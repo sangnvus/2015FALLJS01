@@ -13,7 +13,7 @@ namespace DIO_FALL15.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201508260702197_InitialCreate"; }
+            get { return "201508262312454_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

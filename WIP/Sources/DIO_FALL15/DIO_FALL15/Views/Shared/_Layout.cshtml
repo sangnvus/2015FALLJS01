@@ -22,9 +22,23 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="@Url.Content("/#")" class="navbar-brand"> Create </a></li>
-                    <li><a href="@Url.Content("/#")" class="navbar-brand"> Register </a></li>
-                    <li><a href="@Url.Content("/Account/Login")" class="navbar-brand"> Login </a></li>
+                    @{
+                        var currentUser = Request.Cookies["CurrentUser"];
+                        if (currentUser == null || string.IsNullOrEmpty(currentUser.Value))
+                        {
+                            <li><a href="@Url.Content("/#/register")" class="navbar-brand"> Register </a></li>
+                            <li><a href="@Url.Content("/#/login")" class="navbar-brand"> Login </a></li>
+                        }
+                    }
                 </ul>
+                @{
+
+                    if (currentUser != null && !string.IsNullOrEmpty(currentUser.Value))
+                    {
+                        <ul class="pull-right"><li><a href="@Url.Content("/Account/Logout")" class="navbar-brand"> Logout </a></li></ul>
+                        <ul class="pull-right"><li><a href="@Url.Content("/#/EditProfile")" class="navbar-brand"> Hello, @currentUser.Value </a></li></ul>                      
+                    }
+                }
             </div>
         </div>
     </div>

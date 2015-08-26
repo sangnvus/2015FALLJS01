@@ -10,16 +10,16 @@ app.config(["$routeProvider", "$locationProvider", function ($routeProvider, $lo
             templateUrl: "/Home/ShowProjects",
             controller: "ShowProjectsController"
         });
-    //$routeProvider.when("/addProduct",
-    //    {
-    //        templateUrl: "Products/AddNewProduct",
-    //        controller: "AddProductController"
-    //    });
-    //$routeProvider.when("/editProduct",
-    //    {
-    //        templateUrl: "Products/EditProduct",
-    //        controller: "EditProductController"
-    //    });
+    $routeProvider.when("/login",
+        {
+            templateUrl: "/Account/Login",
+            controller: "ShowProjectsController"
+        });
+    $routeProvider.when("/register",
+        {
+            templateUrl: "Account/Register",
+            controller: "RegisterController"
+        });
     //$routeProvider.when("/deleteProduct",
     //    {
     //        templateUrl: "Products/DeleteProduct",

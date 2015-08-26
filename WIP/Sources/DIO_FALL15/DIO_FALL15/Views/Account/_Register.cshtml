@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Register";
+}
+<h2>Register</h2>
+<form class="form-horizontal" role="form" name="AddUserForm">
+    <hr/>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="name">User name:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="name" placeholder="Enter User name" ng-model="User.UserName">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="link">Password:</label>
+        <div class="col-sm-10">
+            <input type="password" class="form-control" id="password" placeholder="Enter Password" ng-model="User.Password">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="link">Confirm Password:</label>
+        <div class="col-sm-10">
+            <input type="password" class="form-control" id="link" placeholder="Re-enter Password" ng-model="User.rePassword">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="imageLink">First Name:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="imageLink" placeholder="Enter First Name" ng-model="User.FirstName">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="price">Last Name:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="price" placeholder="Enter Price" ng-model="User.LastName">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="price">Gender:</label>
+        <div class="col-sm-10">
+            <select class="form-control" ng-model="User.Gender" convert-to-number>
+                <option value="1">Male</option>
+                <option value="2">Female</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="price">Email:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="price" placeholder="Enter Price" ng-model="User.Email">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="price">PhoneNumber:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="price" placeholder="Enter Price" ng-model="User.PhoneNumber">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="price">Address:</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" id="price" placeholder="Enter Price" ng-model="User.Address"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="button" class="btn btn-default" ng-click="save()">Submit</button>
+        </div>
+    </div>
+</form>
+

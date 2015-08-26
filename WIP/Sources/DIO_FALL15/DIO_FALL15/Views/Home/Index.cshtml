@@ -38,8 +38,12 @@
         </div>*@
 </body>
 @section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/angularjs")
+    @Scripts.Render("~/bundles/md5")
     <script src="~/Scripts_AngularJS/HomeModule.js"></script>
     <script src="~/Scripts_AngularJS/services/ProjectService.js"></script>
+    <script src="~/Scripts_AngularJS/services/AccountService.js"></script>
     <script src="~/Scripts_AngularJS/controllers/ShowProjectsController.js"></script>
+    <script src="~/Scripts_AngularJS/controllers/RegisterController.js"></script>
 }

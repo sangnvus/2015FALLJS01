@@ -65,7 +65,7 @@ namespace DIO_FALL15.Migrations
                         Password = c.String(nullable: false),
                         FirstName = c.String(),
                         LastName = c.String(),
-                        Genrer = c.Int(nullable: false),
+                        Gender = c.Int(nullable: false),
                         Email = c.String(),
                         PhoneNumber = c.String(),
                         Address = c.String(),

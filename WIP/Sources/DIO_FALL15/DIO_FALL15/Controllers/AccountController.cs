@@ -17,7 +17,12 @@ namespace DIO_FALL15.Controllers
         {
             FormsAuthentication.SignOut();
             ViewBag.ReturlUrl = returnUrl;
-            return View(new UserLoginDTO());
+            return PartialView("_Login",new UserLoginDTO());
+        }
+
+        public ActionResult Register()
+        {
+            return PartialView("_Register");
         }
 
         [HttpPost]
@@ -34,6 +39,8 @@ namespace DIO_FALL15.Controllers
             if (user != null)
             {
                 FormsAuthentication.SetAuthCookie(user.Username, model.RememberMe);
+                HttpCookie cookie = new HttpCookie("CurrentUser", user.Username);
+                Response.Cookies.Add(cookie);
                 if (string.IsNullOrEmpty(returnUrl))
                 {
                     return Redirect("/");
@@ -50,6 +57,22 @@ namespace DIO_FALL15.Controllers
             }
             ViewBag.ReturlUrl = returnUrl;
             return View(model);
+        }
+
+        [Authorize]
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            if (Request.Cookies["CurrentUser"] != null)
+            {
+                var user = new HttpCookie("CurrentUser")
+                {
+                    Expires = DateTime.Now.AddDays(-1),
+                    Value = null
+                };
+                Response.Cookies.Add(user);
+            }
+            return Redirect("/");
         }
     }
 }

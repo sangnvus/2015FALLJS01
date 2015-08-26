@@ -1,8 +1,9 @@
+using System.Collections.Generic;
+using DIO_FALL15.Models;
+
 namespace DIO_FALL15.Migrations
 {
-    using DIO_FALL15.Models;
     using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -11,7 +12,7 @@ namespace DIO_FALL15.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(DIO_FALL15.Respository.DatabaseContext context)
@@ -28,6 +29,7 @@ namespace DIO_FALL15.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
             var listUser = new List<User>{
                 new User
                 {
@@ -37,7 +39,7 @@ namespace DIO_FALL15.Migrations
                     LastName = "Luu",
                     Email = "ngocmanh1712@gmail.com",
                     PhoneNumber = "0973232734",
-                    Genrer = Genrer.Male,
+                    Gender = Gender.Male,
                     Address = "Hung Yen"
                 },
                 new User
@@ -48,7 +50,7 @@ namespace DIO_FALL15.Migrations
                     LastName = "Vu",
                     Email = "abcxyz@gmail.com",
                     PhoneNumber = "090987654",
-                    Genrer = Genrer.Male,
+                    Gender = Gender.Male,
                     Address = "Bac Ninh"
                 }
             };
