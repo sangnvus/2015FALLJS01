@@ -10,7 +10,8 @@ namespace DIO_FALL15
         {
             bundles.Add(new ScriptBundle("~/bundles/angularjs").Include(
                 "~/Scripts/angular.js",
-                "~/Scripts/angular-route.js"));
+                "~/Scripts/angular-route.js",
+                "~/Scripts/angular-ui/ui-bootstrap.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/md5").Include(
                 "~/Scripts/myScripts/jquery.md5.js"));
