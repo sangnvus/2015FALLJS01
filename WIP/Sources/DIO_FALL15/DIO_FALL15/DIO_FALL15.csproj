@@ -129,7 +129,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProjectApiController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -140,6 +142,8 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Back.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\DTOs\ProjectDetailDTO.cs" />
+    <Compile Include="Models\DTOs\UserLoginDTO.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -153,6 +157,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\image1.jpg" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -182,6 +187,8 @@
     <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\myScripts\jquery.md5.js" />
+    <Content Include="Scripts_AngularJS\controllers\ShowProjectsController.js" />
     <Content Include="Scripts_AngularJS\HomeModule.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -953,6 +960,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Scripts_AngularJS\services\ProjectService.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -969,15 +977,13 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Home\_ShowProjects.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\" />
-    <Folder Include="Models\DTOs\" />
-    <Folder Include="Scripts_AngularJS\controllers\" />
     <Folder Include="Scripts_AngularJS\directives\" />
     <Folder Include="Scripts_AngularJS\filters\" />
-    <Folder Include="Scripts_AngularJS\services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

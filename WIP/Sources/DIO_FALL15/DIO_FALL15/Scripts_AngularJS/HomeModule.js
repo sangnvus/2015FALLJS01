@@ -1,33 +1,30 @@
 ﻿"use strict";
 
-var app = angular.module("App", ["ngRoute"]);
+var app = angular.module("HomeApp", ["ngRoute"]);
 
-//app.factory("ShareData", function () {
-//    return { value: 0 }
-//});
 
 // Show Routing.
 app.config(["$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider) {
-    $routeProvider.when("/showproduct",
+    $routeProvider.when("/",
         {
-            templateUrl: "/Products/ShowProducts",
-            controller: "ShowProductsController"
+            templateUrl: "/Home/ShowProjects",
+            controller: "ShowProjectsController"
         });
-    $routeProvider.when("/addProduct",
-        {
-            templateUrl: "Products/AddNewProduct",
-            controller: "AddProductController"
-        });
-    $routeProvider.when("/editProduct",
-        {
-            templateUrl: "Products/EditProduct",
-            controller: "EditProductController"
-        });
-    $routeProvider.when("/deleteProduct",
-        {
-            templateUrl: "Products/DeleteProduct",
-            controller: "DeleteProductController"
-        });
+    //$routeProvider.when("/addProduct",
+    //    {
+    //        templateUrl: "Products/AddNewProduct",
+    //        controller: "AddProductController"
+    //    });
+    //$routeProvider.when("/editProduct",
+    //    {
+    //        templateUrl: "Products/EditProduct",
+    //        controller: "EditProductController"
+    //    });
+    //$routeProvider.when("/deleteProduct",
+    //    {
+    //        templateUrl: "Products/DeleteProduct",
+    //        controller: "DeleteProductController"
+    //    });
     $routeProvider.otherwise(
         {
             redirectTo: "/"

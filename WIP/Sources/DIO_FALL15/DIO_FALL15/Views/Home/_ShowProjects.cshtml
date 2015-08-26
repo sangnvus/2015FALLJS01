@@ -1,0 +1,25 @@
+﻿<div class="jumbotron">
+    <h1>All Projects</h1>
+</div>
+<div class="row">
+    <div class="col-md-4 pull-left" ng-repeat="Project in Projects">
+        <img src="~/Images/{{Project.ImageLink}}" class="img-rounded" alt="Cinque Terre" width="90%" height="236">
+        <h3>{{Project.Title}}</h3>
+        <p>
+            {{Project.Description}}
+        </p>
+        <p><strong>Category:</strong> {{Project.Category}}
+        </p>
+        <p><strong>Created Date:</strong> {{Project.CreatedDate | date : 'mediumDate'}}
+        </p>
+        <p><strong>Exprire Date:</strong> {{Project.Deadline | date : 'mediumDate'}}
+        </p>
+        <p><strong>Goal:</strong> {{Project.TargetFund}}$
+        </p>
+        <p><strong>Current:</strong> {{Project.CurrentFund}}$
+        </p>
+        <p>
+            <a class="btn btn-default" href="/#/Back/{{Project.Id}}">Back This Project &raquo;</a>
+        </p>
+    </div>
+</div>
