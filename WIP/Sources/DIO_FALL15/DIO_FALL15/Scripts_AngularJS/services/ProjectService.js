@@ -12,6 +12,11 @@ app.service('ProjectService', function ($http) {
         return $http.get("/api/ProjectApi/GetProject/" + id);
     }
 
+    // Read all Categories
+    this.getCategories = function () {
+        return $http.get("/api/ProjectApi/GetAllCategories");
+    }
+
     // Function to create new Project
     this.post = function (Project) {
         var request = $http({

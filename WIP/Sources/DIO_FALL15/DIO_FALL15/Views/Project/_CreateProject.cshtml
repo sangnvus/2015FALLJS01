@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Add New Student";
+}
+<div>
+    <table><tr><td height="10px"></td></tr></table>
+
+    <table cellpadding="4" cellspacing="4" width="70%" align="center" style="background-color: skyblue;
+border:solid 2px red; padding-top:20px;">
+        <tr>
+            <td colspan="3" style="background-color:gray; font-size:18pt;
+font-weight:bold; height:30px; text-align:center;">
+                Add New Project
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:right;">Title: </td>
+            <td><input type="text" ng-model="Title" />  </td>
+        </tr>
+        <tr>
+            <td style="text-align:right;">Category: </td>
+            <td>
+                <select name="Category" ng-model="Category">
+                    <option value="">---Please select---</option>
+                    <option ng-repeat="category in Categories" value="{{category.CategoryId}}">{{category.Category}}</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:right;">Description: </td>
+            <td><input type="text" ng-model="Description" /> </td>
+        </tr>
+        <tr>
+            <td style="text-align:right;">Deadline: </td>
+            <td><input type="date" ng-model="Deadline" />  </td>
+        </tr>
+        <tr>
+            <td style="text-align:right;">Target Fund: </td>
+            <td><input type="number" ng-model="TargetFund" />  </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="button" value="Add" data-ng-click="save()" />
+            </td>
+        </tr>
+
+    </table>
+</div>

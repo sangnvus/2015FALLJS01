@@ -133,16 +133,19 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectApiController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201508262312454_InitialCreate.cs" />
-    <Compile Include="Migrations\201508262312454_InitialCreate.Designer.cs">
-      <DependentUpon>201508262312454_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201508261447409_InitialCreate.cs" />
+    <Compile Include="Migrations\201508261447409_InitialCreate.Designer.cs">
+      <DependentUpon>201508261447409_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Back.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\DTOs\CategoryDTO.cs" />
+    <Compile Include="Models\DTOs\CreateProjectDTO.cs" />
     <Compile Include="Models\DTOs\ProjectDetailDTO.cs" />
     <Compile Include="Models\DTOs\UserLoginDTO.cs" />
     <Compile Include="Models\DTOs\UserRegisterDTO.cs" />
@@ -190,6 +193,7 @@
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\myScripts\jquery.md5.js" />
+    <Content Include="Scripts_AngularJS\controllers\CreateProjectController.js" />
     <Content Include="Scripts_AngularJS\controllers\RegisterController.js" />
     <Content Include="Scripts_AngularJS\controllers\ShowProjectsController.js" />
     <Content Include="Scripts_AngularJS\HomeModule.js" />
@@ -984,6 +988,7 @@
     <Content Include="Views\Home\_ShowProjects.cshtml" />
     <Content Include="Views\Account\_Login.cshtml" />
     <Content Include="Views\Account\_Register.cshtml" />
+    <Content Include="Views\Project\_CreateProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -998,8 +1003,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201508262312454_InitialCreate.resx">
-      <DependentUpon>201508262312454_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201508261447409_InitialCreate.resx">
+      <DependentUpon>201508261447409_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
