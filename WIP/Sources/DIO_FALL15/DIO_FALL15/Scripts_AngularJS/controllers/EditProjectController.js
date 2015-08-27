@@ -19,15 +19,16 @@ app.directive('fileModel', ['$parse',
 
 app.controller("EditProjectController", function ($scope, $filter, $location, $routeParams, ProjectService) {
 
+    // Load project record
     var Id = $routeParams.id;
     function loadProjectRecord() {
         var promiseGetProject = ProjectService.getProject(Id);
         promiseGetProject.then(
             function (result) {
                 $scope.Project = result.data;
-                Project.DeadlineAsString = $filter('date')(Project.Deadline.date, "yyyy-MM-dd");
-                // Uploade file -> Call service
-                console.log(Project.DeadlineAsString);
+
+                // convert datetime to date
+                $scope.Project.Deadline = new Date($filter('date')($scope.Project.Deadline, "yyyy-MM-dd"));
             },
             function (error) {
                 $scope.error = error;
@@ -36,8 +37,18 @@ app.controller("EditProjectController", function ($scope, $filter, $location, $r
 
     loadProjectRecord();
     
-
-    //$scope.Project.Deadline = $filter('date')($scope.Project.Deadline, "yyyy-MM-dd");
+    // Load category
+    function loadAllCategoriesRecords() {
+        var promiseGetCategory = ProjectService.getCategories();
+        promiseGetCategory.then(
+            function (result) {
+                $scope.Categories = result.data;
+            },
+            function (error) {
+                $scope.error = error;
+            });
+    }
+    loadAllCategoriesRecords();
 
     $scope.save = function () {
 
@@ -47,13 +58,16 @@ app.controller("EditProjectController", function ($scope, $filter, $location, $r
             var files = $(evt.currentTarget).get(0).files;
 
             if (files.length > 0) {
-                fileName = files[0].name
+                fileName = files[0].name;
+
+                // Call upload service
+                var file = $scope.myFile;
+                ProjectService.uploadBulkUserFileToUrl(file);
+            } else {
+                fileName = $scope.Project.ImageLink;
             }
 
         });
-
-        var file = $scope.myFile;
-        ProjectService.uploadBulkUserFileToUrl(file);
 
         var Project = {
             CategoryId: $scope.Project.CategoryId,
@@ -63,7 +77,7 @@ app.controller("EditProjectController", function ($scope, $filter, $location, $r
             ImageLink: fileName
         };
 
-        var promisePut = ProjectService.EditProject($scope.Project.Id, $scope.Project);
+        var promisePut = ProjectService.EditProject($scope.Project.Id, Project);
 
         promisePut.then(
             function (result) {

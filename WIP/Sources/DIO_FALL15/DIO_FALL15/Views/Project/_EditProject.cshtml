@@ -11,7 +11,7 @@
         vertical-align: top;
     }
 </style>
-<h2>Create a new Project</h2>
+<h2>Edit Project</h2>
 <form class="form-horizontal" role="form" name="CreateProjectForm" novalidate>
     <hr />
     <div class="alert alert-danger" role="alert" ng-show="Error != null">
@@ -35,22 +35,22 @@
     <div class="form-group">
         <label class="control-label col-sm-2">Category: </label>
         <div class="col-sm-10">
-            <select class="form-control" ng-model="Project.CategoryId"
+            <select class="form-control" ng-model="Categories.CategoryId"
                     ng-options="category.CategoryId as category.Category for category in Categories "
-                    ng-init="Project.CategoryId"></select>
+                    ng-init="Categories.CategoryId"></select>
         </div>
     </div>
 
     <div class="form-group">
         <label class="control-label col-sm-2" for="link">Description: </label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" name="Description" ng-model="Project.Description">
+            <textarea class="form-control" name="Description" ng-model="Project.Description"></textarea>
         </div>
     </div>
     <div class="form-group">
         <label class="control-label col-sm-2">Deadline: </label>
         <div class="col-sm-10">
-            <input type="date" required class="form-control" placeholder="MM-dd-yyyy" name="Deadline" ng-model="Project.DeadlineAsString" value="{{ Project.DeadlineAsString }}">
+            <input type="date" required class="form-control" placeholder="dd/MM/YYY" name="Deadline" ng-model="Project.Deadline">
             <i class="fa fa-check text-success" ng-show="CreateProjectForm.Deadline.$dirty && CreateProjectForm.Deadline.$valid"></i>
             <div ng-show="CreateProjectForm.Deadline.$dirty && CreateProjectForm.Deadline.$invalid" class="text-danger">
                 <i class="fa fa-times text-danger"></i>
@@ -72,6 +72,12 @@
         </div>
     </div>
     <div class="form-group">
+        <label class="col-sm-2"></label>
+        <div class="col-sm-5">
+            <img src="~/Images/{{Project.ImageLink}}" class="img-rounded" alt="Cinque Terre" width="90%" height="236">
+        </div>
+    </div>
+    <div class="form-group">
         <label class="control-label col-sm-2">Change Image: </label>
         <div class="col-sm-10">
             <input type="file" class="form-control" name="UploadImage" id="fileSelected"
@@ -83,7 +89,7 @@
         <div class="col-sm-offset-2 col-sm-10">
             <button type="button" class="btn btn-primary" ng-click="save()"
                     ng-disabled="!CreateProjectForm.$dirty || (CreateProjectForm.$dirty && CreateProjectForm.$invalid)">
-                Create
+                Edit Project
             </button>
         </div>
     </div>
