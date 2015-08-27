@@ -17,7 +17,7 @@ app.directive('fileModel', ['$parse',
           }
 ]);
 
-app.controller("EditProjectController", function ($scope, $location, $routeParams, ProjectService) {
+app.controller("EditProjectController", function ($scope, $filter, $location, $routeParams, ProjectService) {
 
     var Id = $routeParams.id;
     function loadProjectRecord() {
@@ -25,6 +25,9 @@ app.controller("EditProjectController", function ($scope, $location, $routeParam
         promiseGetProject.then(
             function (result) {
                 $scope.Project = result.data;
+                Project.DeadlineAsString = $filter('date')(Project.Deadline.date, "yyyy-MM-dd");
+                // Uploade file -> Call service
+                console.log(Project.DeadlineAsString);
             },
             function (error) {
                 $scope.error = error;
@@ -32,6 +35,9 @@ app.controller("EditProjectController", function ($scope, $location, $routeParam
     }
 
     loadProjectRecord();
+    
+
+    //$scope.Project.Deadline = $filter('date')($scope.Project.Deadline, "yyyy-MM-dd");
 
     $scope.save = function () {
 
@@ -46,14 +52,13 @@ app.controller("EditProjectController", function ($scope, $location, $routeParam
 
         });
 
-        // Uploade file -> Call service
         var file = $scope.myFile;
         ProjectService.uploadBulkUserFileToUrl(file);
 
         var Project = {
             CategoryId: $scope.Project.CategoryId,
             Description: $scope.Project.Description,
-            Deadline: $scope.Project.Deadline,
+            Deadline: $scope.Project.DeadlineAsString,
             TargetFund: $scope.Project.TargetFund,
             ImageLink: fileName
         };
