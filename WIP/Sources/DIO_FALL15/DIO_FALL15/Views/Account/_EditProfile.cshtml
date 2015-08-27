@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "Register";
+}
+<style>
+    form input[type=text], form input[type=email], form input[type=password], textarea.form-control {
+        display: inline;
+    }
+    textarea.form-control {
+        vertical-align: top;
+    }
+</style>
+<h2>Edit Profile</h2>
+<form class="form-horizontal" role="form" name="EditProfileForm" novalidate>
+    <hr />
+    <div class="alert alert-danger" role="alert" ng-show="Error != null">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{Error}}
+    </div>
+    <div class="alert alert-success" role="alert" ng-show="Success != null">
+        <span class="glyphicon glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{Success}}
+    </div>
+    <div class="form-group hide">
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="UserId" ng-model="User.Id"
+                   ng-trim="true" readonly="" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="name">User name:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="Username" ng-model="User.Username"
+                   ng-trim="true" readonly="" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="imageLink">First Name:</label>
+        <div class="col-sm-10">
+            <input type="text" required="" ng-trim="true" ng-change="removeMessage()"
+                   class="form-control" name="FirstName" placeholder="Enter First Name" ng-model="User.FirstName">
+            <i class="fa fa-check text-success" ng-show="EditProfileForm.FirstName.$dirty && EditProfileForm.FirstName.$valid"></i>
+            <div ng-show="EditProfileForm.FirstName.$dirty && EditProfileForm.FirstName.$invalid" class="text-danger">
+                <i class="fa fa-times text-danger"></i>
+                <span ng-show="EditProfileForm.FirstName.$error.required">First Name is required</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="price">Last Name:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="LastName" ng-change="removeMessage()"
+                   placeholder="Enter Last Name" ng-model="User.LastName"
+                   ng-trim="true" required="">
+            <i class="fa fa-check text-success" ng-show="LastName.Password.$dirty && EditProfileForm.LastName.$valid"></i>
+            <div ng-show="EditProfileForm.LastName.$dirty && EditProfileForm.LastName.$invalid" class="text-danger">
+                <i class="fa fa-times text-danger"></i>
+                <span ng-show="EditProfileForm.LastName.$error.required">Last Name is required</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="price">Gender:</label>
+        <div class="col-sm-10">
+            <select class="form-control" ng-model="User.Gender" convert-to-number ng-change="removeMessage()">
+                <option value="0">Male</option>
+                <option value="1">Female</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="price">Email:</label>
+        <div class="col-sm-10">
+            <input type="email" ng-trim="true" readonly=""
+                   class="form-control"
+                   name="Email" ng-model="User.Email">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="price">PhoneNumber:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="PhoneNumber" placeholder="Enter PhoneNumber"
+                   ng-model="User.PhoneNumber" ng-pattern="/^[0]{1}[19]{1}[0-9]{8,9}$/" ng-change="removeMessage()">
+            <i class="fa fa-check text-success" ng-show="EditProfileForm.PhoneNumber.$dirty && EditProfileForm.PhoneNumber.$valid"></i>
+            <div ng-show="EditProfileForm.PhoneNumber.$dirty && EditProfileForm.PhoneNumber.$invalid" class="text-danger">
+                <i class="fa fa-times text-danger"></i>
+                <span ng-show="EditProfileForm.PhoneNumber.$error.pattern">Wrong format phone number</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="price">Address:</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" name="Address" style="height: 120px"
+                      placeholder="Enter Address" ng-model="User.Address"
+                      maxlength="100" ng-change="removeMessage()"></textarea>
+            <i class="fa fa-check text-success" ng-show="EditProfileForm.Address.$dirty && EditProfileForm.Address.$valid"></i>
+            <div ng-show="EditProfileForm.Address.$dirty && EditProfileForm.Address.$invalid" class="text-danger">
+                <i class="fa fa-times text-danger"></i>
+                <span ng-show="EditProfileForm.Address.$error.maxlength">Address must less than 100 characters</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="button" class="btn btn-primary" ng-click="save()"
+                    ng-disabled="!EditProfileForm.$dirty || (EditProfileForm.$dirty && EditProfileForm.$invalid)">
+                Edit
+            </button>
+        </div>
+    </div>
+</form>
+
+

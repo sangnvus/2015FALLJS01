@@ -1,32 +1,34 @@
 ﻿"use strict";
 
-var app = angular.module("App", ["ngRoute"]);
+var app = angular.module("HomeApp", ["ngRoute"]);
 
-//app.factory("ShareData", function () {
-//    return { value: 0 }
-//});
 
 // Show Routing.
 app.config(["$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider) {
-    $routeProvider.when("/showproduct",
+    $routeProvider.when("/",
         {
-            templateUrl: "/Products/ShowProducts",
-            controller: "ShowProductsController"
+            templateUrl: "/Home/ShowProjects",
+            controller: "ShowProjectsController"
         });
-    $routeProvider.when("/addProduct",
+    $routeProvider.when("/login",
         {
-            templateUrl: "Products/AddNewProduct",
-            controller: "AddProductController"
+            templateUrl: "/Account/Login",
+            controller: "LoginController"
         });
-    $routeProvider.when("/editProduct",
+    $routeProvider.when("/register",
         {
-            templateUrl: "Products/EditProduct",
-            controller: "EditProductController"
+            templateUrl: "Account/Register",
+            controller: "RegisterController"
         });
-    $routeProvider.when("/deleteProduct",
+    $routeProvider.when("/create",
         {
-            templateUrl: "Products/DeleteProduct",
-            controller: "DeleteProductController"
+            templateUrl: "/Project/Create",
+            controller: "CreateProjectController"
+        });
+    $routeProvider.when("/editprofile",
+        {
+            templateUrl: "Account/EditProfile",
+            controller: "EditProfileController"
         });
     $routeProvider.otherwise(
         {

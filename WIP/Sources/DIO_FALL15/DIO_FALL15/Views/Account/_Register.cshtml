@@ -1,0 +1,145 @@
+﻿@{
+    ViewBag.Title = "Register";
+}
+<style>
+    form input[type=text], form input[type=email], form input[type=password] {
+        display: inline;
+    }
+</style>
+<h2>Register</h2>
+<form class="form-horizontal" role="form" name="AddUserForm" novalidate>
+    <hr />
+    <div class="alert alert-danger alert-dismissible" role="alert" ng-show="Error != null">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{Error}}
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="name">User name:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="UserName" placeholder="Enter User name" ng-model="User.UserName"
+                   ng-trim="true"
+                   required
+                   ng-minlength="8"
+                   ng-maxlength="20"
+                   ng-pattern="/^[a-zA-Z0-9]+$/" />
+            <span class="glyphicon glyphicon-ok text-success" ng-show="AddUserForm.UserName.$dirty && AddUserForm.UserName.$valid"></span>
+            @*<i class="fa fa-check text-success" ng-show="AddUserForm.UserName.$dirty && AddUserForm.UserName.$valid"></i>*@
+            <div ng-show="AddUserForm.UserName.$dirty && AddUserForm.UserName.$invalid" class="text-danger">
+                @*<i class="fa fa-times text-danger"></i>*@
+                <span class="glyphicon glyphicon-remove text-danger"></span>
+                <span ng-show="AddUserForm.UserName.$error.required">User name is required</span>
+                <span ng-show="AddUserForm.UserName.$error.minlength">User name must more than 8 characters</span>
+                <span ng-show="AddUserForm.UserName.$error.maxlength">User name must less than 20 characters</span>
+                <span ng-show="AddUserForm.UserName.$error.pattern">User name only have a-z</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="link">Password:</label>
+        <div class="col-sm-10">
+            <input type="password" class="form-control" name="Password"
+                   placeholder="Enter Password" ng-model="User.Password" required>
+            <i class="fa fa-check text-success" ng-show="AddUserForm.Password.$dirty && AddUserForm.Password.$valid"></i>
+            <div ng-show="AddUserForm.Password.$dirty && AddUserForm.Password.$invalid" class="text-danger">
+                <i class="fa fa-times text-danger"></i>
+                <span ng-show="AddUserForm.Password.$error.required">Password is required</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="link">Confirm Password:</label>
+        <div class="col-sm-10">
+            <input type="password" class="form-control" name="rePassword" password-match="User.Password"
+                   placeholder="Re-enter Password" ng-model="User.rePassword">
+            <i class="fa fa-check text-success" ng-show="AddUserForm.rePassword.$dirty && AddUserForm.rePassword.$valid"></i>
+            <div ng-show="AddUserForm.rePassword.$dirty && AddUserForm.rePassword.$invalid" class="text-danger">
+                <i class="fa fa-times text-danger"></i>
+                <span ng-show="AddUserForm.rePassword.$error.required">Confim Password is required</span>
+                <span ng-show="AddUserForm.rePassword.$error.unique">Confim Password is not matched</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="imageLink">First Name:</label>
+        <div class="col-sm-10">
+            <input type="text" required="" ng-trim="true"
+                   class="form-control" name="FirstName" placeholder="Enter First Name" ng-model="User.FirstName">
+            <i class="fa fa-check text-success" ng-show="AddUserForm.FirstName.$dirty && AddUserForm.FirstName.$valid"></i>
+            <div ng-show="AddUserForm.FirstName.$dirty && AddUserForm.FirstName.$invalid" class="text-danger">
+                <i class="fa fa-times text-danger"></i>
+                <span ng-show="AddUserForm.FirstName.$error.required">First Name is required</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="price">Last Name:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="LastName"
+                   placeholder="Enter Last Name" ng-model="User.LastName"
+                   ng-trim="true" required="">
+            <i class="fa fa-check text-success" ng-show="LastName.Password.$dirty && AddUserForm.LastName.$valid"></i>
+            <div ng-show="AddUserForm.LastName.$dirty && AddUserForm.LastName.$invalid" class="text-danger">
+                <i class="fa fa-times text-danger"></i>
+                <span ng-show="AddUserForm.LastName.$error.required">Last Name is required</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="price">Gender:</label>
+        <div class="col-sm-10">
+            <select class="form-control" ng-model="User.Gender" convert-to-number ng-init="User.Gender='0'">
+                <option value="0">Male</option>
+                <option value="1">Female</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="price">Email:</label>
+        <div class="col-sm-10">
+            <input type="email" ng-trim="true" required=""
+                   class="form-control"
+                   name="Email" placeholder="Enter Email" ng-model="User.Email">
+            <i class="fa fa-check text-success" ng-show="AddUserForm.Email.$dirty && AddUserForm.Email.$valid"></i>
+            <div ng-show="AddUserForm.Email.$dirty && AddUserForm.Email.$invalid" class="text-danger">
+                <i class="fa fa-times text-danger"></i>
+                <span ng-show="AddUserForm.Email.$error.required">Email is required</span>
+                <span ng-show="AddUserForm.Email.$error.email">Wrong format email</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="price">PhoneNumber:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="PhoneNumber" placeholder="Enter PhoneNumber"
+                   ng-model="User.PhoneNumber" ng-pattern="/^[0]{1}[19]{1}[0-9]{8,9}$/">
+            <i class="fa fa-check text-success" ng-show="AddUserForm.PhoneNumber.$dirty && AddUserForm.PhoneNumber.$valid"></i>
+            <div ng-show="AddUserForm.PhoneNumber.$dirty && AddUserForm.PhoneNumber.$invalid" class="text-danger">
+                <i class="fa fa-times text-danger"></i>
+                <span ng-show="AddUserForm.PhoneNumber.$error.pattern">Wrong format phone number</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="price">Address:</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" name="Address" style="height: 120px"
+                      placeholder="Enter Address" ng-model="User.Address"
+                      maxlength="100"></textarea>
+            <i class="fa fa-check text-success" ng-show="AddUserForm.Address.$dirty && AddUserForm.Address.$valid"></i>
+            <div ng-show="AddUserForm.Address.$dirty && AddUserForm.Address.$invalid" class="text-danger">
+                <i class="fa fa-times text-danger"></i>
+                <span ng-show="AddUserForm.Address.$error.maxlength">Address must less than 100 characters</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="button" class="btn btn-primary" ng-click="save()"
+                    ng-disabled="!AddUserForm.$dirty || (AddUserForm.$dirty && AddUserForm.$invalid)">
+                Create
+            </button>
+        </div>
+    </div>
+</form>
+

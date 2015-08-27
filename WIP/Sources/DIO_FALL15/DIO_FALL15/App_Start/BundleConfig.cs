@@ -8,6 +8,13 @@ namespace DIO_FALL15
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/bundles/angularjs").Include(
+                "~/Scripts/angular.js",
+                "~/Scripts/angular-route.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/md5").Include(
+                "~/Scripts/myScripts/jquery.md5.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 

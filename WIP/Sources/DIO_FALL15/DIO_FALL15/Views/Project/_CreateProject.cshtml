@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "Add New Student";
+}
+
+<style>
+    form input[type=text], form input[type=date], form input[type=number] {
+        display: inline;
+    }
+</style>
+<h2>Create a new Project</h2>
+<form class="form-horizontal" role="form" name="CreateProjectForm" novalidate>
+    <hr />
+    <div class="alert alert-danger alert-dismissible" role="alert" ng-show="Error != null">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{Error}}
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2">Project Title: </label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="ProjectTitle" placeholder="Enter Project Title" ng-model="Title"
+                   ng-trim="true"
+                   required
+                   ng-minlength="10"
+                   ng-maxlength="50" />
+            <i class="fa fa-check text-success" ng-show="CreateProjectForm.ProjectTitle.$dirty && CreateProjectForm.ProjectTitle.$valid"></i>
+            <div ng-show="CreateProjectForm.ProjectTitle.$dirty && CreateProjectForm.ProjectTitle.$invalid" class="text-danger">
+                <i class="fa fa-times text-danger"></i>
+                <span ng-show="CreateProjectForm.ProjectTitle.$error.required">Project Title is required</span>
+                <span ng-show="CreateProjectForm.ProjectTitle.$error.minlength">Project Title must more than 10 characters</span>
+                <span ng-show="CreateProjectForm.ProjectTitle.$error.maxlength">Project Title must less than 50 characters</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2">Category: </label>
+        <div class="col-sm-10">
+            <select class="form-control" ng-model="Category" ng-options="category.CategoryId as category.Category for category in Categories ">
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="link">Description: </label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="Description" ng-model="Description">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2">Deadline: </label>
+        <div class="col-sm-10">
+            <input type="date" required="" class="form-control" name="Deadline" ng-model="Deadline">
+            <i class="fa fa-check text-success" ng-show="CreateProjectForm.Deadline.$dirty && CreateProjectForm.Deadline.$valid"></i>
+            <div ng-show="CreateProjectForm.Deadline.$dirty && CreateProjectForm.Deadline.$invalid" class="text-danger">
+                <i class="fa fa-times text-danger"></i>
+                <span ng-show="CreateProjectForm.FirstName.$error.required">Deadline is required</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2">Target Fund:</label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control" name="TargetFund"
+                   placeholder="Enter Fund Goal" ng-model="TargetFund"
+                   ng-trim="true" required>
+            <i class="fa fa-check text-success" ng-show="CreateProjectForm.TargetFund.$dirty && CreateProjectForm.TargetFund.$valid"></i>
+            <div ng-show="CreateProjectForm.TargetFund.$dirty && CreateProjectForm.TargetFund.$invalid" class="text-danger">
+                <i class="fa fa-times text-danger"></i>
+                <span ng-show="CreateProjectForm.TargetFund.$error.required">Target Fund is required</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2">Upload Image: </label>
+        <div class="col-sm-10">
+            <input type="file" class="form-control" name="UploadImage" ng-file-select="onFileSelect($files)">
+        </div>
+    </div>
+ 
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="button" class="btn btn-primary" ng-click="save()"
+                    ng-disabled="!CreateProjectForm.$dirty || (CreateProjectForm.$dirty && CreateProjectForm.$invalid)">
+                Create
+            </button>
+        </div>
+    </div>
+</form>
