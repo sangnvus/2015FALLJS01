@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-app.controller('LoginController', function ($scope, $location, AccountService) {
+app.controller('LoginController', function ($scope, $location,$route, AccountService) {
     $scope.Error = null;
     $scope.originalPw = null;
     $scope.save = function () {
@@ -12,9 +12,7 @@ app.controller('LoginController', function ($scope, $location, AccountService) {
         promiseLogin.then(
             function (result) {
                 if (result.status == 200) {
-                    ////$location.path(result.data).replace();
-                    //$stateProvider.go(result.data);
-                    $window.location.reload("/");
+                    $location.path(result.data).reload();
                 }
             },
             function (error) {

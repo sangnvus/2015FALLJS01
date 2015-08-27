@@ -25,11 +25,11 @@ app.config(["$routeProvider", "$locationProvider", function ($routeProvider, $lo
             templateUrl: "/Project/Create",
             controller: "CreateProjectController"
         });
-    //$routeProvider.when("/deleteProduct",
-    //    {
-    //        templateUrl: "Products/DeleteProduct",
-    //        controller: "DeleteProductController"
-    //    });
+    $routeProvider.when("/editprofile",
+        {
+            templateUrl: "Account/EditProfile",
+            controller: "EditProfileController"
+        });
     $routeProvider.otherwise(
         {
             redirectTo: "/"

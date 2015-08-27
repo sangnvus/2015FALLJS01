@@ -69,5 +69,11 @@ namespace DIO_FALL15.Controllers
             }
             return Redirect("/");
         }
+
+        [Authorize]
+        public ActionResult EditProfile()
+        {
+            return PartialView("_EditProfile");
+        }
     }
 }

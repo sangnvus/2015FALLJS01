@@ -36,7 +36,7 @@
                     if (User.Identity != null && User.Identity.IsAuthenticated)
                     {
                         <ul class="pull-right"><li><a href="@Url.Content("/Account/Logout")" class="navbar-brand"> Logout </a></li></ul>
-                        <ul class="pull-right"><li><a href="@Url.Content("/#/EditProfile")" class="navbar-brand"> Hello, @User.Identity.Name </a></li></ul>                      
+                        <ul class="pull-right"><li><a href="@Url.Content("/#/editprofile")" class="navbar-brand"> Hello, @User.Identity.Name </a></li></ul>
                     }
                 }
             </div>

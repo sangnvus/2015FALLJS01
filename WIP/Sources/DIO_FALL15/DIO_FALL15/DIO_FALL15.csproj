@@ -137,7 +137,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-	<Compile Include="Migrations\201508262312454_InitialCreate.cs" />
+    <Compile Include="Migrations\201508262312454_InitialCreate.cs" />
     <Compile Include="Migrations\201508262312454_InitialCreate.Designer.cs">
       <DependentUpon>201508262312454_InitialCreate.cs</DependentUpon>
     </Compile>
@@ -147,6 +147,7 @@
     <Compile Include="Models\DTOs\CategoryDTO.cs" />
     <Compile Include="Models\DTOs\CreateProjectDTO.cs" />
     <Compile Include="Models\DTOs\ProjectDetailDTO.cs" />
+    <Compile Include="Models\DTOs\UserDetailDTO.cs" />
     <Compile Include="Models\DTOs\UserLoginDTO.cs" />
     <Compile Include="Models\DTOs\UserRegisterDTO.cs" />
     <Compile Include="Models\Project.cs" />
@@ -155,6 +156,8 @@
     <Compile Include="Respository\DatabaseContext.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />
@@ -192,14 +195,15 @@
     <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\myScripts\jquery.md5.js" />
-	<Content Include="Scripts_AngularJS\controllers\CreateProjectController.js" />
+    <Content Include="Scripts_AngularJS\controllers\CreateProjectController.js" />
+    <Content Include="Scripts_AngularJS\controllers\EditProfileController.js" />
     <Content Include="Scripts_AngularJS\controllers\LoginController.js" />
     <Content Include="Scripts_AngularJS\controllers\RegisterController.js" />
     <Content Include="Scripts_AngularJS\controllers\ShowProjectsController.js" />
     <Content Include="Scripts_AngularJS\HomeModule.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular-touch.min.js.map" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
@@ -212,6 +216,12 @@
     <Content Include="Scripts\angular-aria.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
@@ -990,6 +1000,7 @@
     <Content Include="Views\Account\_Login.cshtml" />
     <Content Include="Views\Account\_Register.cshtml" />
     <Content Include="Views\Project\_CreateProject.cshtml" />
+    <Content Include="Views\Account\_EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -997,9 +1008,6 @@
     <Folder Include="Scripts_AngularJS\filters\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>

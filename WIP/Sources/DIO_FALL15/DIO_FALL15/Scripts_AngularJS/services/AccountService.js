@@ -7,10 +7,15 @@ app.service('AccountService', function ($http) {
         return $http.get("/api/AccountApi/GetAllAccounts");
     }
 
-    // Read Account by ID
-    this.getAccount = function (id) {
-        return $http.get("/api/AccountApi/GetAccount/" + id);
+    // Read Current Account
+    this.getCurrentAccount = function () {
+        return $http.get("/api/AccountApi/GetCurrentAccount");
     }
+
+    //// Read Account by ID
+    //this.getAccount = function (id) {
+    //    return $http.get("/api/AccountApi/GetAccount/" + id);
+    //}
 
     // Function to create new Account
     this.post = function (Account) {
@@ -24,7 +29,7 @@ app.service('AccountService', function ($http) {
     }
 
     // Function to edit a Account
-    this.put = function (id, Account) {
+    this.EditAccount = function (id, Account) {
         var request = $http({
             method: 'put',
             url: '/api/AccountApi/EditAccount/' + id,

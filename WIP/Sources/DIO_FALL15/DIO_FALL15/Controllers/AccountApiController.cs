@@ -15,8 +15,9 @@ namespace DIO_FALL15.Controllers
     {
         public DatabaseContext Db = new DatabaseContext();
 
-        // POST: api/AccountsApi
-        [ResponseType(typeof(UserRegisterDTO))]
+        // POST: api/AccountsApi/CreateAccount
+        [ResponseType(typeof (UserRegisterDTO))]
+        [HttpPost]
         public IHttpActionResult CreateAccount(UserRegisterDTO Account)
         {
             if (!ModelState.IsValid)
@@ -48,6 +49,80 @@ namespace DIO_FALL15.Controllers
             Db.SaveChanges();
 
             return Ok("Success");
+        }
+
+        // put: api/AccountsApi/EditAccount/:id
+        [Authorize]
+        [ResponseType(typeof(UserDetailDTO))]
+        [HttpPut]
+        public IHttpActionResult EditAccount(int id,UserDetailDTO Account)
+        {
+            if (Account == null)
+            {
+                return BadRequest(ModelState);
+            }
+            var currentUser =
+                Db.Users.SingleOrDefault(u => u.Username.Equals(User.Identity.Name, StringComparison.OrdinalIgnoreCase));
+
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Unauthorized, "User are not login!"));
+            } 
+            else if (currentUser.Id != id || currentUser.Id != Account.Id)
+            {
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Unauthorized, "Not permision to modify"));
+            }
+
+            var updateUser =
+                Db.Users.SingleOrDefault(u => u.Id == id);
+
+            if (updateUser == null)
+            {
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "User not found!"));
+            }
+
+            updateUser.FirstName = Account.FirstName;
+            updateUser.LastName = Account.LastName;
+            updateUser.Gender = Account.Gender;
+            updateUser.PhoneNumber = Account.PhoneNumber;
+            updateUser.Address = Account.Address;
+
+            Db.SaveChanges();
+
+            return Ok("Your Profile has been updated!");
+        }
+
+        [Authorize]
+        [ResponseType(typeof(UserDetailDTO))]
+        [HttpGet]
+        public IHttpActionResult GetCurrentAccount()
+        {
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Unauthorized, "User are not login!"));
+            }
+
+            var currentUser =
+                Db.Users.SingleOrDefault(u => u.Username.Equals(User.Identity.Name, StringComparison.OrdinalIgnoreCase));
+
+            if (currentUser == null)
+            {
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Some thing fail!"));
+            }
+
+            var userDTO = new UserDetailDTO
+            {
+                Id = currentUser.Id,
+                Username = currentUser.Username,
+                FirstName = currentUser.FirstName,
+                LastName = currentUser.LastName,
+                Gender = currentUser.Gender,
+                Email = currentUser.Email,
+                PhoneNumber = currentUser.PhoneNumber,
+                Address = currentUser.Address
+            };
+
+            return Ok(userDTO);
         }
     }
 }
