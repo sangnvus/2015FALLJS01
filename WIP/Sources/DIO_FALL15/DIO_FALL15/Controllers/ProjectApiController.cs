@@ -189,5 +189,24 @@ namespace DIO_FALL15.Controllers
 
             return Ok(listCategoryDTO);
         }
+
+        // GET: api/ProjectApi/GetAllCategories
+        [HttpPut]
+        [ResponseType(typeof(ProjectDetailDTO))]
+        public IHttpActionResult BackProject(int id, Decimal amount)
+        {
+            var updateProject =
+                Db.Projects.SingleOrDefault(u => u.Id == id);
+
+            if (updateProject == null)
+            {
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Project not found!"));
+            }
+
+            updateProject.CurrentFund += amount;
+            Db.SaveChanges();
+
+            return Ok(updateProject.CurrentFund);
+        }
     }
 }

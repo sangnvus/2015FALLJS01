@@ -72,4 +72,14 @@ app.service('ProjectService', function ($http) {
                 //debugger;
             });
     }
+
+    // Function to back money for a project.
+    this.BackProject = function (id, amount) {
+        var request = $http({
+            method: 'put',
+            url: '/api/ProjectApi/BackProject/' + id + '?amount=' + amount,
+        });
+
+        return request;
+    }
 });
