@@ -137,6 +137,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+	<Compile Include="Migrations\201508262312454_InitialCreate.cs" />
+    <Compile Include="Migrations\201508262312454_InitialCreate.Designer.cs">
+      <DependentUpon>201508262312454_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Back.cs" />
@@ -1001,6 +1004,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\201508262312454_InitialCreate.resx">
+      <DependentUpon>201508262312454_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

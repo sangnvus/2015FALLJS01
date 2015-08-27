@@ -14,7 +14,7 @@ app.controller('LoginController', function ($scope, $location, AccountService) {
                 if (result.status == 200) {
                     ////$location.path(result.data).replace();
                     //$stateProvider.go(result.data);
-                    $location.url(result.data);
+                    $window.location.reload("/");
                 }
             },
             function (error) {
