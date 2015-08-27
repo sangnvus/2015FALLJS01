@@ -20,6 +20,11 @@ app.config(["$routeProvider", "$locationProvider", function ($routeProvider, $lo
             templateUrl: "Account/Register",
             controller: "RegisterController"
         });
+    $routeProvider.when("/create",
+        {
+            templateUrl: "/Project/Create",
+            controller: "CreateProjectController"
+        });
     //$routeProvider.when("/deleteProduct",
     //    {
     //        templateUrl: "Products/DeleteProduct",
