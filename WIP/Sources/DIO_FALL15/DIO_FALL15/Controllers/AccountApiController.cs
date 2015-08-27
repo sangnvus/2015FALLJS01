@@ -14,6 +14,7 @@ namespace DIO_FALL15.Controllers
     public class AccountApiController : ApiController
     {
         public DatabaseContext Db = new DatabaseContext();
+
         // POST: api/AccountsApi
         [ResponseType(typeof(UserRegisterDTO))]
         public IHttpActionResult CreateAccount(UserRegisterDTO Account)

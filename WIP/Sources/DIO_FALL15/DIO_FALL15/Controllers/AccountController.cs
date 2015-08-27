@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DIO_FALL15.Models.DTOs;
@@ -25,13 +26,13 @@ namespace DIO_FALL15.Controllers
             return PartialView("_Register");
         }
 
+        // Login Api
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Login(UserLoginDTO model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Something Error");
             }
 
             var user =
@@ -39,38 +40,32 @@ namespace DIO_FALL15.Controllers
             if (user != null)
             {
                 FormsAuthentication.SetAuthCookie(user.Username, model.RememberMe);
-                HttpCookie cookie = new HttpCookie("CurrentUser", user.Username);
-                Response.Cookies.Add(cookie);
+                Session["CurrentUser"] = user.Username;
                 if (string.IsNullOrEmpty(returnUrl))
                 {
-                    return Redirect("/");
+                    return new HttpStatusCodeResult(HttpStatusCode.OK, "/");
                 }
                 else
                 {
-                    return Redirect(returnUrl);
+                    return new HttpStatusCodeResult(HttpStatusCode.OK, returnUrl);
                 }
             }
             else
             {
-                ModelState.AddModelError("", "Invalid Username or Password");
-
+                //return   (HttpStatusCode.BadRequest, "Invalid Username or Password");
+                Response.StatusCode = (int) HttpStatusCode.BadRequest;
+                return Json("Invalid Username or Password");
             }
-            ViewBag.ReturlUrl = returnUrl;
-            return View(model);
         }
 
         [Authorize]
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-            if (Request.Cookies["CurrentUser"] != null)
+            for (int index = 0; index < Session.Keys.Count; index++)
             {
-                var user = new HttpCookie("CurrentUser")
-                {
-                    Expires = DateTime.Now.AddDays(-1),
-                    Value = null
-                };
-                Response.Cookies.Add(user);
+                var sessionName = Session.Keys[index];
+                Session[sessionName] = null;
             }
             return Redirect("/");
         }

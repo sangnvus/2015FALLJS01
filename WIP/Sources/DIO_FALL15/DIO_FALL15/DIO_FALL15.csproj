@@ -190,6 +190,7 @@
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\myScripts\jquery.md5.js" />
+    <Content Include="Scripts_AngularJS\controllers\LoginController.js" />
     <Content Include="Scripts_AngularJS\controllers\RegisterController.js" />
     <Content Include="Scripts_AngularJS\controllers\ShowProjectsController.js" />
     <Content Include="Scripts_AngularJS\HomeModule.js" />

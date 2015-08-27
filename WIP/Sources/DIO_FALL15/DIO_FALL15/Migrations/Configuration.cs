@@ -12,7 +12,7 @@ namespace DIO_FALL15.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(DIO_FALL15.Respository.DatabaseContext context)

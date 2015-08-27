@@ -33,4 +33,15 @@ app.service('AccountService', function ($http) {
 
         return request;
     }
+
+    // Function to edit a Account
+    this.Login = function (User) {
+        var request = $http({
+            method: 'post',
+            url: '/Account/Login/',
+            data: User
+        });
+
+        return request;
+    }
 });

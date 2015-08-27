@@ -13,7 +13,7 @@ app.config(["$routeProvider", "$locationProvider", function ($routeProvider, $lo
     $routeProvider.when("/login",
         {
             templateUrl: "/Account/Login",
-            controller: "ShowProjectsController"
+            controller: "LoginController"
         });
     $routeProvider.when("/register",
         {

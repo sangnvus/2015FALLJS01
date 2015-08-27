@@ -6,12 +6,12 @@
 
 <h2>Login</h2>
 
-@using (Html.BeginForm(Html.BeginForm("Login", "Account", new {returnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {@id = "LoginForm", @class = "form-horizontal", role = "form"})))
+@*@using (Html.BeginForm(Html.BeginForm("Login", "Account", new {returnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {@id = "LoginForm", @class = "form-horizontal", role = "form"})))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        @*<h4>UserLoginDTO</h4>*@
+        <h4>UserLoginDTO</h4>
         <hr/>
         @Html.ValidationSummary(true, "", new {@class = "text-danger"})
         <div class="form-group">
@@ -42,11 +42,61 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Login" class="btn btn-default"/>
+                <button type="submit" class="btn btn-primary">
+                    Login <i class="fa fa-sign-in"></i>
+                </button>
             </div>
         </div>
     </div>
-}
+}*@
+<style>
+    form input[type=text], form input[type=email], form input[type=password] {
+        display: inline;
+    }
+</style>
+<form class="form-horizontal" role="form" name="LoginForm" novalidate>
+    <hr />
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="name">User name:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="UserName" placeholder="Enter User name" ng-model="User.UserName"
+                   ng-trim="true"
+                   required
+                   ng-minlength="8"
+                   ng-maxlength="20"
+                   ng-pattern="/^[a-zA-Z0-9]+$/" />
+            <i class="fa fa-check text-success" ng-show="LoginForm.UserName.$dirty && LoginForm.UserName.$valid"></i>
+            <div ng-show="LoginForm.UserName.$dirty && LoginForm.UserName.$invalid" class="text-danger">
+                <i class="fa fa-times text-danger"></i>
+                <span ng-show="LoginForm.UserName.$error.required">User name is required</span>
+                <span ng-show="LoginForm.UserName.$error.minlength">User name must more than 8 characters</span>
+                <span ng-show="LoginForm.UserName.$error.maxlength">User name must less than 20 characters</span>
+                <span ng-show="LoginForm.UserName.$error.pattern">User name only have a-z</span>
+            </div>
+        </div>
+
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="link">Password:</label>
+        <div class="col-sm-10">
+            <input type="password" class="form-control" name="Password"
+                   placeholder="Enter Password" ng-model="User.Password" required>
+            <i class="fa fa-check text-success" ng-show="LoginForm.Password.$dirty && LoginForm.Password.$valid"></i>
+            <div ng-show="LoginForm.Password.$dirty && LoginForm.Password.$invalid" class="text-danger">
+                <i class="fa fa-times text-danger"></i>
+                <span ng-show="LoginForm.Password.$error.required">Password is required</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="button" class="btn btn-primary" ng-click="save()"
+                    ng-disabled="!LoginForm.$dirty || (LoginForm.$dirty && LoginForm.$invalid)">
+                Login <i class="fa fa-sign-in"></i>
+            </button>
+        </div>
+    </div>
+</form>
 <script>
     $("#LoginForm").submit(function (event) {
         var password = $('#tbPassword').val();

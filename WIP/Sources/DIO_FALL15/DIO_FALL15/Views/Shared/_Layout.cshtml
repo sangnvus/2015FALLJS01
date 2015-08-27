@@ -24,8 +24,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="@Url.Content("/#")" class="navbar-brand"> Create </a></li>
                     @{
-                        var currentUser = Request.Cookies["CurrentUser"];
-                        if (currentUser == null || string.IsNullOrEmpty(currentUser.Value))
+                        if (User.Identity == null || !User.Identity.IsAuthenticated)
                         {
                             <li><a href="@Url.Content("/#/register")" class="navbar-brand"> Register </a></li>
                             <li><a href="@Url.Content("/#/login")" class="navbar-brand"> Login </a></li>
@@ -34,10 +33,10 @@
                 </ul>
                 @{
 
-                    if (currentUser != null && !string.IsNullOrEmpty(currentUser.Value))
+                    if (User.Identity != null && User.Identity.IsAuthenticated)
                     {
                         <ul class="pull-right"><li><a href="@Url.Content("/Account/Logout")" class="navbar-brand"> Logout </a></li></ul>
-                        <ul class="pull-right"><li><a href="@Url.Content("/#/EditProfile")" class="navbar-brand"> Hello, @currentUser.Value </a></li></ul>                      
+                        <ul class="pull-right"><li><a href="@Url.Content("/#/EditProfile")" class="navbar-brand"> Hello, @User.Identity.Name </a></li></ul>                      
                     }
                 }
             </div>
