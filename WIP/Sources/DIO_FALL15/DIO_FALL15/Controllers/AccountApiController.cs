@@ -24,11 +24,11 @@ namespace DIO_FALL15.Controllers
             }
             else if (Db.Users.Any(x => x.Username.Equals(Account.Username, StringComparison.OrdinalIgnoreCase)))
             {
-                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Duplicate_UserName"));
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Username has been used!"));
             }
-            else if (Db.Users.Any(x => x.Username.Equals(Account.Email, StringComparison.OrdinalIgnoreCase)))
+            else if (Db.Users.Any(x => x.Email.Equals(Account.Email, StringComparison.OrdinalIgnoreCase)))
             {
-                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Duplicate_Email"));
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Email has been used!"));
             }
 
             var newUser = new User
@@ -43,8 +43,8 @@ namespace DIO_FALL15.Controllers
                 Address = Account.Address
             };
 
-            //Db.Users.Add(newUser);
-            //Db.SaveChanges();
+            Db.Users.Add(newUser);
+            Db.SaveChanges();
 
             return Ok("Success");
         }
