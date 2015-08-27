@@ -96,7 +96,7 @@ namespace DIO_FALL15.Controllers
                 TargetFund = project.TargetFund,
                 // hardcode
                 CreatedDate = DateTime.Now,
-                CurrentFund = 10000,
+                CurrentFund = 0,
                 Status = Status.Active,
                 ImageLink = "Image1.jpg"
             };

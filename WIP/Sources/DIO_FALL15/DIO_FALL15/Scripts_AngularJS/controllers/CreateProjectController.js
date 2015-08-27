@@ -7,6 +7,7 @@ app.controller('CreateProjectController', function ($scope, ProjectService) {
         promiseGetCategory.then(
             function (result) {
                 $scope.Categories = result.data;
+                $scope.Category = $scope.Categories[0];
             },
             function (error) {
                 $scope.error = error;
@@ -14,7 +15,7 @@ app.controller('CreateProjectController', function ($scope, ProjectService) {
     }
 
     loadAllCategoriesRecords();
-
+    
     $scope.save = function () {
 
         var Project = {
