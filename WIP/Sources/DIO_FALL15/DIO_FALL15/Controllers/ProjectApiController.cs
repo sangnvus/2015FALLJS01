@@ -11,6 +11,8 @@ using DIO_FALL15.Models.DTOs;
 using DIO_FALL15.Respository;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.IO;
+using System.Web;
 
 namespace DIO_FALL15.Controllers
 {
@@ -50,36 +52,9 @@ namespace DIO_FALL15.Controllers
             return Ok(listProjectDTO);
         }
 
-        // PUT: api/ProjectApi/Edit  
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutProject(int id, Project project)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != project.Id)
-            {
-                return BadRequest();
-            }
-
-            Db.Entry(project).State = EntityState.Modified;
-
-            try
-            {
-                Db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
         // POST: api/ProjectApi/CreateProject 
         [ResponseType(typeof(CreateProjectDTO))]
+        [HttpPost]
         public IHttpActionResult CreateProject(CreateProjectDTO project)
         {
             if (!ModelState.IsValid)
@@ -98,13 +73,43 @@ namespace DIO_FALL15.Controllers
                 CreatedDate = DateTime.Now,
                 CurrentFund = 0,
                 Status = Status.Active,
-                ImageLink = "Image1.jpg"
+                ImageLink = project.ImageLink
             };
             Db.Projects.Add(newProject);
             Db.SaveChanges();
 
             //return CreatedAtRoute("DefaultApi", new { id = project.Id }, project);
             return Ok("Create project successfully!");
+        }
+
+        // PUT: api/ProjectApi/Edit  
+        [ResponseType(typeof(ProjectDetailDTO))]
+        [HttpPut]
+        public IHttpActionResult EditProject(int id, ProjectDetailDTO project)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var updateProject =
+                Db.Projects.SingleOrDefault(u => u.Id == id);
+
+            if (updateProject == null)
+            {
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Project not found!"));
+            }
+
+            updateProject.Title = project.Title;
+            updateProject.CategoryId = project.CategoryId;
+            updateProject.Description = project.Description;
+            updateProject.Deadline = project.Deadline;
+            updateProject.TargetFund = project.TargetFund;
+            updateProject.ImageLink = project.ImageLink;
+
+            Db.SaveChanges();
+
+            return Ok("Updated Project!");
         }
 
         // GET: api/ProjectApi/GetAllCategories
