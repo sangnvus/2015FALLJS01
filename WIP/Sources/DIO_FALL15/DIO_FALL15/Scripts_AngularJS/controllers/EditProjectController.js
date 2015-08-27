@@ -17,19 +17,21 @@ app.directive('fileModel', ['$parse',
           }
 ]);
 
-app.controller("EditProjectController", function ($scope, $location, ShareData, ProjectService) {
-    getStudent();
+app.controller("EditProjectController", function ($scope, $location, $routeParams, ProjectService) {
 
-    function getProject() {
-        var promiseGetProject = ProjectService.getProject(ShareData.value);
-
-        promiseGetProject.then(function (pl) {
-            $scope.Project = pl.data;
-        },
-              function (errorPl) {
-                  $scope.error = 'failure loading Project', errorPl;
-              });
+    var Id = $routeParams.id;
+    function loadProjectRecord() {
+        var promiseGetProject = ProjectService.getProject(Id);
+        promiseGetProject.then(
+            function (result) {
+                $scope.Project = result.data;
+            },
+            function (error) {
+                $scope.error = error;
+            });
     }
+
+    loadProjectRecord();
 
     $scope.save = function () {
 

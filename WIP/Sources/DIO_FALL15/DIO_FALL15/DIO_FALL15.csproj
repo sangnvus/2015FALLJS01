@@ -146,6 +146,7 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\DTOs\CategoryDTO.cs" />
     <Compile Include="Models\DTOs\CreateProjectDTO.cs" />
+    <Compile Include="Models\DTOs\ProjectCardDTO.cs" />
     <Compile Include="Models\DTOs\ProjectDetailDTO.cs" />
     <Compile Include="Models\DTOs\UserDetailDTO.cs" />
     <Compile Include="Models\DTOs\UserLoginDTO.cs" />
@@ -199,9 +200,11 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\myScripts\jquery.md5.js" />
     <Content Include="Scripts_AngularJS\controllers\CreateProjectController.js" />
+    <Content Include="Scripts_AngularJS\controllers\CurrentUserProjectsController.js" />
     <Content Include="Scripts_AngularJS\controllers\EditProfileController.js" />
     <Content Include="Scripts_AngularJS\controllers\EditProjectController.js" />
     <Content Include="Scripts_AngularJS\controllers\LoginController.js" />
+    <Content Include="Scripts_AngularJS\controllers\ProjectDetailController.js" />
     <Content Include="Scripts_AngularJS\controllers\RegisterController.js" />
     <Content Include="Scripts_AngularJS\controllers\ShowProjectsController.js" />
     <Content Include="Scripts_AngularJS\HomeModule.js" />
@@ -1002,7 +1005,10 @@
     <Content Include="Views\Account\_Register.cshtml" />
     <Content Include="Views\Project\_CreateProject.cshtml" />
     <Content Include="Views\Account\_EditProfile.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Project\_ProjectDetail.cshtml" />
     <Content Include="Views\Project\_EditProject.cshtml" />
+    <Content Include="Views\Project\_ShowAllCurrentUserProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
