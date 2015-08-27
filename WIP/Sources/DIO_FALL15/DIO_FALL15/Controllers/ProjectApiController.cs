@@ -22,27 +22,20 @@ namespace DIO_FALL15.Controllers
 
         // GET: api/ProjectApi/GetAllProjects
         [HttpGet]
-        [ResponseType(typeof(ProjectDetailDTO))]
+        [ResponseType(typeof(ProjectCardDTO))]
         public IHttpActionResult GetAllProjects()
         {
             var listProject = Db.Projects.ToList();
-            var listProjectDTO = new List<ProjectDetailDTO>();
+            var listProjectDTO = new List<ProjectCardDTO>();
 
             foreach (var project in listProject)
             {
                 listProjectDTO.Add(
-                    new ProjectDetailDTO
+                    new ProjectCardDTO
                     {
                         Id = project.Id,
                         Title = project.Title,
-                        UserId = project.UserId,
-                        Username = project.User.Username,
-                        CategoryId = project.CategoryId,
-                        Category = project.Category.Name,
-                        Status = project.Status.ToString(),
-                        Description = project.Description,
                         ImageLink = project.ImageLink,
-                        CreatedDate = project.CreatedDate,
                         Deadline = project.Deadline,
                         TargetFund = project.TargetFund,
                         CurrentFund = project.CurrentFund
@@ -50,6 +43,99 @@ namespace DIO_FALL15.Controllers
             }
 
             return Ok(listProjectDTO);
+        }
+
+        // GET: api/ProjectApi/GetAllCurrentUserProject
+        [HttpGet]
+        [ResponseType(typeof(ProjectCardDTO))]
+        public IHttpActionResult GetAllCurrentUserProjects()
+        {
+            var listProject = Db.Projects.ToList();
+            var listProjectDTO = new List<ProjectCardDTO>();
+
+            var currentUser =
+                Db.Users.SingleOrDefault(u => u.Username.Equals(User.Identity.Name, 
+                    StringComparison.OrdinalIgnoreCase));
+
+            foreach (var project in listProject)
+            {
+                if (project.User.Id == currentUser.Id)
+                {
+                    listProjectDTO.Add(
+                    new ProjectCardDTO
+                    {
+                        Id = project.Id,
+                        Title = project.Title,
+                        ImageLink = project.ImageLink,
+                        Deadline = project.Deadline,
+                        TargetFund = project.TargetFund,
+                        CurrentFund = project.CurrentFund
+                    });
+                }
+            }
+            Console.WriteLine(listProjectDTO.Count);
+            return Ok(listProjectDTO);
+        }
+
+        // GET: api/ProjectApi/Project/:id
+        [HttpGet]
+        [ResponseType(typeof(ProjectCardDTO))]
+        public IHttpActionResult GetProject(int id)
+        {
+            var project = Db.Projects.SingleOrDefault(x => x.Id == id);
+            if (project == null)
+            {
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Project not found!"));
+            }
+
+            var projectDTO = new ProjectDetailDTO
+            {
+                Id = project.Id,
+                UserId = project.UserId,
+                CategoryId = project.CategoryId,
+                Username = project.User.Username,
+                Category = project.Category.Name,
+                Title = project.Title,
+                ImageLink = project.ImageLink,
+                Status = project.Status.ToString(),
+                Description = project.Description,
+                TargetFund = project.TargetFund,
+                CurrentFund = project.CurrentFund,
+                CreatedDate = project.CreatedDate,
+                Deadline = project.Deadline,
+                
+            };
+
+            return Ok(projectDTO);
+        }
+
+        // PUT: api/ProjectApi/Edit  
+        [ResponseType(typeof(ProjectDetailDTO))]
+        [HttpPut]
+        public IHttpActionResult EditProject(int id, ProjectDetailDTO project)
+        {
+            if (project == null)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var updateProject =
+               Db.Projects.SingleOrDefault(u => u.Id == id);
+
+            if (updateProject == null)
+            {
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Project not found!"));
+            }
+
+            updateProject.CategoryId = project.CategoryId;
+            updateProject.Description = project.Description;
+            updateProject.Deadline = project.Deadline;
+            updateProject.TargetFund = project.TargetFund;
+            updateProject.ImageLink = project.ImageLink;
+
+            Db.SaveChanges();
+
+            return Ok("Update successfull!");
         }
 
         // POST: api/ProjectApi/CreateProject 
@@ -82,35 +168,6 @@ namespace DIO_FALL15.Controllers
             return Ok("Create project successfully!");
         }
 
-        // PUT: api/ProjectApi/Edit  
-        [ResponseType(typeof(ProjectDetailDTO))]
-        [HttpPut]
-        public IHttpActionResult EditProject(int id, ProjectDetailDTO project)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var updateProject =
-                Db.Projects.SingleOrDefault(u => u.Id == id);
-
-            if (updateProject == null)
-            {
-                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Project not found!"));
-            }
-
-            updateProject.Title = project.Title;
-            updateProject.CategoryId = project.CategoryId;
-            updateProject.Description = project.Description;
-            updateProject.Deadline = project.Deadline;
-            updateProject.TargetFund = project.TargetFund;
-            updateProject.ImageLink = project.ImageLink;
-
-            Db.SaveChanges();
-
-            return Ok("Updated Project!");
-        }
 
         // GET: api/ProjectApi/GetAllCategories
         [HttpGet]

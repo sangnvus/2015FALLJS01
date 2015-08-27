@@ -1,18 +1,19 @@
 ﻿"use strict";
 
-app.controller('ShowProjectsController', function ($scope, $location,$cookies,$cookieStore, ProjectService) {
-    function loadAllProjectRecords() {
-        var promiseGetProject = ProjectService.getProjects();
+app.controller('CurrentUserProjectsController', function ($scope, $location,  ProjectService) {
+
+    // Get all current user's projects
+    function loadProjectRecord() {
+        var promiseGetProject = ProjectService.getYourProjects();
         promiseGetProject.then(
-            function(result) {
-                $scope.Projects = result.data;
+            function (result) {
+                $scope.Project = result.data;
             },
-            function(error) {
+            function (error) {
                 $scope.error = error;
             });
     }
-
-    loadAllProjectRecords();
+    loadProjectRecord();
 
     //To Edit Project  
     $scope.editProject = function (id) {

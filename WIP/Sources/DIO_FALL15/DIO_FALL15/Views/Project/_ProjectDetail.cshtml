@@ -1,0 +1,58 @@
+﻿<div>
+    <div class="view_title text-center">
+        <h2>{{Project.Title}}</h2>
+        <p>by {{Project.Username}}</p>
+    </div>
+    <div class="view_overview">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="project-image">
+                    <img src="images/{{Project.ImageLink}}" alt="" class="img-responsive center-block img-rounded">
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-4 text-right">
+                        <h3>Category: </h3>
+                    </div>
+                    <div class="col-md-8 text-left">
+                        <h3>{{Project.Category}}</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 text-right">
+                        <h3>Target: </h3>
+                    </div>
+                    <div class="col-md-8 text-left">
+                        <h3>$ {{Project.TargetFund}}</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 text-right">
+                        <h3>Current: </h3>
+                    </div>
+                    <div class="col-md-8 text-left">
+                        <h3>$ {{Project.CurrentFund}}</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 text-right">
+                        <h3>Exprire: </h3>
+                    </div>
+                    <div class="col-md-8 text-left">
+                        <h3>{{Project.Deadline | date: 'mediumDate'}}</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <h2>Description</h2>
+                    <p>{{Project.Description}}</p>
+                </div>
+                <div class="row">
+                    <button type="button" class="btn btn-primary btn-group-justified btn-lg" ng-click="back()">
+                        Back this project
+                    </button>
+                </div>
+            </div>
+        </div> <!-- end col-md-4 -->
+    </div>
+</div>

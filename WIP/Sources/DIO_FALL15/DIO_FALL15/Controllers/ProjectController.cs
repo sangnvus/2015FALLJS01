@@ -23,8 +23,15 @@ namespace DIO_FALL15.Controllers
             return PartialView("_EditProject");
         }
 
-        [HttpPost]
+        // GET: All current user projects
+        public ActionResult ShowAllCurrentUserProject()
+        {
+            return PartialView("_ShowAllCurrentUserProject");
+        }
 
+
+        // Post: Upload Image
+        [HttpPost]
         public ActionResult fileUpload(HttpPostedFileBase file)
         {
             if (file != null)

@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-var app = angular.module("HomeApp", ["ngRoute"]);
+var app = angular.module("HomeApp", ["ngRoute","ngCookies"]);
 
 
 // Show Routing.
@@ -9,11 +9,6 @@ app.config(["$routeProvider", "$locationProvider", function ($routeProvider, $lo
         {
             templateUrl: "/Home/ShowProjects",
             controller: "ShowProjectsController"
-        });
-    $routeProvider.when("/login",
-        {
-            templateUrl: "/Account/Login",
-            controller: "LoginController"
         });
     $routeProvider.when("/register",
         {
@@ -29,6 +24,21 @@ app.config(["$routeProvider", "$locationProvider", function ($routeProvider, $lo
         {
             templateUrl: "Account/EditProfile",
             controller: "EditProfileController"
+        });
+    $routeProvider.when("/project/:id",
+        {
+            templateUrl: "Project/ProjectDetail",
+            controller: "ProjectDetailController"
+        });
+    $routeProvider.when("/yourproject",
+        {
+            templateUrl: "Project/ShowAllCurrentUserProject",
+            controller: "CurrentUserProjectsController"
+        });
+    $routeProvider.when("/edit/:id",
+        {
+            templateUrl: "Project/Edit",
+            controller: "EditProjectController"
         });
     $routeProvider.otherwise(
         {

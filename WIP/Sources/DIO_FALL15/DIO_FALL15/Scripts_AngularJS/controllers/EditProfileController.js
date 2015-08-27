@@ -1,6 +1,7 @@
 ﻿"use strict";
 
-app.controller('EditProfileController', function ($scope, $location, AccountService) {
+app.controller('EditProfileController', function ($scope, $location,$window, AccountService) {
+
     function loadCurrentUserData() {
         var promiseGetProfile = AccountService.getCurrentAccount();
         promiseGetProfile.then(
@@ -9,7 +10,11 @@ app.controller('EditProfileController', function ($scope, $location, AccountServ
                 $scope.User.Gender = $scope.User.Gender.toString();
             },
             function (error) {
-                $scope.error = error;
+                if (error.status == 401) {
+                    $window.location.href = "http://localhost:14069/Account/Login";
+                } else {
+                    $scope.error = error;
+                }
             });
     }
     loadCurrentUserData();

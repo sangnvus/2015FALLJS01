@@ -1,5 +1,22 @@
 ﻿"use strict";
 
+app.directive('fileModel', ['$parse',
+          function ($parse) {
+              return {
+                  restrict: 'A',
+                  link: function (scope, element, attrs) {
+                      var model = $parse(attrs.fileModel);
+                      var modelSetter = model.assign;
+                      element.bind('change', function () {
+                          scope.$apply(function () {
+                              modelSetter(scope, element[0].files[0]);
+                          });
+                      });
+                  }
+              };
+          }
+]);
+
 app.controller("EditProjectController", function ($scope, $location, ShareData, ProjectService) {
     getStudent();
 
@@ -14,42 +31,48 @@ app.controller("EditProjectController", function ($scope, $location, ShareData, 
               });
     }
 
-    
-
     $scope.save = function () {
-        
-        // Get image file name
+
+        // Get file image name
         var fileName;
         $('#fileSelected').on('change', function (evt) {
             var files = $(evt.currentTarget).get(0).files;
 
             if (files.length > 0) {
                 fileName = files[0].name
-                //console.log(files[0].name);
             }
+
         });
-        // Upload new image file
-        var file = $scope.fileURL;
-        var uploadUrl = "/Images";
-        ProjectService.uploadFileToUrl(file, uploadUrl);
+
+        // Uploade file -> Call service
+        var file = $scope.myFile;
+        ProjectService.uploadBulkUserFileToUrl(file);
 
         var Project = {
-            Title: $scope.Title,
-            CategoryId: $scope.Category,
-            Description: $scope.Description,
-            Deadline: $scope.Deadline,
-            TargetFund: $scope.TargetFund,
-            UserId: "1",
+            CategoryId: $scope.Project.CategoryId,
+            Description: $scope.Project.Description,
+            Deadline: $scope.Project.Deadline,
+            TargetFund: $scope.Project.TargetFund,
             ImageLink: fileName
         };
 
-        var promisePutProject = ProjectService.put($scope.Project.Id, Project);
-        promisePutStudent.then(function (pl) {
-            $location.path("/Home");
-        },
-              function (errorPl) {
-                  $scope.error = 'failure loading Home', errorPl;
-              });
+        var promisePut = ProjectService.EditProject($scope.Project.Id, $scope.Project);
+
+        promisePut.then(
+            function (result) {
+                if (result.status == "200") {
+                    $scope.Success = result.data;
+                    $scope.EditProfileForm.$setPristine();
+                }
+            },
+            function (error) {
+                if (error.data.Message != null) {
+                    $scope.Error = error.data.Message;
+                } else {
+                    $scope.Error = error.data;
+                }
+
+            });
     };
 
 });

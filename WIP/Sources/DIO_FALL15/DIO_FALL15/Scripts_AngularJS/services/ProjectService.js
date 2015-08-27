@@ -7,6 +7,11 @@ app.service('ProjectService', function ($http) {
         return $http.get("/api/ProjectApi/GetAllProjects");
     }
 
+    // Read all current user's projects
+    this.getYourProjects = function () {
+        return $http.get("/api/ProjectApi/GetAllCurrentUserProjects");
+    }
+
     // Read Project by ID
     this.getProject = function (id) {
         return $http.get("/api/ProjectApi/GetProject/" + id);
@@ -29,7 +34,7 @@ app.service('ProjectService', function ($http) {
     }
 
     // Function to edit a Project
-    this.put = function (id, Project) {
+    this.EditProject = function (id, Project) {
         var request = $http({
             method: 'put',
             url: '/api/ProjectApi/EditProject/' + id,
