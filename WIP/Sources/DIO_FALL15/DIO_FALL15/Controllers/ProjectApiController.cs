@@ -203,10 +203,50 @@ namespace DIO_FALL15.Controllers
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Project not found!"));
             }
 
+            var back = new Back
+            {
+                ProjectId = updateProject.Id,
+                UserId = Db.Users.SingleOrDefault(x => x.Username.Equals(User.Identity.Name)).Id,
+                BackAmount = amount,
+                BackedDate = DateTime.Now
+            };
+
             updateProject.CurrentFund += amount;
+            Db.Backs.Add(back);
             Db.SaveChanges();
 
             return Ok(updateProject.CurrentFund);
+        }
+
+        // GET: api/ProjectApi/GetBackProjects
+        [HttpGet]
+        [ResponseType(typeof(UserBackDTO))]
+        public IHttpActionResult GetBackedProjects()
+        {
+            var listProjectsBacked = Db.Backs.ToList();
+            var listProjectBackedDTO = new List<UserBackDTO>();
+            
+            var currentUser =
+                Db.Users.SingleOrDefault(u => u.Username.Equals(User.Identity.Name,
+                    StringComparison.OrdinalIgnoreCase));
+
+            foreach (var project in listProjectsBacked)
+            {
+                if (project.User.Id == currentUser.Id)
+                {
+                    listProjectBackedDTO.Add(
+                    new UserBackDTO
+                    {
+                        Id = project.Id,
+                        ProjectId = project.ProjectId,
+                        Title = project.Project.Title,
+                        BackedDate = project.BackedDate,
+                        BackAmount = project.BackAmount,
+                        
+                    });
+                }
+            }
+            return Ok(listProjectBackedDTO);
         }
     }
 }

@@ -24,7 +24,9 @@ app.controller('CreateProjectController', function ($scope, $location, ProjectSe
         promiseGetCategory.then(
             function (result) {
                 $scope.Categories = result.data;
-                $scope.Category = $scope.Categories[0];
+
+                // Set selected project category
+                $scope.selectedOption = $scope.Categories[0];
             },
             function (error) {
                 $scope.error = error;
@@ -59,11 +61,33 @@ app.controller('CreateProjectController', function ($scope, $location, ProjectSe
         }
     });
 
+    // Set min deadline : current time + 10 days
+    var minDate = new Date(new Date().getTime() + (10 * 24 * 60 * 60 * 1000));
+    var minDateDD = minDate.getDate();
+    var minDateMM = minDate.getMonth() + 1;
+    var minDateYY = minDate.getFullYear();
+
+    if (parseInt(minDateDD) < 10) {
+        minDateDD = "0" + minDateDD
+    }
+    if (parseInt(minDateMM) < 10) {
+        minDateMM = "0" + minDateMM
+    }
+
+    $("#Deadline").attr({
+        "min": minDateYY + "-" + minDateMM + "-" + minDateDD
+    });
+
     $scope.save = function () {
 
         // Uploade file -> Call service
         var file = $scope.myFile;
         ProjectService.uploadBulkUserFileToUrl(file);
+
+        console.log($scope.selectedOption.CategoryId);
+
+        // Update project category
+        $scope.Category = $scope.selectedOption.CategoryId;
 
         var Project = {
             Title: $scope.Title,

@@ -1,0 +1,47 @@
+﻿<div class="jumbotron">
+    <h1>Your Backed Projects</h1>
+</div>
+<div>
+    <table class="table">
+        <tr>
+            <th>
+                Project Title
+            </th>
+            <th>
+                Backed Date
+            </th>
+            <th>
+                Backed Amount $
+            </th>
+            <th>
+                Action
+            </th>
+            <th></th>
+        </tr>
+
+        <tr ng-repeat="Project in Project">
+            <td>
+                {{Project.Title}}
+            </td>
+            <td>
+                {{Project.BackedDate | date : 'mediumDate'}}
+            </td>
+            <td>
+                {{Project.BackAmount}}
+            </td>
+            <td>
+                <a></a>
+                <a href="/#/project/{{Project.Id}}"> View Project Detail </a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+
+
+
+
+
+
+

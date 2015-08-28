@@ -73,36 +73,43 @@
       </nav>
     </div> <!--end header -->
 
-    <div id="content" class="paddingNavbar" style="min-height: 577px; background-color: #def7e0;">
+    <div id="content" class="paddingNavbar" style="min-height: 577px; background-color: #f7fafa;">
       <div id="create_project">
         <div class="container">
-          <div class="col-md-6 col-md-push-3">
-            <h1 class="text-center fontsize-45">What are you going to create?</h1>
-            <div class="form-group">
-                  <label class="" for="sel1">I want to start a </label>
-                  <select class="" id="sel1">
-                    <option>Art</option>
-                    <option>comics</option>
-                    <option>Crafts</option>
-                    <option>Dance</option>
-                    <option>Design</option>
-                    <option>Fashion</option>
-                    <option>Games</option>
-                    <option>Journalism</option>
-                    <option>Music</option>
-                    <option>Photography</option>
-                    <option>Publishing</option>
-                    <option>Technology</option>
-                  </select>
-                  <label class="" for="sel1">project called</label>
-                  <input type="text" id="project_name" name="project[name]" class="form-control" placeholder="title..." >
-                  <select class="" id="sel1">
+          <div class="col-md-8 col-md-push-2" id="main-content">
+            <h1 class="text-center fontsize-45 row">What are you going to create?</h1>
+            <div class="form-group text-center" id="form-input">
+				<div class="row">
+					<h1 for="sel1"><small>I want to start a</small></h1>
+					<select class="form-control input-lg" id="sel1">
+						<option>Art</option>
+						<option>comics</option>
+						<option>Crafts</option>
+						<option>Dance</option>
+						<option>Design</option>
+						<option>Fashion</option>
+						<option>Games</option>
+						<option>Journalism</option>
+						<option>Music</option>
+						<option>Photography</option>
+						<option>Publishing</option>
+						<option>Technology</option>
+					</select>
+					<h1 for="sel1"><small>project called</small></h1>
+				</div>
+                <div class="row">
+                  <input type="text" id="project_name" name="project[name]"
+				  class="form-control input-lg  center-block input-transparent" placeholder="title...">
+                  <!-- <select class="" id="sel1">
                       <option>Select your country*</option>
                       <option>Engligh</option>
                       <option>Vietnam</option>
                       <option>Japan</option>
-                  </select>
-                 <p><a href="create_project2.html" class="btn btn-success">Start</a></p>
+                  </select> -->
+				</div>
+				<div class="row">
+					<p><a href="create_project2.html" class="btn btn-success btn-lg pull-right">Start</a></p>
+				 </div>
             </div>
           </div>
         </div>
