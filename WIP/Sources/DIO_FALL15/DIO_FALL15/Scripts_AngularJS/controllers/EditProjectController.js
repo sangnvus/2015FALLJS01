@@ -56,14 +56,15 @@ app.controller("EditProjectController", function ($scope, $filter, $location, $r
         var files = $(evt.currentTarget).get(0).files;
         if (files.length > 0) {
             fileName = files[0].name;
+            $scope.Project.ImageLink = fileName;
+
+            // Call upload service
+            var file = $scope.fileURL;
+            ProjectService.uploadBulkUserFileToUrl(file);
         }
     });
 
     $scope.save = function () {
-
-        // Call upload service
-        var file = $scope.fileURL;
-        ProjectService.uploadBulkUserFileToUrl(file);
 
         var promisePut = ProjectService.EditProject($scope.Project.Id, $scope.Project);
 
