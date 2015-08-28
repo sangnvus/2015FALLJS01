@@ -48,11 +48,45 @@
                     <p>{{Project.Description}}</p>
                 </div>
                 <div class="row">
-                    <button type="button" class="btn btn-primary btn-group-justified btn-lg" ng-click="back()">
-                        Back this project
+                    <button type="button" class="btn btn-primary btn-group-justified btn-lg"
+                            data-toggle="modal" data-target="#exampleModal"
+                            ng-disabled="ProjectExprire"
+                            ng-class="{'btn-primary' : !ProjectExprire, 'btn-danger':ProjectExprire}">
+                        {{ProjectExprire ? 'This project has exprired' : 'Back this project'}}
                     </button>
                 </div>
             </div>
         </div> <!-- end col-md-4 -->
+    </div>
+</div>
+
+@* Modal back *@
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+
+        <form name="BackForm" role="form">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">Back this project</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" ng-class="{'has-error': BackForm.$dirty && BackForm.$invalid}">
+                        <label for="recipient-name" class="control-label">Amount ($): </label>
+                        <input type="text" name="BackAmount" class="form-control" id="recipient-name"
+                               ng-model="BackAmount"
+                               required
+                               ng-pattern="/^[1-9][0-9]*$/">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="Back()"
+                            ng-disabled="!BackForm.$dirty || (BackForm.$dirty && BackForm.$invalid)">
+                        Back
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
