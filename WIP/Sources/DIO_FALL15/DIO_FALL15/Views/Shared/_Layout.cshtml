@@ -27,7 +27,7 @@
                         if (User.Identity == null || !User.Identity.IsAuthenticated)
                         {
                             <li><a href="@Url.Content("/#/register")" class="navbar-brand"> Register </a></li>
-                            <li><a href="@Url.Content("/#/login")" class="navbar-brand"> Login </a></li>
+                            <li><a href="@Url.Content("/Account/Login")" class="navbar-brand"> Login </a></li>
                         }
                     }
                 </ul>

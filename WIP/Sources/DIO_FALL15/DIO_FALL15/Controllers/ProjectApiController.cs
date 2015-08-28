@@ -20,27 +20,20 @@ namespace DIO_FALL15.Controllers
 
         // GET: api/ProjectApi/GetAllProjects
         [HttpGet]
-        [ResponseType(typeof(ProjectDetailDTO))]
+        [ResponseType(typeof(ProjectCardDTO))]
         public IHttpActionResult GetAllProjects()
         {
             var listProject = Db.Projects.ToList();
-            var listProjectDTO = new List<ProjectDetailDTO>();
+            var listProjectDTO = new List<ProjectCardDTO>();
 
             foreach (var project in listProject)
             {
                 listProjectDTO.Add(
-                    new ProjectDetailDTO
+                    new ProjectCardDTO
                     {
                         Id = project.Id,
                         Title = project.Title,
-                        UserId = project.UserId,
-                        Username = project.User.Username,
-                        CategoryId = project.CategoryId,
-                        Category = project.Category.Name,
-                        Status = project.Status.ToString(),
-                        Description = project.Description,
                         ImageLink = project.ImageLink,
-                        CreatedDate = project.CreatedDate,
                         Deadline = project.Deadline,
                         TargetFund = project.TargetFund,
                         CurrentFund = project.CurrentFund
@@ -48,6 +41,38 @@ namespace DIO_FALL15.Controllers
             }
 
             return Ok(listProjectDTO);
+        }
+
+        // GET: api/ProjectApi/Project/:id
+        [HttpGet]
+        [ResponseType(typeof(ProjectCardDTO))]
+        public IHttpActionResult GetProject(int id)
+        {
+            var project = Db.Projects.SingleOrDefault(x => x.Id == id);
+            if (project == null)
+            {
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Project not found!"));
+            }
+
+            var projectDTO = new ProjectDetailDTO
+            {
+                Id = project.Id,
+                UserId = project.UserId,
+                CategoryId = project.CategoryId,
+                Username = project.User.Username,
+                Category = project.Category.Name,
+                Title = project.Title,
+                ImageLink = project.ImageLink,
+                Status = project.Status.ToString(),
+                Description = project.Description,
+                TargetFund = project.TargetFund,
+                CurrentFund = project.CurrentFund,
+                CreatedDate = project.CreatedDate,
+                Deadline = project.Deadline,
+                
+            };
+
+            return Ok(projectDTO);
         }
 
         // PUT: api/ProjectApi/Edit  

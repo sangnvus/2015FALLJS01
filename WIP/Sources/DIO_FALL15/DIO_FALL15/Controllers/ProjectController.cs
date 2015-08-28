@@ -16,5 +16,10 @@ namespace DIO_FALL15.Controllers
             return PartialView("_CreateProject");
         }
 
+        public ActionResult ProjectDetail()
+        {
+            return PartialView("_ProjectDetail");
+        }
+
     }
 }
