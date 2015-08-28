@@ -203,7 +203,16 @@ namespace DIO_FALL15.Controllers
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Project not found!"));
             }
 
+            var back = new Back
+            {
+                ProjectId = updateProject.Id,
+                UserId = Db.Users.SingleOrDefault(x => x.Username.Equals(User.Identity.Name)).Id,
+                BackAmount = amount,
+                BackedDate = DateTime.Now
+            };
+
             updateProject.CurrentFund += amount;
+            Db.Backs.Add(back);
             Db.SaveChanges();
 
             return Ok(updateProject.CurrentFund);

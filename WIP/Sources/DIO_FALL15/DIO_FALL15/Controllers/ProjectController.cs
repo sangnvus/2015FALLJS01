@@ -51,6 +51,11 @@ namespace DIO_FALL15.Controllers
             return RedirectToAction("");
 
         }
+        public ActionResult ProjectDetail()
+        {
+            return PartialView("_ProjectDetail");
+        }
+
 
     }
 }
