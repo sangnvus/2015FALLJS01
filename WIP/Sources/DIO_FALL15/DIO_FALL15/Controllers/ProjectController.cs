@@ -48,7 +48,7 @@ namespace DIO_FALL15.Controllers
 
                 }
             }
-            return RedirectToAction("Users");
+            return RedirectToAction("");
 
         }
 

@@ -50,34 +50,22 @@ app.controller("EditProjectController", function ($scope, $filter, $location, $r
     }
     loadAllCategoriesRecords();
 
+    // Get file image name
+    var fileName;
+    $('#fileSelected').on('change', function (evt) {
+        var files = $(evt.currentTarget).get(0).files;
+        if (files.length > 0) {
+            fileName = files[0].name;
+        }
+    });
+
     $scope.save = function () {
 
-        // Get file image name
-        var fileName;
-        $('#fileSelected').on('change', function (evt) {
-            var files = $(evt.currentTarget).get(0).files;
+        // Call upload service
+        var file = $scope.fileURL;
+        ProjectService.uploadBulkUserFileToUrl(file);
 
-            if (files.length > 0) {
-                fileName = files[0].name;
-
-                // Call upload service
-                var file = $scope.myFile;
-                ProjectService.uploadBulkUserFileToUrl(file);
-            } else {
-                fileName = $scope.Project.ImageLink;
-            }
-
-        });
-
-        var Project = {
-            CategoryId: $scope.Project.CategoryId,
-            Description: $scope.Project.Description,
-            Deadline: $scope.Project.DeadlineAsString,
-            TargetFund: $scope.Project.TargetFund,
-            ImageLink: fileName
-        };
-
-        var promisePut = ProjectService.EditProject(Id, Project);
+        var promisePut = ProjectService.EditProject($scope.Project.Id, $scope.Project);
 
         promisePut.then(
             function (result) {

@@ -132,10 +132,6 @@ namespace DIO_FALL15.Controllers
             updateProject.Deadline = project.Deadline;
             updateProject.TargetFund = project.TargetFund;
             updateProject.ImageLink = project.ImageLink;
-            updateProject.Id = project.Id;
-            updateProject.Title = project.Title;
-            updateProject.CreatedDate = project.CreatedDate;
-            updateProject.CurrentFund = project.CurrentFund;
 
             Db.SaveChanges();
 
