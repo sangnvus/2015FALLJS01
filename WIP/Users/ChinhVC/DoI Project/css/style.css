@@ -1,7 +1,4 @@
 /*Common css*/
-.color_white{
-	/*color: #FFFFFF;*/
-}
 .color_blue{
 	color: #FFFF00;
 }
@@ -46,11 +43,9 @@
 	border-style: dashed;
 	background-color: #ffffff;
 }
-
-.paddingTop70x{
-	padding-top: 70px;
+.text-center{
+	text-align: center;
 }
-
 /*Navbar*/
 #header nav{
 	background: #2f2f42;
@@ -70,13 +65,45 @@
 .navbar-nav>li>.dropdown-menu {
 	padding: 0px 10px;
 }
+
+/*Padding with Navbar ====*/
+.paddingNavbar{
+	padding-top: 70px;
+}
+/*end Padding with Nav bar*/
+
+/* enable absolute positioning */
+.inner-addon { 
+    position: relative; 
+}
+/*===Add Bootstrap Glyphicon to Input Box ========*/
+/* style icon */
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+/* align icon */
+.left-addon .glyphicon  { left:  0px;}
+.right-addon .glyphicon { right: 0px;}
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+/*====end Add Bootstrap Glyphicon to Input Box ====*/
+
+/*==end Style Common=======================================================*/
+
 /*Content*/
 /*Slider*/
 #slider 
 .carousel-inner > .item > img,
 .carousel-inner > .item > a > img {
-      width: 70%;
+      width: 100%;
       margin: auto;
+      max-height: 580px;
+ }
+ .carousel-caption{
+ 	padding-bottom: 13%;
  }
 
  /*Footer*/
@@ -105,7 +132,7 @@
 	text-decoration: none;
 }
 
-/*Tab-right*/
+/*Tab-right= ==============================*/
 #feature1 .nav>li>a {
     position: relative;
     display: block;
@@ -118,20 +145,42 @@
   min-width: 74px;
   margin-right: 0;
   margin-bottom: 3px;
+  color: #000000;
 }
 
 .tabs-right > .nav-tabs {
   float: right;
   margin-left: 19px;
-  border-left: 1px solid #0000FF;
+  border-left: 1px solid #ddd;
+}
+
+.tabs-right > .nav-tabs > a:hover{
+	color: #FFF000;
 }
 
 .tabs-right > .nav-tabs .active > a,
 .tabs-right > .nav-tabs .active > a:hover,
 .tabs-right > .nav-tabs .active > a:focus {
-  border-color: #ddd #ddd #ddd transparent;
-  *border-left-color: #ffffff;
+	background-color: transparent;
+	border: 0px;
+	color: #2bde73;
+	border-left: 3px solid #2bde73;
+  /*border-color: #ddd #ddd #ddd transparent;*/
+  /*background-color: none;*/
+  /**border-left-color: red;*/
 }
+/*======end Tab-right========================*/
+.tab-center .nav-tabs {
+    text-align:center;
+    border-bottom: 0px solid #ddd;
+}
+.tab-center .nav-tabs > li, .nav-pills > li {
+    float:none;
+    display:inline-block;
+    *display:inline; /* ie7 fix */
+    zoom:1; /* hasLayout ie7 trigger */
+}
+/*======End Tab-center========*/
 
 /*Feature2*/
 #feature2{
@@ -152,12 +201,17 @@
 /*Create_project*/
 #create_project{
 	background: #def7e0;
-	padding: 90px 0px;
+}
+#create_project1 .container{
+	padding-top: 30px;
 }
 #create_project2{
 	background: #f7fafa;
-	padding: 90px 0px;
 }
+#create_project2 .container{
+	padding-top: 30px;
+}
+
 .Editor-editor {
     height: 300px;
     padding: 1%;
@@ -178,15 +232,7 @@
 	font-size: 16px;
 }
 
-.nav-tabs > li, .nav-pills > li {
-    float:none;
-    display:inline-block;
-    *display:inline; /* ie7 fix */
-     zoom:1; /* hasLayout ie7 trigger */
-}
-.nav-tabs {
-    text-align:center;
-}
+
 
 .show-grid [class^="col-"]{
 	padding-top: 10px;

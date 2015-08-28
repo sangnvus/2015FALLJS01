@@ -56,7 +56,8 @@
           </ul>
 
           <form class="navbar-form navbar-left" role="search">
-            <div class="form-group">
+            <div class="form-group inner-addon left-addon">
+              <span class="glyphicon glyphicon-search"></span>
               <input type="text" class="form-control" placeholder="Search Projects">
             </div>
           </form>
@@ -87,22 +88,26 @@
         </div><!-- /.navbar-collapse -->
       </nav>
     </div> <!--end header -->
-    <div id="create_project2">
+
+    <div id="create_project2" class="paddingNavbar">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
              <!-- Nav Tabs -->
-            <ul class="nav nav-tabs">
-              <li><a href="#basic" data-toggle="tab">Basic</a></li>
-              <li><a href="#reward" data-toggle="tab">Reward</a></li>
-              <li><a href="#story" data-toggle="tab">Story</a></li>
-              <li><a href="#preview" data-toggle="tab">Preview</a></li>
-              <a href="#submit" class="btn btn-success">submit for review</a>
-            </ul>
+            <div class="tab-center">
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#basic" data-toggle="tab">Basic</a></li>
+                <li><a href="#reward" data-toggle="tab">Reward</a></li>
+                <li><a href="#story" data-toggle="tab">Story</a></li>
+                <li><a href="#preview" data-toggle="tab">Preview</a></li>
+                <a href="#submit" class="btn btn-success">submit for review</a>
+              </ul>
+            </div>
+            
             
             <!-- Tabs pane -->
             <div class="tab-content">
-              <div id="basic" role="tabpanel" class="tab-pane fade border-main" >
+              <div id="basic" role="tabpanel" class="tab-pane fade in active border-main" >
                 <div>
                   <h2 class="text-center">Start building your project!</h2>
                   <h3 class="text-center">Add an image, a goal, and other important details.</h3>
@@ -292,7 +297,7 @@
                 </div> <!-- end-content -->
               </div><!-- end-tabpanel-Basic -->
 
-              <div id="reward" class="tab-pane fade border-main" >
+              <div id="reward" class="tab-pane border-main" >
                 <div>
                   <h2 class="text-center">How will you thank the people who support you?</h2>
                   <h3 class="text-center">Offer an experience, a copy of what you are making, or a thank you in the credits. Get creative!</h3>
@@ -408,7 +413,7 @@
                 </div>  <!-- end-content -->
               </div><!-- end-tabpanel-Reward -->
 
-              <div id="story" class="tab-pane fade border-main" >
+              <div id="story" class="tab-pane border-main" >
                 <div>
                   <h2 class="text-center">What are you creating?</h2>
                   <h3 class="text-center">Every project must create something to share with others. </h3>
@@ -483,7 +488,7 @@
                 </div><!-- end-tabpanel-Basic -->
               </div> <!-- end-tabpanel-Story -->
 
-              <div class="tab-pane fade in active border-main" id="preview">
+              <div class="tab-pane border-main" id="preview">
                 <div class="view_title text-center">
                   <h2><a href="">Dream of Inovation</a></h2>
                   <p>by <a href="">Vu Cong Chinh</a></p>
@@ -565,11 +570,9 @@
             
             </div> <!-- end col-md-12" -->
           </div> <!-- end row -->
-        </div> <!-- end container -->
+        </div>
+      </div> <!-- end container -->
     </div> <!-- end create_project2 -->
-
-
-
 
     <div id="footer">
       <div class="container">
@@ -589,8 +592,6 @@
         </div>
       </div>
     </div> <!-- end footer -->
-
-
 
   </body>
 </html>
