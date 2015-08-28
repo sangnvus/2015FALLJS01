@@ -49,9 +49,20 @@ namespace DIO_FALL15.Migrations
                     FirstName = "Cong Chinh",
                     LastName = "Vu",
                     Email = "abcxyz@gmail.com",
-                    PhoneNumber = "090987654",
+                    PhoneNumber = "0909876542",
                     Gender = Gender.Male,
                     Address = "Bac Ninh"
+                },
+                new User
+                {
+                    Username = "testaccount",
+                    Password = "25d55ad283aa400af464c76d713c07ad",// this password is 12345678, encrypted by MD5
+                    FirstName = "Test",
+                    LastName = "Test",
+                    Email = "abcxyz123@gmail.com",
+                    PhoneNumber = "0909876540",
+                    Gender = Gender.Male,
+                    Address = "Hoa Lac"
                 }
             };
 

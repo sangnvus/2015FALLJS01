@@ -49,7 +49,7 @@
                 </div>
                 <div class="row">
                     <button type="button" class="btn btn-primary btn-group-justified btn-lg"
-                            data-toggle="modal" data-target="#exampleModal"
+                            ng-click="OpenBackDialog()"
                             ng-disabled="ProjectExprire"
                             ng-class="{'btn-primary' : !ProjectExprire, 'btn-danger':ProjectExprire}">
                         {{ProjectExprire ? 'This project has exprired' : 'Back this project'}}

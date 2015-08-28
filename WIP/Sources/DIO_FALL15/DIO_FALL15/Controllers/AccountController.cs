@@ -17,6 +17,14 @@ namespace DIO_FALL15.Controllers
         public ActionResult Login(string returnUrl = "")
         {
             FormsAuthentication.SignOut();
+            // Remove all cookies.
+            var limit = Request.Cookies.Count;
+            for (int i = 0; i < limit; i++)
+            {
+                var cookieName = Request.Cookies[i].Name;
+                var cookie = new HttpCookie(cookieName) {Expires = DateTime.Now.AddDays(-1)};
+                Response.Cookies.Add(cookie);
+            }
             ViewBag.ReturlUrl = returnUrl;
             return View("Login",new UserLoginDTO());
         }
@@ -99,14 +107,13 @@ namespace DIO_FALL15.Controllers
             //    var sessionName = Session.Keys[index];
             //    Session[sessionName] = null;
             //}
-            if (Request.Cookies["CurrentUser"] != null)
+            // Remove all cookies.
+            var limit = Request.Cookies.Count;
+            for (int i = 0; i < limit; i++)
             {
-                var user = new HttpCookie("CurrentUser")
-                {
-                    Expires = DateTime.Now.AddDays(-1),
-                    Value = null
-                };
-                Response.Cookies.Add(user);
+                var cookieName = Request.Cookies[i].Name;
+                var cookie = new HttpCookie(cookieName) { Expires = DateTime.Now.AddDays(-1) };
+                Response.Cookies.Add(cookie);
             }
             return Redirect("/");
         }
