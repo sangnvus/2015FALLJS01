@@ -199,9 +199,49 @@
 }
 
 /*Create_project*/
-#create_project{
-	background: #def7e0;
+#create_project .container{
+	padding-top: 50px;
 }
+#create_project .container #main-content .row{
+	margin-bottom: 40px;
+}
+
+#create_project .container #form-input{
+	padding: 30px;
+}
+	#create_project .container #form-input .row{
+		margin-bottom: 40px;
+	}
+	
+	#create_project .container #form-input  .row:first-of-type h1{
+		display: inline-block;
+	}
+	
+	#create_project .container #form-input #sel1{
+		width: 200px;
+		margin: 0 20px;  
+		font-size: 22px;
+		display: inline-block;
+	}
+	
+	#create_project .container #form-input  .row:nth-of-type(2) input{
+		width: 80%; 
+		font-size: 32px; 
+	}
+	
+	#create_project .container #form-input  .row:last-of-type a{
+		margin-right: 60px;
+		width:30%;
+		font-size: x-large;
+	}
+	
+	.input-transparent{
+		border:none; 
+		border-bottom: 1px solid lightgray; 
+		box-shadow: none; 
+		background: transparent;
+	}
+
 #create_project1 .container{
 	padding-top: 30px;
 }
@@ -211,6 +251,8 @@
 #create_project2 .container{
 	padding-top: 30px;
 }
+/*Create_project 1*/
+
 
 .Editor-editor {
     height: 300px;
