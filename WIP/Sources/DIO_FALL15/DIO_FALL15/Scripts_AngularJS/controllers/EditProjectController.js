@@ -26,29 +26,44 @@ app.controller("EditProjectController", function ($scope, $filter, $location, $r
         promiseGetProject.then(
             function (result) {
                 $scope.Project = result.data;
-
+                
                 // convert datetime to date
                 $scope.Project.Deadline = new Date($filter('date')($scope.Project.Deadline, "yyyy-MM-dd"));
+
+                // Load categories records
+                loadAllCategoriesRecords();
             },
             function (error) {
                 $scope.error = error;
             });
     }
-
     loadProjectRecord();
-    
-    // Load category
+
+    // Function load all categories
     function loadAllCategoriesRecords() {
         var promiseGetCategory = ProjectService.getCategories();
         promiseGetCategory.then(
             function (result) {
                 $scope.Categories = result.data;
+
+                // Checking project categoy
+                var categoryIndex = 0;
+                for (var i = 0; i < $scope.Categories.length; i++) {
+                    if ($scope.Categories[i].CategoryId == $scope.Project.CategoryId) {
+                        categoryIndex = i;
+                        console.log("index i : " + categoryIndex);
+                        break;
+                    }
+                };
+
+                // Set selected project category
+                $scope.selectedOption = $scope.Categories[categoryIndex];
             },
             function (error) {
                 $scope.error = error;
             });
     }
-    loadAllCategoriesRecords();
+    
 
     // Get file image name
     var fileName;
@@ -56,23 +71,46 @@ app.controller("EditProjectController", function ($scope, $filter, $location, $r
         var files = $(evt.currentTarget).get(0).files;
         if (files.length > 0) {
             fileName = files[0].name;
-            $scope.Project.ImageLink = fileName;
 
-            // Call upload service
-            var file = $scope.fileURL;
-            ProjectService.uploadBulkUserFileToUrl(file);
+            // Update project image file name
+            $scope.Project.ImageLink = fileName;
         }
     });
 
-    $scope.save = function () {
+    // Set min deadline : current time + 10 days
+    var minDate = new Date(new Date().getTime() + (10 * 24 * 60 * 60 * 1000));
+    var minDateDD = minDate.getDate();
+    var minDateMM = minDate.getMonth() + 1;
+    var minDateYY = minDate.getFullYear();
 
+    if (parseInt(minDateDD) < 10) {
+        minDateDD = "0" + minDateDD
+    }
+    if (parseInt(minDateMM) < 10) {
+        minDateMM = "0" + minDateMM
+    }
+
+    $("#Deadline").attr({
+        "min": minDateYY + "-" + minDateMM + "-" + minDateDD
+    });
+
+    $scope.save = function () {
+        // Call upload image file service
+        var file = $scope.fileURL;
+        ProjectService.uploadBulkUserFileToUrl(file);
+
+        // Update project category
+        $scope.Project.CategoryId = $scope.selectedOption.CategoryId;
+
+        // Put update project
         var promisePut = ProjectService.EditProject($scope.Project.Id, $scope.Project);
 
         promisePut.then(
             function (result) {
                 if (result.status == "200") {
                     $scope.Success = result.data;
-                    $scope.EditProfileForm.$setPristine();
+                    $scope.EditProjectForm.$setPristine();
+                    $location.path('/yourproject').replace();
                 }
             },
             function (error) {

@@ -52,11 +52,11 @@
     <div class="form-group">
         <label class="control-label col-sm-2">Deadline: </label>
         <div class="col-sm-10">
-            <input type="date" required="" class="form-control" name="Deadline" ng-model="Deadline">
+            <input type="date" id="Deadline" required="" class="form-control" name="Deadline" ng-model="Deadline">
             <i class="fa fa-check text-success" ng-show="CreateProjectForm.Deadline.$dirty && CreateProjectForm.Deadline.$valid"></i>
             <div ng-show="CreateProjectForm.Deadline.$dirty && CreateProjectForm.Deadline.$invalid" class="text-danger">
                 <i class="fa fa-times text-danger"></i>
-                <span ng-show="CreateProjectForm.FirstName.$error.required">Deadline is required</span>
+                <span ng-show="CreateProjectForm.Deadline.$error.required">Deadline is required</span>
             </div>
         </div>
     </div>
