@@ -59,6 +59,23 @@ app.controller('CreateProjectController', function ($scope, $location, ProjectSe
         }
     });
 
+    // Set min deadline : current time + 10 days
+    var minDate = new Date(new Date().getTime() + (10 * 24 * 60 * 60 * 1000));
+    var minDateDD = minDate.getDate();
+    var minDateMM = minDate.getMonth() + 1;
+    var minDateYY = minDate.getFullYear();
+
+    if (parseInt(minDateDD) < 10) {
+        minDateDD = "0" + minDateDD
+    }
+    if (parseInt(minDateMM) < 10) {
+        minDateMM = "0" + minDateMM
+    }
+
+    $("#Deadline").attr({
+        "min": minDateYY + "-" + minDateMM + "-" + minDateDD
+    });
+
     $scope.save = function () {
 
         // Uploade file -> Call service
