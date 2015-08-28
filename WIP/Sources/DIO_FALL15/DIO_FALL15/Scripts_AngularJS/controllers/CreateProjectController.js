@@ -24,7 +24,9 @@ app.controller('CreateProjectController', function ($scope, $location, ProjectSe
         promiseGetCategory.then(
             function (result) {
                 $scope.Categories = result.data;
-                $scope.Category = $scope.Categories[0];
+
+                // Set selected project category
+                $scope.selectedOption = $scope.Categories[0];
             },
             function (error) {
                 $scope.error = error;
@@ -81,6 +83,11 @@ app.controller('CreateProjectController', function ($scope, $location, ProjectSe
         // Uploade file -> Call service
         var file = $scope.myFile;
         ProjectService.uploadBulkUserFileToUrl(file);
+
+        console.log($scope.selectedOption.CategoryId);
+
+        // Update project category
+        $scope.Category = $scope.selectedOption.CategoryId;
 
         var Project = {
             Title: $scope.Title,

@@ -37,9 +37,8 @@
     <div class="form-group">
         <label class="control-label col-sm-2">Category: </label>
         <div class="col-sm-10">
-            <select class="form-control" ng-model="Category"
-                    ng-options="category.CategoryId as category.Category for category in Categories"
-                    ng-init="Category.CategoryId='0'"></select>
+            <select class="form-control" ng-model="selectedOption"
+                    ng-options="category.Category for category in Categories track by category.CategoryId "></select>
         </div>
     </div>
 
