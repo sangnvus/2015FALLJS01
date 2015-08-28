@@ -22,14 +22,18 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="@Url.Content("/#/create")" class="navbar-brand"> Create </a></li>
+                    
                     @{
                         if (User.Identity == null || !User.Identity.IsAuthenticated)
                         {
                             <li><a href="@Url.Content("/#/register")" class="navbar-brand"> Register </a></li>
                             <li><a href="@Url.Content("/Account/Login")" class="navbar-brand"> Login </a></li>
                         }
-                    }
+                        else
+                        {
+                            <li><a href="@Url.Content("/#/create")" class="navbar-brand"> Create </a></li>
+                        }
+}
                 </ul>
                 @{
 

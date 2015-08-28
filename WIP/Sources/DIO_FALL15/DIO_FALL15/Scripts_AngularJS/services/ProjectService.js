@@ -48,4 +48,23 @@ app.service('ProjectService', function ($http) {
 
         return request;
     }
+
+    // Function to upload image file
+    this.uploadBulkUserFileToUrl = function (file) {
+        var fdata = new FormData();
+        var url = "Project/fileUpload";
+
+        fdata.append('file', file);
+
+        return $http.post(url, fdata, {
+            transformRequest: angular.identity,
+            headers: { 'Content-Type': undefined }
+        })
+            .success(function (resp) {
+                //debugger;
+            })
+            .error(function (resp) {
+                //debugger;
+            });
+    }
 });

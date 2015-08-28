@@ -1,20 +1,30 @@
-﻿@{
-    ViewBag.Title = "Add New Project";
+﻿
+@{
+    ViewBag.Title = "Edit Project";
 }
 
 <style>
     form input[type=text], form input[type=date], form input[type=number] {
         display: inline;
     }
+    textarea.form-control {
+        vertical-align: top;
+    }
 </style>
 <h2>Create a new Project</h2>
 <form class="form-horizontal" role="form" name="CreateProjectForm" novalidate>
     <hr />
-    <div class="alert alert-danger alert-dismissible" role="alert" ng-show="Error != null">
+    <div class="alert alert-danger" role="alert" ng-show="Error != null">
         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
         <span class="sr-only">Error:</span>
         {{Error}}
     </div>
+    <div class="alert alert-success" role="alert" ng-show="Success != null">
+        <span class="glyphicon glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{Success}}
+    </div>
+    
     <div class="form-group">
         <label class="control-label col-sm-2">Project Title: </label>
         <div class="col-sm-10">
@@ -37,8 +47,7 @@
     <div class="form-group">
         <label class="control-label col-sm-2">Category: </label>
         <div class="col-sm-10">
-            <select class="form-control" ng-model="Category" ng-options="category.CategoryId as category.Category for category in Categories ">
-            </select>
+            <select class="form-control" ng-model="Category" ng-options="category.CategoryId as category.Category for category in Categories "></select>
         </div>
     </div>
 
@@ -76,10 +85,10 @@
         <label class="control-label col-sm-2">Upload Image: </label>
         <div class="col-sm-10">
             <input type="file" class="form-control" name="UploadImage" id="fileSelected"
-                   file-model="myFile" accept="image/*">
+                   file-model="fileURL">
         </div>
     </div>
- 
+
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <button type="button" class="btn btn-primary" ng-click="save()"
