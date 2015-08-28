@@ -12,6 +12,11 @@ app.service('ProjectService', function ($http) {
         return $http.get("/api/ProjectApi/GetAllCurrentUserProjects");
     }
 
+    // Read all current user's backed projects
+    this.getBackedProjects = function () {
+        return $http.get("/api/ProjectApi/GetBackedProjects");
+    }
+
     // Read Project by ID
     this.getProject = function (id) {
         return $http.get("/api/ProjectApi/GetProject/" + id);

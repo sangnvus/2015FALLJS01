@@ -35,6 +35,11 @@ app.config(["$routeProvider", "$locationProvider", function ($routeProvider, $lo
             templateUrl: "Project/ShowAllCurrentUserProject",
             controller: "CurrentUserProjectsController"
         });
+    $routeProvider.when("/backedproject",
+        {
+            templateUrl: "Project/BackedProjects",
+            controller: "ShowBackedProjects"
+        });
     $routeProvider.when("/edit/:id",
         {
             templateUrl: "Project/Edit",
