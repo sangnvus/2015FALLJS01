@@ -77,7 +77,7 @@ app.controller("EditProjectController", function ($scope, $filter, $location, $r
             ImageLink: fileName
         };
 
-        var promisePut = ProjectService.EditProject($scope.Project.Id, Project);
+        var promisePut = ProjectService.EditProject(Id, Project);
 
         promisePut.then(
             function (result) {
