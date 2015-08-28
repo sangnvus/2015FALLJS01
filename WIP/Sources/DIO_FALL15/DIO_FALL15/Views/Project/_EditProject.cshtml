@@ -12,7 +12,7 @@
     }
 </style>
 <h2>Edit Project</h2>
-<form class="form-horizontal" role="form" name="CreateProjectForm" novalidate>
+<form class="form-horizontal" role="form" name="EditProjectForm" novalidate>
     <hr />
     <div class="alert alert-danger" role="alert" ng-show="Error != null">
         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -24,7 +24,7 @@
         <span class="sr-only">Error:</span>
         {{Success}}
     </div>
-    
+
     <div class="form-group">
         <label class="control-label col-sm-2">Project Title: </label>
         <div class="col-sm-10">
@@ -35,9 +35,9 @@
     <div class="form-group">
         <label class="control-label col-sm-2">Category: </label>
         <div class="col-sm-10">
-            <select class="form-control" ng-model="Categories.CategoryId"
-                    ng-options="category.CategoryId as category.Category for category in Categories "
-                    ng-init="Categories.CategoryId"></select>
+            <select class="form-control" ng-model="selectedOption"
+                    ng-options="category.Category for category in Categories track by category.CategoryId "
+                    ></select>
         </div>
     </div>
 
@@ -51,10 +51,10 @@
         <label class="control-label col-sm-2">Deadline: </label>
         <div class="col-sm-10">
             <input type="date" required class="form-control" placeholder="dd/MM/YYY" name="Deadline" ng-model="Project.Deadline">
-            <i class="fa fa-check text-success" ng-show="CreateProjectForm.Deadline.$dirty && CreateProjectForm.Deadline.$valid"></i>
-            <div ng-show="CreateProjectForm.Deadline.$dirty && CreateProjectForm.Deadline.$invalid" class="text-danger">
+            <i class="fa fa-check text-success" ng-show="EditProjectForm.Deadline.$dirty && EditProjectForm.Deadline.$valid"></i>
+            <div ng-show="EditProjectForm.Deadline.$dirty && EditProjectForm.Deadline.$invalid" class="text-danger">
                 <i class="fa fa-times text-danger"></i>
-                <span ng-show="CreateProjectForm.FirstName.$error.required">Deadline is required</span>
+                <span ng-show="EditProjectForm.FirstName.$error.required">Deadline is required</span>
             </div>
         </div>
     </div>
@@ -64,10 +64,10 @@
             <input type="number" class="form-control" name="TargetFund"
                    placeholder="Enter Fund Goal" ng-model="Project.TargetFund"
                    ng-trim="true" required>
-            <i class="fa fa-check text-success" ng-show="CreateProjectForm.TargetFund.$dirty && CreateProjectForm.TargetFund.$valid"></i>
-            <div ng-show="CreateProjectForm.TargetFund.$dirty && CreateProjectForm.TargetFund.$invalid" class="text-danger">
+            <i class="fa fa-check text-success" ng-show="EditProjectForm.TargetFund.$dirty && EditProjectForm.TargetFund.$valid"></i>
+            <div ng-show="EditProjectForm.TargetFund.$dirty && EditProjectForm.TargetFund.$invalid" class="text-danger">
                 <i class="fa fa-times text-danger"></i>
-                <span ng-show="CreateProjectForm.TargetFund.$error.required">Target Fund is required</span>
+                <span ng-show="EditProjectForm.TargetFund.$error.required">Target Fund is required</span>
             </div>
         </div>
     </div>
@@ -88,7 +88,7 @@
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <button type="button" class="btn btn-primary" ng-click="save()"
-                    ng-disabled="!CreateProjectForm.$dirty || (CreateProjectForm.$dirty && CreateProjectForm.$invalid)">
+                    ng-disabled="!EditProjectForm.$dirty || (EditProjectForm.$dirty && EditProjectForm.$invalid)">
                 Edit Project
             </button>
         </div>

@@ -17,7 +17,7 @@ app.directive('fileModel', ['$parse',
           }
 ]);
 
-app.controller('CreateProjectController', function ($scope, ProjectService, AccountService) {
+app.controller('CreateProjectController', function ($scope, $location, ProjectService, AccountService) {
 
     function loadAllCategoriesRecords() {
         var promiseGetCategory = ProjectService.getCategories();
@@ -80,6 +80,7 @@ app.controller('CreateProjectController', function ($scope, ProjectService, Acco
 
         promisePost.then(function (pl) {
             alert("Add project successfully");
+            $location.path('/yourproject').replace();
         },
               function (errorPl) {
                   $scope.error = 'failure loading project', errorPl;

@@ -137,9 +137,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201508271627432_Initial.cs" />
-    <Compile Include="Migrations\201508271627432_Initial.Designer.cs">
-      <DependentUpon>201508271627432_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201508270636294_Initial.cs" />
+    <Compile Include="Migrations\201508270636294_Initial.Designer.cs">
+      <DependentUpon>201508270636294_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Back.cs" />
@@ -1020,8 +1020,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201508271627432_Initial.resx">
-      <DependentUpon>201508271627432_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201508270636294_Initial.resx">
+      <DependentUpon>201508270636294_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
