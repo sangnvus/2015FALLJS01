@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-app.controller('ProjectDetailController', function ($scope, $location, $routeParams, ProjectService) {
+app.controller('ProjectDetailController', function ($scope, $location, $routeParams,$cookies,$window, ProjectService) {
     var Id = $routeParams.id;
     $scope.ProjectExprire = false;
     function loadProjectRecord() {
@@ -21,6 +21,17 @@ app.controller('ProjectDetailController', function ($scope, $location, $routePar
         var now = new Date();
         var deadline = new Date($scope.Project.Deadline);
         $scope.ProjectExprire = (deadline <= now);
+    }
+
+    $scope.OpenBackDialog = function() {
+        var currentUser = $cookies.get("CurrentUser");
+        if (currentUser == null) {
+            $window.location.href = "http://localhost:14069/Account/Login";
+        } else {
+            $scope.BackAmount = null;
+            $scope.BackForm.$setPristine();
+            $('#exampleModal').modal('show');
+        }
     }
 
     $scope.Back = function () {
