@@ -439,3 +439,41 @@ height: 100%;
 #project_detail_1{
 	background-color: #f7fafa;
 }
+
+/* Css for login and register */
+#login .container>div, #register .container>div{
+	float:none; 
+	padding: 0;
+	border: 1px solid #d9d9de; 
+	border-radius: 5px; 
+	margin-top:40px;
+	margin-bottom:40px;
+	background: white;
+}
+
+.login-title{
+	margin-bottom: 20px
+}
+
+#login .container a.btn, #register .container a.btn{
+	width: 100%;
+}
+
+#login .container .boderbottom, #register .container .boderbottom{
+	margin: 10px;
+}
+
+#login .container #login-facebook, #register .container #login-facebook{
+	margin-top: 30px;
+}
+
+#login .container .tip-info, #register .container .tip-info{
+	margin-top: 10px; 
+	color: darkgray; 
+	font-size: small; 
+	padding: 0 30px
+}
+
+#login .panel-footer, #register .panel-footer{
+	color: gray;
+}
