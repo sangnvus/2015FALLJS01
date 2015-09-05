@@ -76,7 +76,8 @@
         <label class="control-label col-sm-2">Upload Image: </label>
         <div class="col-sm-10">
             <input type="file" class="form-control" name="UploadImage" id="fileSelected"
-                   file-model="myFile" accept="image/*">
+                   file-model="myFile" ng-file-select="onFileSelect($files)" accept="image/*"><br />
+            <img ng-src="{{imageSrc}}" style="width: 200px; height: 200px" /><br />
         </div>
     </div>
  

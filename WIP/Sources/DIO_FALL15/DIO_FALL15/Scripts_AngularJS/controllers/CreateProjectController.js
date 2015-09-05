@@ -17,8 +17,21 @@ app.directive('fileModel', ['$parse',
           }
 ]);
 
-app.controller('CreateProjectController', function ($scope, $location, ProjectService, AccountService) {
+app.directive("ngFileSelect", function () {
+    return {
+        link: function ($scope, el) {
+            el.bind("change", function (e) {
+                $scope.file = (e.srcElement || e.target).files[0];
+                $scope.getFile();
+            })
+        }
+    }
+})
 
+app.controller('CreateProjectController', function ($scope, $location, ProjectService,
+    fileReader, AccountService) {
+
+    // Load categories
     function loadAllCategoriesRecords() {
         var promiseGetCategory = ProjectService.getCategories();
         promiseGetCategory.then(
@@ -35,6 +48,8 @@ app.controller('CreateProjectController', function ($scope, $location, ProjectSe
 
     loadAllCategoriesRecords();
 
+
+    // Load current user data
     function loadCurrentUserData() {
         var promiseGetProfile = AccountService.getCurrentAccount();
         promiseGetProfile.then(
@@ -51,13 +66,28 @@ app.controller('CreateProjectController', function ($scope, $location, ProjectSe
     }
     loadCurrentUserData();
 
+    // Preview image file
+    $scope.getFile = function () {
+        $scope.progress = 0;
+        fileReader.readAsDataUrl($scope.file, $scope)
+                      .then(function (result) {
+                          $scope.imageSrc = result;
+                      });
+    };
+
+    $scope.$on("fileProgress", function (e, progress) {
+        $scope.progress = progress.loaded / progress.total;
+    });
+
     // Get file image name
     var fileName;
     $('#fileSelected').on('change', function (evt) {
         var files = $(evt.currentTarget).get(0).files;
 
+
         if (files.length > 0) {
-            fileName = files[0].name
+            fileName = files[0].name;
+            alert(files[0].size);
         }
     });
 

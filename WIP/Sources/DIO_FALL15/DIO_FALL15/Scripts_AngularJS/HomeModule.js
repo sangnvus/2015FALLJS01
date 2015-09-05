@@ -1,6 +1,7 @@
 ﻿"use strict";
 
-var app = angular.module("HomeApp", ["ngRoute","ngCookies"]);
+var app = angular.module("HomeApp", ["ngRoute", "ngCookies"]);
+
 
 
 // Show Routing.

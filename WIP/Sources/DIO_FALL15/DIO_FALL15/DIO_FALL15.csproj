@@ -200,6 +200,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\myScripts\jquery.md5.js" />
+    <Content Include="Scripts\myScripts\upload-image.js" />
     <Content Include="Scripts_AngularJS\controllers\CreateProjectController.js" />
     <Content Include="Scripts_AngularJS\controllers\CurrentUserProjectsController.js" />
     <Content Include="Scripts_AngularJS\controllers\EditProfileController.js" />
