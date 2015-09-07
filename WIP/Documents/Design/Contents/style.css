@@ -2,6 +2,9 @@
 .color_blue{
 	color: #FFFF00;
 }
+.color-green{
+	color: #2bde73;
+}
 .grey-dark{
 	color: #828587;
 }
@@ -82,6 +85,36 @@
 .text-center{
 	text-align: center;
 }
+.margin-leftright{
+	margin-left: 10%;
+	margin-right: 10%;
+}
+.border-project{
+	background-color: white;
+    border: solid 1px #d9d9de;
+    border-radius: 6px;
+    margin: 0px 10px 20px 10px;
+}
+.border-project .project_detail{
+	padding-left: 10px;
+	padding-right: 10px;
+	font-size: 12px;
+}
+
+.border-project .project_detail .progress{
+	margin-bottom: 10px;
+}
+.border-project .project_detail .project-status li{
+	text-align: left;
+}
+
+.border-project .project_detail .project-status li p:first-of-type{
+	margin: 0;
+}
+/*.border-project .progress{
+	margin-left: 10px;
+	margin-right: 10px;
+}*/
 /*Navbar*/
 #header nav{
 	background: #2f2f42;
@@ -595,7 +628,8 @@ height: 100%;
 	margin-bottom: 50px;
 }
 
-#ffeature4 a,p{
+#ffeature4 a,
+#ffeature4 p{
 	color: #000;
 	font-size: 12px;
 	margin-right: 10px;
@@ -616,3 +650,16 @@ height: 100%;
 	padding-bottom: 0px;
 }
 /*=End discover======================*/
+
+#search{
+	/*margin-left: 10%;*/
+	/*margin-right: 10%;*/
+}
+#search .searchbar div {
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+#search .explore{
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
