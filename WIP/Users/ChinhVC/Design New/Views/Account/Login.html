@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Home</title>
+
+    <!-- Bootstrap -->
+    <link href="../../Contents/Libraries/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../../Contents/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div id="header">
+      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="home.html">DoI.com</a>
+        </div>
+      
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="#">Discover</a></li>
+            <li><a href="#">Start</a></li>
+            <li role="separator" class="divider-vertical"></li>
+          </ul>
+
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-group inner-addon left-addon">
+              <span class="glyphicon glyphicon-search"></span>
+              <input type="text" class="form-control" placeholder="Search Projects">
+            </div>
+          </form>
+          <div class="collapse navbar-collapse navbar-exl-collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="register.html" class="">Sign up</a></li> 
+              <a href="Login.html" class="btn btn-success navbar-btn navbar-right">Log in</a>
+            </ul>
+          </div>
+        </div><!-- /.navbar-collapse -->
+      </nav>
+    </div> <!--end header -->
+	<div id="content" class="paddingNavbar" style="min-height: 577px; background-color: #f7fafa;">
+		<div id="login">
+			<div class="container">
+				<div class="col-md-5 panel panel-default center-block">
+					<div class="panel-body">
+						<div class="login-title">
+							<h1>Login</h1>
+						</div>
+						<div>
+							<form>
+								<div class="form-group ">
+								<input type="email" required class="form-control input-lg" id="exampleInputEmail1" placeholder="Email or User Name">
+								</div>
+								<div class="form-group">
+									<input type="password" required class="form-control input-lg" id="exampleInputPassword1" placeholder="Password">
+								</div>
+								<div class="checkbox pull-left">
+								  <label>
+									<input type="checkbox" class=""> Remember me
+								  </label>
+								</div>
+								<div class="pull-right" style="margin: 10px 0">
+									<a href="#">Forgot Password?</a>
+								</div>
+								<a href="home_logged.html" class="btn btn-success btn-lg clearfix">
+									<i class="fa fa-sign-in"></i>
+									Log me in!
+								</a>
+							</form>
+						</div>
+						<div class="boderbottom">
+						</div>
+						<div id="login-facebook" >
+							<a class="btn btn-primary btn-lg">
+								<i class="fa fa-facebook-official"></i>
+								<span>Login with Facebook</span>
+							</a>
+							<p class="text-center tip-info" style="">
+								We will never post anything on Facebook without your permission.
+							</p>
+						</div>
+					</div>
+					<div class="panel-footer text-center">
+						<p>New account? <a href="register.html">Sign up</a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <div id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <h4 style="color: #5ea5d7">DoI-Dream Of Innovation</h4>
+            <a href="">Hosted by DoI</a>
+          </div>
+          <div class="col-md-3 col-md-push-6">
+            <ul class="list-inline">
+              <li><a href="#">Home</a></li>
+              <li><a href="#">About us</a></li>
+              <li><a href="#">Help</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div> <!-- end footer -->
+
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
