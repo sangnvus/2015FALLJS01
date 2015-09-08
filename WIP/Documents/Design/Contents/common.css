@@ -1,0 +1,130 @@
+/*Common css*/
+.color_blue{
+	color: #FFFF00;
+}
+.grey-dark{
+	color: #828587;
+}
+.black{
+	color: #000000;
+}
+.no-wrap{
+	white-space: nowrap;
+}
+.fontsize-45{
+	font-size: 45px;
+}
+.fontsize-30{
+	font-size: 15px;
+}
+.h1{
+	font-size: 46px;
+    line-height: 50px;
+}
+.h5{
+	font-size: 14px;
+    line-height: 10px;
+}
+.bold{
+	font-weight: bold;
+}
+.none-decoration{
+	text-decoration: none;
+}
+
+.padding10{
+	padding-top: 15px;
+}
+.padding20{
+	padding-top: 20px;
+}
+.padding30{
+	padding-top: 30px;
+}
+.padding-30{
+	padding-bottom: 30px;
+}
+.border-main{
+	border: 1px solid #d9d9de;
+	border-radius: 15px;
+	background-color: #ffffff;
+	padding: 10px 10px;
+}
+.border-grey{
+	background-color: #f7fafa;
+    border-radius: 6px;
+    /*display: block;*/
+    /*line-height: 30px;*/
+    margin: 20px 10px;
+    padding: 20px 10px;
+    /*position: relative;*/
+	border: 1px solid #d9d9de;
+}
+.border-tips{
+	background-color: #f7fafa;
+    border-radius: 6px;
+    /*display: block;*/
+    /*line-height: 30px;*/
+    margin-top: 20px;
+    /*margin: 20px 10px;*/
+    padding: 20px 10px;
+    /*position: relative;*/
+	border: 1px solid #d9d9de;
+}
+.border-dash{
+	border: 2px solid #d9d9de;
+	border-style: dashed;
+	background-color: #ffffff;
+}
+.border-top{
+	border-top: 1px solid #828587;
+}
+.text-center{
+	text-align: center;
+}
+/*Navbar*/
+#header nav{
+	background: #2f2f42;
+	text-align: center;
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+	padding: 10px 100px;
+}
+#header a{
+	/*color: #FFFFFF;*/
+}
+#avatar {
+	display: inline;
+	width: 20px;
+	height: 20px;
+	margin-right: 2px;
+}
+.navbar-nav>li>.dropdown-menu {
+	padding: 0px 10px;
+}
+
+/*Padding with Navbar ====*/
+.paddingNavbar{
+	padding-top: 70px;
+}
+/*end Padding with Nav bar*/
+
+/* enable absolute positioning */
+.inner-addon { 
+    position: relative; 
+}
+/*===Add Bootstrap Glyphicon to Input Box ========*/
+/* style icon */
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+/* align icon */
+.left-addon .glyphicon  { left:  0px;}
+.right-addon .glyphicon { right: 0px;}
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+/*====end Add Bootstrap Glyphicon to Input Box ====*/
+
+/*==end Style Common=======================================================*/
