@@ -310,7 +310,7 @@
                                         <div class="table-responsive mailbox-messages">
                                             <table class="table table-bordered table-striped table-hover">
                                                 <tbody>
-                                                    <tr class="unread-message clickableRow">
+                                                    <tr class="unread-message clickableRow" data-toggle="modal" data-target="#viewMessageModal">
                                                         <td class="checkbox-col">
                                                             <input type="checkbox" class="selectedId" name="selectedId">
                                                         </td>
@@ -321,7 +321,7 @@
                                                         </td>
                                                         <td class="date-col"> 1/1/14</td>
                                                     </tr>
-                                                    <tr class="unread-message clickableRow">
+                                                    <tr class="unread-message clickableRow" data-toggle="modal" data-target="#viewMessageModal">
                                                         <td class="checkbox-col">
                                                             <input type="checkbox" class="selectedId" name="selectedId">
                                                         </td>
@@ -332,7 +332,7 @@
                                                         </td>
                                                         <td class="date-col">1/1/14</td>
                                                     </tr>
-                                                    <tr class="unread-message clickableRow">
+                                                    <tr class="unread-message clickableRow" data-toggle="modal" data-target="#viewMessageModal">
                                                         <td class="checkbox-col">
                                                             <input type="checkbox" class="selectedId" name="selectedId">
                                                         </td>
@@ -343,7 +343,7 @@
                                                         </td>
                                                         <td class="date-col">1/1/14</td>
                                                     </tr>
-                                                    <tr class="unread-message clickableRow">
+                                                    <tr class="unread-message clickableRow" data-toggle="modal" data-target="#viewMessageModal">
                                                         <td class="checkbox-col">
                                                             <input type="checkbox" class="selectedId" name="selectedId">
                                                         </td>
@@ -354,7 +354,7 @@
                                                         </td>
                                                         <td class="date-col"> 1/1/14</td>
                                                     </tr>
-                                                    <tr class="clickableRow">
+                                                    <tr class="clickableRow" data-toggle="modal" data-target="#viewMessageModal">
                                                         <td class="checkbox-col">
                                                             <input type="checkbox" class="selectedId" name="selectedId">
                                                         </td>
@@ -365,7 +365,7 @@
                                                         </td>
                                                         <td class="date-col"> 1/1/14</td>
                                                     </tr>
-                                                    <tr class="clickableRow">
+                                                    <tr class="clickableRow" data-toggle="modal" data-target="#viewMessageModal">
                                                         <td class="checkbox-col">
                                                             <input type="checkbox" class="selectedId" name="selectedId">
                                                         </td>
@@ -375,7 +375,7 @@
                                                         </td>
                                                         <td class="date-col">1/1/14</td>
                                                     </tr>
-                                                    <tr class="clickableRow">
+                                                    <tr class="clickableRow" data-toggle="modal" data-target="#viewMessageModal">
                                                         <td class="checkbox-col">
                                                             <input type="checkbox" class="selectedId" name="selectedId">
                                                         </td>
@@ -386,7 +386,7 @@
                                                         </td>
                                                         <td class="date-col">1/1/14</td>
                                                     </tr>
-                                                    <tr class="clickableRow">
+                                                    <tr class="clickableRow" data-toggle="modal" data-target="#viewMessageModal">
                                                         <td class="checkbox-col">
                                                             <input type="checkbox" class="selectedId" name="selectedId">
                                                         </td>
@@ -397,7 +397,7 @@
                                                         </td>
                                                         <td class="date-col">1/1/14</td>
                                                     </tr>
-                                                    <tr class="clickableRow">
+                                                    <tr class="clickableRow" data-toggle="modal" data-target="#viewMessageModal">
                                                         <td class="checkbox-col">
                                                             <input type="checkbox" class="selectedId" name="selectedId">
                                                         </td>
@@ -407,7 +407,7 @@
                                                         </td>
                                                         <td class="date-col">1/1/14</td>
                                                     </tr>
-                                                    <tr class="clickableRow">
+                                                    <tr class="clickableRow" data-toggle="modal" data-target="#viewMessageModal">
                                                         <td class="checkbox-col">
                                                             <input type="checkbox" class="selectedId" name="selectedId">
                                                         </td>
@@ -457,24 +457,60 @@
 						  <div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 							<h4 class="modal-title" id="flexModalLabel">
-							  Add new category
+							  Send Message
 							</h4>
 						  </div>
 						  <div class="modal-body">
-							<div class="form-group">
-							  <label for="exampleInputEmail1">Category Name:</label> <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter category name..." />
+						  <div class="form-group">
+							  <label for="exampleInputEmail1">To:</label> <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Received..." />
 							</div>
 							<div class="form-group">
-							  <label for="exampleInputPassword1">Description:</label> 
-							  <textarea class="form-control" id="exampleInputPassword1" placeholder="Description...">
-							  </textarea>
+							  <label for="exampleInputEmail1">Message Title:</label> <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter title here..." />
 							</div>
 							<div class="form-group">
-							  <label for="exampleInputFile">Picture:</label> <input type="file" id="exampleInputFile" />
+							  <label for="exampleInputPassword1">Content:</label> 
+							  <textarea class="form-control" id="exampleInputPassword1" placeholder="Description..." 
+							  rows="6" cols="50" maxlength="300" style="resize: none"></textarea>
 							</div>
 						  </div>
 						  <div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button> <button type="button" class="btn btn-green">Add</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button> <button type="button" class="btn btn-green">Send</button>
+						  </div>
+						</form>
+					  </div><!-- /.modal-content -->
+					</div><!-- /.modal-dialog -->
+				</div>
+				<!-- /.modal -->
+				<!-- Flex Modal -->
+				<div class="modal modal-flex fade" id="viewMessageModal" tabindex="-1" role="dialog" aria-labelledby="flexModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+					  <div class="modal-content">
+						<form role="form">
+						  <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h4 class="modal-title" id="flexModalLabel">
+							  View Message
+							</h4>
+						  </div>
+						  <div class="modal-body">
+						  <div class="form-group">
+							  <label for="exampleInputEmail1">From:</label> <span>Jane Smith</span>
+							</div>
+							<div class="form-group">
+							  <label for="exampleInputEmail1">Message Title:</label> <span>Order Status Update: Order #231</span>
+							</div>
+							<div class="form-group">
+							  <label for="exampleInputPassword1">Content:</label> 
+							  <textarea readonly class="form-control" id="exampleInputPassword1" placeholder="Description..."
+							  rows="6" cols="50" maxlength="300" style="resize: none">Hi again! I wanted to let you know that the orderds
+							  hdsjhjdsb
+							  hdjvjhdsv
+							  bdjhsvdjhsjhdsvhjdvsjhvds
+							  bdjsjdsvdjshvsjdh</textarea>
+							</div>
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button> <button type="button" class="btn btn-green" data-dismiss="modal" data-toggle="modal" data-target="#newMessageModal">Reply</button>
 						  </div>
 						</form>
 					  </div><!-- /.modal-content -->
