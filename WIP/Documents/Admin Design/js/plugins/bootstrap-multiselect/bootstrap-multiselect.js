@@ -410,7 +410,7 @@
                     .addClass('multiselect-all');
             }
 
-            $('label', $li).append("<span> " + label + "<span>");
+            $('label', $li).append(" " + label);
 
             this.$ul.append($li);
 
