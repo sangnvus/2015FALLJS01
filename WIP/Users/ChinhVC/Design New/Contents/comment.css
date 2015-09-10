@@ -13,8 +13,8 @@
  }
 
  a {
-    color: #03658c;
-    text-decoration: none;
+    /*color: #03658c;*/
+    /*text-decoration: none;*/
  }
 
 ul {
@@ -22,8 +22,8 @@ ul {
 }
 
 body {
-    font-family: 'Roboto', Arial, Helvetica, Sans-serif, Verdana;
-    background: #dee1e3;
+    /*font-family: 'Roboto', Arial, Helvetica, Sans-serif, Verdana;*/
+    /*background: #dee1e3;*/
 }
 
 /** ====================
@@ -121,15 +121,16 @@ body {
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
-    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-    -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    /*-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.2);*/
+    /*-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.2);*/
+    /*box-shadow: 0 1px 2px rgba(0,0,0,0.2);*/
     overflow: hidden;
 }
 
 .comments-list .comment-avatar img {
     width: 100%;
     height: 100%;
+    border-radius: 150px
 }
 
 .reply-list .comment-avatar {
@@ -164,7 +165,7 @@ body {
     display: block;
     border-width: 10px 12px 10px 0;
     border-style: solid;
-    border-color: transparent #FCFCFC;
+    border-color: transparent #EEEEEE;
     top: 8px;
     left: -11px;
 }
@@ -179,7 +180,7 @@ body {
     width: 610px;
 }
 .comment-box .comment-head {
-    background: #FCFCFC;
+    background: #EEEEEE;
     padding: 10px 12px;
     border-bottom: 1px solid #E5E5E5;
     overflow: hidden;
