@@ -138,16 +138,30 @@
                         <div class="clearfix"></div>
                     </li>
                     <!-- end SIDE NAV USER PANEL -->
-                    <!-- begin SIDE NAV SEARCH -->
-                    <li class="nav-search">
-                        <form role="form">
-                            <input type="search" class="form-control" placeholder="Search...">
-                            <button class="btn">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </form>
+					<!-- begin USERS DROPDOWN -->
+                    <li class="panel">
+                        <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#users">
+                            <i class="fa fa-files-o"></i> Users <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="collapse nav" id="users">
+                            <li>
+                                <a href="user.html">
+                                    <i class="fa fa-angle-double-right"></i> Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a href="userlist.html">
+                                    <i class="fa fa-angle-double-right"></i> Users List
+                                </a>
+                            </li>
+                            <li>
+                                <a href="adduser.html">
+                                    <i class="fa fa-angle-double-right"></i> Add User
+                                </a>
+                            </li>
+                        </ul>
                     </li>
-                    <!-- end SIDE NAV SEARCH -->
+                    <!-- end USERS DROPDOWN -->
                     <!-- begin DASHBOARD LINK -->
                     <li>
                         <a href="index-2.html">
@@ -155,12 +169,13 @@
                         </a>
                     </li>
                     <!-- end DASHBOARD LINK -->
-                    <!-- begin CHARTS DROPDOWN -->
+                    <!-- begin PROJECTS DROPDOWN -->
                     <li class="panel">
-                        <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#charts">
-                            <i class="fa fa-bar-chart-o"></i> Charts <i class="fa fa-caret-down"></i>
+                        <a href="project.html" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#charts">
+                            <i class="fa fa-bar-chart-o"></i> Project
+							<!-- <i class="fa fa-caret-down"></i> -->
                         </a>
-                        <ul class="collapse nav" id="charts">
+						<!-- <ul class="collapse nav" id="charts">
                             <li>
                                 <a href="flot.html">
                                     <i class="fa fa-angle-double-right"></i> Flot Charts
@@ -171,201 +186,41 @@
                                     <i class="fa fa-angle-double-right"></i> Morris.js
                                 </a>
                             </li>
-                        </ul>
+                        </ul> -->
                     </li>
-                    <!-- end CHARTS DROPDOWN -->
-                    <!-- begin FORMS DROPDOWN -->
-                    <li class="panel">
-                        <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#forms">
-                            <i class="fa fa-edit"></i> Forms <i class="fa fa-caret-down"></i>
+                    <!-- end PROJECTS DROPDOWN -->
+					<!-- begin BACKINGS DROPDOWN -->
+					<li class="panel">
+                        <a href="backing.html" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#charts">
+                            <i class="fa fa-bar-chart-o"></i> Backing 
+							<!-- <i class="fa fa-caret-down"></i> -->
                         </a>
-                        <ul class="collapse nav" id="forms">
-                            <li>
-                                <a href="basic-form-elements.html">
-                                    <i class="fa fa-angle-double-right"></i> Basic Elements
-                                </a>
-                            </li>
-                            <li>
-                                <a href="advanced-form-elements.html">
-                                    <i class="fa fa-angle-double-right"></i> Advanced Elements
-                                </a>
-                            </li>
-                            <li>
-                                <a href="validation.html">
-                                    <i class="fa fa-angle-double-right"></i> Validation
-                                </a>
-                            </li>
-                            <li>
-                                <a href="wysiwyg-editor.html">
-                                    <i class="fa fa-angle-double-right"></i> WYSIWYG Editor
-                                </a>
-                            </li>
-                            <li>
-                                <a href="dropzone-uploader.html">
-                                    <i class="fa fa-angle-double-right"></i> Dropzone Uploader
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- end FORMS DROPDOWN -->
-                    <!-- begin CALENDAR LINK -->
-                    <li>
-                        <a href="calendar.html">
-                            <i class="fa fa-calendar"></i> Calendar
+					</li>
+					<!-- end BACKINGS DROPDOWN -->
+					<!-- begin CATEGORIES DROPDOWN -->
+					<li class="panel">
+                        <a href="category.html" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#charts">
+                            <i class="fa fa-bar-chart-o"></i> Category 
+							<!-- <i class="fa fa-caret-down"></i> -->
                         </a>
-                    </li>
-                    <!-- end CALENDAR LINK -->
-                    <!-- begin TABLES DROPDOWN -->
-                    <li class="panel">
-                        <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#tables">
-                            <i class="fa fa-table"></i> Tables <i class="fa fa-caret-down"></i>
+					</li>
+					<!-- end CATEGORIES DROPDOWN -->
+					<!-- begin SLIDERS DROPDOWN -->
+					<li class="panel">
+                        <a href="slider.html" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#charts">
+                            <i class="fa fa-bar-chart-o"></i> Slider 
+							<!-- <i class="fa fa-caret-down"></i> -->
                         </a>
-                        <ul class="collapse nav" id="tables">
-                            <li>
-                                <a href="basic-tables.html">
-                                    <i class="fa fa-angle-double-right"></i> Basic Tables
-                                </a>
-                            </li>
-                            <li>
-                                <a href="advanced-tables.html">
-                                    <i class="fa fa-angle-double-right"></i> Advanced Tables
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- end TABLES DROPDOWN -->
-                    <!-- begin UI ELEMENTS DROPDOWN -->
-                    <li class="panel">
-                        <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#ui-elements">
-                            <i class="fa fa-wrench"></i> UI Elements <i class="fa fa-caret-down"></i>
+					</li>
+					<!-- end SLIDERS DROPDOWN -->
+					<!-- begin MESSAGES DROPDOWN -->
+					<li class="panel">
+                        <a href="message.html" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#charts">
+                            <i class="fa fa-bar-chart-o"></i> Message 
+							<!-- <i class="fa fa-caret-down"></i> -->
                         </a>
-                        <ul class="collapse nav" id="ui-elements">
-                            <li>
-                                <a href="portlets.html">
-                                    <i class="fa fa-angle-double-right"></i> Portlets &amp; Widgets
-                                </a>
-                            </li>
-                            <li>
-                                <a href="buttons.html">
-                                    <i class="fa fa-angle-double-right"></i> Buttons
-                                </a>
-                            </li>
-                            <li>
-                                <a href="tabs-accordions.html">
-                                    <i class="fa fa-angle-double-right"></i> Tabs &amp; Accordions
-                                </a>
-                            </li>
-                            <li>
-                                <a href="notifications.html">
-                                    <i class="fa fa-angle-double-right"></i> Popups &amp; Notifications
-                                </a>
-                            </li>
-                            <li>
-                                <a href="sliders.html">
-                                    <i class="fa fa-angle-double-right"></i> Sliders
-                                </a>
-                            </li>
-                            <li>
-                                <a href="typography.html">
-                                    <i class="fa fa-angle-double-right"></i> Typography
-                                </a>
-                            </li>
-                            <li>
-                                <a href="icons.html">
-                                    <i class="fa fa-angle-double-right"></i> Icons
-                                </a>
-                            </li>
-                            <li>
-                                <a href="grid.html">
-                                    <i class="fa fa-angle-double-right"></i> Grid
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- end UI ELEMENTS DROPDOWN -->
-                    <!-- begin MESSAGE CENTER DROPDOWN -->
-                    <li class="panel">
-                        <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#message-center">
-                            <i class="fa fa-inbox"></i> Message Center <i class="fa fa-caret-down"></i>
-                        </a>
-                        <ul class="collapse nav" id="message-center">
-                            <li>
-                                <a href="mailbox.html">
-                                    <i class="fa fa-angle-double-right"></i> Mailbox
-                                </a>
-                            </li>
-                            <li>
-                                <a href="compose-message.html">
-                                    <i class="fa fa-angle-double-right"></i> Compose Message
-                                </a>
-                            </li>
-                            <li>
-                                <a href="chat.html">
-                                    <i class="fa fa-angle-double-right"></i> Chat
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- end MESSAGE CENTER DROPDOWN -->
-                    <!-- begin PAGES DROPDOWN -->
-                    <li class="panel">
-                        <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#pages">
-                            <i class="fa fa-files-o"></i> Pages <i class="fa fa-caret-down"></i>
-                        </a>
-                        <ul class="collapse nav in" id="pages">
-                            <li>
-                                <a href="profile.html">
-                                    <i class="fa fa-angle-double-right"></i> User Profile
-                                </a>
-                            </li>
-                            <li>
-                                <a href="invoice.html">
-                                    <i class="fa fa-angle-double-right"></i> Invoice
-                                </a>
-                            </li>
-                            <li>
-                                <a href="pricing.html">
-                                    <i class="fa fa-angle-double-right"></i> Pricing Tables
-                                </a>
-                            </li>
-                            <li>
-                                <a href="faq.html">
-                                    <i class="fa fa-angle-double-right"></i> FAQ Page
-                                </a>
-                            </li>
-                            <li>
-                                <a href="search-results.html">
-                                    <i class="fa fa-angle-double-right"></i> Search Results
-                                </a>
-                            </li>
-                            <li>
-                                <a href="login.html">
-                                    <i class="fa fa-angle-double-right"></i> Login Basic
-                                </a>
-                            </li>
-                            <li>
-                                <a href="login-social.html">
-                                    <i class="fa fa-angle-double-right"></i> Login Social
-                                </a>
-                            </li>
-                            <li>
-                                <a href="404.html">
-                                    <i class="fa fa-angle-double-right"></i> 404 Error
-                                </a>
-                            </li>
-                            <li>
-                                <a href="500.html">
-                                    <i class="fa fa-angle-double-right"></i> 500 Error
-                                </a>
-                            </li>
-                            <li>
-                                <a class="active" href="blank.html">
-                                    <i class="fa fa-angle-double-right"></i> Blank Page
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- end PAGES DROPDOWN -->
+					</li>
+					<!-- end MESSAGES DROPDOWN -->
                 </ul>
                 <!-- /.side-nav -->
             </div>
@@ -410,7 +265,7 @@
                                     <h4>Sliders List</h4>
                                 </div>
 								 <div class="portlet-widgets">
-									<button class="btn btn-green btn-sm" data-toggle="modal" data-target="#newCategoryModal"><i class="fa fa-plus"></i> Add Slider</button>
+									<button class="btn btn-green btn-sm" data-toggle="modal" data-target="#newSliderModal"><i class="fa fa-plus"></i> Add Slider</button>
 									<a data-toggle="collapse" data-parent="#accordion" href="#NewProjectTable"><i class="fa fa-chevron-down"></i></a>
                                 </div>
                                 <div class="clearfix"></div>
@@ -456,8 +311,8 @@
 													</td>
 													<td>
 														<div class="btn-group">
-															<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1"
-															data-toggle="tooltip" data-placement="left" data-trigger="hover" title="Edit">
+															<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1" data-target="#editSliderModal"
+															data-toggle="modal" data-tooltip="tooltip" data-placement="left" data-trigger="hover" title="Edit">
 																<i class="fa fa-pencil"></i>
 															</button>
 															<button class="btn btn-danger btn-sm" type="button" id="dropdownMenu1"
@@ -491,8 +346,8 @@
 													</td>
 													<td>
 														<div class="btn-group">
-															<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1"
-															data-toggle="tooltip" data-placement="left" data-trigger="hover" title="Edit">
+															<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1" data-target="#editSliderModal"
+															data-toggle="modal" data-tooltip="tooltip" data-placement="left" data-trigger="hover" title="Edit">
 																<i class="fa fa-pencil"></i>
 															</button>
 															<button class="btn btn-danger btn-sm" type="button" id="dropdownMenu1"
@@ -522,7 +377,7 @@
 			<!-- start Modals -->
 			<!-- Advanced Modal Trigger -->
 				<!-- Flex Modal -->
-				<div class="modal modal-flex fade" id="newCategoryModal" tabindex="-1" role="dialog" aria-labelledby="flexModalLabel" aria-hidden="true">
+				<div class="modal modal-flex fade" id="newSliderModal" tabindex="-1" role="dialog" aria-labelledby="flexModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
 										<form role="form">
@@ -584,6 +439,71 @@
                                 </div>
                                 <!-- /.modal -->
 			<!-- end Modals -->
+				<!-- Advanced Modal Trigger -->
+				<!-- Flex Modal -->
+				<div class="modal modal-flex fade" id="editSliderModal" tabindex="-1" role="dialog" aria-labelledby="flexModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+										<form role="form">
+											<div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title" id="flexModalLabel">Edit slider</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Slider Title:</label>
+                                                    <input type="text" class="form-control" value="Summon Your Magic" id="exampleInputEmail1">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputPassword1">Slider Description:</label>
+                                                    <textarea  class="form-control" id="exampleInputPassword1">Find out where your origins will take you in an epic new game from the creators of Divinity: Original Sin</textarea>
+                                                </div>
+												<div class="form-group">
+                                                    <label for="exampleInputPassword1">Slider Url:</label>
+                                                    <input type="text" class="form-control" id="exampleInputEmail1" value="http://quickiz.com/fundstarter/uploads/images/sliders/499241.jpg">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputFile">Slider Image:</label>
+													</br>
+                                                    <img style="width: 200px; height: 200px" src="https://d3mlfyygrfdi2i.cloudfront.net/nasa.jpg" class="" alt=""></img>
+													<input type="file" id="exampleInputFile">
+                                                </div>
+												<div class="form-group">
+                                                    <label for="exampleInputFile">Button Color:</label>
+                                                    <select class="form-control">
+														<option selected>Green</option>
+														<option>Blue</option>
+														<option>White</option>
+													</select>
+                                                </div>
+												<div class="form-group">
+                                                    <label for="exampleInputFile">Slider Order:</label>
+                                                    <select class="form-control">
+														<option selected>3</option>
+														<option>1</option>
+														<option>2</option>
+													</select>
+                                                </div>
+												<div class="form-group">
+                                                    <label for="exampleInputFile">Active:</label>
+                                                    <select class="form-control">
+														<option selected>Active</option>
+														<option>Inactive</option>
+													</select>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-green">Edit</button>
+                                            </div>
+										</form>
+						</div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+                                <!-- /.modal -->
+			<!-- end Modals -->
 			
         </div>
         <!-- /#page-wrapper -->
@@ -633,7 +553,7 @@
     <script src="js/demo/advanced-tables-demo.js"></script>
 	<script>
 		$(function () {
-		  $('[data-toggle="tooltip"]').tooltip({container: 'body'});
+		  $('[data-toggle="tooltip"], [data-tooltip="tooltip"]').tooltip({container: 'body'});
 		})
 	</script>
 </body>
