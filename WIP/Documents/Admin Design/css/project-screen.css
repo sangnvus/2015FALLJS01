@@ -9,7 +9,9 @@
 .table > tbody > tr > td > .btn-group{
 	display: flex;
 }
-
+.table > tbody > tr > td > .label{
+	line-height: 2.4em;
+}
 .portlet-body .table-responsive {
 	overflow-x: auto;
 }
@@ -22,6 +24,9 @@
 	display: inline-block;
 }
 
+.carousel-caption{
+	padding-bottom: 13%;
+}
 /*reponsive video*/
 .responsive-video {
 	position: relative;
@@ -42,4 +47,6 @@
 /* override */
 .chat-widget {
 	max-height: 600px !important;
+}
+
 }

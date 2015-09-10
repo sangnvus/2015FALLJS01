@@ -172,12 +172,12 @@
 						<ul class="collapse nav in" id="projects">
                             <li>
                                 <a href="project.html" class="active">
-                                    <i class="fa fa-angle-double-right"></i> Projects List
+                                    <i class="fa fa-angle-double-right"></i> Dashboard
                                 </a>
                             </li>
                             <li>
                                 <a href="new-project.html">
-                                    <i class="fa fa-angle-double-right"></i> New Project
+                                    <i class="fa fa-angle-double-right"></i> Projects List
                                 </a>
                             </li>
                         </ul>
@@ -248,16 +248,16 @@
                 <!-- /.row -->
                 <!-- end PAGE TITLE ROW -->
 				<div class="row">
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="col-lg-2 col-sm-6">
                         <div class="circle-tile">
                             <a href="new-project.html">
-                                <div class="circle-tile-heading dark-blue">
+                                <div class="circle-tile-heading blue">
                                     <i class="fa fa-bell fa-fw fa-3x"></i>
                                 </div>
                             </a>
-                            <div class="circle-tile-content dark-blue">
+                            <div class="circle-tile-content blue">
                                 <div class="circle-tile-description text-faded">
-                                    New Project
+                                    Pending Projects
                                 </div>
                                 <div class="circle-tile-number text-faded">
                                     10
@@ -267,16 +267,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="col-lg-2 col-sm-6">
                         <div class="circle-tile">
                             <a href="#">
                                 <div class="circle-tile-heading green">
-                                    <i class="fa fa-money fa-fw fa-3x"></i>
+                                    <i class="fa fa-check fa-fw fa-3x"></i>
                                 </div>
                             </a>
                             <div class="circle-tile-content green">
                                 <div class="circle-tile-description text-faded">
-                                    Live Project
+                                    Approved Projects
                                 </div>
                                 <div class="circle-tile-number text-faded">
                                     201
@@ -285,25 +285,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="circle-tile">
-                            <a href="#">
-                                <div class="circle-tile-heading orange">
-                                    <i class="fa fa-bell fa-fw fa-3x"></i>
-                                </div>
-                            </a>
-                            <div class="circle-tile-content orange">
-                                <div class="circle-tile-description text-faded">
-                                    Sespended Project
-                                </div>
-                                <div class="circle-tile-number text-faded">
-                                    10
-                                </div>
-                                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="col-lg-2 col-sm-6">
                         <div class="circle-tile">
                             <a href="#">
                                 <div class="circle-tile-heading red">
@@ -312,7 +294,25 @@
                             </a>
                             <div class="circle-tile-content red">
                                 <div class="circle-tile-description text-faded">
-                                    Closed Project
+                                    Suspended Projects
+                                </div>
+                                <div class="circle-tile-number text-faded">
+                                    10
+                                </div>
+                                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-6">
+                        <div class="circle-tile">
+                            <a href="#">
+                                <div class="circle-tile-heading dark-gray">
+                                    <i class="fa fa-times fa-fw fa-3x"></i>
+                                </div>
+                            </a>
+                            <div class="circle-tile-content dark-gray">
+                                <div class="circle-tile-description text-faded">
+                                    Expired Projects
                                 </div>
                                 <div class="circle-tile-number text-faded">
                                     10
@@ -322,9 +322,46 @@
                             </div>
                         </div>
                     </div>
+					<div class="col-lg-2 col-sm-6">
+                        <div class="circle-tile">
+                            <a href="#">
+                                <div class="circle-tile-heading purple">
+                                    <i class="fa fa-archive fa-fw fa-3x"></i>
+                                </div>
+                            </a>
+                            <div class="circle-tile-content purple">
+                                <div class="circle-tile-description text-faded">
+                                    Funded Projects
+                                </div>
+                                <div class="circle-tile-number text-faded">
+                                    10
+                                    <span id="sparklineB"></span>
+                                </div>
+                                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+					<div class="col-lg-2 col-sm-6">
+                        <div class="circle-tile">
+                            <a href="#">
+                                <div class="circle-tile-heading orange">
+                                    <i class="fa fa-star fa-fw fa-3x"></i>
+                                </div>
+                            </a>
+                            <div class="circle-tile-content orange">
+                                <div class="circle-tile-description text-faded">
+                                    Total Projects
+                                </div>
+                                <div class="circle-tile-number text-faded">
+                                    241
+                                    <span id="sparklineB"></span>
+                                </div>
+                                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- end DASHBOARD CIRCLE TILES -->
-				
 				<!-- begin ADVANCED TABLES ROW -->
                 <div class="row">
 
@@ -333,382 +370,326 @@
                         <div class="portlet portlet-default">
                             <div class="portlet-heading">
                                 <div class="portlet-title">
-                                    <h4>Projects List</h4>
+                                    <h4>New Projects List</h4>
+                                </div>
+								<div class="portlet-widgets">
+                                    <a href="#" class="btn btn-blue btn-sm">Export</a>
+									<a data-toggle="collapse" data-parent="#accordion" href="#NewProjectTable"><i class="fa fa-chevron-down"></i></a>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-                            <div class="portlet-body">
-                                <div class="table-responsive">
-                                    <table id="example-table" class="table table-striped table-bordered table-hover table-green">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Title</th>
-                                                <th>Category</th>
-                                                <th>Creator</th>
-                                                <th>Fund Goal</th>
-												<th>Expired Date</th>
-                                                <th>Total Backings</th>
-												<th>Pledge Amount</th>
-												<th>Status</th>
-												<th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="odd">
-                                                <td>#1</td>
-                                                <td>Around the World in 80 Days - with Street View Sketches</td>
-                                                <td>Art</td>
-                                                <td class="center">ngocmanh1712@gmail.com</td>
-                                                <td class="center">$30.000</td>
-                                                <td class="center">10 Feb,2015</td>
-                                                <td class="center">51</td>
-                                                <td class="center">$15.000</td>
-                                                <td class="center">
-													<div class="dropdown">
-													  <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-														Running
-														<span class="caret"></span>
-													  </button>
-													  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-														<li><a href="#"><span class="label label-warning">Pending</a></a></li>
-														<li><a href="#"><span class="label label-danger">Closed</span></a></li>
-													  </ul>
-													</div>
-												</td>
-                                                <td class="center">
-													<a href="project-detail.html">
-														<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1">
-															<i class="fa fa-eye"></i>
-														</button>
-													</a>
-												</td>
-                                            </tr>
-                                            <tr class="even">
-                                                <td>#2</td>
-                                                <td>MapCloth: Custom Waterproof Printing for All</td>
-                                                <td>Technology</td>
-                                                <td class="center">chinhvc@fpt.edu.vn</td>
-                                                <td class="center">$3.000</td>
-                                                <td class="center">9 Nov,2015</td>
-                                                <td class="center">0</td>
-                                                <td class="center">$0</td>
-                                                <td class="center">
-													<div class="dropdown">
-													  <button class="btn btn-warning dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-														Pending
-														<span class="caret"></span>
-													  </button>
-													  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-														<li><a href="#"><span class="label label-warning">Pending</a></a></li>
-														<li><a href="#"><span class="label label-danger">Closed</span></a></li>
-													  </ul>
-													</div>
-												</td>
-                                                <td class="center">
-													<a href="project-detail.html">
-														<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1">
-															<i class="fa fa-eye"></i>
-														</button>
-													</a>
-												</td>
-                                            </tr>
-                                            <tr class="odd">
-                                                <td>#3</td>
-                                                <td>Around the World in 80 Days - with Street View Sketches</td>
-                                                <td>Art</td>
-                                                <td class="center">ngocmanh1712@gmail.com</td>
-                                                <td class="center">$30.000</td>
-                                                <td class="center">10 Feb,2015</td>
-                                                <td class="center">51</td>
-                                                <td class="center">$15.000</td>
-                                                <td class="center">
-													<div class="dropdown">
-													  <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-														Running
-														<span class="caret"></span>
-													  </button>
-													  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-														<li><a href="#"><span class="label label-warning">Pending</a></a></li>
-														<li><a href="#"><span class="label label-danger">Closed</span></a></li>
-													  </ul>
-													</div>
-												</td>
-                                                <td class="center">
-													<a href="project-detail.html">
-														<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1">
-															<i class="fa fa-eye"></i>
-														</button>
-													</a>
-												</td>
-                                            </tr>
-                                            <tr class="even">
-                                                <td>#4</td>
-                                                <td>MapCloth: Custom Waterproof Printing for All</td>
-                                                <td>Technology</td>
-                                                <td class="center">chinhvc@fpt.edu.vn</td>
-                                                <td class="center">$3.000</td>
-                                                <td class="center">9 Nov,2015</td>
-                                                <td class="center">0</td>
-                                                <td class="center">$0</td>
-                                                <td class="center">
-													<div class="dropdown">
-													  <button class="btn btn-danger dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-														Closed
-														<span class="caret"></span>
-													  </button>
-													  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-														<li><a href="#"><span class="label label-warning">Pending</a></a></li>
-														<li><a href="#"><span class="label label-primary">Running</span></a></li>
-													  </ul>
-													</div>
-												</td>
-                                                <td class="center">
-													<a href="project-detail.html">
-														<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1">
-															<i class="fa fa-eye"></i>
-														</button>
-													</a>
-												</td>
-                                            </tr>
-                                            <tr class="odd">
-                                                <td>#5</td>
-                                                <td>Around the World in 80 Days - with Street View Sketches</td>
-                                                <td>Art</td>
-                                                <td class="center">ngocmanh1712@gmail.com</td>
-                                                <td class="center">$30.000</td>
-                                                <td class="center">10 Feb,2015</td>
-                                                <td class="center">51</td>
-                                                <td class="center">$15.000</td>
-                                                <td class="center">
-													<div class="dropdown">
-													  <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-														Running
-														<span class="caret"></span>
-													  </button>
-													  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-														<li><a href="#"><span class="label label-warning">Pending</a></a></li>
-														<li><a href="#"><span class="label label-danger">Closed</span></a></li>
-													  </ul>
-													</div>
-												</td>
-                                                <td class="center">
-													<a href="project-detail.html">
-														<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1">
-															<i class="fa fa-eye"></i>
-														</button>
-													</a>
-												</td>
-                                            </tr>
-                                            <tr class="even">
-                                                <td>#6</td>
-                                                <td>MapCloth: Custom Waterproof Printing for All</td>
-                                                <td>Technology</td>
-                                                <td class="center">chinhvc@fpt.edu.vn</td>
-                                                <td class="center">$3.000</td>
-                                                <td class="center">9 Nov,2015</td>
-                                                <td class="center">0</td>
-                                                <td class="center">$0</td>
-                                                <td class="center">
-													<div class="dropdown">
-													  <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-														Running
-														<span class="caret"></span>
-													  </button>
-													  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-														<li><a href="#"><span class="label label-warning">Pending</a></a></li>
-														<li><a href="#"><span class="label label-danger">Closed</span></a></li>
-													  </ul>
-													</div>
-												</td>
-                                                <td class="center">
-													<a href="project-detail.html">
-														<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1">
-															<i class="fa fa-eye"></i>
-														</button>
-													</a>
-												</td>
-                                            </tr>
-                                            <tr class="odd">
-                                                <td>#7</td>
-                                                <td>Around the World in 80 Days - with Street View Sketches</td>
-                                                <td>Art</td>
-                                                <td class="center">ngocmanh1712@gmail.com</td>
-                                                <td class="center">$30.000</td>
-                                                <td class="center">10 Feb,2015</td>
-                                                <td class="center">51</td>
-                                                <td class="center">$15.000</td>
-                                                <td class="center">
-													<div class="dropdown">
-													  <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-														Running
-														<span class="caret"></span>
-													  </button>
-													  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-														<li><a href="#"><span class="label label-warning">Pending</a></a></li>
-														<li><a href="#"><span class="label label-danger">Closed</span></a></li>
-													  </ul>
-													</div>
-												</td>
-                                                <td class="center">
-													<a href="project-detail.html">
-														<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1">
-															<i class="fa fa-eye"></i>
-														</button>
-													</a>
-												</td>
-                                            </tr>
-                                            <tr class="even">
-                                                <td>#8</td>
-                                                <td>MapCloth: Custom Waterproof Printing for All</td>
-                                                <td>Technology</td>
-                                                <td class="center">chinhvc@fpt.edu.vn</td>
-                                                <td class="center">$3.000</td>
-                                                <td class="center">9 Nov,2015</td>
-                                                <td class="center">0</td>
-                                                <td class="center">$0</td>
-                                                <td class="center">
-													<div class="dropdown">
-													  <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-														Running
-														<span class="caret"></span>
-													  </button>
-													  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-														<li><a href="#"><span class="label label-warning">Pending</a></a></li>
-														<li><a href="#"><span class="label label-danger">Closed</span></a></li>
-													  </ul>
-													</div>
-												</td>
-                                                <td class="center">
-													<a href="project-detail.html">
-														<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1">
-															<i class="fa fa-eye"></i>
-														</button>
-													</a>
-												</td>
-                                            </tr>
-                                            <tr class="odd">
-                                                <td>#9</td>
-                                                <td>Around the World in 80 Days - with Street View Sketches</td>
-                                                <td>Art</td>
-                                                <td class="center">ngocmanh1712@gmail.com</td>
-                                                <td class="center">$30.000</td>
-                                                <td class="center">10 Feb,2015</td>
-                                                <td class="center">51</td>
-                                                <td class="center">$15.000</td>
-                                                <td class="center">
-													<div class="dropdown">
-													  <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-														Running
-														<span class="caret"></span>
-													  </button>
-													  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-														<li><a href="#"><span class="label label-warning">Pending</a></a></li>
-														<li><a href="#"><span class="label label-danger">Closed</span></a></li>
-													  </ul>
-													</div>
-												</td>
-                                                <td class="center">
-													<a href="project-detail.html">
-														<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1">
-															<i class="fa fa-eye"></i>
-														</button>
-													</a>
-												</td>
-                                            </tr>
-                                            <tr class="even">
-                                                <td>#10</td>
-                                                <td>MapCloth: Custom Waterproof Printing for All</td>
-                                                <td>Technology</td>
-                                                <td class="center">chinhvc@fpt.edu.vn</td>
-                                                <td class="center">$3.000</td>
-                                                <td class="center">9 Nov,2015</td>
-                                                <td class="center">0</td>
-                                                <td class="center">$0</td>
-                                                <td class="center">
-													<div class="dropdown">
-													  <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-														Running
-														<span class="caret"></span>
-													  </button>
-													  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-														<li><a href="#"><span class="label label-warning">Pending</a></a></li>
-														<li><a href="#"><span class="label label-danger">Closed</span></a></li>
-													  </ul>
-													</div>
-												</td>
-                                                <td class="center">
-													<a href="project-detail.html">
-														<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1">
-															<i class="fa fa-eye"></i>
-														</button>
-													</a>
-												</td>
-                                            </tr>
-											<tr class="odd">
-                                                <td>#11</td>
-                                                <td>Around the World in 80 Days - with Street View Sketches</td>
-                                                <td>Art</td>
-                                                <td class="center">ngocmanh1712@gmail.com</td>
-                                                <td class="center">$30.000</td>
-                                                <td class="center">10 Feb,2015</td>
-                                                <td class="center">51</td>
-                                                <td class="center">$15.000</td>
-                                                <td class="center">
-													<div class="dropdown">
-													  <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-														Running
-														<span class="caret"></span>
-													  </button>
-													  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-														<li><a href="#"><span class="label label-warning">Pending</a></a></li>
-														<li><a href="#"><span class="label label-danger">Closed</span></a></li>
-													  </ul>
-													</div>
-												</td>
-                                                <td class="center">
-													<a href="project-detail.html">
-														<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1">
-															<i class="fa fa-eye"></i>
-														</button>
-													</a>
-												</td>
-                                            </tr>
-                                            <tr class="even">
-                                                <td>#12</td>
-                                                <td>MapCloth: Custom Waterproof Printing for All</td>
-                                                <td>Technology</td>
-                                                <td class="center">chinhvc@fpt.edu.vn</td>
-                                                <td class="center">$3.000</td>
-                                                <td class="center">9 Nov,2015</td>
-                                                <td class="center">0</td>
-                                                <td class="center">$0</td>
-                                                <td class="center">
-													<div class="dropdown">
-													  <button class="btn btn-warning dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-														Pending
-														<span class="caret"></span>
-													  </button>
-													  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-														<li><a href="#"><span class="label label-primary">Running</a></li>
-														<li><a href="#"><span class="label label-danger">Closed</span></a></li>
-													  </ul>
-													</div>
-												</td>
-                                                <td class="center">
-													<a href="project-detail.html">
-														<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1">
-															<i class="fa fa-eye"></i>
-														</button>
-													</a>
-												</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- /.table-responsive -->
-                            </div>
-                            <!-- /.portlet-body -->
+							<div id="NewProjectTable">
+								<div class="portlet-body">
+									<div class="table-responsive">
+										<table id="example-table" class="table table-striped table-bordered table-hover table-green">
+											<thead>
+												<tr>
+													<th>No</th>
+													<th>Title</th>
+													<th>Category</th>
+													<th>Creator</th>
+													<th>Fund Goal</th>
+													<th>Expired Date</th>
+													<th>Status</th>
+													<th>Action</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr class="odd">
+													<td>#1</td>
+													<td>Around the World in 80 Days - with Street View Sketches</td>
+													<td>Art</td>
+													<td class="center">ngocmanh1712@gmail.com</td>
+													<td class="center">$30.000</td>
+													<td class="center">10 Feb,2015</td>
+													<td><span class="label label-primary center-block">Pending</span></td>
+													<td class="center">
+														<div class="btn-group">														
+															<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="View">
+																<i class="fa fa-eye"></i>
+															</button>
+															<button class="btn btn-success btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="Approve">
+																<i class="fa fa-check"></i>
+															</button>
+															<button class="btn btn-danger btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="Suspend">
+																<i class="fa fa-times"></i>
+															</button>
+														</div>
+													</td>
+												</tr>
+												<tr class="even">
+													<td>#2</td>
+													<td>MapCloth: Custom Waterproof Printing for All</td>
+													<td>Technology</td>
+													<td class="center">chinhvc@fpt.edu.vn</td>
+													<td class="center">$3.000</td>
+													<td class="center">9 Nov,2015</td>
+													<td><span class="label label-danger center-block">Suspended</span></td>
+													<td class="center">
+														<div class="btn-group">
+															<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="View">
+																<i class="fa fa-eye"></i>
+															</button>
+															<button class="btn btn-success btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="Approve">
+																<i class="fa fa-check"></i>
+															</button>
+														</div>
+													</td>
+												</tr>
+												<tr class="odd">
+													<td>#3</td>
+													<td>Around the World in 80 Days - with Street View Sketches</td>
+													<td>Art</td>
+													<td class="center">ngocmanh1712@gmail.com</td>
+													<td class="center">$30.000</td>
+													<td class="center">10 Feb,2015</td>
+													<td><span class="label label-success center-block">Approved</span></td>
+													<td class="center">
+														<div class="btn-group">
+															<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="View">
+																<i class="fa fa-eye"></i>
+															</button>
+															<button class="btn btn-danger btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="Suspend">
+																<i class="fa fa-times"></i>
+															</button>
+														</div>
+													</td>
+												</tr>
+												<tr class="even">
+													<td>#4</td>
+													<td>MapCloth: Custom Waterproof Printing for All</td>
+													<td>Technology</td>
+													<td class="center">chinhvc@fpt.edu.vn</td>
+													<td class="center">$3.000</td>
+													<td class="center">9 Nov,2015</td>
+													<td><span class="label label-primary center-block">Pending</span></td>
+													<td class="center">
+														<div class="btn-group">
+															<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="View">
+																<i class="fa fa-eye"></i>
+															</button>
+															<button class="btn btn-success btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="Approve">
+																<i class="fa fa-check"></i>
+															</button>
+															<button class="btn btn-danger btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="Suspend">
+																<i class="fa fa-times"></i>
+															</button>
+														</div>
+													</td>
+												</tr>
+												<tr class="odd">
+													<td>#5</td>
+													<td>Around the World in 80 Days - with Street View Sketches</td>
+													<td>Art</td>
+													<td class="center">ngocmanh1712@gmail.com</td>
+													<td class="center">$30.000</td>
+													<td class="center">10 Feb,2015</td>
+													<td><span class="label label-primary center-block">Pending</span></td>
+													<td class="center">
+														<div class="btn-group">
+															<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="View">
+																<i class="fa fa-eye"></i>
+															</button>
+															<button class="btn btn-success btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="Approve">
+																<i class="fa fa-check"></i>
+															</button>
+															<button class="btn btn-danger btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="Suspend">
+																<i class="fa fa-times"></i>
+															</button>
+														</div>
+													</td>
+												</tr>
+												<tr class="even">
+													<td>#6</td>
+													<td>MapCloth: Custom Waterproof Printing for All</td>
+													<td>Technology</td>
+													<td class="center">chinhvc@fpt.edu.vn</td>
+													<td class="center">$3.000</td>
+													<td class="center">9 Nov,2015</td>
+													<td><span class="label label-danger center-block">Suspended</span></td>
+													<td class="center">
+														<div class="btn-group">
+															<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="View">
+																<i class="fa fa-eye"></i>
+															</button>
+															<button class="btn btn-success btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="Approve">
+																<i class="fa fa-check"></i>
+															</button>
+														</div>
+													</td>
+												</tr>
+												<tr class="odd">
+													<td>#7</td>
+													<td>Around the World in 80 Days - with Street View Sketches</td>
+													<td>Art</td>
+													<td class="center">ngocmanh1712@gmail.com</td>
+													<td class="center">$30.000</td>
+													<td class="center">10 Feb,2015</td>
+													<td><span class="label label-primary center-block">Pending</span></td>
+													<td class="center">
+														<div class="btn-group">
+															<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="View">
+																<i class="fa fa-eye"></i>
+															</button>
+															<button class="btn btn-success btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="Approve">
+																<i class="fa fa-check"></i>
+															</button>
+															<button class="btn btn-danger btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="Suspend">
+																<i class="fa fa-times"></i>
+															</button>
+														</div>
+													</td>
+												</tr>
+												<tr class="even">
+													<td>#8</td>
+													<td>MapCloth: Custom Waterproof Printing for All</td>
+													<td>Technology</td>
+													<td class="center">chinhvc@fpt.edu.vn</td>
+													<td class="center">$3.000</td>
+													<td class="center">9 Nov,2015</td>
+													<td><span class="label label-primary center-block">Pending</span></td>
+													<td class="center">
+														<div class="btn-group">
+															<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="View">
+																<i class="fa fa-eye"></i>
+															</button>
+															<button class="btn btn-success btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="Approve">
+																<i class="fa fa-check"></i>
+															</button>
+															<button class="btn btn-danger btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="Suspend">
+																<i class="fa fa-times"></i>
+															</button>
+														</div>
+													</td>
+												</tr>
+												<tr class="odd">
+													<td>#9</td>
+													<td>Around the World in 80 Days - with Street View Sketches</td>
+													<td>Art</td>
+													<td class="center">ngocmanh1712@gmail.com</td>
+													<td class="center">$30.000</td>
+													<td class="center">10 Feb,2015</td>
+													<td><span class="label label-primary center-block">Pending</span></td>
+													<td class="center">
+														<div class="btn-group">
+															<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="View">
+																<i class="fa fa-eye"></i>
+															</button>
+															<button class="btn btn-success btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="Approve">
+																<i class="fa fa-check"></i>
+															</button>
+															<button class="btn btn-danger btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="Suspend">
+																<i class="fa fa-times"></i>
+															</button>
+														</div>
+													</td>
+												</tr>
+												<tr class="even">
+													<td>#10</td>
+													<td>MapCloth: Custom Waterproof Printing for All</td>
+													<td>Technology</td>
+													<td class="center">chinhvc@fpt.edu.vn</td>
+													<td class="center">$3.000</td>
+													<td class="center">9 Nov,2015</td>
+													<td><span class="label label-primary center-block">Pending</span></td>
+													<td class="center">
+														<div class="btn-group">
+															<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="View">
+																<i class="fa fa-eye"></i>
+															</button>
+															<button class="btn btn-success btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="Approve">
+																<i class="fa fa-check"></i>
+															</button>
+															<button class="btn btn-danger btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="Suspend">
+																<i class="fa fa-times"></i>
+															</button>
+														</div>
+													</td>
+												</tr>
+												<tr class="odd">
+													<td>#11</td>
+													<td>Around the World in 80 Days - with Street View Sketches</td>
+													<td>Art</td>
+													<td class="center">ngocmanh1712@gmail.com</td>
+													<td class="center">$30.000</td>
+													<td class="center">10 Feb,2015</td>
+													<td><span class="label label-primary center-block">Pending</span></td>
+													<td class="center">
+														<div class="btn-group">
+															<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="View">
+																<i class="fa fa-eye"></i>
+															</button>
+															<button class="btn btn-success btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="Approve">
+																<i class="fa fa-check"></i>
+															</button>
+															<button class="btn btn-danger btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="Suspend">
+																<i class="fa fa-times"></i>
+															</button>
+														</div>
+													</td>
+												</tr>
+												<tr class="even">
+													<td>#12</td>
+													<td>MapCloth: Custom Waterproof Printing for All</td>
+													<td>Technology</td>
+													<td class="center">chinhvc@fpt.edu.vn</td>
+													<td class="center">$3.000</td>
+													<td class="center">9 Nov,2015</td>
+													<td><span class="label label-primary center-block">Pending</span></td>
+													<td class="center">
+														<div class="btn-group">
+															<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="View">
+																<i class="fa fa-eye"></i>
+															</button>
+															<button class="btn btn-success btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="Approve">
+																<i class="fa fa-check"></i>
+															</button>
+															<button class="btn btn-danger btn-sm" type="button" id="dropdownMenu1"
+															data-toggle="tooltip" data-placement="bottom" title="Suspend">
+																<i class="fa fa-times"></i>
+															</button>
+														</div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<!-- /.table-responsive -->
+								</div>
+								<!-- /.portlet-body -->
+							</div>
                         </div>
                         <!-- /.portlet -->
 
@@ -716,8 +697,8 @@
                     <!-- /.col-lg-12 -->
 
                 </div>
-            </div>
-            <!-- /.page-content -->
+            
+				<!-- /.page-content -->
 
         </div>
         <!-- /#page-wrapper -->
@@ -765,7 +746,11 @@
     <!-- THEME SCRIPTS -->
     <script src="js/flex.js"></script>
     <script src="js/demo/advanced-tables-demo.js"></script>
-
+	<script>
+		$(function () {
+		  $('[data-toggle="tooltip"]').tooltip({container: 'body'});
+		})
+	</script>
 </body>
 
 
