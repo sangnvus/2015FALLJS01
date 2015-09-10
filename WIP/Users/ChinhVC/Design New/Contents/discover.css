@@ -543,52 +543,30 @@ height: 100%;
 }
 
 /*Feature3*/
-#ffeature3{
-	margin-top: 50px;
-	margin-bottom: 50px;
+#project_list ul{
+	padding: 0;
 }
 
-#feature3_p1{
-	font-size: 20px;
-	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-
+.remove_pading{
+	padding: 0;
 }
 
-#ffeature3_box{
-	border:1px solid #bdc3c7;
-	border-radius: 4px;
-	padding: 0px 0px 0px 0px;
-	margin-left: 16px;
+.project_name{
+	padding-left: 20px;
+}	
+
+.boder_box_listproject{
+	border: 1px solid #ccc;
+	margin: 30px 0px 30px 0px;
+	border-radius: 5px;
 }
 
-#ffeature3_right{
-	padding:40px 0px 0px 20px;
+.vertical_bot{
+	margin-top: 125px;
 }
 
-
-#feature3_thumbnail1{
-    padding-left: 0px;
-    padding-top: 0px;
-    padding-right: 0px;
-    padding-bottom: 0px;
-    height: 384px;
-}
-
-#feature3_left{
-	padding: 0px 0px 0px 0px;
-}
-
-#feature3_progress{
-	margin: 20% 15px 10px 0px;
-}
-
-#feature3_text_progress{
-	margin: 0px 0px 0px 0px; 	
-	padding: 0px 0px 0px 0px;
-}
-
-#feature3_text_progress p{
-	margin: 0px 0px 0px 0px;
+.img-overflow{
+	overflow: hidden;
 }
 
 /*Feature4*/

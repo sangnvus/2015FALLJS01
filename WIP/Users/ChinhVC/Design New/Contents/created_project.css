@@ -1,0 +1,50 @@
+#header_link{
+	margin-top: 50px;
+	text-align: right;
+}
+
+#setting_container h1{
+	font-weight: bold;
+}
+#setting_container{
+	margin-right: 100px;
+
+}
+
+#project_list ul{
+	padding: 0;
+}
+
+.list li {
+  display: table;
+  width: 100%;
+  margin-top: 15px;
+  border-radius:5px;
+}
+
+.border_list{
+	border: 1px solid #ccc;
+}
+
+.impage_col{
+	width: 15%;
+}
+
+.li-text a{
+  color: black;
+}
+
+.li-head {
+  margin: 0;
+}
+.li-sub {
+  margin: 0;
+}
+
+.remove_pading{
+	padding: 0;
+}
+
+.project_name{
+	padding-left: 20px;
+}	
