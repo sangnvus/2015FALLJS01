@@ -88,7 +88,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="mailbox.html">
+                                <a href="message.html">
                                     <i class="fa fa-envelope"></i> My Messages
                                     <span class="badge green pull-right">4</span>
                                 </a>
@@ -287,7 +287,7 @@
 													<td>Summon Your Magic</td>
 													<td>Find out where your origins will take you in an epic new game from the creators of Divinity: Original Sin.</td>
 													<td>
-														<img style="width: 100px; height: 100px" src="http://quickiz.com/fundstarter/uploads/images/sliders/499241.jpg" class="" alt=""></img>
+														<img style="width: 100px; height: 100px" src="img/slider1.jpg" class="" alt=""></img>
 														<!-- <div class="btn-group">
 															<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1"
 															data-toggle="tooltip" data-placement="left" data-trigger="hover" title="Inactive">
@@ -306,8 +306,12 @@
 													</td>
 													<td>
 														<div class="btn-group">
-															<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1" data-target="#editSliderModal"
-															data-toggle="modal" data-tooltip="tooltip" data-placement="left" data-trigger="hover" title="Edit">
+															<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1" data-target="#previewSlider"
+															data-toggle="modal" data-tooltip="tooltip" data-placement="bottom" data-trigger="hover" title="Preview">
+																<i class="fa fa-eye"></i>
+															</button>
+															<button class="btn btn-success btn-sm" type="button" id="dropdownMenu1" data-target="#editSliderModal"
+															data-toggle="modal" data-tooltip="tooltip" data-placement="bottom" data-trigger="hover" title="Edit">
 																<i class="fa fa-pencil"></i>
 															</button>
 															<button class="btn btn-danger btn-sm" type="button" id="dropdownMenu1"
@@ -322,7 +326,7 @@
 													<td>Reviving a Long-Lost Redesign</td>
 													<td>Help preserve an iconic archive of modernist design with a reissue of the NASA Graphics Standards Manual.</td>
 													<td>
-														<img style="width: 100px; height: 100px" src="https://d3mlfyygrfdi2i.cloudfront.net/nasa.jpg" class="" alt=""></img>
+														<img style="width: 100px; height: 100px" src="img/slider2.jpg" class="" alt=""></img>
 														<!-- <div class="btn-group">
 															<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1"
 															data-toggle="tooltip" data-placement="left" data-trigger="hover" title="Inactive">
@@ -341,8 +345,12 @@
 													</td>
 													<td>
 														<div class="btn-group">
-															<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1" data-target="#editSliderModal"
-															data-toggle="modal" data-tooltip="tooltip" data-placement="left" data-trigger="hover" title="Edit">
+															<button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1" data-target="#previewSlider"
+															data-toggle="modal" data-tooltip="tooltip" data-placement="bottom" data-trigger="hover" title="Preview">
+																<i class="fa fa-eye"></i>
+															</button>
+															<button class="btn btn-success btn-sm" type="button" id="dropdownMenu1" data-target="#editSliderModal"
+															data-toggle="modal" data-tooltip="tooltip" data-placement="bottom" data-trigger="hover" title="Edit">
 																<i class="fa fa-pencil"></i>
 															</button>
 															<button class="btn btn-danger btn-sm" type="button" id="dropdownMenu1"
@@ -433,6 +441,48 @@
                                     <!-- /.modal-dialog -->
                                 </div>
                                 <!-- /.modal -->
+								<!-- Flex Modal -->
+								<div class="modal modal-flex fade" id="previewSlider" tabindex="-1" role="dialog" aria-labelledby="flexModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+											<div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title" id="flexModalLabel">Preview</h4>
+                                            </div>
+                                            <div class="modal-body">
+												<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+												   <ol class="carousel-indicators">
+													  <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+													</ol>
+
+													<!-- Wrapper for slides -->
+													<div class="carousel-inner" role="listbox">
+													  <div class="item active">
+														<img class="imgCarouse" src="img/slider1.jpg" alt="...">
+														<div class="carousel-caption">
+														  <h2>Emmett Louis Till, 1941–1955</h2>
+														  <h4>is murder catalyzed the civil rights movement. Help make the film that will tell his story.</h4>
+														  <a href="" class="btn btn-success">View project</a>
+														</div>
+													  </div>
+													</div>
+													<!-- Controls -->
+													<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+													  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+													  <span class="sr-only">Previous</span>
+													</a>
+													<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+													  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+													  <span class="sr-only">Next</span>
+													</a>
+											  </div>
+                                            </div>
+						</div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+                                
 			<!-- end Modals -->
 				<!-- Advanced Modal Trigger -->
 				<!-- Flex Modal -->
@@ -460,7 +510,7 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputFile">Slider Image:</label>
 													</br>
-                                                    <img style="width: 200px; height: 200px" src="https://d3mlfyygrfdi2i.cloudfront.net/nasa.jpg" class="" alt=""></img>
+                                                    <img style="width: 500px; height: 200px" src="https://d3mlfyygrfdi2i.cloudfront.net/nasa.jpg" class="" alt=""></img>
 													<input type="file" id="exampleInputFile">
                                                 </div>
 												<div class="form-group">

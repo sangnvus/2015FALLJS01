@@ -15,30 +15,8 @@
 	padding: 0;
 }
 
-.list li {
-  display: table;
-  width: 100%;
-  margin-top: 15px;
-  border-radius:5px;
-}
-
-.border_list{
-	border: 1px solid #ccc;
-}
-
-.impage_col{
-	width: 15%;
-}
-
-.li-text a{
-  color: black;
-}
-
-.li-head {
-  margin: 0;
-}
-.li-sub {
-  margin: 0;
+.margin_listproject{
+	margin-bottom: 20px;
 }
 
 .remove_pading{
@@ -48,3 +26,28 @@
 .project_name{
 	padding-left: 20px;
 }	
+
+.textRight {
+text-align : right;
+}
+
+#project_list img{
+	width:100%;
+	height: auto;
+}
+
+.remove_border_buttom{
+	border: 0 none;
+}
+
+.project_box{
+	border: 1px solid #ccc;
+}
+
+.img-overflow{
+	overflow: hidden;
+}
+
+.vertical_bot{
+	vertical-align: bottom;
+}
