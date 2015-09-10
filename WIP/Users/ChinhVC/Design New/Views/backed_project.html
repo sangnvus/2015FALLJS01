@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
+  <meta charset="UTF-8">
+  <title>Document</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <!-- Bootstrap -->
     <link href="../Contents/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../Contents/discover.css" type="text/css">
-    <link rel="stylesheet" href="../Contents/backed_project.css" type="text/css">
+    <link rel="stylesheet" href="../Contents/created_project.css" type="text/css">
     <link rel="stylesheet" href="../Contents/style.css" type="text/css">
  <!--    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
 </head>
 <body>
-	<div id="header">
+  <div id="header">
       <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -69,63 +68,132 @@
         </div><!-- /.navbar-collapse -->
       </nav>
     </div> <!--end header -->
-	
-	<div id="setting_container" class="container-fluid grid-setting">
-	    <div class="row " id="header_link">
-	    	<div class="col-sm-12 col-sm-offset-0">
-	    		<ul id="" class="list-inline nav-inline h5 bold">
-		            <li class="mr2"><a class="link-gray-dark" href="">Activity</a></li>
-		            <li class="mr2"><a class="link-gray-dark" href="">Backed projects</a></li>
-		            <li class="mr2"><a id="editprofile_header" class="editcolorheader link-gray-dark" href="">Created projects</a></li>
-		            <li class="mr2"><a class="link-gray-dark" href="">Setting</a></li>
-		            <li class="mr2"><a class="link-gray-dark" href="">Profile ( public )</a></li>
-		            <!-- <li class="mr2"><a class="link-gray-dark" href="#">Find friends</a></li> -->
-          		</ul>
-	    	</div>
-	    </div>
-	    <div class="row">
-			<div class="col-sm-12">
-				<h1>Backed projects</h1>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-12">
-				<h4>
-					A place to keep track of all your backed projects
-				</h4>
-			</div>
-		</div>
-		<div  class="row ">
-			<div id="project_list" class="col-xs-12 col-sm-12">
-				<ul class="list-inline">
-					<li class="">
-						<div class="col-sm-12 boder_box_listproject remove_pading ">				
-							<div class="col-sm-4 col-md-6 remove_pading img-overflow">
-								<img alt="Bootstrap Image Preview"
-	                    		src="https://ksr-ugc.imgix.net/projects/1990700/photo-original.JPG?v=1438898181&w=560&h=420&fit=crop&auto=format&q=92&s=ac626b10ed5720818e2b1d9754006794" class="">
-							</div>
-							<div class="col-sm-6 col-md-6">
-			                    <p class="h3">STRETCH AND BOBBITO: RADIO THAT CHANGED LIVES</p>
-			                    <p class="bold">by stretchandbobbito</p>   
-			                    <p >A film about quirky friends who became unlikely hip hop legends by engaging their listeners and breaking the biggest rap artists ever!</p> 
-			                    <div class="progress vertical_bot">
-			                      <div class="progress-bar progress-success" style="width: 60%;">60% Complete </div>
-			                    </div>
-			                    <ul id="feature3_text_progress" class="list-inline text-center">
-			                              <li><strong>57%</strong><p>funded</p></li>
-			                              <li><strong>$28,950</strong><p>pledged</p></li>
-			                              <li><strong>415</strong><p>bankers</p></li>
-			                              <li><strong>15</strong><p>days to go</p></li>
-			                    </ul>
-							</div>
-						</div>
-					</li>
-
-				</ul>
-			</div>
-		</div>
-		
+  
+  <div id="setting_container" class="container-fluid grid-setting">
+      <div class="row " id="header_link">
+        <div class="col-sm-12 col-sm-offset-0">
+          <ul id="" class="list-inline nav-inline h5 bold">
+                <li class="mr2"><a class="link-gray-dark" href="">Activity</a></li>
+                <li class="mr2"><a class="link-gray-dark editcolorheader" href="../Views/backed_project.html">Backed projects</a></li>
+                <li class="mr2"><a id="editprofile_header" class=" link-gray-dark" href="../Views/created_project.html">Created projects</a></li>
+                <li class="mr2"><a class="link-gray-dark" href="">Setting</a></li>
+                <li class="mr2"><a class="link-gray-dark" href="../Views/profile_public.html">Profile ( public )</a></li>
+                <!-- <li class="mr2"><a class="link-gray-dark" href="#">Find friends</a></li> -->
+              </ul>
+        </div>
+      </div>
+      <div class="row">
+      <div class="col-sm-12">
+        <h1>Backed projects</h1>
+      </div>
     </div>
-	
+    <div class="row">
+      <div class="col-sm-12">
+        <h4>
+          A place to keep track of all your backed projects
+        </h4>
+      </div>
+    </div>
+    <div  class="row ">
+      <div id="project_list" class="col-xs-12 col-sm-12">
+        <ul class="list-inline img-list">
+          <li class="margin_listproject">
+            <div class="row project_box">
+              <div class="col-xs-12 col-sm-4 col-md-2 remove_pading img-overflow">
+                <div class="media">
+                    <a href="#" class="pull-left">
+                        <img alt="Bootstrap Image Preview"
+                                  src="https://ksr-ugc.imgix.net/projects/1999674/photo-original.png?v=1438120524&w=560&h=420&fit=crop&auto=format&q=92&s=d23b753c6abe74e3727690420ce67b79" class="overflow">
+                    </a>
+                </div>
+               <!--  <hr> -->
+              </div>
+              <div class="col-sm-6 remove_pading">
+              <p class="h4">STRETCH AND BOBBITO: RADIO THAT CHANGED LIVES</p>
+              <p class="bold">by stretchandbobbito</p>   
+              <p >A film about quirky friends who became unlikely hip hop legends by engaging their listeners and breaking the biggest rap artists ever!</p> 
+              </div>
+                <div class="col-xs-12 col-sm-4 vertical_bot">
+                  <ul id="" class="list-inline text-center">
+                                            <li><strong>57%</strong><p>funded</p></li>
+                                            <li><strong>$28,950</strong><p>pledged</p></li>
+                                            <li><strong>415</strong><p>bankers</p></li>
+                                            <li><strong>15</strong><p>days to go</p></li>
+                                </ul>
+                    <div class="progress">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 60%">60%
+                                  <span class="sr-only">60% Complete (success)</span>
+                                </div>
+                              </div>
+                                <div style="text-align: center;">
+                                  <form action="../Views/list_Bankers.html">
+                      <input type="submit" value="Bankers" class="btn-success remove_border_buttom">
+                      <input type="submit" value="Bla bla bla" class="btn-success remove_border_buttom">
+                  </form>
+                                </div>
+                </div>
+            </div>          
+          </li>
+
+          <li class="margin_listproject">
+            <div class="row project_box">
+              <div class="col-xs-12 col-sm-4 col-md-2 remove_pading img-overflow">
+                <div class="media">
+                    <a href="#" class="pull-left">
+                        <img alt="Bootstrap Image Preview"
+                                  src="https://ksr-ugc.imgix.net/projects/1990700/photo-original.JPG?v=1438898181&w=560&h=420&fit=crop&auto=format&q=92&s=ac626b10ed5720818e2b1d9754006794" class="overflow">
+                    </a>
+                </div>
+               <!--  <hr> -->
+              </div>
+              <div class="col-sm-6 remove_pading">
+              <p class="h4">STRETCH AND BOBBITO: RADIO THAT CHANGED LIVES</p>
+              <p class="bold">by stretchandbobbito</p>   
+              <p >A film about quirky friends who became unlikely hip hop legends by engaging their listeners and breaking the biggest rap artists ever!</p> 
+              </div>
+                <div class="col-xs-12 col-sm-4 vertical_bot">
+                  <ul id="" class="list-inline text-center">
+                                            <li><strong>57%</strong><p>funded</p></li>
+                                            <li><strong>$28,950</strong><p>pledged</p></li>
+                                            <li><strong>415</strong><p>bankers</p></li>
+                                            <li><strong>15</strong><p>days to go</p></li>
+                                </ul>
+                    <div class="progress">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">40%
+                                  <span class="sr-only">40% Complete (success)</span>
+                                </div>
+                              </div>
+                                <div style="text-align: center;">
+                                  <form action="../Views/list_Bankers.html">
+                      <input type="submit" value="Bankers" class="btn-success remove_border_buttom">
+                      <input type="submit" value="Bla bla bla" class="btn-success remove_border_buttom">
+                  </form>
+                                </div>
+                </div>
+            </div>          
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+      </div>
+    <div id="footer">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-3">
+              <h4 style="color: #5ea5d7">DoI-Dream Of Innovation</h4>
+              <a href="">Hosted by DoI</a>
+            </div>
+            <div class="col-sm-3 col-sm-push-6">
+              <ul class="list-inline">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About us</a></li>
+                <li><a href="#">Help</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div> <!-- end footer -->
 </body>
 </html>
