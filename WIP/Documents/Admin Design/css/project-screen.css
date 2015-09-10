@@ -13,3 +13,11 @@
 .portlet-body .table-responsive {
 	overflow-x: auto;
 }
+
+.centered {
+	text-align: center;
+}
+.centered > div {
+	float: none;
+	display: inline-block;
+}
