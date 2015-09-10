@@ -23,16 +23,15 @@
     <link href="icons/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- PAGE LEVEL PLUGIN STYLES -->
-	<link href="css/plugins/datatables/datatables.css" rel="stylesheet">
-    <link href="css/plugins/bootstrap-multiselect/bootstrap-multiselect.css" rel="stylesheet">
-
+    <link href="css/plugins/datatables/datatables.css" rel="stylesheet">
+	
     <!-- THEME STYLES - Include these on every page. -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/plugins.css" rel="stylesheet">
-	<link href="css/project-screen.css" rel="stylesheet">
 
     <!-- THEME DEMO STYLES - Use these styles for reference if needed. Otherwise they can be deleted. -->
     <link href="css/demo.css" rel="stylesheet">
+	<link href="css/project-screen.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
@@ -94,23 +93,6 @@
                                     <span class="badge green pull-right">4</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-bell"></i> My Alerts
-                                    <span class="badge orange pull-right">9</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-tasks"></i> My Tasks
-                                    <span class="badge blue pull-right">10</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="calendar.html">
-                                    <i class="fa fa-calendar"></i> My Calendar
-                                </a>
-                            </li>
                             <li class="divider"></li>
                             <li>
                                 <a href="#">
@@ -158,17 +140,17 @@
                     <!-- end SIDE NAV USER PANEL -->
                     <!-- begin USERS DROPDOWN -->
                     <li class="panel">
-                        <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#pages">
+                        <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#users">
                             <i class="fa fa-files-o"></i> Users <i class="fa fa-caret-down"></i>
                         </a>
-                        <ul class="collapse nav in" id="users">
+                        <ul class="collapse nav" id="users">
                             <li>
                                 <a href="user.html">
                                     <i class="fa fa-angle-double-right"></i> Dashboard
                                 </a>
                             </li>
                             <li>
-                                <a href="userlist.html" class="active">
+                                <a href="userlist.html">
                                     <i class="fa fa-angle-double-right"></i> Users List
                                 </a>
                             </li>
@@ -184,22 +166,22 @@
                     <!-- end DASHBOARD LINK -->
                     <!-- begin PROJECTS DROPDOWN -->
                     <li class="panel">
-                        <a href="project.html" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#charts">
+                        <a data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#projects">
                             <i class="fa fa-bar-chart-o"></i> Project
-							<!-- <i class="fa fa-caret-down"></i> -->
+							<i class="fa fa-caret-down"></i>
                         </a>
-						<!-- <ul class="collapse nav" id="charts">
+						<ul class="collapse nav in" id="projects">
                             <li>
-                                <a href="flot.html">
-                                    <i class="fa fa-angle-double-right"></i> Flot Charts
+                                <a href="project.html">
+                                    <i class="fa fa-angle-double-right"></i> Dashboard
                                 </a>
                             </li>
                             <li>
-                                <a href="morris.html">
-                                    <i class="fa fa-angle-double-right"></i> Morris.js
+                                <a href="new-project.html" class="active">
+                                    <i class="fa fa-angle-double-right"></i> Projects List
                                 </a>
                             </li>
-                        </ul> -->
+                        </ul>
                     </li>
                     <!-- end PROJECTS DROPDOWN -->
 					<!-- begin BACKINGS DROPDOWN -->
@@ -252,12 +234,13 @@
                     <div class="col-lg-12">
                         <div class="page-title">
                             <h1>
-                                Users List
+                                Test Project Backers List
                             </h1>
                             <ol class="breadcrumb">
-                                <li><i class="fa fa-dashboard"></i>  <a href="index-2.html">Dashboard</a>
-                                </li>
-                                <li class="active">User List</li>
+                                <li><i class="fa fa-dashboard"></i><a href="index-2.html">Dashboard</a></li>
+                                <li class="active"><a href="new-project.html">Projects List</a></li>
+								<li class="active"><a href="project-detail.html">Projects Detail</a></li>
+								<li class="active">Test Project Backers List</li>
                             </ol>
                         </div>
                     </div>
@@ -265,88 +248,8 @@
                 </div>
                 <!-- /.row -->
                 <!-- end PAGE TITLE ROW -->
-
-				<!-- begin DASHBOARD CIRCLE TILES -->
-                <div class="row centered" >
-					<div class="col-lg-2 col-sm-6">
-						<div class="circle-tile">
-							<a href="#">
-								<div class="circle-tile-heading orange">
-									<i class="fa fa-bell fa-fw fa-3x"></i>
-								</div>
-							</a>
-							<div class="circle-tile-content orange">
-								<div class="circle-tile-description text-faded">
-									New User
-								</div>
-								<div class="circle-tile-number text-faded">
-									9 New
-								</div>
-								<a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-2 col-sm-6">
-						<div class="circle-tile">
-							<a href="#">
-								<div class="circle-tile-heading blue">
-									<i class="fa fa-tasks fa-fw fa-3x"></i>
-								</div>
-							</a>
-							<div class="circle-tile-content blue">
-								<div class="circle-tile-description text-faded">
-									Inactive Users
-								</div>
-								<div class="circle-tile-number text-faded">
-									10
-									<span id="sparklineB"></span>
-								</div>
-								<a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-2 col-sm-6">
-						<div class="circle-tile">
-							<a href="#">
-								<div class="circle-tile-heading purple">
-									<i class="fa fa-comments fa-fw fa-3x"></i>
-								</div>
-							</a>
-							<div class="circle-tile-content purple">
-								<div class="circle-tile-description text-faded">
-									Active User
-								</div>
-								<div class="circle-tile-number text-faded">
-									96
-									<span id="sparklineD"></span>
-								</div>
-								<a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-2 col-sm-6">
-						<div class="circle-tile">
-							<a href="#">
-								<div class="circle-tile-heading dark-blue">
-									<i class="fa fa-users fa-fw fa-3x"></i>
-								</div>
-							</a>
-							<div class="circle-tile-content dark-blue">
-								<div class="circle-tile-description text-faded">
-									 Total Users
-								</div>
-								<div class="circle-tile-number text-faded">
-									265
-									<span id="sparklineA"></span>
-								</div>
-								<a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
-							</div>
-						</div>
-					</div>
-                </div>
-                <!-- end DASHBOARD CIRCLE TILES -->
 				
-				<!-- begin NEW USER TABLES ROW -->
+				<!-- begin ADVANCED TABLES ROW -->
                 <div class="row">
 
                     <div class="col-lg-12">
@@ -354,144 +257,101 @@
                         <div class="portlet portlet-default">
                             <div class="portlet-heading">
                                 <div class="portlet-title">
-                                    <h4>Users List</h4>
+                                    <h4>Test Project Backers List</h4>
+                                </div>
+								<div class="portlet-widgets">
+                                    <a href="#" class="btn btn-blue btn-sm">Export</a>
+									<a data-toggle="collapse" data-parent="#accordion" href="#NewProjectTable"><i class="fa fa-chevron-down"></i></a>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-                            <div class="portlet-body">
-                                <div class="table-responsive">
-                                    <table id="example-table" class="table table-striped table-bordered table-hover table-green">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Email</th>
-												<th>Mobile</th>
-                                                <th>Login Type</th>
-                                                <th>Status</th>
-												<td>Action</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="odd gradeX">
-                                                <td>Test</td>
-                                                <td>Test</td>
-                                                <td>+84789798244</td>
-												<td>Facebook</td>
-                                                <td>
-													<button class="btn btn-default">Inactive</button>
-													<!-- <button class="btn btn-green">Active</button> -->
-												</td>
-												<td>
-													<a href="userprofile.html"><button class="btn btn-blue">View</button></a>
-												</td>
-                                            </tr>
-                                            <tr class="even gradeC">
-                                                <td>Test</td>
-                                                <td>Test</td>
-                                                <td>+84789798244</td>
-												<td>Facebook</td>
-                                                <td>
-													<!-- <button class="btn btn-default">Inactive</button> -->
-													<button class="btn btn-green">Active</button>
-												</td>
-												<td>
-													<a href="userprofile.html"><button class="btn btn-blue">View</button></a>
-												</td>
-                                            </tr>
-                                            <tr class="odd gradeA">
-                                                <td>Test</td>
-                                                <td>Test</td>
-                                                <td>+84789798244</td>
-												<td>Facebook</td>
-                                                <td>
-													<button class="btn btn-default">Inactive</button>
-													<!-- <button class="btn btn-green">Active</button> -->
-												</td>
-												<td>
-													<a href="userprofile.html"><button class="btn btn-blue">View</button></a>
-												</td>
-                                            </tr>
-                                            <tr class="even gradeA">
-                                                <td>Test</td>
-                                                <td>Test</td>
-                                                <td>+84789798244</td>
-												<td>Normal</td>
-                                                <td>
-													<!-- <button class="btn btn-default">Inactive</button> -->
-													<button class="btn btn-green">Active</button>
-												</td>
-												<td>
-													<a href="userprofile.html"><button class="btn btn-blue">View</button></a>
-												</td>
-                                            </tr>
-                                            <tr class="odd gradeA">
-                                                <td>Test</td>
-                                                <td>Test</td>
-                                                <td>+84789798244</td>
-												<td>Normal</td>
-                                                <td>
-													<button class="btn btn-default">Inactive</button>
-													<!-- <button class="btn btn-green">Active</button> -->
-												</td>
-												<td>
-													<a href="userprofile.html"><button class="btn btn-blue">View</button></a>
-												</td>
-                                            </tr>
-                                            <tr class="even gradeA">
-                                                <td>Test</td>
-                                                <td>Test</td>
-                                                <td>+84789798244</td>
-												<td>Normal</td>
-                                                <td>
-													<!-- <button class="btn btn-default">Inactive</button> -->
-													<button class="btn btn-green">Active</button>
-												</td>
-												<td>
-													<a href="userprofile.html"><button class="btn btn-blue">View</button></a>
-												</td>
-                                            </tr>
-                                            <tr class="gradeA">
-                                                <td>Test</td>
-                                                <td>Test</td>
-                                                <td>+84789798244</td>
-												<td>Normal</td>
-                                                <td>
-													<!-- <button class="btn btn-default">Inactive</button> -->
-													<button class="btn btn-green">Active</button>
-												</td>
-												<td>
-													<a href="userprofile.html"><button class="btn btn-blue">View</button></a>
-												</td>
-                                            </tr>
-                                            <tr class="gradeA">
-                                                <td>Test</td>
-                                                <td>Test</td>
-                                                <td>+84789798244</td>
-												<td>Normal</td>
-                                                <td>
-													<!-- <button class="btn btn-default">Inactive</button> -->
-													<button class="btn btn-green">Active</button>
-												</td>
-												<td>
-													<a href="userprofile.html"><button class="btn btn-blue">View</button></a>
-												</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- /.table-responsive -->
-                            </div>
+							<div id="#NewProjectTable">
+								<div class="portlet-body">
+									<div class="table-responsive">
+										<table id="example-table" class="table table-striped table-bordered table-hover table-green">
+											<thead>
+												<tr>
+													<th>No</th>
+													<th>Backer Name</th>
+													<th>Email</th>
+													<th>Phone Number</th>
+													<th>Pledge Amount</th>
+													<th>Reward</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr class="odd">
+													<td>1</td>
+													<td>Test</td>
+													<td>TestTestTest@gmail.com</td>
+													<td>+849878978973</td>
+													<td>$200</td>
+													<td>TestTestTestTestTest</td>
+												</tr>
+												<tr class="odd">
+													<td>1</td>
+													<td>Test</td>
+													<td>TestTestTest@gmail.com</td>
+													<td>+849878978973</td>
+													<td>$200</td>
+													<td>TestTestTestTestTest</td>
+												</tr>
+												<tr class="odd">
+													<td>1</td>
+													<td>Test</td>
+													<td>TestTestTest@gmail.com</td>
+													<td>+849878978973</td>
+													<td>$200</td>
+													<td>TestTestTestTestTest</td>
+												</tr>
+												<tr class="odd">
+													<td>1</td>
+													<td>Test</td>
+													<td>TestTestTest@gmail.com</td>
+													<td>+849878978973</td>
+													<td>$200</td>
+													<td>TestTestTestTestTest</td>
+												</tr>
+												<tr class="odd">
+													<td>1</td>
+													<td>Test</td>
+													<td>TestTestTest@gmail.com</td>
+													<td>+849878978973</td>
+													<td>$200</td>
+													<td>TestTestTestTestTest</td>
+												</tr>
+												<tr class="odd">
+													<td>1</td>
+													<td>Test</td>
+													<td>TestTestTest@gmail.com</td>
+													<td>+849878978973</td>
+													<td>$200</td>
+													<td>TestTestTestTestTest</td>
+												</tr>
+												<tr class="odd">
+													<td>1</td>
+													<td>Test</td>
+													<td>TestTestTest@gmail.com</td>
+													<td>+849878978973</td>
+													<td>$200</td>
+													<td>TestTestTestTestTest</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<!-- /.table-responsive -->
+								</div>
                             <!-- /.portlet-body -->
-                        </div>
+							</div>
+						</div>
                         <!-- /.portlet -->
 
                     </div>
                     <!-- /.col-lg-12 -->
 
                 </div>
-                <!-- /.row -->
-				
             </div>
+			</div>
             <!-- /.page-content -->
 
         </div>
@@ -536,13 +396,10 @@
     <!-- PAGE LEVEL PLUGIN SCRIPTS -->
     <script src="js/plugins/datatables/jquery.dataTables.js"></script>
     <script src="js/plugins/datatables/datatables-bs3.js"></script>
-	
 
     <!-- THEME SCRIPTS -->
     <script src="js/flex.js"></script>
-	<script src="js/demo/advanced-tables-demo.js"></script>
-	<script src="js/demo/buttons-demo.js"></script>
-
+    <script src="js/demo/advanced-tables-demo.js"></script>
 </body>
 
 
