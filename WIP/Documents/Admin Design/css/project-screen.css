@@ -1,0 +1,15 @@
+/* Css for demo prototype of project screen */
+
+/* Table style */
+.table > thead > tr > th {
+     vertical-align: middle;
+	 text-align: center;
+}
+
+.table > tbody > tr > td > .btn-group{
+	display: flex;
+}
+
+.portlet-body .table-responsive {
+	overflow-x: auto;
+}

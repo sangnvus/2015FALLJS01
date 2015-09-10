@@ -1,4 +1,6 @@
 //DataTables Initialization
 $(document).ready(function() {
-    $('#example-table').dataTable();
+    $('#example-table').dataTable({"aoColumnDefs": [
+		{ "bSortable": false, "aTargets": [ 0 ] }
+]});
 });
