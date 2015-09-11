@@ -9,7 +9,9 @@
 .table > tbody > tr > td > .btn-group{
 	display: flex;
 }
-
+.table > tbody > tr > td > .label{
+	line-height: 2.4em;
+}
 .portlet-body .table-responsive {
 	overflow-x: auto;
 }
@@ -20,4 +22,8 @@
 .centered > div {
 	float: none;
 	display: inline-block;
+}
+
+.carousel-caption{
+	padding-bottom: 13%;
 }
