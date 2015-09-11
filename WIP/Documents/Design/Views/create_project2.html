@@ -1,105 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Create Project</title>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>Create Project</title>
 
-    <!-- Bootstrap -->
-    <link href="../Contents/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../Contents/style.css">
-    <link rel="stylesheet" type="text/css" href="css/datepicker.css">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!-- Bootstrap -->
+  <link href="../Contents/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../Contents/style.css">
+  <link rel="stylesheet" type="text/css" href="css/datepicker.css">
+  <link rel="stylesheet" type="text/css" href="../Contents/timeline.css">
+  <link rel="stylesheet" type="text/css" href="../Contents/comment.css">
+  <link rel="stylesheet" type="text/css" href="../Contents/Libraries/jquery.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="../Contents/Libraries/jquery.timelinr.css">
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+      <![endif]-->
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="../Scripts/bootstrap.min.js"></script>
-    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
-    <!-- Inculde text editor -->
-    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../Contents/Libraries/text-editor.css">
-    <script src="../Scripts/Libraries/text-editor.js"></script>
-    <script type="text/javascript">
+      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+      <!-- Include all compiled plugins (below), or include individual files as needed -->
+      <script src="../Scripts/bootstrap.min.js"></script>
+      <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+      <!-- Inculde text editor -->
+      <link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="../Contents/Libraries/text-editor.css">
+      <script src="../Scripts/Libraries/text-editor.js"></script>
+      <script type="text/javascript">
         $(document).ready( function() {  
-             $("#txtEditor").Editor();                    
+         $("#txtEditor").Editor();                    
+       });
+      </script>
+      <script src="../Scripts/Libraries/jquery.dataTables.min.js"></script>
+      <script>
+        $(document).ready(function(){
+          $('#bankersTable').dataTable();
         });
-     </script>
-  </head>
-  <body>
-    <div id="header">
-      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="home_logged.html">DoI.com</a>
-        </div>
-      
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="#">Discover</a></li>
-            <li><a href="create_project1.html">Start</a></li>
-            <li role="separator" class="divider-vertical"></li>
-          </ul>
+      </script>
+      <script src="../Scripts/Libraries/jquery.timelinr-0.9.54.js"></script>
+      <script>
+        $(function(){
+          $().timelinr({
+            arrowKeys: 'true'
+          })
+        });
+      </script>
+    </head>
+    <body>
+      <div id="header">
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="home_logged.html">DoI.com</a>
+          </div>
+          
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+              <li><a href="discover.html">Discover</a></li>
+              <li><a href="create_project1.html">Start</a></li>
+              <li role="separator" class="divider-vertical"></li>
+            </ul>
 
-          <form class="navbar-form navbar-left" role="search">
-            <div class="form-group inner-addon left-addon">
-              <span class="glyphicon glyphicon-search"></span>
-              <input type="text" class="form-control" placeholder="Search Projects">
-            </div>
-          </form>
-          <ul id="profile_dropdown" class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <img id="avatar" src="../images/avatar_default.png" alt="" class="img-responsive img-circle center-block">
-                MyName
-                <span class="caret"></span>
-              </a>
-              
-              <ul class="dropdown-menu">
-                <h4>My stuff</h4>
-                <li><a href="#">Message <span class="badge">3</span></a></li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">Backed projects</a></li>
-                <li><a href="#">Created projects</a></li>
-                <li><a href="#">Starred projects</a></li>
-                <li class="divider"></li>
-                <h4>Setting</h4>
-                <li><a href="account.html">Account</a></li>
-                <li><a href="editprofile2.html">Edit profile</a></li>
-                <li><a href="notification.html">Notifications</a></li>
-                <li class="divider"></li>
-                <p class="no-wrap">You are logged is as <b>ChinhVC</b> | <a href="home.html">Log out</a></p>
-              </ul>
-            </li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </nav>
-    </div> <!--end header -->
+            <form class="navbar-form navbar-left" role="search">
+              <div class="form-group inner-addon left-addon">
+                <span class="glyphicon glyphicon-search"></span>
+                <input type="text" class="form-control" placeholder="Search Projects">
+              </div>
+            </form>
+            <ul id="profile_dropdown" class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <img id="avatar" src="../images/avatar_default.png" alt="" class="img-responsive img-circle center-block">
+                  MyName
+                  <span class="caret"></span>
+                </a>
+                
+                <ul class="dropdown-menu">
+                  <h4>My stuff</h4>
+                  <li><a href="message.html">Message <span class="badge">3</span></a></li>
+                  <li><a href="">Profile</a></li>
+                  <li><a href="backed_project.html">Backed projects</a></li>
+                  <li><a href="created_project.html">Created projects</a></li>
+                  <li><a href="starred_project.html">Starred projects</a></li>
+                  <li class="divider"></li>
+                  <h4>Setting</h4>
+                  <li><a href="account.html">Account</a></li>
+                  <li><a href="editprofile2.html">Edit profile</a></li>
+                  <li><a href="notification.html">Notifications</a></li>
+                  <li class="divider"></li>
+                  <p class="no-wrap">You are logged is as <b>ChinhVC</b> | <a href="home.html">Log out</a></p>
+                </ul>
+              </li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </nav>
+      </div> <!--end header -->
 
-    <div id="create_project2" class="paddingNavbar">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
+      <div id="create_project2" class="paddingNavbar">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
              <!-- Nav Tabs -->
-            <div class="tab-center">
+             <div class="tab-center">
               <ul class="nav nav-tabs">
                 <li class="active"><a href="#basic" data-toggle="tab">Basic</a></li>
                 <li><a href="#reward" data-toggle="tab">Reward</a></li>
                 <li><a href="#story" data-toggle="tab">Story</a></li>
+                <li><a href="#update" data-toggle="tab">Update</a></li>
                 <li><a href="#preview" data-toggle="tab">Preview</a></li>
                 <a href="#submit" class="btn btn-success">submit for review</a>
               </ul>
@@ -126,117 +145,117 @@
                             <input class="photo file" data-help_section="project-image-help" id="project_photo" name="project[photo]" type="file" url="/projects/1182290592/352498880/photo">
                             <strong class="center">
                              <span class="has_file_hide">This is the main image associated with your project. Make it count!</span><span>JPEG, PNG, GIF, or BMP • 50MB file limit</span> <span>At least 1024x768 pixels • 4:3 aspect ratio</span>
-                            </strong>
-                            </div>
+                           </strong>
+                         </div>
+                       </div>
+                     </div>
+
+                     <div class="row border-grey">
+                      <div class="col-md-4">
+                        <h3>Project title</h3>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="field-wrapper">
+                          <input type="text" id="project_name" name="project[name]" class="form-control" placeholder="" >
+                        </div>
+                        <div class="field-help-2">
+                          <p>Your project title and blurb should be simple, specific, and memorable. Our search tools run through these sections of your project, so be sure to incorporate any key words here!</p>
+                          <p>These words will help people find your project, so choose them wisely! Your name will be searchable too.</p>
                         </div>
                       </div>
+                    </div>
 
-                      <div class="row border-grey">
-                        <div class="col-md-4">
-                          <h3>Project title</h3>
+                    <div class="row border-grey">
+                      <div class="col-md-4">
+                        <h3>Short blurb</h3>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="field-wrapper">
+                          <textarea class="form-control" rows="2"></textarea>
                         </div>
-                        <div class="col-md-8">
-                          <div class="field-wrapper">
-                            <input type="text" id="project_name" name="project[name]" class="form-control" placeholder="" >
-                          </div>
-                          <div class="field-help-2">
-                            <p>Your project title and blurb should be simple, specific, and memorable. Our search tools run through these sections of your project, so be sure to incorporate any key words here!</p>
-                            <p>These words will help people find your project, so choose them wisely! Your name will be searchable too.</p>
-                          </div>
+                        <div class="field-help-2">
+                          <p>If you had to describe what you're creating in one tweet, how would you do it?</p>
                         </div>
                       </div>
+                    </div>
 
-                      <div class="row border-grey">
-                        <div class="col-md-4">
-                          <h3>Short blurb</h3>
+                    <div class="row border-grey">
+                      <div class="col-md-4">
+                        <h3>Category</h3>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="field-wrapper">
+                          <select class="form-control" id="sel1">
+                            <option>Art</option>
+                            <option>comics</option>
+                            <option>Crafts</option>
+                            <option>Dance</option>
+                            <option>Design</option>
+                            <option>Fashion</option>
+                            <option>Games</option>
+                            <option>Journalism</option>
+                            <option>Music</option>
+                            <option>Photography</option>
+                            <option>Publishing</option>
+                            <option>Technology</option>
+                          </select>
                         </div>
-                        <div class="col-md-8">
-                          <div class="field-wrapper">
-                            <textarea class="form-control" rows="2"></textarea>
-                          </div>
-                          <div class="field-help-2">
-                            <p>If you had to describe what you're creating in one tweet, how would you do it?</p>
-                          </div>
+                        <br>
+                        <div class="field-wrapper">
+                          <select class="form-control" id="sel1">
+                            <option selected="selected" value="1">Subcategory (optional)</option>
+                            <option value="287">Ceramics</option>
+                            <option value="20">Conceptual Art</option>
+                            <option value="21">Digital Art</option>
+                            <option value="22">Illustration</option>
+                            <option value="288">Installations</option>
+                            <option value="54">Mixed Media</option>
+                            <option value="23">Painting</option>
+                            <option value="24">Performance Art</option>
+                            <option value="53">Public Art</option>
+                            <option value="25">Sculpture</option>
+                            <option value="289">Textiles</option>
+                            <option value="290">Video Art</option>
+                          </select>
                         </div>
                       </div>
+                    </div>
 
-                        <div class="row border-grey">
+                    <div class="row border-grey">
+                      <div class="col-md-4">
+                        <h3>Project location</h3>
+                      </div>
+                      <div class="col-md-8">
+                        <input type="text" id="project_location" name="project[name]" class="form-control" placeholder="" >
+                        <div class="field-help-2">
+                        </div>
+                      </div>
+                    </div> <!--  end Project location -->
+
+                    <div class="row border-grey">
+                      <div class="col-md-4">
+                        <h3>Funding duration</h3>
+                      </div>
+
+                      <div class="col-md-8">
+                        <div class="row">
                           <div class="col-md-4">
-                            <h3>Category</h3>
+                            <div class="radio">
+                              <label><input type="radio" name="optradio" checked>Number of days</label>
+                            </div>
                           </div>
                           <div class="col-md-8">
-                            <div class="field-wrapper">
-                                <select class="form-control" id="sel1">
-                                  <option>Art</option>
-                                  <option>comics</option>
-                                  <option>Crafts</option>
-                                  <option>Dance</option>
-                                  <option>Design</option>
-                                  <option>Fashion</option>
-                                  <option>Games</option>
-                                  <option>Journalism</option>
-                                  <option>Music</option>
-                                  <option>Photography</option>
-                                  <option>Publishing</option>
-                                  <option>Technology</option>
-                                </select>
-                            </div>
-                            <br>
-                             <div class="field-wrapper">
-                                <select class="form-control" id="sel1">
-                                  <option selected="selected" value="1">Subcategory (optional)</option>
-                                  <option value="287">Ceramics</option>
-                                  <option value="20">Conceptual Art</option>
-                                  <option value="21">Digital Art</option>
-                                  <option value="22">Illustration</option>
-                                  <option value="288">Installations</option>
-                                  <option value="54">Mixed Media</option>
-                                  <option value="23">Painting</option>
-                                  <option value="24">Performance Art</option>
-                                  <option value="53">Public Art</option>
-                                  <option value="25">Sculpture</option>
-                                  <option value="289">Textiles</option>
-                                  <option value="290">Video Art</option>
-                                </select>
-                            </div>
+                            <input type="text" id="project_location" name="project[name]" class="form-control" placeholder="1-60 day, we recommend 30 or less" >
                           </div>
                         </div>
-                        
-                      <div class="row border-grey">
-                        <div class="col-md-4">
-                          <h3>Project location</h3>
-                        </div>
-                        <div class="col-md-8">
-                          <input type="text" id="project_location" name="project[name]" class="form-control" placeholder="" >
-                          <div class="field-help-2">
-                          </div>
-                        </div>
-                      </div> <!--  end Project location -->
-                      
-                      <div class="row border-grey">
-                        <div class="col-md-4">
-                          <h3>Funding duration</h3>
-                        </div>
-
-                        <div class="col-md-8">
-                          <div class="row">
-                            <div class="col-md-4">
-                              <div class="radio">
-                                <label><input type="radio" name="optradio" checked>Number of days</label>
-                              </div>
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="radio">
+                              <label><input type="radio" name="optradio">End on date & time</label>
                             </div>
-                              <div class="col-md-8">
-                                <input type="text" id="project_location" name="project[name]" class="form-control" placeholder="1-60 day, we recommend 30 or less" >
-                              </div>
                           </div>
-                          <div class="row">
-                            <div class="col-md-4">
-                              <div class="radio">
-                                <label><input type="radio" name="optradio">End on date & time</label>
-                              </div>
-                            </div>
-                            <div class="col-md-8">
-                               <input type='date' class="form-control" />
+                          <div class="col-md-8">
+                           <input type='date' class="form-control" />
                                <!-- <div class="form-group">
                                   <div class='input-group date' id='datetimepicker1'>
                                       <input type='date' class="form-control" />
@@ -245,355 +264,952 @@
                                       </span>
                                   </div>
                                 </div> -->
-                            </div>
-                          </div>
-                        </div>
-                      </div><!-- end funding duration -->
-
-                     <div class="row border-grey">
-                        <div class="col-md-4">
-                          <h3>Funding goal</h3>
-                        </div>
-                        <div class="col-md-8">
-                          <input type="text" id="funding_goal" name="£50" class="form-control" placeholder="" >
-                          <div class="field-help-2">
-                            <p>Your funding goal should be the minimum amount needed to complete the project and fulfill (and ship!) all rewards. Because funding is all-or-nothing, you can always raise more than your goal but never less. Once your project has launched, it will not be possible to change your funding goal.</p>
-                            <p>If your project is successfully funded, the following fees will be collected from your funding total: Kickstarter's 5% fee and payment processing fees (between 3% and 5%). Please note we do not withhold VAT. If funding isn't successful, there are no fees.
-                            </p>
-                          </div> 
-                        </div>
-                      </div> <!-- end dunding_goal -->
-                    </div><!--  end-col-md9 -->
-
-                    <div class="col-md-3">
-                          <div class="border-tips">
-                            <p>How to:</p>
-                            <a href=""><b>Make an awesome project</b></a>
-                          </div>
-                          <br>
-                          <h3><a href="">Tiko - The Unibody 3D Printer</a></h3>
-                          <p>by vinothini venkatesan</p>
-                          <br>
-                          <div class="border-main">
-                            <img src="../images/projectimage1.jpg" alt="" class="img-responsive center-block">
-                            <div class="info">
-                              Executive produced by Thurston Moore & Nels Cline, Tom Surgal's FIRE MUSIC is the definitive documentary of the Free Jazz revolution.
-                            </div>
-                            <br>
-                            <div class="progress">
-                              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">0%
-                                <span class="sr-only">0% Complete (success)</span>
                               </div>
                             </div>
-                           
-                            <div class="">
-                              <ul class="list-inline text-center">
-                                <li><p><strong>550%</strong></p><p>funded</p></li>
-                                <li><p><strong>$0</strong></p><p>pledged</p></li>
-                              </ul>
                           </div>
-                      </div>
-                    </div> <!-- end-col-md3 -->
-                  </div>
-                </div> <!-- end-content -->
-              </div><!-- end-tabpanel-Basic -->
+                        </div><!-- end funding duration -->
 
-              <div id="reward" class="tab-pane border-main" >
-                <div>
-                  <h2 class="text-center">How will you thank the people who support you?</h2>
-                  <h3 class="text-center">Offer an experience, a copy of what you are making, or a thank you in the credits. Get creative!</h3>
-                </div> <!-- end-title -->
-                <div class="container-fluid">
-                  <div class="row">
-                    <div class="col-md-9">
-                      <div class="row border-grey">
-                        <div class="col-md-2">
-                          <label for="">Reward #1</label>
-                        </div>
-                        <div class="col-md-10">
-                        <div class="row">
-                          <div class="col-md-3">Pledge amount</div>
-                          <div class="col-md-4"><input type="text" id="pledge_amount" name="project[name]" class="form-control" placeholder=""></div>
-                          <div class="col-md-3"></div>
-                          <div class="col-md-2"><a class="btn btn-danger" href="">Delete</a></div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-3">Description</div>
-                          <div class="col-md-9"><div class="field-wrapper">
-                            <textarea class="form-control" rows="2"></textarea>
-                          </div></div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-3">Estimated delivery</div>
-                          <div class="col-md-5">
-                            <select class="form-control" id="sel1">
-                              <option value="0">Select month</option>
-                              <option value="1">January</option>
-                              <option value="2">February</option>
-                              <option value="3">March</option>
-                              <option value="4">April</option>
-                              <option value="5">May</option>
-                              <option value="6">June</option>
-                              <option value="7">July</option>
-                              <option value="8">August</option>
-                              <option value="9">September</option>
-                              <option value="10">October</option>
-                              <option value="11">November</option>
-                              <option value="12">December</option>
-                            </select>
-                          </div>
+                        <div class="row border-grey">
                           <div class="col-md-4">
-                             <select class="form-control" id="sel1">
-                              <option value="0">Select year</option>
-                              <option value="2015">2015</option>
-                              <option value="2016">2016</option>
-                              <option value="2017">2017</option>
-                              <option value="2018">2018</option>
-                              <option value="2019">2019</option>
-                              <option value="2020">2020</option>
-                            </select>
+                            <h3>Funding goal</h3>
                           </div>
-                        </div> 
-                        <div class="row">
-                          <div class="col-md-3">Shipping details</div>
-                          <div class="col-md-9">
-                            <select class="form-control" id="sel1">
-                              <option value="">Select an option</option>
-                              <option value="none">No shipping involved</option>
-                              <option value="restricted">Only ships to certain countries</option>
-                              <option value="unrestricted">Ships anywhere in the world</option>
-                            </select>
+                          <div class="col-md-8">
+                            <input type="text" id="funding_goal" name="£50" class="form-control" placeholder="" >
+                            <div class="field-help-2">
+                              <p>Your funding goal should be the minimum amount needed to complete the project and fulfill (and ship!) all rewards. Because funding is all-or-nothing, you can always raise more than your goal but never less. Once your project has launched, it will not be possible to change your funding goal.</p>
+                              <p>If your project is successfully funded, the following fees will be collected from your funding total: Kickstarter's 5% fee and payment processing fees (between 3% and 5%). Please note we do not withhold VAT. If funding isn't successful, there are no fees.
+                              </p>
+                            </div> 
                           </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-3">Banker</div>
-                          <div class="col-md-3">
-                            <label class="limit_label"><input class="limit_checkbox" type="checkbox"> Limit quantity</label>                          
-                          </div>
-                          <div class="col-md-6">
-							<input type="text" id="limit_quntity" class="form-control" name=""  placeholder=""> 
-						  </div>
-                        </div>
-                        </div>
-                      </div>
-                      <div class="row border-grey border-dash">
-                        <div class="addReward">
-                          <a class="btn btn-success" href="">Add new reward</a>
-                        </div>
-                       <!-- add reward at here -->
-                      </div>
-                    </div> <!-- end col-md-9 -->
+                        </div> <!-- end dunding_goal -->
+                      </div><!--  end-col-md9 -->
 
-                    <div class="col-md-3">
+                      <div class="col-md-3">
                         <div class="border-tips">
                           <p>How to:</p>
-                          <a href=""><b>Create greate rewards</b></a>
+                          <a href=""><b>Make an awesome project</b></a>
                         </div>
-                        <div class="help">
-                          <h5><b>What to offer</b></h5>
-                          <p>Copies of what you're making, unique experiences, and limited editions work great.</p>
-                          <h5><b>How to price</b></h5>
-                          <ul>
-                            <li>Price fairly, and offer a good value. What would <i>you</i> consider a fair exchange?</li>
-                            <li>Something fun for <span class="money gbp no-code">£10</span> or less is always a good idea.</li>
-                            <li>Funds that backers pledge to account for shipping costs will count towards your project's funding goal. Keep this in mind when setting your goal.</li>
-                            <li>Use the shipping tool to add delivery costs for any country you like (including your own). The price will be added to backer's pledges as they check out.</li>
-                          </ul>
-                          <h5><b>What's prohibited</b></h5>
-                          <ul>
-                            <li>Rewards not directly produced by the creator or the project itself</li>
-                            <li>Financial incentives</li>
-                            <li>Raffles, lotteries, and sweepstakes</li>
-                            <li>Coupons, discounts, and cash-value gift cards</li>
-                            <li>For more, please review our list of prohibited items and subject matter</li>
-                          </ul>
-                          <h5><b>Need ideas for rewards?</b></h5>
-                          <p>Campus has a discussion on that — and plenty more.</p>
-                        </div>
-                    </div><!-- end col-md-3 -->
-                  </div>
-                </div>  <!-- end-content -->
-              </div><!-- end-tabpanel-Reward -->
-
-              <div id="story" class="tab-pane border-main" >
-                <div>
-                  <h2 class="text-center">What are you creating?</h2>
-                  <h3 class="text-center">Every project must create something to share with others. </h3>
-                  <h3 class="text-center">Use this space to tell the story behind your project.</h3>
-                </div> <!-- end-title -->
-                <div class="container-fluid">
-                  <div class="row">
-                    <div class="col-md-9">
-                      <div class="row border-grey">
-                        <div class="col-md-4"><label for="">Project video</label></div>
-                        <div class="col-md-8">
-                          <div class="upload">
-                            Choose a video from your computer
-                            <input class="video file" data-help_section="project-video-help" id="project_video" name="project[video]" type="file" url="">
-                            <strong class="center">
-                            <span>MOV, MPEG, AVI, MP4, 3GP, WMV, or FLV • 5GB file limit</span> <span>640x480 pixels • 4:3 aspect ratio</span>
-                            </strong>                 
-                            </div>
-                            <div>Have fun – add a video! Projects with a video have a much higher chance of success. For a dose of inspiration, check out the Creator Handbook. Need some help? Visit our Creator FAQ.</div>
-                        </div>
-                      </div>
-                      <div class="row border-grey">
-                        <div class="col-md-4"><label for="">Project description</label></div>
-                        <div class="col-md-8">
-                            <div class="help">
-                              Use your project description to share more about what you’re raising funds to do and how you plan to pull it off. It’s up to you to make the case for your project.
-                            </div>
-                            <div>
-                              <div id="txtEditor"></div> 
-                            </div>
-                        </div>
-                      </div> 
-                      <div class="row border-grey">
-                        <div class="col-md-4"><label for="">Risks and challenges</label></div>
-                        <div class="col-md-8">
-                          <div class="help">
-                            <p><b>What are the risks and challenges that come with completing your project, and how are you qualified to overcome them?</b></p>
-                            <p>When it comes to fulfillment, every project has potential obstacles, from production delays to permits to collaborator mishaps. What unique challenges might you face <b>after</b> your project is successfully funded? And if setbacks do arise (we hope they don’t, but it happens!), how will you tackle them? If you have any other projects that you're currently in the process of fulfilling, please mention their status in this section.</p>
-                            <p>Addressing this from the start helps build a supportive community. Backers will understand your project is a work in progress and feel confident that you’ll work hard to follow through, even when faced with challenges.</p>
+                        <br>
+                        <h3><a href="">Tiko - The Unibody 3D Printer</a></h3>
+                        <p>by vinothini venkatesan</p>
+                        <br>
+                        <div class="border-main">
+                          <img src="../images/projectimage1.jpg" alt="" class="img-responsive center-block">
+                          <div class="info">
+                            Executive produced by Thurston Moore & Nels Cline, Tom Surgal's FIRE MUSIC is the definitive documentary of the Free Jazz revolution.
                           </div>
-                          <div class="field-wrapper">
-                            <textarea class="form-control" rows="7"></textarea>
-                          </div>
-                        </div>
-                      </div>
-                       <div class="row border-grey">
-                        <div class="col-md-4"><label for="">Project FAQs</label></div>
-                        <div class="col-md-8">
-                          You'll be able to add FAQs on your project page once your project goes live.
-                        </div>
-                      </div>
-                    </div> <!-- end col-md-9 -->
-                    <div class="col-md-3">
-                        <div class="video-tout border-tips">
-                          <a class="link_to_school-video-dialog video_thumb_container">
-                            <!-- <img alt="Media - Video" class="play_button" src="https://d297h9he240fqh.cloudfront.net/assets/projects/button-playvideo-sm-c4ba88222413634953e9fda7e69a2bf49f9e3caf97dfd2ef63e38921db846595.png"> -->
-                            <img alt="Video thumb school 757b761a8e7251582e9e3f9abcf0ff2a4f39bdd13f022020d3e544e47ae138e5" height="115" src="https://d297h9he240fqh.cloudfront.net/assets/projects/edit/video-thumb-school-757b761a8e7251582e9e3f9abcf0ff2a4f39bdd13f022020d3e544e47ae138e5.jpg" width="199">
-                          </a>
-                          <a class="school-tout" href="/help/handbook/your_story" target="_blank"><span><span>How to:</span> Make an awesome video</span></a>
-                        </div>
-                        <div class="help">
-                          <h5><b>Looking for advice?</b></h5>
-                          <p>Visit Campus to read about making great videos and more.</p>
                           <br>
-                          <h5><b>Important reminder</b></h5>
-                          <p>Kickstarter is a global community, and including translations of your description and rewards, or using our Captions & Subtitles to make your videos more accessible, will help your project have a wider appeal. If you're including text or audio in a language outside of those that we currently support (English, French, German, and Spanish), we also ask that you include English translations or subtitles.</p>
-                          <p>Don't use music, images, video, or other content that you don't have the rights to. Reusing copyrighted material is almost always against the law and can lead to expensive lawsuits down the road. The easiest way to avoid copyright troubles is to create all the content yourself or use content that is free for public use.</p>
-                          <p>For legal, mostly free alternatives, check out some of these great resources: SoundCloud, Vimeo Music Store, Free Music Archive, and ccMixter.</p>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">0%
+                              <span class="sr-only">0% Complete (success)</span>
+                            </div>
+                          </div>
+
+                          <div class="">
+                            <ul class="list-inline text-center">
+                              <li><p><strong>550%</strong></p><p>funded</p></li>
+                              <li><p><strong>$0</strong></p><p>pledged</p></li>
+                            </ul>
+                          </div>
                         </div>
-                    </div> <!-- end col-md-3 -->
+                      </div> <!-- end-col-md3 -->
+                    </div>
                   </div> <!-- end-content -->
                 </div><!-- end-tabpanel-Basic -->
-              </div> <!-- end-tabpanel-Story -->
 
-              <div class="tab-pane border-main" id="preview">
-                <div class="view_title text-center">
-                  <h2><a href="">Dream of Inovation</a></h2>
-                  <p>by <a href="">Vu Cong Chinh</a></p>
-                </div>
-                <div class="view_overview">
-                  <div class="row">
-                    <div class="col-md-8">
-                      <div class="project-image">
-                        <img src="../images/projectimage1.jpg" alt="" class="img-responsive center-block">
+                <div id="reward" class="tab-pane border-main" >
+                  <div>
+                    <h2 class="text-center">How will you thank the people who support you?</h2>
+                    <h3 class="text-center">Offer an experience, a copy of what you are making, or a thank you in the credits. Get creative!</h3>
+                  </div> <!-- end-title -->
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-md-9">
+                        <div class="row border-grey">
+                          <div class="col-md-2">
+                            <label for="">Reward #1</label>
+                          </div>
+                          <div class="col-md-10">
+                            <div class="row">
+                              <div class="col-md-3">Pledge amount</div>
+                              <div class="col-md-4"><input type="text" id="pledge_amount" name="project[name]" class="form-control" placeholder=""></div>
+                              <div class="col-md-3"></div>
+                              <div class="col-md-2"><a class="btn btn-danger" href="">Delete</a></div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-3">Description</div>
+                              <div class="col-md-9"><div class="field-wrapper">
+                                <textarea class="form-control" rows="2"></textarea>
+                              </div></div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-3">Estimated delivery</div>
+                              <div class="col-md-5">
+                                <select class="form-control" id="sel1">
+                                  <option value="0">Select month</option>
+                                  <option value="1">January</option>
+                                  <option value="2">February</option>
+                                  <option value="3">March</option>
+                                  <option value="4">April</option>
+                                  <option value="5">May</option>
+                                  <option value="6">June</option>
+                                  <option value="7">July</option>
+                                  <option value="8">August</option>
+                                  <option value="9">September</option>
+                                  <option value="10">October</option>
+                                  <option value="11">November</option>
+                                  <option value="12">December</option>
+                                </select>
+                              </div>
+                              <div class="col-md-4">
+                               <select class="form-control" id="sel1">
+                                <option value="0">Select year</option>
+                                <option value="2015">2015</option>
+                                <option value="2016">2016</option>
+                                <option value="2017">2017</option>
+                                <option value="2018">2018</option>
+                                <option value="2019">2019</option>
+                                <option value="2020">2020</option>
+                              </select>
+                            </div>
+                          </div> 
+                          <div class="row">
+                            <div class="col-md-3">Shipping details</div>
+                            <div class="col-md-9">
+                              <select class="form-control" id="sel1">
+                                <option value="">Select an option</option>
+                                <option value="none">No shipping involved</option>
+                                <option value="restricted">Only ships to certain countries</option>
+                                <option value="unrestricted">Ships anywhere in the world</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-3">Banker</div>
+                            <div class="col-md-3">
+                              <label class="limit_label"><input class="limit_checkbox" type="checkbox"> Limit quantity</label>                          
+                            </div>
+                            <div class="col-md-6">
+                             <input type="text" id="limit_quntity" class="form-control" name=""  placeholder=""> 
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                     <div class="row border-grey border-dash">
+                      <div class="addReward">
+                        <a class="btn btn-success" href="">Add new reward</a>
                       </div>
-                      <h3>Create a website to abc</h3>
-                      <ul class="list-inline">
-                        <li><a href="">Hanoi,Vietnam</a></li>
-                        <li><a href="">Web</a></li>
-                        <li><a class="btn btn-default" href="">share projects</a></li>
+                      <!-- add reward at here -->
+                    </div>
+                  </div> <!-- end col-md-9 -->
+
+                  <div class="col-md-3">
+                    <div class="border-tips">
+                      <p>How to:</p>
+                      <a href=""><b>Create greate rewards</b></a>
+                    </div>
+                    <div class="help">
+                      <h5><b>What to offer</b></h5>
+                      <p>Copies of what you're making, unique experiences, and limited editions work great.</p>
+                      <h5><b>How to price</b></h5>
+                      <ul>
+                        <li>Price fairly, and offer a good value. What would <i>you</i> consider a fair exchange?</li>
+                        <li>Something fun for <span class="money gbp no-code">£10</span> or less is always a good idea.</li>
+                        <li>Funds that backers pledge to account for shipping costs will count towards your project's funding goal. Keep this in mind when setting your goal.</li>
+                        <li>Use the shipping tool to add delivery costs for any country you like (including your own). The price will be added to backer's pledges as they check out.</li>
                       </ul>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="row">
-                        <div>
-                          <div class="backers_count"><b>61</b></div>
-                          <span class="">backers</span>
-                        </div>
-                        <div>
-                          <div class=""><b>$8,007</b></div>
-                          <span class="">pledged of $10,000 goal</span>
-                        </div>
-                        <div>
-                          <div class=""><b>12</b></div>
-                          <span class="">days to go</span>
-                        </div>
-                        <div>
-                          <h2>THIS PROJECT IS NOT LIVE</h2>
-                          <p>This is only a draft that the creator has chosen to share.</p>
-                        </div>
-                      </div>
-                    </div> <!-- end col-md-4 -->
-                  </div>
-                </div>
-                <div id="view_share">
-                  <ul class="list-inline">
-                        <li><a href="">Campaign</a></li>
-                        <li><a href="">Updates</a></li>
-                        <li><a href="">Comments</a></li>
+                      <h5><b>What's prohibited</b></h5>
+                      <ul>
+                        <li>Rewards not directly produced by the creator or the project itself</li>
+                        <li>Financial incentives</li>
+                        <li>Raffles, lotteries, and sweepstakes</li>
+                        <li>Coupons, discounts, and cash-value gift cards</li>
+                        <li>For more, please review our list of prohibited items and subject matter</li>
                       </ul>
-                </div>
-                <div id="view_content">
-                  <div class="row">
-                    <div class="col-md-8">
-                      <h3>About this project</h3>
+                      <h5><b>Need ideas for rewards?</b></h5>
+                      <p>Campus has a discussion on that — and plenty more.</p>
                     </div>
-                    <div class="col-md-4">
-                      <h3>Rewards</h3>
-                      <div class="border-tips">
-                        <label for="">Pledge £10 or more</label>
-                        <p> 0 backers Limited (500 left of 500)</p>
-                        <p>reward1</p>
-                        <p>Estimated delivery:</p>
-                        <p>Oct 2015</p>
-                      </div>
-                      <div class="border-tips">
-                        <label for="">Pledge £10 or more</label>
-                        <p> 0 backers Limited (500 left of 500)</p>
-                        <p>reward1</p>
-                        <p>Estimated delivery:</p>
-                        <p>Oct 2015</p>
-                      </div>
-                      <div class="border-tips">
-                        <label for="">Pledge £10 or more</label>
-                        <p> 0 backers Limited (500 left of 500)</p>
-                        <p>reward1</p>
-                        <p>Estimated delivery:</p>
-                        <p>Oct 2015</p>
+                  </div><!-- end col-md-3 -->
+                </div>
+              </div>  <!-- end-content -->
+            </div><!-- end-tabpanel-Reward -->
+
+            <div id="story" class="tab-pane border-main" >
+              <div>
+                <h2 class="text-center">What are you creating?</h2>
+                <h3 class="text-center">Every project must create something to share with others. </h3>
+                <h3 class="text-center">Use this space to tell the story behind your project.</h3>
+              </div> <!-- end-title -->
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-9">
+                    <div class="row border-grey">
+                      <div class="col-md-4"><label for="">Project video</label></div>
+                      <div class="col-md-8">
+                        <div class="upload">
+                          Choose a video from your computer
+                          <input class="video file" data-help_section="project-video-help" id="project_video" name="project[video]" type="file" url="">
+                          <strong class="center">
+                            <span>MOV, MPEG, AVI, MP4, 3GP, WMV, or FLV • 5GB file limit</span> <span>640x480 pixels • 4:3 aspect ratio</span>
+                          </strong>                 
+                        </div>
+                        <div>Have fun – add a video! Projects with a video have a much higher chance of success. For a dose of inspiration, check out the Creator Handbook. Need some help? Visit our Creator FAQ.</div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div><!-- end-tabpanel-preview -->
+                    <div class="row border-grey">
+                      <div class="col-md-4"><label for="">Project description</label></div>
+                      <div class="col-md-8">
+                        <div class="help">
+                          Use your project description to share more about what you’re raising funds to do and how you plan to pull it off. It’s up to you to make the case for your project.
+                        </div>
+                        <div>
+                          <div id="txtEditor"></div> 
+                        </div>
+                      </div>
+                    </div> 
+                    <div class="row border-grey">
+                      <div class="col-md-4"><label for="">Risks and challenges</label></div>
+                      <div class="col-md-8">
+                        <div class="help">
+                          <p><b>What are the risks and challenges that come with completing your project, and how are you qualified to overcome them?</b></p>
+                          <p>When it comes to fulfillment, every project has potential obstacles, from production delays to permits to collaborator mishaps. What unique challenges might you face <b>after</b> your project is successfully funded? And if setbacks do arise (we hope they don’t, but it happens!), how will you tackle them? If you have any other projects that you're currently in the process of fulfilling, please mention their status in this section.</p>
+                          <p>Addressing this from the start helps build a supportive community. Backers will understand your project is a work in progress and feel confident that you’ll work hard to follow through, even when faced with challenges.</p>
+                        </div>
+                        <div class="field-wrapper">
+                          <textarea class="form-control" rows="7"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row border-grey">
+                      <div class="col-md-4"><label for="">Project FAQs</label></div>
+                      <div class="col-md-8">
+                        You'll be able to add FAQs on your project page once your project goes live.
+                      </div>
+                    </div>
+                  </div> <!-- end col-md-9 -->
+                  <div class="col-md-3">
+                    <div class="video-tout border-tips">
+                      <a class="link_to_school-video-dialog video_thumb_container">
+                        <!-- <img alt="Media - Video" class="play_button" src="https://d297h9he240fqh.cloudfront.net/assets/projects/button-playvideo-sm-c4ba88222413634953e9fda7e69a2bf49f9e3caf97dfd2ef63e38921db846595.png"> -->
+                        <img alt="Video thumb school 757b761a8e7251582e9e3f9abcf0ff2a4f39bdd13f022020d3e544e47ae138e5" height="115" src="https://d297h9he240fqh.cloudfront.net/assets/projects/edit/video-thumb-school-757b761a8e7251582e9e3f9abcf0ff2a4f39bdd13f022020d3e544e47ae138e5.jpg" width="199">
+                      </a>
+                      <a class="school-tout" href="/help/handbook/your_story" target="_blank"><span><span>How to:</span> Make an awesome video</span></a>
+                    </div>
+                    <div class="help">
+                      <h5><b>Looking for advice?</b></h5>
+                      <p>Visit Campus to read about making great videos and more.</p>
+                      <br>
+                      <h5><b>Important reminder</b></h5>
+                      <p>Kickstarter is a global community, and including translations of your description and rewards, or using our Captions & Subtitles to make your videos more accessible, will help your project have a wider appeal. If you're including text or audio in a language outside of those that we currently support (English, French, German, and Spanish), we also ask that you include English translations or subtitles.</p>
+                      <p>Don't use music, images, video, or other content that you don't have the rights to. Reusing copyrighted material is almost always against the law and can lead to expensive lawsuits down the road. The easiest way to avoid copyright troubles is to create all the content yourself or use content that is free for public use.</p>
+                      <p>For legal, mostly free alternatives, check out some of these great resources: SoundCloud, Vimeo Music Store, Free Music Archive, and ccMixter.</p>
+                    </div>
+                  </div> <!-- end col-md-3 -->
+                </div> <!-- end-content -->
+              </div><!-- end-tabpanel-Basic -->
+            </div> <!-- end-tabpanel-Story -->
             
-            </div> <!-- end col-md-12" -->
-          </div> <!-- end row -->
-        </div>
-      </div> <!-- end container -->
-    </div> <!-- end create_project2 -->
+            <div id="update" class="tab-pane border-main" >
+              <div>
+                <h2 class="text-center">How will you thank the people who support you?</h2>
+                <h3 class="text-center">These are update process of projects</h3>
+              </div> <!-- end-title -->
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-9">
+                    <div class="row border-grey">
+                      <div class="col-md-2">
+                        <label for="">Update #1</label>
+                      </div>
+                      <div class="col-md-10">
+                        <div class="row">
+                          <div class="col-md-3"><label for="">Title</label></div>
+                          <div class="col-md-7"><input type="text" id="pledge_amount" name="project[name]" class="form-control" placeholder=""></div>
+                          <div class="col-md-2"><a class="btn btn-danger form-control" href="">Delete</a></div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-3"><label for="">Date</label></div>
+                          <div class="col-md-7"><input type="date" name="" class="form-control" placeholder="date..."></div>
+                          <div class="col-md-2"><a class="btn btn-info form-control"  data-toggle="modal" data-target="#editModal" href="">Edit</a></div>
+                          <!-- Edit Modal  -->
+                          <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                  <h4 class="modal-title" id="myModalLabel">Edit: Update#1</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <form>
+                                    <div class="form-group">
+                                      <label class="control-label">Title:</label>
+                                      <input type="text" class="form-control" id="title">
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="control-label">Date:</label>
+                                      <input type="text" class="form-control" id="date">
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="" class="control-label">Descritption:</label>
+                                      <textarea class="form-control" id="des"></textarea>
+                                    </div>
+                                  </form>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                  <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div> <!-- end EditModal -->
+                        </div>
+                        <div class="row">
+                          <div class="col-md-3"><label for="">Description</label></div>
+                          <div class="col-md-9">
+                            <div class="field-wrapper">
+                              <textarea class="form-control" rows="2"></textarea>
+                            </div>
+                          </div>
+                        </div>
 
-    <div id="footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-3">
-            <h4 style="color: #5ea5d7">DoI-Dream Of Innovation</h4>
-            <a href="">Hosted by DoI</a>
-          </div>
-          <div class="col-md-3 col-md-push-6">
-            <ul class="list-inline">
-              <li><a href="#">Home</a></li>
-              <li><a href="#">About us</a></li>
-              <li><a href="#">Help</a></li>
-              <li><a href="#">Contact</a></li>
-            </ul>
-          </div>
+                      </div>
+                    </div>
+                    <div class="row border-grey border-dash">
+                      <div class="addReward">
+                        <a class="btn btn-success" data-toggle="modal" data-target="#addModal" href="">Add new update</a>
+                        <!-- add Modal  -->
+                        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Add: Update#2</h4>
+                              </div>
+                              <div class="modal-body">
+                                <form>
+                                  <div class="form-group">
+                                    <label class="control-label">Title:</label>
+                                    <input type="text" class="form-control" id="title">
+                                  </div>
+                                  <div class="form-group">
+                                    <label class="control-label">Date:</label>
+                                    <input type="text" class="form-control" id="date">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="" class="control-label">Descritption:</label>
+                                    <textarea class="form-control" id="des"></textarea>
+                                  </div>
+                                </form>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div> <!-- end addModal -->
+                      </div>
+                      <!-- add reward at here -->
+                    </div>
+                  </div> <!-- end col-md-9 -->
+
+                  <div class="col-md-3">
+                    <div class="border-tips">
+                      <p>How to:</p>
+                      <a href=""><b>Create greate rewards</b></a>
+                    </div>
+                    <div class="help">
+                      <h5><b>What to offer</b></h5>
+                      <p>Copies of what you're making, unique experiences, and limited editions work great.</p>
+                      <h5><b>How to price</b></h5>
+                      <ul>
+                        <li>Price fairly, and offer a good value. What would <i>you</i> consider a fair exchange?</li>
+                        <li>Something fun for <span class="money gbp no-code">£10</span> or less is always a good idea.</li>
+                        <li>Funds that backers pledge to account for shipping costs will count towards your project's funding goal. Keep this in mind when setting your goal.</li>
+                        <li>Use the shipping tool to add delivery costs for any country you like (including your own). The price will be added to backer's pledges as they check out.</li>
+                      </ul>
+                      <h5><b>What's prohibited</b></h5>
+                      <ul>
+                        <li>Rewards not directly produced by the creator or the project itself</li>
+                        <li>Financial incentives</li>
+                        <li>Raffles, lotteries, and sweepstakes</li>
+                        <li>Coupons, discounts, and cash-value gift cards</li>
+                        <li>For more, please review our list of prohibited items and subject matter</li>
+                      </ul>
+                      <h5><b>Need ideas for rewards?</b></h5>
+                      <p>Campus has a discussion on that — and plenty more.</p>
+                    </div>
+                  </div><!-- end col-md-3 -->
+                </div>
+              </div>  <!-- end-content -->
+            </div>
+            <!-- Preview -->
+            <div class="tab-pane border-main" id="preview">
+              <div id="project_detail_1" class="paddingNavbar padding-30">
+                <div class="container">
+                  <div id="gt1">
+                    <div class="title text-center">
+                      <h2><a href="">Divinity: Original Sin 2</a></h2>
+                      <p>by <a href="">Larian Studios LLC</a></p>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="responsive-video">
+                         <iframe src="http://www.youtube.com/embed/jLHGnvnw-gI" frameborder="0"> </iframe>
+                       </div>
+                     </div>
+                     <div class="col-md-4">
+                      <div>
+                        <div class="padding15">
+                          <data class="bold h1" data-format="number" data-value="18337">18,337</data>
+                          <p class="bold h5"><span >backers</span></p>
+                        </div>
+                        <div class="padding15">
+                          <data class="bold h1" data-currency="USD" data-format="shorter_money" data-precision="0" data-value="819039.32">$819,039</data>
+                          <p class="bold h5">pledged of <span class="money usd no-code">$500,000</span> <span class="mobile-hide">goal</span></p>
+                        </div>
+                        <div class="padding15">
+                          <data class="bold h1" data-format="number" data-value="33">33</data>
+                          <p class="bold h5"><span >days to go</span></p>
+                        </div>
+                      </div>
+                      <div class="padding30">
+                        <a class="btn btn-success btn-lg" href="back_project.html">Back this project</a>
+                      </div>
+                      <div class="padding30">
+                        <p class="grey-dark">
+                          This project will be funded on <time class="js-adjust-time" data-format="llll z" datetime="2015-09-30T08:55:22-04:00">Wed, Sep 30 2015 7:55 PM +07:00</time>.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-8">
+                      <h3 class="padding20">An epic RPG with turn-based combat, cooperative/competitive multiplayer; sequel to Divinity: Original Sin, GameSpot's PC Game of 2014.</h3>
+                      <div class="padding30">
+                        <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>Sacramento, CA</a>
+                        &nbsp;&nbsp;
+                        <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>Video Games</a>
+                        &nbsp;&nbsp;
+                        <a class="btn btn-default grey-dark" href="">Share this project</a>
+                      </div>
+                    </div>
+                    <div class="col-md-4 border-top">
+                      <div class="row padding30">
+                        <div class="col-md-8">
+                          <h5 class="bold"><a class="black" href="">Larian Studios LLC</a></h5>
+                          <p class="h5">
+                            <span class="inline-block glyphicon glyphicon-copyright-mark"></span>
+                            <span class="inline-block">
+                              <a class="grey-dark bold" href="">2 created</a>
+                              <span class="grey-dark">&nbsp;|&nbsp;</span>
+                            </span>
+                            <span class="inline-block">
+                              <a class="grey-dark bold" href="">14 backed</a>
+                            </span>
+                          </p>
+                          <p class="h5">
+                            <span class="inline-block glyphicon glyphicon-globe"></span>
+                            <a class="grey-dark bold" href="">larian.com</a>
+                          </p>
+                          <p class="h5">
+                            <a class="inline-block bold" href="">See full bio</a>
+                            &nbsp;&nbsp;
+                            <a class="inline-block bold" href="">Contact me</a>
+                          </p>
+                        </div>
+                        <div class="col-md-4">
+                          <a href=""><img id="" src="../images/logoCompany.jpg" alt="" class="img-responsive img-circle center-block"></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- project_detail_1 -->
+
+            <div id="project_detail_2" class="padding30">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="tab-center">
+                      <ul class="nav nav-pills">
+                        <li class="active"><a href="#campaign" data-toggle="tab">Campaign</a></li>
+                        <li><a href="#update" data-toggle="tab">Update <span class="badge">5</span></a></li>
+                        <li><a href="#comments" data-toggle="tab">Comments <span class="badge">10</span></a></li>
+                        <li><a href="#schedule" data-toggle="tab">Schedule</a></li>
+                        <li><a href="#list-bankers" data-toggle="tab">List Bankers <span class="badge">10</span></a></li>
+                        <!-- <a href="back_project.html" class="btn btn-success">Back to this project</a> -->
+                      </ul>
+                    </div>
+                    <!-- Tabs pane -->
+                    <div class="tab-content border-top">
+                      <!-- Campaign -->
+                      <div id="campaign" role="tabpanel" class="tab-pane fade in active">
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-md-8">
+                              <div class="padding10">
+                                <h1>About this project</h1>
+                              </div> <!-- end About this project -->
+                              <div id="load_content" class="padding30">
+                                <img src="../images/img1.jpg" alt="" class="img-responsive">
+                                <p class="padding30">Thank you for taking the time to check out Divinity: Original Sin 2, our biggest and most ambitious RPG to date!</p>
+                                <h1>What the press says</h1>
+                                <p>"I can't help but think that another Kickstarter success could help make Divinity: Original Sin 2 one of the most engaging RPGs to date." - <a href="">PC Gamer</a></p>
+                                <p>“This sequel has some wild new ideas and ambitions far beyond the scope of the already-impressive first game” - <a href="">Polygon</a></p>
+                                <p>“This sequel has some wild new ideas and ambitions far beyond the scope of the already-impressive first game” - <a href="">Polygon</a></p>
+                                <p>“This sequel has some wild new ideas and ambitions far beyond the scope of the already-impressive first game” - <a href="">Polygon</a></p>
+                                <h1>A couple of quick facts</h1>
+                                <p>Divinity: Original Sin 2 is a single- and multiplayer top-down, party-based role-playing game with pen & paper RPG-like levels of freedom.It features turn-based combat, a strong focus on systematic gameplay and a well-grounded narrative. </p>
+                                <p>Divinity: Original Sin 2 is the sequel to the critically acclaimed Divinity: Original Sin, winner of over 150 Game of the Year awards and nominations. Winner of GameSpot’s “PC Game of The Year 2014”.</p>
+                                <p>Divinity: Original Sin 2 is currently in development for PC in English. Subtitles will be available in German, French, and Russian. Other platforms and languages may be announced at a later stage, once development is more advanced. </p>
+                                <img src="../images/img2.jpg" alt="" class="img-responsive">
+                                <p>You'll be able to recruit up to three companions, each of whom is just as detailed as the character you're playing, with their own origin story and motivation to help you in your quest. </p>
+                                <p>This makes it possible for each companion to become a player character in multiplayer mode; every party member is equally important to the whole.</p>
+                                <img src="../images/img3.png" alt="" class="img-responsive">
+                              </div> <!-- end load_content -->
+                              <div id="riskandchallenges" class="padding30">
+                                <h1>Risks and challenges</h1>
+                                <p>We're already funding the game ourselves and are coming to Kickstarter with the aim of expanding the game's feature-set and seeking funds to integrate community input. The biggest risks are that we'll be late (a real possibility), or that certain features that we are planning on now might be changed (or even cut) as we move ahead with development.</p>
+                                <p>If that happens, it'll be because we hit a real roadblock or because some other feature ended up taking significantly more time and resources than we expected. Those kinds of things happen, but they shouldn't affect our ability to finish and release an innovative game that'll be a whole world of fun.</p>
+                                <p class="bold"><a href="">Learn about accountability on DoI</a></p>
+                              </div> <!-- end Risks and challeges -->
+                            </div> <!-- end col-md-8 -->
+
+                            <div class="col-md-4">
+                              <div class="padding10">
+                                <h3>Rewards</h3>
+                              </div> <!-- end Rewards -->
+                              <div id="load_rewards" class="padding20">
+                                <div class="border-tips">
+                                  <label for="">Pledge £10 or more</label>
+                                  <p class="bold"><span class="glyphicon glyphicon-asterisk"></span>24 backers</p>
+                                  <p>Thank the Seven! Err-- Five!</p>
+                                  <p>Thank you for your pledge! For this sign of support, we here at Larian Studios are truly grateful.</p>
+                                  <div class="padding20">
+                                    <p class="grey-dark">Estimated delivery:</p>
+                                    <p>Oct 2015</p>
+                                  </div>
+                                </div>
+                                <div class="border-tips">
+                                  <label for="">Pledge £25 or more</label>
+                                  <p class="bold"> 1370 backers Limited</p>
+                                  <p>Kickstarter Special</p>
+                                  <p>Divinity: Original Sin 2 as a digital download for PC, available from Steam with Alpha and Beta access included, or DRM-free from GOG.com. Also comes with a Digital Game Manual, a 'Backer' Forum Badge and behind-the-scenes footage.</p>
+                                  <div class="padding20">
+                                    <p class="grey-dark">Estimated delivery:</p>
+                                    <p>Dec 2016</p>
+                                  </div>
+                                </div>
+                                <div class="border-tips">
+                                  <label for="">Pledge £50 or more</label>
+                                  <p class="bold"> 1669 backers Limited</p>
+                                  <p>Original Sin Pack</p>
+                                  <p>Get a copy of Divinity: Original Sin 2 and a copy of Divinity: Original Sin - Enhanced Edition as digital downloads for PC, available from Steam with Alpha and Beta access included, or DRM-free from GOG.com. Also comes with a Digital Game Manual, a 'Backer' Forum Badge and behind-the-scenes footage.</p>
+                                  <div class="padding20">
+                                    <p class="grey-dark">Estimated delivery:</p>
+                                    <p>Dec 2016</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div> <!-- end col-md-8 -->
+                          </div>
+                        </div>
+                      </div> <!-- endTabpanel Campagin -->
+
+                      <!-- Update -->
+                      <div id="update" role="tabpanel" class="tab-pane fade in">
+                        <div class="">
+                          <div class="page-header">
+                            <h1 id="timeline-Update">Timeline Update</h1>
+                          </div>
+                          <ul class="timeline">
+                            <li>
+                              <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
+                              <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                  <h4 class="timeline-title">Update #5: Life after death, unlocked! Devline!</h4>
+                                  <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small></p>
+                                </div>
+                                <div class="timeline-body">
+                                  <p>It's celebration time, so grab a glass of hemlock tea and hie yourself to the nearest graveyard. You smashed through the next stretch goal, and now it's official: the Undead will be featured as a playable race in D:OS2.
+                                  </p>
+                                  <p>In this video, we learn a bit more about what's in store for the Undead in Rivellon from our lead writer Jan and concept artist Tania, and Swen gives us another peak into Larian's adventures at PAX.</p>
+                                </div>
+                                <br>
+                                <div class="like-comment">
+                                  <p class="text-muted">74 Comments   104 Likes</p>
+                                </div>
+                              </div>
+                            </li>
+                            <li class="timeline-inverted">
+                              <div class="timeline-badge warning"><i class="glyphicon glyphicon-credit-card"></i></div>
+                              <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                  <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                </div>
+                                <div class="timeline-body">
+                                  <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+                                  <p>Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Interagi no mé, cursus quis, vehicula ac nisi. Aenean vel dui dui. Nullam leo erat, aliquet quis tempus a, posuere ut mi. Ut scelerisque neque et turpis posuere pulvinar pellentesque nibh ullamcorper. Pharetra in mattis molestie, volutpat elementum justo. Aenean ut ante turpis. Pellentesque laoreet mé vel lectus scelerisque interdum cursus velit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ac mauris lectus, non scelerisque augue. Aenean justo massa.</p>
+                                </div>
+                                <br>
+                                <div class="like-comment">
+                                  <p>74 Comments   104 Likes</p>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="timeline-badge danger"><i class="glyphicon glyphicon-credit-card"></i></div>
+                              <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                  <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                </div>
+                                <div class="timeline-body">
+                                  <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+                                </div>
+                              </div>
+                            </li>
+                            <li class="timeline-inverted">
+                              <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                  <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                </div>
+                                <div class="timeline-body">
+                                  <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+                                </div>
+                                <br>
+                                <div class="like-comment">
+                                  <p class="text-muted">74 Comments   104 Likes</p>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="timeline-badge info"><i class="glyphicon glyphicon-floppy-disk"></i></div>
+                              <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                  <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                </div>
+                                <div class="timeline-body">
+                                  <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+                                  <hr>
+                                  <div class="btn-group">
+                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                      <i class="glyphicon glyphicon-cog"></i> <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                      <li><a href="#">Action</a></li>
+                                      <li><a href="#">Another action</a></li>
+                                      <li><a href="#">Something else here</a></li>
+                                      <li class="divider"></li>
+                                      <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                  <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                </div>
+                                <div class="timeline-body">
+                                  <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+                                </div>
+                              </div>
+                            </li>
+                            <li class="timeline-inverted">
+                              <div class="timeline-badge success"><i class="glyphicon glyphicon-thumbs-up"></i></div>
+                              <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                  <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                </div>
+                                <div class="timeline-body">
+                                  <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+                                </div>
+                                <br>
+                                <div class="like-comment">
+                                  <p class="text-muted">74 Comments   104 Likes</p>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div> <!-- endTabpanel update -->
+
+                      <!-- Comment -->
+                      <div id="comments" role="tabpanel" class="tab-pane fade in">
+                        <!-- Contenedor Principal -->
+                        <h1>Comments</h1>
+                        <div class="comments-container">
+                          <ul id="comments-list" class="comments-list">
+                            <li>
+                              <div class="comment-main-level">
+                                <!-- Avatar -->
+                                <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
+                                <!-- Contenedor del Comentario -->
+                                <div class="comment-box">
+                                  <div class="comment-head">
+                                    <h6 class="comment-name by-author"><a href="http://creaticode.com/blog">Agustin Ortiz</a></h6>
+                                    <span>20 minutes ago</span>
+                                    <i class="fa fa-reply"></i>
+                                    <i class="fa fa-heart"></i>
+                                  </div>
+                                  <div class="comment-content">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- Respuestas de los comentarios -->
+                              <ul class="comments-list reply-list">
+                                <li>
+                                  <!-- Avatar -->
+                                  <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
+                                  <!-- Contenedor del Comentario -->
+                                  <div class="comment-box">
+                                    <div class="comment-head">
+                                      <h6 class="comment-name"><a href="http://creaticode.com/blog">Lorena Rojero</a></h6>
+                                      <span>10 minutes ago</span>
+                                      <i class="fa fa-reply"></i>
+                                      <i class="fa fa-heart"></i>
+                                    </div>
+                                    <div class="comment-content">
+                                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                                    </div>
+                                  </div>
+                                </li>
+
+                                <li>
+                                  <!-- Avatar -->
+                                  <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
+                                  <!-- Contenedor del Comentario -->
+                                  <div class="comment-box">
+                                    <div class="comment-head">
+                                      <h6 class="comment-name by-author"><a href="http://creaticode.com/blog">Agustin Ortiz</a></h6>
+                                      <span>10 minutes ago</span>
+                                      <i class="fa fa-reply"></i>
+                                      <i class="fa fa-heart"></i>
+                                    </div>
+                                    <div class="comment-content">
+                                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                                    </div>
+                                  </div>
+                                </li>
+                              </ul>
+                            </li>
+
+                            <li>
+                              <div class="comment-main-level">
+                                <!-- Avatar -->
+                                <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
+                                <!-- Contenedor del Comentario -->
+                                <div class="comment-box">
+                                  <div class="comment-head">
+                                    <h6 class="comment-name"><a href="http://creaticode.com/blog">Lorena Rojero</a></h6>
+                                    <span>10 minutes ago</span>
+                                    <i class="fa fa-reply"></i>
+                                    <i class="fa fa-heart"></i>
+                                  </div>
+                                  <div class="comment-content">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div> <!-- endTabpanel comments -->
+
+                      <!-- Schedule -->
+                      <div id="schedule" role="tabpanel" class="tab-pane fade in">
+                        <div class="">
+                          <div class="page-header">
+                            <h1 id="scheduleTitle">Timeline Schedule</h1>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                             <div id="timeline">
+                              <ul id="dates">
+                                <li><a href="#10102015">10/10/2015</a></li>
+                                <li><a href="#11102015">11/10/2015</a></li>
+                                <li><a href="#12102015">12/10/2015</a></li>
+                                <li><a href="#01102016">1/10/2016</a></li>
+                              </ul>
+                              <ul id="issues">
+                                <li class="issues-content" id="10102015">
+                                  <img src="../images/Schedule/7.png" width="256" height="256" />
+                                  <h1>10-10-2015</h1>
+                                  <p>Donec semper quam scelerisque tortor dictum gravida. In hac habitasse platea dictumst. Nam pulvinar, odio sed rhoncus suscipit, sem diam ultrices mauris, eu consequat purus metus eu velit. Proin metus odio, aliquam eget molestie nec, gravida ut sapien. Phasellus quis est sed turpis sollicitudin venenatis sed eu odio. Praesent eget neque eu eros interdum malesuada non vel leo. Sed fringilla porta ligula.</p>
+                                </li>
+                                <li class="issues-content" id="11102015">
+                                  <img src="../images/Schedule/8.png" width="256" height="256" />
+                                  <h1>11/10/2015</h1>
+                                  <p>Donec semper quam scelerisque tortor dictum gravida. In hac habitasse platea dictumst. Nam pulvinar, odio sed rhoncus suscipit, sem diam ultrices mauris, eu consequat purus metus eu velit. Proin metus odio, aliquam eget molestie nec, gravida ut sapien. Phasellus quis est sed turpis sollicitudin venenatis sed eu odio. Praesent eget neque eu eros interdum malesuada non vel leo. Sed fringilla porta ligula.</p>
+                                </li>
+                                <li class="issues-content" id="12102015">
+                                  <img src="../images/Schedule/9.png" width="256" height="256" />
+                                  <h1>12/10/2015</h1>
+                                  <p>Donec semper quam scelerisque tortor dictum gravida. In hac habitasse platea dictumst. Nam pulvinar, odio sed rhoncus suscipit, sem diam ultrices mauris, eu consequat purus metus eu velit. Proin metus odio, aliquam eget molestie nec, gravida ut sapien. Phasellus quis est sed turpis sollicitudin venenatis sed eu odio. Praesent eget neque eu eros interdum malesuada non vel leo. Sed fringilla porta ligula.</p>
+                                </li>
+                                <li class="issues-content" id="01102016">
+                                  <img src="../images/Schedule/10.png" width="256" height="256" />
+                                  <h1>1/10/2016</h1>
+                                  <p>Donec semper quam scelerisque tortor dictum gravida. In hac habitasse platea dictumst. Nam pulvinar, odio sed rhoncus suscipit, sem diam ultrices mauris, eu consequat purus metus eu velit. Proin metus odio, aliquam eget molestie nec, gravida ut sapien. Phasellus quis est sed turpis sollicitudin venenatis sed eu odio. Praesent eget neque eu eros interdum malesuada non vel leo. Sed fringilla porta ligula.</p>
+                                </li>
+                              </ul>
+                    <!-- <div id="grad_left"></div>
+                    <div id="grad_right"></div> -->
+                    <a href="#" id="next">+</a>
+                    <a href="#" id="prev">-</a>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div><!-- end schedule -->
+
+          <!-- List-Bankers -->
+          <div id="list-bankers" role="tabpanel" class="tab-pane fade in">
+            <div class="container">
+              <h3 class="bold">List Bankers</h3>
+              <br>
+              <table id="bankersTable" class="table table-striped" >  
+                <thead>  
+                  <tr>  
+                    <th>.No</th>  
+                    <th>Name</th>  
+                    <th>Plege amout</th>  
+                    <th>Date</th>  
+                  </tr>  
+                </thead>  
+                <tbody>  
+                  <tr>  
+                    <td>001</td>  
+                    <td>Nguyen Van A</td>  
+                    <td>1000$</td>  
+                    <td>2015-02-09 10:30:00</td>  
+                  </tr>
+                  <tr>  
+                    <td>002</td>  
+                    <td>Vu Cong Chinh</td>  
+                    <td>100$</td>  
+                    <td>2015-02-09 10:30:00</td>  
+                  </tr> 
+                  <tr>  
+                    <td>003</td>  
+                    <td>Nguyen Van B</td>  
+                    <td>200$</td>  
+                    <td>2015-02-09 10:30:00</td>  
+                  </tr> 
+                  <tr>  
+                    <td>004</td>  
+                    <td>Vu Cong Chinh</td>  
+                    <td>1000$</td>  
+                    <td>2015-02-09 10:30:00</td>  
+                  </tr> 
+                  <tr>  
+                    <td>005</td>  
+                    <td>Nguyen Van D</td>  
+                    <td>1000$</td>  
+                    <td>2015-02-09 10:30:00</td>  
+                  </tr> 
+                  <tr>  
+                    <td>006</td>  
+                    <td>Tran Van C</td>  
+                    <td>1500$</td>  
+                    <td>2015-02-09 10:30:00</td>  
+                  </tr> 
+                  <tr>  
+                    <td>007</td>  
+                    <td>Vu Cong Chinh</td>  
+                    <td>2000$</td>  
+                    <td>2015-02-09 10:30:00</td>  
+                  </tr> 
+                  <tr>  
+                    <td>008</td>  
+                    <td>Vu Cong Chinh</td>  
+                    <td>1000$</td>  
+                    <td>2015-02-09 10:30:00</td>  
+                  </tr> 
+                  <tr>  
+                    <td>009</td>  
+                    <td>Vu Cong Chinh</td>  
+                    <td>1000$</td>  
+                    <td>2015-02-09 10:30:00</td>  
+                  </tr> 
+                  <tr>  
+                    <td>010</td>  
+                    <td>Vu Cong Chinh</td>  
+                    <td>1000$</td>  
+                    <td>2015-02-09 10:30:00</td>  
+                  </tr> 
+                  <tr>  
+                    <td>011</td>  
+                    <td>Vu Cong Chinh</td>  
+                    <td>1000$</td>  
+                    <td>2015-02-09 10:30:00</td>  
+                  </tr> 
+                  <tr>  
+                    <td>012</td>  
+                    <td>Charles</td>  
+                    <td>United Kingdom</td>  
+                    <td>28000</td>  
+                  </tr>  
+                  <tr>  
+                    <td>013</td>  
+                    <td>Sravani</td>  
+                    <td>Australia</td>  
+                    <td>7000</td>  
+                  </tr>  
+                  <tr>  
+                    <td>014</td>  
+                    <td>Amar</td>  
+                    <td>India</td>  
+                    <td>18000</td>  
+                  </tr>  
+                  <tr>  
+                    <td>015</td>  
+                    <td>Lakshmi</td>  
+                    <td>India</td>  
+                    <td>12000</td>  
+                  </tr>  
+                </tbody>  
+              </table>  
+            </div>
+          </div><!-- end list-bankers -->
+
         </div>
       </div>
-    </div> <!-- end footer -->
+    </div>
+  </div>
+</div>
+</div><!-- end-tabpanel-preview -->
 
-  </body>
+</div> <!-- end col-md-12" -->
+</div> <!-- end row -->
+</div>
+</div> <!-- end container -->
+</div> <!-- end create_project2 -->
+
+<div id="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <h4 style="color: #5ea5d7">DoI-Dream Of Innovation</h4>
+        <a href="">Hosted by DoI</a>
+      </div>
+      <div class="col-md-3 col-md-push-6">
+        <ul class="list-inline">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About us</a></li>
+          <li><a href="#">Help</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div> <!-- end footer -->
+
+</body>
 </html>
