@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<meta name="description" content="Source code generated using layoutit.com">
+    <meta name="author" content="LayoutIt!">
+    <!-- Bootstrap -->
+    <link href="../Contents/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../Contents/discover.css" type="text/css">
+    <link rel="stylesheet" href="../Contents/message.css" type="text/css">
+ <!--    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
+</head>
+<body>
+	<div id="header">
+      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="home_logged.html">DoI.com</a>
+        </div>
+      
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="discover.html">Discover</a></li>
+            <li><a href="create_project1.html">Start</a></li>
+            <li role="separator" class="divider-vertical"></li>
+          </ul>
+
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-group inner-addon left-addon">
+              <span class="glyphicon glyphicon-search"></span>
+              <input type="text" class="form-control" placeholder="Search Projects">
+            </div>
+          </form>
+          <ul id="profile_dropdown" class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img id="avatar" src="../images/avatar_default.png" alt="" class="img-responsive img-circle center-block">
+                MyName
+                <span class="caret"></span>
+              </a>
+              
+              <ul class="dropdown-menu">
+                <h4>My stuff</h4>
+                <li><a href="../Views/message.html">Message <span class="badge">3</span></a></li>
+                <li><a href="../Views/profile_public.html">Profile</a></li>
+                <li><a href="../Views/backed_project.html">Backed projects</a></li>
+                <li><a href="../Views/created_project.html">Created projects</a></li>
+                <li><a href="#">Starred projects</a></li>
+                <li class="divider"></li>
+                <h4>Setting</h4>
+                <li><a href="account.html">Account</a></li>
+                <li><a href="editprofile2.html">Edit profile</a></li>
+                <li><a href="notification.html">Notifications</a></li>
+                <li class="divider"></li>
+                <p class="no-wrap">You are logged is as <b>ChinhVC</b> | <a href="home.html">Log out</a></p>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </nav>
+    </div> <!--end header -->
+
+
+	<div class="container">
+		<div id="" class="">
+			<div id="header_message" class="row">
+				<div class="col-sm-2 align_col">
+					<h1 >Messages</h1>
+				</div>
+				<div class="col-sm-3 align_col" style="padding-top: 15px;">
+					<div class="btn-group">
+						<button class="btn btn-default">
+							Inbox
+						</button> 
+						<button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="#">Inbox</a>
+							</li>
+							<li>
+								<a href="#">Sent</a>
+							</li>
+							<!-- <li class="divider">s
+							</li> -->
+							<li>
+								<a href="#">Unread</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div id="search_box" class="col-sm-7" style="padding-top: 15px;">
+					<form id="" action="" style="display:inline;" method="get">
+						<div class="search-box ">
+							<span class="icon glyphicon glyphicon-search"></span>
+							<input id="search-box" name="q" type="text" placeholder="Search message..."/>
+						</div>		
+						<input id="search-btn" value="Search" type="submit"/>
+					</form>
+				</div>
+			</div>
+			<div class="row">
+				<div id="action_bar" class="col-sm-12">
+					<div class="action-bar" style="display: inline-block">
+					    <ul class="list-inline text-center" >
+						    <li><a class="icon circle-icon glyphicon glyphicon-chevron-down"></a></li>
+						    <li><a class="icon circle-icon glyphicon glyphicon-refresh"></a></li>
+						    <li><a class="icon circle-icon glyphicon glyphicon-share-alt"></a></li>
+						    <li><a class="icon circle-icon red glyphicon glyphicon-remove"></a></li>
+						    <li><a class="icon circle-icon red glyphicon glyphicon-flag"></a></li>
+					    </ul>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<table id="table_message" style="width : 80%;">
+					<tr>
+					    <td id="col_checkbox">
+					    	<div class="checkbox-wrapper">
+				              <input type="checkbox" id="chk1">
+				            </div>
+					    </td>
+					    <td id="col_from">Lucas Kriebel (via Twitter)</td> 
+					    <td id="col_content">Lucas Kriebel (@LucasKriebel) has sent you a direct message....</td>
+					    <td id="col_time">16:02 am</td>
+					</tr>
+					<tr>
+					    <td id="col_checkbox">
+					    	<div class="checkbox-wrapper">
+				              <input type="checkbox" id="chk1">
+				            </div>
+					    </td>
+					    <td id="col_from">Andrew Zimmer</td> 
+					    <td id="col_content">Last pic over my village  –  Yeah i'd like that! Do you remember</td>
+					    <td id="col_time">Mar 8</td>
+					</tr>
+					<tr>
+					    <td id="col_checkbox">
+					    	<div class="checkbox-wrapper">
+				              <input type="checkbox" id="chk1">
+				            </div>
+					    </td>
+					    <td id="col_from">Web Support Dennis</td> 
+					    <td id="col_content">Sveriges Hetaste sommarjobb  –  Hej Nicklas Sandell! Vi vill bj.....</td>
+					    <td id="col_time">Feb 28</td>
+					</tr>
+					<tr>
+					    <td id="col_checkbox">
+					    	<div class="checkbox-wrapper">
+				              <input type="checkbox" id="chk1">
+				            </div>
+					    </td>
+					    <td id="col_from">Web Support Dennis</td> 
+					    <td id="col_content">Sveriges Hetaste sommarjobb  –  Hej Nicklas Sandell! Vi vill bj.....</td>
+					    <td id="col_time">Feb 28</td>
+					</tr>
+					<tr>
+					    <td id="col_checkbox">
+					    	<div class="checkbox-wrapper">
+				              <input type="checkbox" id="chk1">
+				            </div>
+					    </td>
+					    <td id="col_from">Web Support Dennis</td> 
+					    <td id="col_content">Sveriges Hetaste sommarjobb  –  Hej Nicklas Sandell! Vi vill bj.....</td>
+					    <td id="col_time">Feb 28</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	<script src="../Scripts/jquery-message.min.js"></script>
+	<script src="../Scripts/bootstrap.min.js"></script>
+</body>
+</html>

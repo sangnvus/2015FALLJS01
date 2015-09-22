@@ -1,0 +1,1 @@
+Store Guidelines/Standards/Forms/Templates/Checklist specified for the project usage

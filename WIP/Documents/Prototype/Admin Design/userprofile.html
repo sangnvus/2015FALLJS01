@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Mirrored from themes.startbootstrap.com/flex-admin-v1.2/blank.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 19 Mar 2014 06:24:44 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>User Profile</title>
+
+    <!-- PACE LOAD BAR PLUGIN - This creates the subtle load bar effect at the top of the page. -->
+    <link href="css/plugins/pace/pace.css" rel="stylesheet">
+    <script src="js/plugins/pace/pace.js"></script>
+
+    <!-- GLOBAL STYLES - Include these on every page. -->
+    <link href="css/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic' rel="stylesheet" type="text/css"> -->
+    <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel="stylesheet" type="text/css"> -->
+    <link href="icons/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- PAGE LEVEL PLUGIN STYLES -->
+	<link href="css/plugins/datatables/datatables.css" rel="stylesheet">
+
+    <!-- THEME STYLES - Include these on every page. -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/plugins.css" rel="stylesheet">
+	<link href="css/project-screen.css" rel="stylesheet">
+
+    <!-- THEME DEMO STYLES - Use these styles for reference if needed. Otherwise they can be deleted. -->
+    <link href="css/demo.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- begin TOP NAVIGATION -->
+        <nav class="navbar-top" role="navigation">
+
+            <!-- begin BRAND HEADING -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle pull-right" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <i class="fa fa-bars"></i> Menu
+                </button>
+                <div class="navbar-brand">
+                    <a href="index-2.html">
+                        <img src="img/flex-admin-logo.png" class="img-responsive" alt="">
+                    </a>
+                </div>
+            </div>
+            <!-- end BRAND HEADING -->
+
+            <div class="nav-top">
+
+                <!-- begin LEFT SIDE WIDGETS -->
+                <ul class="nav navbar-left">
+                    <li class="tooltip-sidebar-toggle">
+                        <a href="#" id="sidebar-toggle" data-toggle="tooltip" data-placement="right" title="Sidebar Toggle">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                    </li>
+                    <!-- You may add more widgets here using <li> -->
+                </ul>
+                <!-- end LEFT SIDE WIDGETS -->
+
+                <!-- begin MESSAGES/ALERTS/TASKS/USER ACTIONS DROPDOWNS -->
+                <ul class="nav navbar-right">
+
+                    <!-- begin USER ACTIONS DROPDOWN -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user"></i>  <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="userprofile.html">
+                                    <i class="fa fa-user"></i> My Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a href="message.html">
+                                    <i class="fa fa-envelope"></i> My Messages
+                                    <span class="badge green pull-right">4</span>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-gear"></i> Settings
+                                </a>
+                            </li>
+                            <li>
+                                <a class="logout_open" href="#logout">
+                                    <i class="fa fa-sign-out"></i> Logout
+                                    <strong>John Smith</strong>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-menu -->
+                    </li>
+                    <!-- /.dropdown -->
+                    <!-- end USER ACTIONS DROPDOWN -->
+
+                </ul>
+                <!-- /.nav -->
+                <!-- end MESSAGES/ALERTS/TASKS/USER ACTIONS DROPDOWNS -->
+
+            </div>
+            <!-- /.nav-top -->
+        </nav>
+        <!-- /.navbar-top -->
+        <!-- end TOP NAVIGATION -->
+
+        <!-- begin SIDE NAVIGATION -->
+        <nav class="navbar-side" role="navigation">
+            <div class="navbar-collapse sidebar-collapse collapse">
+                <ul id="side" class="nav navbar-nav side-nav">
+                    <!-- begin SIDE NAV USER PANEL -->
+                    <li class="side-user hidden-xs">
+                        <img class="img-circle" src="img/profile-pic.jpg" alt="">
+                        <p class="welcome">
+                            <i class="fa fa-key"></i> Logged in as
+                        </p>
+                        <p class="name tooltip-sidebar-logout">
+                            John
+                            <span class="last-name">Smith</span> <a style="color: inherit" class="logout_open" href="#logout" data-toggle="tooltip" data-placement="top" title="Logout"><i class="fa fa-sign-out"></i></a>
+                        </p>
+                        <div class="clearfix"></div>
+                    </li>
+                    <!-- end SIDE NAV USER PANEL -->
+                    <!-- begin USERS DROPDOWN -->
+                    <li class="panel">
+                        <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#pages">
+                            <i class="fa fa-files-o"></i> Users <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="collapse nav in" id="users">
+                            <li>
+                                <a href="user.html" class="active">
+                                    <i class="fa fa-angle-double-right"></i> Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a href="userlist.html">
+                                    <i class="fa fa-angle-double-right"></i> Users List
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- end USERS DROPDOWN -->
+                    <!-- begin DASHBOARD LINK -->
+                    <li>
+                        <a href="">
+                            <i class="fa fa-dashboard"></i> Dashboard
+                        </a>
+                    </li>
+                    <!-- end DASHBOARD LINK -->
+                    <!-- begin PROJECTS DROPDOWN -->
+                    <li class="panel">
+                        <a data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#projects">
+                            <i class="fa fa-bar-chart-o"></i> Project
+							<i class="fa fa-caret-down"></i>
+                        </a>
+						<ul class="collapse nav" id="projects">
+                            <li>
+                                <a href="project.html">
+                                    <i class="fa fa-angle-double-right"></i> Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a href="new-project.html">
+                                    <i class="fa fa-angle-double-right"></i> Projects List
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- end PROJECTS DROPDOWN -->
+					<!-- begin BACKINGS DROPDOWN -->
+					<li class="panel">
+                        <a href="backing.html" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#charts">
+                            <i class="fa fa-bar-chart-o"></i> Backing 
+							<!-- <i class="fa fa-caret-down"></i> -->
+                        </a>
+					</li>
+					<!-- end BACKINGS DROPDOWN -->
+					<!-- begin CATEGORIES DROPDOWN -->
+					<li class="panel">
+                        <a href="category.html" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#charts">
+                            <i class="fa fa-bar-chart-o"></i> Category 
+							<!-- <i class="fa fa-caret-down"></i> -->
+                        </a>
+					</li>
+					<!-- end CATEGORIES DROPDOWN -->
+					<!-- begin SLIDERS DROPDOWN -->
+					<li class="panel">
+                        <a href="slider.html" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#charts">
+                            <i class="fa fa-bar-chart-o"></i> Slider 
+							<!-- <i class="fa fa-caret-down"></i> -->
+                        </a>
+					</li>
+					<!-- end SLIDERS DROPDOWN -->
+					<!-- begin MESSAGES DROPDOWN -->
+					<li class="panel">
+                        <a href="message.html" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#charts">
+                            <i class="fa fa-bar-chart-o"></i> Message 
+							<!-- <i class="fa fa-caret-down"></i> -->
+                        </a>
+					</li>
+					<!-- end MESSAGES DROPDOWN -->
+                </ul>
+                <!-- /.side-nav -->
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+        <!-- /.navbar-side -->
+        <!-- end SIDE NAVIGATION -->
+
+        <!-- begin MAIN PAGE CONTENT -->
+        <div id="page-wrapper">
+
+            <div class="page-content">
+
+                <!-- begin PAGE TITLE ROW -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="page-title">
+                            <h1>
+                                User Profile
+                                <small>Sample User Information</small>
+                            </h1>
+                            <ol class="breadcrumb">
+                                <li><i class="fa fa-dashboard"></i>  <a href="index-2.html">Dashboard</a>
+                                </li>
+                                <li class="active">User Profile</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+                <!-- end PAGE TITLE ROW -->
+
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="portlet portlet-default">
+                            <div class="portlet-body">
+                                <ul id="userTab" class="nav nav-tabs">
+                                    <li class="active"><a href="#overview" data-toggle="tab">Profile</a></li>
+									<li><a href="#backed" data-toggle="tab">Backed</a></li>
+									<li><a href="#created" data-toggle="tab">Created</a></li>
+                                </ul>
+                                <div id="userTabContent" class="tab-content">
+                                    <div class="tab-pane fade in active" id="overview">
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <img class="img-responsive img-profile" src="img/profile-full.jpg" alt="">
+                                                <div class="list-group">
+                                                    <a href="#" class="list-group-item active">Overview</a>
+													<a href="#" class="list-group-item">Backed<span class="badge green">9</span></a>
+													<a href="#" class="list-group-item">Created<span class="badge red">9</span></a>
+													<a href="#" class="list-group-item">Status<span class="badge blue">active</span></a>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-10">
+                                                <div id="userSettingsContent" class="tab-content">
+                                                    <div class="tab-pane fade in active" id="basicInformation">
+                                                        <form role="form">
+                                                            <h4 class="page-header">Personal Information:</h4>
+                                                            <div class="form-group">
+                                                                <label>First Name</label>
+                                                                <input type="text" class="form-control" value="John" disabled>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Last Name</label>
+                                                                <input type="text" class="form-control" value="Smith" disabled>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Phone Number</label>
+                                                                <input type="tel" class="form-control" value="1+(234) 555-2039" disabled>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Address</label>
+                                                                <input type="text" class="form-control" value="8516 Market St." disabled>
+                                                            </div>
+															<div class="form-group">
+																<label>Gender</label>
+																<select class="form-control" disabled>
+																	<option>Male</option>
+																	<option>Female</option>
+																</select>
+															</div>
+                                                            <div class="form-inline form-group">
+																<div class="form-group">
+																	<label>Country</label>
+																	<input type="text" class="form-control" value="England" disabled>
+																</div>
+                                                                <div class="form-group">
+                                                                    <label>City</label>
+                                                                    <input type="text" class="form-control" value="Bayville" disabled>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>State</label>
+                                                                    <input type="text" class="form-control" value="FL" disabled>
+                                                                </div>
+                                                            </div>
+															<div class="form-group">
+																<label>Login Type</label>
+																<input type="text" class="form-control" value="Normal" disabled>
+															</div>
+                                                            <h4 class="page-header">Contact Details:</h4>
+                                                            <div class="form-group">
+                                                                <label><i class="fa fa-envelope-o fa-fw"></i> Email Address</label>
+                                                                <input type="email" class="form-control" value="jsmith@website.com" disabled>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label><i class="fa fa-globe fa-fw"></i> Website</label>
+                                                                <input type="url" class="form-control" value="http://www.website.com/" disabled>
+                                                            </div>
+                                                            <h4 class="page-header">Profile Information:</h4>
+                                                            <div class="form-group">
+                                                                <label><i class="fa fa-info fa-fw"></i> About</label>
+                                                                <textarea class="form-control" rows="3" disabled>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam placerat nunc ut tellus tristique, non posuere neque iaculis.</textarea>
+                                                            </div>
+															<div class="form-group">
+																<label>Security Question</label>
+																<select class="form-control" disabled>
+																	<option>What is the name of your favorite chilhood friend?</option>
+																	<option>What is the name of your pet?</option>
+																</select>
+															</div>
+															<div class="form-group">
+																<label>Answer</label>
+																<input class="form-control" type="text" value="bulldog" disabled>
+															</div>
+                                                            <h4 class="page-header">Social Profiles:</h4>
+                                                            <div class="form-group">
+                                                                <label><i class="fa fa-facebook fa-fw"></i> Facebook Profile URL</label>
+                                                                <input type="url" class="form-control" value="http://www.facebook.com/john.smith9324" disabled>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label><i class="fa fa-linkedin fa-fw"></i> LinkedIn Profile URL</label>
+                                                                <input type="url" class="form-control" value="http://www.linkedin.com/u/john.smith923" disabled>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label><i class="fa fa-google-plus fa-fw"></i> Google+ Profile URL</label>
+                                                                <input type="url" class="form-control" value="http://plus.google.com/john-smith9993" disabled>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label><i class="fa fa-twitter fa-fw"></i> Twitter Username</label>
+                                                                <input type="text" class="form-control" value="@JohnSmith" disabled>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="profilePicture">
+                                                        <h3>Current Picture:</h3>
+                                                        <img class="img-responsive img-profile" src="img/profile-full.jpg" alt="">
+                                                        <br>
+                                                        <form role="form">
+                                                            <div class="form-group">
+                                                                <label>Choose a New Image</label>
+                                                                <input type="file">
+                                                                <p class="help-block"><i class="fa fa-warning"></i> Image must be no larger than 500x500 pixels. Supported formats: JPG, GIF, PNG</p>
+                                                                <button type="submit" class="btn btn-default">Update Profile Picture</button>
+                                                                <button class="btn btn-green">Cancel</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="tab-pane fade in" id="changePassword">
+                                                        <h3>Change Password:</h3>
+                                                        <form role="form">
+                                                            <div class="form-group">
+                                                                <label>Old Password</label>
+                                                                <input type="password" class="form-control" value="">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>New Password</label>
+                                                                <input type="password" class="form-control" value="">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Re-Type New Password</label>
+                                                                <input type="password" class="form-control" value="">
+                                                            </div>
+                                                            <button type="submit" class="btn btn-default">Update Password</button>
+                                                            <button class="btn btn-green">Cancel</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+									
+									<!-- Tab backed projects -->
+									<div class="tab-pane fade" id="backed">
+										<div class="row">
+											<div class="col-lg-12">
+
+												<div class="portlet portlet-default">
+													<div class="portlet-heading">
+														<div class="portlet-title">
+															<h4>Backed Projects</h4>
+														</div>
+														<div class="clearfix"></div>
+													</div>
+													<div class="portlet-body">
+														<div class="table-responsive">
+															<table id="example-table" class="table table-striped table-bordered table-hover table-green">
+																<thead>
+																	<tr>
+																		<th>No.</th>
+																		<th>Project Title</th>
+																		<th>Pledged Amount</th>
+																		<th>Funding Goal</th>
+																		<th>Pledged On</th>
+																		<td>Action</td>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr class="odd gradeX">
+																		<td>1</td>
+																		<td>Test</td>
+																		<td>100$</td>
+																		<td>5000$</td>
+																		<td>2000$</td>
+																		<td>
+																			<a href="project-detail.html"><button class="btn btn-blue">View</button></a>
+																		</td>
+																	</tr>
+																	<tr class="even gradeC">
+																		<td>1</td>
+																		<td>Test</td>
+																		<td>100$</td>
+																		<td>5000$</td>
+																		<td>2000$</td>
+																		<td>
+																			<a href="project-detail.html"><button class="btn btn-blue">View</button></a>
+																		</td>
+																	</tr>
+																	<tr class="odd gradeA">
+																		<td>1</td>
+																		<td>Test</td>
+																		<td>100$</td>
+																		<td>5000$</td>
+																		<td>2000$</td>
+																		<td>
+																			<a href="project-detail.html"><button class="btn btn-blue">View</button></a>
+																		</td>
+																	</tr>
+																	<tr class="even gradeA">
+																		<td>1</td>
+																		<td>Test</td>
+																		<td>100$</td>
+																		<td>5000$</td>
+																		<td>2000$</td>
+																		<td>
+																			<a href="project-detail.html"><button class="btn btn-blue">View</button></a>
+																		</td>
+																	</tr>
+																	<tr class="odd gradeA">
+																		<td>1</td>
+																		<td>Test</td>
+																		<td>100$</td>
+																		<td>5000$</td>
+																		<td>2000$</td>
+																		<td>
+																			<a href="project-detail.html"><button class="btn btn-blue">View</button></a>
+																		</td>
+																	</tr>
+																	<tr class="even gradeA">
+																		<td>1</td>
+																		<td>Test</td>
+																		<td>100$</td>
+																		<td>5000$</td>
+																		<td>2000$</td>
+																		<td>
+																			<a href="project-detail.html"><button class="btn btn-blue">View</button></a>
+																		</td>
+																	</tr>
+																	<tr class="gradeA">
+																		<td>1</td>
+																		<td>Test</td>
+																		<td>100$</td>
+																		<td>5000$</td>
+																		<td>2000$</td>
+																		<td>
+																			<a href="project-detail.html"><button class="btn btn-blue">View</button></a>
+																		</td>
+																	</tr>
+																	<tr class="gradeA">
+																		<td>1</td>
+																		<td>Test</td>
+																		<td>100$</td>
+																		<td>5000$</td>
+																		<td>2000$</td>
+																		<td>
+																			<a href="project-detail.html"><button class="btn btn-blue">View</button></a>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+														<!-- /.table-responsive -->
+													</div>
+													<!-- /.portlet-body -->
+												</div>
+												<!-- /.portlet -->
+
+											</div>
+											<!-- /.col-lg-12 -->
+										</div>
+									</div>
+									<!-- End tab backed projects -->
+									
+									<!-- Tab created projects -->
+									<div class="tab-pane fade" id="created">
+										<div class="row">
+											<div class="col-lg-12">
+
+												<div class="portlet portlet-default">
+													<div class="portlet-heading">
+														<div class="portlet-title">
+															<h4>Created Projects</h4>
+														</div>
+														<div class="clearfix"></div>
+													</div>
+													<div class="portlet-body">
+														<div class="table-responsive">
+															<table id="example-table-2" class="table table-striped table-bordered table-hover table-green">
+																<thead>
+																	<tr>
+																		<th>No.</th>
+																		<th>Project Title</th>
+																		<th>Category</th>
+																		<th>Funding Goal</th>
+																		<th>Pledge Amount</th>
+																		<th>Status</th>
+																		<th>Expires In</th>
+																		<th>Isfuned</th>
+																		<td>Action</td>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr>
+																		<td>1</td>
+																		<td>Test</td>
+																		<td>Art</td>
+																		<td>5000$</td>
+																		<td>100$</td>
+																		<td>
+																			<button class="btn btn-white">DRAFT</button>
+																		</td>
+																		<td>20/09/2015</td>
+																		<td><button class="btn btn-green">Yes</button></td>
+																		<td>
+																			<a href="project-detail.html"><button class="btn btn-blue">View</button></a>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td>1</td>
+																		<td>Test</td>
+																		<td>Art</td>
+																		<td>5000$</td>
+																		<td>100$</td>
+																		<td>
+																			<button class="btn btn-green">APPROVED</button>
+																		</td>
+																		<td>20/09/2015</td>
+																		<td><button class="btn btn-white">No</button></td>
+																		<td>
+																			<a href="project-detail.html"><button class="btn btn-blue">View</button></a>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td>1</td>
+																		<td>Test</td>
+																		<td>Art</td>
+																		<td>5000$</td>
+																		<td>100$</td>
+																		<td>
+																			<button class="btn btn-red">SUSPENDED</button>
+																		</td>
+																		<td>20/09/2015</td>
+																		<td><button class="btn btn-green">Yes</button></td>
+																		<td>
+																			<a href="project-detail.html"><button class="btn btn-blue">View</button></a>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td>1</td>
+																		<td>Test</td>
+																		<td>Art</td>
+																		<td>5000$</td>
+																		<td>100$</td>
+																		<td>
+																			<button class="btn btn-white">Draft</button>
+																		</td>
+																		<td>20/09/2015</td>
+																		<td><button class="btn btn-green">Yes</button></td>
+																		<td>
+																			<a href="project-detail.html"><button class="btn btn-blue">View</button></a>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td>1</td>
+																		<td>Test</td>
+																		<td>Art</td>
+																		<td>5000$</td>
+																		<td>100$</td>
+																		<td>
+																			<button class="btn btn-white">Draft</button>
+																		</td>
+																		<td>20/09/2015</td>
+																		<td><button class="btn btn-green">Yes</button></td>
+																		<td>
+																			<a href="project-detail.html"><button class="btn btn-blue">View</button></a>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td>1</td>
+																		<td>Test</td>
+																		<td>Art</td>
+																		<td>5000$</td>
+																		<td>100$</td>
+																		<td>
+																			<button class="btn btn-white">Draft</button>
+																		</td>
+																		<td>20/09/2015</td>
+																		<td><button class="btn btn-green">Yes</button></td>
+																		<td>
+																			<a href="project-detail.html"><button class="btn btn-blue">View</button></a>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+														<!-- /.table-responsive -->
+													</div>
+													<!-- /.portlet-body -->
+												</div>
+												<!-- /.portlet -->
+
+											</div>
+											<!-- /.col-lg-12 -->
+										</div>
+									</div>
+									<!-- End tab created project -->
+									
+								</div>
+                            </div>
+                            <!-- /.portlet-body -->
+                        </div>
+                        <!-- /.portlet -->
+
+
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.page-content -->
+
+        </div>
+        <!-- /#page-wrapper -->
+        <!-- end MAIN PAGE CONTENT -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- GLOBAL SCRIPTS -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/plugins/bootstrap/bootstrap.min.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="js/plugins/popupoverlay/jquery.popupoverlay.js"></script>
+    <script src="js/plugins/popupoverlay/defaults.js"></script>
+    <!-- Logout Notification Box -->
+    <div id="logout">
+        <div class="logout-message">
+            <img class="img-circle img-logout" src="img/profile-pic.jpg" alt="">
+            <h3>
+                <i class="fa fa-sign-out text-green"></i> Ready to go?
+            </h3>
+            <p>Select "Logout" below if you are ready<br> to end your current session.</p>
+            <ul class="list-inline">
+                <li>
+                    <a href="login.html" class="btn btn-green">
+                        <strong>Logout</strong>
+                    </a>
+                </li>
+                <li>
+                    <button class="logout_close btn btn-green">Cancel</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /#logout -->
+    <!-- Logout Notification jQuery -->
+    <script src="js/plugins/popupoverlay/logout.js"></script>
+    <!-- HISRC Retina Images -->
+    <script src="js/plugins/hisrc/hisrc.js"></script>
+
+    <!-- PAGE LEVEL PLUGIN SCRIPTS -->
+	<script src="js/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="js/plugins/datatables/datatables-bs3.js"></script>
+
+    <!-- THEME SCRIPTS -->
+    <script src="js/flex.js"></script>
+	<script src="js/demo/advanced-tables-demo.js"></script>
+
+</body>
+
+
+<!-- Mirrored from themes.startbootstrap.com/flex-admin-v1.2/blank.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 19 Mar 2014 06:24:44 GMT -->
+</html>
