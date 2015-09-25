@@ -354,7 +354,11 @@
 													</div>
 												</div>
 												<!-- end circle title -->
-												
+												<div class="row">
+													<div class="col-lg-12 col-sm-12">
+														<button class="btn btn-danger btn-lg pull-right" data-toggle="modal" data-target="#ConfirmModal">Suspend this project</button>
+													</div>
+												</div>				
 											</div>
 										</div>
 										<!-- end project detail row -->
@@ -646,7 +650,30 @@
         </div>
         <!-- /#page-wrapper -->
         <!-- end MAIN PAGE CONTENT -->
-
+		<!-- Advanced Modal Trigger -->
+				<!-- Flex Modal -->
+				<div class="modal modal-flex fade" id="ConfirmModal" tabindex="-1" role="dialog" aria-labelledby="flexModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-sm">
+					  <div class="modal-content">
+						<form role="form">
+						  <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h4 class="modal-title" id="flexModalLabel">
+							  Confirm
+							</h4>
+						  </div>
+						  <div class="modal-body">
+							<div><h4>Are you want to suspend this project?</h2></div>
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Yes</button> <button type="button" data-dismiss="modal" class="btn btn-danger">No</button>
+						  </div>
+						</form>
+					  </div><!-- /.modal-content -->
+					</div><!-- /.modal-dialog -->
+				</div>
+				<!-- /.modal -->
+			<!-- end Modals -->
     </div>
     <!-- /#wrapper -->
 
