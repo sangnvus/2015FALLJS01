@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Users List</title>
+    <title>User Profile</title>
 
     <!-- PACE LOAD BAR PLUGIN - This creates the subtle load bar effect at the top of the page. -->
     <link href="css/plugins/pace/pace.css" rel="stylesheet">
@@ -18,8 +18,8 @@
 
     <!-- GLOBAL STYLES - Include these on every page. -->
     <link href="css/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic' rel="stylesheet" type="text/css">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel="stylesheet" type="text/css">
+    <!-- <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic' rel="stylesheet" type="text/css"> -->
+    <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel="stylesheet" type="text/css"> -->
     <link href="icons/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- PAGE LEVEL PLUGIN STYLES -->
@@ -63,8 +63,7 @@
             <div class="nav-top">
 
                 <!-- begin LEFT SIDE WIDGETS -->
-                <ul class
-				="nav navbar-left">
+                <ul class="nav navbar-left">
                     <li class="tooltip-sidebar-toggle">
                         <a href="#" id="sidebar-toggle" data-toggle="tooltip" data-placement="right" title="Sidebar Toggle">
                             <i class="fa fa-bars"></i>
@@ -92,23 +91,6 @@
                                 <a href="message.html">
                                     <i class="fa fa-envelope"></i> My Messages
                                     <span class="badge green pull-right">4</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-bell"></i> My Alerts
-                                    <span class="badge orange pull-right">9</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-tasks"></i> My Tasks
-                                    <span class="badge blue pull-right">10</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="calendar.html">
-                                    <i class="fa fa-calendar"></i> My Calendar
                                 </a>
                             </li>
                             <li class="divider"></li>
@@ -156,32 +138,32 @@
                         <div class="clearfix"></div>
                     </li>
                     <!-- end SIDE NAV USER PANEL -->
-                    <!-- begin USERS DROPDOWN -->
-                    <li class="panel">
-                        <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#users">
-                            <i class="fa fa-files-o"></i> Users <i class="fa fa-caret-down"></i>
-                        </a>
-                        <ul class="collapse nav in" id="users">
-                            <li>
-                                <a href="user.html">
-                                    <i class="fa fa-angle-double-right"></i> Dashboard
-                                </a>
-                            </li>
-                            <li>
-                                <a href="userlist.html" class="active">
-                                    <i class="fa fa-angle-double-right"></i> Users List
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- end USERS DROPDOWN -->
-                    <!-- begin DASHBOARD LINK -->
+					<!-- begin DASHBOARD LINK -->
                     <li>
                         <a href="dashboard.html">
                             <i class="fa fa-dashboard"></i> Dashboard
                         </a>
                     </li>
                     <!-- end DASHBOARD LINK -->
+                    <!-- begin USERS DROPDOWN -->
+                    <li class="panel">
+                        <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#users">
+                            <i class="fa fa-files-o"></i> Users <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="collapse nav" id="users">
+                            <li>
+                                <a href="user.html">
+                                    <i class="fa fa-angle-double-right"></i> Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a href="userlist.html">
+                                    <i class="fa fa-angle-double-right"></i> Users List
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- end USERS DROPDOWN -->
                     <!-- begin PROJECTS DROPDOWN -->
                     <li class="panel">
                         <a data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#projects">
@@ -236,7 +218,7 @@
 					<!-- end MESSAGES DROPDOWN -->
 					<!-- begin REPORT -->
 					<li class="panel">
-                        <a href="report.html" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#charts">
+                        <a href="report.html" data-parent="#side" data-toggle="collapse" class="accordion-toggle active" data-target="#charts">
                             <i class="fa fa-bar-chart-o"></i> Report 
 							<!-- <i class="fa fa-caret-down"></i> -->
                         </a>
@@ -260,12 +242,12 @@
                     <div class="col-lg-12">
                         <div class="page-title">
                             <h1>
-                                Users List
+                                Report
                             </h1>
                             <ol class="breadcrumb">
-                                <li><i class="fa fa-dashboard"></i>  <a href="index-2.html">Dashboard</a>
+                                <li><i class="fa fa-dashboard"></i>  <a href="dashboard.html">Dashboard</a>
                                 </li>
-                                <li class="active">User List</li>
+                                <li class="active">Report</li>
                             </ol>
                         </div>
                     </div>
@@ -274,237 +256,276 @@
                 <!-- /.row -->
                 <!-- end PAGE TITLE ROW -->
 
-				<!-- begin DASHBOARD CIRCLE TILES -->
-                <div class="row centered" >
-					<div class="col-lg-2 col-sm-6">
-						<div class="circle-tile">
-							<a href="#">
-								<div class="circle-tile-heading orange">
-									<i class="fa fa-bell fa-fw fa-3x"></i>
-								</div>
-							</a>
-							<div class="circle-tile-content orange">
-								<div class="circle-tile-description text-faded">
-									New User
-								</div>
-								<div class="circle-tile-number text-faded">
-									9 New
-								</div>
-								<a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-2 col-sm-6">
-						<div class="circle-tile">
-							<a href="#">
-								<div class="circle-tile-heading blue">
-									<i class="fa fa-tasks fa-fw fa-3x"></i>
-								</div>
-							</a>
-							<div class="circle-tile-content blue">
-								<div class="circle-tile-description text-faded">
-									Inactive Users
-								</div>
-								<div class="circle-tile-number text-faded">
-									10
-									<span id="sparklineB"></span>
-								</div>
-								<a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-2 col-sm-6">
-						<div class="circle-tile">
-							<a href="#">
-								<div class="circle-tile-heading purple">
-									<i class="fa fa-comments fa-fw fa-3x"></i>
-								</div>
-							</a>
-							<div class="circle-tile-content purple">
-								<div class="circle-tile-description text-faded">
-									Active User
-								</div>
-								<div class="circle-tile-number text-faded">
-									96
-									<span id="sparklineD"></span>
-								</div>
-								<a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-2 col-sm-6">
-						<div class="circle-tile">
-							<a href="#">
-								<div class="circle-tile-heading dark-blue">
-									<i class="fa fa-users fa-fw fa-3x"></i>
-								</div>
-							</a>
-							<div class="circle-tile-content dark-blue">
-								<div class="circle-tile-description text-faded">
-									 Total Users
-								</div>
-								<div class="circle-tile-number text-faded">
-									265
-									<span id="sparklineA"></span>
-								</div>
-								<a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
-							</div>
-						</div>
-					</div>
-                </div>
-                <!-- end DASHBOARD CIRCLE TILES -->
-				
-				<!-- begin NEW USER TABLES ROW -->
                 <div class="row">
-
                     <div class="col-lg-12">
 
                         <div class="portlet portlet-default">
-                            <div class="portlet-heading">
-                                <div class="portlet-title">
-                                    <h4>Users List</h4>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
                             <div class="portlet-body">
-                                <div class="table-responsive">
-                                    <table id="example-table" class="table table-striped table-bordered table-hover table-green">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Email</th>
-												<th>Mobile</th>
-                                                <th>Login Type</th>
-                                                <th>Status</th>
-												<th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="odd gradeX">
-                                                <td>Test</td>
-                                                <td>Test</td>
-                                                <td>+84789798244</td>
-												<td>Facebook</td>
-                                                <td>
-													<button class="btn btn-default">Inactive</button>
-													<!-- <button class="btn btn-green">Active</button> -->
-												</td>
-												<td>
-													<a href="userprofile.html"><button class="btn btn-blue">View</button></a>
-												</td>
-                                            </tr>
-                                            <tr class="even gradeC">
-                                                <td>Test</td>
-                                                <td>Test</td>
-                                                <td>+84789798244</td>
-												<td>Facebook</td>
-                                                <td>
-													<!-- <button class="btn btn-default">Inactive</button> -->
-													<button class="btn btn-green">Active</button>
-												</td>
-												<td>
-													<a href="userprofile.html"><button class="btn btn-blue">View</button></a>
-												</td>
-                                            </tr>
-                                            <tr class="odd gradeA">
-                                                <td>Test</td>
-                                                <td>Test</td>
-                                                <td>+84789798244</td>
-												<td>Facebook</td>
-                                                <td>
-													<button class="btn btn-default">Inactive</button>
-													<!-- <button class="btn btn-green">Active</button> -->
-												</td>
-												<td>
-													<a href="userprofile.html"><button class="btn btn-blue">View</button></a>
-												</td>
-                                            </tr>
-                                            <tr class="even gradeA">
-                                                <td>Test</td>
-                                                <td>Test</td>
-                                                <td>+84789798244</td>
-												<td>Normal</td>
-                                                <td>
-													<!-- <button class="btn btn-default">Inactive</button> -->
-													<button class="btn btn-green">Active</button>
-												</td>
-												<td>
-													<a href="userprofile.html"><button class="btn btn-blue">View</button></a>
-												</td>
-                                            </tr>
-                                            <tr class="odd gradeA">
-                                                <td>Test</td>
-                                                <td>Test</td>
-                                                <td>+84789798244</td>
-												<td>Normal</td>
-                                                <td>
-													<button class="btn btn-default">Inactive</button>
-													<!-- <button class="btn btn-green">Active</button> -->
-												</td>
-												<td>
-													<a href="userprofile.html"><button class="btn btn-blue">View</button></a>
-												</td>
-                                            </tr>
-                                            <tr class="even gradeA">
-                                                <td>Test</td>
-                                                <td>Test</td>
-                                                <td>+84789798244</td>
-												<td>Normal</td>
-                                                <td>
-													<!-- <button class="btn btn-default">Inactive</button> -->
-													<button class="btn btn-green">Active</button>
-												</td>
-												<td>
-													<a href="userprofile.html"><button class="btn btn-blue">View</button></a>
-												</td>
-                                            </tr>
-                                            <tr class="gradeA">
-                                                <td>Test</td>
-                                                <td>Test</td>
-                                                <td>+84789798244</td>
-												<td>Normal</td>
-                                                <td>
-													<!-- <button class="btn btn-default">Inactive</button> -->
-													<button class="btn btn-green">Active</button>
-												</td>
-												<td>
-													<a href="userprofile.html"><button class="btn btn-blue">View</button></a>
-												</td>
-                                            </tr>
-                                            <tr class="gradeA">
-                                                <td>Test</td>
-                                                <td>Test</td>
-                                                <td>+84789798244</td>
-												<td>Normal</td>
-                                                <td>
-													<!-- <button class="btn btn-default">Inactive</button> -->
-													<button class="btn btn-green">Active</button>
-												</td>
-												<td>
-													<a href="userprofile.html"><button class="btn btn-blue">View</button></a>
-												</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- /.table-responsive -->
+                                <ul id="userTab" class="nav nav-tabs">
+                                    <li class="active"><a href="#user" data-toggle="tab">Reported Users</a></li>
+									<li><a href="#project" data-toggle="tab">Reported Projects</a></li>
+                                </ul>
+                                <div id="userTabContent" class="tab-content">
+									
+									<!-- Tab reported user -->
+									<div class="tab-pane fade in active" id="user">
+										<div class="row">
+											<div class="col-lg-12">
+
+												<div class="portlet portlet-default">
+													<div class="portlet-heading">
+														<div class="portlet-title">
+															<h4>Reported Users</h4>
+														</div>
+														<div class="clearfix"></div>
+													</div>
+													<div class="portlet-body">
+														<div class="table-responsive">
+															<table id="example-table" class="table table-striped table-bordered table-hover table-green">
+																<thead>
+																	<tr>
+																		<th>User reported</th>
+																		<th>Reported User</th>
+																		<th>Reason</th>
+																		<th>Reported Date</th>
+																		<th>Status</th>
+																		<th>Action</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr>
+																		<td><a href="userprofile.html">test test test</a></td>
+																		<td><a href="userprofile.html">test test test</a></td>
+																		<td>Spam comment</td>
+																		<td>02-20-2015</td>
+																		<td>
+																			<a class="btn btn-xs btn-red">Waiting</a>
+																		</td>
+																		<td>
+																			<button class="btn btn-blue" data-toggle="modal" data-target="#viewMessageModal">View</button>
+																			<button class="btn btn-default">Confirmed</button>
+																			<button class="btn btn-purple">Cancel</button>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td><a href="userprofile.html">test test test</a></td>
+																		<td><a href="userprofile.html">test test test</a></td>
+																		<td>Spam comment</td>
+																		<td>02-20-2015</td>
+																		<td>
+																			<a class="btn btn-xs btn-purple">Cancel</a>
+																		</td>
+																		<td>
+																			<button class="btn btn-blue" data-toggle="modal" data-target="#viewMessageModal">View</button>
+																			<button class="btn btn-default">Confirmed</button>
+																			<button class="btn btn-purple">Cancel</button>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td><a href="userprofile.html">test test test</a></td>
+																		<td><a href="userprofile.html">test test test</a></td>
+																		<td>Spam comment</td>
+																		<td>02-20-2015</td>
+																		<td>
+																			<a class="btn btn-xs btn-default">Confirmed</a>
+																		</td>
+																		<td>
+																			<button class="btn btn-blue" data-toggle="modal" data-target="#viewMessageModal">View</button>
+																			<button class="btn btn-default">Confirmed</button>
+																			<button class="btn btn-purple">Cancel</button>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+														<!-- /.table-responsive -->
+													</div>
+													<!-- /.portlet-body -->
+												</div>
+												<!-- /.portlet -->
+
+											</div>
+											<!-- /.col-lg-12 -->
+										</div>
+									</div>
+									<!-- End tab reported user -->
+									
+									<!-- Tab reported projects -->
+									<div class="tab-pane fade" id="project">
+										<div class="row">
+											<div class="col-lg-12">
+
+												<div class="portlet portlet-default">
+													<div class="portlet-heading">
+														<div class="portlet-title">
+															<h4>Created Projects</h4>
+														</div>
+														<div class="clearfix"></div>
+													</div>
+													<div class="portlet-body">
+														<div class="table-responsive">
+															<table id="example-table-2" class="table table-striped table-bordered table-hover table-green">
+																<thead>
+																	<tr>
+																		<th>User reported</th>
+																		<th>Reported Project</th>
+																		<th>Creator</th>
+																		<th>Reason</th>
+																		<th>Reported Date</th>
+																		<th>Status</th>
+																		<th>Action</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr>
+																		<td><a href="userprofile.html">test test test</a></td>
+																		<td><a href="project-detail.html">test test test</a></td>
+																		<td><a href="userprofile.html">test test test</a></td>
+																		<td>fake project</td>
+																		<td>02-20-2015</td>
+																		<td>
+																			<a class="btn btn-xs btn-red">Waiting</a>
+																		</td>
+																		<td>
+																			<button class="btn btn-blue" data-toggle="modal" data-target="#viewMessageModal">View</button>
+																			<button class="btn btn-default">Confirmed</button>
+																			<button class="btn btn-purple">Cancel</button>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td><a href="userprofile.html">test test test</a></td>
+																		<td><a href="project-detail.html">test test test</a></td>
+																		<td><a href="userprofile.html">test test test</a></td>
+																		<td>fake project</td>
+																		<td>02-20-2015</td>
+																		<td>
+																			<a class="btn btn-xs btn-purple">Cancel</a>
+																		</td>
+																		<td>
+																			<button class="btn btn-blue" data-toggle="modal" data-target="#viewMessageModal">View</button>
+																			<button class="btn btn-default">Confirmed</button>
+																			<button class="btn btn-purple">Cancel</button>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td><a href="userprofile.html">test test test</a></td>
+																		<td><a href="project-detail.html">test test test</a></td>
+																		<td><a href="userprofile.html">test test test</a></td>
+																		<td>fake project</td>
+																		<td>02-20-2015</td>
+																		<td>
+																			<a class="btn btn-xs btn-default">Confirmed</a>
+																		</td>
+																		<td>
+																			<button class="btn btn-blue" data-toggle="modal" data-target="#viewMessageModal">View</button>
+																			<button class="btn btn-default">Confirmed</button>
+																			<button class="btn btn-purple">Cancel</button>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+														<!-- /.table-responsive -->
+													</div>
+													<!-- /.portlet-body -->
+												</div>
+												<!-- /.portlet -->
+
+											</div>
+											<!-- /.col-lg-12 -->
+										</div>
+									</div>
+									<!-- End tab reported project -->
+									
+								</div>
                             </div>
                             <!-- /.portlet-body -->
                         </div>
                         <!-- /.portlet -->
 
+
                     </div>
                     <!-- /.col-lg-12 -->
-
                 </div>
                 <!-- /.row -->
-				
+
             </div>
             <!-- /.page-content -->
 
         </div>
         <!-- /#page-wrapper -->
         <!-- end MAIN PAGE CONTENT -->
+		
+		<!-- Advanced Modal Trigger -->
+		<!-- Flex Modal -->
+		<div class="modal modal-flex fade" id="newMessageModal" tabindex="-1" role="dialog" aria-labelledby="flexModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+			  <div class="modal-content">
+				<form role="form">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title" id="flexModalLabel">
+					  Send Message
+					</h4>
+				  </div>
+				  <div class="modal-body">
+				  <div class="form-group">
+					  <label for="exampleInputEmail1">To:</label> <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Received..." />
+					</div>
+					<div class="form-group">
+					  <label for="exampleInputEmail1">Message Title:</label> <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter title here..." />
+					</div>
+					<div class="form-group">
+					  <label for="exampleInputPassword1">Content:</label> 
+					  <textarea class="form-control" id="exampleInputPassword1" placeholder="Description..." 
+					  rows="6" cols="50" maxlength="300" style="resize: none"></textarea>
+					</div>
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button> <button type="button" class="btn btn-green">Send</button>
+				  </div>
+				</form>
+			  </div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div>
+		<!-- /.modal -->
+		<!-- Flex Modal -->
+		<div class="modal modal-flex fade" id="viewMessageModal" tabindex="-1" role="dialog" aria-labelledby="flexModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+			  <div class="modal-content">
+				<form role="form">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title" id="flexModalLabel">
+					  View report content
+					</h4>
+				  </div>
+				  <div class="modal-body">
+				  <div class="form-group">
+					  <label for="exampleInputEmail1">From:</label> <span>Jane Smith</span>
+					</div>
+					<div class="form-group">
+					  <label for="exampleInputEmail1">Subject:</label> <span>Spam comment</span>
+					</div>
+					<div class="form-group">
+					  <label for="exampleInputPassword1">Content:</label> 
+					  <textarea readonly class="form-control" id="exampleInputPassword1" placeholder="Description..."
+					  rows="6" cols="50" maxlength="300" style="resize: none">Hi again! I wanted to let you know that the orderds
+					  hdsjhjdsb
+					  hdjvjhdsv
+					  bdjhsvdjhsjhdsvhjdvsjhvds
+					  bdjsjdsvdjshvsjdh</textarea>
+					</div>
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button> <button type="button" class="btn btn-green" data-dismiss="modal" data-toggle="modal" data-target="#newMessageModal">Reply</button>
+				  </div>
+				</form>
+			  </div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div>
+		<!-- /.modal -->
+	<!-- end Modals -->
 
     </div>
     <!-- /#wrapper -->
@@ -542,9 +563,8 @@
     <script src="js/plugins/hisrc/hisrc.js"></script>
 
     <!-- PAGE LEVEL PLUGIN SCRIPTS -->
-    <script src="js/plugins/datatables/jquery.dataTables.js"></script>
+	<script src="js/plugins/datatables/jquery.dataTables.js"></script>
     <script src="js/plugins/datatables/datatables-bs3.js"></script>
-	
 
     <!-- THEME SCRIPTS -->
     <script src="js/flex.js"></script>
