@@ -24,6 +24,7 @@
 
     <!-- PAGE LEVEL PLUGIN STYLES -->
 	<link href="css/plugins/morris/morris.css" rel="stylesheet">
+	<link href="css/plugins/datatables/datatables.css" rel="stylesheet">
 
     <!-- THEME STYLES - Include these on every page. -->
     <link href="css/style.css" rel="stylesheet">
@@ -235,10 +236,21 @@
 					<!-- end MESSAGES DROPDOWN -->
 					<!-- begin REPORT -->
 					<li class="panel">
-                        <a href="report.html" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#charts">
-                            <i class="fa fa-bar-chart-o"></i> Report 
-							<!-- <i class="fa fa-caret-down"></i> -->
+						<a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#reports">
+                            <i class="fa fa-files-o"></i> Report <i class="fa fa-caret-down"></i>
                         </a>
+                        <ul class="collapse nav" id="reports">
+                            <li>
+                                <a href="report-user.html">
+                                    <i class="fa fa-angle-double-right"></i> User
+                                </a>
+                            </li>
+                            <li>
+                                <a href="report-project.html">
+                                    <i class="fa fa-angle-double-right"></i> Project
+                                </a>
+                            </li>
+                        </ul>
 					</li>
 					<!-- end REPORT -->
                 </ul>
@@ -491,11 +503,13 @@
 						<div class="portlet portlet-green">
 							<div class="portlet-heading">
 								<div class="portlet-title">
-									<h4>Fund and Profit</h4>
+									<h4>Projects Chart</h4>
 								</div>
 								<div class="portlet-widgets">
-									<a href="javascript:;"><i class="fa fa-refresh"></i></a>
-									<span class="divider"></span>
+									<select class="form-control project-chart">
+										<option>2015</option>
+										<option>2014</option>
+									</select>
 									<a data-toggle="collapse" data-parent="#accordion" href="#lineChart"><i class="fa fa-chevron-down"></i></a>
 								</div>
 								<div class="clearfix"></div>
@@ -628,6 +642,69 @@
 						<!-- end recent backing table -->
 				</div>
 				<!-- end recent user table -->
+				
+				<!-- begin STATISTICS table -->
+				<div class="row">
+					<div class="col-lg-12">
+                        <div class="portlet portlet-default">
+                            <div class="portlet-heading">
+                                <div class="portlet-title">
+                                    <h4>Users List</h4>
+                                </div>
+								<div class="portlet-widgets">
+									<select class="form-control project-chart">
+										<option>Years</option>
+										<option>Months</option>
+									</select>
+								</div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="table-responsive">
+                                    <table id="example-table" class="table table-striped table-bordered table-hover table-green">
+                                        <thead>
+                                            <tr>
+												<th>Date</th>
+                                                <th>Expire projects</th>
+                                                <th>Succeed projects</th>
+												<th>Fail projects</th>
+                                                <th>Total Fund</th>
+                                                <th>Succeed Fund</th>
+												<th>Total profit</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+												<td>09/2015</td>
+												<td>10</td>
+												<td>11</td>
+												<td>15</td>
+												<td>$10000</td>
+												<td>$7000</td>
+												<td>$2000</td>
+											</tr>
+											<tr>
+												<td>08/2015</td>
+												<td>10</td>
+												<td>11</td>
+												<td>15</td>
+												<td>$10000</td>
+												<td>$7000</td>
+												<td>$2000</td>
+											</tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.table-responsive -->
+                            </div>
+                            <!-- /.portlet-body -->
+                        </div>
+                        <!-- /.portlet -->
+
+                    </div>
+                    <!-- /.col-lg-12 -->
+				</div>
+				<!-- end STATISTICS table -->
             </div>
             <!-- /.page-content -->
 
@@ -671,7 +748,8 @@
     <script src="js/plugins/hisrc/hisrc.js"></script>
 
     <!-- PAGE LEVEL PLUGIN SCRIPTS -->
-
+	<script src="js/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="js/plugins/datatables/datatables-bs3.js"></script>
 	
     <!-- Morris Charts -->
     <script src="js/plugins/morris/raphael-2.1.0.min.js"></script>
@@ -681,6 +759,7 @@
 
     <!-- THEME SCRIPTS -->
     <script src="js/flex.js"></script>
+	<script src="js/demo/advanced-tables-demo.js"></script>
 
 </body>
 
