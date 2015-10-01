@@ -283,7 +283,7 @@
                 <!-- end PAGE TITLE ROW -->
 
 				<!-- begin DASHBOARD CIRCLE TILES -->
-                <div class="row centered">
+                <div class="row">
                     <div class="col-lg-2 col-sm-6">
                         <div class="circle-tile">
                             <a href="user.html">
@@ -359,8 +359,118 @@
                             </div>
                         </div>
                     </div>
+					<div class="col-lg-2 col-sm-6">
+                        <div class="circle-tile">
+                            <a href="#">
+                                <div class="circle-tile-heading purple">
+                                    <i class="fa fa-plus-circle fa-fw fa-3x"></i>
+                                </div>
+                            </a>
+                            <div class="circle-tile-content purple">
+                                <div class="circle-tile-description text-faded">
+                                    New Project
+                                </div>
+                                <div class="circle-tile-number text-faded">
+                                    20
+                                </div>
+                                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+					<div class="col-lg-2 col-sm-6">
+                        <div class="circle-tile">
+                            <a href="#">
+                                <div class="circle-tile-heading orange">
+                                    <i class="fa fa-rocket fa-fw fa-3x"></i>
+                                </div>
+                            </a>
+                            <div class="circle-tile-content orange">
+                                <div class="circle-tile-description text-faded">
+                                    Live Project
+                                </div>
+                                <div class="circle-tile-number text-faded">
+                                    50
+                                </div>
+                                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- end DASHBOARD CIRCLE TILES -->
+				
+				<!-- Donut Chart Example -->
+				<div class="row">
+					<!-- Categories -->
+					<div class="col-lg-4 col-md-12">
+						<div class="portlet portlet-orange">
+							<div class="portlet-heading">
+								<div class="portlet-title">
+									<h4>Categories Chart</h4>
+								</div>
+								<div class="portlet-widgets">
+									<a href="javascript:;"><i class="fa fa-refresh"></i></a>
+									<span class="divider"></span>
+									<a data-toggle="collapse" data-parent="#accordion" href="#cate"><i class="fa fa-chevron-down"></i></a>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div id="cate" class="panel-collapse collapse in">
+								<div class="portlet-body">
+									<div class="portlet-body">
+										<div id="category-donut"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Rank -->
+					<div class="col-lg-4 col-md-12">
+						<div class="portlet portlet-orange">
+							<div class="portlet-heading">
+								<div class="portlet-title">
+									<h4>Rank Chart</h4>
+								</div>
+								<div class="portlet-widgets">
+									<a href="javascript:;"><i class="fa fa-refresh"></i></a>
+									<span class="divider"></span>
+									<a data-toggle="collapse" data-parent="#accordion" href="#rank"><i class="fa fa-chevron-down"></i></a>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div id="rank" class="panel-collapse collapse in">
+								<div class="portlet-body">
+									<div class="portlet-body">
+										<div id="rank-donut"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Rate -->
+					<div class="col-lg-4 col-md-12">
+						<div class="portlet portlet-orange">
+							<div class="portlet-heading">
+								<div class="portlet-title">
+									<h4>Rate Chart</h4>
+								</div>
+								<div class="portlet-widgets">
+									<a href="javascript:;"><i class="fa fa-refresh"></i></a>
+									<span class="divider"></span>
+									<a data-toggle="collapse" data-parent="#accordion" href="#rate"><i class="fa fa-chevron-down"></i></a>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div id="rate" class="panel-collapse collapse in">
+								<div class="portlet-body">
+									<div class="portlet-body">
+										<div id="rate-donut"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- end donut chart -->
 				
 				<!-- begin top table -->
 				<div class="row">
@@ -496,35 +606,6 @@
 				</div>
 				<!-- end top table -->
 				
-				<!-- begin profit chart -->
-				<div class="row">
-					<!-- Line Chart Example -->
-					<div class="col-lg-12">
-						<div class="portlet portlet-green">
-							<div class="portlet-heading">
-								<div class="portlet-title">
-									<h4>Projects Chart</h4>
-								</div>
-								<div class="portlet-widgets">
-									<select class="form-control project-chart">
-										<option>2015</option>
-										<option>2014</option>
-									</select>
-									<a data-toggle="collapse" data-parent="#accordion" href="#lineChart"><i class="fa fa-chevron-down"></i></a>
-								</div>
-								<div class="clearfix"></div>
-							</div>
-							<div id="lineChart" class="panel-collapse collapse in">
-								<div class="portlet-body">
-									<div id="morris-chart-line"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- /.col-lg-12 -->
-				</div>
-				<!-- end profit chart -->
-				
 				<!-- begin recent user and recent backing table -->
 				<div class="row">
 					<!-- begin recent user table -->
@@ -585,63 +666,89 @@
 					<!-- end recent user table -->
 					
 					<!-- begin recent backing table -->
-						<div class="col-lg-6">
-						<div class="portlet portlet-green">
-							<div class="portlet-heading">
-								<div class="portlet-title">
-									<h4>Recent Backings</h4>
-								</div>
-								<div class="portlet-widgets">
-									<a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet4"><i class="fa fa-chevron-down"></i></a>
-								</div>
-								<div class="clearfix"></div>
+					<div class="col-lg-6">
+					<div class="portlet portlet-green">
+						<div class="portlet-heading">
+							<div class="portlet-title">
+								<h4>Recent Backings</h4>
 							</div>
-							<div id="transactionsPortlet4" class="panel-collapse collapse in">
-								<div class="portlet-body">
-									<div class="table-responsive dashboard-demo-table">
-										<table class="table table-bordered table-striped table-hover">
-											<thead>
-												<tr>
-													<th>Backer</th>
-													<th>Project Title</th>
-													<th>Pledge Amount</th>
-													<th>Backed On</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>Lưu Ngọc Mạnh</td>
-													<td>test</td>
-													<td>$1000</td>
-													<td>2015-09-24 09:46:07</td>
-												</tr>
-												<tr>
-													<td>Lưu Ngọc Mạnh</td>
-													<td>test</td>
-													<td>$1000</td>
-													<td>2015-09-24 09:46:07</td>
-												</tr>
-												<tr>
-													<td>Lưu Ngọc Mạnh</td>
-													<td>test</td>
-													<td>$1000</td>
-													<td>2015-09-24 09:46:07</td>
-												</tr>
-												<tr>
-													<td>Lưu Ngọc Mạnh</td>
-													<td>test</td>
-													<td>$1000</td>
-													<td>2015-09-24 09:46:07</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
+							<div class="portlet-widgets">
+								<a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet4"><i class="fa fa-chevron-down"></i></a>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div id="transactionsPortlet4" class="panel-collapse collapse in">
+							<div class="portlet-body">
+								<div class="table-responsive dashboard-demo-table">
+									<table class="table table-bordered table-striped table-hover">
+										<thead>
+											<tr>
+												<th>Backer</th>
+												<th>Project Title</th>
+												<th>Pledge Amount</th>
+												<th>Backed On</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Lưu Ngọc Mạnh</td>
+												<td>test</td>
+												<td>$1000</td>
+												<td>2015-09-24 09:46:07</td>
+											</tr>
+											<tr>
+												<td>Lưu Ngọc Mạnh</td>
+												<td>test</td>
+												<td>$1000</td>
+												<td>2015-09-24 09:46:07</td>
+											</tr>
+											<tr>
+												<td>Lưu Ngọc Mạnh</td>
+												<td>test</td>
+												<td>$1000</td>
+												<td>2015-09-24 09:46:07</td>
+											</tr>
+											<tr>
+												<td>Lưu Ngọc Mạnh</td>
+												<td>test</td>
+												<td>$1000</td>
+												<td>2015-09-24 09:46:07</td>
+											</tr>
+										</tbody>
+									</table>
 								</div>
 							</div>
 						</div>
-						<!-- end recent backing table -->
+					</div>
+					<!-- end recent backing table -->
+					</div>
 				</div>
 				<!-- end recent user table -->
+				
+				<!-- begin statistic chart -->
+				<div class="row">
+					<!-- Line Chart Example -->
+					<div class="col-lg-12">
+						<div class="portlet portlet-default">
+							<div class="portlet-heading">
+								<div class="portlet-title">
+									<h4>Projects statistic Chart</h4>
+								</div>
+								<div class="portlet-widgets">
+									<select class="form-control project-chart">
+										<option>2015</option>
+										<option>2014</option>
+									</select>
+									<a data-toggle="collapse" data-parent="#accordion" href="#lineChart"><i class="fa fa-chevron-down"></i></a>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+						</div>
+					</div>
+					<!-- /.col-lg-12 -->
+				</div>
+				<!-- end statistic chart -->
 				
 				<!-- begin STATISTICS table -->
 				<div class="row">
@@ -649,7 +756,7 @@
                         <div class="portlet portlet-default">
                             <div class="portlet-heading">
                                 <div class="portlet-title">
-                                    <h4>Users List</h4>
+                                    <h4>Project statistic Table</h4>
                                 </div>
 								<div class="portlet-widgets">
 									<select class="form-control project-chart">
@@ -665,32 +772,60 @@
                                         <thead>
                                             <tr>
 												<th>Date</th>
-                                                <th>Expire projects</th>
+                                                <th>Total projects</th>
                                                 <th>Succeed projects</th>
 												<th>Fail projects</th>
+												<th>Running projects</th>
                                                 <th>Total Fund</th>
                                                 <th>Succeed Fund</th>
 												<th>Total profit</th>
+												<th>Success rate</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-												<td>09/2015</td>
+												<td>2015</td>
 												<td>10</td>
 												<td>11</td>
 												<td>15</td>
+												<td>10</td>
 												<td>$10000</td>
 												<td>$7000</td>
 												<td>$2000</td>
+												<td>100%</td>
 											</tr>
 											<tr>
-												<td>08/2015</td>
+												<td>2014</td>
 												<td>10</td>
 												<td>11</td>
 												<td>15</td>
+												<td>10</td>
 												<td>$10000</td>
 												<td>$7000</td>
 												<td>$2000</td>
+												<td>100%</td>
+											</tr>
+											<tr>
+												<td>2013</td>
+												<td>10</td>
+												<td>11</td>
+												<td>15</td>
+												<td>10</td>
+												<td>$10000</td>
+												<td>$7000</td>
+												<td>$2000</td>
+												<td>100%</td>
+											</tr>
+											<tr>
+												<td>2012</td>
+												<td>10</td>
+												<td>11</td>
+												<td>15</td>
+												<td>10</td>
+												<td>$10000</td>
+												<td>$7000</td>
+												<td>$2000</td>
+												<td>100%</td>
 											</tr>
                                         </tbody>
                                     </table>
@@ -705,6 +840,7 @@
                     <!-- /.col-lg-12 -->
 				</div>
 				<!-- end STATISTICS table -->
+				
             </div>
             <!-- /.page-content -->
 
@@ -750,12 +886,14 @@
     <!-- PAGE LEVEL PLUGIN SCRIPTS -->
 	<script src="js/plugins/datatables/jquery.dataTables.js"></script>
     <script src="js/plugins/datatables/datatables-bs3.js"></script>
+	<script src="js/plugins/highcharts/highcharts.js"></script>
+	<script src="js/plugins/highcharts/exporting.js"></script>
 	
     <!-- Morris Charts -->
     <script src="js/plugins/morris/raphael-2.1.0.min.js"></script>
     <script src="js/plugins/morris/morris.js"></script>
     <!-- Morris Demo/Dummy Data -->
-    <script src="js/dashboard-demo.js"></script>
+	<script src="js/statistic-demo.js"></script>
 
     <!-- THEME SCRIPTS -->
     <script src="js/flex.js"></script>
