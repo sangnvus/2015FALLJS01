@@ -23,6 +23,7 @@
     <link href="icons/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- PAGE LEVEL PLUGIN STYLES -->
+	<link href="css/plugins/morris/morris.css" rel="stylesheet">
 
     <!-- THEME STYLES - Include these on every page. -->
     <link href="css/style.css" rel="stylesheet">
@@ -297,7 +298,7 @@
 											<div class="col-lg-5">
 												<!-- circle title -->
 												<div class="row">
-													<div class="col-lg-6 col-sm-9">
+													<div class="col-lg-6 col-md-12">
 														<div class="circle-tile">
 															<a href="#">
 																<div class="circle-tile-heading orange">
@@ -315,7 +316,7 @@
 															</div>
 														</div>
 													</div>
-													<div class="col-lg-6 col-sm-9">
+													<div class="col-lg-6 col-md-12">
 														<div class="circle-tile">
 															<a href="#">
 																<div class="circle-tile-heading red">
@@ -334,7 +335,7 @@
 															</div>
 														</div>
 													</div>
-													<div class="col-lg-6 col-sm-9">
+													<div class="col-lg-6 col-md-12">
 														<div class="circle-tile">
 															<a href="#">
 																<div class="circle-tile-heading green">
@@ -352,7 +353,7 @@
 															</div>
 														</div>
 													</div>
-													<div class="col-lg-6 col-sm-9">
+													<div class="col-lg-6 col-md-12">
 														<div class="circle-tile">
 															<a href="project-backers.html">
 																<div class="circle-tile-heading dark-blue">
@@ -381,6 +382,33 @@
 											</div>
 										</div>
 										<!-- end project detail row -->
+										
+										<!-- project chart -->
+										<div class="row">
+											<!-- Line Chart Example -->
+											<div class="col-lg-12">
+												<div class="portlet portlet-green">
+													<div class="portlet-heading">
+														<div class="portlet-title">
+															<h4>Daily Statistic Chart</h4>
+														</div>
+														<div class="portlet-widgets">
+															<a href="javascript:;"><i class="fa fa-refresh"></i></a>
+															<span class="divider"></span>
+															<a data-toggle="collapse" data-parent="#accordion" href="#lineChart"><i class="fa fa-chevron-down"></i></a>
+														</div>
+														<div class="clearfix"></div>
+													</div>
+													<div id="lineChart" class="panel-collapse collapse in">
+														<div class="portlet-body">
+															<div id="morris-chart-line"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<!-- /.col-lg-12 -->
+										</div>
+										<!-- end project chart -->
 
                                     </div>
                                     <!-- end tab overview -->
@@ -729,7 +757,10 @@
     <script src="js/plugins/hisrc/hisrc.js"></script>
 
     <!-- PAGE LEVEL PLUGIN SCRIPTS -->
-
+	<!-- Morris Charts -->
+    <script src="js/plugins/morris/raphael-2.1.0.min.js"></script>
+    <script src="js/plugins/morris/morris.js"></script>
+	<script src="js/project-detail-demo.js"></script>
     <!-- THEME SCRIPTS -->
     <script src="js/flex.js"></script>
 
