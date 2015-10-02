@@ -13,7 +13,7 @@ namespace DDL_CapstoneProject.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201510020603553_InitialCreate"; }
+            get { return "201510021842581_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

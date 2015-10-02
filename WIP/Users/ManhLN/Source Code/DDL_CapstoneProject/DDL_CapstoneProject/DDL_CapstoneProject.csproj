@@ -129,16 +129,19 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Backing.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Migrations\201510021842581_InitialCreate.cs" />
+    <Compile Include="Migrations\201510021842581_InitialCreate.Designer.cs">
+      <DependentUpon>201510021842581_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Backing.cs" />
+    <Compile Include="Controllers\WebControllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201510020603553_InitialCreate.cs" />
-    <Compile Include="Migrations\201510020603553_InitialCreate.Designer.cs">
-      <DependentUpon>201510020603553_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Helper\BaseApiController.cs" />
+    <Compile Include="Helper\BaseController.cs" />
+    <Compile Include="Helper\SingletonBase.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Conversation.cs" />
@@ -155,7 +158,14 @@
     <Compile Include="Models\UpdateLog.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Respository\CategoryRepository.cs" />
     <Compile Include="Respository\DDLDataContext.cs" />
+    <Compile Include="Respository\MessageRepository.cs" />
+    <Compile Include="Respository\ProjectRepository.cs" />
+    <Compile Include="Respository\SlideRepository.cs" />
+    <Compile Include="Respository\UserRepository.cs" />
+    <Compile Include="Helper\DDLConstants.cs" />
+    <Compile Include="Helper\CommonUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -995,6 +1005,7 @@
     <Folder Include="App\filters\" />
     <Folder Include="App\services\" />
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\ApiControllers\" />
     <Folder Include="images\avatars\" />
     <Folder Include="images\others\" />
     <Folder Include="images\projects\" />
@@ -1006,8 +1017,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201510020603553_InitialCreate.resx">
-      <DependentUpon>201510020603553_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201510021842581_InitialCreate.resx">
+      <DependentUpon>201510021842581_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
