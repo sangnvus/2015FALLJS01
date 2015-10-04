@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using DDL_CapstoneProject.Helpers;
+using DDL_CapstoneProject.Models;
 
 namespace DDL_CapstoneProject.Respository
 {
@@ -14,5 +15,13 @@ namespace DDL_CapstoneProject.Respository
         {
             db = new DDLDataContext();
         }
+
+
+        // GET: api/Slides
+        public List<Slide> GetSlides()
+        {   
+            return db.Slides.Where(x => x.IsActive == true).ToList();
+        }
+
     }
 }

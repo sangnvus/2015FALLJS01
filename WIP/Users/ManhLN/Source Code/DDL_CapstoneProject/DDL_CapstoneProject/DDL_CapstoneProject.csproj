@@ -133,6 +133,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ApiControllers\SlideApiController.cs" />
     <Compile Include="Controllers\ApiControllers\UserApiController.cs" />
     <Compile Include="Controllers\WebControllers\ClientPartialController.cs" />
     <Compile Include="Controllers\WebControllers\LoginController.cs" />
@@ -188,6 +189,7 @@
     <Content Include="App\controllers\HomeController.js" />
     <Content Include="App\controllers\RegisterController.js" />
     <Content Include="App\HomeModule.js" />
+    <Content Include="App\services\SlideSevice.js" />
     <Content Include="App\services\UserService.js" />
     <Content Include="Content\animation.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -1049,6 +1051,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="images\others\" />
     <Folder Include="Views\ClientPartial\" />
+    <Folder Include="Views\Slider\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
