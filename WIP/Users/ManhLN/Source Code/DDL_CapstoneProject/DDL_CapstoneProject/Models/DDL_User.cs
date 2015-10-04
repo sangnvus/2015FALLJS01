@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Web;
 
 namespace DDL_CapstoneProject.Models
@@ -28,19 +29,19 @@ namespace DDL_CapstoneProject.Models
         /// <summary>
         /// User can register account by normal way or facebook account
         /// There are 3 type:
-        ///     Normal: 1 (register)
-        ///     Facebook: 2 (register by facebook)
-        ///     Both: 3 (relation normal account with a facebook account.
+        ///     Normal (register)
+        ///     Facebook (register by facebook)
+        ///     Both (relation normal account with a facebook account.
         /// </summary>
-        public LoginType LoginType { get; set; }
+        public string LoginType { get; set; }
         
         /// <summary>
         /// Type or role of account
         /// There are 2 role:
-        ///     User: 1
-        ///     Admin: 2
+        ///     User
+        ///     Admin
         /// </summary>
-        public UserType UserType { get; set; }
+        public string UserType { get; set; }
 
         /// <summary>
         /// Registered datetime of a account
@@ -52,7 +53,7 @@ namespace DDL_CapstoneProject.Models
         /// Last login datetime of a account
         /// This value is set when account logged in system.
         /// </summary>
-        public DateTime LastLogin { get; set; }
+        public DateTime? LastLogin { get; set; }
         
         /// <summary>
         /// Active status of a account.
@@ -60,9 +61,21 @@ namespace DDL_CapstoneProject.Models
         public bool IsActive { get; set; }
 
         /// <summary>
+        /// Email of user
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
         /// Account's email is verified?
         /// </summary>
         public bool IsVerify { get; set; }
+
+        /// <summary>
+        /// Verify code of a account
+        /// System sends a vefiry link with the code to user'emal to verify email.
+        /// </summary>
+        public string VerifyCode { get; set; }
+
         #endregion "End Attribute"
 
         #region "RelationShip"
@@ -84,17 +97,17 @@ namespace DDL_CapstoneProject.Models
 
     #region "Enum"
 
-    public enum LoginType
-    {
-        Normal = 1,
-        Facebook = 2,
-        Both = 3
-    }
+    //public enum LoginType
+    //{
+    //    Normal = 1,
+    //    Facebook = 2,
+    //    Both = 3
+    //}
 
-    public enum UserType
-    {
-        User = 1,
-        Admin = 2
-    }
+    //public enum UserType
+    //{
+    //    User = 1,
+    //    Admin = 2
+    //}
     #endregion "Enum"
 }

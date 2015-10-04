@@ -13,6 +13,9 @@ namespace DDL_CapstoneProject
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            // Enable route annotation.
+            routes.MapMvcAttributeRoutes();
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

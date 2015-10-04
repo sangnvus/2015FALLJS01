@@ -33,9 +33,9 @@ namespace DDL_CapstoneProject.Migrations
                     {
                         RewardPkgID = c.Int(nullable: false, identity: true),
                         ProjectID = c.Int(nullable: false),
-                        Type = c.Int(nullable: false),
+                        Type = c.String(),
                         Quantity = c.Int(nullable: false),
-                        EstimatedDelivery = c.DateTime(nullable: false),
+                        EstimatedDelivery = c.DateTime(),
                         IsHide = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.RewardPkgID)
@@ -57,12 +57,12 @@ namespace DDL_CapstoneProject.Migrations
                         Location = c.String(),
                         IsExprired = c.Boolean(nullable: false),
                         CurrentFunded = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        ExpireDate = c.DateTime(nullable: false),
+                        ExpireDate = c.DateTime(),
                         FundingGoal = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Description = c.String(),
                         VideoUrl = c.String(),
                         PopularPoint = c.Int(nullable: false),
-                        Status = c.Int(nullable: false),
+                        Status = c.String(),
                     })
                 .PrimaryKey(t => t.ProjectID)
                 .ForeignKey("dbo.Category", t => t.CategoryID)
@@ -105,12 +105,13 @@ namespace DDL_CapstoneProject.Migrations
                         DDL_UserID = c.Int(nullable: false, identity: true),
                         Username = c.String(),
                         Password = c.String(),
-                        LoginType = c.Int(nullable: false),
-                        UserType = c.Int(nullable: false),
+                        LoginType = c.String(),
+                        UserType = c.String(),
                         CreatedDate = c.DateTime(nullable: false),
-                        LastLogin = c.DateTime(nullable: false),
+                        LastLogin = c.DateTime(),
                         IsActive = c.Boolean(nullable: false),
                         IsVerify = c.Boolean(nullable: false),
+                        VerifyCode = c.String(),
                     })
                 .PrimaryKey(t => t.DDL_UserID);
             
@@ -123,9 +124,9 @@ namespace DDL_CapstoneProject.Migrations
                         ReceiverID = c.Int(nullable: false),
                         Subject = c.String(),
                         CreatedDate = c.DateTime(nullable: false),
-                        UpdatedDate = c.DateTime(nullable: false),
-                        DeleteStatus = c.Int(nullable: false),
-                        ViewStatus = c.Int(nullable: false),
+                        UpdatedDate = c.DateTime(),
+                        DeleteStatus = c.String(),
+                        ViewStatus = c.String(),
                     })
                 .PrimaryKey(t => t.ConversationID)
                 .ForeignKey("dbo.DDL_User", t => t.CreatorID)
@@ -159,7 +160,7 @@ namespace DDL_CapstoneProject.Migrations
                         Subject = c.String(),
                         ReportContent = c.String(),
                         ReportedDate = c.DateTime(nullable: false),
-                        Status = c.Int(nullable: false),
+                        Status = c.String(),
                     })
                 .PrimaryKey(t => t.ReportID)
                 .ForeignKey("dbo.Project", t => t.ProjectID)
@@ -177,7 +178,7 @@ namespace DDL_CapstoneProject.Migrations
                         Subject = c.String(),
                         ReportContent = c.String(),
                         ReportedDate = c.DateTime(nullable: false),
-                        Status = c.Int(nullable: false),
+                        Status = c.String(),
                     })
                 .PrimaryKey(t => t.ReportID)
                 .ForeignKey("dbo.DDL_User", t => t.ReportedUserID)
@@ -206,8 +207,8 @@ namespace DDL_CapstoneProject.Migrations
                         DDL_UserID = c.Int(nullable: false),
                         FullName = c.String(),
                         ProfileImage = c.String(),
-                        Gender = c.Int(nullable: false),
-                        DateOfBirth = c.DateTime(nullable: false),
+                        Gender = c.String(),
+                        DateOfBirth = c.DateTime(),
                         Country = c.String(),
                         Address = c.String(),
                         Website = c.String(),
