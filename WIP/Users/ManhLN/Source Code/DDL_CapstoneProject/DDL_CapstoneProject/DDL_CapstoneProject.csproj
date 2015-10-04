@@ -133,6 +133,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ApiControllers\ProjectApiController.cs" />
     <Compile Include="Controllers\ApiControllers\SlideApiController.cs" />
     <Compile Include="Controllers\ApiControllers\UserApiController.cs" />
     <Compile Include="Controllers\WebControllers\ClientPartialController.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\DDL_User.cs" />
     <Compile Include="Models\DTOs\HttpMessageDTO.cs" />
+    <Compile Include="Models\DTOs\ProjectCreateDTO.cs" />
     <Compile Include="Models\DTOs\UserBasicInfoDTO.cs" />
     <Compile Include="Models\DTOs\UserLoginDTO.cs" />
     <Compile Include="Models\DTOs\UserRegisterDTO.cs" />
