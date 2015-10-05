@@ -29,7 +29,7 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/create",
         {
-            templateUrl: "/Project/Create",
+            templateUrl: "/ClientPartial/CreateProject",
             controller: "CreateProjectController"
         });
     $routeProvider.otherwise(
