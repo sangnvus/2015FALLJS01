@@ -39,17 +39,19 @@ namespace DDL_CapstoneProject.Models
         /// Last updated datetime of conversation
         /// or sent time of last message.
         /// </summary>
-        public DateTime UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
 
         /// <summary>
         /// Delete status of conversation
+        /// using ConversationStatus constant.
         /// </summary>
-        public DeleteStatus DeleteStatus { get; set; }
+        public string DeleteStatus { get; set; }
 
         /// <summary>
         /// View status of conversation
+        /// using ConversationStatus constant.
         /// </summary>
-        public ViewStatus ViewStatus { get; set; }
+        public string ViewStatus { get; set; }
 
         #endregion
 
@@ -65,18 +67,18 @@ namespace DDL_CapstoneProject.Models
 
     #region "Enum"
 
-    public enum ViewStatus
-    {
-        CreatorView = 1,
-        ReceiverView = 2,
-        BothView = 3
-    }
+    //public enum ViewStatus
+    //{
+    //    CreatorView = 1,
+    //    ReceiverView = 2,
+    //    BothView = 3
+    //}
 
-    public enum DeleteStatus
-    {
-        CreatorDelete = 1,
-        ReceiverDelete = 2,
-        BothDelete = 3
-    }
+    //public enum DeleteStatus
+    //{
+    //    CreatorDelete = 1,
+    //    ReceiverDelete = 2,
+    //    BothDelete = 3
+    //}
     #endregion
 }

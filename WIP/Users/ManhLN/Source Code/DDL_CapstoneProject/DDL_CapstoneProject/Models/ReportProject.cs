@@ -45,7 +45,7 @@ namespace DDL_CapstoneProject.Models
         /// <summary>
         /// Status of report.
         /// </summary>
-        public ReportStatus Status { get; set; }
+        public string Status { get; set; }
 
         #endregion
 
