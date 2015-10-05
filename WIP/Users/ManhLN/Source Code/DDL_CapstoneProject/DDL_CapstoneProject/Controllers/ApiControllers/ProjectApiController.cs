@@ -17,6 +17,14 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpPost]
         public IHttpActionResult CreateProject(ProjectCreateDTO newProject)
         {
+
+            var currentUser = getCurrentUser();
+
+            if (currentUser == null)
+            {
+                return Ok(new HttpMessageDTO { Status = "error", Message = "Chưa đăng nhập!", Type = "UserNotFound" }); 
+            }
+
             if (!ModelState.IsValid)
             {
                 return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
@@ -24,6 +32,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             try
             {
+                newProject.CreatorID = currentUser.DDL_UserID;
                 var project = ProjectRepository.Instance.CreatProject(newProject);
             }
             catch (Exception)

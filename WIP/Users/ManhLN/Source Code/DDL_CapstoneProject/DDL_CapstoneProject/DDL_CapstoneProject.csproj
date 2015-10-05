@@ -133,6 +133,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ApiControllers\CategoryApiController.cs" />
     <Compile Include="Controllers\ApiControllers\ProjectApiController.cs" />
     <Compile Include="Controllers\ApiControllers\SlideApiController.cs" />
     <Compile Include="Controllers\ApiControllers\UserApiController.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\DDL_User.cs" />
+    <Compile Include="Models\DTOs\CategoryDTO.cs" />
     <Compile Include="Models\DTOs\HttpMessageDTO.cs" />
     <Compile Include="Models\DTOs\ProjectCreateDTO.cs" />
     <Compile Include="Models\DTOs\UserBasicInfoDTO.cs" />
@@ -195,6 +197,7 @@
     <Content Include="App\controllers\ResetPwController.js" />
     <Content Include="App\directives\passwordMatch.js" />
     <Content Include="App\HomeModule.js" />
+    <Content Include="App\services\CategoryService.js" />
     <Content Include="App\services\ProjectService.js" />
     <Content Include="App\services\SlideSevice.js" />
     <Content Include="App\services\UserService.js" />
@@ -1052,13 +1055,12 @@
     <Content Include="Views\Login\Active.cshtml" />
     <Content Include="Views\Login\_RegisterSuccess.cshtml" />
     <Content Include="Views\Login\ForgotPassword.cshtml" />
-    <Content Include="Views\Project\_CreateProject.cshtml" />
+    <Content Include="Views\ClientPartial\_CreateProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />
     <Folder Include="App_Data\" />
     <Folder Include="images\others\" />
-    <Folder Include="Views\ClientPartial\" />
     <Folder Include="Views\Slider\" />
   </ItemGroup>
   <ItemGroup>
