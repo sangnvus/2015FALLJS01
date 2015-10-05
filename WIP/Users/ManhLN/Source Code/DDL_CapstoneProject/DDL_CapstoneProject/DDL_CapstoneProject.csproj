@@ -138,6 +138,7 @@
     <Compile Include="Controllers\ApiControllers\UserApiController.cs" />
     <Compile Include="Controllers\WebControllers\ClientPartialController.cs" />
     <Compile Include="Controllers\WebControllers\LoginController.cs" />
+    <Compile Include="Controllers\WebControllers\ProjectController.cs" />
     <Compile Include="Helper\CustomException.cs" />
     <Compile Include="Helper\MailHelper.cs" />
     <Compile Include="Migrations\201510030826590_InitialCreate.cs" />
@@ -188,11 +189,13 @@
     <Compile Include="Helper\CommonUtils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\controllers\CreateProjectController.js" />
     <Content Include="App\controllers\HomeController.js" />
     <Content Include="App\controllers\RegisterController.js" />
     <Content Include="App\controllers\ResetPwController.js" />
     <Content Include="App\directives\passwordMatch.js" />
     <Content Include="App\HomeModule.js" />
+    <Content Include="App\services\ProjectService.js" />
     <Content Include="App\services\SlideSevice.js" />
     <Content Include="App\services\UserService.js" />
     <Content Include="Content\animation.css" />
@@ -1049,6 +1052,7 @@
     <Content Include="Views\Login\Active.cshtml" />
     <Content Include="Views\Login\_RegisterSuccess.cshtml" />
     <Content Include="Views\Login\ForgotPassword.cshtml" />
+    <Content Include="Views\Project\_CreateProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />
