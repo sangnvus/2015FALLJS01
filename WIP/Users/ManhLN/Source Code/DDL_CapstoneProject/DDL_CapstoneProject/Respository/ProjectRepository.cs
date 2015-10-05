@@ -55,6 +55,15 @@ namespace DDL_CapstoneProject.Respository
         {
             Project project;
 
+            project = CreateEmptyProject();
+            project.Title = newProject.Title;
+            project.CategoryID = newProject.CategoryID;
+            project.CreatorID = newProject.CreatorID;
+            project.FundingGoal = newProject.FundingGoal;
+
+            db.Projects.Add(project);
+            db.SaveChanges();
+
             return project;
         }
 

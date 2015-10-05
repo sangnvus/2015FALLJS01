@@ -27,6 +27,11 @@ app.config(["$routeProvider", function ($routeProvider) {
         {
             templateUrl: "ClientPartial/RegisterSuccess"
         });
+    $routeProvider.when("/create",
+        {
+            templateUrl: "/Project/Create",
+            controller: "CreateProjectController"
+        });
     $routeProvider.otherwise(
         {
             redirectTo: "/"
