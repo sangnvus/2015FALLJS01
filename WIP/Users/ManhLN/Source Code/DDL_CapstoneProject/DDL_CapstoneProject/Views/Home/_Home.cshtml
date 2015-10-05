@@ -29,37 +29,34 @@
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
             <ol class="carousel-indicators">
-                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="{{Slides[0].Order}}" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="{{Slide.Order}}" ng-repeat="Slide in Slides" ng-if="Slide.SlideID != Slides[0].SlideID"></li>
             </ol>
 
             <!-- Wrapper for slides -->
             <div class="carousel-inner" role="listbox">
                 <div class="item active">
-                    <img class="imgCarouse" src="../images/slides/slider1.jpg" alt="...">
+                    <img class="imgCarouse" src="..{{Slides[0].ImageUrl}}" alt="...">
                     <div class="carousel-caption">
-                        <h1>Emmett Louis Till, 1941–1955</h1>
-                        <h3>is murder catalyzed the civil rights movement. Help make the film that will tell his story.</h3>
-                        <a href="project_detail.html" class="btn btn-success btn-lg">View project</a>
+                        <h1>{{Slides[0].Title}}</h1>
+                        <h3>{{Slides[0].Description}}</h3>
+                        <a href="project_detail.html" class="btn {{Slides[0].ButtonColor}} btn-lg">{{Slides[0].ButtonText}}</a>
                     </div>
                 </div>
-                <div class="item">
-                    <img class="imgCarouse" src="../images/slides/slider2.jpg" alt="...">
+                <div class="item" ng-repeat="Slide in Slides" ng-if="Slide.SlideID != Slides[0].SlideID">
+                    <img class="imgCarouse" src="..{{Slide.ImageUrl}}" alt="...">
                     <div class="carousel-caption">
-                        <h1>The World’s Cleanest Power Plant</h1>
-                        <h3>Support a team of architects who are working to reduce carbon emissions by making art in the sky.</h3>
-                        <a href="project_detail.html" class="btn btn-success btn-lg">View project</a>
+                        <h1>{{Slide.Title}}</h1>
+                        <h3>{{Slide.Description}}</h3>
+                        <a href="project_detail.html" class="btn {{Slide.ButtonColor}} btn-lg">{{Slide.ButtonText}}</a>
                     </div>
                 </div>
-                <div class="item">
-                    <img class="imgCarouse" src="../images/slides/slider3.jpg" alt="...">
-                    <div class="carousel-caption">
-                        <h1>Eco - Global Survival Game</h1>
-                        <h3>Collaborate to build civilization in a simulated ecosystem, creating laws to make group decisions.</h3>
-                        <a href="project_detail.html" class="btn btn-success btn-lg">View project</a>
-                    </div>
-                </div>
+
+
+
+
+
+
             </div>
             <!-- Controls -->
             <span class="left carousel-control" data-target="#carousel-example-generic" data-slide="prev">

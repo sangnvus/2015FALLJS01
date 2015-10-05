@@ -10,5 +10,6 @@ namespace DDL_CapstoneProject.Models.DTOs
         public string Status { get; set; }
         public string Type { get; set; }
         public string Message { get; set; }
+        public object Data { get; set; }
     }
 }
