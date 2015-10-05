@@ -156,7 +156,7 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
 
             if (newUser == null)
             {
-                var user = UserRepository.Instance.RegisterFacebook(me);
+                newUser = UserRepository.Instance.RegisterFacebook(me);
             }
             else if (newUser.LoginType == DDLConstants.LoginType.NORMAL)
             {
