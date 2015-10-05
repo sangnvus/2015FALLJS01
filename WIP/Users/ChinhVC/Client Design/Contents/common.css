@@ -1,0 +1,353 @@
+@charset "UTF-8";
+/* CSS Information
+Description: Comon Module CSS
+Date: 2015.10.01
+---------------------------------------------------------- */
+
+
+
+/* Html Page
+---------------------------------------------------------- */
+	html,body {
+	    background-color: #F0F0F0;
+		/*height:100%;*/
+		/*padding:0;*/
+		/*margin:0;*/
+	}
+/* End html page ------------------------------------------ */
+
+
+
+/* Header navbar
+---------------------------------------------------------- */
+	#header nav{
+		/*background: #2f2f42;*/
+		background-color: #f8f8f8;
+		text-align: center;
+		box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+		padding: 0px 100px;
+	}
+	#header a{
+		/*color: #FFFFFF;*/
+	}
+
+	#profile_dropdown:hover .dropdown-toggle{
+		color: #FFFFFF;
+		background: #16a085;
+		border-radius: 8px;
+	}
+	#profile_dropdown ul>li:hover>a{
+		color: #ffffff;
+    	background-color: #1abc9c;
+    	border-radius: 8px;
+	}
+	.divider-vertical {
+	height: 50px;
+	margin: 0 9px;
+	border-left: 1px solid #FFF;
+	border-right: 1px solid #F5F5F5;
+	}
+	#avatar {
+		display: inline;
+		width: 20px;
+		height: 20px;
+		margin-right: 2px;
+	}
+	.navbar-nav>li>.dropdown-menu {
+		padding: 0px 10px;
+	}
+
+	/*Padding with Navbar */
+	.paddingNavbar{
+		padding-top: 50px;
+	}
+
+	/* enable absolute positioning */
+	.inner-addon { 
+		position: relative; 
+	}
+/* End Header navbar ------------------------------------------ */
+	
+	
+
+/*Footer 
+---------------------------------------------------------- */
+	#footer {
+		background: #2f2f42;
+		/*text-align: center;*/
+		box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+		padding: 10px 0px;
+	}
+	#footer a{
+		color: #bdc3c7;
+		text-decoration: none;
+	}
+	#footer a:hover{
+		transition: all 0.5s ease;
+		color: #16a085;
+		text-decoration: none;
+	}
+
+	#footer ul{
+		padding: 20px 0px;
+	}
+/* End Footer ---------------------------------------------- */
+
+
+
+/* Add Bootstrap Glyphicon to Input Box 
+---------------------------------------------------------- */
+	/* style icon */
+	.inner-addon .glyphicon {
+	  position: absolute;
+	  padding: 10px;
+	  pointer-events: none;
+	}
+	/* align icon */
+	.left-addon .glyphicon  { left:  0px;}
+	.right-addon .glyphicon { right: 0px;}
+	/* add padding  */
+	.left-addon input  { padding-left:  30px; }
+	.right-addon input { padding-right: 30px; }
+	
+/* End Bootstrap Glyphicon --------------------------------- */
+
+
+
+/* Porfolio 
+---------------------------------------------------------- */
+	.portfolio-items,
+	.portfolio-filter {
+	  list-style: none;
+	  padding: 0;
+	  margin: 0 -20px 20px 0;
+	}
+	.portfolio-filter > li {
+	  display: inline-block;
+	}
+	.portfolio-items > li {
+	  float: left;
+	  padding: 0;
+	  -webkit-box-sizing: border-box;
+	  -moz-box-sizing: border-box;
+	  box-sizing: border-box;
+	}
+	.portfolio-items.col-2 > li {
+	  width: 50%;
+	}
+	.portfolio-items.col-3 > li {
+	  width: 33%;
+	}
+	.portfolio-items.col-4 > li {
+	  width: 25%;
+	}
+	.portfolio-items.col-5 > li {
+	  width: 20%;
+	}
+	.portfolio-items.col-6 > li {
+	  width: 16%;
+	}
+	.portfolio-item {
+	  padding: 0;
+	  margin: 0;
+	}
+	.portfolio-item .item-inner {
+	  background: #fff;
+	  border: 1px solid #eee;
+	  padding: 10px 10px 0;
+	  margin: 0 20px 20px 0;
+	  position: relative;
+	  border-radius: 6px;
+	}
+	.portfolio-item img {
+	  width: 100%;
+	}
+	.portfolio-item .item-title h5 {
+	  background: #fff;
+	  margin: 0;
+	  padding: 10px 0;
+	  font-weight: 700;
+	  font-size: 18px;
+	  color: #16a085;
+	  white-space: nowrap;
+	  text-overflow: ellipsis;
+	  overflow: hidden;
+	}
+	.portfolio-item .item-content {
+	  background: #fff;
+	  margin: 0;
+	  height: 90px;
+/*	  font-weight: 700;*/
+	  font-size: 16px;
+	  color: #828587;
+	  /*white-space: nowrap;*/
+	  text-overflow: ellipsis;
+	  overflow: hidden;
+	}
+	.portfolio-item .item-footer {
+	  background: #fff;
+	  margin-bottom: 10px;
+	  font-size: 10px;
+	  color: #828587;
+	}
+
+	.portfolio-item .overlay {
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 100%;
+	  opacity: 0;
+	  background: rgba(255, 255, 255, 0.9);
+	  text-align: center;
+	  vertical-align: middle;
+	  -webkit-transition: opacity 300ms;
+	  -moz-transition: opacity 300ms;
+	  -o-transition: opacity 300ms;
+	  transition: opacity 300ms;
+	}
+/*	.portfolio-item .overlay .preview {
+	  position: relative;
+	  top: 50%;
+	  display: inline-block;
+	  margin-top: -20px;
+	}
+	.portfolio-item:hover .overlay {
+	  opacity: 1;
+	}*/
+
+/* End Porfolio ---------------------------------------------- */
+
+
+
+/* Hover Imgage 
+---------------------------------------------------------- */
+figure {
+	overflow: hidden;
+}
+/* Zoom In #1 */
+.hover01 figure img {
+	-webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.hover01 figure:hover img {
+	-webkit-transform: scale(1.3);
+	transform: scale(1.3);
+}
+
+/*Common effect*/
+.effects {
+  padding-left: 15px;
+}
+.effects .effect-content{
+  position: relative;
+  float: left;
+  margin-bottom: 5px;
+  width: 25%;
+  overflow: hidden;
+}
+.effects .effect-content .effect-content:nth-child(n) {
+  margin-right: 5px;
+}
+.effects .effect-content:first-child {
+  margin-left: -15px;
+}
+.effects .effect-content:last-child {
+  margin-right: 0;
+}
+.effects .effect-content .effect-top-main {
+  display: block;
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  height: auto;
+}
+
+.overlay {
+  display: block;
+  position: absolute;
+  z-index: 20;
+  background: rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+a.close-overlay {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  width: 45px;
+  height: 45px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 45px;
+  text-align: center;
+  background-color: #000;
+  cursor: pointer;
+}
+a.close-overlay.hidden {
+  display: none;
+}
+
+a.expand {
+  display: block;
+  position: absolute;
+  z-index: 100;
+  width: 60px;
+  height: 60px;
+  border: solid 5px #fff;
+  text-align: center;
+  color: #fff;
+  line-height: 50px;
+  font-weight: 700;
+  font-size: 30px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+  border-radius: 30px;
+}
+/* EFFECT 2 - SLIDE IN TOP */
+.effect-top .overlay {
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 0;
+}
+.effect-top .overlay a.expand {
+  left: 0;
+  right: 0;
+  top: 50%;
+  margin: -30px auto 0 auto;
+}
+.effect-top .effect-top-main:hover .overlay {
+  height: 100%;
+}
+/*==============================*/
+
+.hover02{
+}
+.hover02:hover{
+	background: #16a085;
+	transition: .5s ease-in-out;
+}
+
+/* End New ---------------------------------------------- */
+
+
+
+/* New 
+---------------------------------------------------------- */
+
+/* End New ---------------------------------------------- */
+
+

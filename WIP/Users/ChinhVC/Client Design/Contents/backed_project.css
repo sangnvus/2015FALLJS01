@@ -1,0 +1,37 @@
+#header_link{
+	margin-top: 50px;
+	text-align: right;
+}
+
+#setting_container h1{
+	font-weight: bold;
+}
+#setting_container{
+	margin-right: 100px;
+}
+
+#project_list ul{
+	padding: 0;
+}
+
+.remove_pading{
+	padding: 0;
+}
+
+.project_name{
+	padding-left: 20px;
+}	
+
+.boder_box_listproject{
+	border: 1px solid #ccc;
+	margin: 30px 0px 30px 0px;
+	border-radius: 5px;
+}
+
+.vertical_bot{
+	margin-top: 150px;
+}
+
+.img-overflow{
+	overflow: hidden;
+}
