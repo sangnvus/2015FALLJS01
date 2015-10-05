@@ -205,6 +205,16 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
             return View();
         }
 
+        /// <summary>
+        /// ForgotPassword action.
+        /// </summary>
+        /// <returns>Forgot password view</returns>
+        [Route("ForgotPassword")]
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
         private Uri RedirectUri
         {
             get

@@ -57,6 +57,18 @@ namespace DDL_CapstoneProject.Respository
             return user;
         }
 
+        public string GenerateNewPassword()
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            var random = new Random();
+            var newPassword = new string(
+                Enumerable.Repeat(chars, 8)
+                          .Select(s => s[random.Next(s.Length)])
+                          .ToArray());
+
+            return newPassword;
+        }
+
         public DDL_User GetByUserNameOrEmail(string userNameOrEmail, string password)
         {
             var user =
@@ -72,6 +84,14 @@ namespace DDL_CapstoneProject.Respository
 
             return user;
         }
+
+        //public DDL_User GetByUserNameOrEmailByLoginType(string userNameOrEmail, string loginType)
+        //{
+        //    var user =
+        //        db.DDL_Users.FirstOrDefault(x => (x.Username == userNameOrEmail || x.Email == userNameOrEmail) && x.LoginType == loginType);
+
+        //    return user;
+        //}
 
         public DDL_User InsertUser(DDL_User newUser)
         {
@@ -189,6 +209,24 @@ namespace DDL_CapstoneProject.Respository
 
             return GetByUserNameOrEmail(user.Email); ;
         }
+
+        public bool ResetPassword(string email)
+        {
+            var user = GetByUserNameOrEmail(email);
+            if (user == null || user.LoginType == DDLConstants.LoginType.FACEBOOK)
+            {
+                throw new UserNotFoundException();
+            }
+
+            string newPassword = GenerateNewPassword();
+            user.Password = CommonUtils.Md5(newPassword);
+            db.SaveChanges();
+
+            MailHelper.Instance.SendMailResetPassword(email,newPassword,user.UserInfo.FullName);
+
+            return true;
+        }
+
         #endregion     
     }
 }

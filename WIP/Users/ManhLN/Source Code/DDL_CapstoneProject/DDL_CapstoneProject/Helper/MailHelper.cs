@@ -50,5 +50,24 @@ namespace DDL_CapstoneProject.Helper
 
             }
         }
+
+        public void SendMailResetPassword(string email, string newPassword,string fullName)
+        {
+            try
+            {
+                _mail.To.Add(email);
+                _mail.Subject = "Dandelion - Mật khẩu mới!";
+                _mail.Body = "Xin chào " + fullName + "," +
+                            "<br/>Mật khẩu mới của bạn là: " + newPassword +
+                            "<br/>Bạn có thể bấm vào link dưới đây để đăng nhập với mật khẩu mới" +
+                            "<br/><a href='http://localhost:34747/login'>http://localhost:34747/login</a>";
+                _smtp.Send(_mail);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+            }
+        }
     }
 }

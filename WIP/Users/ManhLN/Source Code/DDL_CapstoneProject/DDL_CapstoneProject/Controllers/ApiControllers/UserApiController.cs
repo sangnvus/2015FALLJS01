@@ -40,5 +40,28 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
             return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "" });
         }
+
+        [HttpPost]
+        public IHttpActionResult ResetPassword(string email)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
+            }
+            try
+            {
+                var result = UserRepository.Instance.ResetPassword(email);
+            }
+            catch (UserNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = "error", Message = "Tài khoản không tồn tại!", Type = "UserNotFound" });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
+            }
+
+            return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "" });
+        }
     }
 }
