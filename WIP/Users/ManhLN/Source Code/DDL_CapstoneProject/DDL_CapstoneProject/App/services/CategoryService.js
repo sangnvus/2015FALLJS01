@@ -4,7 +4,7 @@ service.service("CategoryService", function ($http) {
 
     //Read all Categories  
     this.getCategories = function () {
-        return $http.get("api/CategoryAPI/GetCategories");
+        return $http.get("api/CategoryApi/GetCategories");
     };
 
 });

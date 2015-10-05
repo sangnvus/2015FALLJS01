@@ -6,10 +6,10 @@ app.controller('CreateProjectController', function ($scope, $location, ProjectSe
         var promiseGetCategory = CategoryService.getCategories();
         promiseGetCategory.then(
             function (result) {
-                $scope.Categories = result.data;
+                $scope.Categories = result.data.Data;
 
                 // Set selected project category
-                $scope.selectedOption = $scope.Categories.Data[0];
+                $scope.selectedOption = $scope.Categories[0];
             },
             function (error) {
                 $scope.error = error;
