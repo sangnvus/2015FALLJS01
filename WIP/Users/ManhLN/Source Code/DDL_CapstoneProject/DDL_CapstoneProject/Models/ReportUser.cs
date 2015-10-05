@@ -45,7 +45,7 @@ namespace DDL_CapstoneProject.Models
         /// <summary>
         /// Status of report.
         /// </summary>
-        public ReportStatus Status { get; set; }
+        public string Status { get; set; }
         #endregion
 
         [ForeignKey("ReporterID")]
@@ -59,11 +59,11 @@ namespace DDL_CapstoneProject.Models
 
     #region "Enum"
 
-    public enum ReportStatus
-    {
-        New = 1,
-        View = 2,
-        Done = 3
-    }
+    //public enum ReportStatus
+    //{
+    //    New = 1,
+    //    View = 2,
+    //    Done = 3
+    //}
     #endregion
 }

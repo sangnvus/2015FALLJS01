@@ -29,15 +29,15 @@ namespace DDL_CapstoneProject.Models
 
         /// <summary>
         /// Gender of user.
-        /// 1: Male
-        /// 2: Female
+        /// 1: male
+        /// 2: female
         /// </summary>
-        public Gender Gender { get; set; }
+        public string Gender { get; set; }
 
         /// <summary>
         /// Date of birth of user.
         /// </summary>
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         /// <summary>
         /// Country of user.
@@ -71,10 +71,10 @@ namespace DDL_CapstoneProject.Models
 
 
     #region "Enum"
-    public enum Gender
-    {
-        Male = 1,
-        Female = 2
-    }
+    //public enum Gender
+    //{
+    //    Male = 1,
+    //    Female = 2
+    //}
     #endregion
 }

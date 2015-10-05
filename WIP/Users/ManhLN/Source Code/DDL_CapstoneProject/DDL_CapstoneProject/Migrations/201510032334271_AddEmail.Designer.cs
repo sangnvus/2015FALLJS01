@@ -7,13 +7,13 @@ namespace DDL_CapstoneProject.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class InitialCreate : IMigrationMetadata
+    public sealed partial class AddEmail : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddEmail));
         
         string IMigrationMetadata.Id
         {
-            get { return "201510021842581_InitialCreate"; }
+            get { return "201510032334271_AddEmail"; }
         }
         
         string IMigrationMetadata.Source

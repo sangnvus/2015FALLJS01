@@ -12,6 +12,8 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
     {
         public ActionResult Index()
         {
+            getCurrentUser();
+            ViewBag.BaseUrl = GetBaseUrl();
             return View();
         }
 
