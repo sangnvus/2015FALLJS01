@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Home</title>
+
+    <!-- Loading Bootstrap -->
+    <link href="../Contents/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Loading Flat UI -->
+    <link href="../Contents/flat-ui.min.css" rel="stylesheet">
+    
+    <!-- Loading Fonts avesome-->
+    <link rel="stylesheet" type="text/css" href="../fonts/font-awesome/css/font-awesome.min.css">
+    
+    <!-- Loading Style -->
+    <link rel="stylesheet" type="text/css" href="../Contents/style.css">
+
+    <!-- Loading Animate -->
+    <link href="../Contents/animate.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div id="header">
+      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-5">
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <a class="navbar-brand" href="home.html">DanDeLion</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-5">
+           <ul class="nav navbar-nav">
+            <li><a href="discover.html">Discover</a></li>
+            <li><a href="">Start</a></li>
+            <li role="separator" class="hidden-xs divider-vertical"></li>
+          </ul>
+          <form class="navbar-form navbar-left" action="#" role="search">
+            <div class="form-group">
+              <div class="input-group">
+                <input class="form-control" id="navbarInput-01" type="search" placeholder="Search Projects">
+                <span class="input-group-btn">
+                  <button type="" class="btn"><span class="fui-search"></span></button>
+                </span>
+              </div>
+            </div>
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <!-- Login and Regiter -->
+            <form  role="search" class="navbar-form navbar-right">
+              <a href="login.html" class="btn btn-success btn-sm btn-wide" style="padding: 8px 0px;" role="button">Log in</a>
+              <a href="register.html" class="btn btn-default btn-sm btn-wide" style="padding: 8px 0px;" role="button" type="">Sign up</a>
+            </form>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </nav>
+    </div>
+
+    <div id="content" class="paddingNavbar">
+      <div id="main-slider" class="no-margin">
+       <div class="carousel slide wet-asphalt">
+        <ol class="carousel-indicators">
+          <li data-target="#main-slider" data-slide-to="0" class="active"></li>
+          <li data-target="#main-slider" data-slide-to="1"></li>
+          <li data-target="#main-slider" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="item active" style="background-image: url(../images/slider/bg1.jpg)">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="carousel-content txt-c white centered">
+                    <h2 class="animation animated-item-1">Powerful and Responsive Web Design</h2>
+                    <p class="animation animated-item-2">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+                    <a class="btn btn-md animation animated-item-3" href="project_detail.html">View project</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!--/.item-->
+          <div class="item" style="background-image: url(../images/slider/bg2.jpg)">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="carousel-content txt-c white centered">
+                    <h2 class="boxed animation animated-item-1">Clean, Crisp, Powerful and Responsive Web Design</h2>
+                    <p class="boxed animation animated-item-2">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+                    <br>
+                    <a class="btn btn-md animation animated-item-3" href="project_detail.html">View project</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!--/.item-->
+          <div class="item" style="background-image: url(../images/slider/bg3.jpg)">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="carousel-content white centered">
+                    <h2 class="animation animated-item-1">Powerful and Responsive Web Design Theme</h2>
+                    <p class="animation animated-item-2">Pellentesque habitant morbi tristique senectus et netus et malesuada fames</p>
+                    <a class="btn btn-md animation animated-item-3" href="project_detail.html">View project</a>
+                  </div>
+                </div>
+                <div class="col-sm-6 hidden-xs animation animated-item-4">
+                  <div class="centered">
+                   <img src="../images/img1.jpg" alt="" class="img-responsive center-block">
+                   <!-- <iframe src="http://www.youtube.com/embed/jLHGnvnw-gI" frameborder="0"> </iframe> -->
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div><!--/.item-->
+       </div><!--/.carousel-inner-->
+       <a class="prev hidden-xs" href="#main-slider" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+       </a>
+       <a class="next hidden-xs" href="#main-slider" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+       </a>
+       </div><!--/.carousel-->
+      </div><!--/#main-slider-->
+
+      <div id="feature1">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="tabbable tabs-right">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a href="#Art_picked" data-toggle="tab">Art</a></li>
+                  <li><a href="#Comics_picked" data-toggle="tab">Comics</a></li>
+                  <li><a href="#Crafts_picked" data-toggle="tab">Crafts</a></li>
+                  <li><a href="#Dance_picked" data-toggle="tab">Dance</a></li> 
+                  <li><a href="#Design_picked" data-toggle="tab">Design</a></li> 
+                  <li><a href="#Fashion_picked" data-toggle="tab">Fashion</a></li> 
+                  <li><a href="#Film_picked" data-toggle="tab">Film & Video</a></li> 
+                  <li><a href="#" data-toggle="tab">Foood</a></li> 
+                  <li><a href="#" data-toggle="tab">Games</a></li> 
+                  <li><a href="#" data-toggle="tab">Journalism</a></li> 
+                  <li><a href="#" data-toggle="tab">Music</a></li> 
+                  <li><a href="#" data-toggle="tab">Photography</a></li> 
+                  <li><a href="#" data-toggle="tab">Phulishing</a></li> 
+                  <li><a href="#" data-toggle="tab">Technology</a></li> 
+                  <li><a href="#" data-toggle="tab">Theater</a></li> 
+                </ul>
+                <div class="tab-content">
+                 <div class="tab-pane active" id="Art_picked">
+                   <h4><p class="fnt30">Staff Picks: <a href="search.html">Art</a></p></h4>
+                   <div class="row">
+                    <div class="col-sm-4">
+                        <img src="../images/project/thumb/project-item1.jpg" alt="" class="img-responsive center-block">
+                    </div>
+                     <div class="col-sm-6">
+                          <p class="fnt35 fnt-b pt0 pb0 mb0 mt0"><a href="project_detail.html">Tiko - The Unibody 3D Printer</a></p>
+                          <p class="pt0 pb0 mb0 mt0">by vinothini venkatesan</p>
+                          <div class="info">
+                            Executive produced by Thurston Moore & Nels Cline, Tom Surgal's FIRE MUSIC is the definitive documentary of the Free Jazz revolution.
+                          </div>
+                          
+                          <div class="mt10 mb5">
+                            <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>Sacramento, CA</a>
+                            &nbsp;&nbsp;
+                            <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>Art</a>
+                            &nbsp;&nbsp;
+                          </div>
+
+                          <div class="progress mt5 mb5">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">40%
+                              <span class="sr-only">40% Complete (success)</span>
+                            </div>
+                          </div>
+                          <div class="">
+                            <ul class="list-inline">
+                              <li><p class="fnt-b mt0 mb0">40%</p><p class="mt0 mb0">funded</p></li>
+                              <li><p class="fnt-b mt0 mb0">$50790</p><p class="mt0 mb0">pledged</p></li>
+                              <li><p class="fnt-b mt0 mb0">5</p><p class="mt0 mb0">bankers</p></li>
+                              <li><p class="fnt-b mt0 mb0">22</p><p class="mt0 mb0">days to go</p></li>
+                            </ul>
+                          </div>
+                      </div>
+                  </div>
+
+                 </div>
+
+                 <div class="tab-pane" id="Comics_picked">
+                   <p class="fnt30">Staff Picks: <a href="search.html">Commic</a></p>
+                     <div class="row">
+                      <div class="col-sm-4">
+                          <img src="../images/project/thumb/project-item2.jpg" alt="" class="img-responsive center-block">
+                      </div>
+                       <div class="col-sm-6">
+                            <p class="fnt35 fnt-b pt0 pb0 mb0 mt0"><a href="project_detail.html">Tiko - The Unibody 3D Printer</a></p>
+                            <p class="pt0 pb0 mb0 mt0">by vinothini venkatesan</p>
+                            <div class="info">
+                              Executive produced by Thurston Moore & Nels Cline, Tom Surgal's FIRE MUSIC is the definitive documentary of the Free Jazz revolution.
+                            </div>
+                            
+                            <div class="mt10 mb5">
+                              <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>Sacramento, CA</a>
+                              &nbsp;&nbsp;
+                              <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>Commic</a>
+                              &nbsp;&nbsp;
+                            </div>
+
+                            <div class="progress mt5 mb5">
+                              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 80%">80%
+                                <span class="sr-only">40% Complete (success)</span>
+                              </div>
+                            </div>
+                            <div class="">
+                              <ul class="list-inline">
+                                <li><p class="fnt-b mt0 mb0">40%</p><p class="mt0 mb0">funded</p></li>
+                                <li><p class="fnt-b mt0 mb0">$50790</p><p class="mt0 mb0">pledged</p></li>
+                                <li><p class="fnt-b mt0 mb0">5</p><p class="mt0 mb0">bankers</p></li>
+                                <li><p class="fnt-b mt0 mb0">22</p><p class="mt0 mb0">days to go</p></li>
+                              </ul>
+                            </div>
+                        </div>
+                  </div>
+                 </div>
+                 <div class="tab-pane" id="Crafts_picked"></div>
+
+                </div>
+              </div>
+            </div>
+           
+          </div>
+        </div>
+      </div> <!-- end feature1 -->
+      <div id="feature2">
+        <section id="portfolio" class="container">
+          <h4>What's popular:</h4>
+          <!-- <ul class="portfolio-filter">
+              <li><a class="btn btn-default active" href="#" data-filter="*">All</a></li>
+              <li><a class="btn btn-default" href="#" data-filter=".bootstrap">Bootstrap</a></li>
+              <li><a class="btn btn-default" href="#" data-filter=".html">HTML</a></li>
+              <li><a class="btn btn-default" href="#" data-filter=".wordpress">Wordpress</a></li>
+          </ul> --><!--/#portfolio-filter-->
+
+          <ul class="portfolio-items col-3">
+              <li class="portfolio-item apps">
+                  <div class="item-inner">
+                      <div class="item-image hover01 column">
+                        <figure><img src="../images/project/thumb/project-item1.jpg" alt=""></figure>
+                      </div>
+                      <div class="item-title">
+                        <h5><a href="project_detail.html">Introducing Liteseeds, LED Stickers are tiny, bright, little LEDs made in the form of a </a></h5>
+                      </div>
+                      <div class="item-content">
+                        <p class="fnt15">Liteseeds LED stickers are tiny, bright, little LEDs made in the form of a sticker. They are peel and stick lights! Safe & easy to use.</p>
+                      </div>
+                      <div class="item-footer">
+                         <div class="mt10 mb5">
+                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>Sacramento, CA</a>
+                                &nbsp;&nbsp;
+                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>Commic</a>
+                                &nbsp;&nbsp;
+                         </div>
+                          <div class="progress mt5 mb5">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="50" aria-valuemax="100" style="width: 50%">
+                              <span class="sr-only">50% Complete (success)</span>
+                            </div>
+                          </div>
+                          <ul class="list-inline">
+                                  <li><p class="fnt-b mt0 mb0 c00">50%</p><p class="mt0 mb0">funded</p></li>
+                                  <li><p class="fnt-b mt0 mb0 c00">$50790</p><p class="mt0 mb0">pledged</p></li>
+                                  <li><p class="fnt-b mt0 mb0 c00">30</p><p class="mt0 mb0">days to go</p></li>
+                          </ul>
+                      </div>
+                  </div>           
+              </li><!--/.portfolio-item-->
+              <li class="portfolio-item apps">
+                  <div class="item-inner">
+                      <div class="item-image hover01 column">
+                        <figure><img src="../images/project/thumb/project-item2.jpg" alt=""></figure>
+                      </div>
+                      <div class="item-title">
+                        <h5><a href="project_detail.html">Introducing Liteseeds, LED Stickers are tiny, bright, little LEDs made in the form of a </a></h5>
+                      </div>
+                      <div class="item-content">
+                        <p class="fnt15">Liteseeds LED stickers are tiny, bright, little LEDs made in the form of a sticker. They are peel and stick lights! Safe & easy to use. Liteseeds LED stickers are tiny, bright, little LEDs made in the form of a sticker. They are peel and stick lights! Safe & easy to use.</p>
+                      </div>
+                      <div class="item-footer">
+                         <div class="mt10 mb5">
+                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>Sacramento, CA</a>
+                                &nbsp;&nbsp;
+                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>Commic</a>
+                                &nbsp;&nbsp;
+                         </div>
+                          <div class="progress mt5 mb5">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="50" aria-valuemax="100" style="width: 120%">
+                              <span class="sr-only">120% Complete (success)</span>
+                            </div>
+                          </div>
+                          <ul class="list-inline">
+                                  <li><p class="fnt-b mt0 mb0 c00">120%</p><p class="mt0 mb0">funded</p></li>
+                                  <li><p class="fnt-b mt0 mb0 c00">$50790</p><p class="mt0 mb0">pledged</p></li>
+                                  <li><p class="fnt-b mt0 mb0 c00">30</p><p class="mt0 mb0">days to go</p></li>
+                          </ul>
+                      </div>
+                  </div>           
+              </li><!--/.portfolio-item-->
+              <li class="portfolio-item apps">
+                  <div class="item-inner">
+                      <div class="item-image hover01 column">
+                        <figure><img src="../images/project/thumb/project-item3.png" alt=""></figure>
+                      </div>
+                      <div class="item-title">
+                        <h5><a href="project_detail.html">Introducing Liteseeds, LED</a></h5>
+                      </div>
+                      <div class="item-content">
+                        <p class="fnt15">Liteseeds LED stickers are tiny, bright, little LEDs made in the form of a sticker. They are peel and stick lights! Safe & easy to use.</p>
+                      </div>
+                      <div class="item-footer">
+                         <div class="mt10 mb5">
+                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>Sacramento, CA</a>
+                                &nbsp;&nbsp;
+                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>Commic</a>
+                                &nbsp;&nbsp;
+                         </div>
+                          <div class="progress mt5 mb5">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="50" aria-valuemax="100" style="width: 50%">
+                              <span class="sr-only">50% Complete (success)</span>
+                            </div>
+                          </div>
+                          <ul class="list-inline">
+                                  <li><p class="fnt-b mt0 mb0 c00">50%</p><p class="mt0 mb0">funded</p></li>
+                                  <li><p class="fnt-b mt0 mb0 c00">$50790</p><p class="mt0 mb0">pledged</p></li>
+                                  <li><p class="fnt-b mt0 mb0 c00">30</p><p class="mt0 mb0">days to go</p></li>
+                          </ul>
+                      </div>
+                  </div>           
+              </li><!--/.portfolio-item-->
+          </ul>
+          <a class="btn btn-transparent btn-sm pull-right mr10" href="discover.html">See more</a>
+        </section><!--/#portfolio-->
+      </div>
+
+      <div id="feature3">
+        <div class="container">
+          <div class="text-center">
+            <p id="topfund" class="h1 bold">TOP FUNDS</p>
+            <div class="row dark-cyan">
+              <div class="col-md-4">
+                <p class="fnt25">Total funded</p>
+                <p><i class="fa fa-money fa-5x"></i></p>
+                <p class="fnt50 fnt-b">$1,961,779</p>
+              </div>
+              <div class="col-md-4">
+                <p class="fnt25">Highest project fund</p>
+                <p><i class="fa fa-line-chart fa-5x"></i></p>
+                <p class="fnt50 fnt-b">$1,055,951</p>
+              </div>
+              <div class="col-md-4">
+                <p class="fnt25">Highest pledge amount</9>
+                <p><i class="fa fa-diamond fa-5x"></i></p>
+                <p class="fnt50 fnt-b">$10000</p>
+              </div>
+            </div>
+             <div id="btnview" class="pt15">
+                 <a class="btn btn-transparent btn-sm" href="statistics.html">View more</a>
+              </div>
+          </div>
+        </div>
+      </div> <!-- end feature3 -->
+    </div> <!-- end content -->
+
+    <div id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <p class="fnt30 fnt-b dark-cyan">DLL - Dandelion</p>
+            <a href="">Hosted by DDL</a>
+          </div>
+          <div class="col-md-6">
+            <ul class="pull-right list-inline">
+              <li><a href="home.html">Home</a></li>
+              <li><a href="about.html">About us</a></li>
+              <li><a href="#">Help</a></li>
+              <li><a href="#">Contact</a></li>
+              <a id="gototop" class="gototop" href="#"><span class="glyphicon glyphicon-chevron-up"></span></i></a>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div> <!-- end footer -->
+
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+    <script src="../Scripts/jquery.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+    <script src="../Scripts/flat-ui.min.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <!-- My Js -->
+    <script src="../Scripts/application.js"></script>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- <script src="../Scripts/bootstrap.min.js"></script>-->
+    <!--<script src="../dist/js/vendor/video.js"></script>-->
+  </body>
+</html>
