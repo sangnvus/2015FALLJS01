@@ -89,7 +89,7 @@ namespace DDL_CapstoneProject.Respository
             return GetByUserNameOrEmail(newUser.Email); ;
         }
 
-        public UserBasicInfoDTO RegisterFacebook(dynamic me)
+        public DDL_User RegisterFacebook(dynamic me)
         {
             // Create new User
             var newUser = new DDL_User
@@ -122,15 +122,7 @@ namespace DDL_CapstoneProject.Respository
             // insert user to Database
             newUser = InsertUser(newUser);
 
-            return new UserBasicInfoDTO
-            {
-                FullName = newUser.UserInfo.FullName,
-                LoginType = newUser.LoginType,
-                IsActive = newUser.IsActive,
-                ProfileImage = newUser.UserInfo.ProfileImage,
-                Role = newUser.UserType,
-                UserName = newUser.Username
-            };
+            return newUser;
         }
 
         public DDL_User Register(UserRegisterDTO newUser)
