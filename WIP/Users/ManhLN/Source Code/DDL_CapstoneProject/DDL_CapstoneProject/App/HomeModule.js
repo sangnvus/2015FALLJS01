@@ -1,7 +1,7 @@
 ﻿"use strict";
 var service = angular.module("DDLService", []);
-
-var app = angular.module("ClientApp", ["ngRoute", "ngAnimate", "DDLService"]);
+var directive = angular.module("DDLDirective", []);
+var app = angular.module("ClientApp", ["ngRoute", "ngAnimate", "DDLService", "DDLDirective"]);
 
 // Show Routing.
 app.config(["$routeProvider", function ($routeProvider) {
@@ -11,7 +11,13 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/",
         {
-            templateUrl: "/ClientPartial/Home"
+            templateUrl: "/ClientPartial/Home",
+            controller: 'HomeController',
+            resolve: {
+                slides: ['SlideService', function (SlideService) {
+                    return SlideService.getSlides();
+                }]
+            }
         });
     $routeProvider.when("/register",
         {

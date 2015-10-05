@@ -146,6 +146,49 @@ namespace DDL_CapstoneProject.Migrations
 
             listCategory.ForEach(u => context.Categories.AddOrUpdate(x => x.Name, u));
             context.SaveChanges();
+
+            var listSlides = new List<Slide>
+            {
+                new Slide
+                {
+                    Title = "Emmett Louis Till, 1941–1955",
+                    Description = "is murder catalyzed the civil rights movement. Help make the film that will tell his story.",
+                    IsActive = true,
+                    CreatedDate = DateTime.Now,
+                    ImageUrl = "/images/slides/slider1.jpg",
+                    ButtonText = "View Project",
+                    ButtonColor = "btn-success",
+                    Order = 1,
+                    SlideUrl = "#"
+                },
+                new Slide
+                {
+                    Title = "Eco - Global Survival Game",
+                    Description = "Collaborate to build civilization in a simulated ecosystem, creating laws to make group decisions.",
+                    IsActive = true,
+                    CreatedDate = DateTime.Now,
+                    ImageUrl = "/images/slides/slider3.jpg",
+                    ButtonText = "View Project",
+                    ButtonColor = "btn-primary",
+                    Order = 2,
+                    SlideUrl = "#"
+                },
+                new Slide
+                {
+                    Title = "The World’s Cleanest Power Plant",
+                    Description = "Support a team of architects who are working to reduce carbon emissions by making art in the sky.",
+                    IsActive = true,
+                    CreatedDate = DateTime.Now,
+                    ImageUrl = "/images/slides/slider2.jpg",
+                    ButtonText = "Download",
+                    ButtonColor = "btn-success",
+                    Order = 3,
+                    SlideUrl = "#"
+                },
+            };
+
+            listSlides.ForEach(u => context.Slides.AddOrUpdate(x => x.Title, u));
+            context.SaveChanges();
         }
     }
 }

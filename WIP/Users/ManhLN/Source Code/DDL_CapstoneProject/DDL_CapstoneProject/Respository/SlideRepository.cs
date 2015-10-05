@@ -20,7 +20,7 @@ namespace DDL_CapstoneProject.Respository
         // GET: api/Slides
         public List<Slide> GetSlides()
         {   
-            return db.Slides.Where(x => x.IsActive == true).ToList();
+            return db.Slides.Where(x => x.IsActive).OrderBy(x => x.Order).ToList();
         }
 
     }

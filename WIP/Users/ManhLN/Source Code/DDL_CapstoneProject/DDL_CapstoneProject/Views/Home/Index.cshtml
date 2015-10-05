@@ -1,7 +1,5 @@
 ﻿@* This is common payout of client page. *@
-<body ng-app="HomeApp">
-    <div ng-view class="slide-animation"></div>
-</body>
+<div ng-view class="slide-animation"></div>
 
 @* All scripts is generated here. *@
 @section scripts{
@@ -10,8 +8,9 @@
     @Scripts.Render("~/bundles/md5")
     <script src="~/Scripts/angular-ui/ui-bootstrap.min.js"></script>
     <script src="~/App/HomeModule.js"></script>
-    <script src="~/App/controllers/HomeController.js"></script>
     <script src="~/App/controllers/RegisterController.js"></script>
     <script src="~/App/services/UserService.js"></script>
-<script src="~/App/services/SlideSevice.js"></script>
+    <script src="~/App/services/SlideSevice.js"></script>
+    <script src="~/App/directives/passwordMatch.js"></script>
+    <script src="~/App/controllers/HomeController.js"></script>
 }
