@@ -18,7 +18,19 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         public IHttpActionResult GetCategories()
         {
             var listCategories = CategoryRepository.Instance.GetCategories();
-            return Ok(new HttpMessageDTO { Status = "success", Data = listCategories });
+            var listCategoryDTO = new List<CategoryDTO>();
+
+            foreach (var Category in listCategories)
+            {
+                listCategoryDTO.Add(
+                    new CategoryDTO
+                    {
+                        CategoryID = Category.CategoryID,
+                        Name = Category.Name,
+                    });
+            }
+
+            return Ok(new HttpMessageDTO { Status = "success", Data = listCategoryDTO });
         }
     }
 }

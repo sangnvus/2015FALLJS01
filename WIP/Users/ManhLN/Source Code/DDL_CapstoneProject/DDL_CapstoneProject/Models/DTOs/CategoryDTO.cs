@@ -8,7 +8,7 @@ namespace DDL_CapstoneProject.Models.DTOs
     public class CategoryDTO
     {
         //attributes
-        public int CategoryId { get; set; }
-        public string Category { get; set; }
+        public int CategoryID { get; set; }
+        public string Name { get; set; }
     }
 }
