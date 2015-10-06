@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Search</title>
+    
+    <!-- Loading Bootstrap -->
+    <link href="../Contents/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Loading Flat UI -->
+    <link href="../Contents/flat-ui.min.css" rel="stylesheet">
+    
+    <!-- Loading Fonts avesome-->
+    <link rel="stylesheet" type="text/css" href="../fonts/font-awesome/css/font-awesome.min.css">
+    
+    <!-- Loading Style -->
+    <link rel="stylesheet" type="text/css" href="../Contents/style.css">
+
+    <!-- Loading Animate -->
+    <link href="../Contents/animate.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div id="header">
+      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-5">
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <a class="navbar-brand" href="home_logged.html">DanDeLion</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-5">
+           <ul class="nav navbar-nav">
+            <li class="hover-nav"><a class="abc" href="discover.html">Discover</a></li>
+            <li class="hover-nav"><a href="">Start</a></li>
+            <li role="separator" class="hidden-xs divider-vertical"></li>
+            <form class="navbar-form navbar-left" action="search-advance.html" role="search">
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" id="navbarInput-01" type="search" placeholder="Search Projects">
+                  <span class="input-group-btn">
+                    <button type="" class="btn"><span class="fui-search"></span></button>
+                  </span>
+                </div>
+              </div>
+          </form>
+          </ul>
+
+          <ul id="profile_dropdown" class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img id="avatar" src="../images/avatar/avatar1.png" alt="" class="img-responsive img-circle center-block">
+                MyName
+                <span class="caret"></span>
+              </a>
+              
+              <ul class="dropdown-menu">
+                <h5 class="c3">My stuff</h5>
+                <li><a href="message.html">Message <span class="badge">3</span></a></li>
+                <li><a href="profile_public.html">Profile</a></li>
+                <li><a href="backed_project.html">Backed projects</a></li>
+                <li><a href="created_project.html">Created projects</a></li>
+                <li><a href="starred_project.html">Starred projects</a></li>
+                <li class="divider"></li>
+                <h5 class="c3">Setting</h5>
+                <li><a href="account.html">Account</a></li>
+                <li><a href="editprofile2.html">Edit profile</a></li>
+                <li class="divider"></li>
+                <p class="no-wrap">You are logged is as <b>ChinhVC</b> | <a class="fnt-b" href="home.html">Log out</a></p>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </nav>
+    </div>
+
+
+    <div id="content" class="paddingNavbar">
+      <div id="search">
+        <div class="searchbar">
+          <div class="container">
+            <div class="control-group form-inline pt20 pb20">
+              <lable class="control-label fnt30 fnt-b">Hiển thị các dự án </lable>
+              <select data-toggle="select" multiple class="form-control multiselect multiselect-default">
+                <option value="0" selected>All</option>
+                <option value="1">Art</option>
+                <option value="2">Comics</option>
+                <option value="3">Crafts</option>
+                <option value="4">Dance</option>
+                <option value="5">Design</option>
+                <option value="6">Fashion</option>
+                <option value="7">Games</option>
+                <option value="8">Journalism</option>
+                <option value="9">Music</option>
+                <option value="10">Photography</option>
+                <option value="11">Publishing</option>
+                <option value="12">Technology</option>
+              </select>
+              <lable class="control-label fnt30 fnt-b"> sắp xếp theo </lable>
+              <select class="form-control fnt20" id="">
+                <option>Magic</option>
+                <option>Popularity</option>
+                <option>Newest</option>
+                <option>End Date</option>
+                <option>Most Funded</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+          <div id="item-search" class="pt30 pb30">
+            <section id="portfolio" class="container">
+              <div class="explore">
+                <span class="fnt30 fnt-b">Explore</span>
+                <span class="fnt30 fnt-b color-green">252,064 projects</span>
+              </div>
+              <ul class="portfolio-items col-4">
+                  <li class="portfolio-item">
+                      <div class="item-inner">
+                          <div class="item-image hover01 column">
+                            <figure><img src="../images/project/thumb/project-item1.jpg" alt=""></figure>
+                          </div>
+                          <div class="item-title">
+                            <h5><a href="project_detail.html">Introducing Liteseeds, LED Stickers are tiny, bright, little LEDs made in the form of a </a></h5>
+                          </div>
+                          <div class="item-content">
+                            <p class="fnt15">Liteseeds LED stickers are tiny, bright, little LEDs made in the form of a sticker. They are peel and stick lights! Safe & easy to use.</p>
+                          </div>
+                          <div class="item-footer">
+                             <div class="mt10 mb5">
+                                    <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>Sacramento, CA</a>
+                                    &nbsp;&nbsp;
+                                    <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>Commic</a>
+                                    &nbsp;&nbsp;
+                             </div>
+                              <div class="progress mt5 mb5">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="50" aria-valuemax="100" style="width: 50%">
+                                  <span class="sr-only">50% Complete (success)</span>
+                                </div>
+                              </div>
+                              <ul class="list-inline">
+                                      <li><p class="fnt-b mt0 mb0 c00">50%</p><p class="mt0 mb0">funded</p></li>
+                                      <li><p class="fnt-b mt0 mb0 c00">$50790</p><p class="mt0 mb0">pledged</p></li>
+                                      <li><p class="fnt-b mt0 mb0 c00">30</p><p class="mt0 mb0">days to go</p></li>
+                              </ul>
+                          </div>
+                      </div>           
+                  </li><!--/.portfolio-item-->
+                  <li class="portfolio-item">
+                      <div class="item-inner">
+                          <div class="item-image hover01 column">
+                            <figure><img src="../images/project/thumb/project-item2.jpg" alt=""></figure>
+                          </div>
+                          <div class="item-title">
+                            <h5><a href="project_detail.html">Introducing Liteseeds, LED Stickers are tiny, bright, little LEDs made in the form of a </a></h5>
+                          </div>
+                          <div class="item-content">
+                            <p class="fnt15">Liteseeds LED stickers are tiny, bright, little LEDs made in the form of a sticker. They are peel and stick lights! Safe & easy to use. Liteseeds LED stickers are tiny, bright, little LEDs made in the form of a sticker. They are peel and stick lights! Safe & easy to use.</p>
+                          </div>
+                          <div class="item-footer">
+                             <div class="mt10 mb5">
+                                    <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>Sacramento, CA</a>
+                                    &nbsp;&nbsp;
+                                    <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>Commic</a>
+                                    &nbsp;&nbsp;
+                             </div>
+                              <div class="progress mt5 mb5">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="50" aria-valuemax="100" style="width: 120%">
+                                  <span class="sr-only">120% Complete (success)</span>
+                                </div>
+                              </div>
+                              <ul class="list-inline">
+                                      <li><p class="fnt-b mt0 mb0 c00">120%</p><p class="mt0 mb0">funded</p></li>
+                                      <li><p class="fnt-b mt0 mb0 c00">$50790</p><p class="mt0 mb0">pledged</p></li>
+                                      <li><p class="fnt-b mt0 mb0 c00">30</p><p class="mt0 mb0">days to go</p></li>
+                              </ul>
+                          </div>
+                      </div>           
+                  </li><!--/.portfolio-item-->
+                  <li class="portfolio-item">
+                      <div class="item-inner">
+                          <div class="item-image hover01 column">
+                            <figure><img src="../images/project/thumb/project-item3.png" alt=""></figure>
+                          </div>
+                          <div class="item-title">
+                            <h5><a href="project_detail.html">Introducing Liteseeds, LED</a></h5>
+                          </div>
+                          <div class="item-content">
+                            <p class="fnt15">Liteseeds LED stickers are tiny, bright, little LEDs made in the form of a sticker. They are peel and stick lights! Safe & easy to use.</p>
+                          </div>
+                          <div class="item-footer">
+                             <div class="mt10 mb5">
+                                    <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>Sacramento, CA</a>
+                                    &nbsp;&nbsp;
+                                    <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>Commic</a>
+                                    &nbsp;&nbsp;
+                             </div>
+                              <div class="progress mt5 mb5">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="50" aria-valuemax="100" style="width: 50%">
+                                  <span class="sr-only">50% Complete (success)</span>
+                                </div>
+                              </div>
+                              <ul class="list-inline">
+                                      <li><p class="fnt-b mt0 mb0 c00">50%</p><p class="mt0 mb0">funded</p></li>
+                                      <li><p class="fnt-b mt0 mb0 c00">$50790</p><p class="mt0 mb0">pledged</p></li>
+                                      <li><p class="fnt-b mt0 mb0 c00">30</p><p class="mt0 mb0">days to go</p></li>
+                              </ul>
+                          </div>
+                      </div>           
+                  </li><!--/.portfolio-item-->
+                  <li class="portfolio-item">
+                      <div class="item-inner">
+                          <div class="item-image hover01 column">
+                            <figure><img src="../images/project/thumb/project-item1.jpg" alt=""></figure>
+                          </div>
+                          <div class="item-title">
+                            <h5><a href="project_detail.html">Introducing Liteseeds, LED Stickers are tiny, bright, little LEDs made in the form of a </a></h5>
+                          </div>
+                          <div class="item-content">
+                            <p class="fnt15">Liteseeds LED stickers are tiny, bright, little LEDs made in the form of a sticker. They are peel and stick lights! Safe & easy to use.</p>
+                          </div>
+                          <div class="item-footer">
+                             <div class="mt10 mb5">
+                                    <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>Sacramento, CA</a>
+                                    &nbsp;&nbsp;
+                                    <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>Commic</a>
+                                    &nbsp;&nbsp;
+                             </div>
+                              <div class="progress mt5 mb5">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="50" aria-valuemax="100" style="width: 50%">
+                                  <span class="sr-only">50% Complete (success)</span>
+                                </div>
+                              </div>
+                              <ul class="list-inline">
+                                      <li><p class="fnt-b mt0 mb0 c00">50%</p><p class="mt0 mb0">funded</p></li>
+                                      <li><p class="fnt-b mt0 mb0 c00">$50790</p><p class="mt0 mb0">pledged</p></li>
+                                      <li><p class="fnt-b mt0 mb0 c00">30</p><p class="mt0 mb0">days to go</p></li>
+                              </ul>
+                          </div>
+                      </div>           
+                  </li><!--/.portfolio-item-->
+                  <li class="portfolio-item">
+                      <div class="item-inner">
+                          <div class="item-image hover01 column">
+                            <figure><img src="../images/project/thumb/project-item2.jpg" alt=""></figure>
+                          </div>
+                          <div class="item-title">
+                            <h5><a href="project_detail.html">Introducing Liteseeds, LED Stickers are tiny, bright, little LEDs made in the form of a </a></h5>
+                          </div>
+                          <div class="item-content">
+                            <p class="fnt15">Liteseeds LED stickers are tiny, bright, little LEDs made in the form of a sticker. They are peel and stick lights! Safe & easy to use. Liteseeds LED stickers are tiny, bright, little LEDs made in the form of a sticker. They are peel and stick lights! Safe & easy to use.</p>
+                          </div>
+                          <div class="item-footer">
+                             <div class="mt10 mb5">
+                                    <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>Sacramento, CA</a>
+                                    &nbsp;&nbsp;
+                                    <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>Commic</a>
+                                    &nbsp;&nbsp;
+                             </div>
+                              <div class="progress mt5 mb5">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="50" aria-valuemax="100" style="width: 120%">
+                                  <span class="sr-only">120% Complete (success)</span>
+                                </div>
+                              </div>
+                              <ul class="list-inline">
+                                      <li><p class="fnt-b mt0 mb0 c00">120%</p><p class="mt0 mb0">funded</p></li>
+                                      <li><p class="fnt-b mt0 mb0 c00">$50790</p><p class="mt0 mb0">pledged</p></li>
+                                      <li><p class="fnt-b mt0 mb0 c00">30</p><p class="mt0 mb0">days to go</p></li>
+                              </ul>
+                          </div>
+                      </div>           
+                  </li><!--/.portfolio-item-->
+                  <li class="portfolio-item">
+                      <div class="item-inner">
+                          <div class="item-image hover01 column">
+                            <figure><img src="../images/project/thumb/project-item3.png" alt=""></figure>
+                          </div>
+                          <div class="item-title">
+                            <h5><a href="project_detail.html">Introducing Liteseeds, LED</a></h5>
+                          </div>
+                          <div class="item-content">
+                            <p class="fnt15">Liteseeds LED stickers are tiny, bright, little LEDs made in the form of a sticker. They are peel and stick lights! Safe & easy to use.</p>
+                          </div>
+                          <div class="item-footer">
+                             <div class="mt10 mb5">
+                                    <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>Sacramento, CA</a>
+                                    &nbsp;&nbsp;
+                                    <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>Commic</a>
+                                    &nbsp;&nbsp;
+                             </div>
+                              <div class="progress mt5 mb5">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="50" aria-valuemax="100" style="width: 50%">
+                                  <span class="sr-only">50% Complete (success)</span>
+                                </div>
+                              </div>
+                              <ul class="list-inline">
+                                      <li><p class="fnt-b mt0 mb0 c00">50%</p><p class="mt0 mb0">funded</p></li>
+                                      <li><p class="fnt-b mt0 mb0 c00">$50790</p><p class="mt0 mb0">pledged</p></li>
+                                      <li><p class="fnt-b mt0 mb0 c00">30</p><p class="mt0 mb0">days to go</p></li>
+                              </ul>
+                          </div>
+                      </div>           
+                  </li><!--/.portfolio-item-->
+
+              </ul>
+              <!-- <div class="form-actions txt-c">
+                  <a class="btn btn-transparent btn-sm" href="discover.html">See more</a>
+              </div> -->
+            </section><!--/#portfolio-->
+          </div> <!-- end item-popular -->
+      </div>
+      
+    </div> <!-- end content -->
+
+
+
+
+
+    <div id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <p class="fnt30 fnt-b dark-cyan">DLL - Dandelion</p>
+            <a href="">Hosted by DDL</a>
+          </div>
+          <div class="col-md-6">
+            <ul class="pull-right list-inline">
+              <li><a href="home.html">Home</a></li>
+              <li><a href="about.html">About us</a></li>
+              <li><a href="#">Help</a></li>
+              <li><a href="#">Contact</a></li>
+              <a id="gototop" class="gototop" href="#"><span class="glyphicon glyphicon-chevron-up"></span></i></a>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div> <!-- end footer -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+    <script src="../Scripts/jquery.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+    <script src="../Scripts/flat-ui.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <!-- My Js -->
+    <script src="../Scripts/application.js"></script>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- <script src="../Scripts/bootstrap.min.js"></script>-->
+    <!--<script src="../dist/js/vendor/video.js"></script>-->
+  </body>
+</html>

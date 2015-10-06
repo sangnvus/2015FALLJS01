@@ -581,16 +581,9 @@ Date: 2015.10.01
 /*Search Page (search.html)
 --------------------------------------------------------- */
 	#search{
-		/*margin-left: 10%;*/
-		/*margin-right: 10%;*/
 	}
-	#search .searchbar div {
-		margin-top: 40px;
-		margin-bottom: 40px;
-	}
-	#search .explore{
-		margin-top: 40px;
-		margin-bottom: 40px;
+	#search .searchbar {
+		background: #fff;
 	}
 /*End Search ---------------------------------------------*/
 
