@@ -12,15 +12,13 @@ namespace DDL_CapstoneProject
 
         public int BackingID { get; set; }
         public int UserID { get; set; }
-        public int RewardPkgID { get; set; }
+        public int ProjectID { get; set; }
         public DateTime BackedDate { get; set; }
-        public decimal PledgedAmount { get; set; }
-        public int Quantity { get; set; }
-        public string Description { get; set; }
         public bool IsPublic { get; set; }
         #endregion
 
+        public virtual BackingDetail BackingDetail { get; set; }
         public virtual DDL_User User { get; set; }
-        public virtual RewardPkg RewardPkg { get; set; }
+        public virtual Project Project { get; set; }
     }
 }

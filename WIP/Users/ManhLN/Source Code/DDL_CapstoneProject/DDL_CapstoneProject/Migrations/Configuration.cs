@@ -159,7 +159,8 @@ namespace DDL_CapstoneProject.Migrations
                     ButtonText = "View Project",
                     ButtonColor = "btn-success",
                     Order = 1,
-                    SlideUrl = "#"
+                    SlideUrl = "#",
+                    TextColor = "dark"
                 },
                 new Slide
                 {
@@ -171,7 +172,8 @@ namespace DDL_CapstoneProject.Migrations
                     ButtonText = "View Project",
                     ButtonColor = "btn-primary",
                     Order = 2,
-                    SlideUrl = "#"
+                    SlideUrl = "#",
+                    TextColor = "light"
                 },
                 new Slide
                 {
@@ -183,7 +185,8 @@ namespace DDL_CapstoneProject.Migrations
                     ButtonText = "Download",
                     ButtonColor = "btn-success",
                     Order = 3,
-                    SlideUrl = "#"
+                    SlideUrl = "#",
+                    TextColor = "light"
                 },
             };
 

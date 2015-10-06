@@ -24,5 +24,14 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         {
             return PartialView("~/Views/Login/_RegisterSuccess.cshtml");
         }
+
+        public ActionResult Message()
+        {
+            return PartialView("~/Views/Message/_MessageList.cshtml");
+        }
+        public ActionResult MessageDetail()
+        {
+            return PartialView("~/Views/Message/_MessageDetail.cshtml");
+        }
     }
 }

@@ -59,6 +59,7 @@ namespace DDL_CapstoneProject.Models
         public virtual ICollection<RewardPkg> RewardPkgs { get; set; }
         public virtual ICollection<Remind> Reminds { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Backing> Backings { get; set; }
     }
 
     #region "Enum"

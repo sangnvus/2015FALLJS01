@@ -17,6 +17,8 @@ namespace DDL_CapstoneProject.Models
         public string SlideUrl { get; set; }
         public string ButtonColor { get; set; }
         public string ButtonText { get; set; }
+        public string TextColor { get; set; }
+        public string VideoUrl { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool IsActive { get; set; }
 

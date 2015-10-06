@@ -27,7 +27,7 @@ namespace DDL_CapstoneProject.Models
         #endregion
 
         public virtual Project Project { get; set; }
-        public virtual ICollection<Backing> Backings { get; set; }
+        public virtual ICollection<BackingDetail> BackingDetails { get; set; }
     }
 
     #region "Enum"

@@ -10,9 +10,10 @@ namespace DDL_CapstoneProject
         {
             // Add angularJS plug-in.
             bundles.Add(new ScriptBundle("~/bundles/angularjs").Include(
-                "~/Scripts/angular.js",
-                "~/Scripts/angular-route.js",
-                "~/Scripts/angular-animate.js"));
+                "~/Scripts/angular.min.js",
+                "~/Scripts/angular-route.min.js",
+                "~/Scripts/angular-animate.min.js",
+                "~/Scripts/angular-sanitize.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/md5").Include(
                 "~/Scripts/plugin/jquery.md5.js"));
