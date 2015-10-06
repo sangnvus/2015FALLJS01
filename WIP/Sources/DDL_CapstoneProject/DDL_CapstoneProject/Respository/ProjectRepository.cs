@@ -34,6 +34,7 @@ namespace DDL_CapstoneProject.Respository
                 CategoryID = 0,
                 CreatorID = 0,
                 Title = string.Empty,
+                CreatedDate = DateTime.Now,
                 Risk = string.Empty,
                 ImageUrl = string.Empty,
                 SubDescription = string.Empty,
@@ -46,43 +47,44 @@ namespace DDL_CapstoneProject.Respository
                 VideoUrl = string.Empty,
                 PopularPoint = 0,
                 Status = DDLConstants.ProjectStatus.DRAFT,
-                //RewardPkgs = new List<RewardPkg>
-                //{
-                //    new RewardPkg
-                //    {
-                //        Type = string.Empty,
-                //        IsHide = false,
-                //        EstimatedDelivery = null,
-                //        Quantity = 0,
-                //    }
-                //},
-                //UpdateLogs = new List<UpdateLog>
-                //{
-                //    new UpdateLog
-                //    {
-                //        Title = string.Empty,
-                //        Description = string.Empty,
-                //        CreatedDate = DateTime.Now,
-                //    }
-                //},
-                //Timelines = new List<Timeline>
-                //{
-                //    new Timeline
-                //    {
-                //        Title = string.Empty,
-                //        Description = string.Empty,
-                //        DueDate = DateTime.Now,
-                //    }
-                //},
-                //Questions = new List<Question>
-                //{
-                //    new Question
-                //    {
-                //        Answer = string.Empty,
-                //        QuestionContent = string.Empty,
-                //        CreatedDate = DateTime.Now,
-                //    }
-                //},
+                RewardPkgs = new List<RewardPkg>
+                {
+                    new RewardPkg
+                    {
+                        Type = string.Empty,
+                        IsHide = false,
+                        EstimatedDelivery = null,
+                        Quantity = 0,
+                        Description = string.Empty,
+                    }
+                },
+                UpdateLogs = new List<UpdateLog>
+                {
+                    new UpdateLog
+                    {
+                        Title = string.Empty,
+                        Description = string.Empty,
+                        CreatedDate = DateTime.Now,
+                    }
+                },
+                Timelines = new List<Timeline>
+                {
+                    new Timeline
+                    {
+                        Title = string.Empty,
+                        Description = string.Empty,
+                        DueDate = DateTime.Now,
+                    }
+                },
+                Questions = new List<Question>
+                {
+                    new Question
+                    {
+                        Answer = string.Empty,
+                        QuestionContent = string.Empty,
+                        CreatedDate = DateTime.Now,
+                    }
+                },
             };
 
             return project;
@@ -105,11 +107,15 @@ namespace DDL_CapstoneProject.Respository
             db.Projects.Add(project);
             db.SaveChanges();
 
-
-
             return project;
         }
 
+        /// <summary>
+        /// Edit a project
+        /// </summary>
+        /// <param name="ProjectID">int</param>
+        /// <param name="project">object</param>
+        /// <returns>updateProject</returns>
         public Project EditProject(int ProjectID, ProjectEditDTO project)
         {
             var updateProject = db.Projects.SingleOrDefault(u => u.ProjectID == ProjectID);
@@ -138,6 +144,23 @@ namespace DDL_CapstoneProject.Respository
             db.SaveChanges();
 
             return updateProject;
+        }
+
+        /// <summary>
+        /// Get a project
+        /// </summary>
+        /// <param name="ProjectID">int</param>
+        /// <returns>project</returns>
+        public Project GetProject(int ProjectID)
+        {
+            var project = db.Projects.SingleOrDefault(x => x.ProjectID == ProjectID);
+
+            if (project == null)
+            {
+                throw new Exception();
+            }
+
+            return project;
         }
 
         #endregion

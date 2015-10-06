@@ -53,7 +53,12 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/create", {
         templateUrl: "/ClientPartial/CreateProject",
-        controller: "CreateProjectController"
+        controller: "CreateProjectController",
+        resolve: {
+            categories: ['CategoryService', function (CategoryService) {
+                return CategoryService.getCategories();
+            }]
+        }
     });
     $routeProvider.when("/edit/:id",
         {
