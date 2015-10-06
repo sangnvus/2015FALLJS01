@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-app.controller('CreateProjectController', function ($scope, $location, ProjectService, CategoryService){
+app.controller('CreateProjectController', function ($scope, $location, ProjectService, categories){
     // Get categories
     $scope.Categories = categories.data.Data;
     // Set selected project category
