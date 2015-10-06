@@ -133,7 +133,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-<Compile Include="Controllers\ApiControllers\MessageApiController.cs" />
+    <Compile Include="Controllers\ApiControllers\MessageApiController.cs" />
     <Compile Include="Controllers\ApiControllers\CategoryApiController.cs" />
     <Compile Include="Controllers\ApiControllers\ProjectApiController.cs" />
     <Compile Include="Controllers\ApiControllers\SlideApiController.cs" />
@@ -155,6 +155,10 @@
     <Compile Include="Migrations\201510052116034_UpdateBackingSlide.Designer.cs">
       <DependentUpon>201510052116034_UpdateBackingSlide.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510061741344_UpdateProjectReward.cs" />
+    <Compile Include="Migrations\201510061741344_UpdateProjectReward.Designer.cs">
+      <DependentUpon>201510061741344_UpdateProjectReward.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Backing.cs" />
     <Compile Include="Controllers\WebControllers\HomeController.cs" />
@@ -171,12 +175,12 @@
     <Compile Include="Models\DDL_User.cs" />
     <Compile Include="Models\DTOs\ConversationBasicDTO.cs" />
     <Compile Include="Models\DTOs\ConversationDetailDTO.cs" />
-	<Compile Include="Models\DTOs\CategoryDTO.cs" />
+    <Compile Include="Models\DTOs\CategoryDTO.cs" />
     <Compile Include="Models\DTOs\HttpMessageDTO.cs" />
     <Compile Include="Models\DTOs\MessageDTO.cs" />
     <Compile Include="Models\DTOs\NewMessageDTO.cs" />
     <Compile Include="Models\DTOs\ProjectCreateDTO.cs" />
-	<Compile Include="Models\DTOs\ProjectEditDTO.cs" />
+    <Compile Include="Models\DTOs\ProjectEditDTO.cs" />
     <Compile Include="Models\DTOs\ReplyDTO.cs" />
     <Compile Include="Models\DTOs\UserBasicInfoDTO.cs" />
     <Compile Include="Models\DTOs\UserLoginDTO.cs" />
@@ -214,7 +218,7 @@
     <Content Include="App\HomeModule.js" />
     <Content Include="App\services\CategoryService.js" />
     <Content Include="App\services\ProjectService.js" />
-	<Content Include="App\services\MessageService.js" />
+    <Content Include="App\services\MessageService.js" />
     <Content Include="App\services\SlideSevice.js" />
     <Content Include="App\services\UserService.js" />
     <Content Include="Content\animation.css" />
@@ -1077,7 +1081,7 @@
     <Content Include="Views\Login\ForgotPassword.cshtml" />
     <Content Include="Views\Message\_MessageList.cshtml" />
     <Content Include="Views\Message\_MessageDetail.cshtml" />
-	<Content Include="Views\ClientPartial\_CreateProject.cshtml" />
+    <Content Include="Views\ClientPartial\_CreateProject.cshtml" />
     <Content Include="Views\ClientPartial\_EditProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -1099,6 +1103,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510052116034_UpdateBackingSlide.resx">
       <DependentUpon>201510052116034_UpdateBackingSlide.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510061741344_UpdateProjectReward.resx">
+      <DependentUpon>201510061741344_UpdateProjectReward.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

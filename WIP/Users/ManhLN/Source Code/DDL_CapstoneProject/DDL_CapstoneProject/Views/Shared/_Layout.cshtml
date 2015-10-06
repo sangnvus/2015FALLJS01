@@ -58,7 +58,7 @@
                         <ul id="profile_dropdown" class="nav navbar-nav navbar-right">
                             <li class="dropdown">
                                 <a href="" class="dropdown-toggle" data-toggle="dropdown">
-                                    @if (ViewBag.CurrentUser.LoginType != DDLConstants.LoginType.NORMAL)
+                                    @if (ViewBag.CurrentUser.ProfileImage.Contains("http"))
                                     {
                                         <img id="avatar" src="@ViewBag.CurrentUser.ProfileImage" alt="" class="img-responsive img-circle center-block">
                                     }
