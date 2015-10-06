@@ -587,6 +587,16 @@ Date: 2015.10.01
 	}
 /*End Search ---------------------------------------------*/
 
+/*Back Project (back_project.html)
+--------------------------------------------------------- */
+#choose_reward .item-radio{
+	background: #f5f5f5;
+	border: 2px solid #828587;
+	border-radius: 6px;
+	padding: 15px;
+}
+/*End Back Project -------------------------------------- */
+
 
 
 /*Payment Page (payment.html)
@@ -599,10 +609,13 @@ Date: 2015.10.01
     	height: 115px;
 	}
 	.credit-card{
-		width: 650px;
 	    padding: 10px;
 	}
 	.credit-card img{
 		padding: 8px 8px 8px 8px;
+	}
+	#paymentMethod p{
+		font-size: 9px;
+		font-size: 0.9em!important;
 	}
 /*End payment -------------------------------------------- */

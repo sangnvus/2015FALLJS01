@@ -21,6 +21,11 @@ Date: 2015.10.01
 	.no-wrap{
 		white-space: nowrap;
 	}
+/*Boder-top*/
+.bt-dash{
+    border-top: 2px solid #d9d9de;
+    border-top-style: dashed;
+}
 
 /*Button
 -----------------------------------------------------------*/
