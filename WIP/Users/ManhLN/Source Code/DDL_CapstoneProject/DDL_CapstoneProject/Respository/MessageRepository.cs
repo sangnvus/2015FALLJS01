@@ -139,7 +139,7 @@ namespace DDL_CapstoneProject.Respository
             // Get list messages.
             var listMessage = from message in db.Messages
                               where message.ConversationID == conversationID
-                              orderby message.SentTime descending
+                              orderby message.SentTime ascending 
                               select new MessageDTO
                               {
                                   MessageID = message.MessageID,

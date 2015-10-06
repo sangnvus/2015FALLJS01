@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-app.controller('MessageDetailController', function ($scope, conversation, MessageService) {
+app.controller('MessageDetailController', function ($scope, conversation,toastr, MessageService) {
     //Todo here.
     $scope.Conversation = conversation.data.Data;
 
@@ -13,16 +13,23 @@ app.controller('MessageDetailController', function ($scope, conversation, Messag
         if ($scope.Reply.Content.trim() !== "") {
             var promisePut = MessageService.Reply($scope.Reply);
             promisePut.then(
-                function (result) {
+                function(result) {
                     if (result.data.Status === "success") {
                         $scope.Conversation.MessageList.push(result.data.Data);
+                        $scope.Reply.Content = "";
+                        toastr.success('Bạn đã gửi tin nhắn thành công!', 'Thành công!');
                     } else if (result.data.Status === "error") {
                         $scope.Error = result.data.Message;
+                        toastr.error($scope.Error, 'Lỗi!');
                     }
                 },
-                function (error) {
+                function(error) {
                     $scope.Error = error.data.Message;
+                    $scope.Error = result.data.Message;
+                    toastr.error($scope.Error, 'Lỗi!');
                 });
+        } else {
+            toastr.warning("Bạn chưa nhập nội dung tin nhắn", 'Thông báo!');
         }
     }
 
