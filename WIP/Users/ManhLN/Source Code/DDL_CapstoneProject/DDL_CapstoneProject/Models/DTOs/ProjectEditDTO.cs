@@ -8,6 +8,7 @@ namespace DDL_CapstoneProject.Models.DTOs
     public class ProjectEditDTO
     {
         // Attributes
+        public int ProjectID { get; set; }
         public string Title { get; set; }
         public string Risk { get; set; }
         public string ImageUrl { get; set; }

@@ -59,5 +59,21 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "" });
         }
+
+        // GET: api/ProjectApi/GetProject/:id
+        [HttpGet]
+        [ResponseType(typeof(ProjectEditDTO))]
+        public IHttpActionResult GetProject(int ProjectID)
+        {
+            var project = ProjectRepository.Instance.GetProject(ProjectID);
+            var projectDTO = new ProjectEditDTO
+            {
+                ProjectID = project.ProjectID,
+                CreatorID = project.CreatorID,
+
+            };
+
+            return Ok(projectDTO);
+        }
     }
 }
