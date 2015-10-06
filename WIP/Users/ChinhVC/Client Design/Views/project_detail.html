@@ -52,21 +52,22 @@
             <li class="hover-nav"><a class="abc" href="discover.html">Discover</a></li>
             <li class="hover-nav"><a href="">Start</a></li>
             <li role="separator" class="hidden-xs divider-vertical"></li>
-          </ul>
-          <form class="navbar-form navbar-left" action="#" role="search">
-            <div class="form-group">
-              <div class="input-group">
-                <input class="form-control" id="navbarInput-01" type="search" placeholder="Search Projects">
-                <span class="input-group-btn">
-                  <button type="" class="btn"><span class="fui-search"></span></button>
-                </span>
+            <form class="navbar-form navbar-left" action="#" role="search">
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" id="navbarInput-01" type="search" placeholder="Search Projects">
+                  <span class="input-group-btn">
+                    <button type="" class="btn"><span class="fui-search"></span></button>
+                  </span>
+                </div>
               </div>
-            </div>
           </form>
+          </ul>
+
           <ul id="profile_dropdown" class="nav navbar-nav navbar-right">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <img id="avatar" src="../images/avatar_default.png" alt="" class="img-responsive img-circle center-block">
+                <img id="avatar" src="../images/avatar/avatar1.png" alt="" class="img-responsive img-circle center-block">
                 MyName
                 <span class="caret"></span>
               </a>
@@ -89,7 +90,7 @@
           </ul>
         </div><!-- /.navbar-collapse -->
       </nav>
-    </div>   
+    </div>
 
       <div id="project-common" class="paddingNavbar padding-30">
         <div class="container">
@@ -253,7 +254,7 @@
               <!-- Tabs pane -->
               <div class="tab-content">
                 <!-- Campaign -->
-                <div id="campaign" role="tabpanel" class="tab-pane fade in active">
+                <div id="campaign" role="tabpanel" class="tab-pane fade in ">
                   <div class="container">
                     <div class="row project-tab-border">
                       <div class="col-md-8 project-tab-campaign">
@@ -538,89 +539,71 @@
                 </div> <!-- endTabpanel update -->
 
                 <!-- Comment -->
-                <div id="comments" role="tabpanel" class="tab-pane fade in project-tab-border">
+                <div id="comments" role="tabpanel" class="tab-pane fade in active project-tab-border">
                   <!-- Contenedor Principal -->
                   <div class="pl15 pr15">
                     <div class="">
-                        <h1 class="fnt25">Comments</h1>
+                      <h1 class="fnt25" id="timeline-Update">Comments</h1>
                     </div>
-                    <div class="comments-container ml0 mr0 mt0">
-                      <ul id="comments-list" class="comments-list">
-                        <li>
-                          <div class="comment-main-level">
-                            <!-- Avatar -->
-                            <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
-                            <!-- Contenedor del Comentario -->
-                            <div class="comment-box">
-                              <div class="comment-head">
-                                <h6 class="comment-name by-author"><a href="http://creaticode.com/blog">Agustin Ortiz</a></h6>
-                                <span>20 minutes ago</span>
-                                <i class="fa fa-reply"></i>
-                                <i class="fa fa-heart"></i>
-                              </div>
-                              <div class="comment-content">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-                              </div>
-                            </div>
+                    <div id="comment-form">
+                      <div class="media">
+                        <h3 class="fnt18">Post comment</h3>
+                        <div class="pull-left">
+                            <img class="avatar img-circle" src="../images/avatar/avatar3.png" alt="">
+                        </div>
+                        <div class="media-body">
+                          <div class="well">
+                            <textarea rows="3" class="form-control" placeholder="Comment"></textarea>
+                            <button type="submit" class="btn btn-primary mt10">Submit Comment</button>
                           </div>
-                          <!-- Respuestas de los comentarios -->
-                          <ul class="comments-list reply-list">
-                            <li>
-                              <!-- Avatar -->
-                              <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
-                              <!-- Contenedor del Comentario -->
-                              <div class="comment-box">
-                                <div class="comment-head">
-                                  <h6 class="comment-name"><a href="http://creaticode.com/blog">Lorena Rojero</a></h6>
-                                  <span>10 minutes ago</span>
-                                  <i class="fa fa-reply"></i>
-                                  <i class="fa fa-heart"></i>
-                                </div>
-                                <div class="comment-content">
-                                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-                                </div>
+                        </div>
+                      </div>
+                    </div><!--/#comment-form-->
+                      <h3 class="fnt22">3 Comments</h3>
+                      <div id="comments-list">
+                          <div class="media">
+                              <div class="pull-left">
+                                  <img class="avatar img-circle" src="../images/avatar/avatar1.png" alt="">
                               </div>
-                            </li>
-
-                            <li>
-                              <!-- Avatar -->
-                              <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
-                              <!-- Contenedor del Comentario -->
-                              <div class="comment-box">
-                                <div class="comment-head">
-                                  <h6 class="comment-name by-author"><a href="http://creaticode.com/blog">Agustin Ortiz</a></h6>
-                                  <span>10 minutes ago</span>
-                                  <i class="fa fa-reply"></i>
-                                  <i class="fa fa-heart"></i>
-                                </div>
-                                <div class="comment-content">
-                                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-                                </div>
+                              <div class="media-body">
+                                  <div class="well">
+                                      <div class="media-heading">
+                                          <strong>John Doe</strong>&nbsp; <small>27 Aug 2013</small>
+                                          <a class="pull-right" href="#"><i class="icon-repeat"></i> Reply</a>
+                                      </div>
+                                      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+                                  </div>
+                                  <div class="media">
+                                      <div class="pull-left">
+                                          <img class="avatar img-circle" src="../images/avatar/avatar3.png" alt="">
+                                      </div>
+                                      <div class="media-body">
+                                          <div class="well">
+                                              <div class="media-heading">
+                                                  <strong>John Doe</strong>&nbsp; <small>27 Aug 2013</small>
+                                                  <a class="pull-right" href="#"><i class="icon-repeat"></i> Reply</a>
+                                              </div>
+                                              <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.</p>
+                                          </div>
+                                      </div>
+                                  </div><!--/.media-->
                               </div>
-                            </li>
-                          </ul>
-                        </li>
-
-                        <li>
-                          <div class="comment-main-level">
-                            <!-- Avatar -->
-                            <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
-                            <!-- Contenedor del Comentario -->
-                            <div class="comment-box">
-                              <div class="comment-head">
-                                <h6 class="comment-name"><a href="http://creaticode.com/blog">Lorena Rojero</a></h6>
-                                <span>10 minutes ago</span>
-                                <i class="fa fa-reply"></i>
-                                <i class="fa fa-heart"></i>
+                          </div><!--/.media-->
+                          <div class="media">
+                              <div class="pull-left">
+                                  <img class="avatar img-circle" src="../images/avatar/avatar2.png" alt="">
                               </div>
-                              <div class="comment-content">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                              <div class="media-body">
+                                  <div class="well">
+                                      <div class="media-heading">
+                                          <strong>John Doe</strong>&nbsp; <small>27 Aug 2013</small>
+                                          <a class="pull-right" href="#"><i class="icon-repeat"></i> Reply</a>
+                                      </div>
+                                      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+                                  </div>
                               </div>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
+                          </div><!--/.media-->
+                      </div><!--/#comments-list-->  
                   </div>
                 </div> <!-- endTabpanel comments -->
 
@@ -632,8 +615,8 @@
                     </div>
                       <div class="row">
                         <div class="col-md-12">
-                         <div id="timeline" style="margin: 0px auto">
-                          <ul id="dates">
+                         <div id="timeline" style="margin: 0px 15px; overflow:auto; width:auto; height:auto">
+                          <ul id="dates" class="pull-right">
                             <li><a href="#10102015">10/10/2015</a></li>
                             <li><a href="#11102015">11/10/2015</a></li>
                             <li><a href="#12102015">12/10/2015</a></li>
@@ -678,12 +661,12 @@
                       <h3 class="fnt25">List Bankers</h3>
                     </div>
                     
-                    <table id="bankersTable" class="table table-striped" >  
+                    <table id="bankersTable" class="table table-striped table-bordered table-hover" >  
                       <thead>  
-                        <tr>  
-                          <th>.No</th>  
+                        <tr style="background: #16a085; color: #FFF">  
+                          <th style="width: 8%">.No</th>  
                           <th>Name</th>  
-                          <th>Plege amout</th>  
+                          <th>Pledge amout</th>  
                           <th>Date</th>  
                         </tr>  
                       </thead>  
