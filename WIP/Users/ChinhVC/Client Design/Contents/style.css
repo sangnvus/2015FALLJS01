@@ -431,7 +431,7 @@ Date: 2015.10.01
 	}
 	#project-tabpanel{
 		padding: 0px 0px 10px 10px;
-		background-color: #D0D1CF;
+		/*background-color: #D0D1CF;*/
 		border-top:1px solid #d9d9de;
 		border-top-style: dashed;
 	}
@@ -474,6 +474,23 @@ Date: 2015.10.01
 		height: 100%;
 	}
 	/*end responsive video======*/
+	
+	/*table*/
+	/*change color bootstrap (#337ab7)=> flat ui (#1abc9c)*/
+	.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+	    z-index: 2;
+	    color: #fff;
+	    cursor: default;
+	    background-color: #1abc9c;
+	    border-color: #1abc9c;
+	}
+	/*comments*/
+	#comments-list p, 
+	#comments-list a{
+		font-size: 16px;
+		font-size: 1.6rem;
+	}
+
 /*End login and register ----------------------------------*/
 
 
