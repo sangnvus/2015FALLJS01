@@ -176,6 +176,7 @@
     <Compile Include="Models\DTOs\MessageDTO.cs" />
     <Compile Include="Models\DTOs\NewMessageDTO.cs" />
     <Compile Include="Models\DTOs\ProjectCreateDTO.cs" />
+	<Compile Include="Models\DTOs\ProjectEditDTO.cs" />
     <Compile Include="Models\DTOs\ReplyDTO.cs" />
     <Compile Include="Models\DTOs\UserBasicInfoDTO.cs" />
     <Compile Include="Models\DTOs\UserLoginDTO.cs" />
@@ -203,6 +204,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\controllers\CreateProjectController.js" />
+    <Content Include="App\controllers\EditProjectController.js" />
     <Content Include="App\controllers\HomeController.js" />
     <Content Include="App\controllers\MessageController.js" />
     <Content Include="App\controllers\MessageDetailController.js" />
@@ -1076,6 +1078,7 @@
     <Content Include="Views\Message\_MessageList.cshtml" />
     <Content Include="Views\Message\_MessageDetail.cshtml" />
 	<Content Include="Views\ClientPartial\_CreateProject.cshtml" />
+    <Content Include="Views\ClientPartial\_EditProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />

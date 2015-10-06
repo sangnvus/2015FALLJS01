@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -40,6 +42,21 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 
                 throw;
             }
+            return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "" });
+        }
+
+        // PUT: api/ProjectApi/Edit  
+        [ResponseType(typeof(ProjectEditDTO))]
+        [HttpPut]
+        public IHttpActionResult EditProject(int ProjectID, ProjectEditDTO project)
+        {
+            if (project == null)
+            {
+                return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
+            }
+
+            var updateProject = ProjectRepository.Instance.EditProject(ProjectID, project);
+
             return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "" });
         }
     }
