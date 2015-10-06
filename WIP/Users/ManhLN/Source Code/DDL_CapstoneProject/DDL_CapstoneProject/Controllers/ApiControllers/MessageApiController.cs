@@ -8,6 +8,7 @@ using System.Web.Http.Description;
 using DDL_CapstoneProject.Helper;
 using DDL_CapstoneProject.Models.DTOs;
 using DDL_CapstoneProject.Respository;
+using DDL_CapstoneProject.Ultilities;
 
 namespace DDL_CapstoneProject.Controllers.ApiControllers
 {
@@ -21,12 +22,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             ConversationBasicDTO result = null;
             if (!ModelState.IsValid)
             {
-                return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
             }
 
             if (User.Identity == null || !User.Identity.IsAuthenticated) 
             {
-                return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Not-Authen" });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
             }
 
             try
@@ -35,13 +36,13 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
             catch (UserNotFoundException)
             {
-                Ok(new HttpMessageDTO { Status = "error", Message = "Không tìm thấy địa chỉ người nhận!", Type = "UserNotFound" });
+                Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không tìm thấy địa chỉ người nhận!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
             }
             catch (Exception)
             {
-                Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
+                Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
             }
-            return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "", Data = result});
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = result });
         }
 
         
@@ -52,12 +53,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             List<ConversationBasicDTO> listSentConversation = null;
             if (!ModelState.IsValid)
             {
-                return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
             }
 
             if (User.Identity == null || !User.Identity.IsAuthenticated)
             {
-                return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Not-Authen" });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
             }
 
             try
@@ -66,13 +67,13 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
             catch (UserNotFoundException)
             {
-                Ok(new HttpMessageDTO { Status = "error", Message = "Không tìm thấy địa chỉ người nhận!", Type = "UserNotFound" });
+                Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không tìm thấy địa chỉ người nhận!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
             }
             catch (Exception)
             {
-                Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
+                Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
             }
-            return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "", Data = listSentConversation});
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = listSentConversation });
         }
 
         [ResponseType(typeof(ConversationBasicDTO))]
@@ -82,12 +83,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             List<ConversationBasicDTO> listReceivedConversation = null;
             if (!ModelState.IsValid)
             {
-                return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
             }
 
             if (User.Identity == null || !User.Identity.IsAuthenticated)
             {
-                return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Not-Authen" });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
             }
 
             try
@@ -96,15 +97,15 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
             catch (UserNotFoundException)
             {
-                Ok(new HttpMessageDTO { Status = "error", Message = "Không tìm thấy địa chỉ người nhận!", Type = "UserNotFound" });
+                Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không tìm thấy địa chỉ người nhận!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
             }
             catch (Exception)
             {
-                Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
+                Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
             }
             return Ok(new HttpMessageDTO
             {
-                Status = "success",
+                Status = DDLConstants.HttpMessageType.SUCCESS,
                 Message = "",
                 Type = "",
                 Data = listReceivedConversation
@@ -118,12 +119,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             ConversationDetailDTO conversationDetail = null;
             if (!ModelState.IsValid)
             {
-                return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
             }
 
             if (User.Identity == null || !User.Identity.IsAuthenticated)
             {
-                return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Not-Authen" });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
             }
 
             try
@@ -132,15 +133,15 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
             catch (KeyNotFoundException)
             {
-                Ok(new HttpMessageDTO { Status = "error", Message = "Không tìm thấy tin nhắn!", Type = "MessageNotFound" });
+                Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không tìm thấy tin nhắn!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
             }
             catch (Exception)
             {
-                Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
+                Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
             }
             return Ok(new HttpMessageDTO
             {
-                Status = "success",
+                Status = DDLConstants.HttpMessageType.SUCCESS,
                 Message = "",
                 Type = "",
                 Data = conversationDetail
@@ -156,7 +157,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             if (User.Identity == null || !User.Identity.IsAuthenticated)
             {
-                return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Not-Authen" });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
             }
 
             try
@@ -165,17 +166,17 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
             catch (UserNotFoundException)
             {
-                Ok(new HttpMessageDTO { Status = "error", Message = "Không tìm thấy địa chỉ người nhận!", Type = "UserNotFound" });
+                Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không tìm thấy địa chỉ người nhận!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
             }
             catch (KeyNotFoundException)
             {
-                Ok(new HttpMessageDTO { Status = "error", Message = "Không tìm thấy tin nhắn!", Type = "MessageNotFound" });
+                Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không tìm thấy tin nhắn!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
             }
             catch (Exception)
             {
-                Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
+                Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
             }
-            return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "", Data = result });
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = result });
         }
     }
 }

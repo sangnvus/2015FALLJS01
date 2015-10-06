@@ -51,7 +51,7 @@
         </div>
         <div class="row">
             <table id="table_message">
-                <tr ng-repeat="conversation in ListConversations | filter:searchFilter" ng-class="{bold: conversation.IsRead = true}">
+                <tr ng-repeat="conversation in ListConversations | filter:searchFilter" ng-class="{bold: !conversation.IsRead}">
                     <td id="col_checkbox">
                         <div class="checkbox-wrapper">
                             <input type="checkbox" id="chk1">

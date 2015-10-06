@@ -1,7 +1,8 @@
 ﻿"use strict";
 var service = angular.module("DDLService", []);
 var directive = angular.module("DDLDirective", []);
-var app = angular.module("ClientApp", ["ngRoute", "ngAnimate", "ngSanitize", "DDLService", "DDLDirective", 'angular-loading-bar','textAngular']);
+var app = angular.module("ClientApp", ["ngRoute", "ngAnimate", "ngSanitize", "DDLService",
+    "DDLDirective", 'angular-loading-bar', 'textAngular', 'toastr']);
 
 // Show Routing.
 app.config(["$routeProvider", function ($routeProvider) {
@@ -28,13 +29,14 @@ app.config(["$routeProvider", function ($routeProvider) {
             templateUrl: "ClientPartial/RegisterSuccess"
         });
 
-	$routeProvider.when("/user/message",
+    $routeProvider.when("/user/message",
         {
             templateUrl: "ClientPartial/Message",
             controller: "MessageController",
             resolve: {
-                conversations: ['MessageService', function (MessageService) {
-                    return MessageService.getListReceivedConversations();
+                conversations: ['$rootScope', '$q', 'MessageService', 'CommmonService', function ($rootScope, $q, MessageService, CommmonService) {
+                    var promise = MessageService.getListReceivedConversations();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }]
             }
         });
@@ -43,27 +45,28 @@ app.config(["$routeProvider", function ($routeProvider) {
             templateUrl: "ClientPartial/MessageDetail",
             controller: "MessageDetailController",
             resolve: {
-                conversation: ['$route', 'MessageService', function ($route, MessageService) {
-                    return MessageService.getConversation($route.current.params.id);
+                conversation: ['$rootScope','$route', '$q', 'MessageService', 'CommmonService', function ($rootScope,$route, $q, MessageService, CommmonService) {
+                    var promise = MessageService.getConversation($route.current.params.id);
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }]
             }
         });
-    $routeProvider.when("/create",{
-            templateUrl: "/ClientPartial/CreateProject",
-            controller: "CreateProjectController"
-        });
+    $routeProvider.when("/create", {
+        templateUrl: "/ClientPartial/CreateProject",
+        controller: "CreateProjectController"
+    });
     $routeProvider.when("/edit/:id",
         {
             templateUrl: "/ClientPartial/EditProject",
             controller: "EditProjectController"
         });
-    $routeProvider.otherwise(        {
-            redirectTo: "/"
-        });
+    $routeProvider.otherwise({
+        redirectTo: "/"
+    });
 
     //$locationProvider.html5Mode(false).hashPrefix("!");
-}]).config(['$provide', function($provide){
-    $provide.decorator('taOptions', ['taRegisterTool', '$delegate', function(taRegisterTool, taOptions) {
+}]).config(['$provide', function ($provide) {
+    $provide.decorator('taOptions', ['taRegisterTool', '$delegate', function (taRegisterTool, taOptions) {
 
         taOptions.forceTextAngularSanitize = false;
 
@@ -72,10 +75,9 @@ app.config(["$routeProvider", function ($routeProvider) {
 }]);
 
 app.run(['$rootScope', '$window', '$anchorScroll', function ($rootScope, $window, $anchorScroll) {
-    //$root.$on('$routeChangeError', function (e, curr, prev) {
-    //    e.preventDefault();
-    //    $window.location.href = "http://localhost:14069/Account/Login";
-    //});
+    $rootScope.$on('$routeChangeError', function (e, curr, prev) {
+        e.preventDefault();
+    });
 
     // Base Url of web app.
     $rootScope.BaseUrl = angular.element($('#BaseUrl')).val();

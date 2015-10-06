@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-app.controller('MessageController', function ($scope, $location,conversations, MessageService) {
+app.controller('MessageController', function ($scope, $location, conversations, MessageService, CommmonService) {
     //Todo here
     $scope.ListConversations = conversations.data.Data;
 
@@ -32,7 +32,8 @@ app.controller('MessageController', function ($scope, $location,conversations, M
                     if ($scope.Sent) {
                         $scope.ListConversations.unshift(result.data.Data);
                     }
-                } else if (result.data.Status === "error") {
+                } else {
+                    CommmonService.checkError(result.data.Type);
                     $scope.Error = result.data.Message;
                 }
             },
@@ -48,7 +49,8 @@ app.controller('MessageController', function ($scope, $location,conversations, M
             function (result) {
                 if (result.data.Status === "success") {
                     $scope.ListConversations = result.data.Data;
-                } else if (result.data.Status === "error") {
+                } else {
+                    CommmonService.checkError(result.data.Type);
                     $scope.Error = result.data.Message;
                 }
             },
@@ -64,7 +66,8 @@ app.controller('MessageController', function ($scope, $location,conversations, M
             function (result) {
                 if (result.data.Status === "success") {
                     $scope.ListConversations = result.data.Data;
-                } else if (result.data.Status === "error") {
+                } else {
+                    CommmonService.checkError(result.data.Type);
                     $scope.Error = result.data.Message;
                 }
             },

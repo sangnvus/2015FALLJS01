@@ -13,7 +13,9 @@ namespace DDL_CapstoneProject
                 "~/Scripts/angular.min.js",
                 "~/Scripts/angular-route.min.js",
                 "~/Scripts/angular-animate.min.js",
-                "~/Scripts/angular-sanitize.min.js"));
+                "~/Scripts/angular-sanitize.min.js",
+                "~/Scripts/angular-toaster/angular-toastr.tpls.js",
+                "~/Scripts/angular-block-ui.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/md5").Include(
                 "~/Scripts/plugin/jquery.md5.js"));
@@ -38,7 +40,9 @@ namespace DDL_CapstoneProject
                       "~/Content/style.css",
                       "~/Content/common.css",
                       "~/Content/hover.css",
-                      "~/Content/font-awesome.min.css"));
+                      "~/Content/font-awesome.min.css",
+                      "~/Content/angular-toastr.css",
+                      "~/Content/angular-block-ui.css"));
         }
     }
 }
