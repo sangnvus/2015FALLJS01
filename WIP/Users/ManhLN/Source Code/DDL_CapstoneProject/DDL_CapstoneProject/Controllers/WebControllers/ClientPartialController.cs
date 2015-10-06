@@ -30,5 +30,12 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         {
             return PartialView("_CreateProject");
         }
+
+        // GET: ClientPartial/EditProject
+        public ActionResult EditProject()
+        {
+            return PartialView("_EditProject");
+        }
+
     }
 }

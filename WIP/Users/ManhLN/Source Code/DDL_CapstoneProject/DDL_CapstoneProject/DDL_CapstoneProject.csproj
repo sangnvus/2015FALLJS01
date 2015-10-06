@@ -166,6 +166,7 @@
     <Compile Include="Models\DTOs\CategoryDTO.cs" />
     <Compile Include="Models\DTOs\HttpMessageDTO.cs" />
     <Compile Include="Models\DTOs\ProjectCreateDTO.cs" />
+    <Compile Include="Models\DTOs\ProjectEditDTO.cs" />
     <Compile Include="Models\DTOs\UserBasicInfoDTO.cs" />
     <Compile Include="Models\DTOs\UserLoginDTO.cs" />
     <Compile Include="Models\DTOs\UserRegisterDTO.cs" />
@@ -192,6 +193,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\controllers\CreateProjectController.js" />
+    <Content Include="App\controllers\EditProjectController.js" />
     <Content Include="App\controllers\HomeController.js" />
     <Content Include="App\controllers\RegisterController.js" />
     <Content Include="App\controllers\ResetPwController.js" />
@@ -1056,6 +1058,7 @@
     <Content Include="Views\Login\_RegisterSuccess.cshtml" />
     <Content Include="Views\Login\ForgotPassword.cshtml" />
     <Content Include="Views\ClientPartial\_CreateProject.cshtml" />
+    <Content Include="Views\ClientPartial\_EditProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />

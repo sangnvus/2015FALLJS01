@@ -32,6 +32,11 @@ app.config(["$routeProvider", function ($routeProvider) {
             templateUrl: "/ClientPartial/CreateProject",
             controller: "CreateProjectController"
         });
+    $routeProvider.when("/edit/:id",
+        {
+            templateUrl: "/ClientPartial/EditProject",
+            controller: "EditProjectController"
+        });
     $routeProvider.otherwise(
         {
             redirectTo: "/"

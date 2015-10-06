@@ -29,6 +29,7 @@ app.controller('CreateProjectController', function ($scope, $location, ProjectSe
             function (result) {
                 if (result.data === "Success") {
                     alert("Add project successfully");
+                    //$location.path('/edit').replace();
                 }
             },
             function (error) {
