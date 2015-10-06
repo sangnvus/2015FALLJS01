@@ -539,137 +539,41 @@ Date: 2015.10.01
 
 /*Discover Page (discover.html)
 --------------------------------------------------------- */
-	/*Feature1*/
-	#ffeature1{
-		margin-top: 40px;
-	}
-	#ffeature1 p{
-		font-weight: bold;
-		margin-top: 30px;
-	}
-	#ffeature1 h1{
-		font-size: 50px;
-	}
-
-	/*Feature2*/
-	.feature2_rowsize{
-		padding: 10px 10px 10px 10px;
-	}
-	.feature2_colsize{
-	    padding-left: 20px;
-	    padding-right: 20px;
-	    width: 216px;
-	    height: 102px;
-	}
-
-	.feature2_1stColRowMargin{
-		margin-left: 60px;
-	}
-
-	#ffeature2 h3{
-		padding: 10px 10px 10px 10px;
-		font-size: 22px;
-		color: #7f8c8d;
-	}
-
-	.thumbnail-size{
-		width: 164px;
-		height: 90px;
+	/*item-category*/
+	.thumbnail_size{
+		height: 100px;
 		text-align: center;
 		margin: 0px 0px 0px 0px ;
+		padding: 30px 0px 10px 0px;
+		overflow: hidden;
+	}
+	/*animation item-category*/
+	.feature2_animation_box, .first_link{
+		-webkit-transition: 0.4s;
+		-moz-transition: 0.4s;
+		-ms-transition: 0.4s;
+		-o-transition: 0.4s;
+		transition: 0.4s;     
+	}
+	.first_link{
+		margin-bottom: -200px;
 	}
 
-	#ffeature2{
-		margin-top: 50px;
-	}
-
-	/*Feature3*/
-	#ffeature3{
-		margin-top: 50px;
-		margin-bottom: 50px;
-	}
-
-	#feature3_p1{
-		margin: 70px 50px 20px 0px;
-		font-size: 20px;
-		font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-
-	}
-
-	#ffeature3_p3{
+	.liveproject_art_font{
+		color: #ecf0f1;
 		font-size: 15px;
-		margin-top: 30px;
-		margin-bottom: 30px;
-	}
-
-	#ffeature3_right{
-		padding-left: 40px;
-	}
-
-	#ffeature3 img{
-		width: 514px;
-		height: 384px;
-		text-align: left;
-		margin-left: 0px;
-		margin-right: 0px;
-	}
-
-	.feature3_size{
-	    margin-left: 60px;
-	    padding-left: 20px; 
-	    padding-right: 0px;
-	}
-
-	#feature3_thumbnail1{
-	    padding-left: 0px;
-	    padding-top: 0px;
-	    padding-right: 0px;
-	    padding-bottom: 0px;
-	    height: 384px;
-	}
-
-	#feature3_left{
-		padding: 0px 0px 0px 0px;
-	}
-
-	/*Feature4*/
-	#btnSeemore{
-		padding: 5px 13px 5px 13px;
-		margin:20px 0px 10px 0px;
-		border: 2px solid #828587;
-		text-align: center;
-		font-size: 12px;
-		border-radius: 4px;
-		color: #828587;
-		border-width: 2px;
 		font-weight: bold;
 	}
 
-	#feature4_row1{
-		margin-bottom: 50px;
+	.feature2_animation_box:hover{
+		background-color: #16a085;
 	}
 
-	#ffeature4 a,
-	#ffeature4 p{
-		color: #000;
-		font-size: 12px;
-		margin-right: 10px;
-		margin-left: 10px;
+
+	.feature2_animation_box:hover .first_link{
+		margin-top: 174px;
 	}
 
-	#feature4_ul p{
-		margin-bottom: 0px;
-	}
-
-	.feature4_thumbnail_size{
-		width: 	320px;
-		height: 450px;
-		padding: 0px 0px 50px 0px;
-	}
-
-	.feature4_progress_size{
-		padding-bottom: 0px;
-	}
 /*End Discover -------------------------------------------*/
 
 
@@ -677,18 +581,21 @@ Date: 2015.10.01
 /*Search Page (search.html)
 --------------------------------------------------------- */
 	#search{
-		/*margin-left: 10%;*/
-		/*margin-right: 10%;*/
 	}
-	#search .searchbar div {
-		margin-top: 40px;
-		margin-bottom: 40px;
-	}
-	#search .explore{
-		margin-top: 40px;
-		margin-bottom: 40px;
+	#search .searchbar {
+		background: #fff;
 	}
 /*End Search ---------------------------------------------*/
+
+/*Back Project (back_project.html)
+--------------------------------------------------------- */
+#choose_reward .item-radio{
+	background: #f5f5f5;
+	border: 2px solid #828587;
+	border-radius: 6px;
+	padding: 15px;
+}
+/*End Back Project -------------------------------------- */
 
 
 
@@ -702,10 +609,13 @@ Date: 2015.10.01
     	height: 115px;
 	}
 	.credit-card{
-		width: 650px;
 	    padding: 10px;
 	}
 	.credit-card img{
 		padding: 8px 8px 8px 8px;
+	}
+	#paymentMethod p{
+		font-size: 9px;
+		font-size: 0.9em!important;
 	}
 /*End payment -------------------------------------------- */
