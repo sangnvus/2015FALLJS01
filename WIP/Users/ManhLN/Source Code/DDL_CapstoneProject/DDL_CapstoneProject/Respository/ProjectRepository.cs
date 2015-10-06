@@ -95,7 +95,6 @@ namespace DDL_CapstoneProject.Respository
         public Project CreatProject(ProjectCreateDTO newProject)
         {
             Project project;
-
             project = CreateEmptyProject();
             project.CreatorID = newProject.CategoryID;
             project.Title = newProject.Title;

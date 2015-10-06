@@ -64,6 +64,7 @@ namespace DDL_CapstoneProject.Ultilities
             public static readonly string CREATOR = "creator";
             public static readonly string RECEIVER = "receiver";
             public static readonly string BOTH = "both";
+            public static readonly string NO = "no";
         }
     }
 }

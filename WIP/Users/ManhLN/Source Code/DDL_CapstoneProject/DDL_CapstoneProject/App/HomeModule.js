@@ -1,7 +1,7 @@
 ﻿"use strict";
 var service = angular.module("DDLService", []);
 var directive = angular.module("DDLDirective", []);
-var app = angular.module("ClientApp", ["ngRoute", "ngAnimate", "DDLService", "DDLDirective"]);
+var app = angular.module("ClientApp", ["ngRoute", "ngAnimate", "ngSanitize", "DDLService", "DDLDirective", 'angular-loading-bar','textAngular']);
 
 // Show Routing.
 app.config(["$routeProvider", function ($routeProvider) {
@@ -27,8 +27,28 @@ app.config(["$routeProvider", function ($routeProvider) {
         {
             templateUrl: "ClientPartial/RegisterSuccess"
         });
-    $routeProvider.when("/create",
+
+	$routeProvider.when("/user/message",
         {
+            templateUrl: "ClientPartial/Message",
+            controller: "MessageController",
+            resolve: {
+                conversations: ['MessageService', function (MessageService) {
+                    return MessageService.getListReceivedConversations();
+                }]
+            }
+        });
+    $routeProvider.when("/user/message/:id",
+        {
+            templateUrl: "ClientPartial/MessageDetail",
+            controller: "MessageDetailController",
+            resolve: {
+                conversation: ['$route', 'MessageService', function ($route, MessageService) {
+                    return MessageService.getConversation($route.current.params.id);
+                }]
+            }
+        });
+    $routeProvider.when("/create",{
             templateUrl: "/ClientPartial/CreateProject",
             controller: "CreateProjectController"
         });
@@ -37,12 +57,18 @@ app.config(["$routeProvider", function ($routeProvider) {
             templateUrl: "/ClientPartial/EditProject",
             controller: "EditProjectController"
         });
-    $routeProvider.otherwise(
-        {
+    $routeProvider.otherwise(        {
             redirectTo: "/"
         });
 
     //$locationProvider.html5Mode(false).hashPrefix("!");
+}]).config(['$provide', function($provide){
+    $provide.decorator('taOptions', ['taRegisterTool', '$delegate', function(taRegisterTool, taOptions) {
+
+        taOptions.forceTextAngularSanitize = false;
+
+        return taOptions;
+    }]);
 }]);
 
 app.run(['$rootScope', '$window', '$anchorScroll', function ($rootScope, $window, $anchorScroll) {

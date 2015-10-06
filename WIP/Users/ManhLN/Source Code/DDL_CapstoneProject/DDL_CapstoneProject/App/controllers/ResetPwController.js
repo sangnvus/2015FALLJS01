@@ -1,6 +1,6 @@
 ﻿"use strict";
 var service = angular.module("DDLService", []);
-var app = angular.module("ClientApp", ["ngRoute", "ngAnimate", "DDLService"]);
+var app = angular.module("ClientApp", ["ngRoute", "ngAnimate", "DDLService", 'angular-loading-bar']);
 
 app.controller('ResetPwController', function ($rootScope, $scope, $location, $window, UserService) {
     // Todo here.

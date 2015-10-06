@@ -19,6 +19,7 @@ namespace DDL_CapstoneProject.Models
         public string ImageUrl { get; set; }
         public string SubDescription { get; set; }
         public string Location { get; set; }
+        public DateTime CreatedDate { get; set; }
         public bool IsExprired { get; set; }
         public decimal CurrentFunded { get; set; }
         public DateTime? ExpireDate { get; set; }
@@ -59,6 +60,7 @@ namespace DDL_CapstoneProject.Models
         public virtual ICollection<RewardPkg> RewardPkgs { get; set; }
         public virtual ICollection<Remind> Reminds { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Backing> Backings { get; set; }
     }
 
     #region "Enum"

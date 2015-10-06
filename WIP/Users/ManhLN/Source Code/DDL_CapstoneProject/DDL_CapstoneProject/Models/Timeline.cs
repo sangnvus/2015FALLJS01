@@ -13,6 +13,7 @@ namespace DDL_CapstoneProject.Models
         public int ProjectID { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public string ImageUrl { get; set; }
         public DateTime DueDate { get; set; }
         #endregion
 
