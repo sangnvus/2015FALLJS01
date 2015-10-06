@@ -73,7 +73,7 @@ namespace DDL_CapstoneProject.Respository
         {
             var listConversation = from conversation in db.Conversations
                                    orderby conversation.UpdatedDate descending
-                                   where conversation.Creator.Username == userName 
+                                   where conversation.Creator.Username == userName
                                    && (conversation.DeleteStatus == DDLConstants.ConversationStatus.NO
                                    || conversation.DeleteStatus == DDLConstants.ConversationStatus.RECEIVER)
                                    select new ConversationBasicDTO
@@ -96,7 +96,7 @@ namespace DDL_CapstoneProject.Respository
         {
             var listConversation = from conversation in db.Conversations
                                    orderby conversation.UpdatedDate descending
-                                   where conversation.Receiver.Username == userName 
+                                   where conversation.Receiver.Username == userName
                                    && (conversation.DeleteStatus == DDLConstants.ConversationStatus.CREATOR
                                    || conversation.DeleteStatus == DDLConstants.ConversationStatus.NO)
                                    select new ConversationBasicDTO
@@ -139,7 +139,7 @@ namespace DDL_CapstoneProject.Respository
             // Get list messages.
             var listMessage = from message in db.Messages
                               where message.ConversationID == conversationID
-                              orderby message.SentTime ascending 
+                              orderby message.SentTime ascending
                               select new MessageDTO
                               {
                                   MessageID = message.MessageID,
@@ -213,6 +213,96 @@ namespace DDL_CapstoneProject.Respository
             };
 
             return messageDTO;
+        }
+
+        /// <summary>
+        /// Delete a conversation
+        /// </summary>
+        /// <param name="conversationId">conversation Id</param>
+        /// <param name="userName">userName</param>
+        /// <returns>bool value</returns>
+        public bool Delete(int conversationId, string userName)
+        {
+            // Check user exist.
+            var user = UserRepository.Instance.GetByUserNameOrEmail(userName);
+            if (user == null)
+            {
+                throw new UserNotFoundException();
+            }
+
+            Conversation conversation = null;
+
+            // Check conversation exist.
+            conversation = db.Conversations.FirstOrDefault(c => c.ConversationID == conversationId 
+                            && (c.CreatorID == user.DDL_UserID || c.ReceiverID == user.DDL_UserID));
+
+            if (conversation == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
+            // Edit delete status.
+            // if is creator.
+            if (conversation.CreatorID == user.DDL_UserID)
+            {
+                conversation.DeleteStatus = conversation.DeleteStatus == DDLConstants.ConversationStatus.RECEIVER ? 
+                    DDLConstants.ConversationStatus.BOTH : DDLConstants.ConversationStatus.CREATOR;
+            }
+            else // if is receiver.
+            {
+                conversation.DeleteStatus = conversation.DeleteStatus == DDLConstants.ConversationStatus.CREATOR ? 
+                    DDLConstants.ConversationStatus.BOTH : DDLConstants.ConversationStatus.RECEIVER;
+            }
+
+            // Save in DB.
+            db.Conversations.AddOrUpdate(conversation);
+            db.SaveChanges();
+
+            return true;
+        }
+
+        /// <summary>
+        /// Delete List of Messages
+        /// </summary>
+        /// <param name="idList">list of identify number of conversations</param>
+        /// <param name="userName">user name of current user</param>
+        /// <returns></returns>
+        public bool DeleteMessageList(int[] idList, string userName)
+        {
+            // Check user exist.
+            var user = UserRepository.Instance.GetByUserNameOrEmail(userName);
+            if (user == null)
+            {
+                throw new UserNotFoundException();
+            }
+
+            // Check conversation exist.
+            var conversationList = db.Conversations.Where(c => idList.Contains(c.ConversationID));
+
+            if (!conversationList.Any())
+            {
+                throw new KeyNotFoundException();
+            }
+
+            // Edit delete status.
+            foreach (var conversation in conversationList)
+            {
+                if (conversation.CreatorID == user.DDL_UserID) // if is creator.
+                {
+                    conversation.DeleteStatus = conversation.DeleteStatus == DDLConstants.ConversationStatus.RECEIVER ?
+                        DDLConstants.ConversationStatus.BOTH : DDLConstants.ConversationStatus.CREATOR;
+                }
+                else // if is receiver.
+                {
+                    conversation.DeleteStatus = conversation.DeleteStatus == DDLConstants.ConversationStatus.CREATOR ?
+                        DDLConstants.ConversationStatus.BOTH : DDLConstants.ConversationStatus.RECEIVER;
+                }
+            }
+
+            // Save in DB.
+            db.SaveChanges();
+
+            return true;
         }
     }
 }

@@ -9,40 +9,41 @@ using System.Web.Http.Description;
 using DDL_CapstoneProject.Helper;
 using DDL_CapstoneProject.Models.DTOs;
 using DDL_CapstoneProject.Respository;
+using DDL_CapstoneProject.Ultilities;
 
 namespace DDL_CapstoneProject.Controllers.ApiControllers
 {
     public class ProjectApiController : BaseApiController
     {
         // POST: api/ProjectApi/CreateProject
-        [ResponseType(typeof (ProjectCreateDTO))]
+        [ResponseType(typeof(ProjectCreateDTO))]
         [HttpPost]
         public IHttpActionResult CreateProject(ProjectCreateDTO newProject)
         {
-
+            int id;
             var currentUser = getCurrentUser();
 
             if (currentUser == null)
             {
-                return Ok(new HttpMessageDTO { Status = "error", Message = "Chưa đăng nhập!", Type = "UserNotFound" }); 
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa đăng nhập!", Type = "UserNotFound" });
             }
 
             if (!ModelState.IsValid)
             {
-                return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = "Bad-Request" });
             }
 
             try
             {
                 newProject.CreatorID = currentUser.DDL_UserID;
                 var project = ProjectRepository.Instance.CreatProject(newProject);
+                id = project.ProjectID;
             }
             catch (Exception)
             {
-
-                return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = "Bad-Request" });
             }
-            return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "" });
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = id });
         }
 
         // PUT: api/ProjectApi/Edit  
@@ -57,23 +58,17 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             var updateProject = ProjectRepository.Instance.EditProject(ProjectID, project);
 
-            return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "" });
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
         }
 
         // GET: api/ProjectApi/GetProject/:id
         [HttpGet]
         [ResponseType(typeof(ProjectEditDTO))]
-        public IHttpActionResult GetProject(int ProjectID)
+        public IHttpActionResult GetProject(int id)
         {
-            var project = ProjectRepository.Instance.GetProject(ProjectID);
-            var projectDTO = new ProjectEditDTO
-            {
-                ProjectID = project.ProjectID,
-                CreatorID = project.CreatorID,
+            var project = ProjectRepository.Instance.GetProject(id);
 
-            };
-
-            return Ok(projectDTO);
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = project });
         }
     }
 }

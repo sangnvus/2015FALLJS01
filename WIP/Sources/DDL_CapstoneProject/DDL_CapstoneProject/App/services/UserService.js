@@ -23,4 +23,17 @@ service.service('UserService', function ($http) {
         return request;
     }
 
+    // Function to get list username filter by value
+    this.getUserName = function (val) {
+        var request = $http({
+            method: 'get',
+            url: '/api/UserApi/GetListUserName',
+            params: {
+                username: val
+            }
+        });
+
+        return request;
+    }
+
 });

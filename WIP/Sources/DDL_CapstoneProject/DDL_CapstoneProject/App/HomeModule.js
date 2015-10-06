@@ -2,7 +2,7 @@
 var service = angular.module("DDLService", []);
 var directive = angular.module("DDLDirective", []);
 var app = angular.module("ClientApp", ["ngRoute", "ngAnimate", "ngSanitize", "DDLService",
-    "DDLDirective", 'angular-loading-bar', 'textAngular', 'toastr']);
+    "DDLDirective", 'angular-loading-bar', 'textAngular', 'toastr', 'ui.bootstrap']);
 
 // Show Routing.
 app.config(["$routeProvider", function ($routeProvider) {
@@ -51,19 +51,30 @@ app.config(["$routeProvider", function ($routeProvider) {
                 }]
             }
         });
-    $routeProvider.when("/create", {
+    $routeProvider.when("/project/create", {
         templateUrl: "/ClientPartial/CreateProject",
         controller: "CreateProjectController",
         resolve: {
-            categories: ['CategoryService', function (CategoryService) {
-                return CategoryService.getCategories();
+            categories: ['$rootScope', '$route', '$q', 'CategoryService', 'CommmonService', function ($rootScope, $route, $q, CategoryService, CommmonService) {
+                var promise = CategoryService.getCategories();
+                return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
             }]
         }
     });
-    $routeProvider.when("/edit/:id",
+    $routeProvider.when("/project/edit/:id",
         {
             templateUrl: "/ClientPartial/EditProject",
-            controller: "EditProjectController"
+            controller: "EditProjectController",
+            resolve: {
+                categories: ['$rootScope', '$route', '$q', 'CategoryService', 'CommmonService', function ($rootScope, $route, $q, CategoryService, CommmonService) {
+                    var promise = CategoryService.getCategories();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }],
+                project: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
+                    var promise = ProjectService.getProject($route.current.params.id);
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }],
+            }
         });
     $routeProvider.otherwise({
         redirectTo: "/"

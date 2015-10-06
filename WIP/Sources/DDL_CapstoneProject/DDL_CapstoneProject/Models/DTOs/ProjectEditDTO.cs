@@ -22,10 +22,10 @@ namespace DDL_CapstoneProject.Models.DTOs
         public int CategoryID { get; set; }
         public int CreatorID { get; set; }
 
-        public virtual ICollection<Question> Questions { get; set; }
-        public virtual ICollection<UpdateLog> UpdateLogs { get; set; }
-        public virtual ICollection<Timeline> Timelines { get; set; }
-        public virtual ICollection<RewardPkg> RewardPkgs { get; set; }
-        public virtual ICollection<Comment> Comments { get; set; }
+        public List<QuestionDTO> Questions { get; set; }
+        public List<UpdateLogDTO> UpdateLogs { get; set; }
+        public List<TimeLineDTO> Timelines { get; set; }
+        public List<RewardPkgDTO> RewardPkgs { get; set; }
+        public List<CommentDTO> Comments { get; set; }
     }
 }

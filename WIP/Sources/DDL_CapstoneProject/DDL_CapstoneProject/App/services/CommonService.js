@@ -29,9 +29,9 @@ service.service("CommmonService", function ($http, $window, $location) {
         if (result === "not-authen") {
             $window.location.href = baseUrl + "login";
         } else if (result === "not-found") {
-            $location.path("/notfound").replace();
+            //$location.path("/notfound").replace();
         } else {
-            $location.path("/error").replace();
+            //$location.path("/error").replace();
         }
     }
 

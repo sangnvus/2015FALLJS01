@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-app.controller('MessageDetailController', function ($scope, conversation, toastr, MessageService, CommmonService) {
+app.controller('MessageDetailController', function ($scope, $location, conversation, toastr, MessageService, CommmonService) {
     //Todo here.
     $scope.Conversation = conversation.data.Data;
 
@@ -9,11 +9,12 @@ app.controller('MessageDetailController', function ($scope, conversation, toastr
         Content: ""
     }
 
+    // function reply a conversation
     $scope.ReplyMessage = function () {
         if ($scope.Reply.Content.trim() !== "") {
             var promisePut = MessageService.Reply($scope.Reply);
             promisePut.then(
-                function(result) {
+                function (result) {
                     if (result.data.Status === "success") {
                         $scope.Conversation.MessageList.push(result.data.Data);
                         $scope.Reply.Content = "";
@@ -24,7 +25,7 @@ app.controller('MessageDetailController', function ($scope, conversation, toastr
                         toastr.error($scope.Error, 'Lỗi!');
                     }
                 },
-                function(error) {
+                function (error) {
                     $scope.Error = error.data.Message;
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
@@ -32,5 +33,25 @@ app.controller('MessageDetailController', function ($scope, conversation, toastr
         } else {
             toastr.warning("Bạn chưa nhập nội dung tin nhắn", 'Thông báo!');
         }
+    }
+
+    // function to delete message.
+    $scope.Delete = function () {
+        var promise = MessageService.Delete($scope.Conversation.ConversationID);
+        promise.then(
+            function (result) {
+                if (result.data.Status === "success") {
+                    $location.path("/user/message").replace();
+                } else {
+                    CommmonService.checkError(result.data.Type);
+                    $scope.Error = result.data.Message;
+                    toastr.error($scope.Error, 'Lỗi!');
+                }
+            },
+            function (error) {
+                $scope.Error = error.data.Message;
+                $scope.Error = result.data.Message;
+                toastr.error($scope.Error, 'Lỗi!');
+            });
     }
 });

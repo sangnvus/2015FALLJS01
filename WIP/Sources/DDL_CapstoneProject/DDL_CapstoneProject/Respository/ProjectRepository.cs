@@ -9,7 +9,7 @@ using DDL_CapstoneProject.Ultilities;
 
 namespace DDL_CapstoneProject.Respository
 {
-    public class ProjectRepository: SingletonBase<ProjectRepository>
+    public class ProjectRepository : SingletonBase<ProjectRepository>
     {
         private DDLDataContext db;
 
@@ -119,27 +119,24 @@ namespace DDL_CapstoneProject.Respository
         public Project EditProject(int ProjectID, ProjectEditDTO project)
         {
             var updateProject = db.Projects.SingleOrDefault(u => u.ProjectID == ProjectID);
-            
+
             if (updateProject == null)
             {
                 throw new Exception();
             }
 
-            updateProject.RewardPkgs = project.RewardPkgs;
             updateProject.CategoryID = project.CategoryID;
             updateProject.Description = project.Description;
             updateProject.ExpireDate = project.ExpireDate;
             updateProject.FundingGoal = project.FundingGoal;
             updateProject.ImageUrl = project.ImageUrl;
             updateProject.Location = project.Location;
-            updateProject.Questions = project.Questions;
             updateProject.Risk = project.Risk;
             updateProject.Status = project.Status;
             updateProject.SubDescription = project.SubDescription;
-            updateProject.Timelines = project.Timelines;
             updateProject.Title = project.Title;
-            updateProject.UpdateLogs = project.UpdateLogs;
             updateProject.VideoUrl = project.VideoUrl;
+
 
             db.SaveChanges();
 
@@ -151,16 +148,99 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="ProjectID">int</param>
         /// <returns>project</returns>
-        public Project GetProject(int ProjectID)
+        public ProjectEditDTO GetProject(int ProjectID)
         {
             var project = db.Projects.SingleOrDefault(x => x.ProjectID == ProjectID);
 
             if (project == null)
             {
-                throw new Exception();
+                throw new KeyNotFoundException();
             }
 
-            return project;
+            var projectDTO = new ProjectEditDTO
+            {
+                ProjectID = project.ProjectID,
+                CreatorID = project.CreatorID,
+                CategoryID = project.CategoryID,
+                Title = project.Title,
+                Risk = project.Risk,
+                ImageUrl = project.Risk,
+                SubDescription = project.SubDescription,
+                Location = project.Location,
+                ExpireDate = project.ExpireDate,
+                FundingGoal = project.FundingGoal,
+                Description = project.Description,
+                VideoUrl = project.VideoUrl,
+                Status = project.Status
+            };
+
+            // Get rewardPkg list
+            var rewardList = from RewardPkg in db.RewardPkgs
+                             where RewardPkg.ProjectID == ProjectID
+                             orderby RewardPkg.Type ascending
+                             select new RewardPkgDTO()
+                             {
+                                 Description = RewardPkg.Description,
+                                 EstimatedDelivery = RewardPkg.EstimatedDelivery,
+                                 IsHide = RewardPkg.IsHide,
+                                 Quantity = RewardPkg.Quantity,
+                                 RewardPkgID = RewardPkg.RewardPkgID,
+                                 Type = RewardPkg.Type
+                             };
+            // Get updatelog list
+            var updateLogList = from UpdateLog in db.UpdateLogs
+                                where UpdateLog.ProjectID == ProjectID
+                                orderby UpdateLog.CreatedDate descending
+                                select new UpdateLogDTO()
+                                {
+                                    Description = UpdateLog.Description,
+                                    Title = UpdateLog.Title,
+                                    CreatedDate = UpdateLog.CreatedDate,
+                                    UpdateLogID = UpdateLog.UpdateLogID,
+                                };
+            // Get timeline list
+            var timelineList = from Timeline in db.Timelines
+                               where Timeline.ProjectID == ProjectID
+                               orderby Timeline.DueDate ascending
+                               select new TimeLineDTO()
+                               {
+                                   Description = Timeline.Description,
+                                   Title = Timeline.Title,
+                                   ImageUrl = Timeline.ImageUrl,
+                                   DueDate = Timeline.DueDate,
+                                   TimelineID = Timeline.TimelineID
+                               };
+            // Get question list
+            var questionList = from Question in db.Questions
+                               where Question.ProjectID == ProjectID
+                               orderby Question.CreatedDate descending
+                               select new QuestionDTO()
+                               {
+                                   CreatedDate = Question.CreatedDate,
+                                   Answer = Question.Answer,
+                                   QuestionContent = Question.QuestionContent,
+                                   QuestionID = Question.QuestionID
+                               };
+            // Get comment list
+            var commentList = from Comment in db.Comments
+                              where Comment.ProjectID == ProjectID
+                              orderby Comment.CreatedDate descending
+                              select new CommentDTO()
+                              {
+                                  CreatedDate = Comment.CreatedDate,
+                                  CommentContent = Comment.CommentContent,
+                                  IsHide = Comment.IsHide,
+                                  CommentID = Comment.CommentID,
+                                  UserID = Comment.UserID
+                              };
+
+            projectDTO.RewardPkgs = rewardList.ToList();
+            projectDTO.UpdateLogs = updateLogList.ToList();
+            projectDTO.Timelines = timelineList.ToList();
+            projectDTO.Questions = questionList.ToList();
+            projectDTO.Comments = commentList.ToList();
+
+            return projectDTO;
         }
 
         #endregion
