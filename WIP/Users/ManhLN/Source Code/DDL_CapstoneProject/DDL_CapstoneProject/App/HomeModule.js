@@ -27,7 +27,7 @@ app.config(["$routeProvider", function ($routeProvider) {
         {
             templateUrl: "ClientPartial/RegisterSuccess"
         });
-    $routeProvider.when("/user/message",
+$routeProvider.when("/user/message",
         {
             templateUrl: "ClientPartial/Message",
             controller: "MessageController",
@@ -46,8 +46,10 @@ app.config(["$routeProvider", function ($routeProvider) {
                     return MessageService.getConversation($route.current.params.id);
                 }]
             }
-        });
-    $routeProvider.otherwise(
+        });$routeProvider.when("/create",{
+            templateUrl: "/ClientPartial/CreateProject",
+            controller: "CreateProjectController"
+        });    $routeProvider.otherwise(
         {
             redirectTo: "/"
         });

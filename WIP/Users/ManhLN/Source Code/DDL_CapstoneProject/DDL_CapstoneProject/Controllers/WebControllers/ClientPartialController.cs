@@ -25,7 +25,12 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
             return PartialView("~/Views/Login/_RegisterSuccess.cshtml");
         }
 
-        public ActionResult Message()
+        // GET: ClientPartial/CreateProject
+        public ActionResult CreateProject()
+        {
+            return PartialView("_CreateProject");
+        }
+		public ActionResult Message()
         {
             return PartialView("~/Views/Message/_MessageList.cshtml");
         }

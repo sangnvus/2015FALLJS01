@@ -54,8 +54,19 @@ namespace DDL_CapstoneProject.Respository
         public Project CreatProject(ProjectCreateDTO newProject)
         {
             Project project;
+            project = CreateEmptyProject();
+            project.CreatorID = newProject.CategoryID;
+            project.Title = newProject.Title;
+            project.CategoryID = newProject.CategoryID;
+            project.CreatorID = newProject.CreatorID;
+            project.FundingGoal = newProject.FundingGoal;
 
-            return null;
+            db.Projects.Add(project);
+            db.SaveChanges();
+
+
+
+            return project;
         }
 
         #endregion
