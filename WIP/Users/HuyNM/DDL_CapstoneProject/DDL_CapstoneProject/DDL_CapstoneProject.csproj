@@ -173,6 +173,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\DDL_User.cs" />
+    <Compile Include="Models\DTOs\CommentDTO.cs" />
     <Compile Include="Models\DTOs\ConversationBasicDTO.cs" />
     <Compile Include="Models\DTOs\ConversationDetailDTO.cs" />
     <Compile Include="Models\DTOs\CategoryDTO.cs" />
@@ -181,7 +182,11 @@
     <Compile Include="Models\DTOs\NewMessageDTO.cs" />
     <Compile Include="Models\DTOs\ProjectCreateDTO.cs" />
     <Compile Include="Models\DTOs\ProjectEditDTO.cs" />
+    <Compile Include="Models\DTOs\QuestionDTO.cs" />
     <Compile Include="Models\DTOs\ReplyDTO.cs" />
+    <Compile Include="Models\DTOs\RewardPkgDTO.cs" />
+    <Compile Include="Models\DTOs\TimeLineDTO.cs" />
+    <Compile Include="Models\DTOs\UpdateLogDTO.cs" />
     <Compile Include="Models\DTOs\UserBasicInfoDTO.cs" />
     <Compile Include="Models\DTOs\UserLoginDTO.cs" />
     <Compile Include="Models\DTOs\UserRegisterDTO.cs" />

@@ -15,10 +15,9 @@
                         <li><a href="#story" data-toggle="tab">Story</a></li>
                         <li><a href="#update" data-toggle="tab">Update</a></li>
                         <li><a href="#preview" data-toggle="tab">Preview</a></li>
-                        <a href="#submit" class="btn btn-success">submit for review</a>
+                        <button tyoe="button" class="btn btn-success" ng-click="submit()">submit for review</button>
                     </ul>
                 </div>
-
 
                 <!-- Tabs pane -->
                 <div class="tab-content">
@@ -32,11 +31,11 @@
                                 <div class="col-md-9">
                                     <div class="row border-grey">
                                         <div class="col-md-4">
-                                            <h3>Project image</h3>
+                                            <h3>Ảnh dự án</h3>
                                         </div>
                                         <div class="col-md-8">
                                             <div class="upload">
-                                                Choose an image from your computer
+                                                Chọn 1 hình ảnh từ máy bạn
                                                 <input class="photo file" data-help_section="project-image-help" id="project_photo" name="project[photo]" type="file" url="/projects/1182290592/352498880/photo">
                                                 <strong class="center">
                                                     <span class="has_file_hide">This is the main image associated with your project. Make it count!</span><span>JPEG, PNG, GIF, or BMP • 50MB file limit</span> <span>At least 1024x768 pixels • 4:3 aspect ratio</span>
@@ -47,11 +46,11 @@
 
                                     <div class="row border-grey">
                                         <div class="col-md-4">
-                                            <h3>Project title</h3>
+                                            <h3>Tên dự án</h3>
                                         </div>
                                         <div class="col-md-8">
                                             <div class="field-wrapper">
-                                                <input type="text" id="project_name" name="project[name]" class="form-control" placeholder="">
+                                                <input type="text" id="project_name" ng-model="Project.Title" class="form-control">
                                             </div>
                                             <div class="field-help-2">
                                                 <p>Your project title and blurb should be simple, specific, and memorable. Our search tools run through these sections of your project, so be sure to incorporate any key words here!</p>
@@ -62,7 +61,7 @@
 
                                     <div class="row border-grey">
                                         <div class="col-md-4">
-                                            <h3>Short blurb</h3>
+                                            <h3>Mô tả ngắn</h3>
                                         </div>
                                         <div class="col-md-8">
                                             <div class="field-wrapper">
@@ -76,49 +75,19 @@
 
                                     <div class="row border-grey">
                                         <div class="col-md-4">
-                                            <h3>Category</h3>
+                                            <h3>Lĩnh vực</h3>
                                         </div>
                                         <div class="col-md-8">
                                             <div class="field-wrapper">
-                                                <select class="form-control" id="sel1">
-                                                    <option>Art</option>
-                                                    <option>comics</option>
-                                                    <option>Crafts</option>
-                                                    <option>Dance</option>
-                                                    <option>Design</option>
-                                                    <option>Fashion</option>
-                                                    <option>Games</option>
-                                                    <option>Journalism</option>
-                                                    <option>Music</option>
-                                                    <option>Photography</option>
-                                                    <option>Publishing</option>
-                                                    <option>Technology</option>
-                                                </select>
-                                            </div>
-                                            <br>
-                                            <div class="field-wrapper">
-                                                <select class="form-control" id="sel1">
-                                                    <option selected="selected" value="1">Subcategory (optional)</option>
-                                                    <option value="287">Ceramics</option>
-                                                    <option value="20">Conceptual Art</option>
-                                                    <option value="21">Digital Art</option>
-                                                    <option value="22">Illustration</option>
-                                                    <option value="288">Installations</option>
-                                                    <option value="54">Mixed Media</option>
-                                                    <option value="23">Painting</option>
-                                                    <option value="24">Performance Art</option>
-                                                    <option value="53">Public Art</option>
-                                                    <option value="25">Sculpture</option>
-                                                    <option value="289">Textiles</option>
-                                                    <option value="290">Video Art</option>
-                                                </select>
+                                                <select class="form-control" ng-model="selectedOption" id="sel1"
+                                                        ng-options="category.Name for category in Categories track by category.CategoryID "></select>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row border-grey">
                                         <div class="col-md-4">
-                                            <h3>Project location</h3>
+                                            <h3>Địa điểm triển khai</h3>
                                         </div>
                                         <div class="col-md-8">
                                             <input type="text" id="project_location" name="project[name]" class="form-control" placeholder="">
@@ -129,7 +98,7 @@
 
                                     <div class="row border-grey">
                                         <div class="col-md-4">
-                                            <h3>Funding duration</h3>
+                                            <h3>Thời gian triển khai</h3>
                                         </div>
 
                                         <div class="col-md-8">
@@ -150,7 +119,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input type='date' class="form-control" />
+                                                    <input type='date' ng-model="Project.ExpireDate" class="form-control" />
                                                     <!-- <div class="form-group">
                                                        <div class='input-group date' id='datetimepicker1'>
                                                            <input type='date' class="form-control" />
@@ -166,10 +135,10 @@
 
                                     <div class="row border-grey">
                                         <div class="col-md-4">
-                                            <h3>Funding goal</h3>
+                                            <h3>Mục tiêu</h3>
                                         </div>
                                         <div class="col-md-8">
-                                            <input type="text" id="funding_goal" name="£50" class="form-control" placeholder="">
+                                            <input type="text" id="funding_goal" ng-model="Project.FundingGoal" class="form-control" placeholder="">
                                             <div class="field-help-2">
                                                 <p>Your funding goal should be the minimum amount needed to complete the project and fulfill (and ship!) all rewards. Because funding is all-or-nothing, you can always raise more than your goal but never less. Once your project has launched, it will not be possible to change your funding goal.</p>
                                                 <p>

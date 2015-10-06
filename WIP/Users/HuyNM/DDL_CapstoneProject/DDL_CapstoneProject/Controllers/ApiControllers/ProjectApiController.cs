@@ -67,29 +67,8 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         public IHttpActionResult GetProject(int id)
         {
             var project = ProjectRepository.Instance.GetProject(id);
-            var projectDTO = new ProjectEditDTO
-            {
-                ProjectID = project.ProjectID,
-                CreatorID = project.CreatorID,
-                CategoryID = project.CategoryID,
-                Title = project.Title,
-                Risk = project.Risk,
-                ImageUrl = project.Risk,
-                SubDescription = project.SubDescription,
-                Location = project.Location,
-                ExpireDate = project.ExpireDate,
-                FundingGoal = project.FundingGoal,
-                Description = project.Description,
-                VideoUrl = project.VideoUrl,
-                Status = project.Status,
-                Questions = project.Questions,
-                UpdateLogs = project.UpdateLogs,
-                Timelines = project.Timelines,
-                RewardPkgs = project.RewardPkgs,
-                Comments = project.Comments,
-            };
 
-            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Data = projectDTO });
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = project });
         }
     }
 }
