@@ -619,3 +619,17 @@ Date: 2015.10.01
 		font-size: 0.9em!important;
 	}
 /*End payment -------------------------------------------- */
+
+
+
+/*Created, Starred, Backed Project Page (created_project.html)
+--------------------------------------------------------- */
+#setting_container {
+	padding-top: 110px;
+	padding-right: 5%;
+}
+#items-projects{
+	padding-top: 30px;
+	padding-bottom: 100px;
+}
+/*End Created, Starred, Backed Project ------------------- */

@@ -183,6 +183,7 @@ Date: 2015.10.01
 	.portfolio-items,
 	.portfolio-filter {
 	  list-style: none;
+	  position: relative;
 	  padding: 0;
 	  margin: 0 -20px 20px 0;
 	}
@@ -218,7 +219,7 @@ Date: 2015.10.01
 	.portfolio-item .item-inner {
 	  background: #fff;
 	  border: 1px solid #eee;
-	  padding: 10px 10px 0;
+	  padding: 10px 10px;
 	  margin: 0 20px 20px 0;
 	  position: relative;
 	  border-radius: 6px;
@@ -226,6 +227,32 @@ Date: 2015.10.01
 	.portfolio-item img {
 	  width: 100%;
 	}
+
+	.portfolio-item .item-inner .item-expand{
+		/*display: none;*/
+		position: absolute;
+		overflow: hidden;
+		height: 0px;
+	}
+
+	.portfolio-item .item-inner:hover .item-expand{
+		/*display: block;*/
+		background: #fff;
+		/*border-top: 0px solid#eee;*/
+		border-right: 1px solid#eee;
+		border-left: 1px solid#eee;
+		border-bottom: 1px solid#eee;
+		border-radius: 6px;
+		z-index: 2;
+		height: 210px;
+		margin-left: -10px;
+		padding-left: 10px;
+	  	-moz-transition: width 1s, height 1s, background-color 1s;
+	  	-o-transition:  width 1s, height 1s, background-color 1s;
+		-webkit-transition: width 1s, height 1s, background-color 1s, -webkit-transform 1s;
+    	transition: opacity 300ms, width 1s, height 1s, background-color 1s, transform 1s;
+	}
+
 	.portfolio-item .item-title h5 {
 	  background: #fff;
 	  margin: 0;
