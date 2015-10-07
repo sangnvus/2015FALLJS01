@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-app.controller('MessageController', function ($scope, $location, conversations, MessageService, CommmonService) {
+app.controller('MessageController', function ($scope, $location, toastr, conversations, MessageService, CommmonService, UserService) {
     //Todo here
     $scope.ListConversations = conversations.data.Data;
 
@@ -12,6 +12,10 @@ app.controller('MessageController', function ($scope, $location, conversations, 
         }
     }
 
+    $scope.Unread = conversations.data.Data.length;
+
+    $scope.selection = [];
+
     $scope.Sent = false;
 
     resetNewMessageModel();
@@ -21,25 +25,46 @@ app.controller('MessageController', function ($scope, $location, conversations, 
         return !$scope.searchText || re.test(obj.SenderName) || re.test(obj.ReceiverName) || re.test(obj.Title);
     };
 
-    $scope.sendMessage = function() {
-        var promisePost = MessageService.sendMessage($scope.NewMessage);
+    $scope.ToggleSelection = function (id) {
+        if ($scope.selection.indexOf(id) === -1) {
+            $scope.selection.push(id);
+        } else {
+            $scope.selection.splice(id);
+        }
+    }
 
-        promisePost.then(
-            function (result) {
-                if (result.data.Status === "success") {
-                    $('#newMessageModel').modal('hide');
-                    resetNewMessageModel();
-                    if ($scope.Sent) {
-                        $scope.ListConversations.unshift(result.data.Data);
+    $scope.showConversationDetail = function (id) {
+        $location.path("/user/message/" + id).replace();
+    }
+
+    $scope.showConversationDetail = function (id) {
+        $location.path("/user/message/" + id).replace();
+    }
+
+    // Function request 
+    $scope.sendMessage = function () {
+        if ($scope.NewMessage.Content.trim() !== "") {
+            var promisePost = MessageService.sendMessage($scope.NewMessage);
+            promisePost.then(
+                function (result) {
+                    if (result.data.Status === "success") {
+                        $('#newMessageModel').modal('hide');
+                        resetNewMessageModel();
+                        if ($scope.Sent) {
+                            $scope.ListConversations.unshift(result.data.Data);
+                        }
+                    } else {
+                        CommmonService.checkError(result.data.Type);
+                        $scope.Error = result.data.Message;
+                        toastr.error($scope.Error, 'Lỗi!');
                     }
-                } else {
-                    CommmonService.checkError(result.data.Type);
-                    $scope.Error = result.data.Message;
-                }
-            },
-            function (error) {
-                $scope.Error = error.data.Message;
-            });
+                },
+                function (error) {
+                    $scope.Error = error.data.Message;
+                });
+        } else {
+            toastr.warning("Bạn chưa nhập nội dung tin nhắn", 'Thông báo!');
+        }
     }
 
     function getListReceivedConversation() {
@@ -81,13 +106,49 @@ app.controller('MessageController', function ($scope, $location, conversations, 
         if (value === "inbox") {
             getListReceivedConversation();
             $scope.Sent = false;
+            $scope.selection = [];
         } else {
             getListSentConversation();
             $scope.Sent = true;
+            $scope.selection = [];
         }
     }
 
-    $scope.showConversationDetail = function(id) {
-        $location.path("/user/message/"+ id).replace();
+    $scope.Delete = function () {
+        var promise = MessageService.DeleteMessages($scope.selection);
+        promise.then(
+            function (result) {
+                if (result.data.Status === "success") {
+                    toastr.success('Đã xóa thành công!');
+                    if ($scope.Sent === true) {
+                        getListSentConversation();
+                    } else {
+                        getListReceivedConversation();
+                    }
+                    $scope.selection = [];
+                } else {
+                    CommmonService.checkError(result.data.Type);
+                    $scope.Error = result.data.Message;
+                    toastr.error($scope.Error, 'Lỗi!');
+                }
+            },
+            function (error) {
+                $scope.Error = error.data.Message;
+                toastr.error($scope.Error, 'Lỗi!');
+            });
     }
+
+    $scope.getUserName = function (val) {
+        var promise = UserService.getUserName(val);
+        return promise.then(
+            function (result) {
+                if (result.data.Status === "success") {
+                    return result.data.Data;
+                }
+            },
+            function (error) {
+                $scope.Error = error.data.Message;
+                toastr.error($scope.Error, 'Lỗi!');
+            });
+    };
 });

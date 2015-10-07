@@ -184,6 +184,7 @@
     <Compile Include="Models\DTOs\ReplyDTO.cs" />
     <Compile Include="Models\DTOs\UserBasicInfoDTO.cs" />
     <Compile Include="Models\DTOs\UserLoginDTO.cs" />
+    <Compile Include="Models\DTOs\UserNameDTO.cs" />
     <Compile Include="Models\DTOs\UserRegisterDTO.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Project.cs" />

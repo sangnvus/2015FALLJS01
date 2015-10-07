@@ -2,7 +2,7 @@
 var service = angular.module("DDLService", []);
 var directive = angular.module("DDLDirective", []);
 var app = angular.module("ClientApp", ["ngRoute", "ngAnimate", "ngSanitize", "DDLService",
-    "DDLDirective", 'angular-loading-bar', 'textAngular', 'toastr']);
+    "DDLDirective", 'angular-loading-bar', 'textAngular', 'toastr', 'ui.bootstrap']);
 
 // Show Routing.
 app.config(["$routeProvider", function ($routeProvider) {
