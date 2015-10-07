@@ -217,6 +217,7 @@
     <Content Include="App\directives\passwordMatch.js" />
     <Content Include="App\HomeModule.js" />
     <Content Include="App\services\CategoryService.js" />
+    <Content Include="App\services\CommonFactory.js" />
     <Content Include="App\services\ProjectService.js" />
     <Content Include="App\services\MessageService.js" />
     <Content Include="App\services\SlideSevice.js" />

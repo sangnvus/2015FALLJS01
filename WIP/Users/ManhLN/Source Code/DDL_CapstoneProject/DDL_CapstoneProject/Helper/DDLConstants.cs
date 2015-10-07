@@ -66,5 +66,14 @@ namespace DDL_CapstoneProject.Ultilities
             public static readonly string BOTH = "both";
             public static readonly string NO = "no";
         }
+
+        public static class HttpMessageType
+        {
+            public static readonly string NOT_AUTHEN = "not-authen";
+            public static readonly string NOT_FOUND = "not-found";
+            public static readonly string BAD_REQUEST = "bad-request";
+            public static readonly string SUCCESS = "success";
+            public static readonly string ERROR = "error";
+        }
     }
 }

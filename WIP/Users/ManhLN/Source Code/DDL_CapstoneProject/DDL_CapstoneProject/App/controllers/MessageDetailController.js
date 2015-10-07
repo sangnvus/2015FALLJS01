@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-app.controller('MessageDetailController', function ($scope, conversation,toastr, MessageService) {
+app.controller('MessageDetailController', function ($scope, conversation, toastr, MessageService, CommmonService) {
     //Todo here.
     $scope.Conversation = conversation.data.Data;
 
@@ -18,7 +18,8 @@ app.controller('MessageDetailController', function ($scope, conversation,toastr,
                         $scope.Conversation.MessageList.push(result.data.Data);
                         $scope.Reply.Content = "";
                         toastr.success('Bạn đã gửi tin nhắn thành công!', 'Thành công!');
-                    } else if (result.data.Status === "error") {
+                    } else {
+                        CommmonService.checkError(result.data.Type);
                         $scope.Error = result.data.Message;
                         toastr.error($scope.Error, 'Lỗi!');
                     }
@@ -32,21 +33,4 @@ app.controller('MessageDetailController', function ($scope, conversation,toastr,
             toastr.warning("Bạn chưa nhập nội dung tin nhắn", 'Thông báo!');
         }
     }
-
-    //loadAllSlidesRecords();
-    //function loadAllSlidesRecords() {
-    //    var promiseGetSlide = SlideService.getSlides();
-
-    //    promiseGetSlide.then(
-    //        function (result) {
-    //            if (result.data.Status === "success") {
-    //                $scope.Slides = result.data.Data;
-    //            } else if (result.data.Status === "error") {
-    //                $scope.Error = result.data.Message;
-    //            }
-    //        },
-    //        function (error) {
-    //            $scope.Error = error.data.Message;
-    //        });
-    //}
 });
