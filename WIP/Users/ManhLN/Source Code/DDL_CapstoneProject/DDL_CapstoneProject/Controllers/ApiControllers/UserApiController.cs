@@ -13,7 +13,11 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 {
     public class UserApiController : BaseApiController
     {
-        // POST: api/AccountsApi/CreateAccount
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newUser"></param>
+        /// <returns></returns>
         [ResponseType(typeof(UserRegisterDTO))]
         [HttpPost]
         public IHttpActionResult Register(UserRegisterDTO newUser)
@@ -41,6 +45,11 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "" });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         [HttpPost]
         public IHttpActionResult ResetPassword(string email)
         {
@@ -62,6 +71,35 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
 
             return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "" });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public IHttpActionResult GetListUserName(string username)
+        {
+            var listUserName = new List<UserNameDTO>();
+            if (string.IsNullOrEmpty(username))
+            {
+                Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "", Data = listUserName});
+            }
+            try
+            {
+                listUserName = UserRepository.Instance.GetListUserName(username);
+            }
+            catch (UserNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = "error", Message = "Tài khoản không tồn tại!", Type = "UserNotFound" });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
+            }
+
+            return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "", Data = listUserName});
         }
     }
 }
