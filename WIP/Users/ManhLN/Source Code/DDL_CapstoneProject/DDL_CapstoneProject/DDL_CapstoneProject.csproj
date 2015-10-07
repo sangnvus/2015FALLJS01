@@ -173,6 +173,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\DDL_User.cs" />
+    <Compile Include="Models\DTOs\CommentDTO.cs" />
     <Compile Include="Models\DTOs\ConversationBasicDTO.cs" />
     <Compile Include="Models\DTOs\ConversationDetailDTO.cs" />
     <Compile Include="Models\DTOs\CategoryDTO.cs" />
@@ -181,9 +182,14 @@
     <Compile Include="Models\DTOs\NewMessageDTO.cs" />
     <Compile Include="Models\DTOs\ProjectCreateDTO.cs" />
     <Compile Include="Models\DTOs\ProjectEditDTO.cs" />
+    <Compile Include="Models\DTOs\QuestionDTO.cs" />
     <Compile Include="Models\DTOs\ReplyDTO.cs" />
+    <Compile Include="Models\DTOs\RewardPkgDTO.cs" />
+    <Compile Include="Models\DTOs\TimeLineDTO.cs" />
+    <Compile Include="Models\DTOs\UpdateLogDTO.cs" />
     <Compile Include="Models\DTOs\UserBasicInfoDTO.cs" />
     <Compile Include="Models\DTOs\UserLoginDTO.cs" />
+    <Compile Include="Models\DTOs\UserNameDTO.cs" />
     <Compile Include="Models\DTOs\UserRegisterDTO.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Project.cs" />
@@ -1069,7 +1075,9 @@
     <Content Include="Scripts\text-angular\textAngular-rangy.min.js" />
     <Content Include="Scripts\text-angular\textAngular.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1093,13 +1101,14 @@
     <Content Include="Views\Login\ForgotPassword.cshtml" />
     <Content Include="Views\Message\_MessageList.cshtml" />
     <Content Include="Views\Message\_MessageDetail.cshtml" />
-    <Content Include="Views\ClientPartial\_CreateProject.cshtml" />
-    <Content Include="Views\ClientPartial\_EditProject.cshtml" />
+    <Content Include="Views\Project\_CreateProject.cshtml" />
+    <Content Include="Views\Project\_EditProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />
     <Folder Include="App_Data\" />
     <Folder Include="images\others\" />
+    <Folder Include="Views\ClientPartial\" />
     <Folder Include="Views\Slider\" />
   </ItemGroup>
   <ItemGroup>

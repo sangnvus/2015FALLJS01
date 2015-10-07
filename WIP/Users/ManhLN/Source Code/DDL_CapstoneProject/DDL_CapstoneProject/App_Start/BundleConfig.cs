@@ -15,7 +15,8 @@ namespace DDL_CapstoneProject
                 "~/Scripts/angular-animate.min.js",
                 "~/Scripts/angular-sanitize.min.js",
                 "~/Scripts/angular-toaster/angular-toastr.tpls.js",
-                "~/Scripts/angular-block-ui.js"));
+                "~/Scripts/angular-block-ui.js",
+                "~/Scripts/angular-ui/ui-bootstrap-tpls.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/md5").Include(
                 "~/Scripts/plugin/jquery.md5.js"));

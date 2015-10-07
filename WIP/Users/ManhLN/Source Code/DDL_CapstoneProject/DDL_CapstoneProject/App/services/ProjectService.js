@@ -23,4 +23,9 @@ app.service('ProjectService', function ($http) {
 
         return request;
     }
+
+    // Function to ger a project by ProjectID
+    this.getProject = function (ProjectID) {
+        return $http.get("/api/ProjectApi/GetProject/" + ProjectID);
+    }
 });

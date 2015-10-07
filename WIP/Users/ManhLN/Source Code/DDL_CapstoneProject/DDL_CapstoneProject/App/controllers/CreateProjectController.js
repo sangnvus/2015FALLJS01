@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-app.controller('CreateProjectController', function ($scope, $location, ProjectService, CategoryService){
+app.controller('CreateProjectController', function ($scope, $location, toastr, ProjectService, categories){
     // Get categories
     $scope.Categories = categories.data.Data;
     // Set selected project category
@@ -14,13 +14,18 @@ app.controller('CreateProjectController', function ($scope, $location, ProjectSe
 
         promisePost.then(
             function (result) {
-                if (result.data === "Success") {
-                    alert("Add project successfully");
-                    //$location.path('/edit').replace();
+                if (result.data.Status === "success") {
+                    toastr.success('Bạn đã khởi tạo dự án thành công!', 'Thành công!');
+                    $location.path("/project/edit/" + result.data.Data).replace();
+                } else {
+                    $scope.Error = result.data.Message;
+                    toastr.error($scope.Error, 'Lỗi!');
                 }
             },
             function (error) {
                 $scope.Error = error.data.Message;
+                $scope.Error = result.data.Message;
+                toastr.error($scope.Error, 'Lỗi!');
             });
     }
 

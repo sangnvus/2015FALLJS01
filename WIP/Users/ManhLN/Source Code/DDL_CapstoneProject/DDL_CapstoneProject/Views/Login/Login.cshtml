@@ -28,15 +28,16 @@
                         </div>
                         <!--Password-->
                         <div class="form-group has-feedback">
-                            <input type="password" id="tbPassword" class="form-control input-lg" placeholder="Mật khẩu"
-                                   name="Password"
+                            <input type="hidden" name="Password" id="tbPassword"/>
+                            <input type="password" id="tbshowPassword" class="form-control input-lg" placeholder="Mật khẩu"
+                                   name="showPassword"
                                    required
                                    ng-model="User.Password">
                             <span class="glyphicon glyphicon-ok form-control-feedback text-success" aria-hidden="true"
-                                  ng-show="LoginForm.Password.$dirty && LoginForm.Password.$valid"></span>
-                            <div ng-show="LoginForm.Password.$dirty && LoginForm.Password.$invalid" class="text-danger">
+                                  ng-show="LoginForm.showPassword.$dirty && LoginForm.showPassword.$valid"></span>
+                            <div ng-show="LoginForm.showPassword.$dirty && LoginForm.showPassword.$invalid" class="text-danger">
                                 <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
-                                <span ng-show="LoginForm.Password.$error.required">Bạn chưa nhập mật khẩu</span>
+                                <span ng-show="LoginForm.showPassword.$error.required">Bạn chưa nhập mật khẩu</span>
                             </div>
                         </div>
                         <!--ErrorSummary-->
@@ -84,7 +85,7 @@
     @Scripts.Render("~/bundles/md5")
     <script>
         $("#LoginForm").submit(function (event) {
-            var password = $('#tbPassword').val();
+            var password = $('#tbshowPassword').val();
             var md5 = $.md5(password);
             $('#tbPassword').val(md5);
             return true;
