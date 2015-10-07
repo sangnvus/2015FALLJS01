@@ -52,4 +52,25 @@ service.service('MessageService', function ($http) {
         return request;
     }
 
+    this.Delete = function (id) {
+        var request = $http({
+            method: 'delete',
+            url: '/api/MessageApi/DeleteMessage?id=' + id
+        });
+
+        return request;
+    }
+
+    this.DeleteMessages = function (listId) {
+        var request = $http({
+            method: 'delete',
+            url: '/api/MessageApi/DeleteMessageList',
+            params: {
+                ids: listId
+            }
+        });
+
+        return request;
+    }
+
 });

@@ -28,7 +28,7 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         // GET: ClientPartial/CreateProject
         public ActionResult CreateProject()
         {
-            return PartialView("_CreateProject");
+            return PartialView("~/Views/Project/_CreateProject.cshtml");
         }
 		public ActionResult Message()
         {
@@ -42,7 +42,7 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
 		// GET: ClientPartial/EditProject
         public ActionResult EditProject()
         {
-            return PartialView("_EditProject");
+            return PartialView("~/Views/Project/_EditProject.cshtml");
         }
     }
 }

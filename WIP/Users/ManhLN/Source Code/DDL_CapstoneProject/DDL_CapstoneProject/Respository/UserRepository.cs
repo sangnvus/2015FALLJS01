@@ -222,11 +222,25 @@ namespace DDL_CapstoneProject.Respository
             user.Password = CommonUtils.Md5(newPassword);
             db.SaveChanges();
 
-            MailHelper.Instance.SendMailResetPassword(email,newPassword,user.UserInfo.FullName);
+            MailHelper.Instance.SendMailResetPassword(email, newPassword, user.UserInfo.FullName);
 
             return true;
         }
 
-        #endregion     
+        #endregion
+
+        public List<UserNameDTO> GetListUserName(string username)
+        {
+            var listUserName = from user in db.DDL_Users
+                               where user.Username.Contains(username) || user.UserInfo.FullName.Contains(username)
+                               orderby user.Username
+                               select new UserNameDTO
+                               {
+                                   UserName = user.Username,
+                                   FullName = user.UserInfo.FullName
+                               };
+
+            return listUserName.ToList();
+        }
     }
 }
