@@ -1,6 +1,7 @@
 ﻿"use strict";
 
-app.controller('MessageController', function ($scope, $location, toastr, conversations, MessageService, CommmonService, UserService) {
+app.controller('MessageController',
+    function ($scope, $location, $rootScope, toastr, conversations, MessageService, CommmonService) {
     //Todo here
     $scope.ListConversations = conversations.data.Data;
 

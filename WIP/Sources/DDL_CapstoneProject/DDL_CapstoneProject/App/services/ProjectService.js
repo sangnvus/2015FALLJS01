@@ -28,4 +28,44 @@ app.service('ProjectService', function ($http) {
     this.getProject = function (ProjectID) {
         return $http.get("/api/ProjectApi/GetProject/" + ProjectID);
     }
+
+    // Function to ger a project by ProjectCode
+    this.getProjectDetail = function (code) {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/getProjectDetail',
+            params: {
+                code: code
+            }
+        });
+
+        return request;
+    }
+
+    // Function to post comment to server.
+    this.Comment = function (code, commment) {
+        var request = $http({
+            method: 'post',
+            url: '/api/ProjectApi/Comment',
+            data: commment,
+            params: {
+                projectCode: code
+            }
+        });
+
+        return request;
+    }
+
+    // Function to post comment to server.
+    this.ShowHideComment = function (commentID) {
+        var request = $http({
+            method: 'put',
+            url: '/api/ProjectApi/ShowHideComment',
+            params: {
+                id: commentID
+            }
+        });
+
+        return request;
+    }
 });

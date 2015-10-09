@@ -8,6 +8,7 @@ using System.Web.Http.Description;
 using DDL_CapstoneProject.Helper;
 using DDL_CapstoneProject.Models.DTOs;
 using DDL_CapstoneProject.Respository;
+using DDL_CapstoneProject.Ultilities;
 
 namespace DDL_CapstoneProject.Controllers.ApiControllers
 {
@@ -100,6 +101,44 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
 
             return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "", Data = listUserName});
+        }
+
+        /// <summary>
+        /// Function check login status
+        /// </summary>
+        /// <returns>user info</returns>
+        [HttpGet]
+        public IHttpActionResult CheckLoginStatus()
+        {
+            UserBasicInfoDTO currentUser;
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return
+                    Ok(new HttpMessageDTO
+                    {
+                        Status = DDLConstants.HttpMessageType.ERROR,
+                        Message = "",
+                        Type = DDLConstants.HttpMessageType.NOT_AUTHEN
+                    });
+            }
+
+            try
+            {
+                currentUser = UserRepository.Instance.GetBasicInfo(User.Identity.Name);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return Ok(new HttpMessageDTO
+            {
+                Status = DDLConstants.HttpMessageType.SUCCESS,
+                Message = "",
+                Type = "",
+                Data = currentUser
+            });
         }
     }
 }

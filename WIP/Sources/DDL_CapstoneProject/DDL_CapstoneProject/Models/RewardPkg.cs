@@ -20,6 +20,7 @@ namespace DDL_CapstoneProject.Models
         ///     limited
         /// </summary>
         public string Type { get; set; }
+        public decimal PledgeAmount { get; set; }
         public int Quantity { get; set; }
         public string Description { get; set; }
         public DateTime? EstimatedDelivery { get; set; }

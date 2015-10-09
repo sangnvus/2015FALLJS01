@@ -43,7 +43,9 @@ namespace DDL_CapstoneProject
                       "~/Content/hover.css",
                       "~/Content/font-awesome.min.css",
                       "~/Content/angular-toastr.css",
-                      "~/Content/angular-block-ui.css"));
+                      "~/Content/angular-block-ui.css",
+                      "~/Content/timeline.css",
+                      "~/Content/comment.css"));
         }
     }
 }

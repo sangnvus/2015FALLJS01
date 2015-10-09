@@ -85,6 +85,23 @@ namespace DDL_CapstoneProject.Respository
             return user;
         }
 
+        public UserBasicInfoDTO GetBasicInfo(string userNameOrEmail)
+        {
+            var currentUser = (from user in db.DDL_Users
+                               where user.Username.Equals(userNameOrEmail) || user.Email.Equals(userNameOrEmail)
+                               select new UserBasicInfoDTO
+                               {
+                                   FullName = user.UserInfo.FullName,
+                                   IsActive = user.IsActive,
+                                   LoginType = user.LoginType,
+                                   ProfileImage = user.UserInfo.ProfileImage,
+                                   UserName = user.Username,
+                                   Role = user.UserType
+                               }).FirstOrDefault();
+
+            return currentUser;
+        }
+
         //public DDL_User GetByUserNameOrEmailByLoginType(string userNameOrEmail, string loginType)
         //{
         //    var user =
@@ -227,8 +244,6 @@ namespace DDL_CapstoneProject.Respository
             return true;
         }
 
-        #endregion
-
         public List<UserNameDTO> GetListUserName(string username)
         {
             var listUserName = from user in db.DDL_Users
@@ -242,5 +257,7 @@ namespace DDL_CapstoneProject.Respository
 
             return listUserName.ToList();
         }
+
+        #endregion
     }
 }

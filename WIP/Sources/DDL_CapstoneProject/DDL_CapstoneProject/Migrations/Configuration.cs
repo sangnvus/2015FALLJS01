@@ -54,6 +54,7 @@ namespace DDL_CapstoneProject.Migrations
                         Biography = "jdsbhjdsjhdvshjsvd\njkdsbdbkdsbdjkbkj\ndsbkjdsbkjbd",
                         FacebookUrl = "http://facebook.com/gatohy",
                         Website = "",
+                        PhoneNumber = "0973232734"
                         //DDL_UserID = context.DDL_Users.Single(x => x.Username == "manhmaluc").DDL_UserID,
                     }
                 },
@@ -191,6 +192,53 @@ namespace DDL_CapstoneProject.Migrations
             };
 
             listSlides.ForEach(u => context.Slides.AddOrUpdate(x => x.Title, u));
+            context.SaveChanges();
+
+            var project = new Project
+            {
+                CategoryID = 1,
+                CreatorID = 1,
+                CreatedDate = DateTime.Today,
+                ExpireDate = DateTime.Today.AddDays(30).AddHours(23).AddMinutes(59),
+                CurrentFunded = 1000000,
+                FundingGoal = 100000000,
+                VideoUrl = "http://www.youtube.com/embed/jLHGnvnw-gI",
+                ImageUrl = "projectimage1.jpg",
+                SubDescription = "An epic RPG with turn-based combat, cooperative/competitive multiplayer; sequel to Divinity: Original Sin, GameSpot's PC Game of 2014.",
+                IsExprired = false,
+                Location = "Viet Nam",
+                PopularPoint = 0,
+                ProjectCode = "PRJ000001",
+                Title = "Divinity: Original Sin 2",
+                Status = DDLConstants.ProjectStatus.APPROVED,
+                Description = @"The American Genre Film Archive (AGFA) is located in Austin, Texas. AGFA exists to preserve the legacy of genre movies through collection, conservation, and distribution.",
+                Risk = "We're already funding the game ourselves and are coming to Kickstarter with the aim of expanding the game's feature-set and seeking funds to integrate community input. The biggest risks are that we'll be late (a real possibility), or that certain features that we are planning on now might be changed (or even cut) as we move ahead with development.<br/><br/>"
+                        + "If that happens, it'll be because we hit a real roadblock or because some other feature ended up taking significantly more time and resources than we expected. Those kinds of things happen, but they shouldn't affect our ability to finish and release an innovative game that'll be a whole world of fun.",
+                Comments = new List<Comment>
+                {
+                    new Comment
+                    {
+                        CommentContent = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?",
+                        IsHide = false,
+                        CreatedDate = DateTime.Today,
+                        UserID = 1,
+                    }
+                }
+            };
+
+            context.Projects.AddOrUpdate(p => p.Title, project);
+            context.SaveChanges();
+
+            var comment = new Comment
+            {
+                ProjectID = project.ProjectID,
+                CommentContent = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?",
+                IsHide = false,
+                CreatedDate = DateTime.Today,
+                UserID = 1,
+            };
+
+            context.Comments.AddOrUpdate(c => c.CommentContent, comment);
             context.SaveChanges();
         }
     }

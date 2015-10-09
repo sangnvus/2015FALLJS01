@@ -40,6 +40,11 @@ namespace DDL_CapstoneProject.Models
         public DateTime? DateOfBirth { get; set; }
 
         /// <summary>
+        /// PhoneNumber of user.
+        /// </summary>
+        public string PhoneNumber { get; set; }
+
+        /// <summary>
         /// Country of user.
         /// </summary>
         public string Country { get; set; }
