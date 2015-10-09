@@ -1,0 +1,557 @@
+﻿<div id="project_detail_1" class="paddingNavbar padding-30">
+    <div class="container">
+        <div id="gt1">
+            <div class="title text-center">
+                <h2><a href="">{{Project.Title}}</a></h2>
+                <p>by <a href="" data-toggle="modal" data-target="#creator">{{Project.Creator.FullName}}</a></p>
+                <!-- Modal -->
+                <div class="modal fade" id="creator" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title bold" id="myModalLabel">About the creator</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <img id="avatar1" src="../images/avatar_default.png" alt="" class="img-responsive img-circle center-block">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <h3>Larian Studios LLC</h3>
+                                            <h4>Sacramento, CA</h4>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-6" style="text-align: left;">
+                                            <div>
+                                                <p>Larian Studios are the developers of the acclaimed Divinity series which includes games like Divine Divinity & Divinity:Original Sin.</p>
+                                                <p> Since 2010 we are self-publishing and self-financing our games. Divinity: Original Sin 2 will be our third self-published game.</p>
+                                                <p> We are a group of hard-core gamers with a specific love for RPGs and RTS games. We also have a weakness for quite a few board games. Our main quest is to make the “Very Big RPG That Will Dwarf Them All”. This is not an easy...</p>
+                                            </div>
+                                            <button class="btn btn-primary">See full profile</button>
+                                        </div>
+                                        <div class="col-md-4 col-md-push-1" style="text-align: left;">
+                                            <div>
+                                                <p class="bold">Clyde Grossman</p>
+                                                <br>
+                                                <p class="bold">Last login: Sep 10 2015</p>
+                                                <br>
+                                                <p class="bold">Facebook: Not connected</p>
+                                                <br>
+                                                <p class="bold">2 Created | 15 Backed</p>
+                                            </div>
+                                            <button class="btn btn-primary">Contact me</button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6" style="text-align: left;">
+                                            <h3 class="bold">Websites</h3>
+                                            <p><a href="">larian.com</a></p>
+                                            <p><a href="">facebook.com</a></p>
+                                            <p><a href="">youtube.com</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="responsive-video">
+                        <iframe src="{{trustSrc(Project.VideoUrl)}}" frameborder="0"></iframe>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div>
+                        <div class="padding15">
+                            <data class="bold h1" data-format="number" data-value="18337">5</data>
+                            <p class="bold h5"><span>người đã ủng hộ</span></p>
+                        </div>
+                        <div class="padding15">
+                            <data class="bold h1" data-currency="USD" data-format="shorter_money" data-precision="0" data-value="819039.32">{{Project.CurrentFunded| number : fractionSize}}&#8363;</data>
+                            <p class="bold h5">đã được gây quỹ, mục tiêu <span class="money usd no-code">{{Project.FundingGoal| number : fractionSize}}&#8363;</span></p>
+                        </div>
+                        <div class="padding15">
+                            <data class="bold h1" data-format="number" data-value="33">{{Project.NumberDays}}</data>
+                            <p class="bold h5"><span>ngày còn lại</span></p>
+                        </div>
+                    </div>
+                    <div class="padding30">
+                        <a class="btn btn-success btn-lg" href="back_project.html">Back this project</a>
+                    </div>
+                    <div class="padding30">
+                        <p class="grey-dark">
+                            Dự án này sẽ kết thúc gây quỹ vào<br /><span class="js-adjust-time">{{Project.ExpireDate | date:"HH:mm 'ngày' MM/dd/yyyy"}}</span>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <h3 class="padding20">{{Project.SubDescription}}</h3>
+                    <div class="padding30">
+                        <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{Project.Location}}</a>
+                        &nbsp;&nbsp;
+                        <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{Project.CategoryName}}</a>
+                        &nbsp;&nbsp;
+                        <a class="btn btn-default grey-dark" href="">Share this project</a>
+                    </div>
+                </div>
+                <div class="col-md-4 border-top">
+                    <div class="row padding30">
+                        <div class="col-md-8">
+                            <h5 class="bold"><a class="black" href="" data-toggle="modal" data-target="#creator">{{Project.Creator.FullName}}</a></h5>
+                            <p class="h5">
+                                <span class="inline-block glyphicon glyphicon-copyright-mark"></span>
+                                <span class="inline-block">
+                                    <a class="grey-dark bold" href="">Đã tạo {{Project.Creator.NumberCreated}}</a>
+                                    <span class="grey-dark">&nbsp;|&nbsp;</span>
+                                </span>
+                                <span class="inline-block">
+                                    <a class="grey-dark bold" href="">Đã ủng hộ {{Project.Creator.NumberBacked}}</a>
+                                </span>
+                            </p>
+                            <p class="h5">
+                                <span class="inline-block glyphicon glyphicon-globe"></span>
+                                <a class="grey-dark bold" href="">{{Project.Creator.Website}}</a>
+                            </p>
+                            <p class="h5">
+                                <a class="inline-block bold" href="">See full bio</a>
+                                &nbsp;&nbsp;
+                                <a class="inline-block bold" href="">Contact me</a>
+                            </p>
+                        </div>
+                        <div class="col-md-4">
+                            <a href=""><img id="" src="{{trustSrc(Project.Creator.ProfileImage)}}" alt="" class="img-responsive img-circle center-block"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- project_detail_1 -->
+
+<div id="project_detail_2" class="padding30">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="tab-center">
+                    <ul class="nav nav-pills">
+                        <li class="active"><a showtab href="#campaign" data-toggle="tab">Campaign</a></li>
+                        <li><a showtab href="#update" data-toggle="tab">Update <span class="badge">5</span></a></li>
+                        <li><a showtab href="#comments" data-toggle="tab">Comments <span class="badge">10</span></a></li>
+                        <li><a showtab href="#schedule" data-toggle="tab">Schedule</a></li>
+                        <li><a showtab href="#list-bankers" data-toggle="tab">List Bankers <span class="badge">10</span></a></li>
+                        <!-- <a href="back_project.html" class="btn btn-success">Back to this project</a> -->
+                    </ul>
+                </div>
+                <!-- Tabs pane -->
+                <div class="tab-content border-top">
+                    <!-- Campaign -->
+                    <div id="campaign" role="tabpanel" class="tab-pane fade in active">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="padding10">
+                                        <h1>About this project</h1>
+                                    </div> <!-- end About this project -->
+                                    <div id="load_content" class="padding30" ng-bind-html="Project.Description">
+                                    </div> <!-- end load_content -->
+                                    <div id="riskandchallenges" class="padding30">
+                                        <h1>Risks and challenges</h1>
+                                        <p>
+                                            {{Project.Risk}}
+                                        </p>
+                                    </div> <!-- end Risks and challeges -->
+                                </div> <!-- end col-md-8 -->
+
+                                <div class="col-md-4">
+                                    <div class="padding10">
+                                        <h3>Rewards</h3>
+                                    </div> <!-- end Rewards -->
+                                    <div id="load_rewards" class="padding20">
+                                        <div class="border-tips">
+                                            <label for="">Pledge £10 or more</label>
+                                            <p class="bold">
+                                                <span class="glyphicon glyphicon-asterisk"></span>24 backers
+                                            </p>
+                                            <p>Thank the Seven! Err-- Five!</p>
+                                            <p>Thank you for your pledge! For this sign of support, we here at Larian Studios are truly grateful.</p>
+                                            <div class="padding20">
+                                                <p class="grey-dark">Estimated delivery:</p>
+                                                <p>Oct 2015</p>
+                                            </div>
+                                        </div>
+                                        <div class="border-tips">
+                                            <label for="">Pledge £25 or more</label>
+                                            <p class="bold"> 1370 backers Limited</p>
+                                            <p>Kickstarter Special</p>
+                                            <p>Divinity: Original Sin 2 as a digital download for PC, available from Steam with Alpha and Beta access included, or DRM-free from GOG.com. Also comes with a Digital Game Manual, a 'Backer' Forum Badge and behind-the-scenes footage.</p>
+                                            <div class="padding20">
+                                                <p class="grey-dark">Estimated delivery:</p>
+                                                <p>Dec 2016</p>
+                                            </div>
+                                        </div>
+                                        <div class="border-tips">
+                                            <label for="">Pledge £50 or more</label>
+                                            <p class="bold"> 1669 backers Limited</p>
+                                            <p>Original Sin Pack</p>
+                                            <p>Get a copy of Divinity: Original Sin 2 and a copy of Divinity: Original Sin - Enhanced Edition as digital downloads for PC, available from Steam with Alpha and Beta access included, or DRM-free from GOG.com. Also comes with a Digital Game Manual, a 'Backer' Forum Badge and behind-the-scenes footage.</p>
+                                            <div class="padding20">
+                                                <p class="grey-dark">Estimated delivery:</p>
+                                                <p>Dec 2016</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- end col-md-8 -->
+                            </div>
+                        </div>
+                    </div> <!-- endTabpanel Campagin -->
+                    <!-- Update -->
+                    <div id="update" role="tabpanel" class="tab-pane fade in">
+                        <div class="">
+                            <div class="page-header">
+                                <h1 id="timeline-Update">Timeline Update</h1>
+                            </div>
+                            <ul class="timeline">
+                                <li>
+                                    <div class="timeline-badge">
+                                        <i class="glyphicon glyphicon-check"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4 class="timeline-title">Update #5: Life after death, unlocked! Devline!</h4>
+                                            <p>
+                                                <small class="text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small>
+                                            </p>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>
+                                                It's celebration time, so grab a glass of hemlock tea and hie yourself to the nearest graveyard. You smashed through the next stretch goal, and now it's official: the Undead will be featured as a playable race in D:OS2.
+                                            </p>
+                                            <p>In this video, we learn a bit more about what's in store for the Undead in Rivellon from our lead writer Jan and concept artist Tania, and Swen gives us another peak into Larian's adventures at PAX.</p>
+                                        </div>
+                                        <br>
+                                        <div class="like-comment">
+                                            <p class="text-muted">74 Comments 104 Likes</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="timeline-inverted">
+                                    <div class="timeline-badge warning">
+                                        <i class="glyphicon glyphicon-credit-card"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+                                            <p>Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Interagi no mé, cursus quis, vehicula ac nisi. Aenean vel dui dui. Nullam leo erat, aliquet quis tempus a, posuere ut mi. Ut scelerisque neque et turpis posuere pulvinar pellentesque nibh ullamcorper. Pharetra in mattis molestie, volutpat elementum justo. Aenean ut ante turpis. Pellentesque laoreet mé vel lectus scelerisque interdum cursus velit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ac mauris lectus, non scelerisque augue. Aenean justo massa.</p>
+                                        </div>
+                                        <br>
+                                        <div class="like-comment">
+                                            <p>74 Comments 104 Likes</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="timeline-badge danger">
+                                        <i class="glyphicon glyphicon-credit-card"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="timeline-inverted">
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+                                        </div>
+                                        <br>
+                                        <div class="like-comment">
+                                            <p class="text-muted">74 Comments 104 Likes</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="timeline-badge info">
+                                        <i class="glyphicon glyphicon-floppy-disk"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+                                            <hr>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                    <i class="glyphicon glyphicon-cog"></i> <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">Action</a></li>
+                                                    <li><a href="#">Another action</a></li>
+                                                    <li><a href="#">Something else here</a></li>
+                                                    <li class="divider"></li>
+                                                    <li><a href="#">Separated link</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="timeline-inverted">
+                                    <div class="timeline-badge success">
+                                        <i class="glyphicon glyphicon-thumbs-up"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+                                        </div>
+                                        <br>
+                                        <div class="like-comment">
+                                            <p class="text-muted">74 Comments 104 Likes</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div> <!-- endTabpanel update -->
+                    <!-- Comment -->
+                    <div id="comments" role="tabpanel" class="tab-pane fade in">
+                        <!-- Contenedor Principal -->
+                        <h1>Comments</h1>
+                        <div ng-if="CurrentUser.IsAuthen">
+                            <form role="form" name="CommentForm" novalidate>
+                                <button style="margin-bottom: 10px" class="btn btn-primary btn-sm clearfix" ng-click="submitComment()"
+                                        ng-disabled="!CommentForm.$dirty || (CommentForm.$dirty && CommentForm.$invalid)">
+                                    Bình luận
+                                </button>
+                                <div class="form-group">
+                                    <textarea type="text" class="form-control input-lg" placeholder="Nhập bình luận..."
+                                              name="Comment"
+                                              ng-model="NewComment.CommentContent"
+                                              ng-trim="true"
+                                              required
+                                              ng-minlength="8"
+                                              ng-maxlength="50"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="comments-container">
+                            <ul id="comments-list" class="comments-list">
+                                <li ng-repeat="Comment in Project.CommentsList">
+                                    <div class="comment-main-level">
+                                        <!-- Avatar -->
+                                        <div class="comment-avatar">
+                                            <img ng-if="checkHTTP(Comment.ProfileImage)" src="{{trustSrc(Comment.ProfileImage)}}" alt=""/>
+                                            <img ng-if="!checkHTTP(Comment.ProfileImage)" src="../images/avatars/{{Comment.ProfileImage}}" alt=""/>
+                                        </div>
+                                        <!-- Contenedor del Comentario -->
+                                        <div class="comment-box">
+                                            <div class="comment-head">
+                                                <h6 class="comment-name" ng-class="{'by-author':Comment.UserName == Project.Creator.UserName}"><a href="http://creaticode.com/blog}">{{Comment.FullName}}</a></h6>
+                                                <span style="margin-top: 8px">lúc {{Comment.CreatedDate | date:"HH:mm 'ngày' MM/dd/yyyy"}}</span>
+                                                <i ng-if="!Comment.IsHide && CurrentUser.UserName == Project.Creator.UserName" class="fa fa-times" ng-click="showHideComment($index)"></i>
+                                                <i ng-if="Comment.IsHide && CurrentUser.UserName == Project.Creator.UserName" class="fa fa-check" ng-click="showHideComment($index)"></i>
+                                            </div>
+                                            <div style="word-break: break-word; white-space: pre-wrap" class="comment-content">{{Comment.CommentContent}}</div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <button style="margin-top: 10px" class="btn btn-primary btn-sm clearfix center-block" ng-click="loadMoreComment()">
+                                Xem thêm
+                            </button>
+                        </div>
+                    </div> <!-- endTabpanel comments -->
+                    <!-- Schedule -->
+                    <div id="schedule" role="tabpanel" class="tab-pane fade in">
+                        <div class="">
+                            <div class="page-header">
+                                <h1 id="scheduleTitle">Timeline Schedule</h1>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="timeline">
+                                        <ul id="dates">
+                                            <li><a href="#10102015">10/10/2015</a></li>
+                                            <li><a href="#11102015">11/10/2015</a></li>
+                                            <li><a href="#12102015">12/10/2015</a></li>
+                                            <li><a href="#01102016">1/10/2016</a></li>
+                                        </ul>
+                                        <ul id="issues">
+                                            <li class="issues-content" id="10102015">
+                                                <img src="../images/Schedule/7.png" width="256" height="256" />
+                                                <h1>10-10-2015</h1>
+                                                <p>Donec semper quam scelerisque tortor dictum gravida. In hac habitasse platea dictumst. Nam pulvinar, odio sed rhoncus suscipit, sem diam ultrices mauris, eu consequat purus metus eu velit. Proin metus odio, aliquam eget molestie nec, gravida ut sapien. Phasellus quis est sed turpis sollicitudin venenatis sed eu odio. Praesent eget neque eu eros interdum malesuada non vel leo. Sed fringilla porta ligula.</p>
+                                            </li>
+                                            <li class="issues-content" id="11102015">
+                                                <img src="../images/Schedule/8.png" width="256" height="256" />
+                                                <h1>11/10/2015</h1>
+                                                <p>Donec semper quam scelerisque tortor dictum gravida. In hac habitasse platea dictumst. Nam pulvinar, odio sed rhoncus suscipit, sem diam ultrices mauris, eu consequat purus metus eu velit. Proin metus odio, aliquam eget molestie nec, gravida ut sapien. Phasellus quis est sed turpis sollicitudin venenatis sed eu odio. Praesent eget neque eu eros interdum malesuada non vel leo. Sed fringilla porta ligula.</p>
+                                            </li>
+                                            <li class="issues-content" id="12102015">
+                                                <img src="../images/Schedule/9.png" width="256" height="256" />
+                                                <h1>12/10/2015</h1>
+                                                <p>Donec semper quam scelerisque tortor dictum gravida. In hac habitasse platea dictumst. Nam pulvinar, odio sed rhoncus suscipit, sem diam ultrices mauris, eu consequat purus metus eu velit. Proin metus odio, aliquam eget molestie nec, gravida ut sapien. Phasellus quis est sed turpis sollicitudin venenatis sed eu odio. Praesent eget neque eu eros interdum malesuada non vel leo. Sed fringilla porta ligula.</p>
+                                            </li>
+                                            <li class="issues-content" id="01102016">
+                                                <img src="../images/Schedule/10.png" width="256" height="256" />
+                                                <h1>1/10/2016</h1>
+                                                <p>Donec semper quam scelerisque tortor dictum gravida. In hac habitasse platea dictumst. Nam pulvinar, odio sed rhoncus suscipit, sem diam ultrices mauris, eu consequat purus metus eu velit. Proin metus odio, aliquam eget molestie nec, gravida ut sapien. Phasellus quis est sed turpis sollicitudin venenatis sed eu odio. Praesent eget neque eu eros interdum malesuada non vel leo. Sed fringilla porta ligula.</p>
+                                            </li>
+                                        </ul>
+                                        <!-- <div id="grad_left"></div>
+                                        <div id="grad_right"></div> -->
+                                        <a href="#" id="next">+</a>
+                                        <a href="#" id="prev">-</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><!-- end schedule -->
+                    <!-- List-Bankers -->
+                    <div id="list-bankers" role="tabpanel" class="tab-pane fade in">
+                        <div class="container">
+                            <h3 class="bold">List Bankers</h3>
+                            <br>
+                            <table id="bankersTable" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>.No</th>
+                                        <th>Name</th>
+                                        <th>Plege amout</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>001</td>
+                                        <td>Nguyen Van A</td>
+                                        <td>1000$</td>
+                                        <td>2015-02-09 10:30:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>002</td>
+                                        <td>Vu Cong Chinh</td>
+                                        <td>100$</td>
+                                        <td>2015-02-09 10:30:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>003</td>
+                                        <td>Nguyen Van B</td>
+                                        <td>200$</td>
+                                        <td>2015-02-09 10:30:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>004</td>
+                                        <td>Vu Cong Chinh</td>
+                                        <td>1000$</td>
+                                        <td>2015-02-09 10:30:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>005</td>
+                                        <td>Nguyen Van D</td>
+                                        <td>1000$</td>
+                                        <td>2015-02-09 10:30:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>006</td>
+                                        <td>Tran Van C</td>
+                                        <td>1500$</td>
+                                        <td>2015-02-09 10:30:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>007</td>
+                                        <td>Vu Cong Chinh</td>
+                                        <td>2000$</td>
+                                        <td>2015-02-09 10:30:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>008</td>
+                                        <td>Vu Cong Chinh</td>
+                                        <td>1000$</td>
+                                        <td>2015-02-09 10:30:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>009</td>
+                                        <td>Vu Cong Chinh</td>
+                                        <td>1000$</td>
+                                        <td>2015-02-09 10:30:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>010</td>
+                                        <td>Vu Cong Chinh</td>
+                                        <td>1000$</td>
+                                        <td>2015-02-09 10:30:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>011</td>
+                                        <td>Vu Cong Chinh</td>
+                                        <td>1000$</td>
+                                        <td>2015-02-09 10:30:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>012</td>
+                                        <td>Charles</td>
+                                        <td>United Kingdom</td>
+                                        <td>28000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>013</td>
+                                        <td>Sravani</td>
+                                        <td>Australia</td>
+                                        <td>7000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>014</td>
+                                        <td>Amar</td>
+                                        <td>India</td>
+                                        <td>18000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>015</td>
+                                        <td>Lakshmi</td>
+                                        <td>India</td>
+                                        <td>12000</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div><!-- end list-bankers -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -29,8 +29,8 @@
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
             <ol class="carousel-indicators">
-                <li data-target="#carousel-example-generic" data-slide-to="{{Slides[0].Order}}" class="active"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="{{Slide.Order}}" ng-repeat="Slide in Slides" ng-if="Slide.SlideID != Slides[0].SlideID"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="{{Slides[0].Order-1}}" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="{{Slide.Order-1}}" ng-repeat="Slide in Slides" ng-if="Slide.SlideID != Slides[0].SlideID"></li>
             </ol>
 
             <!-- Wrapper for slides -->
@@ -51,18 +51,12 @@
                         <a href="project_detail.html" class="btn {{Slide.ButtonColor}} btn-lg">{{Slide.ButtonText}}</a>
                     </div>
                 </div>
-
-
-
-
-
-
             </div>
             <!-- Controls -->
-            <span class="left carousel-control" data-target="#carousel-example-generic" data-slide="prev">
+            <span class="left carousel-control" data-target="#carousel-example-generic" data-slide="prev" style="cursor: pointer">
                 <span class="glyphicon glyphicon-chevron-left"></span>
             </span>
-            <span class="right carousel-control" data-target="#carousel-example-generic" data-slide="next">
+            <span class="right carousel-control" data-target="#carousel-example-generic" data-slide="next" style="cursor: pointer">
                 <span class="glyphicon glyphicon-chevron-right"></span>
             </span>
         </div>
@@ -74,13 +68,13 @@
                 <div class="col-md-12">
                     <div class="tabbable tabs-right">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a href="#Art_picked" data-toggle="tab">Art</a></li>
-                            <li><a href="#Comics_picked" data-toggle="tab">Comics</a></li>
-                            <li><a href="#Crafts_picked" data-toggle="tab">Crafts</a></li>
-                            <li><a href="#Dance_picked" data-toggle="tab">Dance</a></li>
-                            <li><a href="#Design_picked" data-toggle="tab">Design</a></li>
-                            <li><a href="#Fashion_picked" data-toggle="tab">Fashion</a></li>
-                            <li><a href="#Film_picked" data-toggle="tab">Film & Video</a></li>
+                            <li class="active"><a showtab href="#Art_picked" data-toggle="tab">Art</a></li>
+                            <li><a showtab href="#Comics_picked" data-toggle="tab">Comics</a></li>
+                            <li><a showtab href="#Crafts_picked" data-toggle="tab">Crafts</a></li>
+                            <li><a showtab href="#Dance_picked" data-toggle="tab">Dance</a></li>
+                            <li><a showtab href="#Design_picked" data-toggle="tab">Design</a></li>
+                            <li><a showtab href="#Fashion_picked" data-toggle="tab">Fashion</a></li>
+                            <li><a showtab href="#Film_picked" data-toggle="tab">Film & Video</a></li>
                             <li><a href="#" data-toggle="tab">Foood</a></li>
                             <li><a href="#" data-toggle="tab">Games</a></li>
                             <li><a href="#" data-toggle="tab">Journalism</a></li>

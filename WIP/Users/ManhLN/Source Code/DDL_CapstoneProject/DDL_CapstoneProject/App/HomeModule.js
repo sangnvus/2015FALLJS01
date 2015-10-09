@@ -76,6 +76,17 @@ app.config(["$routeProvider", function ($routeProvider) {
                 }],
             }
         });
+    $routeProvider.when("/project/detail/:code",
+        {
+            templateUrl: "ClientPartial/ProjectDetail",
+            controller: "ProjectDetailController",
+            resolve: {
+                project: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
+                    var promise = ProjectService.getProjectDetail($route.current.params.code);
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
+            }
+        });
     $routeProvider.otherwise({
         redirectTo: "/"
     });
@@ -90,16 +101,42 @@ app.config(["$routeProvider", function ($routeProvider) {
     }]);
 }]);
 
-app.run(['$rootScope', '$window', '$anchorScroll', function ($rootScope, $window, $anchorScroll) {
+app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', function ($rootScope, $window, $anchorScroll, UserService) {
     $rootScope.$on('$routeChangeError', function (e, curr, prev) {
         e.preventDefault();
     });
-
-    // Base Url of web app.
-    $rootScope.BaseUrl = angular.element($('#BaseUrl')).val();
 
     // Scroll top when route change.
     $rootScope.$on("$locationChangeStart", function () {
         $anchorScroll();
     });
+
+    // Base Url of web app.
+    $rootScope.BaseUrl = angular.element($('#BaseUrl')).val();
+
+    // Load authen info:
+    $rootScope.UserInfo = {
+        IsAuthen: false
+    };
+    // 1. define function
+    function checkLoginStatus() {
+        var promiseGet = UserService.checkLoginStatus();
+        promiseGet.then(
+            function (result) {
+                if (result.data.Status === "success") {
+                    // Save authen info into $rootScope
+                    $rootScope.UserInfo = result.data.Data;
+                    $rootScope.UserInfo.IsAuthen = true;
+                } else {
+                    $rootScope.UserInfo = {
+                        IsAuthen: false
+                    };
+                }
+            },
+            function (error) {
+                // todo here.
+            });
+    }
+    // 2. call function
+    checkLoginStatus();
 }]);

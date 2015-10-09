@@ -36,4 +36,14 @@ service.service('UserService', function ($http) {
         return request;
     }
 
+    // Function to check login status
+    this.checkLoginStatus = function () {
+        var request = $http({
+            method: 'get',
+            url: '/api/UserApi/CheckLoginStatus',
+        });
+
+        return request;
+    }
+
 });

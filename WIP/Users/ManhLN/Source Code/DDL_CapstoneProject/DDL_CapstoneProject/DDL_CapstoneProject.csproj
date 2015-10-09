@@ -159,6 +159,10 @@
     <Compile Include="Migrations\201510061741344_UpdateProjectReward.Designer.cs">
       <DependentUpon>201510061741344_UpdateProjectReward.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510091748397_EditUserInfoRewardPkg.cs" />
+    <Compile Include="Migrations\201510091748397_EditUserInfoRewardPkg.Designer.cs">
+      <DependentUpon>201510091748397_EditUserInfoRewardPkg.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Backing.cs" />
     <Compile Include="Controllers\WebControllers\HomeController.cs" />
@@ -181,6 +185,7 @@
     <Compile Include="Models\DTOs\MessageDTO.cs" />
     <Compile Include="Models\DTOs\NewMessageDTO.cs" />
     <Compile Include="Models\DTOs\ProjectCreateDTO.cs" />
+    <Compile Include="Models\DTOs\ProjectDetailDTO.cs" />
     <Compile Include="Models\DTOs\ProjectEditDTO.cs" />
     <Compile Include="Models\DTOs\QuestionDTO.cs" />
     <Compile Include="Models\DTOs\ReplyDTO.cs" />
@@ -218,9 +223,11 @@
     <Content Include="App\controllers\HomeController.js" />
     <Content Include="App\controllers\MessageController.js" />
     <Content Include="App\controllers\MessageDetailController.js" />
+    <Content Include="App\controllers\ProjectDetailController.js" />
     <Content Include="App\controllers\RegisterController.js" />
     <Content Include="App\controllers\ResetPwController.js" />
     <Content Include="App\directives\passwordMatch.js" />
+    <Content Include="App\directives\showTabDirective.js" />
     <Content Include="App\HomeModule.js" />
     <Content Include="App\services\CategoryService.js" />
     <Content Include="App\services\CommonService.js" />
@@ -237,11 +244,13 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\comment.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\message.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\textAngular.css" />
+    <Content Include="Content\timeline.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -1103,6 +1112,7 @@
     <Content Include="Views\Message\_MessageDetail.cshtml" />
     <Content Include="Views\Project\_CreateProject.cshtml" />
     <Content Include="Views\Project\_EditProject.cshtml" />
+    <Content Include="Views\Project\_ProjectDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />
@@ -1127,6 +1137,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510061741344_UpdateProjectReward.resx">
       <DependentUpon>201510061741344_UpdateProjectReward.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510091748397_EditUserInfoRewardPkg.resx">
+      <DependentUpon>201510091748397_EditUserInfoRewardPkg.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
