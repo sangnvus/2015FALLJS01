@@ -35,6 +35,14 @@ Date: 2015.10.01
 	#header a{
 		/*color: #FFFFFF;*/
 	}
+	
+	/*Border-divider top*/
+	.borders-t{
+		border-top: 2px solid #cfcfcf;
+	}
+	.border-b{
+		border-bottom: 2px solid #cfcfcf;
+	}
 
 	#profile_dropdown:hover .dropdown-toggle{
 		color: #FFFFFF;

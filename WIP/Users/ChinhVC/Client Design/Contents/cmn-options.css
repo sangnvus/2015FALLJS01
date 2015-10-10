@@ -80,6 +80,10 @@ End Button*/
         color: #16a085 !important;
     }
 
+    .link-gray-dark{
+        color: #bdc3c7;
+        /*font-weight: bold;*/
+    }
 	.color_blue{
 		color: #FFFF00;
 	}

@@ -292,121 +292,6 @@ Date: 2015.10.01
 
 
 
- /*Notification (notification.html)
---------------------------------------------------------- */
-	#view_share{
-		background-color: #34495E;
-		padding: 10px;
-
-	}
-	#view_share a{
-		text-decoration: none;
-		color: #FFFFFF;
-		font-size: 16px;
-	}
-
-	.show-grid [class^="col-"]{
-		padding-top: 10px;
-		padding-bottom: 10px;
-		background-color: #eee;
-		border: 1px solid #ddd;
-		background-color: rgba(86,61,124,.15);
-		border: 1px solid rgba(86,61,124,.2);
-
-	}
-
-	.grid-setting{
-		padding: 60px 0px 0px 120px;
-	}
-
-	.link-gray-dark{
-		color: #bdc3c7;
-		font-weight: bold;
-	}
-
-	#form-group-email-lb2{
-		font-weight: normal;
-		color: #666;	
-	}
-
-	#form-group-email input{
-	}
-
-	#Biography{
-		height: 100px;
-	}
-
-	#feature3_container{
-		border-bottom: 1px solid #bdc3c7;
-		padding-bottom: 50px;
-		margin-top: 50px;
-	}
-
-	.boderbottom{
-		border-bottom: 1px solid #bdc3c7;
-		padding-bottom: 0px;
-		margin-bottom: 0px;
-	}
-
-	#feature3_container_notification{
-		border-bottom: 1px solid #bdc3c7;
-		padding-bottom: 50px;
-		margin-top: 50px;
-		font-size: 14px;
-	}
-
-
-	#form-right div{
-		margin-top: 30px;
-	}
-
-	#form-left div{
-		margin-top: 30px;
-	}
-
-	.editcolorheader{
-		color: #000;
-	}
-
-	#setting_container{
-		margin-bottom: 3px solid #000;
-
-	}
-
-	.show-grid [class^="col-"]{
-			border: 1px solid rgba(86,61,124,.2);
-	}	
-
-	#feature4_editprofile{
-		margin: 10px 0px 50px 0px;
-		padding-left: 0px;
-		padding-top: 5px;
-	}
-
-	#feature4_account{
-		margin: 10px 0px 50px 0px;
-		padding-left: 0px;
-		padding-top: 5px;
-	}
-
-	#feature4_account h5{
-		font-size: 16px;
-	}
-
-	#Save_setting_bt{
-		background: #3498db;
-		color: #ecf0f1;
-		font-weight: bold;
-		font-size: 14px;
-	}
-
-	#notification_fearture3_right{	
-		padding-top: 0px;
-	}
-/* End Notification --------------------------------------*/
-
-
-
 /*Project Details Page (project_detail.html)
 --------------------------------------------------------- */
 	#project-common{
@@ -715,4 +600,94 @@ Date: 2015.10.01
     	overflow: hidden;
     	text-align: right;
 	}
-/*Message Page ------------------------------------------ */
+/* End Message Page ------------------------------------------ */
+
+
+
+/* Account Page (accunt.html, editprofiel.html)
+ ------------------------------------------------------------- */
+ 	#profile {
+ 		padding-top: 70px;
+ 	}
+
+ 	#image-clip{
+ 		width: 100px;
+ 		height: auto;
+ 	}
+	
+	.changePassHide{
+		display: none;
+	}
+
+	.changePassShow{
+		display: block;
+	}
+	
+	.asset_upload {
+	    background-color: white;
+	    border-radius: 6px;
+	    border: 1px dashed #d9d9de;
+	    height: 102px;
+	}
+	.asset_upload .upload input.file {
+	    position: absolute;
+	    font-size: 60px;
+	    opacity: 0;
+	    top: 0;
+	    right: 0;
+	    height: 100%;
+	    width: 100%;
+	    text-indent: -9999px;
+	    cursor: pointer;
+	}
+	.asset_upload .upload strong {
+	    display: block;
+	    font-size: 13px;
+	    padding: 10px;
+	    line-height: 18px;
+	    color: #00a0ff;
+	}
+	.asset_upload .upload strong span {
+	    display: block;
+	    color: #828587;
+	    font-size: 11px;
+	    font-weight: normal;
+	}
+	
+	/* profile_public.html */
+	#profile_public{
+		padding-top: 100px;
+	}
+	#avatar-profile{
+		width: 150px;
+		height: auto;
+	}
+	/*#share_profile a{
+		color: black;
+		font-weight: bold;
+	}
+
+	#profile_data{
+		margin-bottom: 50px;
+	}
+
+	#basic_info div{
+		margin-bottom: 20px;
+		border-bottom: 1px solid;
+		padding-bottom: 10px;
+	}
+
+	#basic_info i{
+		margin-right: 5px;
+	}
+
+	#basic_info a{
+		font-weight: bold;
+		color: black;
+	}
+
+	#basic_info div:last-child{
+		border: 0 none;
+	}*/
+
+/* End Account Page ------------------------------------------ */
