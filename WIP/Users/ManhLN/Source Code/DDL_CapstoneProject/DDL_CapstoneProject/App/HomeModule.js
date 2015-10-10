@@ -91,6 +91,28 @@ app.config(["$routeProvider", function ($routeProvider) {
         redirectTo: "/"
     });
 
+    $routeProvider.when("/user/publicprofile/:username",
+      {
+          templateUrl: "ClientPartial/PublicProfile",
+          controller: 'PublicProfileController',
+          resolve: {
+              userpublicinfo: ['$route', 'UserService', function ($route, UserService) {
+                  return UserService.getPublicInformation($route.current.params.username);
+              }]
+          }
+      });
+
+    $routeProvider.when("/user/editprofile/:username",
+        {
+            templateUrl: "ClientPartial/EditProfile",
+            controller: 'EditProfileController',
+            resolve: {
+                usereditinfo: ['$route', 'UserService', function ($route, UserService) {
+                    return UserService.getProfileInformation($route.current.params.username);
+                }]
+            }
+        });
+
     //$locationProvider.html5Mode(false).hashPrefix("!");
 }]).config(['$provide', function ($provide) {
     $provide.decorator('taOptions', ['taRegisterTool', '$delegate', function (taRegisterTool, taOptions) {
