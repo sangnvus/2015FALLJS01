@@ -140,5 +140,47 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 Data = currentUser
             });
         }
+
+        public IHttpActionResult GetPublicInfo()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
+            }
+            var userExist = UserRepository.Instance.GetUserPublicInfo(User.Identity.Name);
+            return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "", Data = userExist });
+        }
+
+        public IHttpActionResult GetUserInfoEdit()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
+            }
+            var userCurrent = UserRepository.Instance.GetUserEditInfo(User.Identity.Name);
+            return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "", Data = userCurrent });
+        }
+
+        public IHttpActionResult EditUserInfo(UserEditInfoDTO userCurrent)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
+            }
+            try
+            {
+                UserRepository.Instance.EditUserInfo(userCurrent);
+            }
+            catch (DuplicateEmailException)
+            {
+                return Ok(new HttpMessageDTO { Status = "error", Message = "Email này đã được sử dụng!", Type = "DuplicateEmail" });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
+            }
+            return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "" });
+        }
+
     }
 }

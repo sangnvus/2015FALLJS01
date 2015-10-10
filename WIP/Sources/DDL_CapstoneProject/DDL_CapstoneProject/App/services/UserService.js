@@ -46,4 +46,29 @@ service.service('UserService', function ($http) {
         return request;
     }
 
+    this.getPublicInformation = function (user) {
+        var request = $http({
+            method: 'get',
+            url: '/api/UserApi/GetPublicInfo'
+        });
+        return request;
+    }
+
+    this.getProfileInformation = function (user) {
+        var request = $http({
+            method: 'get',
+            url: '/api/UserApi/GetUserInfoEdit'
+        });
+        return request;
+    }
+
+    this.editProfileInformation = function (UserEditInfo) {
+        var request = $http({
+            method: 'post',
+            url: '/api/UserApi/EditUserInfo',
+            data: UserEditInfo
+        });
+        return request;
+    }
+
 });
