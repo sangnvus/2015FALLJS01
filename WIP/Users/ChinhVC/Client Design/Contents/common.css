@@ -342,6 +342,7 @@ figure {
 ul,li{margin:0;padding:0;list-style:none}*/
 
 .menu .item{
+	list-style: none;
 	float:left;
 	position:relative;
 	box-shadow:0 0 7px 0 #CCC;-moz-box-shadow:0 0 7px 0 #CCC;-webkit-box-shadow:0 0 7px 0 #CCC;

@@ -303,12 +303,14 @@ Date: 2015.10.01
 		border-top-style: dashed;
 	}
 	#project-tab ul>li.active>a{
+		list-style: none;
 		color: #FFFFFF;
 		background: #16a085;
 		border-top: 5px solid #05E4B8;
 		border-bottom: 5px solid #05E4B8;
 	}
 	#project-tab ul>li>a:hover{
+		list-style: none;
 		background: #05E4B8;
 		color: #FFFFFF;
 		border-top-style: dashed;
@@ -331,16 +333,19 @@ Date: 2015.10.01
 	}
 	.project-tab-border{
 		background: #FFFFFF;
-		border:2px solid #d9d9de;
-		border-style: dashed;
+		/*border:2px solid #d9d9de;
+		border-style: dashed;*/
 	}
 	.project-tab-campaign{
 		background: #FFFFFF;
-		border-right:2px solid #d9d9de;
-		border-right-style: dashed;
+		/*border-right:2px solid #d9d9de;
+		border-right-style: dashed;*/
 	}
 	.eqWrap {
 		display: flex;
+	}
+	#reward li{
+		list-style: none;
 	}
 	/*reponsive video======*/
 	.responsive-video {
@@ -394,7 +399,7 @@ Date: 2015.10.01
 	.login-title{
 		margin-bottom: 0px
 	}
-
+	
 	#login .container a.btn, #register .container a.btn{
 		width: 100%;
 	}
