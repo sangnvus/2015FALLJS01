@@ -193,8 +193,10 @@
     <Compile Include="Models\DTOs\TimeLineDTO.cs" />
     <Compile Include="Models\DTOs\UpdateLogDTO.cs" />
     <Compile Include="Models\DTOs\UserBasicInfoDTO.cs" />
+    <Compile Include="Models\DTOs\UserEditInfoDTO.cs" />
     <Compile Include="Models\DTOs\UserLoginDTO.cs" />
     <Compile Include="Models\DTOs\UserNameDTO.cs" />
+    <Compile Include="Models\DTOs\UserPublicInfoDTO.cs" />
     <Compile Include="Models\DTOs\UserRegisterDTO.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Project.cs" />
@@ -219,11 +221,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\controllers\CreateProjectController.js" />
+    <Content Include="App\controllers\EditProfileController.js" />
     <Content Include="App\controllers\EditProjectController.js" />
     <Content Include="App\controllers\HomeController.js" />
     <Content Include="App\controllers\MessageController.js" />
     <Content Include="App\controllers\MessageDetailController.js" />
     <Content Include="App\controllers\ProjectDetailController.js" />
+    <Content Include="App\controllers\PublicProfileController.js" />
     <Content Include="App\controllers\RegisterController.js" />
     <Content Include="App\controllers\ResetPwController.js" />
     <Content Include="App\directives\passwordMatch.js" />
@@ -248,6 +252,7 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\message.css" />
+    <Content Include="Content\profilepublic.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\textAngular.css" />
     <Content Include="Content\timeline.css" />
@@ -1113,6 +1118,8 @@
     <Content Include="Views\Project\_CreateProject.cshtml" />
     <Content Include="Views\Project\_EditProject.cshtml" />
     <Content Include="Views\Project\_ProjectDetail.cshtml" />
+    <Content Include="Views\User\_EditProfile.cshtml" />
+    <Content Include="Views\User\_PublicProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />

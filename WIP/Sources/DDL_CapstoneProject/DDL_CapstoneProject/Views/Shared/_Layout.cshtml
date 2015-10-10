@@ -74,14 +74,14 @@
                                 <ul class="dropdown-menu">
                                     <h4>My stuff</h4>
                                     <li><a href="@Url.Content("/#/user/message")">Tin nhắn <span class="badge">3</span></a></li>
-                                    <li><a href="profile_public.html">Thông tin cá nhân</a></li>
+                                    <li><a href="@Url.Content("/#/user/publicprofile/" + User.Identity.Name) ">Thông tin cá nhân</a></li>
                                     <li><a href="backed_project.html">Dự án đã ủng hộ</a></li>
                                     <li><a href="created_project.html">Dự án đã tạo</a></li>
                                     <li><a href="starred_project.html">Dự án theo dõi</a></li>
                                     <li class="divider"></li>
                                     <h4>Cài đặt</h4>
                                     <li><a href="account.html">Tài khoản</a></li>
-                                    <li><a href="editprofile2.html">Thông tin cá nhân</a></li>
+                                    <li><a href="@Url.Content("/#/user/editprofile/" + User.Identity.Name) ">Sửa đổi thông tin cá nhân</a></li>
                                     <li class="divider"></li>
                                     <p class="no-wrap">
                                         Đăng nhập với tài khoản <b>@User.Identity.Name</b> | <a href="@Url.Content("/logout")">Đăng xuất</a>
