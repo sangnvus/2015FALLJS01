@@ -403,7 +403,7 @@ Date: 2015.10.01
 	#notification_fearture3_right{	
 		padding-top: 0px;
 	}
-/* End Notification -------------------------------*/
+/* End Notification --------------------------------------*/
 
 
 
@@ -490,8 +490,7 @@ Date: 2015.10.01
 		font-size: 16px;
 		font-size: 1.6rem;
 	}
-
-/*End login and register ----------------------------------*/
+/*End Project Details Page ------------------------------*/
 
 
 
@@ -533,7 +532,7 @@ Date: 2015.10.01
 	#login .panel-footer, #register .panel-footer{
 		color: gray;
 	}
-/*End login and register -------------------------------------------*/
+/*End login and register ---------------------------------*/
 
 
 
@@ -573,7 +572,6 @@ Date: 2015.10.01
 	.feature2_animation_box:hover .first_link{
 		margin-top: 174px;
 	}
-
 /*End Discover -------------------------------------------*/
 
 
@@ -587,14 +585,16 @@ Date: 2015.10.01
 	}
 /*End Search ---------------------------------------------*/
 
+
+
 /*Back Project (back_project.html)
 --------------------------------------------------------- */
-#choose_reward .item-radio{
-	background: #f5f5f5;
-	border: 2px solid #828587;
-	border-radius: 6px;
-	padding: 15px;
-}
+	#choose_reward .item-radio{
+		background: #f5f5f5;
+		border: 2px solid #828587;
+		border-radius: 6px;
+		padding: 15px;
+	}
 /*End Back Project -------------------------------------- */
 
 
@@ -618,18 +618,101 @@ Date: 2015.10.01
 		font-size: 9px;
 		font-size: 0.9em!important;
 	}
-/*End payment -------------------------------------------- */
+/*End payment ------------------------------------------- */
 
 
 
 /*Created, Starred, Backed Project Page (created_project.html)
 --------------------------------------------------------- */
-#setting_container {
-	padding-top: 110px;
-	padding-right: 5%;
-}
-#items-projects{
-	padding-top: 30px;
-	padding-bottom: 100px;
-}
+	#setting_container {
+		padding-top: 110px;
+		padding-right: 5%;
+	}
+	#items-projects{
+		padding-top: 30px;
+		padding-bottom: 100px;
+	}
 /*End Created, Starred, Backed Project ------------------- */
+
+
+
+/* Message Page (message.html, message-View.html)
+--------------------------------------------------------- */
+	/*message*/
+	#message{
+		padding-top: 100px;
+		padding-bottom: 50px;
+	}
+	#message-view{
+		padding-top: 100px;
+		padding-bottom: 500px;
+	}
+	#message .container{
+		padding-top: 50px;
+		padding-bottom: 50px;
+		/*margin: 0px 0px 0px 0px;*/
+		background: #fff;
+		/*border: 2px solid #16a085;*/
+		/*border-radius: 6px;*/
+	}
+	/*SlideBar-right*/
+    #colPush ul{
+        list-style-type: none;
+    }
+    #colPush li{
+        padding: 10px 0px;
+        border: 1px solid #16a085;
+        background-color: #fff;
+    }
+    #colPush a{
+    	color: #34495E;
+        padding: 0px 35px;
+        /*border: 1px solid green;*/
+    }
+    #colPush li:hover {
+    	cursor: pointer;
+        background-color: #f9f9f9;
+    }
+	#colPush li:hover a{
+    	color: #16a085;
+        padding: 0px 35px;
+    }
+    #colMain{
+    	padding-top: 15px;
+		padding-bottom: 50px;
+    }
+    #colMain #checkboxDelete{
+    	position: absolute;
+    	top:5px;
+    }
+
+    @media (max-width: @screen-xs-max) {
+    }
+	@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) { 
+	}
+	@media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+	}
+	@media (min-width: @screen-lg-min) { 
+	}
+	/*dataTable*/
+	#messageTable{
+		font-size: 16px;
+		background: #fff;
+	}
+    .unread-message{
+    	font-weight: bold;
+    }
+    .from-col {
+    	min-width: 170px;
+    	overflow: hidden;
+	}
+	.from-col:hover,
+	.msg-col:hover {
+		cursor: pointer;
+	}
+	.date-col {
+    /* min-width: 100px; */
+    	overflow: hidden;
+    	text-align: right;
+	}
+/*Message Page ------------------------------------------ */

@@ -1,0 +1,10 @@
+﻿List update or fix
+I/  Footer: fix bottom
+II/ project_detail:
+	1. Bỏ viền, 
+	2. Reward viền quá đậm => làm lại
+	3. Update show creator
+III/Desgin button:
+	1. Viền mỏng
+	2. Thêm nhiều màu lựa chọn
+IV/ 

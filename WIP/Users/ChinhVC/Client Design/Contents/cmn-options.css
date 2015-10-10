@@ -12,6 +12,14 @@ Date: 2015.10.01
 		padding: 0;
 	}
 
+/*Noborder*/
+    .noboder:hover{
+        border-color: transparent!important;
+    }
+    .noboder:focus{
+        border-color: transparent!important;
+    }
+
 /*Center*/
 	.center {
 	  text-align: center;
