@@ -662,32 +662,13 @@ Date: 2015.10.01
 		width: 150px;
 		height: auto;
 	}
-	/*#share_profile a{
-		color: black;
-		font-weight: bold;
-	}
-
-	#profile_data{
-		margin-bottom: 50px;
-	}
-
-	#basic_info div{
-		margin-bottom: 20px;
-		border-bottom: 1px solid;
-		padding-bottom: 10px;
-	}
-
-	#basic_info i{
-		margin-right: 5px;
-	}
-
-	#basic_info a{
-		font-weight: bold;
-		color: black;
-	}
-
-	#basic_info div:last-child{
-		border: 0 none;
-	}*/
 
 /* End Account Page ------------------------------------------ */
+
+
+
+/* List Backers (list_backers.html)
+-------------------------------------------------------------- */
+/*table*/
+
+/* List Backer ----------------------------------------------- */
