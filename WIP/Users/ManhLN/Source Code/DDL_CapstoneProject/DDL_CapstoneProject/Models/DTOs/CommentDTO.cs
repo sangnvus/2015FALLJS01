@@ -13,6 +13,7 @@ namespace DDL_CapstoneProject.Models.DTOs
         public string ProfileImage { get; set; }
         public string CommentContent { get; set; }
         public DateTime CreatedDate { get; set; }
+        public bool IsEdited { get; set; }
         public bool IsHide { get; set; }
     }
 }

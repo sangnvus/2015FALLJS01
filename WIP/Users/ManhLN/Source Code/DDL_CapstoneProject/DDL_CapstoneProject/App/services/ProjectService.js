@@ -43,24 +43,53 @@ app.service('ProjectService', function ($http) {
     }
 
     // Function to post comment to server.
-    this.Comment = function (code, commment) {
+    this.Comment = function (code, commment, lastCommentDatetime) {
         var request = $http({
             method: 'post',
             url: '/api/ProjectApi/Comment',
             data: commment,
             params: {
-                projectCode: code
+                projectCode: code,
+                lastComment: lastCommentDatetime
             }
         });
 
         return request;
     }
 
-    // Function to post comment to server.
+    // Function to hide/unhide comment.
     this.ShowHideComment = function (commentID) {
         var request = $http({
             method: 'put',
             url: '/api/ProjectApi/ShowHideComment',
+            params: {
+                id: commentID
+            }
+        });
+
+        return request;
+    }
+
+
+    // Function to edit comment.
+    this.editComment = function (commentID, content) {
+        var request = $http({
+            method: 'put',
+            url: '/api/ProjectApi/EditComment',
+            params: {
+                id: commentID,
+                content: content
+            }
+        });
+
+        return request;
+    }
+
+    // Function to delete a comment to server.
+    this.deleteComment = function (commentID) {
+        var request = $http({
+            method: 'delete',
+            url: '/api/ProjectApi/DeleteComment',
             params: {
                 id: commentID
             }
