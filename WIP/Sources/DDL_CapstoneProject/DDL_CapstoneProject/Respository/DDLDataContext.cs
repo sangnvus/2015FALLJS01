@@ -29,11 +29,15 @@ namespace DDL_CapstoneProject.Respository
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Remind> Reminds { get; set; }
         public DbSet<Backing> Backings { get; set; }
+        public DbSet<BackingDetail> BackingDetails { get; set; }
+
         #endregion
 
         public DDLDataContext()
             : base(DDLConstants.ConnectionString)
         {
+            Configuration.ProxyCreationEnabled = true;
+            Configuration.LazyLoadingEnabled = true;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -31,12 +31,12 @@ namespace DDL_CapstoneProject.Respository
             }
             else
             {
-                var creatorID = UserRepository.Instance.GetByUserNameOrEmail(senderName).DDL_UserID;
+                var creator = UserRepository.Instance.GetByUserNameOrEmail(senderName);
                 var newConversation = new Conversation
                 {
                     CreatedDate = DateTime.Now,
                     UpdatedDate = DateTime.Now,
-                    CreatorID = creatorID,
+                    CreatorID = creator.DDL_UserID,
                     ReceiverID = receiver.DDL_UserID,
                     Subject = newMessage.Title,
                     ViewStatus = DDLConstants.ConversationStatus.CREATOR,
@@ -46,7 +46,7 @@ namespace DDL_CapstoneProject.Respository
                         new Message
                         {
                             MessageContent = newMessage.Content,
-                            UserID = creatorID,
+                            UserID = creator.DDL_UserID,
                             SentTime = DateTime.Now
                         }
                     }
@@ -62,8 +62,8 @@ namespace DDL_CapstoneProject.Respository
                     Title = newConversation.Subject,
                     IsRead = true,
                     IsSent = true,
-                    SenderName = newConversation.Creator.UserInfo.FullName,
-                    ReceiverName = newConversation.Receiver.UserInfo.FullName
+                    SenderName = creator.UserInfo.FullName,
+                    ReceiverName = receiver.UserInfo.FullName
                 };
                 return conversation;
             }

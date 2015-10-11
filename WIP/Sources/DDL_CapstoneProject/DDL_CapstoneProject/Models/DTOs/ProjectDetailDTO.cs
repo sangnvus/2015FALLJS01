@@ -41,6 +41,8 @@ namespace DDL_CapstoneProject.Models.DTOs
         public int NumberDays { get; set; }
 
         public List<CommentDTO> CommentsList { get; set; }
+
+        public List<UpdateLogDTO> UpdateLogsList { get; set; }
     }
 
     public class CreatorDTO

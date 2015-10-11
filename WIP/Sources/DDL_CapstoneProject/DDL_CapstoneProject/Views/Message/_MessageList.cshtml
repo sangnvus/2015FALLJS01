@@ -84,7 +84,7 @@
                             <label for="ToAddress">Người nhận:</label>
                             @*<input type="text" name="ToUser" class="form-control" placeholder="" ng-model="NewMessage.ToUser"/>*@
                             <input type="text" name="ToUser" ng-model="NewMessage.ToUser" placeholder="Nhập tên người nhận..."
-                                   typeahead="user as user.UserName for user in getUserName($viewValue)"
+                                   typeahead="user.UserName as user.UserName for user in getUserName($viewValue)"
                                    typeahead-loading="loadingLocations" typeahead-no-results="noResults"
                                    typeahead-template-url="customTemplate.html" required=""
                                    class="form-control">

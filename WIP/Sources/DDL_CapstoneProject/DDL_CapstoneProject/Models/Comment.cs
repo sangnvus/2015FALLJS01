@@ -15,6 +15,8 @@ namespace DDL_CapstoneProject.Models
         public int ProjectID { get; set; }
         public string CommentContent { get; set; }
         public DateTime CreatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
+        public bool IsEdited { get; set; }
         public bool IsHide { get; set; }
         #endregion
 

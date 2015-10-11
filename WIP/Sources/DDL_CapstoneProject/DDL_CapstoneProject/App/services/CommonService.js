@@ -11,7 +11,7 @@ service.service("CommmonService", function ($http, $window, $location) {
                             deferred.resolve(result);
                         } else if (result.data.Type === "not-authen") {
                             deferred.reject();
-                            $window.location.href = baseUrl + "login";
+                            $window.location.href = baseUrl + "login?returnUrl=" + $location.url();
                         } else if (result.data.Type === "not-found") {
                             $location.path("/notfound").replace();
                             deferred.reject();
@@ -25,9 +25,9 @@ service.service("CommmonService", function ($http, $window, $location) {
         return deferred.promise;
     };
 
-    this.checkError = function (result) {
+    this.checkError = function (result, baseUrl) {
         if (result === "not-authen") {
-            $window.location.href = baseUrl + "login";
+            $window.location.href = baseUrl + "login?returnUrl=" + $location.url();
         } else if (result === "not-found") {
             //$location.path("/notfound").replace();
         } else {
