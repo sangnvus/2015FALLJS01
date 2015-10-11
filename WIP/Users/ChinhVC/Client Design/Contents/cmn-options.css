@@ -13,6 +13,11 @@ Date: 2015.10.01
 	}
 
 /*Noborder*/
+    .noboder{
+         background: transparent!important;
+         border-color: transparent!important;
+    }
+
     .noboder:hover{
         border-color: transparent!important;
     }

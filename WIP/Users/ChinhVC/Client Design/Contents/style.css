@@ -674,6 +674,8 @@ Date: 2015.10.01
 
 /* List Backers (list_backers.html)
 -------------------------------------------------------------- */
-/*table*/
+	#backerchart{
+		background: #FFFFFF;
+	}
 
 /* List Backer ----------------------------------------------- */
