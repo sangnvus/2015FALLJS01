@@ -321,6 +321,8 @@ namespace DDL_CapstoneProject.Respository
             return projectDetail;
         }
 
+        #region Comment
+
         private List<CommentDTO> GetComments(int projectID, bool showHide)
         {
             var commentsQuery = from comment in db.Comments
@@ -365,20 +367,18 @@ namespace DDL_CapstoneProject.Respository
             }
 
             // Create comment.
-            var newComment = new Comment
-            {
-                CommentContent = comment.CommentContent,
-                CreatedDate = DateTime.Now,
-                IsHide = false,
-                UserID = user.DDL_UserID,
-                ProjectID = project.ProjectID,
-                IsEdited = false,
-                UpdatedDate = DateTime.Now
-            };
+            var newComment = db.Comments.Create();
+            newComment.CommentContent = comment.CommentContent;
+            newComment.CreatedDate = DateTime.Now;
+            newComment.IsHide = false;
+            newComment.UserID = user.DDL_UserID;
+            newComment.ProjectID = project.ProjectID;
+            newComment.IsEdited = false;
+            newComment.UpdatedDate = DateTime.Now;
 
 
             // Add to DB.
-            db.Comments.AddOrUpdate(newComment);
+            db.Comments.Add(newComment);
             db.SaveChanges();
 
             // Get list new comment.
@@ -519,6 +519,9 @@ namespace DDL_CapstoneProject.Respository
 
             return true;
         }
+        #endregion
+
+
         #endregion
     }
 }

@@ -8,7 +8,16 @@ app.controller('EditProfileController', function ($scope, toastr, usereditinfo, 
     // Submit User model to edit user information
     $scope.submit = function () {
         var promisePost = UserService.editProfileInformation($scope.UserEditInfo);
-        toastr.success('Bạn đã gửi tin nhắn thành công!', 'Thành công!');
+
+        promisePost.then(
+                function () {
+                    if (usereditinfo.data.Status === "success") {
+                        toastr.success('Sửa thông tin cá nhân!', 'Thành công!');
+                    } else if (usereditinfo.data.Status === "error") {
+                        $scope.Error = usereditinfo.data.Message;
+                    }
+                }
+                );
 
         //$scope.error = function () {
         //    fullname.$invalid;
@@ -19,13 +28,5 @@ app.controller('EditProfileController', function ($scope, toastr, usereditinfo, 
         { 'id': 'female', 'label': 'Female' },
     ]
 
-    promisePost.then(
-            function () {
-                if (usereditinfo.data.Status === "success") {
-                } else if (usereditinfo.data.Status === "error") {
-                    $scope.Error = usereditinfo.data.Message;
-                }
-            }
-            );
 
 });
