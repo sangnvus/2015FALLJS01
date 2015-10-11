@@ -50,5 +50,16 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         {
             return PartialView("~/Views/Project/_ProjectDetail.cshtml");
         }
+
+        // GET: ClientPartial/PublicProfile
+        public ActionResult PublicProfile()
+        {
+            return PartialView("~/Views/User/_PublicProfile.cshtml");
+        }
+
+        public ActionResult EditProfile()
+        {
+            return PartialView("~/Views/User/_EditProfile.cshtml");
+        }
     }
 }
