@@ -24,6 +24,7 @@
 
     <!-- Loading more css -->
     <link rel="stylesheet" type="text/css" href="../Contents/Libraries/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../Contents/Libraries/morris.css">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -91,6 +92,8 @@
     <div id="content" class="paddingNavbar">
       <div class="container">
         <h3>Danh sách người ủng hộ</h3>
+        <div id="backerchart"></div>
+        <br>
         <div class="panel panel-primary">
           <div class="panel-heading bold">
             Danh sách người ủng hộ
@@ -404,6 +407,8 @@
     <!--<script src="../dist/js/vendor/video.js"></script>-->
     <script src="../Scripts/Libraries/jquery.dataTables.min.js"></script>
     <script src="../Scripts/Libraries/dataTables.bootstrap.min.js"></script>
+    <script src="../Scripts/Libraries/morris.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
     <script>
       $(document).ready(function(){
         $('#backersTable').dataTable({
@@ -422,6 +427,54 @@
             }
         }
         });
+      });
+    </script>
+    <script>
+       $(document).ready(function(){
+              new Morris.Line({
+              // ID of the element in which to draw the chart.
+              element: 'backerchart',
+              // Chart data records -- each entry in this array corresponds to a point on
+              // the chart.
+              data: [
+                { ngày: '08-09-2015', value: 0 },
+                { ngày: '09-09-2015', value: 0 },
+                { ngày: '10-09-2015', value: 0 },
+                { ngày: '11-09-2015', value: 0 },
+                { ngày: '12-09-2015', value: 0 },
+                { ngày: '13-09-2015', value: 20 },
+                { ngày: '14-09-2015', value: 20 },
+                { ngày: '15-09-2015', value: 20 },
+                { ngày: '16-09-2015', value: 50 },
+                { ngày: '17-09-2015', value: 50 },
+                { ngày: '18-09-2015', value: 50 },
+                { ngày: '19-09-2015', value: 75 },
+                { ngày: '20-09-2015', value: 75 },
+                { ngày: '21-09-2015', value: 75 },
+                { ngày: '22-09-2015', value: 100 },
+                { ngày: '23-09-2015', value: 100 },
+                { ngày: '24-09-2015', value: 150 },
+                { ngày: '25-09-2015', value: 150 },
+                { ngày: '26-09-2015', value: 200 },
+                { ngày: '27-09-2015', value: 200 },
+                { ngày: '28-09-2015', value: 250 },
+                { ngày: '29-09-2015', value: 300 },
+                { ngày: '30-09-2015', value: 350},
+              ],
+              // The name of the data record attribute that contains x-values.
+              xkey: 'ngày',
+              // A list of names of data record attributes that contain y-values.
+              ykeys: ['value'],
+              // Labels for the ykeys -- will be displayed when you hover over the
+              // chart.
+              lineColors: ['#16a085'],
+              pointFillColors: ['#16a085'],
+              labels: ['tiền đã ủng hộ'],
+              resize: 'true',
+              xlabels: ['day'],
+              goals: [300],
+              goalLineColors: ['red'],
+            });
       });
     </script>
   </body>
