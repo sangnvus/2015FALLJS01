@@ -239,6 +239,23 @@ Date: 2015.10.01
  /*Create Project Page 2 (create_project2.html)
 --------------------------------------------------------- */
 /*Create_project*/
+	#process-Create{
+		padding-top: 70px;
+	}
+	#tabs-panel{
+		font-family: "Times New Roman", Times, serif;
+	}
+	.title{
+		font-size: 20px;
+		font-weight: bold;
+	}
+	.countText{
+	    position: absolute;
+		top: 5px;
+    	right: 20px;
+	    font-weight: bold;
+	    color: #c3c3c3;
+	}
 	#create_project .container{
 		padding-top: 50px;
 	}
@@ -640,8 +657,9 @@ Date: 2015.10.01
 	    opacity: 0;
 	    top: 0;
 	    right: 0;
-	    height: 100%;
+
 	    width: 100%;
+	    height: 100%;
 	    text-indent: -9999px;
 	    cursor: pointer;
 	}
