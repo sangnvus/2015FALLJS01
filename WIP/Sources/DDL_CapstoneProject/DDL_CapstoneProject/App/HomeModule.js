@@ -2,7 +2,7 @@
 var service = angular.module("DDLService", []);
 var directive = angular.module("DDLDirective", []);
 var app = angular.module("ClientApp", ["ngRoute", "ngAnimate", "ngSanitize", "DDLService",
-    "DDLDirective", 'angular-loading-bar', 'textAngular', 'toastr', 'ui.bootstrap']);
+    "DDLDirective", 'angular-loading-bar', 'textAngular', 'toastr', 'ui.bootstrap', 'monospaced.elastic']);
 
 // Show Routing.
 app.config(["$routeProvider", function ($routeProvider) {
@@ -45,22 +45,23 @@ app.config(["$routeProvider", function ($routeProvider) {
             templateUrl: "ClientPartial/MessageDetail",
             controller: "MessageDetailController",
             resolve: {
-                conversation: ['$rootScope','$route', '$q', 'MessageService', 'CommmonService', function ($rootScope,$route, $q, MessageService, CommmonService) {
+                conversation: ['$rootScope', '$route', '$q', 'MessageService', 'CommmonService', function ($rootScope, $route, $q, MessageService, CommmonService) {
                     var promise = MessageService.getConversation($route.current.params.id);
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }]
             }
         });
-    $routeProvider.when("/project/create", {
-        templateUrl: "/ClientPartial/CreateProject",
-        controller: "CreateProjectController",
-        resolve: {
-            categories: ['$rootScope', '$route', '$q', 'CategoryService', 'CommmonService', function ($rootScope, $route, $q, CategoryService, CommmonService) {
-                var promise = CategoryService.getCategories();
-                return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
-            }]
-        }
-    });
+    $routeProvider.when("/project/create",
+        {
+            templateUrl: "/ClientPartial/CreateProject",
+            controller: "CreateProjectController",
+            resolve: {
+                categories: ['$rootScope', '$route', '$q', 'CategoryService', 'CommmonService', function ($rootScope, $route, $q, CategoryService, CommmonService) {
+                    var promise = CategoryService.getCategories();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
+            }
+        });
     $routeProvider.when("/project/edit/:id",
         {
             templateUrl: "/ClientPartial/EditProject",
@@ -87,21 +88,17 @@ app.config(["$routeProvider", function ($routeProvider) {
                 }]
             }
         });
-    $routeProvider.otherwise({
-        redirectTo: "/"
-    });
-
 
     $routeProvider.when("/user/publicprofile/:username",
-    {
-        templateUrl: "ClientPartial/PublicProfile",
-        controller: 'PublicProfileController',
-        resolve: {
-            userpublicinfo: ['$route', 'UserService', function ($route, UserService) {
-                return UserService.getPublicInformation($route.current.params.username);
-            }]
-        }
-    });
+        {
+            templateUrl: "ClientPartial/PublicProfile",
+            controller: 'PublicProfileController',
+            resolve: {
+                userpublicinfo: ['$route', 'UserService', function ($route, UserService) {
+                    return UserService.getPublicInformation($route.current.params.username);
+                }]
+            }
+        });
 
     $routeProvider.when("/user/editprofile/:username",
         {
@@ -113,6 +110,10 @@ app.config(["$routeProvider", function ($routeProvider) {
                 }]
             }
         });
+
+    $routeProvider.otherwise({
+        redirectTo: "/"
+    });
 
     //$locationProvider.html5Mode(false).hashPrefix("!");
 }]).config(['$provide', function ($provide) {

@@ -7,13 +7,13 @@ namespace DDL_CapstoneProject.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class UpdateProjectReward : IMigrationMetadata
+    public sealed partial class InitialCreate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateProjectReward));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
         
         string IMigrationMetadata.Id
         {
-            get { return "201510061741344_UpdateProjectReward"; }
+            get { return "201510110856270_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

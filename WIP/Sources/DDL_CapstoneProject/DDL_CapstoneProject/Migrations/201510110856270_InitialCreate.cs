@@ -13,19 +13,33 @@ namespace DDL_CapstoneProject.Migrations
                     {
                         BackingID = c.Int(nullable: false, identity: true),
                         UserID = c.Int(nullable: false),
-                        RewardPkgID = c.Int(nullable: false),
+                        ProjectID = c.Int(nullable: false),
                         BackedDate = c.DateTime(nullable: false),
-                        PledgedAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        Quantity = c.Int(nullable: false),
-                        Description = c.String(),
                         IsPublic = c.Boolean(nullable: false),
                         User_DDL_UserID = c.Int(),
                     })
                 .PrimaryKey(t => t.BackingID)
-                .ForeignKey("dbo.RewardPkg", t => t.RewardPkgID)
+                .ForeignKey("dbo.Project", t => t.ProjectID)
                 .ForeignKey("dbo.DDL_User", t => t.User_DDL_UserID)
-                .Index(t => t.RewardPkgID)
+                .Index(t => t.ProjectID)
                 .Index(t => t.User_DDL_UserID);
+            
+            CreateTable(
+                "dbo.BackingDetail",
+                c => new
+                    {
+                        BackingID = c.Int(nullable: false),
+                        RewardPkgID = c.Int(nullable: false),
+                        PledgedAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Quantity = c.Int(nullable: false),
+                        Description = c.String(),
+                        Address = c.String(),
+                    })
+                .PrimaryKey(t => t.BackingID)
+                .ForeignKey("dbo.Backing", t => t.BackingID)
+                .ForeignKey("dbo.RewardPkg", t => t.RewardPkgID)
+                .Index(t => t.BackingID)
+                .Index(t => t.RewardPkgID);
             
             CreateTable(
                 "dbo.RewardPkg",
@@ -34,7 +48,9 @@ namespace DDL_CapstoneProject.Migrations
                         RewardPkgID = c.Int(nullable: false, identity: true),
                         ProjectID = c.Int(nullable: false),
                         Type = c.String(),
+                        PledgeAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Quantity = c.Int(nullable: false),
+                        Description = c.String(),
                         EstimatedDelivery = c.DateTime(),
                         IsHide = c.Boolean(nullable: false),
                     })
@@ -55,6 +71,8 @@ namespace DDL_CapstoneProject.Migrations
                         ImageUrl = c.String(),
                         SubDescription = c.String(),
                         Location = c.String(),
+                        CreatedDate = c.DateTime(nullable: false),
+                        UpdatedDate = c.DateTime(),
                         IsExprired = c.Boolean(nullable: false),
                         CurrentFunded = c.Decimal(nullable: false, precision: 18, scale: 2),
                         ExpireDate = c.DateTime(),
@@ -90,6 +108,8 @@ namespace DDL_CapstoneProject.Migrations
                         ProjectID = c.Int(nullable: false),
                         CommentContent = c.String(),
                         CreatedDate = c.DateTime(nullable: false),
+                        UpdatedDate = c.DateTime(),
+                        IsEdited = c.Boolean(nullable: false),
                         IsHide = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.CommentID)
@@ -110,6 +130,7 @@ namespace DDL_CapstoneProject.Migrations
                         CreatedDate = c.DateTime(nullable: false),
                         LastLogin = c.DateTime(),
                         IsActive = c.Boolean(nullable: false),
+                        Email = c.String(),
                         IsVerify = c.Boolean(nullable: false),
                         VerifyCode = c.String(),
                     })
@@ -209,6 +230,7 @@ namespace DDL_CapstoneProject.Migrations
                         ProfileImage = c.String(),
                         Gender = c.String(),
                         DateOfBirth = c.DateTime(),
+                        PhoneNumber = c.String(),
                         Country = c.String(),
                         Address = c.String(),
                         Website = c.String(),
@@ -241,6 +263,7 @@ namespace DDL_CapstoneProject.Migrations
                         ProjectID = c.Int(nullable: false),
                         Title = c.String(),
                         Description = c.String(),
+                        ImageUrl = c.String(),
                         DueDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.TimelineID)
@@ -273,6 +296,8 @@ namespace DDL_CapstoneProject.Migrations
                         SlideUrl = c.String(),
                         ButtonColor = c.String(),
                         ButtonText = c.String(),
+                        TextColor = c.String(),
+                        VideoUrl = c.String(),
                         CreatedDate = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                     })
@@ -302,7 +327,9 @@ namespace DDL_CapstoneProject.Migrations
             DropForeignKey("dbo.Backing", "User_DDL_UserID", "dbo.DDL_User");
             DropForeignKey("dbo.Comment", "ProjectID", "dbo.Project");
             DropForeignKey("dbo.Project", "CategoryID", "dbo.Category");
-            DropForeignKey("dbo.Backing", "RewardPkgID", "dbo.RewardPkg");
+            DropForeignKey("dbo.Backing", "ProjectID", "dbo.Project");
+            DropForeignKey("dbo.BackingDetail", "RewardPkgID", "dbo.RewardPkg");
+            DropForeignKey("dbo.BackingDetail", "BackingID", "dbo.Backing");
             DropIndex("dbo.UpdateLog", new[] { "ProjectID" });
             DropIndex("dbo.Timeline", new[] { "ProjectID" });
             DropIndex("dbo.Question", new[] { "ProjectID" });
@@ -322,8 +349,10 @@ namespace DDL_CapstoneProject.Migrations
             DropIndex("dbo.Project", new[] { "CreatorID" });
             DropIndex("dbo.Project", new[] { "CategoryID" });
             DropIndex("dbo.RewardPkg", new[] { "ProjectID" });
+            DropIndex("dbo.BackingDetail", new[] { "RewardPkgID" });
+            DropIndex("dbo.BackingDetail", new[] { "BackingID" });
             DropIndex("dbo.Backing", new[] { "User_DDL_UserID" });
-            DropIndex("dbo.Backing", new[] { "RewardPkgID" });
+            DropIndex("dbo.Backing", new[] { "ProjectID" });
             DropTable("dbo.Slide");
             DropTable("dbo.UpdateLog");
             DropTable("dbo.Timeline");
@@ -339,6 +368,7 @@ namespace DDL_CapstoneProject.Migrations
             DropTable("dbo.Category");
             DropTable("dbo.Project");
             DropTable("dbo.RewardPkg");
+            DropTable("dbo.BackingDetail");
             DropTable("dbo.Backing");
         }
     }

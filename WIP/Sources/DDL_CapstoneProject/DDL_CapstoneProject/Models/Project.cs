@@ -20,6 +20,7 @@ namespace DDL_CapstoneProject.Models
         public string SubDescription { get; set; }
         public string Location { get; set; }
         public DateTime CreatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
         public bool IsExprired { get; set; }
         public decimal CurrentFunded { get; set; }
         public DateTime? ExpireDate { get; set; }

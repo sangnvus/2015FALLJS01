@@ -143,25 +143,9 @@
     <Compile Include="Controllers\WebControllers\ProjectController.cs" />
     <Compile Include="Helper\CustomException.cs" />
     <Compile Include="Helper\MailHelper.cs" />
-    <Compile Include="Migrations\201510030826590_InitialCreate.cs" />
-    <Compile Include="Migrations\201510030826590_InitialCreate.Designer.cs">
-      <DependentUpon>201510030826590_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510032334271_AddEmail.cs" />
-    <Compile Include="Migrations\201510032334271_AddEmail.Designer.cs">
-      <DependentUpon>201510032334271_AddEmail.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510052116034_UpdateBackingSlide.cs" />
-    <Compile Include="Migrations\201510052116034_UpdateBackingSlide.Designer.cs">
-      <DependentUpon>201510052116034_UpdateBackingSlide.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510061741344_UpdateProjectReward.cs" />
-    <Compile Include="Migrations\201510061741344_UpdateProjectReward.Designer.cs">
-      <DependentUpon>201510061741344_UpdateProjectReward.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510091748397_EditUserInfoRewardPkg.cs" />
-    <Compile Include="Migrations\201510091748397_EditUserInfoRewardPkg.Designer.cs">
-      <DependentUpon>201510091748397_EditUserInfoRewardPkg.cs</DependentUpon>
+    <Compile Include="Migrations\201510110856270_InitialCreate.cs" />
+    <Compile Include="Migrations\201510110856270_InitialCreate.Designer.cs">
+      <DependentUpon>201510110856270_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Backing.cs" />
@@ -230,6 +214,8 @@
     <Content Include="App\controllers\PublicProfileController.js" />
     <Content Include="App\controllers\RegisterController.js" />
     <Content Include="App\controllers\ResetPwController.js" />
+    <Content Include="App\directives\elastic.js" />
+    <Content Include="App\directives\ngEnter.js" />
     <Content Include="App\directives\passwordMatch.js" />
     <Content Include="App\directives\showTabDirective.js" />
     <Content Include="App\HomeModule.js" />
@@ -1086,8 +1072,8 @@
     <Content Include="Scripts\plugin\jquery.md5.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\text-angular\textAngular-rangy.min.js" />
-    <Content Include="Scripts\text-angular\textAngular.min.js" />
+    <Content Include="App\directives\text-angular\textAngular-rangy.min.js" />
+    <Content Include="App\directives\text-angular\textAngular.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1133,20 +1119,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201510030826590_InitialCreate.resx">
-      <DependentUpon>201510030826590_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510032334271_AddEmail.resx">
-      <DependentUpon>201510032334271_AddEmail.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510052116034_UpdateBackingSlide.resx">
-      <DependentUpon>201510052116034_UpdateBackingSlide.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510061741344_UpdateProjectReward.resx">
-      <DependentUpon>201510061741344_UpdateProjectReward.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510091748397_EditUserInfoRewardPkg.resx">
-      <DependentUpon>201510091748397_EditUserInfoRewardPkg.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201510110856270_InitialCreate.resx">
+      <DependentUpon>201510110856270_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
