@@ -28,7 +28,7 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
                 var cookie = new HttpCookie(cookieName) { Expires = DateTime.Now.AddDays(-1) };
                 Response.Cookies.Add(cookie);
             }
-            ViewBag.ReturlUrl = returnUrl;
+            ViewBag.ReturnUrl = returnUrl;
             return View("Login", new UserLoginDTO());
         }
 
@@ -66,7 +66,7 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
                 }
                 else
                 {
-                    return Redirect(returnUrl);
+                    return Redirect("/#/"+returnUrl);
                 }
             }
 

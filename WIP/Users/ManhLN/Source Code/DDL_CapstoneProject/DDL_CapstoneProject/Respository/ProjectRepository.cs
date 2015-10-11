@@ -299,6 +299,20 @@ namespace DDL_CapstoneProject.Respository
             // Insert list comments into project
             projectDetail.CommentsList = commentsList;
 
+            // Get updateLog list.
+            var updateLogsList = (from updateLog in db.UpdateLogs
+                                  where updateLog.ProjectID == projectDetail.ProjectID
+                                  orderby updateLog.CreatedDate descending
+                                  select new UpdateLogDTO
+                                  {
+                                      CreatedDate = updateLog.CreatedDate,
+                                      Description = updateLog.Description,
+                                      Title = updateLog.Title,
+                                      UpdateLogID = updateLog.UpdateLogID
+                                  }).ToList();
+
+            // Insert updatelog list into projectDTO
+            projectDetail.UpdateLogsList = updateLogsList;
 
             // Set number exprire day.
             var timespan = projectDetail.ExpireDate - DateTime.Today;
@@ -320,7 +334,8 @@ namespace DDL_CapstoneProject.Respository
                                     UserName = comment.User.Username,
                                     CommentContent = comment.CommentContent,
                                     CommentID = comment.CommentID,
-                                    IsHide = comment.IsHide
+                                    IsHide = comment.IsHide,
+                                    IsEdited = comment.IsEdited,
                                 };
 
             var commentsList = showHide ? commentsQuery.Take(10).ToList() : commentsQuery.Where(x => !x.IsHide).Take(10).ToList();
@@ -328,7 +343,7 @@ namespace DDL_CapstoneProject.Respository
             return commentsList;
         }
 
-        public CommentDTO AddComment(string projectCode, CommentDTO comment)
+        public List<CommentDTO> AddComment(string projectCode, CommentDTO comment, DateTime lastCommentDateTime)
         {
             // Check user exist.
             var user = UserRepository.Instance.GetByUserNameOrEmail(comment.UserName);
@@ -356,7 +371,9 @@ namespace DDL_CapstoneProject.Respository
                 CreatedDate = DateTime.Now,
                 IsHide = false,
                 UserID = user.DDL_UserID,
-                ProjectID = project.ProjectID
+                ProjectID = project.ProjectID,
+                IsEdited = false,
+                UpdatedDate = DateTime.Now,
             };
 
 
@@ -364,19 +381,22 @@ namespace DDL_CapstoneProject.Respository
             db.Comments.AddOrUpdate(newComment);
             db.SaveChanges();
 
-            // Create return message data.
-            var commentDTO = new CommentDTO
-            {
-                IsHide = newComment.IsHide,
-                FullName = user.UserInfo.FullName,
-                CreatedDate = newComment.CreatedDate,
-                ProfileImage = user.UserInfo.ProfileImage,
-                UserName = user.Username,
-                CommentContent = newComment.CommentContent,
-                CommentID = newComment.CommentID,
-            };
+            // Get list new comment.
+            var commentsList = (from commentItem in db.Comments
+                                where commentItem.Project.ProjectCode == projectCode && commentItem.CreatedDate > lastCommentDateTime
+                                orderby commentItem.CreatedDate descending 
+                                select new CommentDTO
+                                {
+                                    IsHide = commentItem.IsHide,
+                                    FullName = commentItem.User.UserInfo.FullName,
+                                    CreatedDate = commentItem.CreatedDate,
+                                    ProfileImage = commentItem.User.UserInfo.ProfileImage,
+                                    UserName = commentItem.User.Username,
+                                    CommentContent = commentItem.CommentContent,
+                                    CommentID = commentItem.CommentID,
+                                }).ToList();
 
-            return commentDTO;
+            return commentsList;
         }
 
         /// <summary>
@@ -398,11 +418,12 @@ namespace DDL_CapstoneProject.Respository
             // Check creator.
             if (!comment.Project.Creator.Username.Equals(userName, StringComparison.OrdinalIgnoreCase))
             {
-                throw new NotPermissonException();
+                throw new NotPermissionException();
             }
 
             // Change hide status
             comment.IsHide = !comment.IsHide;
+            comment.UpdatedDate = DateTime.Now;
 
             // Save in DB
             db.SaveChanges();
@@ -417,11 +438,83 @@ namespace DDL_CapstoneProject.Respository
                 UserName = comment.User.Username,
                 CommentContent = comment.CommentContent,
                 CommentID = comment.CommentID,
+                IsEdited = comment.IsEdited
+            };
+
+            return commentDto;
+        }
+
+        /// <summary>
+        /// EditComment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userName"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public CommentDTO EditComment(int id, string userName, string content)
+        {
+
+            // Get comment.
+            var comment = db.Comments.FirstOrDefault(c => c.CommentID == id);
+            if (comment == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
+            // Check permission.
+            if (!comment.User.Username.Equals(userName, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new NotPermissionException();
+            }
+
+            // Change content
+            comment.CommentContent = content;
+            comment.UpdatedDate = DateTime.Now;
+            comment.IsEdited = true;
+
+            // Save in DB
+            db.SaveChanges();
+
+            // Map DTO
+            var commentDto = new CommentDTO
+            {
+                IsHide = comment.IsHide,
+                FullName = comment.User.UserInfo.FullName,
+                CreatedDate = comment.CreatedDate,
+                ProfileImage = comment.User.UserInfo.ProfileImage,
+                UserName = comment.User.Username,
+                CommentContent = comment.CommentContent,
+                CommentID = comment.CommentID,
+                IsEdited = comment.IsEdited
             };
 
             return commentDto;
         }
 
         #endregion
+
+        public bool DeleteComment(int id, string userName)
+        {
+            // Get comment.
+            var comment = db.Comments.FirstOrDefault(c => c.CommentID == id);
+            if (comment == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
+            // Check creator.
+            if (!comment.User.Username.Equals(userName, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new NotPermissionException();
+            }
+
+            // Delete comment
+            db.Comments.Remove(comment);
+
+            // Save in DB
+            db.SaveChanges();
+
+            return true;
+        }
     }
 }

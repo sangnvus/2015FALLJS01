@@ -163,6 +163,10 @@
     <Compile Include="Migrations\201510091748397_EditUserInfoRewardPkg.Designer.cs">
       <DependentUpon>201510091748397_EditUserInfoRewardPkg.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510101835496_AddUpdateTimeCommentProject.cs" />
+    <Compile Include="Migrations\201510101835496_AddUpdateTimeCommentProject.Designer.cs">
+      <DependentUpon>201510101835496_AddUpdateTimeCommentProject.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Backing.cs" />
     <Compile Include="Controllers\WebControllers\HomeController.cs" />
@@ -226,6 +230,7 @@
     <Content Include="App\controllers\ProjectDetailController.js" />
     <Content Include="App\controllers\RegisterController.js" />
     <Content Include="App\controllers\ResetPwController.js" />
+    <Content Include="App\directives\ngEnter.js" />
     <Content Include="App\directives\passwordMatch.js" />
     <Content Include="App\directives\showTabDirective.js" />
     <Content Include="App\HomeModule.js" />
@@ -303,6 +308,7 @@
     <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="App\directives\elastic.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular-touch.min.js.map" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
@@ -1081,8 +1087,8 @@
     <Content Include="Scripts\plugin\jquery.md5.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\text-angular\textAngular-rangy.min.js" />
-    <Content Include="Scripts\text-angular\textAngular.min.js" />
+    <Content Include="App\directives\text-angular\textAngular-rangy.min.js" />
+    <Content Include="App\directives\text-angular\textAngular.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1140,6 +1146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510091748397_EditUserInfoRewardPkg.resx">
       <DependentUpon>201510091748397_EditUserInfoRewardPkg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510101835496_AddUpdateTimeCommentProject.resx">
+      <DependentUpon>201510101835496_AddUpdateTimeCommentProject.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

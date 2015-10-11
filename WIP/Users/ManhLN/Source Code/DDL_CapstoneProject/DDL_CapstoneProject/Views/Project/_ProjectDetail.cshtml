@@ -88,7 +88,7 @@
                     </div>
                     <div class="padding30">
                         <p class="grey-dark" ng-if="!Project.IsExprired">
-                            Dự án này sẽ kết thúc gây quỹ vào<br/><span class="js-adjust-time">{{Project.ExpireDate | date:"HH:mm 'ngày' MM/dd/yyyy"}}</span>.
+                            Dự án này sẽ kết thúc gây quỹ vào<br /><span class="js-adjust-time">{{Project.ExpireDate | date:"HH:mm 'ngày' dd/MM/yyyy"}}</span>.
                         </p>
                         <p class="grey-dark" ng-if="Project.IsExprired">
                             Dự án này đã kết thúc gây qũy
@@ -148,11 +148,11 @@
 
                 <div class="tab-center">
                     <ul class="nav nav-pills">
-                        <li class="active"><a showtab href="#campaign" data-toggle="tab">Campaign</a></li>
-                        <li><a showtab href="#update" data-toggle="tab">Update <span class="badge">5</span></a></li>
-                        <li><a showtab href="#comments" data-toggle="tab">Comments <span class="badge">10</span></a></li>
-                        <li><a showtab href="#schedule" data-toggle="tab">Schedule</a></li>
-                        <li><a showtab href="#list-bankers" data-toggle="tab">List Bankers <span class="badge">10</span></a></li>
+                        <li class="active"><a showtab href="#campaign" data-toggle="tab">Thông tin</a></li>
+                        <li><a showtab href="#update" data-toggle="tab">Cập nhật <span class="badge">{{Project.UpdateLogsList.length}}</span></a></li>
+                        <li><a showtab href="#comments" data-toggle="tab">Bình luận <span class="badge">{{Project.CommentsList.length}}</span></a></li>
+                        <li><a showtab href="#schedule" data-toggle="tab">Tiến trình</a></li>
+                        <li><a showtab href="#list-bankers" data-toggle="tab">Ủng hộ <span class="badge">10</span></a></li>
                         <!-- <a href="back_project.html" class="btn btn-success">Back to this project</a> -->
                     </ul>
                 </div>
@@ -173,6 +173,17 @@
                                         <p>
                                             {{Project.Risk}}
                                         </p>
+                                    </div> <!-- end Risks and challeges -->
+                                    <div id="questionAnswer" class="padding30">
+                                        <h1>FAG</h1>
+                                        <a class="btn btn-primary" role="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                            Link with href
+                                        </a>
+                                        <div class="collapse" id="collapseExample">
+                                            <div class="well">
+                                                ...
+                                            </div>
+                                        </div>
                                     </div> <!-- end Risks and challeges -->
                                 </div> <!-- end col-md-8 -->
 
@@ -222,127 +233,22 @@
                     <div id="update" role="tabpanel" class="tab-pane fade in">
                         <div class="">
                             <div class="page-header">
-                                <h1 id="timeline-Update">Timeline Update</h1>
+                                <h1 id="timeline-Update">Thông tin cập nhật ({{Project.UpdateLogsList.length}})</h1>
                             </div>
                             <ul class="timeline">
-                                <li>
+                                <li ng-repeat="UpdateLog in Project.UpdateLogsList" ng-class-even="'timeline-inverted'">
                                     <div class="timeline-badge">
                                         <i class="glyphicon glyphicon-check"></i>
                                     </div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <h4 class="timeline-title">Update #5: Life after death, unlocked! Devline!</h4>
+                                            <h4 class="timeline-title">{{UpdateLog.Title}}</h4>
                                             <p>
-                                                <small class="text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small>
+                                                <small class="text-muted"><i class="glyphicon glyphicon-time"></i> lúc {{UpdateLog.CreatedDate | date:"HH:mm 'ngày' dd/MM/yyyy"}}</small>
                                             </p>
                                         </div>
                                         <div class="timeline-body">
-                                            <p>
-                                                It's celebration time, so grab a glass of hemlock tea and hie yourself to the nearest graveyard. You smashed through the next stretch goal, and now it's official: the Undead will be featured as a playable race in D:OS2.
-                                            </p>
-                                            <p>In this video, we learn a bit more about what's in store for the Undead in Rivellon from our lead writer Jan and concept artist Tania, and Swen gives us another peak into Larian's adventures at PAX.</p>
-                                        </div>
-                                        <br>
-                                        <div class="like-comment">
-                                            <p class="text-muted">74 Comments 104 Likes</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="timeline-inverted">
-                                    <div class="timeline-badge warning">
-                                        <i class="glyphicon glyphicon-credit-card"></i>
-                                    </div>
-                                    <div class="timeline-panel">
-                                        <div class="timeline-heading">
-                                            <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                                        </div>
-                                        <div class="timeline-body">
-                                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                                            <p>Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Interagi no mé, cursus quis, vehicula ac nisi. Aenean vel dui dui. Nullam leo erat, aliquet quis tempus a, posuere ut mi. Ut scelerisque neque et turpis posuere pulvinar pellentesque nibh ullamcorper. Pharetra in mattis molestie, volutpat elementum justo. Aenean ut ante turpis. Pellentesque laoreet mé vel lectus scelerisque interdum cursus velit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ac mauris lectus, non scelerisque augue. Aenean justo massa.</p>
-                                        </div>
-                                        <br>
-                                        <div class="like-comment">
-                                            <p>74 Comments 104 Likes</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="timeline-badge danger">
-                                        <i class="glyphicon glyphicon-credit-card"></i>
-                                    </div>
-                                    <div class="timeline-panel">
-                                        <div class="timeline-heading">
-                                            <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                                        </div>
-                                        <div class="timeline-body">
-                                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="timeline-inverted">
-                                    <div class="timeline-panel">
-                                        <div class="timeline-heading">
-                                            <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                                        </div>
-                                        <div class="timeline-body">
-                                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                                        </div>
-                                        <br>
-                                        <div class="like-comment">
-                                            <p class="text-muted">74 Comments 104 Likes</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="timeline-badge info">
-                                        <i class="glyphicon glyphicon-floppy-disk"></i>
-                                    </div>
-                                    <div class="timeline-panel">
-                                        <div class="timeline-heading">
-                                            <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                                        </div>
-                                        <div class="timeline-body">
-                                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                                            <hr>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-                                                    <i class="glyphicon glyphicon-cog"></i> <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" role="menu">
-                                                    <li><a href="#">Action</a></li>
-                                                    <li><a href="#">Another action</a></li>
-                                                    <li><a href="#">Something else here</a></li>
-                                                    <li class="divider"></li>
-                                                    <li><a href="#">Separated link</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="timeline-panel">
-                                        <div class="timeline-heading">
-                                            <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                                        </div>
-                                        <div class="timeline-body">
-                                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="timeline-inverted">
-                                    <div class="timeline-badge success">
-                                        <i class="glyphicon glyphicon-thumbs-up"></i>
-                                    </div>
-                                    <div class="timeline-panel">
-                                        <div class="timeline-heading">
-                                            <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                                        </div>
-                                        <div class="timeline-body">
-                                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                                        </div>
-                                        <br>
-                                        <div class="like-comment">
-                                            <p class="text-muted">74 Comments 104 Likes</p>
+                                            {{UpdateLog.Description}}
                                         </div>
                                     </div>
                                 </li>
@@ -352,7 +258,8 @@
                     <!-- Comment -->
                     <div id="comments" role="tabpanel" class="tab-pane fade in">
                         <!-- Contenedor Principal -->
-                        <h1>Comments</h1>
+                        <h1>Bình luận ({{Project.CommentsList.length}})</h1>
+                        <!-- Form Comment -->
                         <div ng-if="CurrentUser.IsAuthen">
                             <form role="form" name="CommentForm" novalidate>
                                 <button style="margin-bottom: 10px" class="btn btn-primary btn-sm clearfix" ng-click="submitComment()"
@@ -360,34 +267,44 @@
                                     Bình luận
                                 </button>
                                 <div class="form-group">
-                                    <textarea type="text" class="form-control input-lg" placeholder="Nhập bình luận..."
+                                    <textarea type="text" class="form-control input-lg" placeholder="Nhập bình luận..." style="resize: none"
                                               name="Comment"
                                               ng-model="NewComment.CommentContent"
                                               ng-trim="true"
                                               required
-                                              ng-minlength="8"
-                                              ng-maxlength="50"></textarea>
+                                              ng-minlength="10"
+                                              ng-maxlength="200"
+                                              msd-elastic="\n"></textarea>
                                 </div>
                             </form>
                         </div>
+                        <!-- List comment -->
                         <div class="comments-container">
                             <ul id="comments-list" class="comments-list">
                                 <li ng-repeat="Comment in Project.CommentsList">
                                     <div class="comment-main-level">
                                         <!-- Avatar -->
                                         <div class="comment-avatar">
-                                            <img ng-if="checkHTTP(Comment.ProfileImage)" src="{{trustSrc(Comment.ProfileImage)}}" alt=""/>
-                                            <img ng-if="!checkHTTP(Comment.ProfileImage)" src="../images/avatars/{{Comment.ProfileImage}}" alt=""/>
+                                            <img ng-if="checkHTTP(Comment.ProfileImage)" src="{{trustSrc(Comment.ProfileImage)}}" alt="" />
+                                            <img ng-if="!checkHTTP(Comment.ProfileImage)" src="../images/avatars/{{Comment.ProfileImage}}" alt="" />
                                         </div>
                                         <!-- Contenedor del Comentario -->
                                         <div class="comment-box">
                                             <div class="comment-head">
                                                 <h6 class="comment-name" ng-class="{'by-author':Comment.UserName == Project.Creator.UserName}"><a href="http://creaticode.com/blog}">{{Comment.FullName}}</a></h6>
-                                                <span style="margin-top: 8px">lúc {{Comment.CreatedDate | date:"HH:mm 'ngày' MM/dd/yyyy"}}</span>
-                                                <i ng-if="!Comment.IsHide && CurrentUser.UserName == Project.Creator.UserName" class="fa fa-times" ng-click="showHideComment($index)"></i>
-                                                <i ng-if="Comment.IsHide && CurrentUser.UserName == Project.Creator.UserName" class="fa fa-check" ng-click="showHideComment($index)"></i>
+                                                <span style="margin-top: 8px">lúc {{Comment.CreatedDate | date:"HH:mm 'ngày' dd/MM/yyyy"}}</span><span ng-show="Comment.IsEdited" style="margin-top: 8px">&nbsp;- đã chỉnh sửa</span>
+                                                <i ng-if="!Comment.IsHide && CurrentUser.UserName == Project.Creator.UserName" class="fa fa-eye-slash" ng-click="showHideComment($index)"></i>
+                                                <i ng-if="Comment.IsHide && CurrentUser.UserName == Project.Creator.UserName" class="fa fa-eye" ng-click="showHideComment($index)"></i>
+                                                <i ng-if="CurrentUser.UserName == Comment.UserName" class="fa fa-times" ng-click="deleteComment($index)"></i>
+                                                <!-- Comment -->
+                                                <i ng-if="CurrentUser.UserName == Comment.UserName" ng-class="{'hide':IsEdit[$index] === true}" class="fa fa-edit" ng-click="showEditForm($index)"></i>
+                                                <i ng-if="CurrentUser.UserName == Comment.UserName" ng-class="{'hide':(IsEdit[$index] == null || IsEdit[$index] === false)}" ng-click="showEditForm($index)">Hủy</i>
+                                                <i ng-if="CurrentUser.UserName == Comment.UserName" ng-class="{'hide':(IsEdit[$index] == null || IsEdit[$index] === false)}" ng-click="editComment($index)">Lưu</i>
                                             </div>
-                                            <div style="word-break: break-word; white-space: pre-wrap" class="comment-content">{{Comment.CommentContent}}</div>
+                                            <div ng-class="{'hide':IsEdit[$index] === true}" style="word-break: break-word; white-space: pre-wrap;" class="comment-content">{{Comment.CommentContent}}</div>
+                                            <div ng-if="CurrentUser.UserName == Comment.UserName" ng-class="{'hide':(IsEdit[$index] == null || IsEdit[$index] === false)}">
+                                                <textarea msd-elastic="\n" class="form-control" ng-model="Comment.EditedCommentContent" ng-enter="editComment($index)" style="border-radius: 0; resize: none"></textarea>
+                                            </div>
                                         </div>
                                     </div>
                                 </li>
@@ -447,7 +364,7 @@
                     <!-- List-Bankers -->
                     <div id="list-bankers" role="tabpanel" class="tab-pane fade in">
                         <div class="container">
-                            <h3 class="bold">List Bankers</h3>
+                            <h3 class="bold">Danh sách người ủng hộ</h3>
                             <br>
                             <table id="bankersTable" class="table table-striped">
                                 <thead>

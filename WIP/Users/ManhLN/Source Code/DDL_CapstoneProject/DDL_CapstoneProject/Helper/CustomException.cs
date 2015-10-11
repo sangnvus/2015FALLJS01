@@ -69,23 +69,23 @@ namespace DDL_CapstoneProject.Helper
         }
     }
 
-    public class NotPermissonException : Exception
+    public class NotPermissionException : Exception
     {
-        public NotPermissonException()
+        public NotPermissionException()
         {
         }
 
-        public NotPermissonException(string message)
+        public NotPermissionException(string message)
             : base(message)
         {
         }
 
-        public NotPermissonException(string message, Exception innerException)
+        public NotPermissionException(string message, Exception innerException)
             : base(message, innerException)
         {
         }
 
-        protected NotPermissonException(SerializationInfo info, StreamingContext context)
+        protected NotPermissionException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }
