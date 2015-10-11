@@ -31,26 +31,49 @@ namespace DDL_CapstoneProject.Respository
             }
             else
             {
-                var creatorID = UserRepository.Instance.GetByUserNameOrEmail(senderName).DDL_UserID;
-                var newConversation = new Conversation
+                var creator = UserRepository.Instance.GetByUserNameOrEmail(senderName);
+
+                // Create conversation.
+                var newConversation = db.Conversations.Create();
+                newConversation.CreatedDate = DateTime.Now;
+                newConversation.UpdatedDate = DateTime.Now;
+                newConversation.CreatorID = creator.DDL_UserID;
+                newConversation.ReceiverID = receiver.DDL_UserID;
+                newConversation.Subject = newMessage.Title;
+                newConversation.ViewStatus = DDLConstants.ConversationStatus.CREATOR;
+                newConversation.DeleteStatus = DDLConstants.ConversationStatus.NO;
+
+                // Create message.
+                var message = db.Messages.Create();
+                message.MessageContent = newMessage.Content;
+                message.UserID = creator.DDL_UserID;
+                message.SentTime = DateTime.Now;
+
+                // Add message into conversation.
+                newConversation.Messages = new List<Message>
                 {
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now,
-                    CreatorID = creatorID,
-                    ReceiverID = receiver.DDL_UserID,
-                    Subject = newMessage.Title,
-                    ViewStatus = DDLConstants.ConversationStatus.CREATOR,
-                    DeleteStatus = DDLConstants.ConversationStatus.NO,
-                    Messages = new List<Message>()
-                    {
-                        new Message
-                        {
-                            MessageContent = newMessage.Content,
-                            UserID = creatorID,
-                            SentTime = DateTime.Now
-                        }
-                    }
+                    message
                 };
+
+                //var newConversation = new Conversation
+                //{
+                //    CreatedDate = DateTime.Now,
+                //    UpdatedDate = DateTime.Now,
+                //    CreatorID = creator.DDL_UserID,
+                //    ReceiverID = receiver.DDL_UserID,
+                //    Subject = newMessage.Title,
+                //    ViewStatus = DDLConstants.ConversationStatus.CREATOR,
+                //    DeleteStatus = DDLConstants.ConversationStatus.NO,
+                //    Messages = new List<Message>()
+                //    {
+                //        new Message
+                //        {
+                //            MessageContent = newMessage.Content,
+                //            UserID = creator.DDL_UserID,
+                //            SentTime = DateTime.Now
+                //        }
+                //    }
+                //};
 
                 db.Conversations.Add(newConversation);
                 db.SaveChanges();
@@ -62,8 +85,8 @@ namespace DDL_CapstoneProject.Respository
                     Title = newConversation.Subject,
                     IsRead = true,
                     IsSent = true,
-                    SenderName = newConversation.Creator.UserInfo.FullName,
-                    ReceiverName = newConversation.Receiver.UserInfo.FullName
+                    SenderName = creator.UserInfo.FullName,
+                    ReceiverName = receiver.UserInfo.FullName
                 };
                 return conversation;
             }
@@ -182,13 +205,11 @@ namespace DDL_CapstoneProject.Respository
             }
 
             // Create new message.
-            var newMessage = new Message
-            {
-                ConversationID = reply.ConversationID,
-                MessageContent = reply.Content,
-                UserID = user.DDL_UserID,
-                SentTime = DateTime.Now
-            };
+            var newMessage = db.Messages.Create();
+            newMessage.ConversationID = reply.ConversationID;
+            newMessage.MessageContent = reply.Content;
+            newMessage.UserID = user.DDL_UserID;
+            newMessage.SentTime = DateTime.Now;
 
             // Change viewstate.
             conversation.UpdatedDate = DateTime.Now;
@@ -233,7 +254,7 @@ namespace DDL_CapstoneProject.Respository
             Conversation conversation = null;
 
             // Check conversation exist.
-            conversation = db.Conversations.FirstOrDefault(c => c.ConversationID == conversationId 
+            conversation = db.Conversations.FirstOrDefault(c => c.ConversationID == conversationId
                             && (c.CreatorID == user.DDL_UserID || c.ReceiverID == user.DDL_UserID));
 
             if (conversation == null)
@@ -245,12 +266,12 @@ namespace DDL_CapstoneProject.Respository
             // if is creator.
             if (conversation.CreatorID == user.DDL_UserID)
             {
-                conversation.DeleteStatus = conversation.DeleteStatus == DDLConstants.ConversationStatus.RECEIVER ? 
+                conversation.DeleteStatus = conversation.DeleteStatus == DDLConstants.ConversationStatus.RECEIVER ?
                     DDLConstants.ConversationStatus.BOTH : DDLConstants.ConversationStatus.CREATOR;
             }
             else // if is receiver.
             {
-                conversation.DeleteStatus = conversation.DeleteStatus == DDLConstants.ConversationStatus.CREATOR ? 
+                conversation.DeleteStatus = conversation.DeleteStatus == DDLConstants.ConversationStatus.CREATOR ?
                     DDLConstants.ConversationStatus.BOTH : DDLConstants.ConversationStatus.RECEIVER;
             }
 

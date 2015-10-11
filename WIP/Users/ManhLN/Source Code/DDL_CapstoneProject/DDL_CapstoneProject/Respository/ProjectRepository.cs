@@ -321,6 +321,8 @@ namespace DDL_CapstoneProject.Respository
             return projectDetail;
         }
 
+        #region Comment
+
         private List<CommentDTO> GetComments(int projectID, bool showHide)
         {
             var commentsQuery = from comment in db.Comments
@@ -335,7 +337,7 @@ namespace DDL_CapstoneProject.Respository
                                     CommentContent = comment.CommentContent,
                                     CommentID = comment.CommentID,
                                     IsHide = comment.IsHide,
-                                    IsEdited = comment.IsEdited,
+                                    IsEdited = comment.IsEdited
                                 };
 
             var commentsList = showHide ? commentsQuery.Take(10).ToList() : commentsQuery.Where(x => !x.IsHide).Take(10).ToList();
@@ -365,26 +367,24 @@ namespace DDL_CapstoneProject.Respository
             }
 
             // Create comment.
-            var newComment = new Comment
-            {
-                CommentContent = comment.CommentContent,
-                CreatedDate = DateTime.Now,
-                IsHide = false,
-                UserID = user.DDL_UserID,
-                ProjectID = project.ProjectID,
-                IsEdited = false,
-                UpdatedDate = DateTime.Now,
-            };
+            var newComment = db.Comments.Create();
+            newComment.CommentContent = comment.CommentContent;
+            newComment.CreatedDate = DateTime.Now;
+            newComment.IsHide = false;
+            newComment.UserID = user.DDL_UserID;
+            newComment.ProjectID = project.ProjectID;
+            newComment.IsEdited = false;
+            newComment.UpdatedDate = DateTime.Now;
 
 
             // Add to DB.
-            db.Comments.AddOrUpdate(newComment);
+            db.Comments.Add(newComment);
             db.SaveChanges();
 
             // Get list new comment.
             var commentsList = (from commentItem in db.Comments
                                 where commentItem.Project.ProjectCode == projectCode && commentItem.CreatedDate > lastCommentDateTime
-                                orderby commentItem.CreatedDate descending 
+                                orderby commentItem.CreatedDate descending
                                 select new CommentDTO
                                 {
                                     IsHide = commentItem.IsHide,
@@ -423,7 +423,6 @@ namespace DDL_CapstoneProject.Respository
 
             // Change hide status
             comment.IsHide = !comment.IsHide;
-            comment.UpdatedDate = DateTime.Now;
 
             // Save in DB
             db.SaveChanges();
@@ -491,8 +490,12 @@ namespace DDL_CapstoneProject.Respository
             return commentDto;
         }
 
-        #endregion
-
+        /// <summary>
+        /// DeleteComment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userName"></param>
+        /// <returns>boolean</returns>
         public bool DeleteComment(int id, string userName)
         {
             // Get comment.
@@ -516,5 +519,9 @@ namespace DDL_CapstoneProject.Respository
 
             return true;
         }
+        #endregion
+
+
+        #endregion
     }
 }

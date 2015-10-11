@@ -66,7 +66,7 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
                 }
                 else
                 {
-                    return Redirect("/#/"+returnUrl);
+                    return Redirect("/#/" + returnUrl);
                 }
             }
 

@@ -143,29 +143,9 @@
     <Compile Include="Controllers\WebControllers\ProjectController.cs" />
     <Compile Include="Helper\CustomException.cs" />
     <Compile Include="Helper\MailHelper.cs" />
-    <Compile Include="Migrations\201510030826590_InitialCreate.cs" />
-    <Compile Include="Migrations\201510030826590_InitialCreate.Designer.cs">
-      <DependentUpon>201510030826590_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510032334271_AddEmail.cs" />
-    <Compile Include="Migrations\201510032334271_AddEmail.Designer.cs">
-      <DependentUpon>201510032334271_AddEmail.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510052116034_UpdateBackingSlide.cs" />
-    <Compile Include="Migrations\201510052116034_UpdateBackingSlide.Designer.cs">
-      <DependentUpon>201510052116034_UpdateBackingSlide.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510061741344_UpdateProjectReward.cs" />
-    <Compile Include="Migrations\201510061741344_UpdateProjectReward.Designer.cs">
-      <DependentUpon>201510061741344_UpdateProjectReward.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510091748397_EditUserInfoRewardPkg.cs" />
-    <Compile Include="Migrations\201510091748397_EditUserInfoRewardPkg.Designer.cs">
-      <DependentUpon>201510091748397_EditUserInfoRewardPkg.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510101835496_AddUpdateTimeCommentProject.cs" />
-    <Compile Include="Migrations\201510101835496_AddUpdateTimeCommentProject.Designer.cs">
-      <DependentUpon>201510101835496_AddUpdateTimeCommentProject.cs</DependentUpon>
+    <Compile Include="Migrations\201510110856270_InitialCreate.cs" />
+    <Compile Include="Migrations\201510110856270_InitialCreate.Designer.cs">
+      <DependentUpon>201510110856270_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Backing.cs" />
@@ -181,8 +161,6 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\DDL_User.cs" />
-    <Compile Include="Models\DTOs\UserPublicInfoDTO.cs" />
-    <Compile Include="Models\DTOs\UserEditInfoDTO.cs" />
     <Compile Include="Models\DTOs\CommentDTO.cs" />
     <Compile Include="Models\DTOs\ConversationBasicDTO.cs" />
     <Compile Include="Models\DTOs\ConversationDetailDTO.cs" />
@@ -199,8 +177,10 @@
     <Compile Include="Models\DTOs\TimeLineDTO.cs" />
     <Compile Include="Models\DTOs\UpdateLogDTO.cs" />
     <Compile Include="Models\DTOs\UserBasicInfoDTO.cs" />
+    <Compile Include="Models\DTOs\UserEditInfoDTO.cs" />
     <Compile Include="Models\DTOs\UserLoginDTO.cs" />
     <Compile Include="Models\DTOs\UserNameDTO.cs" />
+    <Compile Include="Models\DTOs\UserPublicInfoDTO.cs" />
     <Compile Include="Models\DTOs\UserRegisterDTO.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Project.cs" />
@@ -224,16 +204,17 @@
     <Compile Include="Helper\CommonUtils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App\controllers\EditProfileController.js" />
-    <Content Include="App\controllers\PublicProfileController.js" />
     <Content Include="App\controllers\CreateProjectController.js" />
+    <Content Include="App\controllers\EditProfileController.js" />
     <Content Include="App\controllers\EditProjectController.js" />
     <Content Include="App\controllers\HomeController.js" />
     <Content Include="App\controllers\MessageController.js" />
     <Content Include="App\controllers\MessageDetailController.js" />
     <Content Include="App\controllers\ProjectDetailController.js" />
+    <Content Include="App\controllers\PublicProfileController.js" />
     <Content Include="App\controllers\RegisterController.js" />
     <Content Include="App\controllers\ResetPwController.js" />
+    <Content Include="App\directives\elastic.js" />
     <Content Include="App\directives\ngEnter.js" />
     <Content Include="App\directives\passwordMatch.js" />
     <Content Include="App\directives\showTabDirective.js" />
@@ -257,6 +238,7 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\message.css" />
+    <Content Include="Content\profilepublic.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\textAngular.css" />
     <Content Include="Content\timeline.css" />
@@ -312,7 +294,6 @@
     <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
-    <Content Include="App\directives\elastic.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular-touch.min.js.map" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
@@ -1123,6 +1104,8 @@
     <Content Include="Views\Project\_CreateProject.cshtml" />
     <Content Include="Views\Project\_EditProject.cshtml" />
     <Content Include="Views\Project\_ProjectDetail.cshtml" />
+    <Content Include="Views\User\_EditProfile.cshtml" />
+    <Content Include="Views\User\_PublicProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />
@@ -1136,23 +1119,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201510030826590_InitialCreate.resx">
-      <DependentUpon>201510030826590_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510032334271_AddEmail.resx">
-      <DependentUpon>201510032334271_AddEmail.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510052116034_UpdateBackingSlide.resx">
-      <DependentUpon>201510052116034_UpdateBackingSlide.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510061741344_UpdateProjectReward.resx">
-      <DependentUpon>201510061741344_UpdateProjectReward.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510091748397_EditUserInfoRewardPkg.resx">
-      <DependentUpon>201510091748397_EditUserInfoRewardPkg.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510101835496_AddUpdateTimeCommentProject.resx">
-      <DependentUpon>201510101835496_AddUpdateTimeCommentProject.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201510110856270_InitialCreate.resx">
+      <DependentUpon>201510110856270_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

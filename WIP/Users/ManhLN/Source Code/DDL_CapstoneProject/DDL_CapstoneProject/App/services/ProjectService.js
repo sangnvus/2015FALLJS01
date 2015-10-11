@@ -70,7 +70,6 @@ app.service('ProjectService', function ($http) {
         return request;
     }
 
-
     // Function to edit comment.
     this.editComment = function (commentID, content) {
         var request = $http({

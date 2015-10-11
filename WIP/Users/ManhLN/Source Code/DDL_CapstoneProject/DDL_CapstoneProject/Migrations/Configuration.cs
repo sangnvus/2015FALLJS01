@@ -295,7 +295,6 @@ namespace DDL_CapstoneProject.Migrations
 
             updateLogList.ForEach(u => context.UpdateLogs.AddOrUpdate(x => x.Title, u));
             context.SaveChanges();
-
         }
     }
 }

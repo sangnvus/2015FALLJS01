@@ -3,6 +3,7 @@
 app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, toastr, project, ProjectService, CommmonService) {
     //Todo here.
     $scope.Project = project.data.Data;
+
     $scope.CurrentUser = $rootScope.UserInfo;
     $scope.NewComment = {};
 
@@ -12,8 +13,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
         return $sce.trustAsResourceUrl(src);
     }
 
-
-    // Function check string startwith 'http'.
+    // Function check string startwith 'http'
     $scope.checkHTTP = function (input) {
         var lowerStr = (input + "").toLowerCase();
         return lowerStr.indexOf('http') === 0;
@@ -29,33 +29,33 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
         }
     }
 
-    // Function to submit comment.
-    $scope.submitComment = function (form) {
+    // Function to submit comment
+    $scope.submitComment = function () {
         //if (form.$dirty === false || (form.$dirty && form.$invalid)) {
         //    toastr.warning("Tối thiểu 10, tối đa 200 kí tự", 'Thông báo!');
         //} else {
-            $scope.NewComment.UserName = $scope.CurrentUser.UserName;
-            var promisePut = ProjectService.Comment($scope.Project.ProjectCode, $scope.NewComment, $scope.Project.CommentsList[0].CreatedDate);
-            promisePut.then(
-                function (result) {
-                    if (result.data.Status === "success") {
-                        $scope.Project.CommentsList = result.data.Data.concat($scope.Project.CommentsList);
-                        $scope.NewComment = "";
-                        toastr.success('Bình luận thành công!');
-                    } else {
-                        CommmonService.checkError(result.data.Type);
-                        $scope.Error = result.data.Message;
-                        toastr.error($scope.Error, 'Lỗi!');
-                    }
-                },
-                function (error) {
-                    $scope.Error = error.data.Message;
+        $scope.NewComment.UserName = $scope.CurrentUser.UserName;
+        var promisePut = ProjectService.Comment($scope.Project.ProjectCode, $scope.NewComment, $scope.Project.CommentsList[0].CreatedDate);
+        promisePut.then(
+            function (result) {
+                if (result.data.Status === "success") {
+                    $scope.Project.CommentsList = result.data.Data.concat($scope.Project.CommentsList);
+                    $scope.NewComment = "";
+                    toastr.success('Bình luận thành công!');
+                } else {
+                    CommmonService.checkError(result.data.Type);
+                    $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
-                });
+                }
+            },
+            function (error) {
+                $scope.Error = error.data.Message;
+                toastr.error($scope.Error, 'Lỗi!');
+            });
         //}
     }
 
-    // Function hide/unhide comment.
+    // Function hide/unhide comment
     $scope.showHideComment = function (index) {
         var promisePut = ProjectService.ShowHideComment($scope.Project.CommentsList[index].CommentID);
         promisePut.then(
@@ -75,7 +75,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
             });
     }
 
-    // Function load more comment.
+    // Function load more comment
     $scope.loadMoreComment = function () {
         var skip = $scope.Project.CommentsList.length;
         var promisePut = ProjectService.loadMoreComment($scope.Project.CommentsList[index].CommentID, skip);

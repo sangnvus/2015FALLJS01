@@ -114,12 +114,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         }
 
         #region Comment Functions
-        
+ 
         /// <summary>
         /// Post: api/ProjectApi/Comment?projectCode=xxx
         /// </summary>
         /// <param name="projectCode">projectCode</param>
-        /// <param name="lastCommentDateTime">CommentDTO</param>
+        /// <param name="lastComment">CommentDTO</param>
         /// <param name="comment">CommentDTO</param>
         /// <returns>CommentDTO</returns>
         [HttpPost]
@@ -127,7 +127,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         public IHttpActionResult Comment(string projectCode, DateTime lastComment, CommentDTO comment)
         {
             List<CommentDTO> result = null;
-            //var datetime = DateTime.Parse(lastCommentDateTime);
+
             if (User.Identity == null || !User.Identity.IsAuthenticated)
             {
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });

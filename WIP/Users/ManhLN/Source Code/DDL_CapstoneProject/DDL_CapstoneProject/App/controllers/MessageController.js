@@ -1,7 +1,7 @@
 ﻿"use strict";
 
 app.controller('MessageController',
-    function ($scope, $location, $rootScope, toastr, conversations, MessageService, CommmonService) {
+    function ($scope, $location, $rootScope, toastr, conversations, MessageService, CommmonService, UserService) {
     //Todo here
     $scope.ListConversations = conversations.data.Data;
 
@@ -38,10 +38,6 @@ app.controller('MessageController',
         $location.path("/user/message/" + id).replace();
     }
 
-    $scope.showConversationDetail = function (id) {
-        $location.path("/user/message/" + id).replace();
-    }
-
     // Function request 
     $scope.sendMessage = function () {
         if ($scope.NewMessage.Content.trim() !== "") {
@@ -54,6 +50,7 @@ app.controller('MessageController',
                         if ($scope.Sent) {
                             $scope.ListConversations.unshift(result.data.Data);
                         }
+                        toastr.success("Gửi tin nhắn thành công!", 'Thông báo!');
                     } else {
                         CommmonService.checkError(result.data.Type);
                         $scope.Error = result.data.Message;
