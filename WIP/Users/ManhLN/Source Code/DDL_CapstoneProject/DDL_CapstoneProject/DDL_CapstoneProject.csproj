@@ -181,6 +181,8 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\DDL_User.cs" />
+    <Compile Include="Models\DTOs\UserPublicInfoDTO.cs" />
+    <Compile Include="Models\DTOs\UserEditInfoDTO.cs" />
     <Compile Include="Models\DTOs\CommentDTO.cs" />
     <Compile Include="Models\DTOs\ConversationBasicDTO.cs" />
     <Compile Include="Models\DTOs\ConversationDetailDTO.cs" />
@@ -222,6 +224,8 @@
     <Compile Include="Helper\CommonUtils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\controllers\EditProfileController.js" />
+    <Content Include="App\controllers\PublicProfileController.js" />
     <Content Include="App\controllers\CreateProjectController.js" />
     <Content Include="App\controllers\EditProjectController.js" />
     <Content Include="App\controllers\HomeController.js" />

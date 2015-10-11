@@ -258,6 +258,62 @@ namespace DDL_CapstoneProject.Respository
             return listUserName.ToList();
         }
 
+        public UserPublicInfoDTO GetUserPublicInfo(string userName)
+        {
+            var userPublic = from user in db.DDL_Users
+                             where user.Username == userName
+                             select new UserPublicInfoDTO
+                             {
+                                 FullName = user.UserInfo.FullName,
+                                 Biography = user.UserInfo.Biography,
+                                 CreatedDate = user.CreatedDate,
+                                 FacebookUrl = user.UserInfo.FacebookUrl,
+                                 LastLogin = user.LastLogin,
+                                 ProfileImage = user.UserInfo.ProfileImage,
+                                 CountBackedProject = user.Backings.Count(x => x.User.Username == user.Username),
+                                 UserName = user.Username
+                             };
+            return userPublic.First();
+        }
+
+        public UserEditInfoDTO GetUserEditInfo(string userName)
+        {
+            var userEdit = from user in db.DDL_Users
+                           where user.Username == userName
+                           select new UserEditInfoDTO
+                           {
+                               FullName = user.UserInfo.FullName,
+                               Biography = user.UserInfo.Biography,
+                               CreatedDate = user.CreatedDate,
+                               FacebookUrl = user.UserInfo.FacebookUrl,
+                               ProfileImage = user.UserInfo.ProfileImage,
+                               UserName = user.Username,
+                               DateOfBirth = user.UserInfo.DateOfBirth,
+                               Addres = user.UserInfo.Address,
+                               Email = user.Email,
+                               Website = user.UserInfo.Website,
+                               Gender = user.UserInfo.Gender,
+                           };
+            return userEdit.First();
+        }
+
+
+        //UserEditInfoDTO
+        public void EditUserInfo(UserEditInfoDTO userCurrent)
+        {
+            var userEdit = db.DDL_Users.FirstOrDefault(x => x.Username.Equals(userCurrent.UserName)).UserInfo;
+            userEdit.FullName = userCurrent.FullName;
+            userEdit.FacebookUrl = userCurrent.FacebookUrl;
+            userEdit.ProfileImage = userCurrent.ProfileImage;
+            userEdit.Website = userCurrent.Website;
+            userEdit.DateOfBirth = userCurrent.DateOfBirth;
+            userEdit.Biography = userCurrent.Biography;
+            userEdit.Address = userCurrent.Addres;
+            userEdit.Gender = userCurrent.Gender;
+
+            db.SaveChanges();
+        }
+
         #endregion
     }
 }
