@@ -66,6 +66,11 @@ Date: 2015.10.01
 		height: 45px;
 		margin: 0px;
 	}
+
+	/*No-sort datatable*/
+	/*.no-sort::after { display: none!important; }
+	.no-sort { pointer-events: none!important; cursor: default!important; }*/
+	
 /*	#profile_dropdown .dropdown{
 		margin: 0px 0px;
 		padding: 0px 0px;
