@@ -340,7 +340,8 @@ namespace DDL_CapstoneProject.Respository
                                     IsEdited = comment.IsEdited
                                 };
 
-            var commentsList = showHide ? commentsQuery.Take(10).ToList() : commentsQuery.Where(x => !x.IsHide).Take(10).ToList();
+            //var commentsList = showHide ? commentsQuery.Take(10).ToList() : commentsQuery.Where(x => !x.IsHide).Take(10).ToList();
+            var commentsList = showHide ? commentsQuery.ToList() : commentsQuery.Where(x => !x.IsHide).ToList();
 
             return commentsList;
         }
@@ -382,7 +383,7 @@ namespace DDL_CapstoneProject.Respository
             db.SaveChanges();
 
             // Get list new comment.
-            var commentsList = (from commentItem in db.Comments
+            var commentsQuery = from commentItem in db.Comments
                                 where commentItem.Project.ProjectCode == projectCode && commentItem.CreatedDate > lastCommentDateTime
                                 orderby commentItem.CreatedDate descending
                                 select new CommentDTO
@@ -394,7 +395,11 @@ namespace DDL_CapstoneProject.Respository
                                     UserName = commentItem.User.Username,
                                     CommentContent = commentItem.CommentContent,
                                     CommentID = commentItem.CommentID,
-                                }).ToList();
+                                };
+
+            var commentsList = (comment.UserName == project.Creator.Username)
+                ? commentsQuery.ToList()
+                : commentsQuery.Where(c => !c.IsHide).ToList();
 
             return commentsList;
         }

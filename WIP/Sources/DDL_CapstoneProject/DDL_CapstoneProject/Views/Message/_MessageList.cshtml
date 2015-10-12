@@ -1,126 +1,183 @@
-﻿<style>
-    #table_message tr:hover {
-        background-color: #a9a9a9;
-    }
-</style>
-<div class="container center-block" id="message-content">
-    <div id="" class="center-block">
-        <div id="header_message" class="row">
-            <div class="col-sm-2 align_col">
-                <h1>Tin nhắn</h1>
-            </div>
-            <div class="col-sm-3 align_col" style="padding-top: 15px;">
-                <div class="btn-group">
-                    <button class="btn btn-default" ng-if="!Sent">
-                        Hộp thư đến
-                    </button>
-                    <button class="btn btn-default" ng-if="Sent">
-                        Thư đã gửi
-                    </button>
-                    <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="" ng-click="changeInboxSent('inbox')">Hộp thư đến <span ng-if="Unread" class="badge">{{Unread}}</span></a>
-                        </li>
-                        <!-- <li class="divider">s
-                        </li> -->
-                        <li>
-                            <a href="" ng-click="changeInboxSent('sent')">Thư đã gửi</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div id="search_box" class="col-sm-7" style="padding-top: 15px;">
-                <form id="" action="" style="display: inline;" method="get">
-                    <div class="search-box ">
-                        <span class="icon glyphicon glyphicon-search"></span>
-                        <input id="search-box" name="q" type="text" placeholder="tìm tin nhắn..." ng-model="searchText"/>
-                    </div>
-                    <input id="search-btn" value="Tìm kiếm" type="button"/>
-                </form>
-            </div>
-        </div>
+﻿<!-- Side Navigation -->
+<div id="message" class="paddingNavbar" style="background-color: #fff">
+    <div class="container">
         <div class="row">
-            <div id="action_bar" class="col-sm-12">
-                <div class="action-bar" style="display: inline-block">
-                    <ul class="list-inline text-center">
-                        <li><a class="icon circle-icon glyphicon glyphicon-plus" data-toggle="modal" data-target="#newMessageModel"></a></li>
-                        <li><a class="icon circle-icon glyphicon glyphicon-refresh"></a></li>
-                        <li><a class="icon circle-icon red glyphicon glyphicon-remove" ng-click="Delete()"></a></li>
-                        <li><a class="icon circle-icon red glyphicon glyphicon-flag"></a></li>
-                    </ul>
-                </div>
+            <div id="colPush" class="col-md-3">
+                <ul class="">
+                    <h5 class="fnt30 fnt-b">Message</h5>
+                    <div class="clearfix"></div>
+                    <li data-toggle="modal" data-target="#sentBox">
+                        <a class="link">
+                            <i class=" icon fa fa-edit fa-2x fa-fw">
+                            </i>
+                            <span class="toggle">Tạo mới</span>
+                        </a>
+                    </li>
+
+                    <li ng-click="changeInboxSent('inbox')">
+                        <a>
+                            <i class="icon fa fa-inbox fa-2x fa-fw"></i>
+                            <span class="toggle">Hộp thư đến({{Unread}})</span>
+                        </a>
+                    </li>
+
+                    <li ng-click="changeInboxSent('sent')">
+                        <a>
+                            <i class="icon fa fa-paper-plane fa-2x fa-fw"></i>
+                            <span class="toggle">Hộp thư đi</span>
+                        </a>
+                    </li>
+
+                    <!-- <li>
+                        <a>
+                            <i class="icon fa fa-trash-o fa-2x fa-fw"></i>
+                            <span class="toggle">Delete</span>
+                        </a>
+                    </li>
+
+                    <li class="item toggle-link1">
+                        <a>
+                            <i class="arrow_toogle icon fa fa-arrow-circle-left fa-2x fa-fw"></i>
+                            <span class="toggle">Hide</span>
+                        </a>
+                    </li> -->
+                </ul>
             </div>
-        </div>
-        <div class="row">
-            <table id="table_message">
-                <tr ng-repeat="conversation in ListConversations | filter:searchFilter" ng-class="{bold: !conversation.IsRead}">
-                    <td id="col_checkbox">
-                        <div class="checkbox-wrapper">
-                            <input type="checkbox" style="cursor: pointer" ng-click="ToggleSelection(conversation.ConversationID)" value="{{conversation.ConversationID}}"/>
-                        </div>
-                    </td>
-                    <td id="col_from" ng-show="!Sent">Từ: {{conversation.SenderName}}</td>
-                    <td id="col_from" ng-show="Sent">Tới: {{conversation.ReceiverName}}</td>
-                    <td id="col_content" style="cursor: pointer" ng-click="showConversationDetail(conversation.ConversationID)">{{conversation.Title}}</td>
-                    <td id="col_time">{{conversation.UpdatedDate | date:'shortDate'}}</td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <!--Modal new message-->
-    <div class="modal fade" id="newMessageModel" tabindex="-1" role="dialog" aria-labelledby="newMessageModel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <form name="NewMessageForm" novalidate>
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="newMessageModelLabel">Gửi tin nhắn mới</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="ToAddress">Người nhận:</label>
-                            @*<input type="text" name="ToUser" class="form-control" placeholder="" ng-model="NewMessage.ToUser"/>*@
-                            <input type="text" name="ToUser" ng-model="NewMessage.ToUser" placeholder="Nhập tên người nhận..."
-                                   typeahead="user.UserName as user.UserName for user in getUserName($viewValue)"
-                                   typeahead-loading="loadingLocations" typeahead-no-results="noResults"
-                                   typeahead-template-url="customTemplate.html" required=""
-                                   class="form-control">
-                            <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
-                            <div ng-show="noResults">
-                                <i class="glyphicon glyphicon-remove"></i> Không tìm thấy
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="Title">Tiêu đề:</label>
-                            <input type="text" class="form-control" placeholder="Nhập tiêu đề..." name="Title"
-                                   ng-model="NewMessage.Title"
-                                   required=""
-                                   ng-minlength="8"
-                                   ng-maxlength="50"/>
-                        </div>
-                        <div>
-                            <label for="">Nội dung:</label>
-                            <div text-angular name="Content" ng-model="NewMessage.Content"></div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                        <button type="button" class="btn btn-primary" ng-click="sendMessage()"
-                                ng-disabled="!NewMessageForm.$dirty || (NewMessageForm.$dirty && NewMessageForm.$invalid)">
-                            Gửi
+            <div id="colMain" class="col-md-8">
+                <!--Buttons-->
+                <div id="checkboxDelete" class="">
+                    <!-- <div class="dropdown">
+                        <button class="btn btn-transparent dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <input type="checkbox">
                         </button>
-                    </div>
-                </form>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="#">All</a></li>
+                            <li><a href="#">None</a></li>
+                            <li><a href="#">Read</a></li>
+                            <li><a href="#">Unread</a></li>
+                        </ul>
+                    </div> -->
+
+                    <button class="toggle-link btn btn-primary"><i class="icon fa fa-bars"></i></button>
+                    <button class="btn btn-primary btn18"><i class="icon fa fa-refresh"></i></button>
+                    <button class="btn btn-danger btn18" ng-click="Delete()"><i class="icon fa fa-trash-o"></i> Delete</button>
+                </div>
+
+                <!--Conversation table-->
+                <table datatable="ng" dt-options="dtOptions" id="messageTable" dt-column-defs="dtColumnDefs"
+                       class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr style="background: #16a085; color: #FFF">
+                            <th style="width: 5%">
+                                <input type="checkbox" class="selectedId" name="selectedId">
+                            </th>
+                            <th style="width: 15%">Tên</th>
+                            <th style="width: 70%">Tiêu đề - nội dung</th>
+                            <th style="width: 10%">Ngày</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="conversation in ListConversations" ng-class="{'unread-message': !conversation.IsRead}">
+                            <td class="checkbox-col">
+                                <input type="checkbox" class="selectedId" name="selectedId"
+                                       ng-click="ToggleSelection(conversation.ConversationID)" value="{{conversation.ConversationID}}">
+                            </td>
+                            <td class="from-col" href="message-View.html" ng-if="!Sent"
+                                ng-click="showConversationDetail(conversation.ConversationID)">
+                                Từ: {{conversation.SenderName}}
+                            </td>
+                            <td class="from-col" href="message-View.html" ng-if="Sent"
+                                ng-click="showConversationDetail(conversation.ConversationID)">
+                                Tới: {{conversation.ReceiverName}}
+                            </td>
+                            <td class="msg-col" ng-click="showConversationDetail(conversation.ConversationID)">
+                                {{conversation.Title}}
+                                <span class="text-muted">- Hi again! I wanted to let you know that the order...</span>
+                            </td>
+                            <td class="date-col"> {{conversation.UpdatedDate | date:'shortDate'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Box sent message -->
+<div class="container">
+    <div class="modal fade" id="sentBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <form name="NewMessageForm" novalidate class="form-horizontal">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #404040">
+                        <button type="button" class="close cFF" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title fnt18 cFF" id="myModalLabel">Tin nhắn mới</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group" style="border-bottom: 1px solid #cfcfcf">
+                            <label for="" class="col-sm-2 control-label fnt18 fnt-b fnt-b txt-l">Tới:</label>
+                            <div class="pl0 ml0 col-sm-10">
+                                <input type="text" class="pl0 ml0 form-control flat fnt18 fnt-b noboder" id=""
+                                       placeholder="Tên người nhận..."
+                                       name="ToUser" ng-model="NewMessage.ToUser"
+                                       typeahead="user.UserName as user.UserName for user in getUserName($viewValue)"
+                                       typeahead-loading="loadingLocations" typeahead-no-results="noResults"
+                                       typeahead-template-url="customTemplate.html" required="">
+                                <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+                                <div ng-show="noResults">
+                                    <i class="glyphicon glyphicon-remove text-danger"></i> Tài khoản không tồn tại
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="border-bottom: 1px solid #cfcfcf">
+                            <label for="" class="pr0 col-sm-2 control-label fnt18 fnt-b txt-l">Tiêu đề:</label>
+                            <div class="pl0 ml0 col-sm-10">
+                                <input type="text" class="pl0 ml0 form-control fnt18 fnt-b flat noboder"
+                                       placeholder="Nhập tiêu đề..."
+                                       name="Title"
+                                       ng-model="NewMessage.Title"
+                                       required=""
+                                       ng-minlength="8"
+                                       ng-maxlength="50">
+                            </div>
+                        </div>
+                        <div>
+                            <div text-angular name="Content" ng-model="NewMessage.Content"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer pt5 pb5">
+                        @* <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>*@
+                        <button type="button" class="btn btn-info btn-sm btn-wide btn18" ng-click="sendMessage()"
+                                ng-disabled="!NewMessageForm.$dirty || (NewMessageForm.$dirty && NewMessageForm.$invalid)">
+                            Gửi
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<!--Template load user-->
 <script type="text/ng-template" id="customTemplate.html">
     <a>
         <span>{{match.model.FullName}}</span>
         <span>({{match.model.UserName}})</span>
     </a>
+</script>
+<script>
+    //$(document).ready(function () {
+    //    // Table message use Jtable
+    //    $('#messageTable').dataTable();
+    //    $('#messageTable_length').hide();
+
+    //});
+
+    //Toogle slideBar
+    $('.toggle-link').click(function () {
+        $('.toggle').toggle(300);
+        $('#colPush').toggleClass("col-md-3 col-md-2", 300);
+        $('#colMain').toggleClass("col-md-8 col-md-9", 300);
+        $('.arrow_toogle').toggleClass("fa-arrow-circle-left fa-arrow-circle-right", 300);
+    });
 </script>

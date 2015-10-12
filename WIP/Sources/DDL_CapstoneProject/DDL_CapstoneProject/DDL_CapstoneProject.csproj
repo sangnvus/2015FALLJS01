@@ -105,13 +105,13 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="WebGrease">
-      <Private>True</Private>
-      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
-    </Reference>
     <Reference Include="Antlr3.Runtime">
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -229,16 +229,45 @@
     <Content Include="Content\angular-block-ui.min.css" />
     <Content Include="Content\angular-toastr.css" />
     <Content Include="Content\angular-toastr.min.css" />
+    <Content Include="Content\animate.css" />
     <Content Include="Content\animation.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\comment.css" />
+    <Content Include="Content\cmn-options.css" />
+    <Content Include="Content\common.css" />
+    <Content Include="Content\data-tables\datatables.bootstrap.css" />
+    <Content Include="Content\data-tables\datatables.bootstrap.min.css" />
+    <Content Include="Content\data-tables\datatables.css" />
+    <Content Include="Content\data-tables\datatables.min.css" />
+    <Content Include="Content\flat-ui.css" />
+    <Content Include="Content\flat-ui.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
-    <Content Include="Content\message.css" />
-    <Content Include="Content\profilepublic.css" />
+    <Content Include="Content\images\back_disabled.png" />
+    <Content Include="Content\images\back_enabled.png" />
+    <Content Include="Content\images\back_enabled_hover.png" />
+    <Content Include="Content\images\biggerdot.png" />
+    <Content Include="Content\images\dot.gif" />
+    <Content Include="Content\images\forward_disabled.png" />
+    <Content Include="Content\images\forward_enabled.png" />
+    <Content Include="Content\images\forward_enabled_hover.png" />
+    <Content Include="Content\images\grad_bottom.png" />
+    <Content Include="Content\images\grad_left.png" />
+    <Content Include="Content\images\grad_right.png" />
+    <Content Include="Content\images\grad_top.png" />
+    <Content Include="Content\images\next.png" />
+    <Content Include="Content\images\next_v.png" />
+    <Content Include="Content\images\prev.png" />
+    <Content Include="Content\images\prev_v.png" />
+    <Content Include="Content\images\sort_asc.png" />
+    <Content Include="Content\images\sort_asc_disabled.png" />
+    <Content Include="Content\images\sort_both.png" />
+    <Content Include="Content\images\sort_desc.png" />
+    <Content Include="Content\images\sort_desc_disabled.png" />
+    <Content Include="Content\Libraries\jquery.timelinr.css" />
+    <Content Include="Content\main.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\textAngular.css" />
     <Content Include="Content\timeline.css" />
@@ -246,14 +275,15 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\glyphicons\flat-ui-icons-regular.svg" />
+    <Content Include="fonts\lato\lato-black.svg" />
+    <Content Include="fonts\lato\lato-bold.svg" />
+    <Content Include="fonts\lato\lato-bolditalic.svg" />
+    <Content Include="fonts\lato\lato-italic.svg" />
+    <Content Include="fonts\lato\lato-light.svg" />
+    <Content Include="fonts\lato\lato-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
     <Content Include="images\avatars\avatar_test0001.jpg" />
     <Content Include="images\projects\projectimage1.jpg" />
     <Content Include="images\projects\projectimage2.jpg" />
@@ -294,6 +324,14 @@
     <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\data-tables\angular-datatables.bootstrap.js" />
+    <Content Include="Scripts\data-tables\angular-datatables.bootstrap.min.js" />
+    <Content Include="Scripts\data-tables\angular-datatables.js" />
+    <Content Include="Scripts\data-tables\angular-datatables.min.js" />
+    <Content Include="Scripts\data-tables\jquery.dataTables.js" />
+    <Content Include="Scripts\data-tables\jquery.dataTables.min.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular-touch.min.js.map" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
@@ -314,9 +352,9 @@
     <Content Include="Scripts\angular-block-ui.min.js.map" />
     <Content Include="Scripts\angular-block-ui.js.map" />
     <Content Include="Content\angular-block-ui.css.map" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\flat-ui\application.js" />
+    <Content Include="Scripts\flat-ui\flat-ui.js" />
+    <Content Include="Scripts\flat-ui\flat-ui.min.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-et.js" />
@@ -1061,14 +1099,47 @@
     <Content Include="Scripts\i18n\angular-locale_zh.js" />
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="fonts\lato\lato-black.eot" />
+    <Content Include="fonts\lato\lato-black.ttf" />
+    <Content Include="fonts\lato\lato-black.woff" />
+    <Content Include="fonts\lato\lato-bold.eot" />
+    <Content Include="fonts\lato\lato-bold.ttf" />
+    <Content Include="fonts\lato\lato-bold.woff" />
+    <Content Include="fonts\lato\lato-bolditalic.eot" />
+    <Content Include="fonts\lato\lato-bolditalic.ttf" />
+    <Content Include="fonts\lato\lato-bolditalic.woff" />
+    <Content Include="fonts\lato\lato-italic.eot" />
+    <Content Include="fonts\lato\lato-italic.ttf" />
+    <Content Include="fonts\lato\lato-italic.woff" />
+    <Content Include="fonts\lato\lato-light.eot" />
+    <Content Include="fonts\lato\lato-light.ttf" />
+    <Content Include="fonts\lato\lato-light.woff" />
+    <Content Include="fonts\lato\lato-regular.eot" />
+    <Content Include="fonts\lato\lato-regular.ttf" />
+    <Content Include="fonts\lato\lato-regular.woff" />
+    <Content Include="fonts\glyphicons\flat-ui-icons-regular.eot" />
+    <Content Include="fonts\glyphicons\flat-ui-icons-regular.ttf" />
+    <Content Include="fonts\glyphicons\flat-ui-icons-regular.woff" />
+    <Content Include="fonts\glyphicons\selection.json" />
+    <Content Include="Content\flat-ui.css.map" />
+    <None Include="Scripts\jquery-1.11.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.11.1.js" />
+    <Content Include="Scripts\jquery-1.11.1.min.js" />
+    <Content Include="Scripts\jquery-1.11.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Libraries\jquery.timelinr-0.9.54.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\plugin\jquery.md5.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -1091,7 +1162,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Home\_Home.cshtml" />

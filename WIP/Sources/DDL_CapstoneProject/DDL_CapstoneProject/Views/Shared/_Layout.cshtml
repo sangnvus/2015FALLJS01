@@ -1,57 +1,96 @@
-﻿@using DDL_CapstoneProject.Ultilities
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
+
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Home</title>
+
+    <!-- Load css -->
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <link href="~/Content/animation.css" rel="stylesheet"/>
-    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.7.1/loading-bar.min.css' type='text/css' media='all'/>
+    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.7.1/loading-bar.min.css' type='text/css' media='all' />
     @RenderSection("stylesheets", required: false)
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+            background-color: #d6dbdf;
+            margin: 2px 0;
+            white-space: nowrap;
+        }
+
+        .pagination li {
+            margin-right: 0px;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+        }
+
+        #comments-list .well {
+            padding-top: 10px;
+        }
+
+        #comments-list .media-heading {
+            border-bottom: 1px solid #ccc;
+        } 
+
+        #comments-list .well.hided-comment {
+            background-color: #ccc;
+        }
+    </style>
 </head>
 <body ng-app="ClientApp">
-    <input type="hidden" value="@ViewBag.BaseUrl" id="BaseUrl"/>
+    <input type="hidden" value="@ViewBag.BaseUrl" id="BaseUrl" />
+
+    <!-- Header-->
     <div id="header">
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-5">
                     <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="@Url.Content("/#/home/")">Dandelion</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div class="collapse navbar-collapse" id="navbar-collapse-5">
                 <ul class="nav navbar-nav">
-                    <li><a href="#">Discover</a></li>
-                    @* HuyNM - create project *@
+                    <li><a href="discover.html">Discover</a></li>
                     <li><a href="@Url.Content("/#/project/create/")">Tạo</a></li>
-                    <li role="separator" class="divider-vertical"></li>
+                    <li role="separator" class="hidden-xs divider-vertical"></li>
                 </ul>
-
-                <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group inner-addon left-addon">
-                        <span class="glyphicon glyphicon-search"></span>
-                        <input type="text" class="form-control" placeholder="Tìm kiếm">
+                <form class="navbar-form navbar-left" action="search-advance.html" role="search">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input class="form-control" id="navbarInput-01" type="search" placeholder="Tìm kiếm...">
+                            <span class="input-group-btn">
+                                <button type="" class="btn"><span class="fui-search"></span></button>
+                            </span>
+                        </div>
                     </div>
                 </form>
-
                 <!-- Login/Logout/Profile -->
                 @{
                     if (User.Identity == null || !User.Identity.IsAuthenticated)
                     {
-                        <div class="collapse navbar-collapse navbar-exl-collapse">
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a href="@Url.Content("/#/register/")" class="">Đăng ký</a></li>
-                                <a href="@Url.Content("/login/")" class="btn btn-success navbar-btn navbar-right">Đăng nhập</a>
-                            </ul>
-                        </div>
+                        <ul class="nav navbar-nav navbar-right">
+                            <!-- Login and Regiter -->
+                            <form role="search" class="navbar-form navbar-right">
+                                <a href="@Url.Content("/login/")" class="btn btn-success btn-sm btn-wide" style="padding: 8px 0px;" role="button">Đăng nhập</a>
+                                <a href="@Url.Content("/#/register/")" class="btn btn-default btn-sm btn-wide" style="padding: 8px 0px;" role="button" type="">Đăng ký</a>
+                            </form>
+                        </ul>
                     }
                     else
                     {
@@ -66,26 +105,23 @@
                                     {
                                         <img id="avatar" src="@Url.Content("~/images/avatars/" + @ViewBag.CurrentUser.ProfileImage)" alt="" class="img-responsive img-circle center-block">
                                     }
-
                                     @ViewBag.CurrentUser.FullName
                                     <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu">
-                                    <h4>My stuff</h4>
+                                    <h5 class="c3">My stuff</h5>
                                     <li><a href="@Url.Content("/#/user/message")">Tin nhắn <span class="badge">3</span></a></li>
-                                    <li><a href="@Url.Content("/#/user/publicprofile/" + User.Identity.Name) ">Thông tin cá nhân</a></li>
+                                    <li><a href="@Url.Content("/#/user/publicprofile/" + User.Identity.Name)">Thông tin cá nhân</a></li>
                                     <li><a href="backed_project.html">Dự án đã ủng hộ</a></li>
                                     <li><a href="created_project.html">Dự án đã tạo</a></li>
                                     <li><a href="starred_project.html">Dự án theo dõi</a></li>
                                     <li class="divider"></li>
-                                    <h4>Cài đặt</h4>
+                                    <h5 class="c3">Chỉnh sửa</h5>
                                     <li><a href="account.html">Tài khoản</a></li>
-                                    <li><a href="@Url.Content("/#/user/editprofile/" + User.Identity.Name) ">Sửa đổi thông tin cá nhân</a></li>
+                                    <li><a href="@Url.Content("/#/user/editprofile/" + User.Identity.Name)">Thông tin cá nhân</a></li>
                                     <li class="divider"></li>
-                                    <p class="no-wrap">
-                                        Đăng nhập với tài khoản <b>@User.Identity.Name</b> | <a href="@Url.Content("/logout")">Đăng xuất</a>
-                                    </p>
+                                    <p class="no-wrap">Bạn đang đăng nhập với <b>@User.Identity.Name</b> | <a class="fnt-b" href="@Url.Content("/logout")">Thoát</a></p>
                                 </ul>
                             </li>
                         </ul>
@@ -93,51 +129,34 @@
                 }
             </div><!-- /.navbar-collapse -->
         </nav>
-    </div> <!--end header -->
-    @*<div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    </ul>
-                </div>
-            </div>
-        </div>*@
-    <div id="content" class="paddingNavbar" style="min-height: 577px; background-color: #f7fafa;">
+    </div>
+    <div style="min-height: 577px">
         @RenderBody()
         @RenderSection("SPAViews", required: false)
     </div>
+
     <!--Footer-->
-    <footer id="footer">
+    <div id="footer">
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
-                    <h4 style="color: #5ea5d7">DoI-Dream Of Innovation</h4>
-                    <a href="">Hosted by DoI</a>
+                <div class="col-md-6">
+                    <p class="fnt30 fnt-b dark-cyan">DLL - Dandelion</p>
+                    <a href="">Hosted by DDL</a>
                 </div>
-                <div class="col-md-3 col-md-push-6">
-                    <ul class="list-inline">
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">About us</a></li>
+                <div class="col-md-6">
+                    <ul class="pull-right list-inline">
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="about.html">About us</a></li>
                         <li><a href="#">Help</a></li>
                         <li><a href="#">Contact</a></li>
+                        <a id="gototop" class="gototop" href="#"><span class="glyphicon glyphicon-chevron-up"></span></a>
                     </ul>
                 </div>
             </div>
         </div>
-    </footer>
-    <!--End Footer-->
+    </div> <!-- end footer -->
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/otherScripts")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.7.1/loading-bar.min.js'></script>
