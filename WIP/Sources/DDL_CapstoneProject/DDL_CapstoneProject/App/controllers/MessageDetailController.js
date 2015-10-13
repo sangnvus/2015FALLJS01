@@ -1,12 +1,22 @@
 ﻿"use strict";
 
-app.controller('MessageDetailController', function ($scope, $location, conversation, toastr, MessageService, CommmonService) {
+app.controller('MessageDetailController', function ($scope, $location, $sce, $rootScope, conversation, toastr, MessageService, CommmonService) {
     //Todo here.
     $scope.Conversation = conversation.data.Data;
-
+    $scope.CurrentUser = $rootScope.UserInfo;
     $scope.Reply = {
         ConversationID: $scope.Conversation.ConversationID,
         Content: ""
+    }
+
+    // Function check string startwith 'http'
+    $scope.checkHTTP = function (input) {
+        var lowerStr = (input + "").toLowerCase();
+        return lowerStr.indexOf('http') === 0;
+    }
+
+    $scope.trustSrc = function (src) {
+        return $sce.trustAsResourceUrl(src);
     }
 
     // function reply a conversation
@@ -18,7 +28,7 @@ app.controller('MessageDetailController', function ($scope, $location, conversat
                     if (result.data.Status === "success") {
                         $scope.Conversation.MessageList.push(result.data.Data);
                         $scope.Reply.Content = "";
-                        toastr.success('Bạn đã gửi tin nhắn thành công!', 'Thành công!');
+                        toastr.success('Gửi tin nhắn trả lời!', 'Thành công!');
                     } else {
                         CommmonService.checkError(result.data.Type);
                         $scope.Error = result.data.Message;
