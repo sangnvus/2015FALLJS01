@@ -75,5 +75,13 @@ namespace DDL_CapstoneProject.Ultilities
             public static readonly string SUCCESS = "success";
             public static readonly string ERROR = "error";
         }
+
+        public static class FileType
+        {
+            public static readonly string AVATAR = "/images/avatars/";
+            public static readonly string OTHER = "/images/others/";
+            public static readonly string PROJECT = "/images/projects/";
+            public static readonly string SLIDE = "/images/slides/";
+        }
     }
 }

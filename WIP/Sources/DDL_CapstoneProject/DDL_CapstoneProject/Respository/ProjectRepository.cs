@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
-using DDL_CapstoneProject.Helper;
 using DDL_CapstoneProject.Helpers;
 using DDL_CapstoneProject.Models;
 using DDL_CapstoneProject.Models.DTOs;
@@ -36,14 +34,14 @@ namespace DDL_CapstoneProject.Respository
                 CategoryID = 0,
                 CreatorID = 0,
                 Title = string.Empty,
-                CreatedDate = DateTime.Now,
+                CreatedDate = DateTime.Today,
                 Risk = string.Empty,
                 ImageUrl = string.Empty,
                 SubDescription = string.Empty,
                 Location = string.Empty,
                 IsExprired = false,
                 CurrentFunded = 0,
-                ExpireDate = null,
+                ExpireDate = DateTime.Today,
                 FundingGoal = 0,
                 Description = string.Empty,
                 VideoUrl = string.Empty,
@@ -53,7 +51,7 @@ namespace DDL_CapstoneProject.Respository
                 {
                     new RewardPkg
                     {
-                        Type = string.Empty,
+                        Type = DDLConstants.RewardType.NO_REWARD,
                         IsHide = false,
                         EstimatedDelivery = null,
                         Quantity = 0,
@@ -66,7 +64,7 @@ namespace DDL_CapstoneProject.Respository
                     {
                         Title = string.Empty,
                         Description = string.Empty,
-                        CreatedDate = DateTime.Now,
+                        CreatedDate = DateTime.Today,
                     }
                 },
                 Timelines = new List<Timeline>
@@ -75,7 +73,7 @@ namespace DDL_CapstoneProject.Respository
                     {
                         Title = string.Empty,
                         Description = string.Empty,
-                        DueDate = DateTime.Now,
+                        DueDate = DateTime.Today,
                     }
                 },
                 Questions = new List<Question>
@@ -84,7 +82,7 @@ namespace DDL_CapstoneProject.Respository
                     {
                         Answer = string.Empty,
                         QuestionContent = string.Empty,
-                        CreatedDate = DateTime.Now,
+                        CreatedDate = DateTime.Today,
                     }
                 },
             };
@@ -109,36 +107,67 @@ namespace DDL_CapstoneProject.Respository
             db.Projects.Add(project);
             db.SaveChanges();
 
+            // Create projectCode
+            string projectIDString = project.ProjectID.ToString();
+            int plusLength = 6 - projectIDString.Length;
+            string plusCode = string.Concat(Enumerable.Repeat("0", plusLength));
+            project.ProjectCode = "PRJ" + plusCode + projectIDString;
+
+            db.SaveChanges();
+
             return project;
         }
 
         /// <summary>
         /// Edit a project
         /// </summary>
-        /// <param name="ProjectID">int</param>
         /// <param name="project">object</param>
         /// <returns>updateProject</returns>
-        public Project EditProject(int ProjectID, ProjectEditDTO project)
+        public Project EditProjectBasic(ProjectDetailDTO project, string uploadImageName)
         {
-            var updateProject = db.Projects.SingleOrDefault(u => u.ProjectID == ProjectID);
+            var updateProject = db.Projects.SingleOrDefault(u => u.ProjectID == project.ProjectID);
 
             if (updateProject == null)
             {
                 throw new Exception();
             }
 
+            if (uploadImageName != string.Empty)
+            {
+                updateProject.ImageUrl = DDLConstants.FileType.PROJECT + uploadImageName;
+            }
+
             updateProject.CategoryID = project.CategoryID;
-            updateProject.Description = project.Description;
             updateProject.ExpireDate = project.ExpireDate;
             updateProject.FundingGoal = project.FundingGoal;
-            updateProject.ImageUrl = project.ImageUrl;
             updateProject.Location = project.Location;
-            updateProject.Risk = project.Risk;
             updateProject.Status = project.Status;
             updateProject.SubDescription = project.SubDescription;
             updateProject.Title = project.Title;
-            updateProject.VideoUrl = project.VideoUrl;
 
+
+            db.SaveChanges();
+
+            return updateProject;
+        }
+
+        /// <summary>
+        /// Edit project's story
+        /// </summary>
+        /// <param name="project"></param>
+        /// <returns></returns>
+        public Project EditProjectStory(ProjectStoryDTO project)
+        {
+            var updateProject = db.Projects.SingleOrDefault(u => u.ProjectID == project.ProjectID);
+
+            if (updateProject == null)
+            {
+                throw new Exception();
+            }
+
+            updateProject.Risk = project.Risk;
+            updateProject.VideoUrl = project.VideoUrl;
+            updateProject.Description = project.Description;
 
             db.SaveChanges();
 
@@ -150,7 +179,7 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="ProjectID">int</param>
         /// <returns>project</returns>
-        public ProjectEditDTO GetProject(int ProjectID)
+        public ProjectEditDTO GetProjectBasic(int ProjectID)
         {
             var project = db.Projects.SingleOrDefault(x => x.ProjectID == ProjectID);
 
@@ -162,370 +191,40 @@ namespace DDL_CapstoneProject.Respository
             var projectDTO = new ProjectEditDTO
             {
                 ProjectID = project.ProjectID,
-                CreatorID = project.CreatorID,
+                ProjectCode = project.ProjectCode,
                 CategoryID = project.CategoryID,
                 Title = project.Title,
-                Risk = project.Risk,
-                ImageUrl = project.Risk,
+                ImageUrl = project.ImageUrl,
                 SubDescription = project.SubDescription,
                 Location = project.Location,
                 ExpireDate = project.ExpireDate,
                 FundingGoal = project.FundingGoal,
-                Description = project.Description,
-                VideoUrl = project.VideoUrl,
-                Status = project.Status
+                Status = project.Status,
+                CurrentFunded = project.CurrentFunded,
             };
-
-            // Get rewardPkg list
-            var rewardList = from RewardPkg in db.RewardPkgs
-                             where RewardPkg.ProjectID == ProjectID
-                             orderby RewardPkg.Type ascending
-                             select new RewardPkgDTO()
-                             {
-                                 Description = RewardPkg.Description,
-                                 EstimatedDelivery = RewardPkg.EstimatedDelivery,
-                                 IsHide = RewardPkg.IsHide,
-                                 Quantity = RewardPkg.Quantity,
-                                 RewardPkgID = RewardPkg.RewardPkgID,
-                                 Type = RewardPkg.Type
-                             };
-            // Get updatelog list
-            var updateLogList = from UpdateLog in db.UpdateLogs
-                                where UpdateLog.ProjectID == ProjectID
-                                orderby UpdateLog.CreatedDate descending
-                                select new UpdateLogDTO()
-                                {
-                                    Description = UpdateLog.Description,
-                                    Title = UpdateLog.Title,
-                                    CreatedDate = UpdateLog.CreatedDate,
-                                    UpdateLogID = UpdateLog.UpdateLogID,
-                                };
-            // Get timeline list
-            var timelineList = from Timeline in db.Timelines
-                               where Timeline.ProjectID == ProjectID
-                               orderby Timeline.DueDate ascending
-                               select new TimeLineDTO()
-                               {
-                                   Description = Timeline.Description,
-                                   Title = Timeline.Title,
-                                   ImageUrl = Timeline.ImageUrl,
-                                   DueDate = Timeline.DueDate,
-                                   TimelineID = Timeline.TimelineID
-                               };
-            // Get question list
-            var questionList = from Question in db.Questions
-                               where Question.ProjectID == ProjectID
-                               orderby Question.CreatedDate descending
-                               select new QuestionDTO()
-                               {
-                                   CreatedDate = Question.CreatedDate,
-                                   Answer = Question.Answer,
-                                   QuestionContent = Question.QuestionContent,
-                                   QuestionID = Question.QuestionID
-                               };
-            // Get comment list
-            var commentList = from Comment in db.Comments
-                              where Comment.ProjectID == ProjectID
-                              orderby Comment.CreatedDate descending
-                              select new CommentDTO()
-                              {
-                                  CreatedDate = Comment.CreatedDate,
-                                  CommentContent = Comment.CommentContent,
-                                  IsHide = Comment.IsHide,
-                                  CommentID = Comment.CommentID,
-                                  //UserID = Comment.UserID
-                              };
-
-            projectDTO.RewardPkgs = rewardList.ToList();
-            projectDTO.UpdateLogs = updateLogList.ToList();
-            projectDTO.Timelines = timelineList.ToList();
-            projectDTO.Questions = questionList.ToList();
-            projectDTO.Comments = commentList.ToList();
 
             return projectDTO;
         }
 
-        public ProjectDetailDTO GetProjectByCode(string projectCode, string userName)
+        public ProjectStoryDTO GetProjectStory(int ProjectID)
         {
-            if (string.IsNullOrEmpty(projectCode))
-            {
-                throw new KeyNotFoundException();
-            }
+            var project = db.Projects.SingleOrDefault(x => x.ProjectID == ProjectID);
 
-            // Create Project query from dB.
-            var projectDetail = (from project in db.Projects
-                                 where project.ProjectCode.Equals(projectCode.ToUpper())
-                                 select new ProjectDetailDTO
-                                 {
-                                     CategoryID = project.CategoryID,
-                                     CreatedDate = project.CreatedDate,
-                                     Description = project.Description,
-                                     Title = project.Title,
-                                     ImageUrl = project.ImageUrl,
-                                     Status = project.Status,
-                                     SubDescription = project.SubDescription,
-                                     ProjectCode = project.ProjectCode,
-                                     CurrentFunded = project.CurrentFunded,
-                                     ExpireDate = project.ExpireDate,
-                                     Risk = project.Risk,
-                                     FundingGoal = project.FundingGoal,
-                                     Location = project.Location,
-                                     IsExprired = project.IsExprired,
-                                     VideoUrl = project.VideoUrl,
-                                     CategoryName = project.Category.Name,
-                                     ProjectID = project.ProjectID,
-                                     NumberBacked = project.Backings.Count,
-                                     Creator = new CreatorDTO
-                                     {
-                                         FullName = project.Creator.UserInfo.FullName,
-                                         UserName = project.Creator.Username,
-                                         NumberBacked = project.Creator.Backings.Count,
-                                         NumberCreated = project.Creator.CreatedProjects.Count,
-                                         ProfileImage = project.Creator.UserInfo.ProfileImage
-                                     }
-                                 }).FirstOrDefault();
-
-            // Check project exist?
-            if (projectDetail == null)
-            {
-                throw new KeyNotFoundException();
-            }
-
-            // Get comments.
-            var commentsList = (userName != null && projectDetail.Creator.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase))
-                                ? GetComments(projectDetail.ProjectID, true)
-                                : GetComments(projectDetail.ProjectID, false);
-
-            // Insert list comments into project
-            projectDetail.CommentsList = commentsList;
-
-            // Get updateLog list.
-            var updateLogsList = (from updateLog in db.UpdateLogs
-                                  where updateLog.ProjectID == projectDetail.ProjectID
-                                  orderby updateLog.CreatedDate descending
-                                  select new UpdateLogDTO
-                                  {
-                                      CreatedDate = updateLog.CreatedDate,
-                                      Description = updateLog.Description,
-                                      Title = updateLog.Title,
-                                      UpdateLogID = updateLog.UpdateLogID
-                                  }).ToList();
-
-            // Insert updatelog list into projectDTO
-            projectDetail.UpdateLogsList = updateLogsList;
-
-            // Set number exprire day.
-            var timespan = projectDetail.ExpireDate - DateTime.Today;
-            projectDetail.NumberDays = timespan.GetValueOrDefault().Days;
-
-            return projectDetail;
-        }
-
-        #region Comment
-
-        private List<CommentDTO> GetComments(int projectID, bool showHide)
-        {
-            var commentsQuery = from comment in db.Comments
-                                where comment.ProjectID == projectID
-                                orderby comment.CreatedDate descending
-                                select new CommentDTO
-                                {
-                                    FullName = comment.User.UserInfo.FullName,
-                                    ProfileImage = comment.User.UserInfo.ProfileImage,
-                                    CreatedDate = comment.CreatedDate,
-                                    UserName = comment.User.Username,
-                                    CommentContent = comment.CommentContent,
-                                    CommentID = comment.CommentID,
-                                    IsHide = comment.IsHide,
-                                    IsEdited = comment.IsEdited
-                                };
-
-            //var commentsList = showHide ? commentsQuery.Take(10).ToList() : commentsQuery.Where(x => !x.IsHide).Take(10).ToList();
-            var commentsList = showHide ? commentsQuery.ToList() : commentsQuery.Where(x => !x.IsHide).ToList();
-
-            return commentsList;
-        }
-
-        public List<CommentDTO> AddComment(string projectCode, CommentDTO comment, DateTime lastCommentDateTime)
-        {
-            // Check user exist.
-            var user = UserRepository.Instance.GetByUserNameOrEmail(comment.UserName);
-            if (user == null)
-            {
-                throw new UserNotFoundException();
-            }
-
-            // Get project
-            Project project = null;
-            if (projectCode != null)
-            {
-                // Check conversation exist.
-                project = db.Projects.FirstOrDefault(c => c.ProjectCode.Equals(projectCode, StringComparison.OrdinalIgnoreCase));
-            }
             if (project == null)
             {
                 throw new KeyNotFoundException();
             }
 
-            // Create comment.
-            var newComment = db.Comments.Create();
-            newComment.CommentContent = comment.CommentContent;
-            newComment.CreatedDate = DateTime.Now;
-            newComment.IsHide = false;
-            newComment.UserID = user.DDL_UserID;
-            newComment.ProjectID = project.ProjectID;
-            newComment.IsEdited = false;
-            newComment.UpdatedDate = DateTime.Now;
-
-
-            // Add to DB.
-            db.Comments.Add(newComment);
-            db.SaveChanges();
-
-            // Get list new comment.
-            var commentsQuery = from commentItem in db.Comments
-                                where commentItem.Project.ProjectCode == projectCode && commentItem.CreatedDate > lastCommentDateTime
-                                orderby commentItem.CreatedDate descending
-                                select new CommentDTO
-                                {
-                                    IsHide = commentItem.IsHide,
-                                    FullName = commentItem.User.UserInfo.FullName,
-                                    CreatedDate = commentItem.CreatedDate,
-                                    ProfileImage = commentItem.User.UserInfo.ProfileImage,
-                                    UserName = commentItem.User.Username,
-                                    CommentContent = commentItem.CommentContent,
-                                    CommentID = commentItem.CommentID,
-                                };
-
-            var commentsList = (comment.UserName == project.Creator.Username)
-                ? commentsQuery.ToList()
-                : commentsQuery.Where(c => !c.IsHide).ToList();
-
-            return commentsList;
-        }
-
-        /// <summary>
-        /// ShowHideComment function
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <returns>CommentDTO</returns>
-        public CommentDTO ShowHideComment(int id, string userName)
-        {
-
-            // Get comment.
-            var comment = db.Comments.FirstOrDefault(c => c.CommentID == id);
-            if (comment == null)
+            var projectBasicDTO = new ProjectStoryDTO
             {
-                throw new KeyNotFoundException();
-            }
-
-            // Check creator.
-            if (!comment.Project.Creator.Username.Equals(userName, StringComparison.OrdinalIgnoreCase))
-            {
-                throw new NotPermissionException();
-            }
-
-            // Change hide status
-            comment.IsHide = !comment.IsHide;
-
-            // Save in DB
-            db.SaveChanges();
-
-            // Map DTO
-            var commentDto = new CommentDTO
-            {
-                IsHide = comment.IsHide,
-                FullName = comment.User.UserInfo.FullName,
-                CreatedDate = comment.CreatedDate,
-                ProfileImage = comment.User.UserInfo.ProfileImage,
-                UserName = comment.User.Username,
-                CommentContent = comment.CommentContent,
-                CommentID = comment.CommentID,
-                IsEdited = comment.IsEdited
+                ProjectID = project.ProjectID,
+                Description = project.Description,
+                Risk = project.Risk,
+                VideoUrl = project.VideoUrl
             };
 
-            return commentDto;
+            return projectBasicDTO;
         }
-
-        /// <summary>
-        /// EditComment
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="userName"></param>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        public CommentDTO EditComment(int id, string userName, string content)
-        {
-
-            // Get comment.
-            var comment = db.Comments.FirstOrDefault(c => c.CommentID == id);
-            if (comment == null)
-            {
-                throw new KeyNotFoundException();
-            }
-
-            // Check permission.
-            if (!comment.User.Username.Equals(userName, StringComparison.OrdinalIgnoreCase))
-            {
-                throw new NotPermissionException();
-            }
-
-            // Change content
-            comment.CommentContent = content;
-            comment.UpdatedDate = DateTime.Now;
-            comment.IsEdited = true;
-
-            // Save in DB
-            db.SaveChanges();
-
-            // Map DTO
-            var commentDto = new CommentDTO
-            {
-                IsHide = comment.IsHide,
-                FullName = comment.User.UserInfo.FullName,
-                CreatedDate = comment.CreatedDate,
-                ProfileImage = comment.User.UserInfo.ProfileImage,
-                UserName = comment.User.Username,
-                CommentContent = comment.CommentContent,
-                CommentID = comment.CommentID,
-                IsEdited = comment.IsEdited
-            };
-
-            return commentDto;
-        }
-
-        /// <summary>
-        /// DeleteComment
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="userName"></param>
-        /// <returns>boolean</returns>
-        public bool DeleteComment(int id, string userName)
-        {
-            // Get comment.
-            var comment = db.Comments.FirstOrDefault(c => c.CommentID == id);
-            if (comment == null)
-            {
-                throw new KeyNotFoundException();
-            }
-
-            // Check creator.
-            if (!comment.User.Username.Equals(userName, StringComparison.OrdinalIgnoreCase))
-            {
-                throw new NotPermissionException();
-            }
-
-            // Delete comment
-            db.Comments.Remove(comment);
-
-            // Save in DB
-            db.SaveChanges();
-
-            return true;
-        }
-        #endregion
-
 
         #endregion
     }

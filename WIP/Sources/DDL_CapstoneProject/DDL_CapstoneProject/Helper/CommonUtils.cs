@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -28,6 +29,23 @@ namespace DDL_CapstoneProject.Ultilities
         public static string Md5(string data)
         {
             return BitConverter.ToString(EncryptData(data)).Replace("-", "").ToLower();
+        }
+
+        public static string UploadImage(HttpPostedFile file, string fileName, string uploadPath)
+        {
+            if (file != null)
+            {
+                var extension = Path.GetExtension(file.FileName);
+                fileName = fileName + extension;
+                var path = Path.Combine(HttpContext.Current.Request.MapPath(uploadPath), fileName);
+
+                file.SaveAs(path);
+
+                return fileName;
+            }
+
+            return string.Empty;
+
         }
     }
 }
