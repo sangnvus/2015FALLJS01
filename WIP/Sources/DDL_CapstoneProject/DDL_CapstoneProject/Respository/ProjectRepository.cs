@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using DDL_CapstoneProject.Helper;
 using DDL_CapstoneProject.Helpers;
 using DDL_CapstoneProject.Models;
 using DDL_CapstoneProject.Models.DTOs;
@@ -225,6 +226,287 @@ namespace DDL_CapstoneProject.Respository
 
             return projectBasicDTO;
         }
+
+        public ProjectDetailDTO GetProjectByCode(string projectCode, string userName)
+        {
+            if (string.IsNullOrEmpty(projectCode))
+            {
+                throw new KeyNotFoundException();
+            }
+
+            // Create Project query from dB.
+            var projectDetail = (from project in db.Projects
+                                 where project.ProjectCode.Equals(projectCode.ToUpper())
+                                 select new ProjectDetailDTO
+                                 {
+                                     CategoryID = project.CategoryID,
+                                     CreatedDate = project.CreatedDate,
+                                     Description = project.Description,
+                                     Title = project.Title,
+                                     ImageUrl = project.ImageUrl,
+                                     Status = project.Status,
+                                     SubDescription = project.SubDescription,
+                                     ProjectCode = project.ProjectCode,
+                                     CurrentFunded = project.CurrentFunded,
+                                     ExpireDate = project.ExpireDate,
+                                     Risk = project.Risk,
+                                     FundingGoal = project.FundingGoal,
+                                     Location = project.Location,
+                                     IsExprired = project.IsExprired,
+                                     VideoUrl = project.VideoUrl,
+                                     CategoryName = project.Category.Name,
+                                     ProjectID = project.ProjectID,
+                                     NumberBacked = project.Backings.Count,
+                                     Creator = new CreatorDTO
+                                     {
+                                         FullName = project.Creator.UserInfo.FullName,
+                                         UserName = project.Creator.Username,
+                                         NumberBacked = project.Creator.Backings.Count,
+                                         NumberCreated = project.Creator.CreatedProjects.Count,
+                                         ProfileImage = project.Creator.UserInfo.ProfileImage
+                                     }
+                                 }).FirstOrDefault();
+
+            // Check project exist?
+            if (projectDetail == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
+            // Get comments.
+            var commentsList = (userName != null && projectDetail.Creator.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase))
+                                ? GetComments(projectDetail.ProjectID, true)
+                                : GetComments(projectDetail.ProjectID, false);
+
+            // Insert list comments into project
+            projectDetail.CommentsList = commentsList;
+
+            // Get updateLog list.
+            var updateLogsList = (from updateLog in db.UpdateLogs
+                                  where updateLog.ProjectID == projectDetail.ProjectID
+                                  orderby updateLog.CreatedDate descending
+                                  select new UpdateLogDTO
+                                  {
+                                      CreatedDate = updateLog.CreatedDate,
+                                      Description = updateLog.Description,
+                                      Title = updateLog.Title,
+                                      UpdateLogID = updateLog.UpdateLogID
+                                  }).ToList();
+
+            // Insert updatelog list into projectDTO
+            projectDetail.UpdateLogsList = updateLogsList;
+
+            // Set number exprire day.
+            var timespan = projectDetail.ExpireDate - DateTime.Today;
+            projectDetail.NumberDays = timespan.GetValueOrDefault().Days;
+
+            return projectDetail;
+        }
+
+        #region Comment
+
+        private List<CommentDTO> GetComments(int projectID, bool showHide)
+        {
+            var commentsQuery = from comment in db.Comments
+                                where comment.ProjectID == projectID
+                                orderby comment.CreatedDate descending
+                                select new CommentDTO
+                                {
+                                    FullName = comment.User.UserInfo.FullName,
+                                    ProfileImage = comment.User.UserInfo.ProfileImage,
+                                    CreatedDate = comment.CreatedDate,
+                                    UserName = comment.User.Username,
+                                    CommentContent = comment.CommentContent,
+                                    CommentID = comment.CommentID,
+                                    IsHide = comment.IsHide,
+                                    IsEdited = comment.IsEdited
+                                };
+
+            //var commentsList = showHide ? commentsQuery.Take(10).ToList() : commentsQuery.Where(x => !x.IsHide).Take(10).ToList();
+            var commentsList = showHide ? commentsQuery.ToList() : commentsQuery.Where(x => !x.IsHide).ToList();
+
+            return commentsList;
+        }
+
+        public List<CommentDTO> AddComment(string projectCode, CommentDTO comment, DateTime lastCommentDateTime)
+        {
+            // Check user exist.
+            var user = UserRepository.Instance.GetByUserNameOrEmail(comment.UserName);
+            if (user == null)
+            {
+                throw new UserNotFoundException();
+            }
+
+            // Get project
+            Project project = null;
+            if (projectCode != null)
+            {
+                // Check conversation exist.
+                project = db.Projects.FirstOrDefault(c => c.ProjectCode.Equals(projectCode, StringComparison.OrdinalIgnoreCase));
+            }
+            if (project == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
+            // Create comment.
+            var newComment = db.Comments.Create();
+            newComment.CommentContent = comment.CommentContent;
+            newComment.CreatedDate = DateTime.Now;
+            newComment.IsHide = false;
+            newComment.UserID = user.DDL_UserID;
+            newComment.ProjectID = project.ProjectID;
+            newComment.IsEdited = false;
+            newComment.UpdatedDate = DateTime.Now;
+
+
+            // Add to DB.
+            db.Comments.Add(newComment);
+            db.SaveChanges();
+
+            // Get list new comment.
+            var commentsQuery = from commentItem in db.Comments
+                                where commentItem.Project.ProjectCode == projectCode && commentItem.CreatedDate > lastCommentDateTime
+                                orderby commentItem.CreatedDate descending
+                                select new CommentDTO
+                                {
+                                    IsHide = commentItem.IsHide,
+                                    FullName = commentItem.User.UserInfo.FullName,
+                                    CreatedDate = commentItem.CreatedDate,
+                                    ProfileImage = commentItem.User.UserInfo.ProfileImage,
+                                    UserName = commentItem.User.Username,
+                                    CommentContent = commentItem.CommentContent,
+                                    CommentID = commentItem.CommentID,
+                                };
+
+            var commentsList = (comment.UserName == project.Creator.Username)
+                ? commentsQuery.ToList()
+                : commentsQuery.Where(c => !c.IsHide).ToList();
+
+            return commentsList;
+        }
+
+        /// <summary>
+        /// ShowHideComment function
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <returns>CommentDTO</returns>
+        public CommentDTO ShowHideComment(int id, string userName)
+        {
+
+            // Get comment.
+            var comment = db.Comments.FirstOrDefault(c => c.CommentID == id);
+            if (comment == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
+            // Check creator.
+            if (!comment.Project.Creator.Username.Equals(userName, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new NotPermissionException();
+            }
+
+            // Change hide status
+            comment.IsHide = !comment.IsHide;
+
+            // Save in DB
+            db.SaveChanges();
+
+            // Map DTO
+            var commentDto = new CommentDTO
+            {
+                IsHide = comment.IsHide,
+                FullName = comment.User.UserInfo.FullName,
+                CreatedDate = comment.CreatedDate,
+                ProfileImage = comment.User.UserInfo.ProfileImage,
+                UserName = comment.User.Username,
+                CommentContent = comment.CommentContent,
+                CommentID = comment.CommentID,
+                IsEdited = comment.IsEdited
+            };
+
+            return commentDto;
+        }
+
+        /// <summary>
+        /// EditComment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userName"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public CommentDTO EditComment(int id, string userName, string content)
+        {
+
+            // Get comment.
+            var comment = db.Comments.FirstOrDefault(c => c.CommentID == id);
+            if (comment == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
+            // Check permission.
+            if (!comment.User.Username.Equals(userName, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new NotPermissionException();
+            }
+
+            // Change content
+            comment.CommentContent = content;
+            comment.UpdatedDate = DateTime.Now;
+            comment.IsEdited = true;
+
+            // Save in DB
+            db.SaveChanges();
+
+            // Map DTO
+            var commentDto = new CommentDTO
+            {
+                IsHide = comment.IsHide,
+                FullName = comment.User.UserInfo.FullName,
+                CreatedDate = comment.CreatedDate,
+                ProfileImage = comment.User.UserInfo.ProfileImage,
+                UserName = comment.User.Username,
+                CommentContent = comment.CommentContent,
+                CommentID = comment.CommentID,
+                IsEdited = comment.IsEdited
+            };
+
+            return commentDto;
+        }
+
+        /// <summary>
+        /// DeleteComment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userName"></param>
+        /// <returns>boolean</returns>
+        public bool DeleteComment(int id, string userName)
+        {
+            // Get comment.
+            var comment = db.Comments.FirstOrDefault(c => c.CommentID == id);
+            if (comment == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
+            // Check creator.
+            if (!comment.User.Username.Equals(userName, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new NotPermissionException();
+            }
+
+            // Delete comment
+            db.Comments.Remove(comment);
+
+            // Save in DB
+            db.SaveChanges();
+
+            return true;
+        }
+        #endregion
 
         #endregion
     }
