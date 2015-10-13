@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using DDL_CapstoneProject.Helpers;
 using DDL_CapstoneProject.Models;
+using DDL_CapstoneProject.Models.DTOs;
 
 namespace DDL_CapstoneProject.Respository
 {
@@ -20,9 +21,23 @@ namespace DDL_CapstoneProject.Respository
 
         #region "Methods"
         // GET: api/Category
-        public List<Category> GetCategories()
+        public List<CategoryDTO> GetCategories()
         {
-            return db.Categories.Where(x => x.IsActive).ToList();
+            // Get rewardPkg list
+            var listCategories = db.Categories.Where(x => x.IsActive).ToList();
+
+            var listCategoryDTO = new List<CategoryDTO>();
+
+            foreach (var Category in listCategories)
+            {
+                listCategoryDTO.Add(
+                    new CategoryDTO
+                    {
+                        CategoryID = Category.CategoryID,
+                        Name = Category.Name,
+                    });
+            }
+            return listCategoryDTO;
         }
         #endregion
         

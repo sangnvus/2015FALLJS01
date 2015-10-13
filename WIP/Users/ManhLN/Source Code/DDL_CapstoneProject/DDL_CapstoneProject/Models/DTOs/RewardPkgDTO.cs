@@ -8,6 +8,7 @@ namespace DDL_CapstoneProject.Models.DTOs
     public class RewardPkgDTO
     {
         public int RewardPkgID { get; set; }
+        public decimal PledgeAmount { get; set; }
         /// <summary>
         /// Type of reward
         /// there are 3 type:
