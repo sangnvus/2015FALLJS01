@@ -2,7 +2,8 @@
 var service = angular.module("DDLService", []);
 var directive = angular.module("DDLDirective", []);
 var app = angular.module("ClientApp", ["ngRoute", "ngAnimate", "ngSanitize", "DDLService",
-    "DDLDirective", 'angular-loading-bar', 'textAngular', 'toastr', 'ui.bootstrap', 'monospaced.elastic', 'datatables', 'datatables.bootstrap']);
+    "DDLDirective", 'angular-loading-bar', 'textAngular', 'toastr', 'ui.bootstrap', 'monospaced.elastic',
+    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert', 'ui.bootstrap.tabs']);
 
 // Show Routing.
 app.config(["$routeProvider", function ($routeProvider) {
@@ -52,17 +53,16 @@ app.config(["$routeProvider", function ($routeProvider) {
                 }]
             }
         });
-    $routeProvider.when("/project/create",
-        {
-            templateUrl: "/ClientPartial/CreateProject",
-            controller: "CreateProjectController",
-            resolve: {
-                categories: ['$rootScope', '$route', '$q', 'CategoryService', 'CommmonService', function ($rootScope, $route, $q, CategoryService, CommmonService) {
-                    var promise = CategoryService.getCategories();
-                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
-                }]
-            }
-        });
+    $routeProvider.when("/project/create", {
+        templateUrl: "/ClientPartial/CreateProject",
+        controller: "CreateProjectController",
+        resolve: {
+            categories: ['$rootScope', '$route', '$q', 'CategoryService', 'CommmonService', function ($rootScope, $route, $q, CategoryService, CommmonService) {
+                var promise = CategoryService.getCategories();
+                return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+            }]
+        }
+    });
     $routeProvider.when("/project/edit/:id",
         {
             templateUrl: "/ClientPartial/EditProject",
