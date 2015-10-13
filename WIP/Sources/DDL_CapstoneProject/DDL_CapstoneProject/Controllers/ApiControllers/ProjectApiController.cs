@@ -269,5 +269,31 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
         }
+
+
+        //TrungVN
+
+        public IHttpActionResult GetProject(int take, int categoryid, string orderby)
+        {
+            var listGetProject = ProjectRepository.Instance.GetProject(take, categoryid, orderby);
+            return Ok(new HttpMessageDTO { Status = "success", Data = listGetProject });
+        }
+        public IHttpActionResult GetProjectByCategory()
+        {
+            var listGetProjectByCategory = ProjectRepository.Instance.GetProjectByCategory();
+            return Ok(new HttpMessageDTO { Status = "success", Data = listGetProjectByCategory });
+        }
+        public IHttpActionResult GetProjectStatisticList()
+        {
+            var listGetProjectStatistic = ProjectRepository.Instance.GetProjectStatisticList();
+            return Ok(new HttpMessageDTO { Status = "success", Data = listGetProjectStatistic });
+        }
+        public IHttpActionResult GetStatisticListForHome()
+        {
+            var listStatisticForHome = ProjectRepository.Instance.GetStatisticListForHome();
+            return Ok(new HttpMessageDTO { Status = "success", Data = listStatisticForHome });
+        }
+
+        //Trungvn
     }
 }

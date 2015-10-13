@@ -39,6 +39,33 @@ namespace DDL_CapstoneProject.Respository
             }
             return listCategoryDTO;
         }
+        public List<CategoryProjectCountDTO> GetCategoryProjectCount()
+        {
+            var CategoryList = new List<CategoryProjectCountDTO>();
+            var CategorySet = from category in db.Categories
+                              select new CategoryProjectCountDTO
+                              {
+                                  CategoryID = category.CategoryID,
+                                  Name = category.Name,
+                                  projectCount = (from pro in category.Projects
+                                                  where !pro.IsExprired
+                                                  select pro.ProjectID).Count()
+
+                              };
+            try
+            {
+
+                if (CategorySet.Any())
+                {
+                    CategoryList = CategorySet.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return CategoryList;
+        }
         #endregion
         
     }

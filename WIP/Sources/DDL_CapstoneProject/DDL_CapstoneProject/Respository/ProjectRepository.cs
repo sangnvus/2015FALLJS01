@@ -6,6 +6,8 @@ using DDL_CapstoneProject.Helpers;
 using DDL_CapstoneProject.Models;
 using DDL_CapstoneProject.Models.DTOs;
 using DDL_CapstoneProject.Ultilities;
+using System.Data.Entity;
+using System.Diagnostics;
 
 namespace DDL_CapstoneProject.Respository
 {
@@ -26,6 +28,158 @@ namespace DDL_CapstoneProject.Respository
         /// Initial a empty project
         /// </summary>
         /// <returns>emptyProject</returns>
+        /// 
+
+
+        //TrungVn
+
+
+        public List<ProjectBasicViewDTO> GetProject(int take, int categoryid, string order)
+        {
+            DateTime currentDate = DateTime.Now;
+            var ProjectList = from project in db.Projects
+                              where !project.IsExprired && (categoryid == 0 || project.CategoryID == categoryid)
+                              select new ProjectBasicViewDTO
+                              {
+                                  ProjectID = project.ProjectID,
+                                  CreatorName = project.Creator.UserInfo.FullName,
+                                  Title = project.Title,
+                                  ImageUrl = project.ImageUrl,
+                                  SubDescription = project.SubDescription,
+                                  Location = project.Location,
+                                  CurrentFunded = Decimal.Round((project.CurrentFunded / project.FundingGoal) * 100),
+                                  CurrentFundedNumber = project.CurrentFunded,
+                                  ExpireDate = DbFunctions.DiffDays(project.ExpireDate, DateTime.Now),
+                                  FundingGoal = project.FundingGoal,
+                                  Category = project.Category.Name,
+                                  Backers = project.Backings.Count,
+                                  CreatedDate = project.CreatedDate,
+                                  PopularPoint = project.PopularPoint
+                              };
+            try
+            {
+                if (ProjectList.Any())
+                {
+                    return orderBy(order, ProjectList).Take(take).ToList();
+                }
+            }
+            catch (Exception ex) { }
+            return new List<ProjectBasicViewDTO>();
+        }
+
+
+        public List<ProjectBasicViewDTO> GetProjectHightestAndTotalFund()
+        {
+            var list = new List<ProjectBasicViewDTO>();
+            var HeightestFund = from project in db.Projects
+                                where project.IsExprired && project.CurrentFunded > project.FundingGoal
+                                orderby project.CurrentFunded
+                                select new ProjectBasicViewDTO
+                                {
+                                    CurrentFundedNumber = project.CurrentFunded
+                                };
+            try
+            {
+                if (HeightestFund.Any())
+                {
+                    list.Add(HeightestFund.Take(1).ToList()[0]);
+                }
+            }
+            catch (Exception ex) { Debug.WriteLine(ex); }
+            var TotalFund = from project in db.Projects
+                            select project.CurrentFunded;
+            try
+            {
+                var pro = new ProjectBasicViewDTO();
+                if (TotalFund.Any())
+                {
+                    pro.CurrentFundedNumber = (Convert.ToDecimal(TotalFund.Sum()));
+                }
+                list.Add(pro);
+            }
+            catch (Exception ex) { Debug.WriteLine(ex); }
+            if (!list.Any())
+            {
+                list.Add(new ProjectBasicViewDTO());
+            }
+            return list;
+        }
+
+        private IQueryable<ProjectBasicViewDTO> orderBy(string order, IQueryable<ProjectBasicViewDTO> ProjectList)
+        {
+            if (order == "CurrentFunded")
+            {
+                return from project in ProjectList
+                       orderby project.CurrentFundedNumber descending
+                       select project;
+            }
+            if (order == "CreatedDate")
+            {
+                return from project in ProjectList
+                       orderby project.CreatedDate descending
+                       select project;
+            }
+            if (order == "PopularPoint")
+            {
+                return from project in ProjectList
+                       orderby project.PopularPoint descending
+                       select project;
+            }
+            if (order == "ExpireDate")
+            {
+                return from project in ProjectList
+                       orderby project.ExpireDate
+                       select project;
+            }
+            if (order == "FundingGoal")
+            {
+                return from project in ProjectList
+                       orderby project.FundingGoal
+                       select project;
+            }
+            return ProjectList;
+        }
+        public List<ProjectBasicViewDTO> GetProjectByCategory()
+        {
+            var ProjectList = new List<ProjectBasicViewDTO>();
+            try
+            {
+                List<Category> cat = db.Categories.ToList();
+                for (int i = 0; i < cat.Count(); i++)
+                {
+                    List<ProjectBasicViewDTO> getProject = GetProject(1, cat[i].CategoryID, "PopularPoint");
+                    if (getProject.Any())
+                        ProjectList.Add(getProject[0]);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            return ProjectList;
+        }
+
+        public List<List<ProjectBasicViewDTO>> GetProjectStatisticList()
+        {
+            var ProjectList = new List<List<ProjectBasicViewDTO>>();
+            ProjectList.Add(GetProject(3, 0, "PopularPoint"));
+            ProjectList.Add(GetProject(3, 0, "CreatedDate"));
+            ProjectList.Add(GetProject(3, 0, "CurrentFunded"));
+            ProjectList.Add(GetProject(3, 0, "ExpireDate"));
+
+            return ProjectList;
+        }
+        public List<List<ProjectBasicViewDTO>> GetStatisticListForHome()
+        {
+            var ProjectList = new List<List<ProjectBasicViewDTO>>();
+            ProjectList.Add(GetProject(3, 0, "PopularPoint"));
+            ProjectList.Add(GetProjectByCategory());
+            ProjectList.Add(GetProject(1, 0, "CurrentFunded"));
+            ProjectList.Add(GetProjectHightestAndTotalFund());
+            return ProjectList;
+        }
+        //TrungVn
+
         public Project CreateEmptyProject()
         {
             var project = new Project

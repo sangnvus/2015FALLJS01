@@ -16,7 +16,11 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
             ViewBag.BaseUrl = GetBaseUrl();
             return View();
         }
+        public ActionResult Discover()
+        {
 
+            return PartialView("Discover");
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

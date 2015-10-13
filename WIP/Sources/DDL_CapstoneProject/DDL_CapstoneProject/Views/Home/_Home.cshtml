@@ -1,66 +1,34 @@
-﻿<div>
-    <div id="slider">
-        @*<carousel interval="5000" no-wrap="false">
-                <slide active="true">
-                    <img ng-src="../images/slides/slider1.jpg" class="imgCarouse">
-                    <div class="carousel-caption">
-                        <h1>Emmett Louis Till, 1941–1955</h1>
-                        <h3>is murder catalyzed the civil rights movement. Help make the film that will tell his story.</h3>
-                        <a href="project_detail.html" class="btn btn-success btn-lg">View project</a>
-                    </div>
-                </slide>
-                <slide>
-                    <img ng-src="../images/slides/slider2.jpg" class="imgCarouse">
-                    <div class="carousel-caption">
-                        <h1>The World’s Cleanest Power Plant</h1>
-                        <h3>Support a team of architects who are working to reduce carbon emissions by making art in the sky.</h3>
-                        <a href="project_detail.html" class="btn btn-success btn-lg">View project</a>
-                    </div>
-                </slide>
-                <slider>
-                    <img ng-src="../images/slides/slider3.jpg" class="imgCarouse">
-                    <div class="carousel-caption">
-                        <h1>Eco - Global Survival Game</h1>
-                        <h3>Collaborate to build civilization in a simulated ecosystem, creating laws to make group decisions.</h3>
-                        <a href="project_detail.html" class="btn btn-success btn-lg">View project</a>
-                    </div>
-                </slider>
-            </carousel>*@
-        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
+﻿
+<div id="content" class="paddingNavbar">
+    <div id="main-slider" class="no-margin">
+        <div class="carousel slide wet-asphalt">
             <ol class="carousel-indicators">
-                <li data-target="#carousel-example-generic" data-slide-to="{{Slides[0].Order-1}}" class="active"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="{{Slide.Order-1}}" ng-repeat="Slide in Slides" ng-if="Slide.SlideID != Slides[0].SlideID"></li>
+                <li showtab data-target="#main-slider" data-slide-to="{{$index}}" ng-repeat="slide in Slides track by $index" ng-class="{'active': $first}"></li>
             </ol>
-
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner" role="listbox">
-                <div class="item active">
-                    <img class="imgCarouse" src="..{{Slides[0].ImageUrl}}" alt="...">
-                    <div class="carousel-caption">
-                        <h1>{{Slides[0].Title}}</h1>
-                        <h3>{{Slides[0].Description}}</h3>
-                        <a href="project_detail.html" class="btn {{Slides[0].ButtonColor}} btn-lg">{{Slides[0].ButtonText}}</a>
+            <div class="carousel-inner">
+                <div class="item" style="background-image: url({{slide.ImageUrl}})" ng-repeat="slide in Slides track by $index" ng-class="{'active': $first}">
+                    <div class="container">
+                        <div class="row">
+                            <div ng-class="$index == 3 ? 'col-sm-6': 'col-sm-12'">
+                                <div class=" carousel-content txt-c white centered">
+                                <h2 class="animation animated-item-1">{{slide.Title}}</h2>
+                                <p class="animation animated-item-2">{{slide.Description}}</p>
+                                <a class="btn btn-md animation animated-item-3" href="{{slide.SlideUrl}}">{{slide.ButtonText}}</a>
+                            </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="item" ng-repeat="Slide in Slides" ng-if="Slide.SlideID != Slides[0].SlideID">
-                    <img class="imgCarouse" src="..{{Slide.ImageUrl}}" alt="...">
-                    <div class="carousel-caption">
-                        <h1>{{Slide.Title}}</h1>
-                        <h3>{{Slide.Description}}</h3>
-                        <a href="project_detail.html" class="btn {{Slide.ButtonColor}} btn-lg">{{Slide.ButtonText}}</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Controls -->
-            <span class="left carousel-control" data-target="#carousel-example-generic" data-slide="prev" style="cursor: pointer">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-            </span>
-            <span class="right carousel-control" data-target="#carousel-example-generic" data-slide="next" style="cursor: pointer">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-            </span>
-        </div>
-    </div> <!-- end slider -->
+                </div><!--/.item-->
+            </div><!--/.carousel-inner-->
+            <a showtab class="prev hidden-xs" href="#main-slider" data-slide="prev" ng-non-bindable>
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            </a>
+            <a showtab class="next hidden-xs" href="#main-slider" data-slide="next" ng-non-bindable>
+                @*ng-non-bindable*@
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            </a>
+        </div><!--/.carousel-->
+    </div><!--/#main-slider-->
 
     <div id="feature1">
         <div class="container">
@@ -68,91 +36,48 @@
                 <div class="col-md-12">
                     <div class="tabbable tabs-right">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a showtab href="#Art_picked" data-toggle="tab">Art</a></li>
-                            <li><a showtab href="#Comics_picked" data-toggle="tab">Comics</a></li>
-                            <li><a showtab href="#Crafts_picked" data-toggle="tab">Crafts</a></li>
-                            <li><a showtab href="#Dance_picked" data-toggle="tab">Dance</a></li>
-                            <li><a showtab href="#Design_picked" data-toggle="tab">Design</a></li>
-                            <li><a showtab href="#Fashion_picked" data-toggle="tab">Fashion</a></li>
-                            <li><a showtab href="#Film_picked" data-toggle="tab">Film & Video</a></li>
-                            <li><a href="#" data-toggle="tab">Foood</a></li>
-                            <li><a href="#" data-toggle="tab">Games</a></li>
-                            <li><a href="#" data-toggle="tab">Journalism</a></li>
-                            <li><a href="#" data-toggle="tab">Music</a></li>
-                            <li><a href="#" data-toggle="tab">Photography</a></li>
-                            <li><a href="#" data-toggle="tab">Phulishing</a></li>
-                            <li><a href="#" data-toggle="tab">Technology</a></li>
-                            <li><a href="#" data-toggle="tab">Theater</a></li>
+                            <li ng-repeat="category in projectByCategory" ng-class="{'active': $first}"><a showtab="" href="#_picked{{category.ProjectID}}" data-toggle="tab">{{category.Category}}</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane active" id="Art_picked">
-                                <h3>Staff Picks: Art</h3>
-                                <br>
+                            <div class="tab-pane" id="_picked{{category.ProjectID}}" ng-repeat="category in projectByCategory" ng-class="{'active': $first}">
+                                <h4><p class="fnt30">Staff Picks: <a href="search.html">{{category.Category}}</a></p></h4>
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <img src="../images/projects/projectimage1.jpg" alt="" class="img-responsive center-block">
+                                        <img src="\images\projects\{{category.ImageUrl}}" alt="" class="img-responsive center-block">
                                     </div>
                                     <div class="col-sm-6">
-                                        <h3><a href="project_detail.html">Tiko - The Unibody 3D Printer</a></h3>
-                                        <p>by vinothini venkatesan</p>
-                                        <br>
+                                        <p class="fnt35 fnt-b pt0 pb0 mb0 mt0"><a href="project_detail.html">{{category.Title}}</a></p>
+                                        <p class="pt0 pb0 mb0 mt0">by {{category.CreatorName}}</p>
                                         <div class="info">
-                                            Executive produced by Thurston Moore & Nels Cline, Tom Surgal's FIRE MUSIC is the definitive documentary of the Free Jazz revolution.
-                                        </div>
-                                        <br>
-                                        <div class="progress">
-                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                                40%
-                                                <span class="sr-only">40% Complete (success)</span>
-                                            </div>
+                                            {{category.SubDescription}}
                                         </div>
 
+                                        <div class="mt10 mb5">
+                                            <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{category.Location}}</a>
+                                            &nbsp;&nbsp;
+                                            <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{category.Category}}</a>
+                                            &nbsp;&nbsp;
+                                        </div>
+
+                                        <div class="progress mt5 mb5">
+                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{category.CurrentFunded}}" aria-valuemin="0" aria-valuemax="100" style="width: {{category.CurrentFunded}}%">
+                                                {{category.CurrentFunded}}%
+                                                <span class="sr-only">{{category.CurrentFunded}}% Complete (success)</span>
+                                            </div>
+                                        </div>
                                         <div class="">
-                                            <ul class="list-inline text-center">
-                                                <li><p><strong>40%</strong></p><p>funded</p></li>
-                                                <li><p><strong>$50790</strong></p><p>pledged</p></li>
-                                                <li><p><strong>5</strong></p><p>bankers</p></li>
-                                                <li><p><strong>22</strong></p><p>days to go</p></li>
+                                            <ul class="list-inline">
+                                                <li><p class="fnt-b mt0 mb0">{{category.CurrentFunded}}%</p><p class="mt0 mb0">funded</p></li>
+                                                <li><p class="fnt-b mt0 mb0">${{category.CurrentFundedNumber}}</p><p class="mt0 mb0">pledged</p></li>
+                                                <li><p class="fnt-b mt0 mb0">{{category.Backers}}</p><p class="mt0 mb0">bankers</p></li>
+                                                <li><p class="fnt-b mt0 mb0">{{category.ExpireDate}}</p><p class="mt0 mb0">days to go</p></li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
 
-                            <div class="tab-pane" id="Comics_picked">
-                                <h3>Staff Picks: Comics</h3>
-                                <br>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <img src="../images/projects/projectimage2.jpg" alt="" class="img-responsive center-block">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <h3><a href="project_detail.html">Wonderful: An eruption of life</a></h3>
-                                        <p>by maria james</p>
-                                        <br>
-                                        <div class="info">
-                                            An extra ordinary animation
-                                        </div>
-                                        <br>
-                                        <div class="progress">
-                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-                                                0%
-                                                <span class="sr-only">0% Complete (success)</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="">
-                                            <ul class="list-inline text-center">
-                                                <li><p><strong>0%</strong></p><p>funded</p></li>
-                                                <li><p><strong>$0</strong></p><p>pledged</p></li>
-                                                <li><p><strong>0</strong></p><p>bankers</p></li>
-                                                <li><p><strong>30</strong></p><p>days to go</p></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="Crafts_picked"></div>
                         </div>
                     </div>
                 </div>
@@ -160,72 +85,55 @@
             </div>
         </div>
     </div> <!-- end feature1 -->
-
     <div id="feature2">
-        <div class="container">
-            <h3>What's popular</h3>
-            <br>
-            <div class="row">
-                <div class="col-md-4">
-                    <img src="../images/projects/projectimage4.png" alt="" class="img-responsive center-block">
-                    <br>
-                    <p><a href="project_detail.html"><strong>Introducing Liteseeds, LED Stickers</strong></a></p>
-                    <p>Liteseeds LED stickers are tiny, bright, little LEDs made in the form of a sticker. They are peel and stick lights! Safe & easy to use.</p>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="50" aria-valuemax="100" style="width: 50%">
-                            50%
-                            <span class="sr-only">50% Complete (success)</span>
+        <section id="portfolio" class="container">
+            <h4>What's popular:</h4>
+            <!-- <ul class="portfolio-filter">
+                <li><a class="btn btn-default active" href="#" data-filter="*">All</a></li>
+                <li><a class="btn btn-default" href="#" data-filter=".bootstrap">Bootstrap</a></li>
+                <li><a class="btn btn-default" href="#" data-filter=".html">HTML</a></li>
+                <li><a class="btn btn-default" href="#" data-filter=".wordpress">Wordpress</a></li>
+            </ul> -->
+            <!--/#portfolio-filter-->
+
+            <ul class="portfolio-items col-3">
+                <li class="portfolio-item apps" ng-repeat="project in popularproject">
+                    <div class="item-inner">
+                        <div class="item-image hover01 column">
+                            <a href="project_detail.html"><figure><img src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
+                        </div></a>
+                        <div class="item-title">
+                            <h5><a href="project_detail.html">{{project.Title}}</a></h5>
+                        </div>
+                        <div class="item-content">
+                            <p class="fnt15">{{project.SubDescription}}</p>
+                        </div>
+                        <div class="item-footer">
+                            <div class="mt10 mb5">
+                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
+                                &nbsp;&nbsp;
+                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
+                                &nbsp;&nbsp;
+                            </div>
+                            <div class="progress mt5 mb5">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
+                                    <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
+                                </div>
+                            </div>
+                            <ul class="list-inline">
+                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">funded</p></li>
+                                <li><p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p><p class="mt0 mb0">pledged</p></li>
+                                <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">days to go</p></li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="">
-                        <ul class="list-inline text-center">
-                            <li><p><strong>50%</strong></p><p>funded</p></li>
-                            <li><p><strong>$1000</strong></p><p>pledged</p></li>
-                            <li><p><strong>30</strong></p><p>days to go</p></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <img src="../images/projects/projectimage4.png" alt="" class="img-responsive center-block">
-                    <br>
-                    <p><a href="project_detail.html"><strong>Introducing Liteseeds, LED Stickers</strong></a></p>
-                    <p>Liteseeds LED stickers are tiny, bright, little LEDs made in the form of a sticker. They are peel and stick lights! Safe & easy to use.</p>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="80" aria-valuemax="100" style="width: 80%">
-                            80%
-                            <span class="sr-only">0% Complete (success)</span>
-                        </div>
-                    </div>
-                    <div class="">
-                        <ul class="list-inline text-center">
-                            <li><p><strong>80%</strong></p><p>funded</p></li>
-                            <li><p><strong>$5900</strong></p><p>pledged</p></li>
-                            <li><p><strong>30</strong></p><p>days to go</p></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <img src="../images/projects/projectimage4.png" alt="" class="img-responsive center-block">
-                    <br>
-                    <p><a href="project_detail.html"><strong>Introducing Liteseeds, LED Stickers</strong></a></p>
-                    <p>Liteseeds LED stickers are tiny, bright, little LEDs made in the form of a sticker. They are peel and stick lights! Safe & easy to use.</p>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="80" aria-valuemax="100" style="width: 80%">
-                            80%
-                            <span class="sr-only">0% Complete (success)</span>
-                        </div>
-                    </div>
-                    <div class="">
-                        <ul class="list-inline text-center">
-                            <li><p><strong>80%</strong></p><p>funded</p></li>
-                            <li><p><strong>$5900</strong></p><p>pledged</p></li>
-                            <li><p><strong>30</strong></p><p>days to go</p></li>
-                        </ul>
-                    </div>
-                </div>
+                </li><!--/.portfolio-item-->
+            </ul>
+            <div class="form-actions txt-c">
+                <a class="btn btn-transparent btn-sm" href="discover.html">See more</a>
             </div>
-        </div>
-    </div> <!-- end feature2 -->
+        </section><!--/#portfolio-->
+    </div>
 
     <div id="feature3">
         <div class="container">
@@ -235,17 +143,17 @@
                     <div class="col-md-4">
                         <p class="fnt25">Total funded</p>
                         <p><i class="fa fa-money fa-5x"></i></p>
-                        <p class="fnt50 fnt-b">$1,961,779</p>
+                        <p class="fnt50 fnt-b">${{totalprojectfund.CurrentFundedNumber}}</p>
                     </div>
                     <div class="col-md-4">
                         <p class="fnt25">Highest project fund</p>
                         <p><i class="fa fa-line-chart fa-5x"></i></p>
-                        <p class="fnt50 fnt-b">$1,055,951</p>
+                        <p class="fnt50 fnt-b">${{highestprojectfund.CurrentFundedNumber}}</p>
                     </div>
                     <div class="col-md-4">
                         <p class="fnt25">Highest pledge amount</9>
                         <p><i class="fa fa-diamond fa-5x"></i></p>
-                        <p class="fnt50 fnt-b">$10000</p>
+                        <p class="fnt50 fnt-b">${{highestprojectpledge.CurrentFundedNumber}}</p>
                     </div>
                 </div>
                 <div id="btnview" class="pt15">
@@ -254,4 +162,4 @@
             </div>
         </div>
     </div> <!-- end feature3 -->
-</div>
+</div> <!-- end content -->

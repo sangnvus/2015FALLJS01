@@ -38,3 +38,43 @@ E:\Study\0. Capsule Project\Capstone Project\2015FALLJS01\wip\sources\ddl_capsto
 E:\Study\0. Capsule Project\Capstone Project\2015FALLJS01\wip\sources\ddl_capstoneproject\DDL_CapstoneProject\obj\Debug\DDL_CapstoneProject.csproj.GenerateResource.Cache
 E:\Study\0. Capsule Project\Capstone Project\2015FALLJS01\wip\sources\ddl_capstoneproject\DDL_CapstoneProject\obj\Debug\DDL_CapstoneProject.dll
 E:\Study\0. Capsule Project\Capstone Project\2015FALLJS01\wip\sources\ddl_capstoneproject\DDL_CapstoneProject\obj\Debug\DDL_CapstoneProject.pdb
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\DDL_CapstoneProject.dll.config
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\DDL_CapstoneProject.dll
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\DDL_CapstoneProject.pdb
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\Antlr3.Runtime.dll
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\EntityFramework.dll
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\EntityFramework.SqlServer.dll
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\Facebook.dll
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\Microsoft.Web.Infrastructure.dll
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\Newtonsoft.Json.dll
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\System.Net.Http.Formatting.dll
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\System.Web.Helpers.dll
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\System.Web.Http.dll
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\System.Web.Http.WebHost.dll
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\System.Web.Mvc.dll
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\System.Web.Optimization.dll
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\System.Web.Razor.dll
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\System.Web.WebPages.Deployment.dll
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\System.Web.WebPages.dll
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\System.Web.WebPages.Razor.dll
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\WebGrease.dll
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\EntityFramework.xml
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\EntityFramework.SqlServer.xml
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\Facebook.xml
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\System.Web.Helpers.xml
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\System.Web.Mvc.xml
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\System.Web.Optimization.xml
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\System.Web.Razor.xml
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\System.Web.WebPages.xml
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\System.Web.WebPages.Deployment.xml
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\System.Web.WebPages.Razor.xml
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\Antlr3.Runtime.pdb
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\Newtonsoft.Json.xml
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\System.Net.Http.Formatting.xml
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\System.Web.Http.xml
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\bin\System.Web.Http.WebHost.xml
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\obj\Debug\DDL_CapstoneProject.csprojResolveAssemblyReference.cache
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\obj\Debug\DDL_CapstoneProject.Migrations.InitialCreate.resources
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\obj\Debug\DDL_CapstoneProject.csproj.GenerateResource.Cache
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\obj\Debug\DDL_CapstoneProject.dll
+D:\Capstone Project\DDL\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\obj\Debug\DDL_CapstoneProject.pdb

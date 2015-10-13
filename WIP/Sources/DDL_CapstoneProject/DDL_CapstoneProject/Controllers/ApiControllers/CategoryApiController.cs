@@ -21,5 +21,10 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             return Ok(new HttpMessageDTO { Status = "success", Data = listCategoryDTO });
         }
+        public IHttpActionResult GetCategoryProjectCount()
+        {
+            var listGetCategoryProjectCount = CategoryRepository.Instance.GetCategoryProjectCount();
+            return Ok(new HttpMessageDTO { Status = "success", Data = listGetCategoryProjectCount });
+        }
     }
 }

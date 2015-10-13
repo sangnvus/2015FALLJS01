@@ -161,6 +161,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\DDL_User.cs" />
+    <Compile Include="Models\DTOs\CategoryProjectCountDTO.cs" />
     <Compile Include="Models\DTOs\CommentDTO.cs" />
     <Compile Include="Models\DTOs\ConversationBasicDTO.cs" />
     <Compile Include="Models\DTOs\ConversationDetailDTO.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="Models\DTOs\HttpMessageDTO.cs" />
     <Compile Include="Models\DTOs\MessageDTO.cs" />
     <Compile Include="Models\DTOs\NewMessageDTO.cs" />
+    <Compile Include="Models\DTOs\ProjectBasicViewDTO.cs" />
     <Compile Include="Models\DTOs\ProjectCreateDTO.cs" />
     <Compile Include="Models\DTOs\ProjectDetailDTO.cs" />
     <Compile Include="Models\DTOs\ProjectStoryDTO.cs" />
@@ -175,6 +177,7 @@
     <Compile Include="Models\DTOs\QuestionDTO.cs" />
     <Compile Include="Models\DTOs\ReplyDTO.cs" />
     <Compile Include="Models\DTOs\RewardPkgDTO.cs" />
+    <Compile Include="Models\DTOs\SlideDTO.cs" />
     <Compile Include="Models\DTOs\TimeLineDTO.cs" />
     <Compile Include="Models\DTOs\UpdateLogDTO.cs" />
     <Compile Include="Models\DTOs\UserBasicInfoDTO.cs" />
@@ -208,6 +211,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\controllers\CreateProjectController.js" />
+    <Content Include="App\controllers\DiscoverController.js" />
     <Content Include="App\controllers\EditProfileController.js" />
     <Content Include="App\controllers\EditProjectController.js" />
     <Content Include="App\controllers\HomeController.js" />
@@ -1187,6 +1191,7 @@
     <Content Include="Views\Project\_ProjectDetail.cshtml" />
     <Content Include="Views\User\_EditProfile.cshtml" />
     <Content Include="Views\User\_PublicProfile.cshtml" />
+    <Content Include="Views\Home\Discover.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />
