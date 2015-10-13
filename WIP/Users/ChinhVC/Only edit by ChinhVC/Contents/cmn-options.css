@@ -45,14 +45,14 @@ Date: 2015.10.01
 /*Button transparent*/
 .btn-transparent{
     background: #f9f9f9;
-    border: 3px solid #828587;
+    border: 2px solid #828587;
     color: #828587;
     border-radius: 5px;
     margin-top: 5px;
 }
 .btn-transparent:hover{
     background: #FFFFFF;
-    border: 3px solid #16a085;
+    border: 2px solid #16a085;
     color: #16a085;
     font-weight: bold;
     border-radius: 5px;
