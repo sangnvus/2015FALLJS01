@@ -21,11 +21,16 @@ namespace DDL_CapstoneProject
             bundles.Add(new ScriptBundle("~/bundles/md5").Include(
                 "~/Scripts/plugin/jquery.md5.js"));
 
+            //bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+            //            "~/Scripts/jquery-{version}.js"));
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
+
+            bundles.Add(new ScriptBundle("~/bundles/otherScripts").IncludeDirectory(
+                "~/Scripts/flat-ui", "*.js", true));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
@@ -33,19 +38,17 @@ namespace DDL_CapstoneProject
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/bootstrap.min.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/style.css",
-                      "~/Content/common.css",
-                      "~/Content/hover.css",
+                      "~/Content/bootstrap.min.css",
                       "~/Content/font-awesome.min.css",
                       "~/Content/angular-toastr.css",
                       "~/Content/angular-block-ui.css",
-                      "~/Content/timeline.css",
-                      "~/Content/comment.css"));
+                      "~/Content/flat-ui.min.css",
+                      "~/Content/style.css",
+                      "~/Content/animate.css"));
         }
     }
 }
