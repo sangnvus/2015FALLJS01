@@ -1,0 +1,74 @@
+﻿"use strict";
+
+service.service('UserService', function ($http) {
+
+    // Function to create new Account
+    this.register = function (newUser) {
+        var request = $http({
+            method: 'post',
+            url: '/api/UserApi/Register',
+            data: newUser
+        });
+
+        return request;
+    }
+
+    // Function to reset password
+    this.resetPassword = function (email) {
+        var request = $http({
+            method: 'post',
+            url: '/api/UserApi/ResetPassword?email=' + email,
+        });
+
+        return request;
+    }
+
+    // Function to get list username filter by value
+    this.getUserName = function (val) {
+        var request = $http({
+            method: 'get',
+            url: '/api/UserApi/GetListUserName',
+            params: {
+                username: val
+            }
+        });
+
+        return request;
+    }
+
+    // Function to check login status
+    this.checkLoginStatus = function () {
+        var request = $http({
+            method: 'get',
+            url: '/api/UserApi/CheckLoginStatus',
+        });
+
+        return request;
+    }
+
+    this.getPublicInformation = function (user) {
+        var request = $http({
+            method: 'get',
+            url: '/api/UserApi/GetPublicInfo'
+        });
+        return request;
+    }
+
+    this.getProfileInformation = function (user) {
+        var request = $http({
+            method: 'get',
+            url: '/api/UserApi/GetUserInfoEdit'
+        });
+        return request;
+    }
+
+    this.editProfileInformation = function (UserEditInfo) {
+        var request = $http({
+            method: 'post',
+            url: '/api/UserApi/EditUserInfo',
+            data: UserEditInfo
+        });
+        return request;
+    }
+
+});
