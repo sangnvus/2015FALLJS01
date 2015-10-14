@@ -1,0 +1,56 @@
+﻿===============14/10/2015 =============================
+UPDATE: DESIGN
+Mình đã update design một số cái sau: 
+Nếu page nào ảnh hưởng đến ai thì check và merger lại nhé. 
+Chú ý: các file css, js chỉ 1 người sửa thôi nhé
+- fix header => update button login, button register, home: (html, common.css)
+- fix footer => update animation.js
+- created, backed, starred project: add button "see more", update css style
+- fix button "see more": cmn-common.css
+- change font default flat ui -> font-family: Times new roman (common.css)
+=======================================================
+
+
+
+===============14/10/2015 =============================
+@Huy
+* update create_project2.html
+- add tab: timeline tab, question-answer tab
+- update:
+- fix: BASIC TAB: date start, end
+- fix: STORY TAB: add more 2 selection: url, pc
+- tab: question and answer
+=======================================================
+
+
+===============14/10/2015 =============================
+UPDATE 1.1
+- Update scroll to top: ALL SCREEN
+- css: common.css
+- js: application.js
+- html: all page html => code
+    <div class="scroll-top-wrapper ">
+      <span class="scroll-top-inner">
+        <i class="fa fa-2x fa-arrow-circle-up"></i>
+      </span>
+    </div> <!-- end SCROLL TO TOP -->
+
+    <div id="footer">
+    ...    
+    </div> <!-- end FOOTER-->
+--------------------------------------
+- update: input select
+- change html: editprofile.html, create_project2.html
+after:
+	<select class="form-control fnt-b" >
+before:
+	<select class="form-control fnt-b select select-primary" data-toggle="select">
+=======================================================
+	
+	
+	
+	
+	
+	
+	
+	

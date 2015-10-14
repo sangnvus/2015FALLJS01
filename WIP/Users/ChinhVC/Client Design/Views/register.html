@@ -44,9 +44,9 @@
            <ul class="nav navbar-nav">
             <li><a href="discover.html">Discover</a></li>
             <li><a href="">Start</a></li>
-            <li role="separator" class="hidden-xs divider-vertical"></li>
+            <li role="separator" class="divider-vertical hidden-xs"></li>
           </ul>
-          <form class="navbar-form navbar-left" action="search-advance.html" role="search">
+          <form id="search" class="navbar-form navbar-left" action="search-advance.html" role="search">
             <div class="form-group">
               <div class="input-group">
                 <input class="form-control" id="navbarInput-01" type="search" placeholder="Search Projects">
@@ -59,81 +59,86 @@
           <ul class="nav navbar-nav navbar-right">
             <!-- Login and Regiter -->
             <form  role="search" class="navbar-form navbar-right">
-              <a href="login.html" class="btn btn-success btn-sm btn-wide" style="padding: 8px 0px;" role="button">Log in</a>
-              <a href="register.html" class="btn btn-default btn-sm btn-wide" style="padding: 8px 0px;" role="button" type="">Sign up</a>
+              <a id="btnLogin" href="login.html" class="btn btn-success btn-sm btn-wide" style="padding: 8px 0px;" role="button"><span class="glyphicon glyphicon-log-in"></span><span class="hidden-sm"> Đăng nhập</span></a>
+              <a id="btnRegister" href="register.html" class="btn btn-default btn-sm btn-wide" style="padding: 8px 0px;" role="button" type=""><i class="fa fa-key"></i></span><span class="hidden-sm"> Đăng ký</span></a>
             </form>
           </ul>
         </div><!-- /.navbar-collapse -->
       </nav>
-    </div>
+    </div> <!-- end HEADER -->
   
-  <div id="content" class="paddingNavbar" style="min-height: 577px; background-color: #f7fafa;">
-    <div id="login">
-      <div class="container">
-        <div class="col-md-5 panel panel-default center-block">
-          <div class="panel-body pt10 pb10 pl10 pr10">
-          <div class="login-form">
-            <div class="login-title">
-              <h4 class="txt-c mt0 mb0 pt0 pb0">Sign up</h4>
-            </div>
-            <div id="login-facebook" class="mt20 mb0 pt0 pb0">
-              <a href="home_logged.html" class="btn btn-info btn-lg">
-                <i class="fa fa-facebook-official"></i>
-                <span>Login with Facebook</span>
-              </a>
-              <p class="text-center tip-info" style="">
-                We will never post anything on Facebook without your permission.
+    <div id="content" class="paddingNavbar" style="min-height: 577px; background-color: #f7fafa;">
+      <div id="login">
+        <div class="container">
+          <div class="col-md-5 panel panel-default center-block">
+            <div class="panel-body pt10 pb10 pl10 pr10">
+            <div class="login-form">
+              <div class="login-title">
+                <h4 class="txt-c mt0 mb0 pt0 pb0">Sign up</h4>
+              </div>
+              <div id="login-facebook" class="mt20 mb0 pt0 pb0">
+                <a href="home_logged.html" class="btn btn-info btn-lg">
+                  <i class="fa fa-facebook-official"></i>
+                  <span>Login with Facebook</span>
+                </a>
+                <p class="text-center tip-info" style="">
+                  We will never post anything on Facebook without your permission.
+                </p>
+                <div class="boderbottom"></div>
+              </div>
+
+              <div class="form-group ">
+                    <input type="email" required class="form-control login-field" id="exampleInputEmail1" placeholder="First Name">
+                    <label class="login-field-icon fui-user" for="login-name"></label>
+              </div>
+              <div class="form-group ">
+                <input type="email" required class="form-control login-field" id="exampleInputEmail1" placeholder="Last Name">
+                <label class="login-field-icon fui-user" for="login-name"></label>
+              </div>
+              <div class="form-group ">
+                <input type="email" required class="form-control login-field" id="exampleInputEmail1" placeholder="User Name">
+                <label class="login-field-icon fui-user" for="login-name"></label>
+              </div>
+              <div class="form-group ">
+                <input type="email" required class="form-control login-field" id="exampleInputEmail1" placeholder="Email">
+                <label class="login-field-icon fui-mail" for="login-name"></label>
+              </div>
+              <div class="form-group ">
+                <input type="email" required class="form-control login-field" id="exampleInputEmail1" placeholder="Re-enter Email">
+                <label class="login-field-icon fui-mail" for="login-name"></label>
+              </div>
+              <div class="form-group">
+                <input type="password" required class="form-control login-field" id="exampleInputPassword1" placeholder="Password">
+                <label class="login-field-icon fui-lock" for="login-pass"></label>
+              </div>
+              <div class="form-group">
+                <input type="password" required class="form-control login-field" id="exampleInputPassword1" placeholder="Re-enter Password">
+                <label class="login-field-icon fui-lock" for="login-pass"></label>
+              </div>
+
+              <a class="btn btn-primary btn-lg btn-block" href="home_logged.html"><i class="fa fa-sign-in"></i> Sign up</a>
+              <p class="text-center tip-info">
+                  By signing up you agree to our <a>terms of use</a> , <a>privacy policy</a> , and <a>cookie policy</a> .
               </p>
-              <div class="boderbottom"></div>
+              <div class="text-center">
+                <div class="boderbottom"></div>
+                <p>I have an account? <a href="Login.html">Log in</a></p>
+              </div>
+              </div>
+
             </div>
 
-            <div class="form-group ">
-                  <input type="email" required class="form-control login-field" id="exampleInputEmail1" placeholder="First Name">
-                  <label class="login-field-icon fui-user" for="login-name"></label>
-            </div>
-            <div class="form-group ">
-              <input type="email" required class="form-control login-field" id="exampleInputEmail1" placeholder="Last Name">
-              <label class="login-field-icon fui-user" for="login-name"></label>
-            </div>
-            <div class="form-group ">
-              <input type="email" required class="form-control login-field" id="exampleInputEmail1" placeholder="User Name">
-              <label class="login-field-icon fui-user" for="login-name"></label>
-            </div>
-            <div class="form-group ">
-              <input type="email" required class="form-control login-field" id="exampleInputEmail1" placeholder="Email">
-              <label class="login-field-icon fui-mail" for="login-name"></label>
-            </div>
-            <div class="form-group ">
-              <input type="email" required class="form-control login-field" id="exampleInputEmail1" placeholder="Re-enter Email">
-              <label class="login-field-icon fui-mail" for="login-name"></label>
-            </div>
-            <div class="form-group">
-              <input type="password" required class="form-control login-field" id="exampleInputPassword1" placeholder="Password">
-              <label class="login-field-icon fui-lock" for="login-pass"></label>
-            </div>
-            <div class="form-group">
-              <input type="password" required class="form-control login-field" id="exampleInputPassword1" placeholder="Re-enter Password">
-              <label class="login-field-icon fui-lock" for="login-pass"></label>
-            </div>
-
-            <a class="btn btn-primary btn-lg btn-block" href="home_logged.html"><i class="fa fa-sign-in"></i> Sign up</a>
-            <p class="text-center tip-info">
-                By signing up you agree to our <a>terms of use</a> , <a>privacy policy</a> , and <a>cookie policy</a> .
-            </p>
-            <div class="text-center">
-              <div class="boderbottom"></div>
-              <p>I have an account? <a href="Login.html">Log in</a></p>
-            </div>
-            </div>
-
+            
           </div>
-
-          
         </div>
       </div>
-    </div>
-  </div>  <!--end content -->
+    </div>  <!--end CONTENT -->
 
+    <div class="scroll-top-wrapper ">
+      <span class="scroll-top-inner">
+        <i class="fa fa-2x fa-arrow-circle-up"></i>
+      </span>
+    </div> <!-- end SCROLL TO TOP -->
 
     <div id="footer">
       <div class="container">
@@ -153,7 +158,7 @@
           </div>
         </div>
       </div>
-    </div> <!-- end footer -->
+    </div> <!-- end FOOTER -->
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

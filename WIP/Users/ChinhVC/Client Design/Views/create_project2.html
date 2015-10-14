@@ -114,6 +114,8 @@
             <li><a href="#reward" data-toggle="tab">Gói quà</a></li>
             <li><a href="#story" data-toggle="tab">Câu chuyện</a></li>
             <li><a href="#update" data-toggle="tab">Cập nhật</a></li>
+            <li><a href="#quesion-answer" data-toggle="tab">Hỏi đáp</a></li>
+            <li><a href="#timelineTab" data-toggle="tab">Timeline</a></li>
             <li><a href="#preview" data-toggle="tab">Xem trước</a></li>
             <a href="#submit" class="btn btn-primary">submit for review</a>
           </ul>
@@ -180,7 +182,7 @@
                     <div class="col-md-4"><p class="title">Category</p></div>
                     <div class="col-md-8">
                       <div class="field-wrapper">
-                        <select class="form-control fnt-b">
+                        <select class="form-control fnt-b select select-primary" data-toggle="select">
                           <option>Art</option>
                           <option>comics</option>
                           <option>Crafts</option>
@@ -210,12 +212,12 @@
                     <div class="col-md-4"><p class="title">Funding duration</p></div>
                     <div class="col-md-8">
                       <div class="form-inline">
-                        <label for="startdate" class="fnt22">Start:</label>
-                        <input type='date' class="form-control mt0 mb0 pb0 pt0"/>
+                        <label for="startdate" class="fnt20" >Start:</label>
+                        <input type='date' class="form-control" style="line-height: 15px"/>
                       </div>
                       <div class="form-inline">
-                        <label for="enddate" class="fnt22">End:</label>
-                        <input type='date' class="form-control mt0 mb0 pb0 pt0"/>
+                        <label for="enddate" class="fnt20">End:</label>
+                        <input type='date' class="form-control" style="line-height: 15px"/>
                       </div>
                     </div>
                   </div> <!-- end funding duration -->
@@ -289,19 +291,19 @@
                           </ul>
                         </div>
                       </div> <!-- end Pledge amount -->
-                      <div class="row">
+                      <div class="row pb5">
                         <div class="col-md-4">Description</div>
                         <div class="col-md-8">
                           <textarea class="form-control" rows="3" style="resize:none"></textarea>
                         </div>
                       </div> <!-- end Description -->
-                      <div class="row">
+                      <div class="row pt5 pb5">
                         <div class="col-md-4">Thời gian giao hàng</div>
                         <div class="col-md-8">
                           <input type="month" class="form-control" style="line-height: 15px;">         
                         </div>
                       </div> <!-- end Estimated delivery -->
-                      <div class="row">
+                      <div class="row pt5 pb5">
                         <div class="col-md-4">Backer</div>
                         <div class="col-md-4">
                           <label class="checkbox" for="checkbox2">
@@ -313,7 +315,7 @@
                          <input type="text" id="limit_quntity" class="form-control" name=""  placeholder=""> 
                        </div>
                       </div> <!-- end Backer -->
-                      <div class="row">
+                      <div class="row pt5 pb5">
                         <div class="col-md-4">Acitve</div>
                         <div class="col-md-8">
                           <label class="checkbox" for="checkbox3">
@@ -376,11 +378,42 @@
                       <div for="upload">
                           <div class="asset_upload">
                             <div class="upload">
-                              <input class="avatar file" type="file">
-                              <strong class="center profile-photo">
+                              <!-- <input class="avatar file" type="file"> -->
+                              <!-- <a class="btn"></a> -->
+                              <!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                              Launch demo modal
+                              </button> -->
+                              <strong class="center profile-photo" data-toggle="modal" data-target="#videoModal">
                                 Lựa chọn một hình ảnh từ máy tính của bạn 
                                 <span> MOV, MPEG, AVI, MP4, 3GP, WMV, or FLV • 5GB file limit</span> <span>640x480 pixels • tỷ lệ màn hình 4:3</span>
                               </strong>
+                              <!-- Modal upload Video -->
+                              <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                      <h4 class="modal-title" id="myModalLabel">Upload Video</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                      <form>
+                                        <div class="form-group">
+                                          <label for="url" class="control-label fnt20">Url:</label>
+                                          <input type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="upload-pc" class="control-label fnt20">Tải từ máy tính:</label>
+                                          <input type="file">
+                                        </div>
+                                      </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                      <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div> <!-- end upload Video -->
                             </div>
                           </div>
                       </div>
@@ -450,55 +483,58 @@
                     <div class="col-md-10">
                       <div class="row">
                         <div class="col-md-3"><p class="title">Title</p></div>
-                        <div class="col-md-7"><input type="text" id="pledge_amount" name="project[name]" class="form-control" placeholder=""></div>
-                        <div class="col-md-2"><a class="btn btn-danger form-control" href="">Delete</a></div>
+                        <div class="col-md-9"><input type="text" class="form-control"></div>
                       </div> <!-- end Title -->
                       <div class="row">
                         <div class="col-md-3"><p class="title">Date</p></div>
-                        <div class="col-md-7"><input type="date" name="" class="form-control" style="line-height: 15px"></div>
-                        <div class="col-md-2">
-                          <a class="btn btn-info form-control" data-toggle="modal" data-target="#editModal">Edit</a>
-                        </div> <!-- end Edit -->
-                        <!-- Edit Modal  -->
-                        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                          <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h5 class="modal-title" id="myModalLabel">Edit: Update#1</h5>
-                              </div>
-                              <div class="modal-body">
-                                <form>
-                                  <div class="form-group">
-                                    <p class="title">Title:</p>
-                                    <input type="text" class="form-control" id="title">
-                                  </div>
-                                  <div class="form-group">
-                                    <p class="title">Date:</p>
-                                    <input type="date" name="" class="form-control" style="line-height: 15px">
-                                  </div>
-                                  <div class="form-group">
-                                    <p class="title">Descritption:</p>
-                                    <textarea class="form-control" row="5" style="resize:none"></textarea>
-                                  </div>
-                                </form>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div> <!-- end EditModal -->
+                        <div class="col-md-9"><input type="date" name="" class="form-control" style="line-height: 15px"></div>
                       </div>
-                      <div class="row">
+                      <div class="row pt5 pb5">
                         <div class="col-md-3"><p class="title">Description</p></div>
                         <div class="col-md-9">
                           <div class="field-wrapper">
                             <textarea class="form-control" rows="5" style="resize:none"></textarea>
                           </div>
                         </div>
-                      </div>
+                      </div> <!-- end Description -->
+                      <div class="row pt5 pb5">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-9">
+                          <a class="btn btn-info btn-sm btn-wide pl5 pr5" data-toggle="modal" data-target="#editModal">Edit</a>
+                          <a class="btn btn-danger btn-sm btn-wide pl5 pr5" href="">Delete</a>
+                          <!-- Edit Modal  -->
+                          <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                  <h5 class="modal-title" id="myModalLabel">Edit: Update#1</h5>
+                                </div>
+                                <div class="modal-body">
+                                  <form>
+                                    <div class="form-group">
+                                      <p class="title">Title:</p>
+                                      <input type="text" class="form-control" id="title">
+                                    </div>
+                                    <div class="form-group">
+                                      <p class="title">Date:</p>
+                                      <input type="date" name="" class="form-control" style="line-height: 15px">
+                                    </div>
+                                    <div class="form-group">
+                                      <p class="title">Descritption:</p>
+                                      <textarea class="form-control" row="5" style="resize:none"></textarea>
+                                    </div>
+                                  </form>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                  <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div> <!-- end EditModal -->
+                        </div>
+                      </div> <!-- end Action -->
                     </div>
                   </div>
                   <div class="row border-grey border-dash">
@@ -572,6 +608,175 @@
               </div>
             </div>  <!-- end-content -->
           </div> <!-- end UPDATE --> 
+          <div id="quesion-answer" role="tabpanel" class="tab-pane fade in border-main" >
+            <div>
+              <h4 class="text-center">Đặt những câu hỏi và trả lời</h4>
+              <h5 class="text-center">Giải đáp những thắc mắc và biết thêm nhiều thông tin</h5>
+            </div> <!-- end-title -->
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-9">
+                  <div class="row border-grey">
+                    <div class="col-md-1"><p class="title">#1</p></div>
+                    <div class="col-md-11">
+                      <div class="row pt5 pb5">
+                        <div class="col-md-2"><p class="title">Câu hỏi</p></div>
+                        <div class="col-md-10">
+                          <div class="field-wrapper">
+                            <textarea class="form-control" rows="5" style="resize:none"></textarea>
+                          </div>
+                        </div>
+                      </div> <!-- end Question -->
+                      <div class="row pt5 pb5">
+                        <div class="col-md-2"><p class="title">Trả lời</p></div>
+                        <div class="col-md-10">
+                          <div class="field-wrapper">
+                            <textarea class="form-control" rows="5" style="resize:none"></textarea>
+                          </div>
+                        </div>
+                      </div> <!-- end Answer -->
+                      <div class="row pt5 pb5">
+                        <div class="col-md-2"><p class="title"></p></div>
+                        <div class="col-md-10 list-inline">
+                          <a class="btn btn-info btn-wide pl10 pr10 pt5 pb5" href="">Edit</a>
+                          <a class="btn btn-danger btn-wide pl10 pr10 pt5 pb5" href="">Delete</a>
+                        </div>
+                      </div> <!-- end Action -->
+                    </div>
+                  </div>
+                  <div class="row border-grey border-dash">
+                    <div class="addReward">
+                      <div class="txt-c">
+                        <a class="btn btn-success" data-toggle="modal">Thêm hỏi đáp</a>
+                      </div>
+                    </div>
+                    <!-- add reward at here -->
+                  </div>
+                </div> <!-- end col-md-9 -->
+
+                <div class="col-md-3">
+                  <!-- <div class="border-tips">
+                    <p>How to:</p>
+                    <a href=""><b>Create greate rewards</b></a>
+                  </div>
+                  <div class="help">
+                    <h5><b>What to offer</b></h5>
+                    <p>Copies of what you're making, unique experiences, and limited editions work great.</p>
+                    <h5><b>How to price</b></h5>
+                    <ul>
+                      <li>Price fairly, and offer a good value. What would <i>you</i> consider a fair exchange?</li>
+                      <li>Something fun for <span class="money gbp no-code">£10</span> or less is always a good idea.</li>
+                      <li>Funds that backers pledge to account for shipping costs will count towards your project's funding goal. Keep this in mind when setting your goal.</li>
+                      <li>Use the shipping tool to add delivery costs for any country you like (including your own). The price will be added to backer's pledges as they check out.</li>
+                    </ul>
+                    <h5><b>What's prohibited</b></h5>
+                    <ul>
+                      <li>Rewards not directly produced by the creator or the project itself</li>
+                      <li>Financial incentives</li>
+                      <li>Raffles, lotteries, and sweepstakes</li>
+                      <li>Coupons, discounts, and cash-value gift cards</li>
+                      <li>For more, please review our list of prohibited items and subject matter</li>
+                    </ul>
+                    <h5><b>Need ideas for rewards?</b></h5>
+                    <p>Campus has a discussion on that — and plenty more.</p>
+                  </div> -->
+                </div><!-- end col-md-3 -->
+              </div>
+            </div>  <!-- end-content -->
+          </div> <!-- end QUESTION AND ANSWER --> 
+          <div id="timelineTab" role="tabpanel" class="tab-pane fade in border-main" >
+            <div>
+              <h4 class="text-center">Tiến độ dự án</h4>
+              <h5 class="text-center">Đây là thời gian cam kết hoàn thành tiến độ dự án</h5>
+            </div> <!-- end-title -->
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-9">
+                  <div class="row border-grey">
+                    <div class="col-md-2"><p class="title">#1</p></div>
+                    <div class="col-md-10">
+                      <div class="row">
+                        <div class="col-md-3"><p class="title">Tiêu đề</p></div>
+                        <div class="col-md-9"><input type="text" class="form-control" placeholder=""></div>
+                      </div> <!-- end Title and Delete-->
+                      <div class="row">
+                        <div class="col-md-3"><p class="title">Ngày</p></div>
+                        <div class="col-md-9"><input type="date" name="" class="form-control" style="line-height: 15px"></div>
+                      </div><!-- end Date -->
+                      <div class="row pt5 pb5">
+                        <div class="col-md-3"><p class="title">Ảnh</p></div>
+                        <div class="col-md-9">
+                          <div class="asset_upload">
+                            <div class="image-clip pull-left">
+                              <img id="image-clip" src="../images/avatar/avatar1.png" alt="" class="img-responsive center-block">
+                            </div>
+                            <div class="upload">
+                              <input class="avatar file" type="file">
+                              <strong class="center profile-photo">
+                                Lựa chọn một hình ảnh từ máy tính của bạn 
+                                <span> JPEG, PNG, GIF, or BMP  •  50MB file limit</span>
+                              </strong>
+                            </div>
+                          </div>
+                        </div>
+                      </div> <!-- end Image -->
+                      <div class="row pt5 pb5">
+                        <div class="col-md-3"><p class="title">Mô tả</p></div>
+                        <div class="col-md-9">
+                          <div class="field-wrapper">
+                            <textarea class="form-control" rows="5" style="resize:none"></textarea>
+                          </div>
+                        </div>
+                      </div> <!-- end Description -->
+                      <div class="row pt5 pb5">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-9">
+                          <a class="btn btn-info btn-sm btn-wide pl5 pr5">Sửa</a>
+                          <a class="btn btn-danger btn-sm btn-wide pl5 pr5">Xóa</a>
+                        </div>
+                      </div> <!-- end Action -->
+                    </div>
+                  </div>
+                  <div class="row border-grey border-dash">
+                    <div class="addReward">
+                      <div class="txt-c">
+                        <a class="btn btn-success">Thêm timeline</a>
+                      </div>
+                    </div>
+                    <!-- add reward at here -->
+                  </div>
+                </div> <!-- end col-md-9 -->
+
+                <div class="col-md-3">
+                  <!-- <div class="border-tips">
+                    <p>How to:</p>
+                    <a href=""><b>Create greate rewards</b></a>
+                  </div>
+                  <div class="help">
+                    <h5><b>What to offer</b></h5>
+                    <p>Copies of what you're making, unique experiences, and limited editions work great.</p>
+                    <h5><b>How to price</b></h5>
+                    <ul>
+                      <li>Price fairly, and offer a good value. What would <i>you</i> consider a fair exchange?</li>
+                      <li>Something fun for <span class="money gbp no-code">£10</span> or less is always a good idea.</li>
+                      <li>Funds that backers pledge to account for shipping costs will count towards your project's funding goal. Keep this in mind when setting your goal.</li>
+                      <li>Use the shipping tool to add delivery costs for any country you like (including your own). The price will be added to backer's pledges as they check out.</li>
+                    </ul>
+                    <h5><b>What's prohibited</b></h5>
+                    <ul>
+                      <li>Rewards not directly produced by the creator or the project itself</li>
+                      <li>Financial incentives</li>
+                      <li>Raffles, lotteries, and sweepstakes</li>
+                      <li>Coupons, discounts, and cash-value gift cards</li>
+                      <li>For more, please review our list of prohibited items and subject matter</li>
+                    </ul>
+                    <h5><b>Need ideas for rewards?</b></h5>
+                    <p>Campus has a discussion on that — and plenty more.</p>
+                  </div> -->
+                </div><!-- end col-md-3 -->
+              </div>
+            </div>  <!-- end-content -->
+          </div> <!-- end TIMELINE-TAB --> 
           <div id="preview" role="tabpanel" class="tab-pane fade in  border-main">
             <div id="project-common" class="paddingNavbar padding-30">
               <div class="">
@@ -1190,6 +1395,11 @@
       </div>
     </div> <!-- end BASIC-TABPANEL -->
     
+    <div class="scroll-top-wrapper ">
+      <span class="scroll-top-inner">
+        <i class="fa fa-2x fa-arrow-circle-up"></i>
+      </span>
+    </div> <!-- end SCROLL TO TOP -->
 
     <div class="pt30"></div>
     <div id="footer">
