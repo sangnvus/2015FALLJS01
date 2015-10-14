@@ -6,28 +6,34 @@ String.prototype.repeat = function (num) {
 
 (function ($) {
 
-  // // Add segments to a slider
-  // $.fn.addSliderSegments = function () {
-  //   return this.each(function () {
-  //     var $this = $(this),
-  //         option = $this.slider('option'),
-  //         amount = (option.max - option.min)/option.step,
-  //         orientation = option.orientation;
-  //     if ( 'vertical' === orientation ) {
-  //       var output = '', i;
-  //       console.log(amount);
-  //       for (i = 1; i <= amount - 1; i++) {
-  //           output += '<div class="ui-slider-segment" style="top:' + 100 / amount * i + '%;"></div>';
-  //       }
-  //       $this.prepend(output);
-  //     } else {
-  //       var segmentGap = 100 / (amount) + '%';
-  //       var segment = '<div class="ui-slider-segment" style="margin-left: ' + segmentGap + ';"></div>';
-  //       $this.prepend(segment.repeat(amount - 1));
-  //     }
-  //   });
-  // };
+  //Sticky Footer
+  // -------------------------------------------------------------
+  $(document).ready(function(){
+      function stickyFooter(){
+        var footer = $("#footer");
+        var pos = footer.position();
+        var height = $(window).height();
+        height = height - pos.top;
+        height = height - footer.height();
+        if (height > 0) {
+            footer.css({
+                'margin-top': height + 'px'
+            });
+        }
+      }
+      $(window).bind("load", function () {
+         stickyFooter();
+      });
+      $(window).resize(function() {
+         stickyFooter();
+      });
+  });
+  // end Sticky Footer --------------------------------------------
+
+
+
   //#main-slider
+  // -------------------------------------------------------------
   $(function(){
     $('#main-slider.carousel').carousel({
       interval: 8000
@@ -43,16 +49,35 @@ String.prototype.repeat = function (num) {
       $(this).css('margin-top',  ($('#main-slider').height() - $(this).height())/2);
     });
   });
+  //end Main Slider ---------------------------------------------
 
-  //goto top
-  $('.gototop').click(function(event) {
-    event.preventDefault();
-    $('html, body').animate({
-      scrollTop: $("body").offset().top
-    }, 500);
-  }); 
 
-  
+
+  //Scroll to top
+  // -------------------------------------------------------------
+  $(document).on( 'scroll', function(){
+    if ($(window).scrollTop() > 100) {
+      $('.scroll-top-wrapper').addClass('show');
+    } else {
+      $('.scroll-top-wrapper').removeClass('show');
+    }
+  });
+  function scrollToTop() {
+    verticalOffset = typeof(verticalOffset) != 'undefined' ? verticalOffset : 0;
+    element = $('body');
+    offset = element.offset();
+    offsetTop = offset.top;
+    $('html, body').animate({scrollTop: offsetTop}, 500, 'linear');
+  }
+         
+  $('.scroll-top-wrapper').on('click', scrollToTop);
+  $('.gototop').on('click', scrollToTop);
+  //end Scroll to top ---------------------------------------------
+
+
+
+  //Funtions Flat UI
+  //---------------------------------------------------------------
   $(function () {
 
     // Todo list
@@ -73,29 +98,6 @@ String.prototype.repeat = function (num) {
     
     // Tooltips
     $('[data-toggle=tooltip]').tooltip('show');
-
-    // // jQuery UI Sliders
-    // var $slider = $('#slider');
-    // if ($slider.length > 0) {
-    //   $slider.slider({
-    //     max: 15,
-    //     step: 6,
-    //     value: 3,
-    //     orientation: 'horizontal',
-    //     range: 'min'
-    //   }).addSliderSegments();
-    // }
-
-    // var $verticalSlider = $('#vertical-slider');
-    // if ($verticalSlider.length) {
-    //   $verticalSlider.slider({
-    //     min: 1,
-    //     max: 5,
-    //     value: 3,
-    //     orientation: 'vertical',
-    //     range: 'min'
-    //   }).addSliderSegments($verticalSlider.slider('option').max, 'vertical');
-    // }
 
     // Focus state for append/prepend inputs
     $('.input-group').on('focus', '.form-control', function () {
@@ -150,7 +152,7 @@ String.prototype.repeat = function (num) {
 
     // make code pretty
     window.prettyPrint && prettyPrint();
-
   });
+  //end Funtions Flat UI ---------------------------------------------
 
 })(jQuery);

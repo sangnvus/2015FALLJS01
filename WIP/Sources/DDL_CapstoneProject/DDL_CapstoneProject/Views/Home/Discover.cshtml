@@ -28,7 +28,9 @@
 
     <div id="item-popular" class="pt30">
         <section id="portfolio" class="container">
-            <h4>What's popular:</h4>
+            <h4 class="pull-left">What's popular:</h4>
+            <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="discover.html">See more</a>
+            <div class="clearfix"></div>
             <ul class="portfolio-items col-3">
                 <li class="portfolio-item" ng-repeat="project in popularproject">
                     <div class="item-inner">
@@ -36,7 +38,7 @@
                             <figure><img src="/images/projects/{{project.ImageUrl}}" alt=""></figure>
                         </div>
                         <div class="item-title">
-                            <h5><a href="project_detail.html">{{project.Title}}</a></h5>
+                            <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
                         </div>
                         <div class="item-content">
                             <p class="fnt15">{{project.SubDescription}}</p>
@@ -63,14 +65,15 @@
                 </li><!--/.portfolio-item-->
             </ul>
             <div class="form-actions txt-c">
-                <a class="btn btn-transparent btn-sm" href="discover.html">See more</a>
             </div>
         </section><!--/#portfolio-->
     </div> <!-- end item-popular -->
 
     <div id="item-newest" class="pt30">
         <section id="portfolio" class="container">
-            <h4>What's newest:</h4>
+            <h4 class="pull-left">What's newest:</h4>
+            <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="discover.html">See more</a>
+            <div class="clearfix"></div>
             <ul class="portfolio-items col-3">
                 <li class="portfolio-item" ng-repeat="project in newestproject">
                     <div class="item-inner">
@@ -78,7 +81,7 @@
                             <figure><img src="/images/projects/{{project.ImageUrl}}" alt=""></figure>
                         </div>
                         <div class="item-title">
-                            <h5><a href="project_detail.html">{{project.Title}}</a></h5>
+                            <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
                         </div>
                         <div class="item-content">
                             <p class="fnt15">{{project.SubDescription}}</p>
@@ -105,14 +108,16 @@
                 </li><!--/.portfolio-item-->
             </ul>
             <div class="form-actions txt-c">
-                <a class="btn btn-transparent btn-sm" href="discover.html">See more</a>
             </div>
         </section><!--/#portfolio-->
     </div> <!-- end item-newest -->
 
     <div id="item-most-fund" class="pt30">
         <section id="portfolio" class="container">
-            <h4>What's most fund:</h4>
+            <h4 class="pull-left">What's most fund:</h4>
+            <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="discover.html">See more</a>
+            <div class="clearfix"></div>
+
             <ul class="portfolio-items col-3">
                 <li class="portfolio-item" ng-repeat="project in mostfundproject">
                     <div class="item-inner">
@@ -120,7 +125,7 @@
                             <figure><img src="/images/projects/{{project.ImageUrl}}" alt=""></figure>
                         </div>
                         <div class="item-title">
-                            <h5><a href="project_detail.html">{{project.Title}}</a></h5>
+                            <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
                         </div>
                         <div class="item-content">
                             <p class="fnt15">{{project.SubDescription}}</p>
@@ -147,14 +152,15 @@
                 </li><!--/.portfolio-item-->
             </ul>
             <div class="form-actions txt-c">
-                <a class="btn btn-transparent btn-sm" href="discover.html">See more</a>
             </div>
         </section><!--/#portfolio-->
     </div> <!-- end item-most-fund -->
 
     <div id="item-end-date" class="pt30 pb30">
         <section id="portfolio" class="container">
-            <h4>What's end date:</h4>
+            <h4 class="pull-left">What's end date:</h4>
+            <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="discover.html">See more</a>
+            <div class="clearfix"></div>
             <ul class="portfolio-items col-3">
                 <li class="portfolio-item" ng-repeat="project in enddateproject">
                     <div class="item-inner">
@@ -162,7 +168,7 @@
                             <figure><img src="/images/projects/{{project.ImageUrl}}" alt=""></figure>
                         </div>
                         <div class="item-title">
-                            <h5><a href="project_detail.html">{{project.Title}}</a></h5>
+                            <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
                         </div>
                         <div class="item-content">
                             <p class="fnt15">{{project.SubDescription}}</p>
@@ -190,7 +196,6 @@
             </ul>
 
             <div class="form-actions txt-c">
-                <a class="btn btn-transparent btn-sm" href="discover.html">See more</a>
             </div>
         </section><!--/#portfolio-->
     </div> <!-- end item-end-date -->

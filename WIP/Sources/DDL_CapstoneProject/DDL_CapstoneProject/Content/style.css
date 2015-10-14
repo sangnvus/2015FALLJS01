@@ -1,4 +1,4 @@
-﻿@charset "utf-8";
+@charset "utf-8";
 
 @import "common.css";
 @import "cmn-options.css";
@@ -533,12 +533,12 @@ Date: 2015.10.01
 /*Created, Starred, Backed Project Page (created_project.html)
 --------------------------------------------------------- */
 	#setting_container {
-		padding-top: 110px;
+		padding-top: 100px;
 		padding-right: 5%;
 	}
 	#items-projects{
-		padding-top: 30px;
-		padding-bottom: 100px;
+		padding-top: 0px;
+		padding-bottom: 30px;
 	}
 /*End Created, Starred, Backed Project ------------------- */
 

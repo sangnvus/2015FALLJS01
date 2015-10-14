@@ -7,6 +7,19 @@ app.service('ProjectService', function ($http) {
         return $http.get("/api/ProjectApi/GetProject/" + projectID);
     }
 
+    // Function to ger a project by ProjectCode
+    this.getProjectDetail = function (code) {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/getProjectDetail',
+            params: {
+                code: code
+            }
+        });
+
+        return request;
+    }
+
     // Function to create new Project
     this.createProject = function (project) {
         var request = $http({
@@ -139,4 +152,59 @@ app.service('ProjectService', function ($http) {
     this.GetStatisticListForHome = function () {
         return $http.get('/api/ProjectApi/GetStatisticListForHome');
     };
+
+    // Function to post comment to server.
+    this.Comment = function (code, commment, lastCommentDatetime) {
+        var request = $http({
+            method: 'post',
+            url: '/api/ProjectApi/Comment',
+            data: commment,
+            params: {
+                projectCode: code,
+                lastComment: lastCommentDatetime
+            }
+        });
+
+        return request;
+    }
+
+    // Function to hide/unhide comment.
+    this.ShowHideComment = function (commentID) {
+        var request = $http({
+            method: 'put',
+            url: '/api/ProjectApi/ShowHideComment',
+            params: {
+                id: commentID
+            }
+        });
+
+        return request;
+    }
+
+    // Function to edit comment.
+    this.editComment = function (commentID, content) {
+        var request = $http({
+            method: 'put',
+            url: '/api/ProjectApi/EditComment',
+            params: {
+                id: commentID,
+                content: content
+            }
+        });
+
+        return request;
+    }
+
+    // Function to delete a comment to server.
+    this.deleteComment = function (commentID) {
+        var request = $http({
+            method: 'delete',
+            url: '/api/ProjectApi/DeleteComment',
+            params: {
+                id: commentID
+            }
+        });
+
+        return request;
+    }
 });

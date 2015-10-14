@@ -43,6 +43,7 @@ namespace DDL_CapstoneProject.Respository
                               select new ProjectBasicViewDTO
                               {
                                   ProjectID = project.ProjectID,
+                                  ProjectCode = project.ProjectCode,
                                   CreatorName = project.Creator.UserInfo.FullName,
                                   Title = project.Title,
                                   ImageUrl = project.ImageUrl,
@@ -50,7 +51,7 @@ namespace DDL_CapstoneProject.Respository
                                   Location = project.Location,
                                   CurrentFunded = Decimal.Round((project.CurrentFunded / project.FundingGoal) * 100),
                                   CurrentFundedNumber = project.CurrentFunded,
-                                  ExpireDate = DbFunctions.DiffDays(project.ExpireDate, DateTime.Now),
+                                  ExpireDate = DbFunctions.DiffDays(DateTime.Now,project.ExpireDate),
                                   FundingGoal = project.FundingGoal,
                                   Category = project.Category.Name,
                                   Backers = project.Backings.Count,

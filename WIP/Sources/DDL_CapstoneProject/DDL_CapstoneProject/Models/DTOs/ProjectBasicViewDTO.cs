@@ -16,6 +16,7 @@ namespace DDL_CapstoneProject.Models.DTOs
             PopularPoint = 0;
         }
         public int ProjectID { get; set; }
+        public string ProjectCode {get; set; }
         public string CreatorName { get; set; }
         public string Title { get; set; }
         public string ImageUrl { get; set; }

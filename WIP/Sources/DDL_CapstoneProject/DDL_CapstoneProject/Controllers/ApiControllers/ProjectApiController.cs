@@ -295,5 +295,194 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         }
 
         //Trungvn
+
+
+        // GET: api/ProjectApi/GetProjectDetail?code=code
+        [HttpGet]
+        [ResponseType(typeof(ProjectDetailDTO))]
+        public IHttpActionResult GetProjectDetail(string code)
+        {
+            ProjectDetailDTO projectDetail = null;
+            if (!ModelState.IsValid)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            try
+            {
+                // Get current user name.
+                var currentUser = User.Identity != null ? User.Identity.Name : null;
+                projectDetail = ProjectRepository.Instance.GetProjectByCode(code, currentUser);
+                if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    projectDetail.Creator.IsOwner = false;
+                }
+                else if (projectDetail.Creator.UserName.Equals(User.Identity.Name))
+                {
+                    projectDetail.Creator.IsOwner = true;
+                }
+            }
+            catch (KeyNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Dự án không tồn tại!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO
+            {
+                Status = DDLConstants.HttpMessageType.SUCCESS,
+                Message = "",
+                Type = "",
+                Data = projectDetail
+            });
+        }
+
+        #region Comment Functions
+
+        /// <summary>
+        /// Post: api/ProjectApi/Comment?projectCode=xxx
+        /// </summary>
+        /// <param name="projectCode">projectCode</param>
+        /// <param name="lastComment">CommentDTO</param>
+        /// <param name="comment">CommentDTO</param>
+        /// <returns>CommentDTO</returns>
+        [HttpPost]
+        [ResponseType(typeof(CommentDTO))]
+        public IHttpActionResult Comment(string projectCode, DateTime lastComment, CommentDTO comment)
+        {
+            List<CommentDTO> result = null;
+
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
+            try
+            {
+                result = ProjectRepository.Instance.AddComment(projectCode, comment, lastComment);
+            }
+            catch (UserNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Người dùng không tồn tại!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+            }
+            catch (KeyNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Dự án không tồn tại!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = result });
+        }
+
+        /// <summary>
+        /// Put: api/ProjectApi/ShowHideComment?id=
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>CommentDTO</returns>
+        [HttpPut]
+        [ResponseType(typeof(CommentDTO))]
+        public IHttpActionResult ShowHideComment(int id)
+        {
+            CommentDTO result = null;
+
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
+            try
+            {
+                result = ProjectRepository.Instance.ShowHideComment(id, User.Identity.Name);
+            }
+            catch (UserNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Người dùng không tồn tại!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+            }
+            catch (KeyNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Bình luận không tồn tại!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = result });
+        }
+
+        /// <summary>
+        /// Put: api/ProjectApi/EditComment?id=&content=
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="content"></param>
+        /// <returns>CommentDTO</returns>
+        [HttpPut]
+        [ResponseType(typeof(CommentDTO))]
+        public IHttpActionResult EditComment(int id, string content)
+        {
+            CommentDTO result = null;
+
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
+            try
+            {
+                result = ProjectRepository.Instance.EditComment(id, User.Identity.Name, content);
+            }
+            catch (UserNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Người dùng không tồn tại!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+            }
+            catch (KeyNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Bình luận không tồn tại!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = result });
+        }
+
+        /// <summary>
+        /// Put: api/ProjectApi/DeleteComment?id=
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [ResponseType(typeof(CommentDTO))]
+        public IHttpActionResult DeleteComment(int id)
+        {
+            var result = false;
+
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
+            try
+            {
+                result = ProjectRepository.Instance.DeleteComment(id, User.Identity.Name);
+            }
+            catch (UserNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Người dùng không tồn tại!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+            }
+            catch (KeyNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Bình luận không tồn tại!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = result });
+        }
+        #endregion
     }
 }
