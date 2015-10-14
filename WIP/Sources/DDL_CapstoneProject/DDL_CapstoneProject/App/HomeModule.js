@@ -130,8 +130,9 @@ app.config(["$routeProvider", function ($routeProvider) {
             templateUrl: "ClientPartial/EditProfile",
             controller: 'EditProfileController',
             resolve: {
-                usereditinfo: ['$route', 'UserService', function ($route, UserService) {
-                    return UserService.getProfileInformation($route.current.params.username);
+                usereditinfo: ['$rootScope', '$route', 'UserService', '$q', 'CommmonService', function ($rootScope, $route, UserService, $q, CommmonService) {
+                    var promise = UserService.getProfileInformation($route.current.params.username);
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }]
             }
         });

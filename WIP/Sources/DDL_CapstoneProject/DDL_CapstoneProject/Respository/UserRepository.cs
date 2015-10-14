@@ -271,7 +271,8 @@ namespace DDL_CapstoneProject.Respository
                                  LastLogin = user.LastLogin,
                                  ProfileImage = user.UserInfo.ProfileImage,
                                  CountBackedProject = user.Backings.Count(x => x.User.Username == user.Username),
-                                 UserName = user.Username
+                                 UserName = user.Username,
+                                 Website = user.UserInfo.Website,
                              };
             return userPublic.First();
         }
@@ -293,23 +294,28 @@ namespace DDL_CapstoneProject.Respository
                                Email = user.Email,
                                Website = user.UserInfo.Website,
                                Gender = user.UserInfo.Gender,
+                               ContactNumber = user.UserInfo.PhoneNumber,
                            };
             return userEdit.First();
         }
 
 
         //UserEditInfoDTO
-        public void EditUserInfo(UserEditInfoDTO userCurrent)
+        public void EditUserInfo(UserEditInfoDTO userCurrent, string uploadImageName)
         {
             var userEdit = db.DDL_Users.FirstOrDefault(x => x.Username.Equals(userCurrent.UserName)).UserInfo;
+            if (uploadImageName != string.Empty)
+            {
+                userEdit.ProfileImage = uploadImageName;
+            }
             userEdit.FullName = userCurrent.FullName;
             userEdit.FacebookUrl = userCurrent.FacebookUrl;
-            userEdit.ProfileImage = userCurrent.ProfileImage;
             userEdit.Website = userCurrent.Website;
             userEdit.DateOfBirth = userCurrent.DateOfBirth;
             userEdit.Biography = userCurrent.Biography;
             userEdit.Address = userCurrent.Addres;
             userEdit.Gender = userCurrent.Gender;
+            userEdit.PhoneNumber = userCurrent.ContactNumber;
 
             db.SaveChanges();
         }
