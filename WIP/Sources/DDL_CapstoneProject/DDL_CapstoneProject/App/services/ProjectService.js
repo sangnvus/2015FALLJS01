@@ -119,4 +119,24 @@ app.service('ProjectService', function ($http) {
     this.deleteUpdateLog = function (updateLogID) {
         return $http.delete("/api/ProjectApi/DeleteUpdateLog/" + updateLogID);
     }
+    
+    this.GetProject = function (take, categoryid, orderby) {
+        return $http.get('/api/ProjectApi/GetProject/', {
+            params:
+                {
+                    categoryid: categoryid,
+                    take: take,
+                    orderby: orderby
+                }
+        });
+    };
+    this.GetProjectStatisticList = function () {
+        return $http.get('/api/ProjectApi/GetProjectStatisticList');
+    };
+    this.GetProjectByCategory = function () {
+        return $http.get('/api/ProjectApi/GetProjectByCategory');
+    };
+    this.GetStatisticListForHome = function () {
+        return $http.get('/api/ProjectApi/GetStatisticListForHome');
+    };
 });

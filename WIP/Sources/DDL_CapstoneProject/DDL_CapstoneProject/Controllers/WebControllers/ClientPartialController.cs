@@ -13,7 +13,10 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         {
             return PartialView("~/Views/Home/_Home.cshtml");
         }
-
+        public ActionResult Discover()
+        {
+            return PartialView("~/Views/Home/Discover.cshtml");
+        }
         // GET: ClientPartial
         public ActionResult Register()
         {

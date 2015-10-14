@@ -7,4 +7,7 @@ service.service("CategoryService", function ($http) {
         return $http.get("api/CategoryApi/GetCategories");
     };
 
+    this.GetCategoryProjectCount = function () {
+        return $http.get('/api/CategoryApi/GetCategoryProjectCount');
+    };
 });

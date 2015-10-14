@@ -1,23 +1,12 @@
 ﻿"use strict";
 
-app.controller('HomeController', function ($scope, slides) {
+app.controller('HomeController', function ($scope, slides, liststatisticforhome) {
     //Todo here.
     $scope.Slides = slides.data.Data;
-
-    //loadAllSlidesRecords();
-    //function loadAllSlidesRecords() {
-    //    var promiseGetSlide = SlideService.getSlides();
-
-    //    promiseGetSlide.then(
-    //        function (result) {
-    //            if (result.data.Status === "success") {
-    //                $scope.Slides = result.data.Data;
-    //            } else if (result.data.Status === "error") {
-    //                $scope.Error = result.data.Message;
-    //            }
-    //        },
-    //        function (error) {
-    //            $scope.Error = error.data.Message;
-    //        });
-    //}
+    console.log($scope.Slides)
+    $scope.popularproject = liststatisticforhome.data.Data[0];
+    $scope.projectByCategory = liststatisticforhome.data.Data[1];
+    $scope.highestprojectpledge = liststatisticforhome.data.Data[2][0];
+    $scope.highestprojectfund = liststatisticforhome.data.Data[3][0];
+    $scope.totalprojectfund = liststatisticforhome.data.Data[3][1];
 });

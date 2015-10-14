@@ -18,6 +18,25 @@ app.config(["$routeProvider", function ($routeProvider) {
             resolve: {
                 slides: ['SlideService', function (SlideService) {
                     return SlideService.getSlides();
+                }],
+                liststatisticforhome: ['ProjectService', function (ProjectService) {
+                    return ProjectService.GetStatisticListForHome();
+                }],
+            }
+        });
+    $routeProvider.when("/discover",
+        {
+            templateUrl: "ClientPartial/Discover",
+            controller: 'DiscoverController',
+            resolve: {
+                projectstatisticlist: ['ProjectService', function (ProjectService) {
+                    return ProjectService.GetProjectStatisticList();
+                }],
+                //popularprojectwithcategory: ['ProjectService', function (ProjectService) {
+                //    return ProjectService.GetProjectByCategory();
+                //}],
+                categoryprojectcount: ['CategoryService', function (CategoryService) {
+                    return CategoryService.GetCategoryProjectCount();
                 }]
             }
         });
