@@ -55,8 +55,13 @@ app.config(["$routeProvider", function ($routeProvider) {
             templateUrl: "ClientPartial/Message",
             controller: "MessageController",
             resolve: {
-                conversations: ['$rootScope', '$q', 'MessageService', 'CommmonService', function ($rootScope, $q, MessageService, CommmonService) {
-                    var promise = MessageService.getListReceivedConversations();
+                conversations: ['$route', '$rootScope', '$q', 'MessageService', 'CommmonService', function ($route, $rootScope, $q, MessageService, CommmonService) {
+                    var promise;
+                    if ($route.current.params.list == null || $route.current.params.list !== "sent") {
+                        promise = MessageService.getListReceivedConversations();
+                    } else {
+                        promise = MessageService.getListSentConversations();
+                    }
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }]
             }

@@ -14,14 +14,14 @@
                         </a>
                     </li>
 
-                    <li ng-click="changeInboxSent('inbox')">
+                    <li ng-click="changeInboxSent('inbox')" ng-class="{'active': !Sent}">
                         <a>
                             <i class="icon fa fa-inbox fa-2x fa-fw"></i>
-                            <span class="toggle">Hộp thư đến({{Unread}})</span>
+                            <span class="toggle">Hộp thư đến</span>
                         </a>
                     </li>
 
-                    <li ng-click="changeInboxSent('sent')">
+                    <li ng-click="changeInboxSent('sent')" ng-class="{'active': !Sent}">
                         <a>
                             <i class="icon fa fa-paper-plane fa-2x fa-fw"></i>
                             <span class="toggle">Hộp thư đi</span>
@@ -65,11 +65,18 @@
 
                 <!--Conversation table-->
                 <table datatable="ng" dt-options="dtOptions" id="messageTable" dt-column-defs="dtColumnDefs"
-                       class="table table-striped table-bordered table-hover">
+                       class="table table-bordered table-hover">
                     <thead>
                         <tr style="background: #16a085; color: #FFF">
                             <th style="width: 5%">
-                                <input type="checkbox" class="selectedId" name="selectedId">
+                                <label class="checkbox" for="checkboxAll">
+                                    <input type="checkbox" id="checkboxAll" data-toggle="checkbox" class="custom-checkbox"
+                                           ng-change="checkAllClick(checkAll)"
+                                           ng-model="checkAll"
+                                           value="true">
+                                    <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
+                                    &nbsp;
+                                </label>
                             </th>
                             <th style="width: 15%">Tên</th>
                             <th style="width: 70%">Tiêu đề - nội dung</th>
@@ -79,20 +86,25 @@
                     <tbody>
                         <tr ng-repeat="conversation in ListConversations" ng-class="{'unread-message': !conversation.IsRead}">
                             <td class="checkbox-col">
-                                <input type="checkbox" class="selectedId" name="selectedId"
-                                       ng-click="ToggleSelection(conversation.ConversationID)" value="{{conversation.ConversationID}}">
+                                <label class="checkbox" for="checkbox$index">
+                                    <input type="checkbox" id="checkbox$index" data-toggle="checkbox" class="custom-checkbox"
+                                           ng-model="conversation.Selected"
+                                           value="{{conversation.ConversationID}}">
+                                    <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
+                                    &nbsp;
+                                </label>
                             </td>
-                            <td class="from-col" href="message-View.html" ng-if="!Sent"
-                                ng-click="showConversationDetail(conversation.ConversationID)">
-                                Từ: {{conversation.SenderName}}
+                            <td class="from-col" href="message-View.html" ng-if="!Sent">
+                                <a href="/#/user/message/{{conversation.ConversationID}}"> Từ: {{conversation.SenderName}}{{bool$index}}</a>
                             </td>
-                            <td class="from-col" href="message-View.html" ng-if="Sent"
-                                ng-click="showConversationDetail(conversation.ConversationID)">
-                                Tới: {{conversation.ReceiverName}}
+                            <td class="from-col" href="message-View.html" ng-if="Sent">
+                                <a href="/#/user/message/{{conversation.ConversationID}}">Tới: {{conversation.ReceiverName}}</a>
                             </td>
-                            <td class="msg-col" ng-click="showConversationDetail(conversation.ConversationID)">
-                                {{conversation.Title}}
-                                <span class="text-muted">- Hi again! I wanted to let you know that the order...</span>
+                            <td class="msg-col">
+                                <a href="/#/user/message/{{conversation.ConversationID}}">
+                                    {{conversation.Title}}
+                                    <span class="text-muted">- Hi again! I wanted to let you know that the order...</span>
+                                </a>
                             </td>
                             <td class="date-col"> {{conversation.UpdatedDate | date:'shortDate'}}</td>
                         </tr>

@@ -229,6 +229,7 @@
     <Content Include="App\directives\passwordMatch.js" />
     <Content Include="App\directives\showTabDirective.js" />
     <Content Include="App\directives\SweetAlert.min.js" />
+    <Content Include="App\directives\timelinr.js" />
     <Content Include="App\directives\ui-bootstrap%28-tpls%29.js" />
     <Content Include="App\HomeModule.js" />
     <Content Include="App\services\CategoryService.js" />
@@ -301,6 +302,16 @@
     <Content Include="images\projects\projectimage1.jpg" />
     <Content Include="images\projects\projectimage2.jpg" />
     <Content Include="images\projects\projectimage4.png" />
+    <Content Include="images\Schedule\1.png" />
+    <Content Include="images\Schedule\10.png" />
+    <Content Include="images\Schedule\2.png" />
+    <Content Include="images\Schedule\3.png" />
+    <Content Include="images\Schedule\4.png" />
+    <Content Include="images\Schedule\5.png" />
+    <Content Include="images\Schedule\6.png" />
+    <Content Include="images\Schedule\7.png" />
+    <Content Include="images\Schedule\8.png" />
+    <Content Include="images\Schedule\9.png" />
     <Content Include="images\slides\slider1.jpg" />
     <Content Include="images\slides\slider2.jpg" />
     <Content Include="images\slides\slider3.jpg" />

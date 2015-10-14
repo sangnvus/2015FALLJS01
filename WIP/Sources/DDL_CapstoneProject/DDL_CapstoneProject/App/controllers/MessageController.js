@@ -1,24 +1,17 @@
 ﻿"use strict";
 
 app.controller('MessageController',
-    function ($scope, $location, $rootScope, toastr, conversations, MessageService, CommmonService, UserService, DTOptionsBuilder, DTColumnDefBuilder) {
+    function ($scope, $location, $rootScope, $route, toastr, conversations, MessageService, CommmonService, UserService, DTOptionsBuilder, DTColumnDefBuilder) {
         //Todo here
+
+        //Atrributes
         $scope.ListConversations = conversations.data.Data;
-
-        function resetNewMessageModel() {
-            $scope.NewMessage = {
-                ToUser: "",
-                Title: "",
-                Content: ""
-            }
-        }
-
-        $scope.Unread = conversations.data.Data.length;
-
+        $scope.Sent = $route.current.params.list === "sent" ? true : false;
+        $scope.Unread = $scope.ListConversations.length;
+        $scope.checkAll = false;
         $scope.selection = [];
 
-        $scope.Sent = false;
-
+        // Define table
         $scope.dtOptions = DTOptionsBuilder.newOptions()
         .withDisplayLength(10)
         .withOption('bLengthChange', false)
@@ -29,21 +22,52 @@ app.controller('MessageController',
             DTColumnDefBuilder.newColumnDef(0).notSortable()
         ];
 
+        // Functions reset new message form
+        function resetNewMessageModel() {
+            $scope.NewMessage = {
+                ToUser: "",
+                Title: "",
+                Content: ""
+            }
+        }
+        // call function
         resetNewMessageModel();
+
+        // Add selected column to table with value true/false
+        function addSelected(bool) {
+            for (var i = 0; i < $scope.ListConversations.length; i++) {
+                $scope.ListConversations[i].Selected = bool;
+            }
+            if (!bool) {
+                $scope.checkAll = false;
+            }
+        }
+
+        // Call function addSelected
+        addSelected(false);
+
+        // watch ListConversations for changes
+        $scope.$watch('ListConversations|filter:{Selected:true}', function (nv) {
+            $scope.selection = nv.map(function (conversation) {
+                return conversation.ConversationID;
+            });
+        }, true);
 
         $scope.searchFilter = function (obj) {
             var re = new RegExp($scope.searchText, 'i');
             return !$scope.searchText || re.test(obj.SenderName) || re.test(obj.ReceiverName) || re.test(obj.Title);
         };
 
-        $scope.ToggleSelection = function (id) {
-            if ($scope.selection.indexOf(id) === -1) {
-                $scope.selection.push(id);
+        // Check all checkbox
+        $scope.checkAllClick = function (boolAll) {
+            if (boolAll) {
+                addSelected(true);
             } else {
-                $scope.selection.splice(id);
+                addSelected(false);
             }
         }
 
+        // Change to message detail
         $scope.showConversationDetail = function (id) {
             $location.path("/user/message/" + id).replace();
         }
@@ -114,12 +138,12 @@ app.controller('MessageController',
             if (value === "inbox") {
                 getListReceivedConversation();
                 $scope.Sent = false;
-                $scope.selection = [];
             } else {
                 getListSentConversation();
                 $scope.Sent = true;
-                $scope.selection = [];
             }
+            $scope.selection = [];
+            addSelected(false);
         }
 
         $scope.Delete = function () {

@@ -95,7 +95,7 @@
                 <li class="active"><a showtab href="#campaign" data-toggle="tab">Thông tin</a></li>
                 <li><a showtab href="#update" data-toggle="tab">Cập nhật <span class="badge">{{Project.UpdateLogsList.length}}</span></a></li>
                 <li><a showtab href="#comments" data-toggle="tab">Bình luận <span class="badge">{{Project.CommentsList.length}}</span></a></li>
-                @*<li><a showtab href="#schedule" data-toggle="tab">Tiến trình</a></li>*@
+                <li><a showtab href="#schedule" data-toggle="tab">Tiến trình</a></li>
                 <li><a showtab href="#list-backers" data-toggle="tab">Ủng hộ <span class="badge">10</span></a></li>
             </ul>
         </div>
@@ -364,7 +364,7 @@
                         </div>
                     </div> <!-- endTabpanel COMMENT -->
                     <!-- SCHEDULE -->
-                    @*<div id="schedule" role="tabpanel" class="tab-pane fade in project-tab-border">
+                    <div id="schedule" role="tabpanel" class="tab-pane fade in project-tab-border" timeliner-directive>
                         <div class="ml10 mr10">
                             <div class="">
                                 <h1 class="fnt25" id="scheduleTitle">Timeline Schedule</h1>
@@ -373,10 +373,10 @@
                                 <div class="col-md-12">
                                     <div id="timeline" style="margin: 0px 15px; overflow:auto; width:auto; height:auto">
                                         <ul id="dates" class="pull-right">
-                                            <li><a showtab href="#10102015">10/10/2015</a></li>
-                                            <li><a showtab href="#11102015">11/10/2015</a></li>
-                                            <li><a showtab href="#12102015">12/10/2015</a></li>
-                                            <li><a showtab href="#01102016">1/10/2016</a></li>
+                                            <li><a onclick="return false" href="#10102015">10/10/2015</a></li>
+                                            <li><a onclick="return false" href="#11102015">11/10/2015</a></li>
+                                            <li><a onclick="return false" href="#12102015">12/10/2015</a></li>
+                                            <li><a onclick="return false" href="#01102016">1/10/2016</a></li>
                                         </ul>
                                         <ul id="issues">
                                             <li class="issues-content" id="10102015">
@@ -402,13 +402,13 @@
                                         </ul>
                                         <!-- <div id="grad_left"></div>
                                         <div id="grad_right"></div> -->
-                                        <a href="#" id="next">+</a>
-                                        <a href="#" id="prev">-</a>
+                                        <a href="#" onclick="return false" id="next">+</a>
+                                        <a href="#" onclick="return false" id="prev">-</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div><!-- end SCHEDULE -->*@
+                    </div><!-- end SCHEDULE -->
                     <!-- LIST-BACKERS -->
                     <div id="list-backers" role="tabpanel" class="tab-pane fade in project-tab-border">
                         <div class="ml10 mr10">

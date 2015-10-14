@@ -7,15 +7,15 @@
                     <h5 class="fnt30 fnt-b">Message</h5>
                     <div class="clearfix"></div>
 
-                    <li ng-click="changeInboxSent('inbox')">
-                        <a>
+                    <li>
+                        <a href="/#/user/message/">
                             <i class="icon fa fa-inbox fa-2x fa-fw"></i>
                             <span class="toggle">Hộp thư đến</span>
                         </a>
                     </li>
 
-                    <li ng-click="changeInboxSent('sent')">
-                        <a>
+                    <li>
+                        <a href="/#/user/message?list=sent">
                             <i class="icon fa fa-paper-plane fa-2x fa-fw"></i>
                             <span class="toggle">Hộp thư đi</span>
                         </a>
@@ -43,7 +43,7 @@
                     <button class="btn btn-danger btn18" ng-click="Delete()"><i class="icon fa fa-trash-o"></i> Xóa</button>
 
                     <!-- mes chat -->
-                    <div class="pt10" style="min-width: 800px">
+                    <div class="pt10">
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                             <div class="panel panel-default" ng-repeat="Message in Conversation.MessageList">
                                 <div class="panel-heading" role="tab" id="headingOne">
@@ -52,8 +52,8 @@
                                             <!-- Collapsible Group Item #1 -->
                                             <div class="row">
                                                 <div class="col-sm-1">
-                                                    <img style="width: 45px; height: 45px" ng-if="checkHTTP(Message.SenderProfileImage)" src="{{trustSrc(Message.SenderProfileImage)}}" a alt=""/>
-                                                    <img style="width: 45px; height: 45px" ng-if="!checkHTTP(Message.SenderProfileImage)" src="../images/avatars/{{Message.SenderProfileImage}}" alt=""/>
+                                                    <img style="width: 45px; height: 45px" ng-if="checkHTTP(Message.SenderProfileImage)" src="{{trustSrc(Message.SenderProfileImage)}}" a alt="" />
+                                                    <img style="width: 45px; height: 45px" ng-if="!checkHTTP(Message.SenderProfileImage)" src="../images/avatars/{{Message.SenderProfileImage}}" alt="" />
                                                 </div>
                                                 <div class="col-sm-9">
                                                     <p class="mb0">{{Message.SenderName}}</p>
@@ -66,7 +66,7 @@
                                         </a>
                                     </h4>
                                 </div>
-                                <div id="message{{Message.MessageID}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="message{{Message.MessageID}}">
+                                <div id="message{{Message.MessageID}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="message{{Message.MessageID}}" ng-class="{'in': $last}">
                                     <div class="panel-body" ng-bind-html="Message.Content"></div>
                                 </div>
                             </div>
@@ -75,8 +75,8 @@
                         <div class="reply" style="border-top: 2px solid #cfcfcf">
                             <div class="media pt20">
                                 <div class="pull-left">
-                                    <img style="width: 50px; height: 50px" ng-if="checkHTTP(CurrentUser.ProfileImage)" src="{{trustSrc(CurrentUser.ProfileImage)}}" alt=""/>
-                                    <img style="width: 50px; height: 50px" ng-if="!checkHTTP(CurrentUser.ProfileImage)" src="../images/avatars/{{CurrentUser.ProfileImage}}" alt=""/>
+                                    <img style="width: 50px; height: 50px" ng-if="checkHTTP(CurrentUser.ProfileImage)" src="{{trustSrc(CurrentUser.ProfileImage)}}" alt="" />
+                                    <img style="width: 50px; height: 50px" ng-if="!checkHTTP(CurrentUser.ProfileImage)" src="../images/avatars/{{CurrentUser.ProfileImage}}" alt="" />
                                 </div>
                                 <div class="media-body border-tips">
                                     <div text-angular name="Content" ng-model="Reply.Content"></div>
