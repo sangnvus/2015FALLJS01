@@ -88,6 +88,11 @@ namespace DDL_CapstoneProject.Respository
         {
             var deleteUpdateLog = db.UpdateLogs.SingleOrDefault(x => x.UpdateLogID == updateLogID);
 
+            if (deleteUpdateLog == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
             if (deleteUpdateLog != null)
             {
                 db.UpdateLogs.Remove(deleteUpdateLog);

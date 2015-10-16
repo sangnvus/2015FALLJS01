@@ -62,13 +62,22 @@ service.service('UserService', function ($http) {
         return request;
     }
 
-    this.editProfileInformation = function (UserEditInfo) {
-        var request = $http({
-            method: 'post',
-            url: '/api/UserApi/EditUserInfo',
-            data: UserEditInfo
-        });
-        return request;
+    this.editProfileInformation = function (UserEditInfo, file) {
+        var fdata = new FormData();
+        var url = "/api/UserApi/EditUserInfo";
+        fdata.append('file', file);
+        fdata.append('profile', JSON.stringify(UserEditInfo));
+        return $http.post(url, fdata, {
+            transformRequest: angular.identity,
+            headers: { 'Content-Type': undefined },
+
+        })
+            .success(function (resp) {
+                //debugger;
+            })
+            .error(function (resp) {
+                //debugger;
+            });
     }
 
 });

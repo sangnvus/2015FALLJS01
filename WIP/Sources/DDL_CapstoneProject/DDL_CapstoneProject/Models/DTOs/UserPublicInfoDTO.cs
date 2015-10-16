@@ -15,5 +15,7 @@ namespace DDL_CapstoneProject.Models.DTOs
         public DateTime CreatedDate { get; set; }
         public string Biography { get; set; }
         public int CountBackedProject { get; set; }
+        public string Website { get; set; }
+        
     }
 }

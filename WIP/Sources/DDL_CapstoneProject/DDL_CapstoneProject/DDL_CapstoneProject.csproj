@@ -230,7 +230,6 @@
     <Content Include="App\directives\showTabDirective.js" />
     <Content Include="App\directives\SweetAlert.min.js" />
     <Content Include="App\directives\timelinr.js" />
-    <Content Include="App\directives\ui-bootstrap%28-tpls%29.js" />
     <Content Include="App\HomeModule.js" />
     <Content Include="App\services\CategoryService.js" />
     <Content Include="App\services\CommonService.js" />

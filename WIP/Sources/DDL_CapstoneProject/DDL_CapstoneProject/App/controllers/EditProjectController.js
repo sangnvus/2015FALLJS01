@@ -1,16 +1,10 @@
 ﻿"use strict";
 
-app.controller("EditProjectController", function ($scope, $filter, $location, toastr, $routeParams, ProjectService, categories, project, fileReader, SweetAlert) {
+app.controller("EditProjectController", function ($scope, $filter, $location, toastr, CommmonService, $routeParams, ProjectService, categories, project, fileReader, SweetAlert) {
     // initial newReward
     $scope.NewReward = {};
     // initial newUpdateLog
     $scope.NewUpdateLog = {};
-
-    // Initial tab active
-    $scope.activeBasic = true;
-    $scope.activeReward = false;
-    $scope.activeStory = false;
-    $scope.activeUpdate = false;
 
     // Get project's basic record
     $scope.Project = project.data.Data;
@@ -30,7 +24,9 @@ app.controller("EditProjectController", function ($scope, $filter, $location, to
     $scope.selectedOption = $scope.Categories[categoryIndex];
 
     // convert datetime to date
-    $scope.Project.ExpireDate = new Date($filter('date')($scope.Project.ExpireDate, "yyyy-MM-dd"));
+    if ($scope.Project.ExpireDate != null) {
+        $scope.Project.ExpireDate = new Date($filter('date')($scope.Project.ExpireDate, "yyyy-MM-dd"));
+    }
 
     // Copy original project's basic
     $scope.originalProjectBasic = angular.copy($scope.Project);
@@ -93,6 +89,8 @@ app.controller("EditProjectController", function ($scope, $filter, $location, to
 
     // Edit project's story
     $scope.editProjectStory = function (form) {
+        console.log("story: " + $scope.ProjectStory);
+        console.log("des: " + $scope.ProjectStory.Description);
         // Put update project's story
         var promisePutProjectStory = ProjectService.editProjectStory($scope.ProjectStory);
 
@@ -125,7 +123,12 @@ app.controller("EditProjectController", function ($scope, $filter, $location, to
                     $scope.RewardPKgs = result.data.Data;
                     // convert datetime to date
                     for (var i = 0; i < $scope.RewardPKgs.length; i++) {
-                        $scope.RewardPKgs[i].EstimatedDelivery = new Date($filter('date')($scope.RewardPKgs[i].EstimatedDelivery, "yyyy-MM-dd"));
+                        if ($scope.RewardPKgs[i].EstimatedDelivery != null) {
+                            $scope.RewardPKgs[i].EstimatedDelivery = new Date($filter('date')($scope.RewardPKgs[i].EstimatedDelivery, "yyyy-MM-dd"));
+                        }
+                        if ($scope.RewardPKgs[i].Quantity > 0) {
+                            $scope.RewardPKgs[i].LimitQuantity = true;
+                        }
                     };
                     // Copy original project reward
                     $scope.originalReward = angular.copy($scope.RewardPKgs);
@@ -142,7 +145,14 @@ app.controller("EditProjectController", function ($scope, $filter, $location, to
     };
     // Edit rewardPkg
     $scope.updateReward = function (form) {
-        console.log("reward:: " + $scope.RewardPKgs[0].Description);
+
+        // Check if rewardPkg is not limit quantity
+        for (var i = 0; i < $scope.RewardPKgs.length; i++) {
+            if ($scope.RewardPKgs[i].LimitQuantity == false) {
+                $scope.RewardPKgs[i].Quantity = 0;
+            }
+        };
+
         // Put update project
         var promiseUpdateReward = ProjectService.editRewardPkgs($scope.RewardPKgs);
 
@@ -303,83 +313,34 @@ app.controller("EditProjectController", function ($scope, $filter, $location, to
             });
     };
 
-    // Check before switch tab
-    $scope.preventToBasic = function (event, rewardForm, updateForm, storyForm) {
-        if (!angular.equals($scope.originalReward, $scope.RewardPKgs)) {
-            $scope.checkEditReward(rewardForm, "basic");
-            event.preventDefault();
-        }
-
-        if (!angular.equals($scope.originalUpdateLog, $scope.UpdateLogs)) {
-            $scope.checkEditUpdateLog(updateForm, "basic");
-            event.preventDefault();
-        }
-
-        if (!angular.equals($scope.originalStory, $scope.ProjectStory)) {
-            $scope.checkEditStory(storyForm, "basic");
-            event.preventDefault();
-        }
-    };
-
-    $scope.preventToReward = function (event, basicForm, updateForm, storyForm) {
+    // Prevent switch tab if tab's invalid
+    $('#tablist a').click(function (e) {
         if (!angular.equals($scope.originalProjectBasic, $scope.Project)) {
-            $scope.checkEditProjectBasic(basicForm, "reward");
-            event.preventDefault();
-        }
-
-        if (!angular.equals($scope.originalUpdateLog, $scope.UpdateLogs)) {
-            $scope.checkEditUpdateLog(updateForm, "reward");
-            event.preventDefault();
-        }
-
-        if (!angular.equals($scope.originalStory, $scope.ProjectStory)) {
-            $scope.checkEditStory(storyForm, "reward");
-            event.preventDefault();
-        }
-
-        $scope.getReward();
-    };
-
-    $scope.preventToUpdateLog = function (event, basicForm, rewardForm, storyForm) {
-        if (!angular.equals($scope.originalProjectBasic, $scope.Project)) {
-            $scope.checkEditProjectBasic(basicForm, "update");
-            event.preventDefault();
+            $scope.checkEditProjectBasic($scope.BasicForm);
+            e.stopImmediatePropagation();
         }
 
         if (!angular.equals($scope.originalReward, $scope.RewardPKgs)) {
-            $scope.checkEditReward(rewardForm, "update");
-            event.preventDefault();
-        }
-
-        if (!angular.equals($scope.originalStory, $scope.ProjectStory)) {
-            $scope.checkEditStory(storyForm, "update");
-            event.preventDefault();
-        }
-
-        $scope.getUpdateLog();
-    };
-
-    $scope.preventToStory = function (event, basicForm, rewardForm, updateForm) {
-        if (!angular.equals($scope.originalProjectBasic, $scope.Project)) {
-            $scope.checkEditProjectBasic(basicForm, "story");
-            event.preventDefault();
-        }
-
-        if (!angular.equals($scope.originalReward, $scope.RewardPKgs)) {
-            $scope.checkEditReward(rewardForm, "story");
-            event.preventDefault();
+            $scope.checkEditReward($scope.rewardForm);
+            e.stopImmediatePropagation();
         }
 
         if (!angular.equals($scope.originalUpdateLog, $scope.UpdateLogs)) {
-            $scope.checkEditUpdateLog(updateForm, "story");
-            event.preventDefault();
+            $scope.checkEditUpdateLog($scope.updateForm);
+            e.stopImmediatePropagation();
         }
 
-        $scope.getStory();
-    };
+        if (!angular.equals($scope.originalStory, $scope.ProjectStory)) {
+            $scope.checkEditStory($scope.storyForm);
+            e.stopImmediatePropagation();
+        }
+
+        // Get the tab want to move to
+        $scope.thisTab = $(this);
+    });
 
     // If tab basic is dirty
-    $scope.checkEditProjectBasic = function (form, toTab) {
+    $scope.checkEditProjectBasic = function (form) {
         SweetAlert.swal({
             title: "You have changed something!",
             text: "Project's basic will be edit!",
@@ -395,8 +356,6 @@ app.controller("EditProjectController", function ($scope, $filter, $location, to
                 if (isConfirm) {
                     SweetAlert.swal("Edited!", "Project's basic has been edited.", "success");
                     $scope.editProjectBasic(form);
-                    // Switch tab
-                    //$scope.changeTab(toTab);
                 } else {
                     SweetAlert.swal("Cancelled", "Project's basic is safe :)", "error");
                     $scope.Project = angular.copy($scope.originalProjectBasic);
@@ -407,13 +366,13 @@ app.controller("EditProjectController", function ($scope, $filter, $location, to
                     resetImg.replaceWith(resetImg = resetImg.clone(true));
                     $scope.file = null;
                     // Switch tab
-                    //$scope.changeTab(toTab);
+                    $scope.thisTab.tab('show');
                 }
             });
     };
 
     // If tab reward is dirty
-    $scope.checkEditReward = function (form, toTab) {
+    $scope.checkEditReward = function (form) {
         SweetAlert.swal({
             title: "You have changed something!",
             text: "Project's reward will be edit!",
@@ -429,21 +388,19 @@ app.controller("EditProjectController", function ($scope, $filter, $location, to
                 if (isConfirm) {
                     SweetAlert.swal("Edited!", "Reward has been edited.", "success");
                     $scope.updateReward(form);
-                    // Switch tab
-                    //$scope.changeTab(toTab);
                 } else {
                     SweetAlert.swal("Cancelled", "Reward is safe :)", "error");
                     $scope.RewardPKgs = angular.copy($scope.originalReward);
                     form.$setPristine();
                     form.$setUntouched();
                     // Switch tab
-                    //$scope.changeTab(toTab);
+                    $scope.thisTab.tab('show');
                 }
             });
     };
 
     // If tab update log is dirty
-    $scope.checkEditUpdateLog = function (form, toTab) {
+    $scope.checkEditUpdateLog = function (form) {
         SweetAlert.swal({
             title: "You have changed something!",
             text: "Project's update log will be edit!",
@@ -459,19 +416,21 @@ app.controller("EditProjectController", function ($scope, $filter, $location, to
                 if (isConfirm) {
                     SweetAlert.swal("Edited!", "Project's update log has been edited.", "success");
                     $scope.editUpdateLog(form);
-                    //$scope.changeTab(toTab);
+                    // Switch tab
+                    $scope.thisTab.tab('show');
                 } else {
                     SweetAlert.swal("Cancelled", "Project's update log is safe :)", "error");
                     $scope.UpdateLogs = angular.copy($scope.originalUpdateLog);
                     form.$setPristine();
                     form.$setUntouched();
-                    //$scope.changeTab(toTab);
+                    // Switch tab
+                    $scope.thisTab.tab('show');
                 }
             });
     };
 
     // If tab story is dirty
-    $scope.checkEditStory = function (form, toTab) {
+    $scope.checkEditStory = function (form) {
         SweetAlert.swal({
             title: "You have changed something!",
             text: "Project's story will be edit!",
@@ -487,51 +446,16 @@ app.controller("EditProjectController", function ($scope, $filter, $location, to
                 if (isConfirm) {
                     SweetAlert.swal("Edited!", "Project's story has been edited.", "success");
                     $scope.editProjectStory(form);
-                    //$scope.changeTab(toTab);
                 } else {
                     SweetAlert.swal("Cancelled", "Project's story is safe :)", "error");
                     $scope.ProjectStory = angular.copy($scope.originalStory);
                     form.$setPristine();
                     form.$setUntouched();
-                    //$scope.changeTab(toTab);
+                    // Switch tab
+                    $scope.thisTab.tab('show');
                 }
             });
     };
-
-    //$scope.changeTab = function(toTab) {
-    //    if (toTab === "update") {
-    //        $scope.activeUpdate = true;
-    //        $scope.activeBasic = false;
-    //        $scope.activeStory = false;
-    //        $scope.activeReward = false;
-    //    };
-
-    //    if (toTab === "reward") {
-    //        $scope.activeReward = true;
-    //        $scope.activeBasic = false;
-    //        $scope.activeStory = false;
-    //        $scope.activeUpdate = false;
-    //    };
-
-    //    if (toTab === "basic") {
-    //        $scope.activeBasic = true;
-    //        $scope.activeReward = false;
-    //        $scope.activeStory = false;
-    //        $scope.activeUpdate = false;
-    //    };
-
-    //    if (toTab === "story") {
-    //        $scope.activeStory = true;
-    //        $scope.activeReward = false;
-    //        $scope.activeBasic = false;
-    //        $scope.activeUpdate = false;
-    //    };
-
-    //    console.log("story: " + $scope.activeStory);
-    //    console.log("reward: " + $scope.activeReward);
-    //    console.log("basic: " + $scope.activeBasic);
-    //    console.log("update: " + $scope.activeUpdate);
-    //};
 
     // Discard project basic
     $scope.resetProjectBasic = function (form) {
@@ -568,13 +492,14 @@ app.controller("EditProjectController", function ($scope, $filter, $location, to
 
     // submit project
     $scope.submit = function () {
+        $scope.Project.Status = "pending";
         // Put update project
-        var promisePut = ProjectService.editProject($scope.file, $scope.Project);
+        var promisePut = ProjectService.submitProject($scope.Project);
 
         promisePut.then(
             function (result) {
                 if (result.data.Status === "success") {
-                    toastr.success('Sửa thành công!', 'Thành công!');
+                    toastr.success('Submit thành công!', 'Thành công!');
                 } else {
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');

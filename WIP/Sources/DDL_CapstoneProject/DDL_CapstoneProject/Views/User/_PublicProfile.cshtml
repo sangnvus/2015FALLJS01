@@ -1,57 +1,34 @@
-﻿<div id="publicprofile" class="container">
-    <div id="profile_data" class="row ">
-        <div class="col-sm-2">
-            <img src="https://ksr-ugc.imgix.net/avatars/17647896/10392462_337056226498139_402189443907235508_n.original.jpg?v=1440567238&w=160&h=160&fit=crop&auto=format&q=92&s=5c064d2c2a97357d78e098404a5bb6d0" alt="" class="img-responsive">
-        </div>
-        <div class="col-sm-4">
-            <h2 ng-bind="UserBasicInfo.UserName"></h2>
-            <h4>Backed {{UserBasicInfo.CountBackedProject}} projects</h4>
-            <h4>Joined {{UserBasicInfo.CreatedDate}}</h4>
-        </div>
-        <div class="col-sm-6 col-md-4 col-md-offset-2">
-            <div id="share_profile" class="actions">
-                <a href="">
-                    <i class="icon-facebook"></i>
-                    <i class="icon-twitter"></i>
-                    Share your profile
-                </a>
-                <span class="h4">|</span>
-                <a href="../Views/editprofile2.html">Edit your profile</a>
+﻿
+<div id="profile_public" class="paddingNavbar">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <img id="avatar-profile" src="{{UserBasicInfo.ProfileImage}}" alt="" class="img-responsive">
+                    </div>
+                    <div class="col-sm-8 pt10">
+                        <h3 class="fnt24 mt0 mb10">{{UserBasicInfo.FullName}}</h3>
+                        <p class="mt0 mb0">Tạo: 0 dự án</p>
+                        <p class="mt0 mb0">Ủng hộ: {{UserBasicInfo.CountBackedProject}} dự án</p>
+                        <p>Tham gia vào: {{UserBasicInfo.CreatedDate | date:"MM/dd/yyyy"}}</p>
+                    </div>
+                </div>
+                <div class="row pl10 pr10 pt20">
+                    <div class="readability">
+                        <h5 class="fnt22 fnt-b">Description lists</h5>
+                        <p>{{UserBasicInfo.Biography}}</p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-5">
-            <dl>
-                <dt>
-                    Description lists
-                </dt>
-                <dd>
-                    {{UserBasicInfo.Biography}}
-                </dd>
-            </dl>
-        </div>
-        <div id="basic_info" class="col-sm-3 col-sm-offset-3">
-            <div class="row">
-                <i class="glyphicon glyphicon-ok"></i>
-                {{UserBasicInfo.FullName}}
+            <div class="col-md-6" style="width:350px">
+                <div class="mt5 mb5 border-b"><i class="glyphicon glyphicon-lock"></i>&nbsp;&nbsp;Đăng nhập lần cuối: {{UserBasicInfo.LastLogin | date:"HH:mm MM/dd/yyyy"}}</div>
+                <div class="mt5 mb5 border-b"><i class="glyphicon glyphicon-globe"></i>&nbsp;&nbsp;{{UserBasicInfo.Website}}</div>
+                <div class="mt5 mb5 border-b"><i class="fa fa-facebook-square"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{UserBasicInfo.FacebookUrl}}</div>
+                <div class="mt5 mb5">
+                    <button class="btn btn-primary">Liên hệ với tôi</button>
+                </div>
             </div>
-            <div class="row">
-                <i class="glyphicon glyphicon-lock"></i>
-                {{UserBasicInfo.LastLogin}}
-            </div>
-            <div class="row">
-                <i class="icon-facebook" style="font-size: 18px;"></i>
-                {{UserBasicInfo.FacebookUrl}}
-            </div>
-            <div class="row">
-                <i class="glyphicon glyphicon-bold"></i>First created · <a href="">{{UserBasicInfo.CountBackedProject}}</a>
-            </div>
-            <div class="row">
-                <button class="btn btn-primary">Contact me</button>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-    </div>
-</div>
+        </div> <!-- end ROW -->
+    </div> <!--end CONTAINER -->
+</div> <!-- end PROFILE PUBLIC -->
