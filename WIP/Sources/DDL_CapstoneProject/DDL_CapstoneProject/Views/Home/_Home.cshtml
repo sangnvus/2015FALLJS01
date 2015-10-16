@@ -152,7 +152,7 @@
                         <p class="fnt50 fnt-b">${{highestprojectfund.CurrentFundedNumber}}</p>
                     </div>
                     <div class="col-md-4">
-                        <p class="fnt25">Highest pledge amount</9>
+                        <p class="fnt25">Highest pledge amount</p>
                         <p><i class="fa fa-diamond fa-5x"></i></p>
                         <p class="fnt50 fnt-b">${{highestprojectpledge.CurrentFundedNumber}}</p>
                     </div>
@@ -164,3 +164,17 @@
         </div>
     </div> <!-- end feature3 -->
 </div> <!-- end content -->
+<script>
+    //#main-slider
+    // -------------------------------------------------------------
+    $(function () {
+        $('#main-slider.carousel').carousel({
+            interval: 8000
+        });
+    });
+
+    $('.centered').each(function (e) {
+        $(this).css('margin-top', ($('#main-slider').height() - $(this).height()) / 2);
+    });
+    //end Main Slider ---------------------------------------------
+</script>
