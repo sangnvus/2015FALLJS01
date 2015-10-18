@@ -136,7 +136,41 @@ app.config(["$routeProvider", function ($routeProvider) {
                 }]
             }
         });
+  $routeProvider.when("/project/backedProject",
+       {
+           templateUrl: "ClientPartial/BackedProject",
+           controller: 'BackedProjectController',
+            resolve: {
+                listsBacked: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
+                    var promise = ProjectService.getBackedProject();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
+            }
+       });
 
+    $routeProvider.when("/project/starredProject",
+       {
+           templateUrl: "ClientPartial/StarredProject",
+           controller: 'StarredProjectController',
+           resolve: {
+               project: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
+                   var promise = ProjectService.getStarredProject();
+                   return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+               }]
+           }
+       });
+
+    $routeProvider.when("/project/createdProject",
+      {
+          templateUrl: "ClientPartial/CreatedProject",
+          controller: 'CreatedProjectController',
+          resolve: {
+              projects: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
+                  var promise = ProjectService.getCreatedProject();
+                  return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+              }]
+          }
+      });
     $routeProvider.otherwise({
         redirectTo: "/"
     });

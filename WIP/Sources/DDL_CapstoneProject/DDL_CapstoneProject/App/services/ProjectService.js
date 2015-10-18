@@ -218,4 +218,41 @@ app.service('ProjectService', function ($http) {
 
         return request;
     }
+// 17/10/2015 - MaiCTP - get BackedProject
+    this.getBackedProject = function () {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/GetBackedProject/'
+          
+        });
+
+        return request;
+
+    }
+
+    // 18/10/2015 - MaiCTP - get StarredProject
+    this.getStarredProject = function () {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/GetStarredProject/'
+
+        });
+
+        return request;
+
+    }
+
+    // 18/10/2015 - MaiCTP - get CreatedProject
+    this.getCreatedProject = function () {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/GetCreatedProject/'
+
+        });
+
+        return request;
+
+    }
+
+
 });

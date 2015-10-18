@@ -74,15 +74,15 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             var file = httpRequest.Files["file"];
             var uploadImageName = CommonUtils.UploadImage(file, imageName, DDLConstants.FileType.PROJECT);
 
-            try
-            {
-                updateProject = ProjectRepository.Instance.EditProjectBasic(project, uploadImageName);
-            }
-            catch (Exception)
-            {
+        //    try
+        //    {
+        //        updateProject = ProjectRepository.Instance.EditProjectBasic(project, uploadImageName);
+        //    }
+        //    catch (Exception)
+        //    {
 
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
-            }
+        //        return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+        //    }
 
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
         }
@@ -369,7 +369,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
             catch (Exception)
             {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+           return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
             }
 
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
@@ -469,6 +469,27 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             });
         }
 
+  //  17/10/2015 - MaiCTP - Get BAckedProject
+        public IHttpActionResult GetBackedProject()
+        {
+            var listBacked = ProjectRepository.Instance.GetBackedProject(User.Identity.Name);
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = listBacked });
+        }
+
+
+        //  18/10/2015 - MaiCTP - Get StarredProject
+        public IHttpActionResult GetStarredProject()
+        {
+            var listStarred = ProjectRepository.Instance.GetStarredProject(User.Identity.Name);
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = listStarred });
+        }
+
+        //  18/10/2015 - MaiCTP - Get CreatedProject
+        public IHttpActionResult GetCreatedProject()
+        {
+            var listCreated = ProjectRepository.Instance.GetCreatedProject(User.Identity.Name);
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = listCreated });
+        }
         #region Comment Functions
 
         /// <summary>

@@ -193,6 +193,7 @@ namespace DDL_CapstoneProject.Respository
                 Location = string.Empty,
                 IsExprired = false,
                 CurrentFunded = 0,
+				
                 FundingGoal = 0,
                 Description = string.Empty,
                 VideoUrl = string.Empty,
@@ -272,7 +273,7 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="project">object</param>
         /// <returns>updateProject</returns>
-        public ProjectEditDTO EditProjectBasic(ProjectEditDTO project, string uploadImageName)
+        public Project EditProjectBasic(ProjectDetailDTO project, string uploadImageName)
         {
             var updateProject = db.Projects.SingleOrDefault(u => u.ProjectID == project.ProjectID);
 
@@ -447,7 +448,7 @@ namespace DDL_CapstoneProject.Respository
                                      SubDescription = project.SubDescription,
                                      ProjectCode = project.ProjectCode,
                                      CurrentFunded = project.CurrentFunded,
-                                     ExpireDate = project.ExpireDate,
+                                     
                                      Risk = project.Risk,
                                      FundingGoal = project.FundingGoal,
                                      Location = project.Location,
@@ -502,6 +503,102 @@ namespace DDL_CapstoneProject.Respository
             return projectDetail;
         }
 
+      // 17/10/2015 - MaiCTP - Get BackedProject
+        public List<ProjectBasicViewDTO> GetBackedProject(String userName)
+        {
+          
+            var Project = (from backing in db.Backings
+                           from project in db.Projects
+                           where backing.User.Username == userName  && project.ProjectID == backing.ProjectID
+                           select new ProjectBasicViewDTO
+                            {
+                                ProjectID = project.ProjectID,
+                                ProjectCode = project.ProjectCode,
+                                CreatorName = project.Creator.UserInfo.FullName,
+                                Title = project.Title,
+                                ImageUrl = project.ImageUrl,
+                                SubDescription = project.SubDescription,
+                                Location = project.Location,
+                                CurrentFunded = Decimal.Round((project.CurrentFunded / project.FundingGoal) * 100),
+                                CurrentFundedNumber = project.CurrentFunded,
+                                ExpireDate = DbFunctions.DiffDays(DateTime.Now, project.ExpireDate),
+                                FundingGoal = project.FundingGoal,
+                                Category = project.Category.Name,
+                                Backers = project.Backings.Count,
+                                CreatedDate = project.CreatedDate,
+                                PopularPoint = project.PopularPoint
+                            }).Distinct().ToList();
+
+
+            return Project;
+
+        }
+
+
+        //18/10/2015 - MaiCTP - Get StarredProject
+        public List<ProjectBasicViewDTO> GetStarredProject(String userName)
+        {
+            var Project = (from remind in db.Reminds
+                           from project in db.Projects
+                           where remind.User.Username == userName && project.ProjectID == remind.ProjectID
+                           select new ProjectBasicViewDTO
+                           {
+                               ProjectID = project.ProjectID,
+                               ProjectCode = project.ProjectCode,
+                               CreatorName = project.Creator.UserInfo.FullName,
+                               Title = project.Title,
+                               ImageUrl = project.ImageUrl,
+                               SubDescription = project.SubDescription,
+                               Location = project.Location,
+                               CurrentFunded = Decimal.Round((project.CurrentFunded / project.FundingGoal) * 100),
+                               CurrentFundedNumber = project.CurrentFunded,
+                               ExpireDate = DbFunctions.DiffDays(DateTime.Now, project.ExpireDate),
+                               FundingGoal = project.FundingGoal,
+                               Category = project.Category.Name,
+                               Backers = project.Backings.Count,
+                               CreatedDate = project.CreatedDate,
+                               PopularPoint = project.PopularPoint
+                           }).Distinct().ToList();
+
+
+            return Project;
+        }
+
+
+        // 18/10/2015 - MaiCTP - Get CreatedProject
+        public List<ProjectBasicViewDTO> GetCreatedProject(String userName)
+        {
+            List<ProjectBasicViewDTO> ProjectList = new List<ProjectBasicViewDTO>();
+
+            var projectList = (from project in db.Projects
+                               where project.Creator.Username.Equals(userName, StringComparison.OrdinalIgnoreCase)
+                               select new ProjectBasicViewDTO
+                               {
+                                   ProjectID = project.ProjectID,
+                                   ProjectCode = project.ProjectCode,
+                                   CreatorName = project.Creator.UserInfo.FullName,
+                                   Title = project.Title,
+                                   ImageUrl = project.ImageUrl,
+                                   SubDescription = project.SubDescription,
+                                   Location = project.Location,
+                                   CurrentFunded = Decimal.Round((project.CurrentFunded / project.FundingGoal) * 100),
+                                   CurrentFundedNumber = project.CurrentFunded,
+                                   ExpireDate = DbFunctions.DiffDays(DateTime.Now, project.ExpireDate),
+                                   FundingGoal = project.FundingGoal,
+                                   Category = project.Category.Name,
+                                   Backers = project.Backings.Count,
+                                   CreatedDate = project.CreatedDate,
+                                   PopularPoint = project.PopularPoint
+                               }).Distinct();
+
+
+
+
+            return projectList.ToList();
+
+        }
+
+    
         #region Comment
 
         private List<CommentDTO> GetComments(int projectID, bool showHide)

@@ -64,5 +64,20 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         {
             return PartialView("~/Views/User/_EditProfile.cshtml");
         }
+
+        public ActionResult BackedProject()
+        {
+            return PartialView("~/Views/Project/_BackedProject.cshtml");
+        }
+
+        public ActionResult StarredProject()
+        {
+            return PartialView("~/Views/Project/_StarredProject.cshtml");
+        }
+
+        public ActionResult CreatedProject()
+        {
+            return PartialView("~/Views/Project/_CreatedProject.cshtml");
+        }
     }
 }

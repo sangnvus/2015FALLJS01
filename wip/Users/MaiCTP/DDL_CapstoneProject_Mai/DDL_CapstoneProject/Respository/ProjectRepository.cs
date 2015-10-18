@@ -197,7 +197,7 @@ namespace DDL_CapstoneProject.Respository
                 Location = string.Empty,
                 IsExprired = false,
                 CurrentFunded = 0,
-                ExpireDate = DateTime.Today,
+                
                 FundingGoal = 0,
                 Description = string.Empty,
                 VideoUrl = string.Empty,
@@ -209,7 +209,7 @@ namespace DDL_CapstoneProject.Respository
                     {
                         Type = DDLConstants.RewardType.NO_REWARD,
                         IsHide = false,
-                        EstimatedDelivery = null,
+                      
                         Quantity = 0,
                         Description = string.Empty,
                     }
@@ -220,7 +220,7 @@ namespace DDL_CapstoneProject.Respository
                     {
                         Title = string.Empty,
                         Description = string.Empty,
-                        CreatedDate = DateTime.Today,
+                        
                     }
                 },
                 Timelines = new List<Timeline>
@@ -238,7 +238,7 @@ namespace DDL_CapstoneProject.Respository
                     {
                         Answer = string.Empty,
                         QuestionContent = string.Empty,
-                        CreatedDate = DateTime.Today,
+                        
                     }
                 },
             };
@@ -285,7 +285,6 @@ namespace DDL_CapstoneProject.Respository
 
             if (updateProject == null)
             {
-                throw new Exception();
             }
 
             if (uploadImageName != string.Empty)
@@ -301,10 +300,23 @@ namespace DDL_CapstoneProject.Respository
             updateProject.SubDescription = project.SubDescription;
             updateProject.Title = project.Title;
 
+            updateProject.UpdatedDate = DateTime.Today;
 
             db.SaveChanges();
 
-            return updateProject;
+            var updateProjectDTO = new ProjectEditDTO
+            {
+                CategoryID = updateProject.CategoryID,
+                ExpireDate = updateProject.ExpireDate,
+                FundingGoal = updateProject.FundingGoal,
+                Location = updateProject.Location,
+                Status = updateProject.Status,
+                SubDescription = updateProject.SubDescription,
+                Title = updateProject.Title,
+                ProjectID = updateProject.ProjectID,
+            };
+
+            return updateProjectDTO;
         }
 
         /// <summary>
@@ -312,13 +324,13 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="project"></param>
         /// <returns></returns>
-        public Project EditProjectStory(ProjectStoryDTO project)
+        public ProjectStoryDTO EditProjectStory(ProjectStoryDTO project)
         {
             var updateProject = db.Projects.SingleOrDefault(u => u.ProjectID == project.ProjectID);
 
             if (updateProject == null)
             {
-                throw new Exception();
+                throw new KeyNotFoundException();
             }
 
             updateProject.Risk = project.Risk;
@@ -327,7 +339,15 @@ namespace DDL_CapstoneProject.Respository
 
             db.SaveChanges();
 
-            return updateProject;
+     var updateProjectDTO = new ProjectStoryDTO
+            {
+                Risk = updateProject.Risk,
+                VideoUrl = updateProject.VideoUrl,
+                Description = updateProject.Description,
+                ProjectID = updateProject.ProjectID
+            };
+
+            return updateProjectDTO;
         }
 
         /// <summary>
@@ -335,15 +355,20 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="ProjectID">int</param>
         /// <returns>project</returns>
-        public ProjectEditDTO GetProjectBasic(int ProjectID)
+        public ProjectEditDTO GetProjectBasic(int ProjectID, int UserID)
         {
             var project = db.Projects.SingleOrDefault(x => x.ProjectID == ProjectID);
 
+         var user = db.DDL_Users.SingleOrDefault(x => x.DDL_UserID == UserID);
             if (project == null)
             {
                 throw new KeyNotFoundException();
             }
 
+           if (project.CreatorID != UserID && user.UserType != DDLConstants.UserType.ADMIN)
+            {
+                throw new NotPermissionException();
+            }
             var projectDTO = new ProjectEditDTO
             {
                 ProjectID = project.ProjectID,
@@ -381,7 +406,30 @@ namespace DDL_CapstoneProject.Respository
 
             return projectBasicDTO;
         }
+     #endregion
 
+        public ProjectEditDTO SubmitProject(ProjectEditDTO submitProject)
+        {
+            var updateProject = db.Projects.SingleOrDefault(u => u.ProjectID == submitProject.ProjectID);
+
+            if (updateProject == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
+            updateProject.Status = submitProject.Status;
+
+            db.SaveChanges();
+
+            var updateProjectDTO = new ProjectEditDTO
+            {
+                Status = updateProject.Status,
+                ProjectID = updateProject.ProjectID,
+            };
+
+            return updateProjectDTO;
+        }
+        
         public ProjectDetailDTO GetProjectByCode(string projectCode, string userName)
         {
             if (string.IsNullOrEmpty(projectCode))
@@ -403,7 +451,7 @@ namespace DDL_CapstoneProject.Respository
                                      SubDescription = project.SubDescription,
                                      ProjectCode = project.ProjectCode,
                                      CurrentFunded = project.CurrentFunded,
-                                     ExpireDate = project.ExpireDate,
+                                     
                                      Risk = project.Risk,
                                      FundingGoal = project.FundingGoal,
                                      Location = project.Location,
