@@ -25,7 +25,16 @@ namespace DDL_CapstoneProject.Respository
 
         #region "Methods"
 
+        /// <summary>
+        /// Initial a empty project
+        /// </summary>
+        /// <returns>emptyProject</returns>
+        /// 
+
+
         //TrungVn
+
+
         public List<ProjectBasicViewDTO> GetProject(int take, int categoryid, string order)
         {
             DateTime currentDate = DateTime.Now;
@@ -42,7 +51,7 @@ namespace DDL_CapstoneProject.Respository
                                   Location = project.Location,
                                   CurrentFunded = Decimal.Round((project.CurrentFunded / project.FundingGoal) * 100),
                                   CurrentFundedNumber = project.CurrentFunded,
-                                  ExpireDate = DbFunctions.DiffDays(DateTime.Now,project.ExpireDate),
+                                  ExpireDate = DbFunctions.DiffDays(DateTime.Now, project.ExpireDate),
                                   FundingGoal = project.FundingGoal,
                                   Category = project.Category.Name,
                                   Backers = project.Backings.Count,
@@ -173,11 +182,6 @@ namespace DDL_CapstoneProject.Respository
         }
         //TrungVn
 
-        #region HuyNM
-        /// <summary>
-        /// Initial a empty project
-        /// </summary>
-        /// <returns>emptyProject</returns>
         public Project CreateEmptyProject()
         {
             var project = new Project
@@ -193,7 +197,7 @@ namespace DDL_CapstoneProject.Respository
                 Location = string.Empty,
                 IsExprired = false,
                 CurrentFunded = 0,
-				
+                
                 FundingGoal = 0,
                 Description = string.Empty,
                 VideoUrl = string.Empty,
@@ -204,8 +208,8 @@ namespace DDL_CapstoneProject.Respository
                     new RewardPkg
                     {
                         Type = DDLConstants.RewardType.NO_REWARD,
-                        PledgeAmount = 0,
                         IsHide = false,
+                        EstimatedDelivery = null,
                         Quantity = 0,
                         Description = string.Empty,
                     }
@@ -216,6 +220,7 @@ namespace DDL_CapstoneProject.Respository
                     {
                         Title = string.Empty,
                         Description = string.Empty,
+                        CreatedDate = DateTime.Today,
                     }
                 },
                 Timelines = new List<Timeline>
@@ -233,6 +238,7 @@ namespace DDL_CapstoneProject.Respository
                     {
                         Answer = string.Empty,
                         QuestionContent = string.Empty,
+                        CreatedDate = DateTime.Today,
                     }
                 },
             };
@@ -279,12 +285,12 @@ namespace DDL_CapstoneProject.Respository
 
             if (updateProject == null)
             {
-                throw new KeyNotFoundException();
+                throw new Exception();
             }
 
             if (uploadImageName != string.Empty)
             {
-                updateProject.ImageUrl = uploadImageName;
+                updateProject.ImageUrl = DDLConstants.FileType.PROJECT + uploadImageName;
             }
 
             updateProject.CategoryID = project.CategoryID;
@@ -294,23 +300,12 @@ namespace DDL_CapstoneProject.Respository
             updateProject.Status = project.Status;
             updateProject.SubDescription = project.SubDescription;
             updateProject.Title = project.Title;
+
             updateProject.UpdatedDate = DateTime.Today;
 
             db.SaveChanges();
 
-            var updateProjectDTO = new ProjectEditDTO
-            {
-                CategoryID = updateProject.CategoryID,
-                ExpireDate = updateProject.ExpireDate,
-                FundingGoal = updateProject.FundingGoal,
-                Location = updateProject.Location,
-                Status = updateProject.Status,
-                SubDescription = updateProject.SubDescription,
-                Title = updateProject.Title,
-                ProjectID = updateProject.ProjectID,
-            };
-
-            return updateProjectDTO;
+            return updateProject;
         }
 
         /// <summary>
@@ -333,15 +328,7 @@ namespace DDL_CapstoneProject.Respository
 
             db.SaveChanges();
 
-            var updateProjectDTO = new ProjectStoryDTO
-            {
-                Risk = updateProject.Risk,
-                VideoUrl = updateProject.VideoUrl,
-                Description = updateProject.Description,
-                ProjectID = updateProject.ProjectID
-            };
-
-            return updateProjectDTO;
+            return updateProject;
         }
 
         /// <summary>
@@ -353,16 +340,9 @@ namespace DDL_CapstoneProject.Respository
         {
             var project = db.Projects.SingleOrDefault(x => x.ProjectID == ProjectID);
 
-            var user = db.DDL_Users.SingleOrDefault(x => x.DDL_UserID == UserID);
-
             if (project == null)
             {
                 throw new KeyNotFoundException();
-            }
-
-            if (project.CreatorID != UserID && user.UserType != DDLConstants.UserType.ADMIN)
-            {
-                throw new NotPermissionException();
             }
 
             var projectDTO = new ProjectEditDTO
@@ -402,30 +382,6 @@ namespace DDL_CapstoneProject.Respository
 
             return projectBasicDTO;
         }
-        #endregion
-
-        public ProjectEditDTO SubmitProject(ProjectEditDTO submitProject)
-        {
-            var updateProject = db.Projects.SingleOrDefault(u => u.ProjectID == submitProject.ProjectID);
-
-            if (updateProject == null)
-            {
-                throw new KeyNotFoundException();
-            }
-
-            updateProject.Status = submitProject.Status;
-
-            db.SaveChanges();
-
-            var updateProjectDTO = new ProjectEditDTO
-            {
-                Status = updateProject.Status,
-                ProjectID = updateProject.ProjectID,
-            };
-
-            return updateProjectDTO;
-        }
-        
 
         public ProjectDetailDTO GetProjectByCode(string projectCode, string userName)
         {
@@ -503,7 +459,7 @@ namespace DDL_CapstoneProject.Respository
             return projectDetail;
         }
 
-      // 17/10/2015 - MaiCTP - Get BackedProject
+        // 17/10/2015 - MaiCTP - Get BackedProject
         public List<ProjectBasicViewDTO> GetBackedProject(String userName)
         {
           
@@ -599,6 +555,7 @@ namespace DDL_CapstoneProject.Respository
         }
 
     
+
         #region Comment
 
         private List<CommentDTO> GetComments(int projectID, bool showHide)
