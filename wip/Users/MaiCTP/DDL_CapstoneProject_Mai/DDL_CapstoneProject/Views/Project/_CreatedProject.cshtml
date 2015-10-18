@@ -1,0 +1,66 @@
+﻿
+
+<div id="setting_container" class="paddingNavbar">
+    <div class="row pull-right">
+        <div class="col-sm-12 col-sm-offset-0">
+            <ul id="" class="list-inline fnt18 fnt-b">
+                <li class=""><a class="c-3" href="../#/project/createdProject">Created projects</a></li>
+                <li class=""><a class="c-10" href="../#/project/backedProject">Backed projects</a></li>
+                <li class=""><a class="c-10" href="../#/project/starredProject">Starred projects</a></li>
+                <li class=""><a class="c-10" href="account.html">Setting</a></li>
+                <li class=""><a class="c-10" href="../project/profilePublic.html">Profile ( public )</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="items-projects">
+    <section id="portfolio" class="container">
+        <h4>Created projects:</h4>
+
+        <ul class="portfolio-items col-4" ng-repeat="project in ListCreatedProject">
+            <li class="portfolio-item apps">
+                <div class="item-inner">
+                    <div class="item-image column">
+                        <figure><img src="\images\projects\{{project.ImageUrl}}" alt=""></figure>
+                    </div>
+                    <div class="item-title">
+                        <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
+                    </div>
+                    <div class="item-expand">
+                        <div class="item-content">
+                            <p class="fnt15">{{project.SubDescription}}</p>
+                        </div>
+                        <div class="item-footer">
+                            <div class="mt10 mb5">
+                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
+                                &nbsp;&nbsp;
+                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
+                                &nbsp;&nbsp;
+                            </div>
+                            <div class="progress mt5 mb5">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="50" aria-valuemax="100" style="width: 50%">
+                                    <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
+                                </div>
+                            </div>
+                            <ul class="list-inline">
+                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">funded</p></li>
+                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber | currency}}</p><p class="mt0 mb0">pledged</p></li>
+                                <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">days to go</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li><!--/.portfolio-item-->
+        </ul>
+    </section><!--/#portfolio-->
+    <div class="form-actions txt-c">
+        <a class="btn btn-transparent btn-sm" href="../#/project/createdProject">See more</a>
+    </div>
+</div>
+
+<div class="scroll-top-wrapper ">
+    <span class="scroll-top-inner">
+        <i class="fa fa-2x fa-arrow-circle-up"></i>
+    </span>
+</div> <!-- end SCROLL TO TOP -->

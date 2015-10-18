@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Add New Project";
+}
+
+<form class="form-horizontal" role="form" name="CreateProjectForm" novalidate>
+    <div id="content" class="pt20">
+        <div id="create_project1">
+            <div class="container">
+                <div for="title" class="">
+                    <h3 class="fnt35 fnt-b txt-c">Cùng chúng tôi bắt đầu một hành trình mới nào!</h3>
+                    <h4 class="fnt30 fnt-b txt-c">Hãy nói cho chúng tôi biết bạn cần gì!</h4>
+                </div> <!-- TITLE -->
+                <div for="content" class="">
+                    <form action="">
+                        <div class="form-inline">
+                            <span class="mr0 fnt30">Tôi muốn bắt đầu với dự án về</span>
+                            <select class="ml0 form-control flat noboder fnt30 fnt-b mb20" style="height: 55px;" ng-model="selectedOption" id="sel1"
+                                    ng-options="category.Name for category in Categories track by category.CategoryID "></select>
+                        </div>
+                        <div class="form-inline">
+                            <span class="mr0 fnt30">với tên là</span>
+                            <input type="text" class="pl0 ml0 form-control flat fnt30 fnt-b noboder mb15" name="Title" style="height: 55px;" id="" placeholder="..." maxlength="60" ng-maxlength="60"
+                                   name="ProjectTitle" ng-model="Project.Title" ng-trim="true" required>
+                            <span class="glyphicon glyphicon-ok text-success form-control-feedback"
+                                  ng-show="CreateProjectForm.Title.$dirty && CreateProjectForm.Title.$valid"></span>
+                            <div ng-show="CreateProjectForm.Title.$dirty && CreateProjectForm.Title.$invalid" class="text-danger">
+                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                <span ng-show="CreateProjectForm.Title.$error.required">Bạn chưa nhập tên dự án!</span>
+                                <span ng-show="CreateProjectForm.Title.$error.maxlength">Tối đa 60 kí tự!</span>
+                            </div>
+                        </div>
+                        <div class="form-inline">
+                            <span class="mr0 fnt30">và số tiền gây quỹ là</span>
+                            <input type="number" class="pl0 ml0 form-control flat fnt30 fnt-b noboder mb15" style="height: 55px;" id="" placeholder="..."
+                                   ng-model="Project.FundingGoal" name="FundingGoal"
+                                   required ng-trim="true">
+                            <span class="glyphicon glyphicon-ok text-success form-control-feedback"
+                                  ng-show="CreateProjectForm.FundingGoal.$dirty && CreateProjectForm.FundingGoal.$valid"></span>
+                            <div ng-show="CreateProjectForm.FundingGoal.$dirty && CreateProjectForm.FundingGoal.$invalid" class="text-danger">
+                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                <span ng-show="CreateProjectForm.FundingGoal.$error.required">Bạn chưa nhập số tiền gây quỹ!</span>
+                            </div>
+                            <div class="form-inline borders-t">
+                                <p class="mr0 fnt20 mt10 c3">Với số tiền trên chúng tôi thấy dự án thuộc hạng
+                                    <span class="fnt22 fnt-b" ng-if="Project.FundingGoal <= 50000000">D</span>
+                                    <span class="fnt22 fnt-b" ng-if="Project.FundingGoal <= 100000000 && Project.FundingGoal > 50000000">C</span>
+                                    <span class="fnt22 fnt-b" ng-if="Project.FundingGoal <= 500000000 && Project.FundingGoal > 100000000">B</span>
+                                    <span class="fnt22 fnt-b" ng-if="Project.FundingGoal > 500000000">A</span>
+                                </p>
+                                <p class="mr0 fnt20 c3">Vì vậy chúng tôi sẽ lấy <span class="fnt22 fnt-b">5%</span> số tiền mà bạn qây quỹ được.
+                                </p>
+                                <p class="mr0 fnt20 c3">Nếu bạn đồng ý thì hãy ấn bắt đầu để tiếp tục</p>
+                                <p><a href="#" class="btn btn-primary btn-lg" ng-disabled="!CreateProjectForm.$dirty || (CreateProjectForm.$dirty && CreateProjectForm.$invalid)">Bắt đầu</a>
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                </div> <!-- CONTENT -->
+            </div>
+        </div>
+    </div>
+</form>

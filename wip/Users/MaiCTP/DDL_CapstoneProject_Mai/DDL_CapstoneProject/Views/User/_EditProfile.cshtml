@@ -1,0 +1,134 @@
+﻿<div id="publicprofile" class="container">
+    <div class="row " id="setting_header">
+        <div class="col-md-9"><h1>Settings</h1></div>
+    </div>
+    <div id="feature2" class="row">
+        <ul id="" class="list-inline nav-inline h5 bold">
+            <li class="mr2"><a class="link-gray-dark" href="account.html">Account</a></li>
+            <li class="mr2"><a id="editprofile_header" class="editcolorheader link-gray-dark" href="editprofile2.html">Edit profile</a></li>
+            <li class="mr2"><a class="link-gray-dark" href="notification.html">Notifications</a></li>
+            <!-- <li class="mr2"><a class="link-gray-dark" href="#">Find friends</a></li> -->
+        </ul>
+    </div>
+    <div id="feature3_container" class="row col-md-11">
+        <div id="" class="row">
+            <div class="col-md-5">
+                <form id="form-left" name="myForm" role="form">
+                    <div id="" class="form-group">
+                        <p>
+                            <span class="sr-only">Error:</span>
+                            {{Error}}
+                        </p>
+                        <p>
+                            <label>Full Name</label>
+                            <input type="text" name="fullname" class="form-control"
+                                   ng-model="UserEditInfo.FullName" value="{{UserEditInfo.FullName}}"
+                                   required
+                                   ng-trim="true"
+                                   ng-minlength="6"
+                                   ng-maxlength="30"
+                                   ng-pattern="/^[a-zA-Z]+[\s]+[a-zA-Z\s]+$/" />
+                        </p>
+                        <span ng-show="myForm.fullname.$dirty && myForm.fullname.$invalid">
+                            <span ng-show="myForm.fullname.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
+                            <span style="color:red" ng-show="myForm.fullname.$error.required">Bạn chưa nhập tên đầy đủ!</span><br ng-show="myForm.fullname.$error.required" />
+                            <span style="color:red" ng-show="myForm.fullname.$error.minlength">Tên đầy đủ tối thiểu 6 kí tự!</span><br ng-show="myForm.fullname.$error.minlength" />
+                            <span style="color:red" ng-show="myForm.fullname.$error.maxlength">Tên đầy đủ tối đa 20 kí tự!</span><br ng-show="myForm.fullname.$error.maxlength" />
+                            <span style="color:red" ng-show="myForm.fullname.$error.pattern">Tên đầy đủ phải gồm cả họ và tên!</span><br ng-show="myForm.fullname.$error.pattern" />
+                        </span>
+
+
+                        <p><label id="form-group-email-lb2">Your name is displayed on your profile.</label></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Picture</label>
+                        <p class="inline">
+                            <img alt="Bootstrap Image Preview" src="{{UserEditInfo.ProfileImage}}" />
+                            <div class="upload">
+                                <input type="file" id="files" title="foo" />
+                                <label for="files">Choose an image from your computer <span> JPEG, PNG, GIF, or BMP  •  50MB file limit</span></label>
+                            </div>
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <p>
+                            <label>Biography</label>
+                            <textarea id="Biography" ng-model="UserEditInfo.Biography"
+                                      class="form-control">
+                                {{UserEditInfo.Biography}}
+                            </textarea>
+                        </p>
+                    </div>
+
+                </form>
+            </div>
+            <div class="col-md-1"> </div>
+            <div class="col-md-6">
+                <form id='form-right' role="form" name="myForm2">
+                    <label> </label>
+                    <p>
+                        <label>Gender</label>
+                        <select class="form-control" ng-change="unitChanged()" ng-model="UserEditInfo.Gender">
+                            <option ng-selected="item.id == {{UserEditInfo.Gender}}" value="{{item.id}}" ng-repeat="item in units">{{item.label}}</option>
+                        </select>
+                    </p>
+                    <div id="" class="form-group">
+                        <p>
+                            <label>Date of birth</label>
+                            <input type="text" id="dob" name="DoB" class="form-control"
+                                   ng-model="UserEditInfo.DateOfBirth"
+                                   value="{{UserEditInfo.DateOfBirth}}"
+                                   required />
+                        </p>
+
+                        <span ng-show="myForm2.DoB.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
+                        <span style="color:red" ng-show="myForm2.DoB.$error.required">Bạn chưa nhập ngày tháng năm sinh!</span>
+                    </div>
+
+                    <p>
+                        <label>Websites</label>
+                        <input type="text" name="weburl" value="{{UserEditInfo.Website}}"
+                               ng-model="UserEditInfo.Website"
+                               class="form-control ">
+                    </p>
+                    <div id="form-group-email" class="form-group">
+                        <p>
+                            <label>Email</label>
+                            <input type="email" name="email" id="exampleInputEmail1" class="form-control "
+                                   value="{{UserEditInfo.Email}}"
+                                   ng-model="UserEditInfo.Email"
+                                   required />
+                        </p>
+                        <span ng-show="myForm2.email.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
+                        <span style="color:red" ng-show="myForm2.email.$error.required">Bạn chưa nhập email!</span>
+                        <span style="color:red" ng-show="myForm2.email.$error.email">Email không đúng định dạng!</span>
+                    </div>
+                    <div id="" class="form-group">
+                        <p>
+                            <label>Contact Number</label>
+                            <input type="text" id="" class="form-control " />
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <p>
+                            <label>Address</label>
+                            <input type="text" id="" class="form-control"
+                                   value="{{UserEditInfo.Addres}}"
+                                   name="address"
+                                   ng-model="UserEditInfo.Addres"
+                                   required />
+                        </p>
+                        <span ng-show="myForm2.address.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
+                        <span style="color:red" ng-show="myForm2.address.$error.required">Bạn chưa nhập địa chỉ!</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="feature4_editprofile" class="col-md-9">
+        <button id="Save_setting_bt" class="btn btn--blue" ng-click="submit()">  Save settings</button>
+        <a class="btn" href="/profile/1043530344">View profile</a>
+    </div>
+</div>
