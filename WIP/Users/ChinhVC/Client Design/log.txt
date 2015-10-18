@@ -3,10 +3,9 @@ UPDATE: DESIGN
 Mình đã update design một số cái sau: 
 Nếu page nào ảnh hưởng đến ai thì check và merger lại nhé. 
 Chú ý: các file css, js chỉ 1 người sửa thôi nhé
-- fix header => update button login, button register, home: (html, common.css)
+- fix header => update login, register, home: (html, common.css)
 - fix footer => update animation.js
 - created, backed, starred project: add button "see more", update css style
-- fix button "see more": cmn-common.css
 - change font default flat ui -> font-family: Times new roman (common.css)
 =======================================================
 

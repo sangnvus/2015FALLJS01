@@ -606,11 +606,20 @@ Date: 2015.10.01
 	/*dataTable*/
 	#messageTable{
 		font-size: 16px;
-		background: #fff;
+		
 	}
-    .unread-message{
+    #messageTable .unread-message{
     	font-weight: bold;
+    	background: #fff;
     }
+    #messageTable .read{
+    	background: #F4F4F4;
+    }
+
+    #messageTable td>a{
+		color: #34495e!important;
+    }
+
     .from-col {
     	min-width: 170px;
     	overflow: hidden;
