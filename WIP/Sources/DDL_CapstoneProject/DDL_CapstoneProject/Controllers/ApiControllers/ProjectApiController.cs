@@ -950,6 +950,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpGet]
         public IHttpActionResult RemindProject(string code)
         {
+            var currentUser = getCurrentUser();
+
+            if (currentUser == null)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
             var httpRequest = HttpContext.Current.Request;
             //RemindDTO remindInfo = null;
 
