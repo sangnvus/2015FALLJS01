@@ -180,59 +180,74 @@ namespace DDL_CapstoneProject.Respository
         /// <returns>emptyProject</returns>
         public Project CreateEmptyProject()
         {
-            var project = new Project
+            // Create project 
+            var project = db.Projects.Create();
+            project.ProjectCode = string.Empty;
+            project.CategoryID = 0;
+            project.CreatorID = 0;
+            project.Title = string.Empty;
+            project.CreatedDate = DateTime.Today;
+            project.Risk = string.Empty;
+            project.ImageUrl = string.Empty;
+            project.SubDescription = string.Empty;
+            project.Location = string.Empty;
+            project.IsExprired = false;
+            project.CurrentFunded = 0;
+            project.FundingGoal = 0;
+            project.Description = string.Empty;
+            project.VideoUrl = string.Empty;
+            project.PopularPoint = 0;
+            project.Status = DDLConstants.ProjectStatus.DRAFT;
+
+            // Create rewardPkgs
+            var rewardPkgs = db.RewardPkgs.Create();
+            rewardPkgs.Type = DDLConstants.RewardType.NO_REWARD;
+            rewardPkgs.PledgeAmount = 0;
+            rewardPkgs.IsHide = false;
+            rewardPkgs.Quantity = 0;
+            rewardPkgs.Description = string.Empty;
+
+            // Add rewardPkgs to project
+            project.RewardPkgs = new List<RewardPkg>
             {
-                ProjectCode = string.Empty,
-                CategoryID = 0,
-                CreatorID = 0,
-                Title = string.Empty,
-                CreatedDate = DateTime.Today,
-                Risk = string.Empty,
-                ImageUrl = string.Empty,
-                SubDescription = string.Empty,
-                Location = string.Empty,
-                IsExprired = false,
-                CurrentFunded = 0,
-                FundingGoal = 0,
-                Description = string.Empty,
-                VideoUrl = string.Empty,
-                PopularPoint = 0,
-                Status = DDLConstants.ProjectStatus.DRAFT,
-                RewardPkgs = new List<RewardPkg>
-                {
-                    new RewardPkg
-                    {
-                        Type = DDLConstants.RewardType.NO_REWARD,
-                        PledgeAmount = 0,
-                        IsHide = false,
-                        Quantity = 0,
-                        Description = string.Empty,
-                    }
-                },
-                UpdateLogs = new List<UpdateLog>
-                {
-                    new UpdateLog
-                    {
-                        Title = string.Empty,
-                        Description = string.Empty
-                    }
-                },
-                Timelines = new List<Timeline>
-                {
-                    new Timeline
-                    {
-                        Title = string.Empty,
-                        Description = string.Empty
-                    }
-                },
-                Questions = new List<Question>
-                {
-                    new Question
-                    {
-                        Answer = string.Empty,
-                        QuestionContent = string.Empty
-                    }
-                },
+                rewardPkgs
+            };
+
+            // Create updateLog
+            var updateLog = db.UpdateLogs.Create();
+            updateLog.Title = string.Empty;
+            updateLog.Description = string.Empty;
+            updateLog.CreatedDate = DateTime.Today;
+
+            // Add updateLog to project
+            project.UpdateLogs = new List<UpdateLog>
+            {
+                updateLog
+            };
+
+            // Create timeline
+            var timeline = db.Timelines.Create();
+            timeline.Title = string.Empty;
+            timeline.Description = string.Empty;
+            timeline.ImageUrl = string.Empty;
+            timeline.DueDate = DateTime.Today;
+
+            // Add timeline to project
+            project.Timelines = new List<Timeline>
+            {
+                timeline
+            };
+
+            // Create question
+            var question = db.Questions.Create();
+            question.Answer = string.Empty;
+            question.QuestionContent = string.Empty;
+            question.CreatedDate = DateTime.Today;
+
+            // Add question to project
+            project.Questions = new List<Question>
+            {
+                question
             };
 
             return project;
@@ -244,8 +259,7 @@ namespace DDL_CapstoneProject.Respository
         /// <returns>project</returns>
         public Project CreatProject(ProjectCreateDTO newProject)
         {
-            Project project;
-            project = CreateEmptyProject();
+            var project = CreateEmptyProject();
             project.CreatorID = newProject.CategoryID;
             project.Title = newProject.Title;
             project.CategoryID = newProject.CategoryID;
@@ -292,7 +306,6 @@ namespace DDL_CapstoneProject.Respository
             updateProject.Status = project.Status;
             updateProject.SubDescription = project.SubDescription;
             updateProject.Title = project.Title;
-
             updateProject.UpdatedDate = DateTime.Today;
 
             db.SaveChanges();
@@ -307,6 +320,9 @@ namespace DDL_CapstoneProject.Respository
                 SubDescription = updateProject.SubDescription,
                 Title = updateProject.Title,
                 ProjectID = updateProject.ProjectID,
+                ProjectCode = updateProject.ProjectCode,
+                ImageUrl = updateProject.ImageUrl,
+                CurrentFunded = project.CurrentFunded,
             };
 
             return updateProjectDTO;
@@ -348,9 +364,9 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="ProjectID">int</param>
         /// <returns>project</returns>
-        public ProjectEditDTO GetProjectBasic(int ProjectID, int UserID)
+        public ProjectEditDTO GetProjectBasic(string code, int UserID)
         {
-            var project = db.Projects.SingleOrDefault(x => x.ProjectID == ProjectID);
+            var project = db.Projects.SingleOrDefault(x => x.ProjectCode == code);
 
             var user = db.DDL_Users.SingleOrDefault(x => x.DDL_UserID == UserID);
 
@@ -363,7 +379,6 @@ namespace DDL_CapstoneProject.Respository
             {
                 throw new NotPermissionException();
             }
-
 
             var projectDTO = new ProjectEditDTO
             {
@@ -403,30 +418,78 @@ namespace DDL_CapstoneProject.Respository
             return projectBasicDTO;
         }
 
-        #endregion
-
-        public ProjectEditDTO SubmitProject(ProjectEditDTO submitProject)
+        public List<string> SubmitProject(ProjectEditDTO submitProject)
         {
-            var updateProject = db.Projects.SingleOrDefault(u => u.ProjectID == submitProject.ProjectID);
+            var project = db.Projects.SingleOrDefault(u => u.ProjectID == submitProject.ProjectID);
 
-            if (updateProject == null)
+            if (project == null)
             {
                 throw new KeyNotFoundException();
             }
 
-            updateProject.Status = submitProject.Status;
+            List<string> mylist = new List<string>();
 
-            db.SaveChanges();
-
-            var updateProjectDTO = new ProjectEditDTO
+            string messageBasic = string.Empty;
+            if (string.IsNullOrEmpty(project.Title) || string.IsNullOrEmpty(project.ImageUrl) || string.IsNullOrEmpty(project.SubDescription)
+                || string.IsNullOrEmpty(project.Location) || project.ExpireDate == null || project.FundingGoal <= 0)
             {
-                Status = updateProject.Status,
-                ProjectID = updateProject.ProjectID,
-            };
+                messageBasic = "Xin hãy xem lại trang thông tin cơ bản, các trường (kể cả ảnh dự án) PHẢI được điền đầy đủ và hợp lệ";
+                mylist.Add(messageBasic);
 
-            return updateProjectDTO;
+            }
+
+            var rewardList = RewardPkgRepository.Instance.GetRewardPkg(project.ProjectID);
+            string messageReward = string.Empty;
+            if (rewardList.Any(reward => reward.PledgeAmount <= 0 || reward.Description == null || reward.Description == string.Empty ||
+                                         reward.EstimatedDelivery == null))
+            {
+                messageReward = "Xin hãy xem lại trang gói quà! Tất cả các trường PHẢI được điền đầy đủ và hợp lệ";
+                mylist.Add(messageReward);
+            }
+
+            string messageStory = string.Empty;
+            if (string.IsNullOrEmpty(project.Description) || string.IsNullOrEmpty(project.Risk))
+            {
+                messageStory = "Xin hãy xem lại trang câu chuyện! Các trường PHẢI được nhập đầy đủ (trừ video)";
+                mylist.Add(messageStory);
+            }
+
+            var timeline = TimeLineRepository.Instance.GetTimeLine(project.ProjectID);
+            string messageTimeline = string.Empty;
+            foreach (var point in timeline)
+            {
+                if (string.IsNullOrEmpty(point.Title) || string.IsNullOrEmpty(point.ImageUrl) || string.IsNullOrEmpty(point.Description))
+                {
+                    messageTimeline = "Xin hãy xem lại trang lịch trình! Các trường PHẢI được nhập đầy đủ(kể cả ảnh)";
+                }
+            }
+
+            if (!string.IsNullOrEmpty(messageTimeline))
+            {
+                mylist.Add(messageTimeline);
+            }
+
+            if (string.IsNullOrEmpty(messageTimeline) && string.IsNullOrEmpty(messageBasic) &&
+                string.IsNullOrEmpty(messageReward) && string.IsNullOrEmpty(messageStory))
+            {
+                project.Status = DDLConstants.ProjectStatus.PENDING;
+
+                db.SaveChanges();
+            }
+
+            // string[] errorList = new string[]
+            //{
+            //    messageBasic, 
+            //    messageReward, 
+            //    messageStory, 
+            //    messageTimeline
+            //};
+
+
+
+            return mylist;
         }
-        
+        #endregion       
 
         public ProjectDetailDTO GetProjectByCode(string projectCode, string userName)
         {

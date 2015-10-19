@@ -21,5 +21,6 @@ namespace DDL_CapstoneProject.Models.DTOs
         public string Description { get; set; }
         public DateTime? EstimatedDelivery { get; set; }
         public bool IsHide { get; set; }
+        public int Backers { get; set; }
     }
 }

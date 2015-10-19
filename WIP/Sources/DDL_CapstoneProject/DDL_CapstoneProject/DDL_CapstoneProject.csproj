@@ -200,6 +200,8 @@
     <Compile Include="Models\UpdateLog.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Respository\QuestionRepository.cs" />
+    <Compile Include="Respository\TimelineRepository.cs" />
     <Compile Include="Respository\UpdateLogRepository.cs" />
     <Compile Include="Respository\RewardPkgRepository.cs" />
     <Compile Include="Respository\CategoryRepository.cs" />
@@ -232,7 +234,6 @@
     <Content Include="App\directives\ngFileDirty.js" />
     <Content Include="App\directives\ngFileSelect.js" />
     <Content Include="App\directives\passwordMatch.js" />
-    <Content Include="App\directives\showTabDirective.js" />
     <Content Include="App\directives\SweetAlert.min.js" />
     <Content Include="App\directives\text-angular\textAngular-sanitize.min.js" />
     <Content Include="App\directives\timelinr.js" />
