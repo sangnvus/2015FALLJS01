@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <div class="pt20">
-                        <button class="btn btn-primary btn-lg" href="back-project.html">Ủng hộ dự án</button>
+                        <a class="btn btn-primary btn-lg" href="@Url.Content("/#/project/back/{{Project.ProjectCode}}")">Ủng hộ dự án</a>
                         <button class="btn btn-danger btn-lg" disabled ng-if="Project.IsExprired" href="back_project.html">Dự án đã hết hạn</button>
                         <a href="" class="grey-dark" ng-click="remind()">&nbsp;&nbsp;<i class="fa fa-star"></i> Đánh dấu</a>
                     </div>

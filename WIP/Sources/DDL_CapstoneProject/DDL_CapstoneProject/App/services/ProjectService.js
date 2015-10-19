@@ -246,6 +246,19 @@ app.service('ProjectService', function ($http) {
         return request;
     }
 
+    // Function to get rewardPkgs by projectCode
+    this.getRewardPkgByCode = function (code) {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/GetRewardPkgByCode',
+            params: {
+                code: code
+            }
+        });
+
+        return request;
+    }
+
     this.GetProjectStatisticList = function () {
         return $http.get('/api/ProjectApi/GetProjectStatisticList');
     };

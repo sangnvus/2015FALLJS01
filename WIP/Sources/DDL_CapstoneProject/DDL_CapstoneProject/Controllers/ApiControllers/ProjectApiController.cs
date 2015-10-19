@@ -231,6 +231,32 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = rewardPkg });
         }
 
+        // GET: api/ProjectApi/GetRewardPkgByCode/:code
+        [HttpGet]
+        [ResponseType(typeof(RewardPkgDTO))]
+        public IHttpActionResult GetRewardPkgByCode(string code)
+        {
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
+            List<RewardPkgDTO> rewardPkg;
+
+            try
+            {
+                rewardPkg = RewardPkgRepository.Instance.GetRewardPkgByCode(code);
+            }
+            catch (Exception)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = rewardPkg });
+        }
+
         // POST: api/ProjectApi/CreateRewardPkg
         [ResponseType(typeof(RewardPkgDTO))]
         [HttpPost]

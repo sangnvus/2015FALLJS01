@@ -1,0 +1,85 @@
+﻿<div id="content" class="paddingNavbar">
+    <div id="back_project">
+        <div class="container">
+            <div class="title text-center">
+                <h3 class="fnt30 mb0 pb0"><a href="project_detail.html">Divinity: Original Sin 2</a></h3>
+                <p class="fnt18 mt0 pt0">by <a class="fnt-b" href="">Larian Studios LLC</a></p>
+            </div>
+            <div class="row mr30 ml30">
+                <div class="col-md-8 pull-left">
+                    <p class="fnt22 fnt-b">Let's choose your reward!</p>
+                    <div id="choose_reward">
+                        <form role="form" name="chooseRewardForm" novalidate>
+                            <div class="form-group">
+                                <div class="item-radio mt20 mb20">
+                                    <label class="radio" for="radio100">
+                                        <input name="optionsRadios2" type="radio" data-toggle="radio" value="" id="radio0" required checked>
+                                        <div class="row pb20">
+                                            <div class="col-md-8">
+                                                <div class="fnt18"><span class="fnt-b">No thanks, </span><span>I just want to help the project.</span></div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <!-- <p class="mt0 pt0">Estimated delivery</p>
+                                                     <p class="mt0 pt0">Dec 2016</p> -->
+                                            </div>
+                                        </div>
+                                        <!-- expand -->
+                                        <div class="item-expand pt10 bt-dash">
+                                            <form action=""></form>
+                                            <form class="form-inline" role="form">
+                                                <p class="fnt18 fnt-b pt0 pp0">Plegde Infor:</p>
+                                                <div class="form-group pb10">
+                                                    <div class="input-group pl10">
+                                                        <input type="text" class="form-control" placeholder="Nhập số tiền" value="15" />
+                                                        <span class="input-group-addon">VNĐ</span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group pb10 pl10">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="Nhập số lượng" value="1" />
+                                                        <span class="input-group-addon">SP</span>
+                                                    </div>
+                                                </div>
+                                                <a href="payment.html" class="form-control btn btn-primary mb10">Continue</a>
+                                            </form>
+                                        </div>
+                                    </label>
+                                </div> <!-- item-radio -->
+                                <div class="item-radio mt20 mb20" ng-repeat="reward in RewardPkgs | orderBy:'PledgeAmount'">
+                                    <label class="radio" for="radio101">
+                                        <input name="optionsRadios2" type="radio" data-toggle="radio" value="" id="radio{{1+index}}" required>
+                                        <div class="row pb20">
+                                            <div class="col-md-8">
+                                                <div class="fnt18"><span class="fnt-b">{{reward.PledgeAmount}}</span></div>
+                                                <p>Backers: {{reward.Backers}} <span>| {{reward.Quantity}}</span></p>
+                                                <p>{{reward.Description}}</p>
+                                            </div>
+                                            <div class="col-md-4" ng-show="reward.EstimatedDelivery != null">
+                                                <p class="fnt-b mt0 pt0">Estimated delivery</p>
+                                                <p class="mt0 pt0">{{reward.EstimatedDelivery | date:"dd/MM/yyyy"}}</p>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div> <!-- item-radio -->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-4 pull-right pt30">
+                    <div class="fnt16 border-tips">
+                        <p class="bold">DoI is not a store.</p>
+                        <p>It's a way to bring creative projects to life.</p>
+                        <p>DoI does not guarantee projects or investigate a creator's ability to complete their project. It is the responsibility of the project creator to complete their project as promised, and the claims of this project are theirs alone.</p>
+                        <p><a href="">Learn more about accountability</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- end feature3 -->
+</div> <!-- end content -->
+
+<div class="scroll-top-wrapper ">
+    <span class="scroll-top-inner">
+        <i class="fa fa-2x fa-arrow-circle-up"></i>
+    </span>
+</div> <!-- end SCROLL TO TOP -->

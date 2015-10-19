@@ -102,6 +102,17 @@ app.config(["$routeProvider", function ($routeProvider) {
                 }],
             }
         });
+    $routeProvider.when("/project/back/:code",
+        {
+            templateUrl: "ClientPartial/BackProject",
+            controller: "BackProjectController",
+            resolve: {
+                rewardPkgs: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
+                    var promise = ProjectService.getRewardPkgByCode($route.current.params.code);
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
+            }
+        });
     $routeProvider.when("/project/detail/:code",
         {
             templateUrl: "ClientPartial/ProjectDetail",

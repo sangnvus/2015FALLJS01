@@ -199,57 +199,6 @@ namespace DDL_CapstoneProject.Respository
             project.PopularPoint = 0;
             project.Status = DDLConstants.ProjectStatus.DRAFT;
 
-            // Create rewardPkgs
-            var rewardPkgs = db.RewardPkgs.Create();
-            rewardPkgs.Type = DDLConstants.RewardType.NO_REWARD;
-            rewardPkgs.PledgeAmount = 0;
-            rewardPkgs.IsHide = false;
-            rewardPkgs.Quantity = 0;
-            rewardPkgs.Description = string.Empty;
-
-            // Add rewardPkgs to project
-            project.RewardPkgs = new List<RewardPkg>
-            {
-                rewardPkgs
-            };
-
-            // Create updateLog
-            var updateLog = db.UpdateLogs.Create();
-            updateLog.Title = string.Empty;
-            updateLog.Description = string.Empty;
-            updateLog.CreatedDate = DateTime.Today;
-
-            // Add updateLog to project
-            project.UpdateLogs = new List<UpdateLog>
-            {
-                updateLog
-            };
-
-            // Create timeline
-            var timeline = db.Timelines.Create();
-            timeline.Title = string.Empty;
-            timeline.Description = string.Empty;
-            timeline.ImageUrl = string.Empty;
-            timeline.DueDate = DateTime.Today;
-
-            // Add timeline to project
-            project.Timelines = new List<Timeline>
-            {
-                timeline
-            };
-
-            // Create question
-            var question = db.Questions.Create();
-            question.Answer = string.Empty;
-            question.QuestionContent = string.Empty;
-            question.CreatedDate = DateTime.Today;
-
-            // Add question to project
-            project.Questions = new List<Question>
-            {
-                question
-            };
-
             return project;
         }
 
@@ -438,10 +387,10 @@ namespace DDL_CapstoneProject.Respository
 
             var rewardList = RewardPkgRepository.Instance.GetRewardPkg(project.ProjectID);
             string messageReward = string.Empty;
-            if (rewardList.Any(reward => reward.PledgeAmount <= 0 || reward.Description == null || reward.Description == string.Empty ||
-                                         reward.EstimatedDelivery == null))
+            if (rewardList.Any(reward => reward.PledgeAmount <= 0 || string.IsNullOrEmpty(reward.Description)
+                                         || reward.EstimatedDelivery < project.ExpireDate))
             {
-                messageReward = "Xin hãy xem lại trang gói quà! Tất cả các trường PHẢI được điền đầy đủ và hợp lệ";
+                messageReward = "Xin hãy xem lại trang gói quà! Tất cả các trường PHẢI được điền đầy đủ và hợp lệ(Ngày giao phải sau ngày đóng gây quỹ)";
                 mylist.Add(messageReward);
             }
 
@@ -452,38 +401,12 @@ namespace DDL_CapstoneProject.Respository
                 mylist.Add(messageStory);
             }
 
-            var timeline = TimeLineRepository.Instance.GetTimeLine(project.ProjectID);
-            string messageTimeline = string.Empty;
-            foreach (var point in timeline)
-            {
-                if (string.IsNullOrEmpty(point.Title) || string.IsNullOrEmpty(point.ImageUrl) || string.IsNullOrEmpty(point.Description))
-                {
-                    messageTimeline = "Xin hãy xem lại trang lịch trình! Các trường PHẢI được nhập đầy đủ(kể cả ảnh)";
-                }
-            }
-
-            if (!string.IsNullOrEmpty(messageTimeline))
-            {
-                mylist.Add(messageTimeline);
-            }
-
-            if (string.IsNullOrEmpty(messageTimeline) && string.IsNullOrEmpty(messageBasic) &&
-                string.IsNullOrEmpty(messageReward) && string.IsNullOrEmpty(messageStory))
+            if (string.IsNullOrEmpty(messageBasic) && string.IsNullOrEmpty(messageReward) && string.IsNullOrEmpty(messageStory))
             {
                 project.Status = DDLConstants.ProjectStatus.PENDING;
 
                 db.SaveChanges();
             }
-
-            // string[] errorList = new string[]
-            //{
-            //    messageBasic, 
-            //    messageReward, 
-            //    messageStory, 
-            //    messageTimeline
-            //};
-
-
 
             return mylist;
         }
