@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, toastr, project, ProjectService, CommmonService) {
+app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, toastr, project, ProjectService, CommmonService, listbacker) {
     //Todo here.
     $scope.Project = project.data.Data;
 
@@ -140,4 +140,21 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                 toastr.error($scope.Error, 'Lỗi!');
             });
     }
+
+    $scope.remind = function () {
+        var promise = ProjectService.remindProject($scope.Project.ProjectCode);
+          promisePost.then(
+            function (result) {
+              if (result.data.Status === "success") {
+               toastr.success('Theo dõi dự án!', 'Thành công!');
+            } else if (result.data.Status === "error") {
+                 $scope.Error = result.data.Message;
+               toastr.error($scope.Error, 'Lỗi!');
+           }
+          }
+         );
+    };
+    $scope.ListBacker = listbacker.data.Data;
+    
+    
 });

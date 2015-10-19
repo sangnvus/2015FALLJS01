@@ -110,6 +110,10 @@ app.config(["$routeProvider", function ($routeProvider) {
                 project: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
                     var promise = ProjectService.getProjectDetail($route.current.params.code);
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }],
+                listbacker: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
+                    var promise = ProjectService.getListBacker($route.current.params.code);
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }]
             }
         });

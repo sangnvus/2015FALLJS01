@@ -662,7 +662,56 @@ namespace DDL_CapstoneProject.Respository
 
         }
 
-    
+        public void RemindProject(string userName, string projectCode)
+        {
+            var userCurrent = db.DDL_Users.FirstOrDefault(x => x.Username.Equals(userName));
+            var project = db.Projects.FirstOrDefault(x => x.ProjectCode == projectCode);
+            var reminded = db.Reminds.FirstOrDefault(x => x.UserID.Equals(userCurrent.DDL_UserID) && x.ProjectID == project.ProjectID);
+            if (reminded != null)
+            {
+                db.Reminds.Remove(reminded);
+                db.SaveChanges();
+            }
+            else
+            {
+                reminded = new Remind
+                {
+                    Project = project,
+                    User = userCurrent,
+                    RemindID = 0,
+                    ProjectID = 0,
+                    UserID = 0
+                };
+                reminded.Project.ProjectID = project.ProjectID;
+                reminded.User.DDL_UserID = userCurrent.DDL_UserID;
+                db.Reminds.Add(reminded);
+                db.SaveChanges();
+            }
+        }
+
+        public List<BackingDTO> GetListBacker(string projectCode)
+        {
+            var project = db.Projects.FirstOrDefault(x => x.ProjectCode == projectCode);
+            var remindInfo = db.Reminds.FirstOrDefault(x => x.ProjectID == project.ProjectID);
+            int number = 0;
+
+            var list = new List<BackingDTO>();
+            var listBacker = from backer in db.Backings
+                             where project.ProjectID == backer.ProjectID
+                             select new BackingDTO
+                             {
+                                 Amount = backer.BackingDetail.PledgedAmount,
+                                 Date = backer.BackedDate,
+                                 FullName = backer.User.UserInfo.FullName,
+                             };
+            foreach (BackingDTO backer in listBacker)
+            {
+                number = number + 1;
+                backer.No = number;
+                list.Add(backer);
+            }
+            return list;
+        }
 
         #region Comment
 
