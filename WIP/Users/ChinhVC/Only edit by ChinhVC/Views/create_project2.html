@@ -126,7 +126,7 @@
     <div id="tabs-panel">
       <div class="container">
         <div class="tab-content">
-          <div id="basic" role="tabpanel" class="tab-pane fade in active  border-main">
+          <div id="basic" role="tabpanel" class="tab-pane fade in   border-main">
             <div for="title">
               <h4 class="text-center">Start building your project!</h4>
               <h5 class="text-center">Add an image, a goal, and other important details.</h5>
@@ -270,26 +270,87 @@
               </div>
             </div> <!-- end-CONTENT -->
           </div> <!-- end-BASIC -->
-          <div id="reward" role="tabpanel" class="tab-pane fade in border-main">
+          <div id="reward" role="tabpanel" class="tab-pane fade active in border-main">
             <div for="title">
               <h4 class="text-center">How will you thank the people who support you?</h4>
               <h5 class="text-center">Offer an experience, a copy of what you are making, or a thank you in the credits. Get creative!</h5>
             </div> <!-- end-TITLE -->
+            <!-- edit Reward Modal -->
+            <div class="modal fade" id="editRewardModal" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h5 class="modal-title" id="myModalLabel">Edit reward</h5>
+                  </div>
+                  <div class="modal-body">
+                    <h5 class="title">Gói #2</h5>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="row pb5">
+                          <div class="col-md-4">Pledge amount</div>
+                          <div class="col-md-8"><input type="text" id="pledge_amount" name="project[name]" class="form-control" placeholder=""></div>
+                        </div> <!-- end Pledge amount -->
+                        <div class="row pb5">
+                          <div class="col-md-4">Description</div>
+                          <div class="col-md-8">
+                            <textarea class="form-control" rows="3" style="resize:none"></textarea>
+                          </div>
+                        </div> <!-- end Description -->
+                        <div class="row pt5 pb5">
+                          <div class="col-md-4">Thời gian giao hàng</div>
+                          <div class="col-md-8">
+                            <input type="month" class="form-control" style="line-height: 15px;">         
+                          </div>
+                        </div> <!-- end Estimated delivery -->
+                        <div class="row pt5 pb5">
+                          <div class="col-sm-4 col-md-4">Backer</div>
+                          <div class="col-sm-4 col-md-4">
+                              <select class="form-control select select-primary select-xs pr20" data-toggle="select">
+                                <option value="0">option1</option>
+                                <option value="1">option2</option>
+                                <option value="2">option3</option>
+                              </select>
+                          </div>
+                          <div class="col-md-4">
+                            <input type="text" class="form-control" id="limit_quntity">
+                          </div>
+                        </div> <!-- end Backer -->
+                      </div> <!-- end items -->
+                    </div> <!-- end item package -->
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- end report modal -->
             <div class="container-fluid">
               <div class="row">
                 <div class="col-md-9">
                   <div class="row border-grey">
                     <div class="col-md-2"><p class="title">Gói #1</p></div>
                     <div class="col-md-10">
-                      <div class="row">
+                      <div style="background: #FFF; border: 1px solid eee; padding: 10px; border-radius: 6px">
+                        <p class="fnt-b mt0 mb0">Pledge 22$ or more</p>
+                        <p class="mt0 mb0">0 backers | limit: 15</p>
+                        <p class="mt0 mb0">fer an experience, a copy of what you are making, or a thank you in the credits. Get creative!fer an experience, a copy of what you are making, or a thank you in the credits. Get creative!</p>
+                        <p class="mt0 mb0 pb0 pt0">Estimated delivery: 04/2015</p>
+                      </div>
+                      <ul class="list-inline pull-right mt0 mb0 pb0 pt0">
+                        <li><a class="btn btn-default btn-xs" href="">Hide</a></li>
+                        <li><a class="btn btn-danger btn-xs" href="">Delete</a></li>
+                        <li><a class="btn btn-info btn-xs" href="" data-toggle="modal" data-target="#editRewardModal">Edit</a></li>
+                      </ul>
+                    </div> <!-- end items -->
+                  </div> <!-- end item package -->
+                  <div class="row border-grey">
+                    <div class="col-md-2"><p class="title">Gói #2</p></div>
+                    <div class="col-md-10">
+                      <div class="row pb5">
                         <div class="col-md-4">Pledge amount</div>
-                        <div class="col-md-4"><input type="text" id="pledge_amount" name="project[name]" class="form-control" placeholder=""></div>
-                        <div class="col-md-4 ">
-                          <ul class="list-inline pull-right">
-                            <!-- <li><a class="btn btn-info" href="">Edit</a></li> -->
-                            <li><a class="btn btn-danger" href="">Delete</a></li>
-                          </ul>
-                        </div>
+                        <div class="col-md-8"><input type="text" id="pledge_amount" name="project[name]" class="form-control" placeholder=""></div>
                       </div> <!-- end Pledge amount -->
                       <div class="row pb5">
                         <div class="col-md-4">Description</div>
@@ -304,28 +365,27 @@
                         </div>
                       </div> <!-- end Estimated delivery -->
                       <div class="row pt5 pb5">
-                        <div class="col-md-4">Backer</div>
-                        <div class="col-md-4">
-                          <label class="checkbox" for="checkbox2">
-                             <input type="checkbox" value="" id="checkbox2" data-toggle="checkbox">
-                              Giới hạn số lượng
-                          </label>
+                        <div class="col-sm-4 col-md-4">Backer</div>
+                        <div class="col-sm-4 col-md-4">
+                            <select class="form-control select select-primary select-xs" data-toggle="select">
+                              <option value="0">option1</option>
+                              <option value="1">option2</option>
+                              <option value="2">option3</option>
+                            </select>
                         </div>
                         <div class="col-md-4">
-                         <input type="text" id="limit_quntity" class="form-control" name=""  placeholder=""> 
-                       </div>
+                          <input type="text" class="form-control" id="limit_quntity">
+                        </div>
                       </div> <!-- end Backer -->
                       <div class="row pt5 pb5">
-                        <div class="col-md-4">Acitve</div>
-                        <div class="col-md-8">
-                          <label class="checkbox" for="checkbox3">
-                             <input type="checkbox" value="" id="checkbox3" data-toggle="checkbox">
-                              Ẩn gói quà này
-                          </label>
+                        <div class="col-md-12">
+                          <ul class="list-inline pull-right">
+                            <li><a class="btn btn-danger btn-sm" href="">Delete</a></li>
+                          </ul>
                         </div>
-                      </div> <!-- end Active -->
+                      </div>
                     </div> <!-- end items -->
-                  </div> <!-- end items -->
+                  </div> <!-- end item package -->
                   <div class="row border-grey border-dash">
                     <div class="addReward txt-c"><a class="btn btn-success" href="">Add new reward</a></div>
                   </div> <!-- end ADD REWARD -->
