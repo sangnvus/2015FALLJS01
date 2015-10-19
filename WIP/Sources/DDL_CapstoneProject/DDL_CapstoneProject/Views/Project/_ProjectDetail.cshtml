@@ -30,7 +30,7 @@
                     <div class="pt20">
                         <button class="btn btn-primary btn-lg" href="back-project.html">Ủng hộ dự án</button>
                         <button class="btn btn-danger btn-lg" disabled ng-if="Project.IsExprired" href="back_project.html">Dự án đã hết hạn</button>
-                        <a href="" class="grey-dark">&nbsp;&nbsp;<i class="fa fa-star"></i> Đánh dấu</a>
+                        <a href="" class="grey-dark" ng-click="remind()">&nbsp;&nbsp;<i class="fa fa-star"></i> Đánh dấu</a>
                     </div>
                     <div class="pt10">
                         <p class="fnt15 grey-dark" ng-if="!Project.IsExprired">
@@ -428,95 +428,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>001</td>
-                                        <td>Nguyen Van A</td>
-                                        <td>1000$</td>
-                                        <td>2015-02-09 10:30:00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>002</td>
-                                        <td>Vu Cong Chinh</td>
-                                        <td>100$</td>
-                                        <td>2015-02-09 10:30:00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>003</td>
-                                        <td>Nguyen Van B</td>
-                                        <td>200$</td>
-                                        <td>2015-02-09 10:30:00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>004</td>
-                                        <td>Vu Cong Chinh</td>
-                                        <td>1000$</td>
-                                        <td>2015-02-09 10:30:00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>005</td>
-                                        <td>Nguyen Van D</td>
-                                        <td>1000$</td>
-                                        <td>2015-02-09 10:30:00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>006</td>
-                                        <td>Tran Van C</td>
-                                        <td>1500$</td>
-                                        <td>2015-02-09 10:30:00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>007</td>
-                                        <td>Vu Cong Chinh</td>
-                                        <td>2000$</td>
-                                        <td>2015-02-09 10:30:00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>008</td>
-                                        <td>Vu Cong Chinh</td>
-                                        <td>1000$</td>
-                                        <td>2015-02-09 10:30:00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>009</td>
-                                        <td>Vu Cong Chinh</td>
-                                        <td>1000$</td>
-                                        <td>2015-02-09 10:30:00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>010</td>
-                                        <td>Vu Cong Chinh</td>
-                                        <td>1000$</td>
-                                        <td>2015-02-09 10:30:00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>011</td>
-                                        <td>Vu Cong Chinh</td>
-                                        <td>1000$</td>
-                                        <td>2015-02-09 10:30:00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>012</td>
-                                        <td>Charles</td>
-                                        <td>United Kingdom</td>
-                                        <td>28000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>013</td>
-                                        <td>Sravani</td>
-                                        <td>Australia</td>
-                                        <td>7000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>014</td>
-                                        <td>Amar</td>
-                                        <td>India</td>
-                                        <td>18000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>015</td>
-                                        <td>Lakshmi</td>
-                                        <td>India</td>
-                                        <td>12000</td>
+                                    <tr ng-repeat="x in ListBacker">
+                                        <td>{{x.No}}</td>
+                                        <td>{{x.FullName}}</td>
+                                        <td>{{x.Amount}}</td>
+                                        <td>{{x.Date}}</td>
                                     </tr>
                                 </tbody>
                             </table>  <!-- TABLE BACKERS LIST -->

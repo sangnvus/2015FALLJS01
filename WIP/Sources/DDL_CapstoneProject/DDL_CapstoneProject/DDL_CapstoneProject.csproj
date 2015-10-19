@@ -163,6 +163,7 @@
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\DDL_User.cs" />
     <Compile Include="Models\DTOs\AdminCategoryDTO.cs" />
+    <Compile Include="Models\DTOs\BackingDTO.cs" />
     <Compile Include="Models\DTOs\CategoryProjectCountDTO.cs" />
     <Compile Include="Models\DTOs\CommentDTO.cs" />
     <Compile Include="Models\DTOs\ConversationBasicDTO.cs" />

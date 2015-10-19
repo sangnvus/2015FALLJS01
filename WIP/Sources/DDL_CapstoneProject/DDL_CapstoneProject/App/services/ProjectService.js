@@ -346,5 +346,25 @@ app.service('ProjectService', function ($http) {
 
     }
 
+    this.remindProject = function (code) {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/RemindProject',
+            params: {
+                code: code
+            }
+        });
+        return request;
+    }
 
+    this.getListBacker = function (code) {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/GetListBacker',
+            params: {
+                code: code
+            }
+        });
+        return request;
+    }
 });
