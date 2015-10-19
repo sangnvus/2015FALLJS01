@@ -1,4 +1,4 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 
 @import "common.css";
 @import "cmn-options.css";
@@ -605,11 +605,18 @@ Date: 2015.10.01
 	}
 	/*dataTable*/
 	#messageTable{
-		font-size: 16px;
-		background: #fff;
+		font-size: 16px;		
 	}
-    .unread-message{
+    #messageTable .unread-message{
     	font-weight: bold;
+    	background: #F4F4F4;
+    }
+    #messageTable .read{
+    	background: #fff;
+    }
+
+    #messageTable td>a{
+		color: #34495e!important;
     }
     .from-col {
     	min-width: 170px;

@@ -30,7 +30,7 @@ app.controller('MessageDetailController', function ($scope, $location, $sce, $ro
                         $scope.Reply.Content = "";
                         toastr.success('Gửi tin nhắn trả lời!', 'Thành công!');
                     } else {
-                        CommmonService.checkError(result.data.Type);
+                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         $scope.Error = result.data.Message;
                         toastr.error($scope.Error, 'Lỗi!');
                     }
@@ -53,7 +53,7 @@ app.controller('MessageDetailController', function ($scope, $location, $sce, $ro
                 if (result.data.Status === "success") {
                     $location.path("/user/message").replace();
                 } else {
-                    CommmonService.checkError(result.data.Type);
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 }

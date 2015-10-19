@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="responsive-video">
-                        <iframe src="{{trustSrc(Project.VideoUrl)}}" frameborder="0"> </iframe>
+                        <iframe ng-src="{{trustSrc(Project.VideoUrl)}}" frameborder="0"> </iframe>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -78,8 +78,8 @@
                             </p>
                         </div>
                         <div class="col-md-4 pt30">
-                            <img id="" ng-if="checkHTTP(Project.Creator.ProfileImage)" src="{{trustSrc(Project.Creator.ProfileImage)}}" alt="" class="img-responsive img-circle center-block">
-                            <img id="" ng-if="!checkHTTP(Project.Creator.ProfileImage)" src="../images/avatars/{{Project.Creator.ProfileImage}}" alt="" class="img-responsive img-circle center-block">
+                            <img id="" ng-if="checkHTTP(Project.Creator.ProfileImage)" ng-src="{{trustSrc(Project.Creator.ProfileImage)}}" alt="" class="img-responsive img-circle center-block">
+                            <img id="" ng-if="!checkHTTP(Project.Creator.ProfileImage)" ng-src="../images/avatars/{{Project.Creator.ProfileImage}}" alt="" class="img-responsive img-circle center-block">
                         </div>
                     </div>
                 </div>
@@ -296,8 +296,8 @@
                                 <div class="media">
                                     <h3 class="fnt18" style="padding-left: 60px">Bình luận về dự án này</h3>
                                     <div class="pull-left">
-                                        <img class="avatar img-circle" ng-if="checkHTTP(CurrentUser.ProfileImage)" src="{{trustSrc(CurrentUser.ProfileImage)}}" alt="" />
-                                        <img class="avatar img-circle" ng-if="!checkHTTP(CurrentUser.ProfileImage)" src="../images/avatars/{{CurrentUser.ProfileImage}}" alt="" />
+                                        <img class="avatar img-circle" ng-if="checkHTTP(CurrentUser.ProfileImage)" ng-src="{{trustSrc(CurrentUser.ProfileImage)}}" alt="" />
+                                        <img class="avatar img-circle" ng-if="!checkHTTP(CurrentUser.ProfileImage)" ng-src="../images/avatars/{{CurrentUser.ProfileImage}}" alt="" />
                                     </div>
                                     <div class="media-body">
                                         <form role="form" name="CommentForm" novalidate>
@@ -309,6 +309,7 @@
                                                           required
                                                           ng-minlength="10"
                                                           ng-maxlength="200"
+                                                          max-length="200"
                                                           msd-elastic="\n"></textarea>
                                                 <button type="submit" class="btn btn-primary mt10" ng-click="submitComment()"
                                                         ng-disabled="!CommentForm.$dirty || (CommentForm.$dirty && CommentForm.$invalid)">
@@ -325,8 +326,8 @@
                                 <!--avatar-->
                                 <div class="media" ng-repeat="Comment in Project.CommentsList">
                                     <div class="pull-left">
-                                        <img class="avatar img-circle" ng-if="checkHTTP(Comment.ProfileImage)" src="{{trustSrc(Comment.ProfileImage)}}" alt="" />
-                                        <img class="avatar img-circle" ng-if="!checkHTTP(Comment.ProfileImage)" src="../images/avatars/{{Comment.ProfileImage}}" alt="" />
+                                        <img class="avatar img-circle" ng-if="checkHTTP(Comment.ProfileImage)" ng-src="{{trustSrc(Comment.ProfileImage)}}" alt="" />
+                                        <img class="avatar img-circle" ng-if="!checkHTTP(Comment.ProfileImage)" ng-src="../images/avatars/{{Comment.ProfileImage}}" alt="" />
                                     </div>
                                     <div class="media-body">
                                         <div class="well" ng-class="{'hided-comment':Comment.IsHide}">

@@ -86,7 +86,7 @@ app.controller('MessageController',
                             }
                             toastr.success("Gửi tin nhắn thành công!", 'Thông báo!');
                         } else {
-                            CommmonService.checkError(result.data.Type);
+                            CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                             $scope.Error = result.data.Message;
                             toastr.error($scope.Error, 'Lỗi!');
                         }
@@ -107,7 +107,7 @@ app.controller('MessageController',
                     if (result.data.Status === "success") {
                         $scope.ListConversations = result.data.Data;
                     } else {
-                        CommmonService.checkError(result.data.Type);
+                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         $scope.Error = result.data.Message;
                     }
                 },
@@ -124,7 +124,7 @@ app.controller('MessageController',
                     if (result.data.Status === "success") {
                         $scope.ListConversations = result.data.Data;
                     } else {
-                        CommmonService.checkError(result.data.Type);
+                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         $scope.Error = result.data.Message;
                     }
                 },
@@ -159,7 +159,7 @@ app.controller('MessageController',
                         }
                         $scope.selection = [];
                     } else {
-                        CommmonService.checkError(result.data.Type);
+                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         $scope.Error = result.data.Message;
                         toastr.error($scope.Error, 'Lỗi!');
                     }
@@ -179,6 +179,7 @@ app.controller('MessageController',
                     }
                 },
                 function (error) {
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = error.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 });
