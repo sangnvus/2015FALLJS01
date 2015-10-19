@@ -101,7 +101,6 @@
         </div>
       </div>
     </div>
-
     <div id="items-projects">
       <section id="portfolio" class="container">
         <h4 class="pt30">Backed projects:</h4>
@@ -109,6 +108,64 @@
             <li class=""><a class="c-10" href="../Views/backed_project.html">Dự án đã ủng hộ</a></li>
             <li class=""><a class="c-3"   href="../Views/backed_project_history.html">Lịch sử ủng hộ</a></li>
         </ul> <!-- end Selection -->
+                            <!-- Modal -->
+        <div class="modal fade" id="infoBanker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Thông tin ủng hộ</h4>
+              </div>
+              <div class="modal-body">
+               <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h3 class="fnt25">Người ủng hộ</h3>
+                    <div class="row">
+                      <div class="col-md-3">
+                        <img id="avatar-profile" src="../images/avatar/avatar1.png" alt="" class="img-responsive center-block pt30">
+                      </div>
+                      <div class="col-md-9">
+                        <br>
+                        <form>
+                          <div>
+                            <label class="fnt20 fnt-b mt0 mb0" for="name">Nguyen Van A</label>
+                          </div>
+                          <div>
+                            <label class="fnt20 mt0 mb0" for="email">avn@gmail.com</label>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="">
+                      <div class="">
+                         <label class="fnt18 mt0 mb0" for="name"><span class="fnt-b">Địa chỉ:</span> ABC, Thanh Tri, Hanoi</label>
+                      </div>
+                      <div class="">
+                        <label class="fnt18 mt0 mb0" for="name"><span class="fnt-b">Số điện thoại:</span> 0164819088</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <h3 class="fnt25">Dự án: "Divinity: Original Sin 2"</h3>
+                    <br>
+                    <p class="fnt18" for="name"><span>Ủng hộ gói: </span><span class="fnt-b">"Ủng hộ 200000VNĐ hoặc nhiều hơn"</span> với số tiền:<span class="fnt-b">200,000 VNĐ</span> và <span class="fnt-b">số lượng: 1</span></p>
+                    <!-- <p class="fnt18" for="name"><span class="fnt-b">Số lượng:</span> 1</p> -->
+                    <p class="fnt18" for="name"><span class="fnt-b">Tổng số tiền:</span> 200,000 VNĐ</p>
+                    <p class="fnt18" for="name"><span class="fnt-b">Ngày gửi:</span> 2015-02-09 10:30:00</p>
+                    <p class="mb0 pb0"><span class="fnt-b">Nội dung:</span></p>
+                    <p class="mt0 pt0">Tôi đã ủng hộ 200,000 VNĐ cho dự án. Chúc dự án gây quỹ thành công.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+          </div>
+        </div> <!-- end Modal infoBanker -->
         <table id="table_historyBacked" class="table table-striped table-bordered table-hover" >  
           <thead style="background: #16a085; color: #FFF">  
             <tr>  
@@ -123,13 +180,13 @@
           <tbody>  
             <tr>  
               <td>001</td>  
-              <td>Dự án 1</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 1</a></td>  
               <td>100000</td>  
               <td>2015-02-09 10:30:00</td> 
               <td>Thành công</td>
               <td>
                 <div class="btn-group">
-                  <a href="project_detail.html" class="btn btn-danger btn-sm" type="button" title="View">
+                  <a href="#" class="btn btn-danger btn-sm" type="button" data-toggle="modal" data-target="#infoBanker" title="View">
                     <i class="fa fa-eye"></i>
                   </a>
                 </div>
@@ -137,13 +194,13 @@
             </tr> <!-- item --> 
             <tr>  
               <td>001</td>  
-              <td>Dự án 1</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 1</a></td>  
               <td>100000</td>  
               <td>2015-02-09 10:30:00</td> 
               <td>Thành công</td>
               <td>
                 <div class="btn-group">
-                  <a href="project_detail.html" class="btn btn-danger btn-sm" type="button" title="View">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#infoBanker" type="button" title="View">
                     <i class="fa fa-eye"></i>
                   </a>
                 </div>
@@ -151,13 +208,13 @@
             </tr> <!-- item --> 
             <tr>  
               <td>001</td>  
-              <td>Dự án 1</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 1</a></td>  
               <td>100000</td>  
               <td>2015-02-09 10:30:00</td> 
               <td>Đang chạy</td>
               <td>
                 <div class="btn-group">
-                  <a href="project_detail.html" class="btn btn-danger btn-sm" type="button" title="View">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#infoBanker" type="button" title="View">
                     <i class="fa fa-eye"></i>
                   </a>
                 </div>
@@ -165,13 +222,13 @@
             </tr> <!-- item --> 
             <tr>  
               <td>001</td>  
-              <td>Dự án 1</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 1</a></td>  
               <td>100000</td>  
               <td>2015-02-09 10:30:00</td> 
               <td>Thất bại</td>
               <td>
                 <div class="btn-group">
-                  <a href="project_detail.html" class="btn btn-danger btn-sm" type="button" title="View">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#infoBanker" type="button" title="View">
                     <i class="fa fa-eye"></i>
                   </a>
                 </div>
@@ -179,13 +236,13 @@
             </tr> <!-- item --> 
             <tr>  
               <td>001</td>  
-              <td>Dự án 1</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 1</a></td>  
               <td>100000</td>  
               <td>2015-02-09 10:30:00</td> 
               <td>Thành công</td>
               <td>
                 <div class="btn-group">
-                  <a href="project_detail.html" class="btn btn-danger btn-sm" type="button" title="View">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#infoBanker" type="button" title="View">
                     <i class="fa fa-eye"></i>
                   </a>
                 </div>
@@ -193,13 +250,13 @@
             </tr> <!-- item --> 
             <tr>  
               <td>002</td>  
-              <td>Dự án 2</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 2</a></td>  
               <td>200000</td>  
               <td>2015-02-19 10:30:00</td> 
               <td>Thành công</td>
               <td>
                 <div class="btn-group">
-                  <a href="project_detail.html" class="btn btn-danger btn-sm" type="button" title="View">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#infoBanker" type="button" title="View">
                     <i class="fa fa-eye"></i>
                   </a>
                 </div>
@@ -207,13 +264,13 @@
             </tr> <!-- item --> 
             <tr>  
               <td>003</td>  
-              <td>Dự án 3</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 3</a></td>  
               <td>100000</td>  
               <td>2015-02-19 10:30:00</td> 
               <td>Thất bại</td>
               <td>
                 <div class="btn-group">
-                  <a href="project_detail.html" class="btn btn-danger btn-sm" type="button" title="View">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#infoBanker" type="button" title="View">
                     <i class="fa fa-eye"></i>
                   </a>
                 </div>
@@ -221,13 +278,13 @@
             </tr> <!-- item --> 
             <tr>  
               <td>004</td>  
-              <td>Dự án 4</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 4</a></td>  
               <td>100000</td>  
               <td>2015-02-09 10:30:00</td> 
               <td>Thành công</td>
               <td>
                 <div class="btn-group">
-                  <a href="project_detail.html" class="btn btn-danger btn-sm" type="button" title="View">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#infoBanker" type="button" title="View">
                     <i class="fa fa-eye"></i>
                   </a>
                 </div>
@@ -235,13 +292,13 @@
             </tr> <!-- item --> 
             <tr>  
               <td>005</td>  
-              <td>Dự án 5</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 5</a></td>  
               <td>100000</td>  
               <td>2015-02-09 10:30:00</td> 
               <td>Thành công</td>
               <td>
                 <div class="btn-group">
-                  <a href="project_detail.html" class="btn btn-danger btn-sm" type="button" title="View">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#infoBanker" type="button" title="View">
                     <i class="fa fa-eye"></i>
                   </a>
                 </div>
@@ -249,13 +306,13 @@
             </tr> <!-- item --> 
             <tr>  
               <td>006</td>  
-              <td>Dự án 6</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 6</a></td>  
               <td>100000</td>  
               <td>2015-02-09 10:30:00</td> 
               <td>Thành công</td>
               <td>
                 <div class="btn-group">
-                  <a href="project_detail.html" class="btn btn-danger btn-sm" type="button" title="View">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#infoBanker" type="button" title="View">
                     <i class="fa fa-eye"></i>
                   </a>
                 </div>
@@ -263,13 +320,13 @@
             </tr> <!-- item --> 
             <tr>  
               <td>007</td>  
-              <td>Dự án 7</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 7</a></td>  
               <td>100000</td>  
               <td>2015-02-09 10:30:00</td> 
               <td>Thành công</td>
               <td>
                 <div class="btn-group">
-                  <a href="project_detail.html" class="btn btn-danger btn-sm" type="button" title="View">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#infoBanker" type="button" title="View">
                     <i class="fa fa-eye"></i>
                   </a>
                 </div>
@@ -277,13 +334,13 @@
             </tr> <!-- item --> 
             <tr>  
               <td>008</td>  
-              <td>Dự án 8</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 8</a></td>  
               <td>100000</td>  
               <td>2015-02-09 10:30:00</td> 
               <td>Thành công</td>
               <td>
                 <div class="btn-group">
-                  <a href="project_detail.html" class="btn btn-danger btn-sm" type="button" title="View">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#infoBanker" type="button" title="View">
                     <i class="fa fa-eye"></i>
                   </a>
                 </div>
@@ -293,7 +350,7 @@
         </table>  
       </section><!--/#portfolio-->
     </div>
-
+    
     <div class="scroll-top-wrapper ">
       <span class="scroll-top-inner">
         <i class="fa fa-2x fa-arrow-circle-up"></i>
