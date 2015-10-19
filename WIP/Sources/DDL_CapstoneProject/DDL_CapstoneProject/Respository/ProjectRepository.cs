@@ -565,37 +565,55 @@ namespace DDL_CapstoneProject.Respository
             return projectDetail;
         }
 
-        // 17/10/2015 - MaiCTP - Get BackedProject
-        public List<ProjectBasicViewDTO> GetBackedProject(String userName)
+        // 19/10/2015 - MaiCTP - Get BackedProjectHistory
+        public List<ProjectViewHistoryDTO> GetBackedProjectHistory(String userName)
         {
           
             var Project = (from backing in db.Backings
                            from project in db.Projects
                            where backing.User.Username == userName  && project.ProjectID == backing.ProjectID
-                           select new ProjectBasicViewDTO
+                           select new ProjectViewHistoryDTO
                             {
                                 ProjectID = project.ProjectID,
-                                ProjectCode = project.ProjectCode,
                                 CreatorName = project.Creator.UserInfo.FullName,
                                 Title = project.Title,
-                                ImageUrl = project.ImageUrl,
-                                SubDescription = project.SubDescription,
-                                Location = project.Location,
-                                CurrentFunded = Decimal.Round((project.CurrentFunded / project.FundingGoal) * 100),
-                                CurrentFundedNumber = project.CurrentFunded,
-                                ExpireDate = DbFunctions.DiffDays(DateTime.Now, project.ExpireDate),
-                                FundingGoal = project.FundingGoal,
-                                Category = project.Category.Name,
-                                Backers = project.Backings.Count,
-                                CreatedDate = project.CreatedDate,
-                                PopularPoint = project.PopularPoint
+                                CurrentFunded= project.CurrentFunded,
+                                BackedDate = backing.BackedDate,
+                                Status = project.Status
                             }).Distinct().ToList();
+            return Project;
+
+        }
+
+        // 17/10/2015 - MaiCTP - Get BackedProject
+        public List<ProjectBasicViewDTO> GetBackedProject(String userName)
+        {
+
+            var Project = (from backing in db.Backings
+                           from project in db.Projects
+                           where backing.User.Username == userName && project.ProjectID == backing.ProjectID
+                           select new ProjectBasicViewDTO
+                           {
+                               ProjectID = project.ProjectID,
+                               Title = project.Title,
+                               CreatorName = project.Creator.UserInfo.FullName,
+                               ImageUrl = project.ImageUrl,
+                               SubDescription = project.SubDescription,
+                               Location = project.Location,
+                               CurrentFunded = Decimal.Round((project.CurrentFunded / project.FundingGoal) * 100),
+                               CurrentFundedNumber = project.CurrentFunded,
+                               ExpireDate = DbFunctions.DiffDays(DateTime.Now, project.ExpireDate),
+                               FundingGoal = project.FundingGoal,
+                               Category = project.Category.Name,
+                               Backers = project.Backings.Count,
+                               CreatedDate = project.CreatedDate,
+                               PopularPoint = project.PopularPoint
+                           }).Distinct().ToList();
 
 
             return Project;
 
         }
-
 
         //18/10/2015 - MaiCTP - Get StarredProject
         public List<ProjectBasicViewDTO> GetStarredProject(String userName)
@@ -650,7 +668,8 @@ namespace DDL_CapstoneProject.Respository
                                    Category = project.Category.Name,
                                    Backers = project.Backings.Count,
                                    CreatedDate = project.CreatedDate,
-                                   PopularPoint = project.PopularPoint
+                                   PopularPoint = project.PopularPoint, 
+                                   Status = project.Status
                                }).Distinct();
 
 

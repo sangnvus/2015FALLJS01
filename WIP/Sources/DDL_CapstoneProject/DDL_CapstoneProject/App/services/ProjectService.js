@@ -322,6 +322,18 @@ app.service('ProjectService', function ($http) {
 
     }
 
+    // 19/10/2015 - MaiCTP - get BackedProjectHistory
+    this.getBackedProjectHistory = function () {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/GetBackedProjectHistory/'
+
+        });
+
+        return request;
+
+    }
+
     // 18/10/2015 - MaiCTP - get StarredProject
     this.getStarredProject = function () {
         var request = $http({

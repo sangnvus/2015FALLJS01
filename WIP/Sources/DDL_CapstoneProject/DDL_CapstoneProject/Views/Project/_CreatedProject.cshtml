@@ -18,7 +18,8 @@
     <section id="portfolio" class="container">
         <h4>Created projects:</h4>
 
-        <ul class="portfolio-items col-4" ng-repeat="project in ListCreatedProject">
+        <h4>Dự án đang chạy:</h4>
+        <ul class="portfolio-items col-4" ng-repeat="project in ListCreatedProject | filter : {Status : 'approved'}">
             <li class="portfolio-item apps">
                 <div class="item-inner">
                     <div class="item-image column">

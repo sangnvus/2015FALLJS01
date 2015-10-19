@@ -1,14 +1,12 @@
-﻿
-
-<div id="setting_container" class="paddingNavbar">
+﻿<div id="setting_container" class="paddingNavbar">
     <div class="row pull-right">
         <div class="col-sm-12 col-sm-offset-0">
             <ul id="" class="list-inline fnt18 fnt-b">
                 <li class=""><a class="c-10" href="../#/project/createdProject">Dự án đã tạo</a></li>
                 <li class=""><a class="c3" href="../#/project/backedProject">Dự án đã ủng hộ</a></li>
                 <li class=""><a class="c-10" href="../#/project/starredProject">Dự án theo dõi</a></li>
-                <li class=""><a class="c-10" href="account.html">Cài đặt</a></li>
-                <li class=""><a class="c-10" href="../project/profilePublic.html">Thông tin cá nhân ( Công khai )</a></li>
+                <!-- <li class=""><a class="c-10" href="account.html">Setting</a></li> -->
+                <!-- <li class=""><a class="c-10" href="../Views/profile_public.html">Profile ( public )</a></li> -->
             </ul>
         </div>
     </div>
@@ -16,8 +14,11 @@
 
 <div id="items-projects">
     <section id="portfolio" class="container">
-        <h4>Backed projects:</h4>
-
+        <h4 class="pt30">Backed projects:</h4>
+        <ul class="list-inline fnt18 fnt-b">
+            <li class=""><a class="c3" href="../#/project/backedProject">Dự án đã ủng hộ</a></li>
+            <li class=""><a class="c-10" href="../#/project/backedProjectHistory">Lịch sử ủng hộ</a></li>
+        </ul>
         <ul class="portfolio-items col-4" ng-repeat="project in ListBackedProject">
             <li class="portfolio-item apps">
                 <div class="item-inner">

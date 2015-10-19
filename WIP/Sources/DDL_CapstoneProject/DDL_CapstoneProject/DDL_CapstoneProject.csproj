@@ -171,6 +171,7 @@
     <Compile Include="Models\DTOs\HttpMessageDTO.cs" />
     <Compile Include="Models\DTOs\MessageDTO.cs" />
     <Compile Include="Models\DTOs\NewMessageDTO.cs" />
+    <Compile Include="Models\DTOs\ProjectViewHistoryDTO.cs" />
     <Compile Include="Models\DTOs\ProjectBasicViewDTO.cs" />
     <Compile Include="Models\DTOs\ProjectCreateDTO.cs" />
     <Compile Include="Models\DTOs\ProjectDetailDTO.cs" />
@@ -218,6 +219,7 @@
     <Content Include="App\controllers\admin\AdminCategoryController.js" />
     <Content Include="App\controllers\admin\AdminDashboardController.js" />
     <Content Include="App\controllers\BackedProjectController.js" />
+    <Content Include="App\controllers\BackedProjectHistoryProjectController.js" />
     <Content Include="App\controllers\CreatedProjectController.js" />
     <Content Include="App\controllers\CreateProjectController.js" />
     <Content Include="App\controllers\DiscoverController.js" />
@@ -1226,6 +1228,7 @@
     <Content Include="Views\Project\_BackedProject.cshtml" />
     <Content Include="Views\Project\_CreatedProject.cshtml" />
     <Content Include="Views\Project\_StarredProject.cshtml" />
+    <Content Include="Views\Project\_BackedProjectHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />

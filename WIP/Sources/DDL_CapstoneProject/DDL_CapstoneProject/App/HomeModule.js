@@ -175,6 +175,21 @@ app.config(["$routeProvider", function ($routeProvider) {
         redirectTo: "/"
     });
 
+    $routeProvider.when("/project/backedProjectHistory",
+      {
+          templateUrl: "ClientPartial/BackedProjectHistory",
+          controller: 'BackedProjectHistoryProjectController',
+          resolve: {
+              projects: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
+                  var promise = ProjectService.getBackedProjectHistory();
+                  return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+              }]
+          }
+      });
+    $routeProvider.otherwise({
+        redirectTo: "/"
+    });
+
     //$locationProvider.html5Mode(false).hashPrefix("!");
 }]).config(['$provide', function ($provide) {
     $provide.decorator('taOptions', ['taRegisterTool', '$delegate', function (taRegisterTool, taOptions) {

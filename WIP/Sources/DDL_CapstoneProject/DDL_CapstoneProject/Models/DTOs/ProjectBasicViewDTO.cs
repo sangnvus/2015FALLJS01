@@ -30,5 +30,6 @@ namespace DDL_CapstoneProject.Models.DTOs
         public int Backers { get; set; }
         public DateTime CreatedDate { get; set; }
         public int PopularPoint { get; set; }
+        public string Status { get; set; }
     }
 }

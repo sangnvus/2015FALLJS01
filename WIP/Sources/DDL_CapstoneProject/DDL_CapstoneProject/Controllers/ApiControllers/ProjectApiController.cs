@@ -861,6 +861,50 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = listBacked });
         }
 
+        //  19/10/2015 - MaiCTP - Get BAckedProjectHistory
+
+        [HttpGet]
+        [ResponseType(typeof(ProjectBasicViewDTO))]
+        public IHttpActionResult GetBackedProjectHistory()
+        {
+            List<ProjectViewHistoryDTO> listBacked = new List<ProjectViewHistoryDTO>();
+
+            var currentUser = getCurrentUser();
+
+            if (currentUser == null)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa đăng nhập", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
+            try
+            {
+                var ListBacked = ProjectRepository.Instance.GetBackedProjectHistory(User.Identity.Name);
+                listBacked = ListBacked;
+
+            }
+            catch (ProjectNotFoundException)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa ủng hộ dự án nào!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = listBacked });
+        }
+
         //  18/10/2015 - MaiCTP - Get StarredProject
         [HttpGet]
         [ResponseType(typeof(ProjectBasicViewDTO))]
