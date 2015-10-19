@@ -217,6 +217,8 @@
     <Content Include="App\AdminModule.js" />
     <Content Include="App\controllers\admin\AdminCategoryController.js" />
     <Content Include="App\controllers\admin\AdminDashboardController.js" />
+    <Content Include="App\controllers\BackedProjectController.js" />
+    <Content Include="App\controllers\CreatedProjectController.js" />
     <Content Include="App\controllers\CreateProjectController.js" />
     <Content Include="App\controllers\DiscoverController.js" />
     <Content Include="App\controllers\EditProfileController.js" />
@@ -228,6 +230,7 @@
     <Content Include="App\controllers\PublicProfileController.js" />
     <Content Include="App\controllers\RegisterController.js" />
     <Content Include="App\controllers\ResetPwController.js" />
+    <Content Include="App\controllers\StarredProjectController.js" />
     <Content Include="App\directives\elastic.js" />
     <Content Include="App\directives\ngAutoComplete.js" />
     <Content Include="App\directives\ngEnter.js" />
@@ -1219,6 +1222,9 @@
     <Content Include="Views\Home\AdminIndex.cshtml" />
     <Content Include="Views\AdminPartial\_Category.cshtml" />
     <Content Include="Views\AdminPartial\_Dashboard.cshtml" />
+    <Content Include="Views\Project\_BackedProject.cshtml" />
+    <Content Include="Views\Project\_CreatedProject.cshtml" />
+    <Content Include="Views\Project\_StarredProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />
