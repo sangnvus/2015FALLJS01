@@ -143,14 +143,23 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             });
         }
 
-        public IHttpActionResult GetPublicInfo()
+        [HttpGet]
+        public IHttpActionResult GetPublicInfo(string username)
         {
+            UserPublicInfoDTO userExist;
             if (!ModelState.IsValid)
             {
                 return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
             }
-            var userExist = UserRepository.Instance.GetUserPublicInfo(User.Identity.Name);
-            userExist.ProfileImage = DDLConstants.FileType.AVATAR + userExist.ProfileImage;
+            try
+            {
+                userExist = UserRepository.Instance.GetUserPublicInfo(username);
+            }
+            catch (UserNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không tìm thấy!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+            }
+            //userExist.ProfileImage = DDLConstants.FileType.AVATAR + userExist.ProfileImage;
             return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "", Data = userExist });
         }
 
