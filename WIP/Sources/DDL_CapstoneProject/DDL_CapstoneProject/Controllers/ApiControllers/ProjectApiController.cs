@@ -17,6 +17,8 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 {
     public class ProjectApiController : BaseApiController
     {
+        #region HuyNM project function
+
         // POST: api/ProjectApi/CreateProject
         [ResponseType(typeof(ProjectCreateDTO))]
         [HttpPost]
@@ -35,17 +37,16 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
             }
 
-            try
-            {
-                newProject.CreatorID = currentUser.DDL_UserID;
-                var project = ProjectRepository.Instance.CreatProject(newProject);
-                id = project.ProjectID;
-            }
-            catch (Exception)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
-            }
-            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = id });
+            //try
+            //{
+            newProject.CreatorID = currentUser.DDL_UserID;
+            var project = ProjectRepository.Instance.CreatProject(newProject);
+            //}
+            //catch (Exception)
+            //{
+            //    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            //}
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = project.ProjectCode });
         }
 
         // PUT: api/ProjectApi/EditProject  
@@ -77,6 +78,10 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             try
             {
                 updateProject = ProjectRepository.Instance.EditProjectBasic(project, uploadImageName);
+                if (updateProject.ImageUrl != string.Empty)
+                {
+                    updateProject.ImageUrl = DDLConstants.FileType.PROJECT + updateProject.ImageUrl;
+                }
             }
             catch (Exception)
             {
@@ -84,7 +89,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
             }
 
-            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Data = updateProject });
         }
 
         // PUT: api/ProjectApi/EditProjectStory  
@@ -112,10 +117,10 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
         }
 
-        // GET: api/ProjectApi/GetProject/:id
+        // GET: api/ProjectApi/GetProject/:code
         [HttpGet]
         [ResponseType(typeof(ProjectEditDTO))]
-        public IHttpActionResult GetProject(int id)
+        public IHttpActionResult GetProject(string code)
         {
             ProjectEditDTO project = null;
 
@@ -138,7 +143,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             try
             {
-                project = ProjectRepository.Instance.GetProjectBasic(id, currentUser.DDL_UserID);
+                project = ProjectRepository.Instance.GetProjectBasic(code, currentUser.DDL_UserID);
                 if (project.ImageUrl != string.Empty)
                 {
                     project.ImageUrl = DDLConstants.FileType.PROJECT + project.ImageUrl;
@@ -202,7 +207,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         public IHttpActionResult CreateRewardPkg(int id, RewardPkgDTO newRewardPkgs)
         {
             var currentUser = getCurrentUser();
-            var rewardPkg = new RewardPkg();
+            var rewardPkg = new RewardPkgDTO();
 
             if (currentUser == null)
             {
@@ -375,6 +380,296 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
         }
 
+        // GET: api/ProjectApi/GetTimeline/:id
+        [HttpGet]
+        [ResponseType(typeof(TimeLineDTO))]
+        public IHttpActionResult GetTimeLine(int id)
+        {
+            List<TimeLineDTO> timeline;
+
+            try
+            {
+                timeline = TimeLineRepository.Instance.GetTimeLine(id);
+                foreach (var point in timeline)
+                {
+                    if (point.ImageUrl != string.Empty)
+                    {
+                        point.ImageUrl = DDLConstants.FileType.PROJECT + point.ImageUrl;
+                    }
+                }
+
+            }
+            catch (Exception)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = timeline });
+        }
+
+        // PUT: api/ProjectApi/CreateTimeline/:id  
+        [ResponseType(typeof(TimeLineDTO))]
+        [HttpPost]
+        public IHttpActionResult CreateTimeline(int id)
+        {
+            var httpRequest = HttpContext.Current.Request;
+
+            TimeLineDTO newTimeLine = null;
+
+            if (httpRequest.Form.Count <= 0)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            var timelineJson = httpRequest.Form["timeline"];
+            var timeline = new JavaScriptSerializer().Deserialize<TimeLineDTO>(timelineJson);
+
+            if (timeline == null)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            string imageName = "imgTimeline_" + timeline.TimelineID;
+            var file = httpRequest.Files["file"];
+            var uploadImageName = CommonUtils.UploadImage(file, imageName, DDLConstants.FileType.PROJECT);
+
+            try
+            {
+                newTimeLine = TimeLineRepository.Instance.CreateTimeline(id, timeline, uploadImageName);
+                if (newTimeLine.ImageUrl != string.Empty)
+                {
+                    newTimeLine.ImageUrl = DDLConstants.FileType.PROJECT + newTimeLine.ImageUrl;
+                }
+            }
+            catch (Exception)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Data = newTimeLine });
+        }
+
+        // PUT: api/ProjectApi/UpdateTimeline
+        [ResponseType(typeof(TimeLineDTO))]
+        [HttpPost]
+        public IHttpActionResult UpdateTimeline()
+        {
+            var httpRequest = HttpContext.Current.Request;
+
+            bool updateTimeLine = false;
+
+            if (httpRequest.Form.Count <= 0)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            var timelineJson = httpRequest.Form["timeline"];
+            var timeline = new JavaScriptSerializer().Deserialize<TimeLineDTO>(timelineJson);
+
+            if (timeline == null)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            string imageName = "imgTimeline_" + timeline.TimelineID;
+            var file = httpRequest.Files["file"];
+            var uploadImageName = CommonUtils.UploadImage(file, imageName, DDLConstants.FileType.PROJECT);
+
+            try
+            {
+                updateTimeLine = TimeLineRepository.Instance.EditTimeline(timeline, uploadImageName);
+            }
+            catch (Exception)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Data = updateTimeLine });
+        }
+
+        // Delete: api/ProjectApi/DeleteTimeline/:id 
+        [ResponseType(typeof(TimeLineDTO))]
+        [HttpDelete]
+        public IHttpActionResult DeleteTimeline(int id)
+        {
+            var currentUser = getCurrentUser();
+
+            if (currentUser == null)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
+            try
+            {
+                var result = TimeLineRepository.Instance.DeleteTimeline(id);
+
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
+        }
+
+        // GET: api/ProjectApi/GetQuestion/:id
+        [HttpGet]
+        [ResponseType(typeof(QuestionDTO))]
+        public IHttpActionResult GetQuestion(int id)
+        {
+            List<QuestionDTO> questionList;
+
+            try
+            {
+                questionList = QuestionRepository.Instance.GetQuestion(id);
+            }
+            catch (Exception)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = questionList });
+        }
+
+        // POST: api/ProjectApi/CreateQuestion
+        [ResponseType(typeof(QuestionDTO))]
+        [HttpPost]
+        public IHttpActionResult CreateQuestion(int id, QuestionDTO newQuestion)
+        {
+            var currentUser = getCurrentUser();
+            var newQA = new QuestionDTO();
+
+            if (currentUser == null)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            try
+            {
+                newQA = QuestionRepository.Instance.CreateQuestion(id, newQuestion);
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = newQA });
+        }
+
+        // PUT: api/ProjectApi/EditQuestion
+        [ResponseType(typeof(QuestionDTO))]
+        [HttpPut]
+        public IHttpActionResult EditQuestion(List<QuestionDTO> question)
+        {
+            bool result = false;
+            if (question == null)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            try
+            {
+                result = QuestionRepository.Instance.EditQuestion(question);
+            }
+            catch (Exception)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
+        }
+
+        // Delete: api/ProjectApi/DeleteQuestion/:id 
+        [ResponseType(typeof(QuestionDTO))]
+        [HttpDelete]
+        public IHttpActionResult DeleteQuestion(int id)
+        {
+            var currentUser = getCurrentUser();
+
+            if (currentUser == null)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
+            try
+            {
+                var result = QuestionRepository.Instance.DeleteQuestion(id);
+
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
+        }
+
+        // PUT: api/ProjectApi/EditProjectStory  
+        [ResponseType(typeof(ProjectEditDTO))]
+        [HttpPut]
+        public IHttpActionResult SubmitProject(ProjectEditDTO project)
+        {
+            List<string> errorList = null;
+
+            int flag = 0;
+
+            var currentUser = getCurrentUser();
+
+            if (currentUser == null)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
+            if (project == null)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            if (project.Status != DDLConstants.ProjectStatus.DRAFT &&
+                project.Status != DDLConstants.ProjectStatus.REJECTED)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            try
+            {
+                errorList = ProjectRepository.Instance.SubmitProject(project);
+                foreach (var error in errorList)
+                {
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        flag = 1;
+                    }
+                }
+
+                if (flag == 0)
+                {
+                    project.Status = DDLConstants.ProjectStatus.PENDING;
+                }
+                else
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = "", Data = errorList });
+                }
+            }
+            catch (Exception)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = DDLConstants.HttpMessageType.SUCCESS, Type = "", Data = project });
+        }
+        #endregion
+
 
         //TrungVN
 
@@ -397,31 +692,6 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         {
             var listStatisticForHome = ProjectRepository.Instance.GetStatisticListForHome();
             return Ok(new HttpMessageDTO { Status = "success", Data = listStatisticForHome });
-        }
-
-        // PUT: api/ProjectApi/EditProjectStory  
-        [ResponseType(typeof(ProjectEditDTO))]
-        [HttpPut]
-        public IHttpActionResult SubmitProject(ProjectEditDTO project)
-        {
-            ProjectEditDTO updateProject = null;
-
-            if (project == null)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
-            }
-
-            try
-            {
-                updateProject = ProjectRepository.Instance.SubmitProject(project);
-            }
-            catch (Exception)
-            {
-
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
-            }
-
-            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
         }
 
         //Trungvn

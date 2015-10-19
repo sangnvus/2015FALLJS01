@@ -93,15 +93,10 @@ namespace DDL_CapstoneProject.Respository
                 throw new KeyNotFoundException();
             }
 
-            if (deleteUpdateLog != null)
-            {
-                db.UpdateLogs.Remove(deleteUpdateLog);
-                db.SaveChanges();
+            db.UpdateLogs.Remove(deleteUpdateLog);
+            db.SaveChanges();
 
-                return true;
-            }
-
-            return false;
+            return true;
         }
 
         #endregion
