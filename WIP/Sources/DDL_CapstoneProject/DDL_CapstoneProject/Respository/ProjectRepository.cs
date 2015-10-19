@@ -364,18 +364,16 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="ProjectID">int</param>
         /// <returns>project</returns>
-        public ProjectEditDTO GetProjectBasic(string code, int UserID)
+        public ProjectEditDTO GetProjectBasic(string code, int UserID, string userType)
         {
             var project = db.Projects.SingleOrDefault(x => x.ProjectCode == code);
-
-            var user = db.DDL_Users.SingleOrDefault(x => x.DDL_UserID == UserID);
 
             if (project == null)
             {
                 throw new KeyNotFoundException();
             }
 
-            if (project.CreatorID != UserID && user.UserType != DDLConstants.UserType.ADMIN)
+            if (project.CreatorID != UserID && userType != DDLConstants.UserType.ADMIN)
             {
                 throw new NotPermissionException();
             }
