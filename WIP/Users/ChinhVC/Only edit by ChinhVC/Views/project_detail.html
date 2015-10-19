@@ -226,7 +226,27 @@
                         <p>We're already funding the game ourselves and are coming to Kickstarter with the aim of expanding the game's feature-set and seeking funds to integrate community input. The biggest risks are that we'll be late (a real possibility), or that certain features that we are planning on now might be changed (or even cut) as we move ahead with development.</p>
                         <p>If that happens, it'll be because we hit a real roadblock or because some other feature ended up taking significantly more time and resources than we expected. Those kinds of things happen, but they shouldn't affect our ability to finish and release an innovative game that'll be a whole world of fun.</p>
                         <p class="bold"><a href="">Learn about accountability on DoI</a></p>
-                        <p><a class="btn btn-default" href="">Report this project</a></p>
+                        <p><a  class="btn btn-default" data-toggle="modal" data-target="#reportModal">Report this project</a></p>
+                        <!-- Report Modal -->
+                        <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h5 class="modal-title" id="myModalLabel">Report project</h5>
+                              </div>
+                              <div class="modal-body">
+                                <h5 class="fnt20"><span class="fnt-n">Project:</span> "Divinity: Original Sin 2"</h5>
+                                <h5 class="fnt20 fnt-n">Content:</h5>
+                                <textarea class="form-control" style="resize:none" name="" id="" cols="30" rows="5"></textarea>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Sent</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div> <!-- end report modal -->
                       </div> <!-- end Risks and challeges -->
                     </div> <!-- end col-md-8 -->
 
