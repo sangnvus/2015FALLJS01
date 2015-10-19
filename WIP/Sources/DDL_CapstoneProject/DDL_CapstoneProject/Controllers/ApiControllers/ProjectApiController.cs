@@ -37,6 +37,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
             }
 
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
             //try
             //{
             newProject.CreatorID = currentUser.DDL_UserID;
@@ -54,6 +60,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpPost]
         public IHttpActionResult EditProjectBasic()
         {
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
             var httpRequest = HttpContext.Current.Request;
 
             ProjectEditDTO updateProject = null;
@@ -104,6 +116,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
             }
 
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
             try
             {
                 updateProject = ProjectRepository.Instance.EditProjectStory(project);
@@ -120,7 +138,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         // GET: api/ProjectApi/GetProject/:code
         [HttpGet]
         [ResponseType(typeof(ProjectEditDTO))]
-        public IHttpActionResult GetProject(string code)
+        public IHttpActionResult GetProjectBasic(string code)
         {
             ProjectEditDTO project = null;
 
@@ -143,7 +161,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             try
             {
-                project = ProjectRepository.Instance.GetProjectBasic(code, currentUser.DDL_UserID);
+                project = ProjectRepository.Instance.GetProjectBasic(code, currentUser.DDL_UserID, currentUser.UserType);
                 if (project.ImageUrl != string.Empty)
                 {
                     project.ImageUrl = DDLConstants.FileType.PROJECT + project.ImageUrl;
@@ -167,6 +185,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [ResponseType(typeof(ProjectStoryDTO))]
         public IHttpActionResult GetProjectStory(int id)
         {
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
             ProjectStoryDTO project = null;
             try
             {
@@ -186,6 +210,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [ResponseType(typeof(RewardPkgDTO))]
         public IHttpActionResult GetRewardPkg(int id)
         {
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
             List<RewardPkgDTO> rewardPkg;
 
             try
@@ -206,17 +236,17 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpPost]
         public IHttpActionResult CreateRewardPkg(int id, RewardPkgDTO newRewardPkgs)
         {
-            var currentUser = getCurrentUser();
             var rewardPkg = new RewardPkgDTO();
-
-            if (currentUser == null)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
-            }
 
             if (!ModelState.IsValid)
             {
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
             }
 
             try
@@ -235,7 +265,14 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpPut]
         public IHttpActionResult EditRewardPkg(List<RewardPkgDTO> rewardPkg)
         {
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
             bool result = false;
+
             if (rewardPkg == null)
             {
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
@@ -259,11 +296,10 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpDelete]
         public IHttpActionResult DeleteRewardPkg(int id)
         {
-            var currentUser = getCurrentUser();
-
-            if (currentUser == null)
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
             {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
             }
 
             try
@@ -285,11 +321,10 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         public IHttpActionResult GetUpdateLog(int id)
         {
             List<UpdateLogDTO> updateLog = null;
-            var currentUser = getCurrentUser();
-
-            if (currentUser == null)
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
             {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
             }
 
             try
@@ -310,12 +345,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpPost]
         public IHttpActionResult CreateUpdateLog(int id, UpdateLogDTO newUpdateLog)
         {
-            var currentUser = getCurrentUser();
             var updateLog = new UpdateLog();
 
-            if (currentUser == null)
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
             {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
             }
 
             if (!ModelState.IsValid)
@@ -339,6 +374,11 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpPut]
         public IHttpActionResult EditUpdateLog(List<UpdateLogDTO> updateLog)
         {
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
 
             if (updateLog == null)
             {
@@ -367,6 +407,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpDelete]
         public IHttpActionResult DeleteUpdateLog(int id)
         {
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
             try
             {
                 var result = UpdateLogRepository.Instance.DeleteUpdateLog(id);
@@ -385,6 +431,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [ResponseType(typeof(TimeLineDTO))]
         public IHttpActionResult GetTimeLine(int id)
         {
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
             List<TimeLineDTO> timeline;
 
             try
@@ -413,6 +465,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpPost]
         public IHttpActionResult CreateTimeline(int id)
         {
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
             var httpRequest = HttpContext.Current.Request;
 
             TimeLineDTO newTimeLine = null;
@@ -456,6 +514,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpPost]
         public IHttpActionResult UpdateTimeline()
         {
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
             var httpRequest = HttpContext.Current.Request;
 
             bool updateTimeLine = false;
@@ -495,11 +559,10 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpDelete]
         public IHttpActionResult DeleteTimeline(int id)
         {
-            var currentUser = getCurrentUser();
-
-            if (currentUser == null)
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
             {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
             }
 
             try
@@ -520,6 +583,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [ResponseType(typeof(QuestionDTO))]
         public IHttpActionResult GetQuestion(int id)
         {
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
             List<QuestionDTO> questionList;
 
             try
@@ -540,13 +609,13 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpPost]
         public IHttpActionResult CreateQuestion(int id, QuestionDTO newQuestion)
         {
-            var currentUser = getCurrentUser();
-            var newQA = new QuestionDTO();
-
-            if (currentUser == null)
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
             {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
             }
+
+            var newQA = new QuestionDTO();
 
             if (!ModelState.IsValid)
             {
@@ -569,6 +638,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpPut]
         public IHttpActionResult EditQuestion(List<QuestionDTO> question)
         {
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
             bool result = false;
             if (question == null)
             {
@@ -593,11 +668,10 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpDelete]
         public IHttpActionResult DeleteQuestion(int id)
         {
-            var currentUser = getCurrentUser();
-
-            if (currentUser == null)
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
             {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
             }
 
             try
@@ -618,16 +692,15 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpPut]
         public IHttpActionResult SubmitProject(ProjectEditDTO project)
         {
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
             List<string> errorList = null;
 
             int flag = 0;
-
-            var currentUser = getCurrentUser();
-
-            if (currentUser == null)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
-            }
 
             if (project == null)
             {

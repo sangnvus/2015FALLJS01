@@ -6,7 +6,7 @@ app.service('ProjectService', function ($http) {
     this.getProject = function (code) {
         var request = $http({
             method: 'get',
-            url: '/api/ProjectApi/GetProject',
+            url: '/api/ProjectApi/GetProjectBasic',
             params: {
                 code: code
             }
