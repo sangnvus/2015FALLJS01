@@ -143,7 +143,16 @@ app.service('ProjectService', function ($http) {
         });
     };
 
-   
+    // Function to submit project
+    this.submitProject = function (project) {
+        var request = $http({
+            method: 'put',
+            url: '/api/ProjectApi/SubmitProject/',
+            data: project
+        });
+
+        return request;
+    }
 
     this.GetProjectStatisticList = function () {
         return $http.get('/api/ProjectApi/GetProjectStatisticList');
