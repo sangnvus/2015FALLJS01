@@ -524,7 +524,9 @@ namespace DDL_CapstoneProject.Respository
                                          FullName = project.Creator.UserInfo.FullName,
                                          UserName = project.Creator.Username,
                                          NumberBacked = project.Creator.Backings.Count,
-                                         NumberCreated = project.Creator.CreatedProjects.Count,
+                                         NumberCreated = project.Creator.CreatedProjects.Count(x => x.Status != DDLConstants.ProjectStatus.DRAFT
+                                             && x.Status != DDLConstants.ProjectStatus.REJECTED
+                                             && x.Status != DDLConstants.ProjectStatus.PENDING),
                                          ProfileImage = project.Creator.UserInfo.ProfileImage
                                      }
                                  }).FirstOrDefault();

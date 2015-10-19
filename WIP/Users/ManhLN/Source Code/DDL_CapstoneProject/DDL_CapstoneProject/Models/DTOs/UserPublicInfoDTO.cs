@@ -14,8 +14,9 @@ namespace DDL_CapstoneProject.Models.DTOs
         public string FacebookUrl { get; set; }
         public DateTime CreatedDate { get; set; }
         public string Biography { get; set; }
+        public int CountCreatedProject { get; set; }
         public int CountBackedProject { get; set; }
         public string Website { get; set; }
-        
+
     }
 }

@@ -49,7 +49,10 @@ service.service('UserService', function ($http) {
     this.getPublicInformation = function (user) {
         var request = $http({
             method: 'get',
-            url: '/api/UserApi/GetPublicInfo'
+            url: '/api/UserApi/GetPublicInfo',
+            params: {
+                username: user
+            }
         });
         return request;
     }

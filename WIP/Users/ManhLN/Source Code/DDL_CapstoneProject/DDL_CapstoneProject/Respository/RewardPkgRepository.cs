@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using DDL_CapstoneProject.Helpers;
@@ -40,7 +41,8 @@ namespace DDL_CapstoneProject.Respository
                                  IsHide = RewardPkg.IsHide,
                                  Quantity = RewardPkg.Quantity,
                                  RewardPkgID = RewardPkg.RewardPkgID,
-                                 Type = RewardPkg.Type
+                                 Type = RewardPkg.Type,
+                                 Backers = db.BackingDetails.Count(t => t.RewardPkgID == RewardPkg.RewardPkgID)
                              };
 
             return rewardList.ToList();
@@ -52,7 +54,7 @@ namespace DDL_CapstoneProject.Respository
         /// <param name="ProjectID"></param>
         /// <param name="rewardPkg"></param>
         /// <returns>newRewardPkg</returns>
-        public RewardPkg CreateRewardPkg(int ProjectID, RewardPkgDTO rewardPkg)
+        public RewardPkgDTO CreateRewardPkg(int ProjectID, RewardPkgDTO rewardPkg)
         {
             var newRewarPkg = new RewardPkg
             {
@@ -67,7 +69,18 @@ namespace DDL_CapstoneProject.Respository
             db.RewardPkgs.Add(newRewarPkg);
             db.SaveChanges();
 
-            return newRewarPkg;
+            var newRewardPkgDTO = new RewardPkgDTO
+            {
+                Backers = db.BackingDetails.Count(t => t.RewardPkgID == newRewarPkg.RewardPkgID),
+                PledgeAmount = newRewarPkg.PledgeAmount,
+                Description = newRewarPkg.Description,
+                EstimatedDelivery = newRewarPkg.EstimatedDelivery,
+                Quantity = newRewarPkg.Quantity,
+                Type = newRewarPkg.Type,
+                IsHide = newRewarPkg.IsHide
+            };
+
+            return newRewardPkgDTO;
         }
 
         /// <summary>
@@ -117,15 +130,10 @@ namespace DDL_CapstoneProject.Respository
             //db.RewardPkgs.Remove(deleteRewardPkg);
             //db.SaveChanges();
 
-            if (deleteRewardPkg != null)
-            {
-                db.RewardPkgs.Remove(deleteRewardPkg);
-                db.SaveChanges();
+            db.RewardPkgs.Remove(deleteRewardPkg);
+            db.SaveChanges();
 
-                return true;
-            }
-
-            return false;
+            return true;
         }
 
         #endregion

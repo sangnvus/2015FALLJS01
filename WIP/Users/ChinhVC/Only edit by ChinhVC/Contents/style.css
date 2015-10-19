@@ -530,7 +530,7 @@ Date: 2015.10.01
 
 
 
-/*Created, Starred, Backed Project Page (created_project.html)
+/*Created, Starred, Backed Project, Page (created_project.html)
 --------------------------------------------------------- */
 	#setting_container {
 		padding-top: 100px;
@@ -539,6 +539,9 @@ Date: 2015.10.01
 	#items-projects{
 		padding-top: 0px;
 		padding-bottom: 30px;
+	}
+	td>a{
+		color: #34495E;
 	}
 /*End Created, Starred, Backed Project ------------------- */
 

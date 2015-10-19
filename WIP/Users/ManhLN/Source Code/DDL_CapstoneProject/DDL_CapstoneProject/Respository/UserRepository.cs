@@ -270,11 +270,19 @@ namespace DDL_CapstoneProject.Respository
                                  FacebookUrl = user.UserInfo.FacebookUrl,
                                  LastLogin = user.LastLogin,
                                  ProfileImage = user.UserInfo.ProfileImage,
-                                 CountBackedProject = user.Backings.Count(x => x.User.Username == user.Username),
+                                 CountBackedProject = user.Backings.Count,
+                                 CountCreatedProject = user.CreatedProjects.Count(x => x.Status != DDLConstants.ProjectStatus.DRAFT
+                                             && x.Status != DDLConstants.ProjectStatus.REJECTED
+                                             && x.Status != DDLConstants.ProjectStatus.PENDING),
                                  UserName = user.Username,
-                                 Website = user.UserInfo.Website,
+                                 Website = user.UserInfo.Website
                              };
-            return userPublic.First();
+            if (!userPublic.Any())
+            {
+                throw new UserNotFoundException();
+            }
+
+            return userPublic.FirstOrDefault();
         }
 
         public UserEditInfoDTO GetUserEditInfo(string userName)
