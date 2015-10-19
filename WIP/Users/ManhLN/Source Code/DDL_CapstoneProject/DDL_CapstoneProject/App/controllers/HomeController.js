@@ -3,7 +3,6 @@
 app.controller('HomeController', function ($scope, slides, liststatisticforhome) {
     //Todo here.
     $scope.Slides = slides.data.Data;
-    console.log($scope.Slides)
     $scope.popularproject = liststatisticforhome.data.Data[0];
     $scope.projectByCategory = liststatisticforhome.data.Data[1];
     $scope.highestprojectpledge = liststatisticforhome.data.Data[2][0];

@@ -138,6 +138,7 @@
     <Compile Include="Controllers\ApiControllers\ProjectApiController.cs" />
     <Compile Include="Controllers\ApiControllers\SlideApiController.cs" />
     <Compile Include="Controllers\ApiControllers\UserApiController.cs" />
+    <Compile Include="Controllers\WebControllers\AdminPartialController.cs" />
     <Compile Include="Controllers\WebControllers\ClientPartialController.cs" />
     <Compile Include="Controllers\WebControllers\LoginController.cs" />
     <Compile Include="Controllers\WebControllers\ProjectController.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\DDL_User.cs" />
+    <Compile Include="Models\DTOs\AdminCategoryDTO.cs" />
     <Compile Include="Models\DTOs\CategoryProjectCountDTO.cs" />
     <Compile Include="Models\DTOs\CommentDTO.cs" />
     <Compile Include="Models\DTOs\ConversationBasicDTO.cs" />
@@ -210,6 +212,9 @@
     <Compile Include="Helper\CommonUtils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\AdminModule.js" />
+    <Content Include="App\controllers\admin\AdminCategoryController.js" />
+    <Content Include="App\controllers\admin\AdminDashboardController.js" />
     <Content Include="App\controllers\CreateProjectController.js" />
     <Content Include="App\controllers\DiscoverController.js" />
     <Content Include="App\controllers\EditProfileController.js" />
@@ -229,15 +234,18 @@
     <Content Include="App\directives\passwordMatch.js" />
     <Content Include="App\directives\showTabDirective.js" />
     <Content Include="App\directives\SweetAlert.min.js" />
+    <Content Include="App\directives\text-angular\textAngular-sanitize.min.js" />
     <Content Include="App\directives\timelinr.js" />
-    <Content Include="App\directives\ui-bootstrap%28-tpls%29.js" />
     <Content Include="App\HomeModule.js" />
+    <Content Include="App\services\Admin\AdminCategoryService.js" />
     <Content Include="App\services\CategoryService.js" />
     <Content Include="App\services\CommonService.js" />
     <Content Include="App\services\ProjectService.js" />
     <Content Include="App\services\MessageService.js" />
     <Content Include="App\services\SlideSevice.js" />
     <Content Include="App\services\UserService.js" />
+    <Content Include="Content\admin\adminStyle.css" />
+    <Content Include="Content\admin\plugin.css" />
     <Content Include="Content\angular-block-ui.css" />
     <Content Include="Content\angular-block-ui.min.css" />
     <Content Include="Content\angular-toastr.css" />
@@ -262,6 +270,7 @@
     <Content Include="Content\images\back_enabled.png" />
     <Content Include="Content\images\back_enabled_hover.png" />
     <Content Include="Content\images\biggerdot.png" />
+    <Content Include="Content\images\checkmark.png" />
     <Content Include="Content\images\dot.gif" />
     <Content Include="Content\images\forward_disabled.png" />
     <Content Include="Content\images\forward_enabled.png" />
@@ -315,6 +324,7 @@
     <Content Include="images\slides\slider1.jpg" />
     <Content Include="images\slides\slider2.jpg" />
     <Content Include="images\slides\slider3.jpg" />
+    <Content Include="Scripts\admin-flex\flex.js" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -1203,6 +1213,11 @@
     <Content Include="Views\User\_EditProfile.cshtml" />
     <Content Include="Views\User\_PublicProfile.cshtml" />
     <Content Include="Views\Home\Discover.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Login\AdminLogin.cshtml" />
+    <Content Include="Views\Home\AdminIndex.cshtml" />
+    <Content Include="Views\AdminPartial\_Category.cshtml" />
+    <Content Include="Views\AdminPartial\_Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />

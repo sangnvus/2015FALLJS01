@@ -43,7 +43,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                     $scope.NewComment = "";
                     toastr.success('Bình luận thành công!');
                 } else {
-                    CommmonService.checkError(result.data.Type);
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 }
@@ -64,7 +64,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                     $scope.Project.CommentsList[index] = result.data.Data;
                     toastr.success('Thành công!');
                 } else {
-                    CommmonService.checkError(result.data.Type);
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 }
@@ -85,7 +85,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                     $scope.Project.CommentsList[index] = result.data.Data;
                     toastr.success('Thành công!');
                 } else {
-                    CommmonService.checkError(result.data.Type);
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 }
@@ -107,7 +107,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                         $scope.showEditForm(index);
                         toastr.success('Sửa bình luận', 'Thành công!');
                     } else {
-                        CommmonService.checkError(result.data.Type);
+                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         $scope.Error = result.data.Message;
                         toastr.error($scope.Error, 'Lỗi!');
                     }
@@ -130,7 +130,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                     $scope.Project.CommentsList.splice(index, 1);
                     toastr.success('Xóa bình luận', 'Thành công!');
                 } else {
-                    CommmonService.checkError(result.data.Type);
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 }

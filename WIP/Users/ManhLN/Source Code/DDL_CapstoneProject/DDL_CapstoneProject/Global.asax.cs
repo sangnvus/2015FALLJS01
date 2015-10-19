@@ -21,5 +21,14 @@ namespace DDL_CapstoneProject
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        protected void Application_BeginRequest()
+        {
+            if (Request.Path.Equals("/admin", StringComparison.OrdinalIgnoreCase))
+            {
+                var redirectUrl = VirtualPathUtility.AppendTrailingSlash(Request.Path);
+                Response.RedirectPermanent(redirectUrl);
+            }
+        }
     }
 }

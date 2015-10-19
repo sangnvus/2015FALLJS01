@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-app.controller('RegisterController', function ($rootScope,$scope,$location,$window, UserService) {
+app.controller('RegisterController', function ($rootScope, $scope, $location, $window, UserService, CommmonService) {
     // Todo here.
     $scope.Error = null;
     // Submit User model to create new account
@@ -15,6 +15,7 @@ app.controller('RegisterController', function ($rootScope,$scope,$location,$wind
                 if (result.data.Status === "success") {
                     $location.path("/register_success").replace();
                 } else if (result.data.Status === "error") {
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
                 }
             },

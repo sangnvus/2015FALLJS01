@@ -2,7 +2,7 @@
 var service = angular.module("DDLService", []);
 var app = angular.module("ClientApp", ["ngRoute", "ngAnimate", "DDLService", 'angular-loading-bar']);
 
-app.controller('ResetPwController', function ($rootScope, $scope, $location, $window, UserService) {
+app.controller('ResetPwController', function ($rootScope, $scope, $location, $window, UserService, CommmonService) {
     // Todo here.
     $scope.Error = null;
 
@@ -19,6 +19,7 @@ app.controller('ResetPwController', function ($rootScope, $scope, $location, $wi
                     $scope.Message = "Mật khẩu mới đã được gửi đến email của bạn!";
                     $scope.Error = null;
                 } else if (result.data.Status === "error") {
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
                 }
             },

@@ -41,14 +41,16 @@ namespace DDL_CapstoneProject
                       "~/Scripts/bootstrap.min.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new StyleBundle("~/Content/clientcss").Include(
+                      "~/Content/flat-ui.min.css",
+                      "~/Content/style.css",
+                      "~/Content/animate.css"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.min.css",
                       "~/Content/font-awesome.min.css",
                       "~/Content/angular-toastr.css",
-                      "~/Content/angular-block-ui.css",
-                      "~/Content/flat-ui.min.css",
-                      "~/Content/style.css",
-                      "~/Content/animate.css"));
+                      "~/Content/angular-block-ui.css"));
         }
     }
 }

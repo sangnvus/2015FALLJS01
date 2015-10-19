@@ -66,7 +66,6 @@ app.service('ProjectService', function ($http) {
         });
 
         return request;
-
     }
 
     // Function to get rewardPkgList by ProjectID
@@ -143,6 +142,18 @@ app.service('ProjectService', function ($http) {
                 }
         });
     };
+
+    // Function to submit project
+    this.submitProject = function (project) {
+        var request = $http({
+            method: 'put',
+            url: '/api/ProjectApi/SubmitProject/',
+            data: project
+        });
+
+        return request;
+    }
+
     this.GetProjectStatisticList = function () {
         return $http.get('/api/ProjectApi/GetProjectStatisticList');
     };
@@ -207,4 +218,41 @@ app.service('ProjectService', function ($http) {
 
         return request;
     }
+// 17/10/2015 - MaiCTP - get BackedProject
+    this.getBackedProject = function () {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/GetBackedProject/'
+          
+        });
+
+        return request;
+
+    }
+
+    // 18/10/2015 - MaiCTP - get StarredProject
+    this.getStarredProject = function () {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/GetStarredProject/'
+
+        });
+
+        return request;
+
+    }
+
+    // 18/10/2015 - MaiCTP - get CreatedProject
+    this.getCreatedProject = function () {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/GetCreatedProject/'
+
+        });
+
+        return request;
+
+    }
+
+
 });

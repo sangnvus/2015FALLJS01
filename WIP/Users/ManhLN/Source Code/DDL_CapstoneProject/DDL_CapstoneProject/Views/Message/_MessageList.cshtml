@@ -4,7 +4,7 @@
         <div class="row">
             <div id="colPush" class="col-md-3">
                 <ul class="">
-                    <h5 class="fnt30 fnt-b">Message</h5>
+                    <h5 class="fnt30 fnt-b">Tin nhắn</h5>
                     <div class="clearfix"></div>
                     <li data-toggle="modal" data-target="#sentBox">
                         <a class="link">
@@ -64,7 +64,7 @@
                 </div>
 
                 <!--Conversation table-->
-                <table datatable="ng" dt-options="dtOptions" id="messageTable" dt-column-defs="dtColumnDefs"
+                <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" id="messageTable"
                        class="table table-bordered table-hover">
                     <thead>
                         <tr style="background: #16a085; color: #FFF">
@@ -84,10 +84,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="conversation in ListConversations" ng-class="{'unread-message': !conversation.IsRead}">
+                        <tr ng-repeat="conversation in ListConversations" ng-class="{'read': conversation.IsRead, 'unread-message': !conversation.IsRead}">
                             <td class="checkbox-col">
-                                <label class="checkbox" for="checkbox$index">
-                                    <input type="checkbox" id="checkbox$index" data-toggle="checkbox" class="custom-checkbox"
+                                <label class="checkbox" for="checkbox{{$index}}">
+                                    <input type="checkbox" id="checkbox{{$index}}" data-toggle="checkbox" class="custom-checkbox"
                                            ng-model="conversation.Selected"
                                            value="{{conversation.ConversationID}}">
                                     <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
@@ -125,6 +125,7 @@
                         <button type="button" class="close cFF" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title fnt18 cFF" id="myModalLabel">Tin nhắn mới</h4>
                     </div>
+                    <!--Body-->
                     <div class="modal-body">
                         <div class="form-group" style="border-bottom: 1px solid #cfcfcf">
                             <label for="" class="col-sm-2 control-label fnt18 fnt-b fnt-b txt-l">Tới:</label>

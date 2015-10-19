@@ -35,6 +35,7 @@ namespace DDL_CapstoneProject.Respository
                              select new RewardPkgDTO()
                              {
                                  Description = RewardPkg.Description,
+                                 PledgeAmount = RewardPkg.PledgeAmount,
                                  EstimatedDelivery = RewardPkg.EstimatedDelivery,
                                  IsHide = RewardPkg.IsHide,
                                  Quantity = RewardPkg.Quantity,
@@ -56,6 +57,7 @@ namespace DDL_CapstoneProject.Respository
             var newRewarPkg = new RewardPkg
             {
                 ProjectID = ProjectID,
+                PledgeAmount = rewardPkg.PledgeAmount,
                 Description = rewardPkg.Description,
                 EstimatedDelivery = rewardPkg.EstimatedDelivery,
                 Quantity = rewardPkg.Quantity,
@@ -80,7 +82,7 @@ namespace DDL_CapstoneProject.Respository
 
                 if (updateReward == null)
                 {
-                    throw new Exception();
+                    throw new KeyNotFoundException();
                 }
 
                 updateReward.Description = reward.Description;
@@ -88,6 +90,7 @@ namespace DDL_CapstoneProject.Respository
                 updateReward.Quantity = reward.Quantity;
                 updateReward.IsHide = reward.IsHide;
                 updateReward.Type = reward.Type;
+                updateReward.PledgeAmount = reward.PledgeAmount;
 
                 db.SaveChanges();
             }
@@ -103,6 +106,11 @@ namespace DDL_CapstoneProject.Respository
         public bool DeleteRewardPkg(int rewardPkgID)
         {
             var deleteRewardPkg = db.RewardPkgs.SingleOrDefault(x => x.RewardPkgID == rewardPkgID);
+
+            if (deleteRewardPkg == null)
+            {
+                throw new KeyNotFoundException();
+            }
 
             //RewardPkg deleteRewardPkg = new RewardPkg() { RewardPkgID = rewardPkgID };
             //db.RewardPkgs.Attach(deleteRewardPkg);

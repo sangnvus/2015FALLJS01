@@ -6,7 +6,7 @@
                 <li showtab data-target="#main-slider" data-slide-to="{{$index}}" ng-repeat="slide in Slides track by $index" ng-class="{'active': $first}"></li>
             </ol>
             <div class="carousel-inner">
-                <div class="item" style="background-image: url({{slide.ImageUrl}})" ng-repeat="slide in Slides track by $index" ng-class="{'active': $first}">
+                <div class="item" ng-style="{'background-image': 'url({{slide.ImageUrl}})'}" ng-repeat="slide in Slides track by $index" ng-class="{'active': $first}">
                     <div class="container">
                         <div class="row">
                             <div ng-class="$index == 2 ? 'col-sm-6': 'col-sm-12'">
@@ -43,7 +43,7 @@
                                 <h4><p class="fnt30">Staff Picks: <a href="search.html">{{category.Category}}</a></p></h4>
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <img src="\images\projects\{{category.ImageUrl}}" alt="" class="img-responsive center-block">
+                                        <img ng-src="\images\projects\{{category.ImageUrl}}" alt="" class="img-responsive center-block">
                                     </div>
                                     <div class="col-sm-6">
                                         <p class="fnt35 fnt-b pt0 pb0 mb0 mt0"><a href="/#/project/detail/{{category.ProjectCode}}">{{category.Title}}</a></p>
@@ -102,7 +102,7 @@
                 <li class="portfolio-item apps" ng-repeat="project in popularproject">
                     <div class="item-inner">
                         <div class="item-image hover01 column">
-                            <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
+                            <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
                         </div>
                         <div class="item-title">
                             <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
@@ -152,7 +152,7 @@
                         <p class="fnt50 fnt-b">${{highestprojectfund.CurrentFundedNumber}}</p>
                     </div>
                     <div class="col-md-4">
-                        <p class="fnt25">Highest pledge amount</9>
+                        <p class="fnt25">Highest pledge amount</p>
                         <p><i class="fa fa-diamond fa-5x"></i></p>
                         <p class="fnt50 fnt-b">${{highestprojectpledge.CurrentFundedNumber}}</p>
                     </div>
@@ -164,3 +164,17 @@
         </div>
     </div> <!-- end feature3 -->
 </div> <!-- end content -->
+<script>
+    //#main-slider
+    // -------------------------------------------------------------
+    $(function () {
+        $('#main-slider.carousel').carousel({
+            interval: 8000
+        });
+    });
+
+    $('.centered').each(function (e) {
+        $(this).css('margin-top', ($('#main-slider').height() - $(this).height()) / 2);
+    });
+    //end Main Slider ---------------------------------------------
+</script>

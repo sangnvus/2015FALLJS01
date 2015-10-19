@@ -59,7 +59,9 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
             }
             else
             {
-                FormsAuthentication.SetAuthCookie(user.Username, model.RememberMe);
+                FormsAuthentication.SetAuthCookie(user.Username, model.RememberMe); 
+                user.LastLogin = DateTime.Now;
+                UserRepository.Instance.UpdateUser(user);
                 if (string.IsNullOrEmpty(returnUrl))
                 {
                     return Redirect("/");
@@ -177,6 +179,8 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
             // Set the auth cookie
 
             FormsAuthentication.SetAuthCookie(newUser.Username, false);
+            newUser.LastLogin = DateTime.Now;
+            UserRepository.Instance.UpdateUser(newUser);
             //SessionHelper.RenewCurrentUser();
 
             return Redirect("/");
@@ -213,6 +217,89 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         public ActionResult ForgotPassword()
         {
             return View();
+        }
+
+        // GET: Login
+        [Route("Admin/Login")]
+        public ActionResult AdminLogin(string returnUrl = "")
+        {
+            FormsAuthentication.SignOut();
+            // Remove all cookies.
+            var limit = Request.Cookies.Count;
+            for (int i = 0; i < limit; i++)
+            {
+                var cookieName = Request.Cookies[i].Name;
+                var cookie = new HttpCookie(cookieName) { Expires = DateTime.Now.AddDays(-1) };
+                Response.Cookies.Add(cookie);
+            }
+            ViewBag.ReturnUrl = returnUrl;
+            return View("AdminLogin", new UserLoginDTO());
+        }
+
+
+        [Route("Admin/Login")]
+        [HttpPost]
+        public ActionResult AdminLogin(UserLoginDTO model, string returnUrl)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("~/Views/Login/AdminLogin.cshtml", model);
+            }
+
+            var user =
+                UserRepository.Instance.GetByUserNameOrEmail(model.Username, model.Password);
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Sai mật khẩu hoặc tài khoản không tồn tài!");
+
+            }
+            else if (user.LoginType == DDLConstants.LoginType.FACEBOOK || user.UserType == DDLConstants.UserType.USER)
+            {
+                ModelState.AddModelError("", "Bạn không có quyền truy cập!");
+
+            }
+            else if (!user.IsActive || !user.IsVerify)
+            {
+                ModelState.AddModelError("", "Tài khoản bị khóa hoặc chưa xác nhận Email!");
+            }
+            else
+            {
+                FormsAuthentication.SetAuthCookie(user.Username, model.RememberMe);
+                user.LastLogin = DateTime.Now;
+                UserRepository.Instance.UpdateUser(user);
+                if (string.IsNullOrEmpty(returnUrl))
+                {
+                    return Redirect("/admin");
+                }
+                else
+                {
+                    return Redirect("/Admin/#/" + returnUrl);
+                }
+            }
+
+            ViewBag.ReturlUrl = returnUrl;
+            return View("~/Views/Login/AdminLogin.cshtml", model);
+        }
+
+        [Route("Admin/Logout")]
+        [Authorize]
+        public ActionResult AdminLogout()
+        {
+            FormsAuthentication.SignOut();
+            //for (int index = 0; index < Session.Keys.Count; index++)
+            //{
+            //    var sessionName = Session.Keys[index];
+            //    Session[sessionName] = null;
+            //}
+            // Remove all cookies.
+            var limit = Request.Cookies.Count;
+            for (int i = 0; i < limit; i++)
+            {
+                var cookieName = Request.Cookies[i].Name;
+                var cookie = new HttpCookie(cookieName) { Expires = DateTime.Now.AddDays(-1) };
+                Response.Cookies.Add(cookie);
+            }
+            return Redirect("/admin/login");
         }
 
         private Uri RedirectUri

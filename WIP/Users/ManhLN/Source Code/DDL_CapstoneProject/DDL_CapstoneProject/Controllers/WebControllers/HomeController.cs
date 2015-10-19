@@ -10,12 +10,26 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
 {
     public class HomeController : BaseController
     {
+        [Route("")]
         public ActionResult Index()
         {
             getCurrentUser();
             ViewBag.BaseUrl = GetBaseUrl();
             return View();
         }
+
+        [Route("Admin")]
+        public ActionResult AdminIndex()
+        {
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Redirect("/admin/login");
+            }
+            getCurrentUser();
+            ViewBag.BaseUrl = GetBaseUrl() + "admin/";
+            return View();
+        }
+
         public ActionResult Discover()
         {
 

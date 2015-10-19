@@ -9,6 +9,8 @@ using DDL_CapstoneProject.Helper;
 using DDL_CapstoneProject.Models.DTOs;
 using DDL_CapstoneProject.Respository;
 using DDL_CapstoneProject.Ultilities;
+using System.Web;
+using System.Web.Script.Serialization;
 
 namespace DDL_CapstoneProject.Controllers.ApiControllers
 {
@@ -148,32 +150,62 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
             }
             var userExist = UserRepository.Instance.GetUserPublicInfo(User.Identity.Name);
+            userExist.ProfileImage = DDLConstants.FileType.AVATAR + userExist.ProfileImage;
             return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "", Data = userExist });
         }
 
         public IHttpActionResult GetUserInfoEdit()
         {
+            UserEditInfoDTO userCurrent = null;
             if (!ModelState.IsValid)
             {
                 return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
             }
-            var userCurrent = UserRepository.Instance.GetUserEditInfo(User.Identity.Name);
-            return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "", Data = userCurrent });
-        }
 
-        public IHttpActionResult EditUserInfo(UserEditInfoDTO userCurrent)
-        {
-            if (!ModelState.IsValid)
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
             {
-                return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
             }
             try
             {
-                UserRepository.Instance.EditUserInfo(userCurrent);
+                userCurrent = UserRepository.Instance.GetUserEditInfo(User.Identity.Name);
+                userCurrent.ProfileImage = DDLConstants.FileType.AVATAR + userCurrent.ProfileImage;
             }
-            catch (DuplicateEmailException)
+            catch (UserNotFoundException)
             {
-                return Ok(new HttpMessageDTO { Status = "error", Message = "Email này đã được sử dụng!", Type = "DuplicateEmail" });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Bạn chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "", Data = userCurrent });
+        }
+
+        public IHttpActionResult EditUserInfo()
+        {
+            var httpRequest = HttpContext.Current.Request;
+            var userCurrentJson = httpRequest.Form["profile"];
+            var userCurrent = new JavaScriptSerializer().Deserialize<UserEditInfoDTO>(userCurrentJson);
+            if (!ModelState.IsValid)
+            {
+                return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
+            }
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+            try
+            {
+                string imageName = "img_" + userCurrent.UserName;
+                var file = httpRequest.Files["file"];
+                var uploadImageName = CommonUtils.UploadImage(file, imageName, DDLConstants.FileType.AVATAR);
+                UserRepository.Instance.EditUserInfo(userCurrent, uploadImageName);
+            }
+            catch (UserNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Bạn chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
             }
             catch (Exception)
             {
