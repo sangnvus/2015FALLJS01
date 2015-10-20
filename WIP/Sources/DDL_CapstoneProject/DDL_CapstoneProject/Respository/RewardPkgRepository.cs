@@ -59,7 +59,7 @@ namespace DDL_CapstoneProject.Respository
             // Get rewardPkg list
             var rewardList = from RewardPkg in db.RewardPkgs
                              where RewardPkg.ProjectID == project.ProjectID
-                             orderby RewardPkg.PledgeAmount descending
+                             orderby RewardPkg.PledgeAmount ascending
                              select new RewardPkgDTO()
                              {
                                  Description = RewardPkg.Description,

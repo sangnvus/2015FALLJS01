@@ -206,7 +206,7 @@ namespace DDL_CapstoneProject.Respository
         /// Create a new project
         /// </summary>
         /// <returns>project</returns>
-        public Project CreatProject(ProjectCreateDTO newProject)
+        public string CreatProject(ProjectCreateDTO newProject)
         {
             var project = CreateEmptyProject();
             project.CreatorID = newProject.CategoryID;
@@ -226,7 +226,7 @@ namespace DDL_CapstoneProject.Respository
 
             db.SaveChanges();
 
-            return project;
+            return project.ProjectCode;
         }
 
         /// <summary>
@@ -274,6 +274,10 @@ namespace DDL_CapstoneProject.Respository
                 CurrentFunded = project.CurrentFunded,
             };
 
+            // Set number exprire day.
+            var timespan = updateProjectDTO.ExpireDate - DateTime.Today;
+            updateProjectDTO.NumberDays = timespan.GetValueOrDefault().Days;
+
             return updateProjectDTO;
         }
 
@@ -313,7 +317,7 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="ProjectID">int</param>
         /// <returns>project</returns>
-        public ProjectEditDTO GetProjectBasic(string code, int UserID, string userType)
+        public ProjectEditDTO GetProjectBasic(string code, string UserName)
         {
             var project = db.Projects.SingleOrDefault(x => x.ProjectCode == code);
 
@@ -322,7 +326,9 @@ namespace DDL_CapstoneProject.Respository
                 throw new KeyNotFoundException();
             }
 
-            if (project.CreatorID != UserID && userType != DDLConstants.UserType.ADMIN)
+            var user = db.DDL_Users.SingleOrDefault(x => x.Username == UserName);
+
+            if (project.CreatorID != user.DDL_UserID)
             {
                 throw new NotPermissionException();
             }
@@ -341,6 +347,10 @@ namespace DDL_CapstoneProject.Respository
                 Status = project.Status,
                 CurrentFunded = project.CurrentFunded,
             };
+
+            // Set number exprire day.
+            var timespan = projectDTO.ExpireDate - DateTime.Today;
+            projectDTO.NumberDays = timespan.GetValueOrDefault().Days;
 
             return projectDTO;
         }
@@ -409,6 +419,51 @@ namespace DDL_CapstoneProject.Respository
             }
 
             return mylist;
+        }
+
+        public string BackProject(ProjectBackDTO backingData)
+        {
+            var project = db.Projects.SingleOrDefault(x => x.ProjectCode == backingData.ProjectCode);
+
+            if (project == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
+            var user = db.DDL_Users.SingleOrDefault((x => x.Email == backingData.Email));
+            if (user == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
+            // Create new backing record
+            var backing = db.Backings.Create();
+            backing.UserID = user.DDL_UserID;
+            backing.ProjectID = project.ProjectID;
+            backing.BackedDate = DateTime.Today;
+            backing.IsPublic = backingData.IsPublic;
+
+            // Create new backingDetail recored
+            var backingDetail = db.BackingDetails.Create();
+            backingDetail.RewardPkgID = backingData.RewardPkgID;
+            backingDetail.PledgedAmount = backingData.PledgeAmount;
+            backingDetail.Quantity = backingData.Quantity;
+            backingDetail.Description = backingData.Description;
+            backingDetail.Address = backingData.Address;
+            backingDetail.Email = backingData.Email;
+            backingDetail.PhoneNumber = backingData.PhoneNumber;
+
+            // Add backingDetail to backing
+            backing.BackingDetail = backingDetail;
+
+            db.Backings.Add(backing);
+
+            // Caculate project current fund
+            project.CurrentFunded += backingDetail.PledgedAmount;
+
+            db.SaveChanges();
+
+            return project.ProjectCode;
         }
         #endregion       
 
