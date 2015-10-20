@@ -141,7 +141,6 @@
     <Compile Include="Controllers\WebControllers\AdminPartialController.cs" />
     <Compile Include="Controllers\WebControllers\ClientPartialController.cs" />
     <Compile Include="Controllers\WebControllers\LoginController.cs" />
-    <Compile Include="Controllers\WebControllers\ProjectController.cs" />
     <Compile Include="Helper\CustomException.cs" />
     <Compile Include="Helper\MailHelper.cs" />
     <Compile Include="Migrations\201510110856270_InitialCreate.cs" />
@@ -184,6 +183,7 @@
     <Compile Include="Models\DTOs\ProjectEditDTO.cs" />
     <Compile Include="Models\DTOs\QuestionDTO.cs" />
     <Compile Include="Models\DTOs\ReplyDTO.cs" />
+    <Compile Include="Models\DTOs\ProjectBackDTO.cs" />
     <Compile Include="Models\DTOs\RewardPkgDTO.cs" />
     <Compile Include="Models\DTOs\SlideDTO.cs" />
     <Compile Include="Models\DTOs\TimeLineDTO.cs" />
@@ -234,6 +234,7 @@
     <Content Include="App\controllers\HomeController.js" />
     <Content Include="App\controllers\MessageController.js" />
     <Content Include="App\controllers\MessageDetailController.js" />
+    <Content Include="App\controllers\PaymentProjectController.js" />
     <Content Include="App\controllers\ProjectDetailController.js" />
     <Content Include="App\controllers\PublicProfileController.js" />
     <Content Include="App\controllers\RegisterController.js" />
@@ -1242,6 +1243,7 @@
     <Content Include="Views\Project\_StarredProject.cshtml" />
     <Content Include="Views\Project\_BackProject.cshtml" />
     <Content Include="Views\User\_EditPassword.cshtml" />
+    <Content Include="Views\Project\_PaymentProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />

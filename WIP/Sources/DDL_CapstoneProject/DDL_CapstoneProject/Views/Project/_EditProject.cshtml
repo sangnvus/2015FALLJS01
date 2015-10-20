@@ -83,7 +83,8 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="">
-                                            <input type="text" id="project_name" class="form-control fnt18 fnt-b" name="ProjectTitle" maxlength="60" ng-maxlength="60" ng-trim="true" ng-minlength="10"
+                                            <input type="text" id="project_name" class="form-control fnt18 fnt-b" style="padding-right: 48px;"
+                                                   name="ProjectTitle" maxlength="60" ng-maxlength="60" ng-trim="true" ng-minlength="10"
                                                    ng-disabled="AllEditable == false" ng-model="Project.Title">
                                             <label for="" class="countText">{{Project.Title.length + "/60"}}</label>
                                             <div ng-show="BasicForm.ProjectTitle.$dirty && BasicForm.ProjectTitle.$invalid" class="text-danger">

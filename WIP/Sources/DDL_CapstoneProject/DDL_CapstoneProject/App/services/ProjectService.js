@@ -302,6 +302,33 @@ app.service('ProjectService', function ($http) {
         return request;
     }
 
+    // Function to save backing data
+    var BackData = {};
+
+    this.addBack = function (newBacking) {
+        BackData = newBacking;
+    };
+
+    this.getBack = function () {
+        return BackData;
+    };
+
+    this.return = {
+        addBack: this.addBack,
+        getBack: this.getBack
+    };
+
+    // Function to back project
+    this.backingProject = function (backingData) {
+        var request = $http({
+            method: 'post',
+            url: '/api/ProjectApi/BackProject',
+            data: backingData
+        });
+
+        return request;
+    }
+
     this.GetProjectStatisticList = function () {
         return $http.get('/api/ProjectApi/GetProjectStatisticList');
     };

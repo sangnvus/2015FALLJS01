@@ -26,6 +26,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         {
             int id;
             var currentUser = getCurrentUser();
+            string projectCode = "";
 
             if (currentUser == null)
             {
@@ -43,16 +44,16 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
             }
 
-            //try
-            //{
-            newProject.CreatorID = currentUser.DDL_UserID;
-            var project = ProjectRepository.Instance.CreatProject(newProject);
-            //}
-            //catch (Exception)
-            //{
-            //    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
-            //}
-            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = project.ProjectCode });
+            try
+            {
+                newProject.CreatorID = currentUser.DDL_UserID;
+                projectCode = ProjectRepository.Instance.CreatProject(newProject);
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = projectCode });
         }
 
         // PUT: api/ProjectApi/EditProject  
@@ -142,13 +143,6 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         {
             ProjectEditDTO project = null;
 
-            var currentUser = getCurrentUser();
-
-            if (currentUser == null)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
-            }
-
             if (!ModelState.IsValid)
             {
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
@@ -161,7 +155,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             try
             {
-                project = ProjectRepository.Instance.GetProjectBasic(code, currentUser.DDL_UserID, currentUser.UserType);
+                project = ProjectRepository.Instance.GetProjectBasic(code, User.Identity.Name);
                 if (project.ImageUrl != string.Empty)
                 {
                     project.ImageUrl = DDLConstants.FileType.PROJECT + project.ImageUrl;
@@ -766,6 +760,35 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
 
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = DDLConstants.HttpMessageType.SUCCESS, Type = "", Data = project });
+        }
+
+        // POST: api/ProjectApi/BackProject
+        [ResponseType(typeof(QuestionDTO))]
+        [HttpPost]
+        public IHttpActionResult BackProject(ProjectBackDTO backingData)
+        {
+            string projectCode;
+
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            try
+            {
+                projectCode = ProjectRepository.Instance.BackProject(backingData);
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = projectCode });
         }
         #endregion
 

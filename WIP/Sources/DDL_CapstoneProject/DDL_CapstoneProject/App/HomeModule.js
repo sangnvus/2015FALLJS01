@@ -114,12 +114,26 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/project/back/:code",
         {
-            caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/BackProject",
             controller: "BackProjectController",
             resolve: {
                 rewardPkgs: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
                     var promise = ProjectService.getRewardPkgByCode($route.current.params.code);
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
+            }
+        });
+    $routeProvider.when("/project/payment/:code",
+        {
+            templateUrl: "ClientPartial/PaymentProject",
+            controller: "PaymentProjectController",
+            resolve: {
+                rewardPkgs: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
+                    var promise = ProjectService.getRewardPkgByCode($route.current.params.code);
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }],
+                usereditinfo: ['$rootScope', '$route', 'UserService', '$q', 'CommmonService', function ($rootScope, $route, UserService, $q, CommmonService) {
+                    var promise = UserService.getProfileInformation();
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }]
             }
