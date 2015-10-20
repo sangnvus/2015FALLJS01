@@ -543,6 +543,56 @@ Date: 2015.10.01
 	td>a{
 		color: #34495E;
 	}
+
+	/*	.hoverItem{
+		background:#000000;
+		position: absolute;
+		width:100%;
+		height:100%;
+		top:0;
+		left:0;
+		opacity:0;
+	}*/
+	/*.hoverItem:hover{
+		background:#FFFFFF;
+		position: absolute;
+		width:100%;
+		height:100%;
+		top:0;
+		left:0;
+		opacity:0.5;
+		-webkit-transition: opacity 700ms;
+		-moz-transition: opacity 700ms;
+		-o-transition: opacity 700ms;
+		transition: opacity 700ms;
+	}*/
+	.titleHoverItem a{
+		color: #FFF;
+	}
+	.titleHoverItem:hover{
+		background: red;
+	}
+	.titleHoverItem{
+		font-size: 20px;
+		font-weight: bold;
+		color: #FFF;
+		position: absolute; 
+		top: -20px;
+		right: -20px;
+		background-color: #828587;
+		border-radius: 50%;
+		padding: 0 10px;
+		opacity: 0;
+	}
+	.item-inner:hover .titleHoverItem{
+		opacity: 1;
+		-webkit-transition: opacity 700ms;
+		-moz-transition: opacity 700ms;
+		-o-transition: opacity 700ms;
+		transition: opacity 700ms;
+	}
+
+
 /*End Created, Starred, Backed Project ------------------- */
 
 
