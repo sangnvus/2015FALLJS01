@@ -162,6 +162,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\DDL_User.cs" />
+    <Compile Include="Models\DTOs\EditPasswordDTO.cs" />
     <Compile Include="Models\DTOs\AdminCategoryDTO.cs" />
     <Compile Include="Models\DTOs\BackingDTO.cs" />
     <Compile Include="Models\DTOs\CategoryProjectCountDTO.cs" />
@@ -218,6 +219,7 @@
     <Content Include="App\AdminModule.js" />
     <Content Include="App\controllers\admin\AdminCategoryController.js" />
     <Content Include="App\controllers\admin\AdminDashboardController.js" />
+    <Content Include="App\controllers\EditPasswordController.js" />
     <Content Include="App\controllers\BackProjectController.js" />
     <Content Include="App\controllers\BackedProjectController.js" />
     <Content Include="App\controllers\CreatedProjectController.js" />
@@ -1230,6 +1232,7 @@
     <Content Include="Views\Project\_CreatedProject.cshtml" />
     <Content Include="Views\Project\_StarredProject.cshtml" />
     <Content Include="Views\Project\_BackProject.cshtml" />
+    <Content Include="Views\User\_EditPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />
