@@ -1080,14 +1080,6 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpGet]
         public IHttpActionResult RemindProject(string code)
         {
-            var currentUser = getCurrentUser();
-
-            if (currentUser == null)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
-            }
-            var httpRequest = HttpContext.Current.Request;
-            //RemindDTO remindInfo = null;
 
             if (User.Identity == null || !User.Identity.IsAuthenticated)
             {
@@ -1113,10 +1105,6 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         public IHttpActionResult GetListBacker(string code)
         {
             var listBacker = new List<BackingDTO>();
-            if (User.Identity == null || !User.Identity.IsAuthenticated)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
-            }
             try
             {
                 listBacker = ProjectRepository.Instance.GetListBacker(code);
@@ -1131,6 +1119,30 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
 
             return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "", Data = listBacker });
+        }
+
+        [HttpGet]
+        public IHttpActionResult ReportProject(string code, string content)
+        {
+
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+            try
+            {
+                ProjectRepository.Instance.ReportProject(User.Identity.Name, code, content);
+            }
+            catch (UserNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Bạn chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "" });
         }
 
         #region Comment Functions

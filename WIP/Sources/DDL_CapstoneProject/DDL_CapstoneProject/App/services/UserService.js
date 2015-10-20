@@ -83,4 +83,21 @@ service.service('UserService', function ($http) {
             });
     }
 
+    this.getEditPassword = function () {
+        var request = $http({
+            method: 'get',
+            url: '/api/UserApi/GetUserPasswordEdit'
+        });
+        return request;
+    }
+
+    this.changepassword = function (newpass) {
+        var request = $http({
+            method: 'post',
+            url: '/api/UserApi/ChangePassword',
+            data: newpass
+        });
+        return request;
+    }
+
 });

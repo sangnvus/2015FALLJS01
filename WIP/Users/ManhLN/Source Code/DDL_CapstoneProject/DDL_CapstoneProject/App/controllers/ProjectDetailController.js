@@ -1,9 +1,12 @@
 ﻿"use strict";
 
-app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, toastr, project, ProjectService, CommmonService) {
+app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, toastr, project, ProjectService, CommmonService, listbacker) {
     //Todo here.
     $scope.Project = project.data.Data;
-
+    $scope.FirstUpdateLogs = false;
+    $scope.Project.UpdateLogsList = {};
+    $scope.FirstLoadComment = false;
+    $scope.Project.CommentsList = {}
     $scope.CurrentUser = $rootScope.UserInfo;
     $scope.NewComment = {};
 
@@ -19,6 +22,52 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
         return lowerStr.indexOf('http') === 0;
     }
 
+    // function get comments
+    $scope.getCommentList = function () {
+        if (!$scope.FirstLoadComment) {
+            var promiseGet = ProjectService.getCommentList($scope.Project.ProjectCode, "");
+            promiseGet.then(
+                function (result) {
+                    if (result.data.Status === "success") {
+                        $scope.Project.CommentsList = result.data.Data;
+                        $scope.FirstLoadComment = true;
+                    } else {
+                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        $scope.Error = result.data.Message;
+                        toastr.error($scope.Error, 'Lỗi');
+                    }
+                },
+                function (error) {
+                    $scope.Error = error.data.Message;
+                    toastr.error($scope.Error, 'Lỗi');
+                });
+        }
+    }
+
+    // function get comments
+    $scope.getUpdateLogList = function () {
+        if (!$scope.FirstUpdateLogs) {
+            var promiseGet = ProjectService.getUpdateLogList($scope.Project.ProjectCode);
+            promiseGet.then(
+                function (result) {
+                    if (result.data.Status === "success") {
+                        $scope.Project.UpdateLogsList = result.data.Data;
+                        $scope.Project.NumberUpdate = $scope.Project.UpdateLogsList.length;
+                        $scope.FirstUpdateLogs = true;
+                    } else {
+                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        $scope.Error = result.data.Message;
+                        toastr.error($scope.Error, 'Lỗi');
+                    }
+                },
+                function (error) {
+                    $scope.Error = error.data.Message;
+                    toastr.error($scope.Error, 'Lỗi');
+                });
+        }
+    }
+
+
     // Function show edit comment form.
     $scope.showEditForm = function (index) {
         if ($scope.IsEdit[index] == null || $scope.IsEdit[index] === false) {
@@ -32,7 +81,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
     // Function to submit comment
     $scope.submitComment = function () {
         //if (form.$dirty === false || (form.$dirty && form.$invalid)) {
-        //    toastr.warning("Tối thiểu 10, tối đa 200 kí tự", 'Thông báo!');
+        //    toastr.warning("Tối thiểu 10, tối đa 200 kí tự", 'Thông báo');
         //} else {
         $scope.NewComment.UserName = $scope.CurrentUser.UserName;
         var promisePut = ProjectService.Comment($scope.Project.ProjectCode, $scope.NewComment, $scope.Project.CommentsList[0].CreatedDate);
@@ -40,17 +89,18 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
             function (result) {
                 if (result.data.Status === "success") {
                     $scope.Project.CommentsList = result.data.Data.concat($scope.Project.CommentsList);
-                    $scope.NewComment = "";
-                    toastr.success('Bình luận thành công!');
+                    $scope.Project.NumberComment += result.data.Data.length;
+                    $scope.NewComment = {};
+                    toastr.success('Bình luận thành công');
                 } else {
                     CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
-                    toastr.error($scope.Error, 'Lỗi!');
+                    toastr.error($scope.Error, 'Lỗi');
                 }
             },
             function (error) {
                 $scope.Error = error.data.Message;
-                toastr.error($scope.Error, 'Lỗi!');
+                toastr.error($scope.Error, 'Lỗi');
             });
         //}
     }
@@ -62,28 +112,27 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
             function (result) {
                 if (result.data.Status === "success") {
                     $scope.Project.CommentsList[index] = result.data.Data;
-                    toastr.success('Thành công!');
+                    toastr.success('Thành công');
                 } else {
                     CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
-                    toastr.error($scope.Error, 'Lỗi!');
+                    toastr.error($scope.Error, 'Lỗi');
                 }
             },
             function (error) {
                 $scope.Error = error.data.Message;
-                toastr.error($scope.Error, 'Lỗi!');
+                toastr.error($scope.Error, 'Lỗi');
             });
     }
 
     // Function load more comment
     $scope.loadMoreComment = function () {
-        var skip = $scope.Project.CommentsList.length;
-        var promisePut = ProjectService.loadMoreComment($scope.Project.CommentsList[index].CommentID, skip);
+        var last = $scope.Project.CommentsList.length;
+        var promisePut = ProjectService.getCommentList($scope.Project.ProjectCode, $scope.Project.CommentsList[last - 1].CreatedDate);
         promisePut.then(
             function (result) {
                 if (result.data.Status === "success") {
-                    $scope.Project.CommentsList[index] = result.data.Data;
-                    toastr.success('Thành công!');
+                    $scope.Project.CommentsList = $scope.Project.CommentsList.concat(result.data.Data);
                 } else {
                     CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
@@ -105,16 +154,16 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                     if (result.data.Status === "success") {
                         $scope.Project.CommentsList[index] = result.data.Data;
                         $scope.showEditForm(index);
-                        toastr.success('Sửa bình luận', 'Thành công!');
+                        toastr.success('Sửa bình luận thành công');
                     } else {
                         CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         $scope.Error = result.data.Message;
-                        toastr.error($scope.Error, 'Lỗi!');
+                        toastr.error($scope.Error, 'Lỗi');
                     }
                 },
                 function (error) {
                     $scope.Error = error.data.Message;
-                    toastr.error($scope.Error, 'Lỗi!');
+                    toastr.error($scope.Error, 'Lỗi');
                 });
         } else {
             $scope.showEditForm(index);
@@ -128,16 +177,34 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
             function (result) {
                 if (result.data.Status === "success") {
                     $scope.Project.CommentsList.splice(index, 1);
-                    toastr.success('Xóa bình luận', 'Thành công!');
+                    $scope.Project.NumberComment--;
+                    toastr.success('Xóa bình luận thành công');
                 } else {
                     CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
-                    toastr.error($scope.Error, 'Lỗi!');
+                    toastr.error($scope.Error, 'Lỗi');
                 }
             },
             function (error) {
                 $scope.Error = error.data.Message;
-                toastr.error($scope.Error, 'Lỗi!');
+                toastr.error($scope.Error, 'Lỗi');
             });
     }
+
+    $scope.remind = function () {
+        var promise = ProjectService.remindProject($scope.Project.ProjectCode);
+          promisePost.then(
+            function (result) {
+              if (result.data.Status === "success") {
+               toastr.success('Theo dõi dự án', 'Thành công');
+            } else if (result.data.Status === "error") {
+                 $scope.Error = result.data.Message;
+               toastr.error($scope.Error, 'Lỗi');
+           }
+          }
+         );
+    };
+    $scope.ListBacker = listbacker.data.Data;
+    
+    
 });

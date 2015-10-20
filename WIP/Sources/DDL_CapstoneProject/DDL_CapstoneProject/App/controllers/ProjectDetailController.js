@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, toastr, project, ProjectService, CommmonService, listbacker) {
+app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, toastr, project, ProjectService, CommmonService) {
     //Todo here.
     $scope.Project = project.data.Data;
     $scope.FirstUpdateLogs = false;
@@ -193,7 +193,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
 
     $scope.remind = function () {
         var promise = ProjectService.remindProject($scope.Project.ProjectCode);
-          promisePost.then(
+          promise.then(
             function (result) {
               if (result.data.Status === "success") {
                toastr.success('Theo dõi dự án', 'Thành công');
@@ -204,7 +204,30 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
           }
          );
     };
-    $scope.ListBacker = listbacker.data.Data;
+
+    $scope.Reminded = true;
+    $scope.report = function () {
+        var promise = ProjectService.reportProject($scope.Project.ProjectCode, $scope.ReportContent);
+        promise.then(
+            function (result) {
+                if (result.data.Status === "success") {
+                    toastr.success('Báo cáo sai phạm thành công!');
+                } else if (result.data.Status === "error") {
+                    $scope.Error = result.data.Message;
+                    toastr.error($scope.Error, 'Bạn chưa đăng nhập!');
+                }
+            }
+         );
+    };
+
+    $scope.loadlistBacker = function () {
+        var promise = ProjectService.getListBacker($scope.Project.ProjectCode);
+        promise.then(
+            function (result) {
+                $scope.ListBacker = result.data.Data;
+            }
+         );
+    };
     
     
 });

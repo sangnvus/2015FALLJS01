@@ -14,8 +14,13 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
     // Detech create a new timeline point
     $scope.isCreateTimeline = false;
 
-    // 
+
+
+    // check error list
     $scope.errorListFlag = false;
+
+    $scope.Project = {};
+    $scope.Project.Status = "approved";
 
     // Get project's basic record
     $scope.Project = project.data.Data;
@@ -61,11 +66,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         "min": minDateYY + "-" + minDateMM + "-" + minDateDD
     });
 
-    $scope.setDeliveryDate = function () {
-        $(".delivery").attr({
-            "min": minDateYY + "-" + minDateMM
-        });
-    }
+    $scope.endDate = minDateYY + "-" + minDateMM + "-" + minDateDD;
 
     // Get categories
     $scope.Categories = categories.data.Data;
@@ -82,6 +83,13 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         };
     }
     $scope.selectedCate();
+
+    //// Reward option
+    //$scope.rewardOption = [
+    //    { id: '1', name: 'no reward' },
+    //    { id: '2', name: 'unlimited' },
+    //    { id: '3', name: 'limited' }
+    //];
 
     // Set selected project category
     $scope.selectedOption = $scope.Categories[categoryIndex];
@@ -210,6 +218,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                             $scope.RewardPKgs[i].LimitQuantity = true;
                         }
                     };
+
                     // Copy original project reward
                     $scope.originalReward = angular.copy($scope.RewardPKgs);
 
@@ -604,10 +613,10 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         }
 
         if (!angular.equals($scope.originalUpdateLog, $scope.UpdateLogs)) {
-            if ($scope.updateForm.$invalid) {
+            if ($scope.updateLogForm.$invalid) {
                 $scope.checkForm();
             } else {
-                $scope.checkEditUpdateLog($scope.updateForm);
+                $scope.checkEditUpdateLog($scope.updateLogForm);
             }
             e.stopImmediatePropagation();
         }
@@ -660,10 +669,10 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         }
 
         if (!angular.equals($scope.originalUpdateLog, $scope.UpdateLogs)) {
-            if ($scope.updateForm.$invalid) {
+            if ($scope.updateLogForm.$invalid) {
                 $scope.checkForm();
             } else {
-                $scope.checkEditUpdateLog($scope.updateForm);
+                $scope.checkEditUpdateLog($scope.updateLogForm);
             }
             e.stopImmediatePropagation();
         }
@@ -784,8 +793,6 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                 if (isConfirm) {
                     SweetAlert.swal("Edited!", "Project's update log has been edited.", "success");
                     $scope.editUpdateLog(form);
-                    // Switch tab
-                    $scope.thisTab.tab('show');
                 } else {
                     SweetAlert.swal("Cancelled", "Project's update log is safe :)", "error");
                     $scope.UpdateLogs = angular.copy($scope.originalUpdateLog);
@@ -901,7 +908,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         }
 
         if (toTab === "#quesion-answer") {
-            //$scope.getTimeline();
+            $scope.getQuestion();
         }
 
         if (toTab === "#timelineTab") {
@@ -986,6 +993,10 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                 if (result.data.Status === "success") {
                     toastr.success('Submit thành công!', 'Thành công!');
                     $scope.Project = result.data.Data;
+                    $scope.errorListFlag = false;
+                    $scope.AllEditable = false;
+                    $scope.originalProjectBasic = angular.copy($scope.Project);
+
                 } else {
                     $scope.errorListFlag = true;
                     $scope.errorList = result.data.Data;

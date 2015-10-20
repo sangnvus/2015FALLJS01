@@ -131,7 +131,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             catch (Exception)
             {
 
-                throw;
+                return Ok(new HttpMessageDTO
+                {
+                    Status = DDLConstants.HttpMessageType.ERROR,
+                    Message = "",
+                    Type = DDLConstants.HttpMessageType.BAD_REQUEST
+                });
             }
 
             return Ok(new HttpMessageDTO

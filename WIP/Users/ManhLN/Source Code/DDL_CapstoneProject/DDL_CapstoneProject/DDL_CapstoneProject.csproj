@@ -163,6 +163,7 @@
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\DDL_User.cs" />
     <Compile Include="Models\DTOs\AdminCategoryDTO.cs" />
+    <Compile Include="Models\DTOs\BackingDTO.cs" />
     <Compile Include="Models\DTOs\CategoryProjectCountDTO.cs" />
     <Compile Include="Models\DTOs\CommentDTO.cs" />
     <Compile Include="Models\DTOs\ConversationBasicDTO.cs" />
@@ -217,6 +218,7 @@
     <Content Include="App\AdminModule.js" />
     <Content Include="App\controllers\admin\AdminCategoryController.js" />
     <Content Include="App\controllers\admin\AdminDashboardController.js" />
+    <Content Include="App\controllers\BackProjectController.js" />
     <Content Include="App\controllers\BackedProjectController.js" />
     <Content Include="App\controllers\CreatedProjectController.js" />
     <Content Include="App\controllers\CreateProjectController.js" />
@@ -346,6 +348,7 @@
     <Content Include="Scripts\angular-messages.js" />
     <Content Include="Scripts\angular-messages.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular-morris-chart.min.js" />
     <Content Include="Scripts\angular-resource.js" />
     <Content Include="Scripts\angular-resource.min.js" />
     <Content Include="Scripts\angular-route.js" />
@@ -1226,6 +1229,7 @@
     <Content Include="Views\Project\_BackedProject.cshtml" />
     <Content Include="Views\Project\_CreatedProject.cshtml" />
     <Content Include="Views\Project\_StarredProject.cshtml" />
+    <Content Include="Views\Project\_BackProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />

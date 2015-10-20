@@ -55,7 +55,7 @@ namespace DDL_CapstoneProject.Respository
             {
                 ProjectID = ProjectID,
                 Description = newUpdateLog.Description,
-                CreatedDate = newUpdateLog.CreatedDate,
+                CreatedDate = DateTime.Today,
                 Title = newUpdateLog.Title
             };
             db.UpdateLogs.Add(updateLog);

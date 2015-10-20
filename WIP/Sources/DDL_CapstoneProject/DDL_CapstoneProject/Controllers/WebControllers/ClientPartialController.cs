@@ -89,5 +89,10 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         {
             return PartialView("~/Views/Project/_BackProject.cshtml");
         }
+
+        public ActionResult EditPassword()
+        {
+            return PartialView("~/Views/User/_EditPassword.cshtml");
+        }
     }
 }

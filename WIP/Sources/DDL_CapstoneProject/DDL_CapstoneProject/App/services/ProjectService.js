@@ -435,4 +435,16 @@ app.service('ProjectService', function ($http) {
         });
         return request;
     }
+
+    this.reportProject = function (code, reportcontent) {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/ReportProject',
+            params: {
+                code: code,
+                content: reportcontent
+            }
+        });
+        return request;
+    }
 });
