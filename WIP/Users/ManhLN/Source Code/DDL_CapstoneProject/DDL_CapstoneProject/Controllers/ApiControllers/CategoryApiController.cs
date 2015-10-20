@@ -34,6 +34,26 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             return Ok(new HttpMessageDTO { Status = "success", Data = listGetCategoryProjectCount });
         }
 
+        /// <summary>
+        /// GetCategoryProjectCount
+        /// </summary>
+        /// <returns></returns>
+        // GET: api/CategoryApi/GetCategoriesForCreate
+        [HttpGet]
+        [ResponseType(typeof(CategoryDTO))]
+        public IHttpActionResult GetCategoriesForCreate()
+        {
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
+            var listCategoryDTO = CategoryRepository.Instance.GetCategories();
+
+            return Ok(new HttpMessageDTO { Status = "success", Data = listCategoryDTO });
+        }
+
         public IHttpActionResult GetCategoriesForAdmin()
         {
             List<AdminCategoryDTO> categoryList;

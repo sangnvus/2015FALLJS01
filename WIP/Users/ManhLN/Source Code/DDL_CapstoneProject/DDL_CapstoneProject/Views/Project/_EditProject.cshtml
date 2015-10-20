@@ -4,7 +4,7 @@
 
 <div id="process-Create">
     <div class="container">
-        <h5>Tiến trình</h5>
+        <h5>Chỉnh sửa</h5>
         <div class="progress">
             <div class="progress-bar" style="width: 40%;"></div>
             <div class="progress-bar progress-bar-warning" style="width: 20%;"></div>
@@ -13,7 +13,12 @@
         </div>
     </div>
 </div> <!-- end PROCESS-CREATE -->
-
+@* Wanrning *@
+<div class="alert alert-warning" role="alert" style="text-align: center" ng-if="Project.Status == 'rejected'">Dự án của bạn bị từ chối, xin hãy xem và chỉnh sửa lại trước khi submit lần tiếp theo. Nếu bạn cần giúp đỡ hãy liên hệ với chúng tôi qua email... hay SĐT...</div>
+<div class="alert alert-warning" role="alert" style="text-align: center" ng-if="Project.Status == 'pending'">Dự án của bạn đang trong thời gian kiểm duyệt(2-3 ngày từ ngày submit) vui lòng chờ kết quả từ chúng tôi!</div>
+<div class="alert alert-warning" role="alert" style="text-align: center" ng-if="errorListFlag == true">
+    <p ng-repeat="error in errorList">{{error}}</p>
+</div>
 <div id="create-tabs">
     <div class="container">
         <div class="tab-center" id="tablist">
@@ -21,11 +26,15 @@
                 <li class="active"><a onclick="return false" href="#basic" data-toggle="tab">Thông tin</a></li>
                 <li><a onclick="return false" href="#reward" data-toggle="tab" ng-click="getReward()">Gói quà</a></li>
                 <li><a onclick="return false" href="#story" data-toggle="tab" ng-click="getStory()">Câu chuyện</a></li>
-                <li ng-if="Project.Status !== 'draft'"><a onclick="return false" href="#update" data-toggle="tab">Cập nhật</a></li>
-                <li ng-if="Project.Status !== 'draft'"><a onclick="return false" href="#quesion-answer" data-toggle="tab">Hỏi đáp</a></li>
-                <li ng-if="Project.Status !== 'draft'"><a onclick="return false" href="#timelineTab" data-toggle="tab">Timeline</a></li>
-                <li><a onclick="return false" href="#preview" data-toggle="tab">Xem trước</a></li>
-                <form name="submitForm"><a href="#submit" class="btn btn-primary" ng-click="submit()">submit for review</a></form>
+                <li ng-if="Project.Status == 'approved'"><a onclick="return false" href="#update" data-toggle="tab" ng-click="getUpdateLog()">Cập nhật</a></li>
+                <li ng-if="Project.Status == 'approved'"><a onclick="return false" href="#quesion-answer" data-toggle="tab" ng-click="getQuestion()">Hỏi đáp</a></li>
+                <li><a onclick="return false" href="#timelineTab" data-toggle="tab" ng-click="getTimeline()">Timeline</a></li>
+                @*<li><a onclick="return false" href="#preview" data-toggle="tab">Xem trước</a></li>*@
+                <a class="btn btn-primary" ng-click="submit()" ng-if="Project.Status == 'draft' || Project.Status == 'rejected'">submit for review</a>
+                <a class="btn btn-primary" ng-if="Project.Status == 'pending'">Chờ kiểm duyệt</a>
+                <a class="btn btn-primary" ng-if="Project.Status == 'approved'">Approved</a>
+                <a class="btn btn-primary" ng-if="Project.Status == 'suspended'">Suspend</a>
+                <a class="btn btn-primary" ng-if="Project.Status == 'expired'">Expired</a>
             </ul>
         </div>
     </div>
@@ -43,7 +52,7 @@
                     <h5 class="text-center">Add an image, a goal, and other important details.</h5>
                 </div> <!-- end-TITLE -->
                 <div for="content" class="container-fluid">
-                    <form name="BasicForm" id="basic-form" ng-model="BasicForm">
+                    <form name="BasicForm" id="basic-form" ng-model="BasicForm" novalidate>
                         <div class="row">
                             <div class="col-md-9">
                                 <div class="row border-grey">
@@ -52,13 +61,13 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="">
-                                            <img id="image-project" ng-src="{{Project.ImageUrl}}" alt="" class="img-responsive center-block">
+                                            <img ng-src="{{Project.ImageUrl}}" alt="" class="img-responsive center-block projecImg-preview">
                                         </div>
                                         <div for="image">
                                             <div class="asset_upload">
                                                 <div class="upload">
                                                     <input type="file" class="avatar file" name="UploadImage" id="imgSelected" ng-file-dirty
-                                                           ng-file-select="onFileSelect($files)" accept="image/*">
+                                                           ng-file-select="onFileSelect($files)" accept="image/*" ng-disabled="AllEditable == false">
                                                     <strong class="center profile-photo">
                                                         Lựa chọn một hình ảnh từ máy tính của bạn
                                                         <span> JPEG, PNG, GIF, or BMP  •  50MB file limit</span>
@@ -74,9 +83,15 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="">
-                                            <input type="text" id="project_name" class="form-control fnt18 fnt-b" name="ProjectTitle" maxlength="60" ng-maxlength="60" ng-trim="true"
-                                                   required ng-model="Project.Title">
+                                            <input type="text" id="project_name" class="form-control fnt18 fnt-b" name="ProjectTitle" maxlength="60" ng-maxlength="60" ng-trim="true" ng-minlength="10"
+                                                   ng-disabled="AllEditable == false" ng-model="Project.Title">
                                             <label for="" class="countText">{{Project.Title.length + "/60"}}</label>
+                                            <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="BasicForm.ProjectTitle.$dirty && BasicForm.ProjectTitle.$valid"></span>
+                                            <div ng-show="BasicForm.ProjectTitle.$dirty && BasicForm.ProjectTitle.$invalid" class="text-danger">
+                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                <span ng-show="BasicForm.ProjectTitle.$error.minlength">Tên dự án tối thiểu 10 kí tự!</span>
+                                                <span ng-show="BasicForm.ProjectTitle.$error.maxlength">Tên dự án tối đa 60 kí tự!</span>
+                                            </div>
                                         </div>
                                         <div class="field-help-2">
                                             <p>Your project title and blurb should be simple, specific, and memorable. Our search tools run through these sections of your project, so be sure to incorporate any key words here!</p>
@@ -90,9 +105,15 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="field-wrapper">
-                                            <textarea class="form-control fnt18" rows="3" style="resize: none" name="SubDes" required
-                                                      rows="3" maxlength="300" ng-maxlength="300" ng-model="Project.SubDescription"></textarea>
-                                            <label for="" class="countText" style="top: 70px">{{Project.SubDescription.length + "/300"}}</label>
+                                            <textarea class="form-control fnt18" rows="3" style="resize: none" name="SubDes" ng-trim="true" ng-minlength="30"
+                                                      rows="3" maxlength="135" ng-maxlength="135" ng-model="Project.SubDescription" ng-disabled="AllEditable == false"></textarea>
+                                            <label for="" class="countText" style="top: 70px">{{Project.SubDescription.length + "/135"}}</label>
+                                            <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="BasicForm.SubDes.$dirty && BasicForm.SubDes.$valid"></span>
+                                            <div ng-show="BasicForm.SubDes.$dirty && BasicForm.SubDes.$invalid" class="text-danger">
+                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                <span ng-show="BasicForm.SubDes.$error.minlength">Tên dự án tối thiểu 30 kí tự!</span>
+                                                <span ng-show="BasicForm.SubDes.$error.maxlength">Tên dự án tối đa 135 kí tự!</span>
+                                            </div>
                                         </div>
                                         <div class="field-help-2">
                                             <p>If you had to describe what you're creating in one tweet, how would you do it?</p>
@@ -106,7 +127,7 @@
                                     <div class="col-md-8">
                                         <div class="field-wrapper">
                                             <select class="form-control fnt-b" ng-model="selectedOption" id="sel1"
-                                                    ng-options="category.Name for category in Categories track by category.CategoryID "></select>
+                                                    ng-options="category.Name for category in Categories track by category.CategoryID " ng-disabled="AllEditable == false"></select>
                                         </div>
                                     </div>
                                 </div> <!-- end category -->
@@ -116,8 +137,15 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="">
-                                            <input type="text" class="form-control fnt18 fnt-b" name="ProjectLocation" required ng-model="Project.Location" ng-autocomplete>
+                                            <input type="text" class="form-control fnt18 fnt-b" name="ProjectLocation" ng-minlength="10" ng-maxlength="60" maxlength="60" ng-trim="true"
+                                                   ng-model="Project.Location" ng-autocomplete ng-disabled="AllEditable == false">
                                             <label for="" class="countText">{{Project.Location.length + "/60"}}</label>
+                                            <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="BasicForm.ProjectLocation.$dirty && BasicForm.ProjectLocation.$valid"></span>
+                                            <div ng-show="BasicForm.ProjectLocation.$dirty && BasicForm.ProjectLocation.$invalid" class="text-danger">
+                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                <span ng-show="BasicForm.ProjectLocation.$error.minlength">Tên dự án tối thiểu 10 kí tự!</span>
+                                                <span ng-show="BasicForm.ProjectLocation.$error.maxlength">Tên dự án tối đa 60 kí tự!</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div> <!-- end location -->
@@ -132,7 +160,7 @@
                                             </div>*@
                                         <div class="form-inline">
                                             <label for="enddate" class="fnt20">End:</label>
-                                            <input type='date' ng-model="Project.ExpireDate" name="ProjectDeadLine" class="form-control" style="line-height: 15px" />
+                                            <input type='date' ng-model="Project.ExpireDate" name="ProjectDeadLine" id="ProjectDeadLine" class="form-control" style="line-height: 15px" ng-disabled="AllEditable == false" />
                                         </div>
                                     </div>
                                 </div> <!-- end funding duration -->
@@ -141,7 +169,12 @@
                                         <p class="title">Funding goal</p>
                                     </div>
                                     <div class="col-md-8">
-                                        <input type="number" class="form-control fnt-b" name="FundingGoal" required ng-model="Project.FundingGoal">
+                                        <input type="number" class="form-control fnt-b" ng-trim="true" name="FundingGoal" min="1000000" ng-model="Project.FundingGoal" ng-disabled="AllEditable == false">
+                                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="BasicForm.FundingGoal.$dirty && BasicForm.FundingGoal.$valid"></span>
+                                        <div ng-show="BasicForm.FundingGoal.$dirty && BasicForm.FundingGoal.$invalid" class="text-danger">
+                                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                                            <span ng-show="BasicForm.FundingGoal.$invalid">Mục tiêu gây quỹ phải là chữ số và lớn hơn 1,000,000!</span>
+                                        </div>
                                         <div for="tips">
                                             <p>Your funding goal should be the minimum amount needed to complete the project and fulfill (and ship!) all rewards. Because funding is all-or-nothing, you can always raise more than your goal but never less. Once your project has launched, it will not be possible to change your funding goal.</p>
                                             <p>If your project is successfully funded, the following fees will be collected from your funding total: Kickstarter's 5% fee and payment processing fees (between 3% and 5%). Please note we do not withhold VAT. If funding isn't successful, there are no fees.</p>
@@ -150,7 +183,7 @@
                                 </div> <!-- end funding goals -->
                                 <div ng-if="BasicForm.$dirty">
                                     <button type="button" class="btn btn-success" ng-click="resetProjectBasic(BasicForm)">Discard</button>
-                                    <button type="button" class="btn btn-success" ng-click="editProjectBasic(BasicForm)">Save changes</button>
+                                    <button type="button" ng-disabled="BasicForm.$invalid" class="btn btn-success" ng-click="editProjectBasic(BasicForm)">Save changes</button>
                                 </div>
                             </div>
                             <!-- end BASIC CONTENT -->
@@ -160,7 +193,7 @@
                                     <li class="portfolio-item" style="list-style: none">
                                         <div class="item-inner  ml0 mr0">
                                             <div class="item-image hover01 column">
-                                                <figure><img ng-src="{{Project.ImageUrl}}" alt=""></figure>
+                                                <figure><img ng-src="{{Project.ImageUrl}}" class="projecImg-preview"></figure>
                                             </div> <!-- end item-image -->
                                             <div class="item-title">
                                                 <h5><a href="">{{Project.Title}}</a></h5>
@@ -210,11 +243,10 @@
                     <h4 class="text-center">How will you thank the people who support you?</h4>
                     <h5 class="text-center">Offer an experience, a copy of what you are making, or a thank you in the credits. Get creative!</h5>
                 </div> <!-- end-TITLE -->
-
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-9">
-                            <form name="rewardForm" ng-model="rewardForm">
+                            <form name="rewardForm" ng-model="rewardForm" novalidate>
                                 <div ng-repeat="RewardPKgs in RewardPKgs">
                                     <div class="row border-grey">
                                         <div class="col-md-2">
@@ -224,46 +256,65 @@
                                             <div class="row">
                                                 <div class="col-md-4">Pledge amount</div>
                                                 <div class="col-md-4">
-                                                    <input type="number" class="form-control" ng-model="RewardPKgs.PledgeAmount">
+                                                    <input type="number" class="form-control" min="0" name="PledgeAmount{{$index}}" ng-model="RewardPKgs.PledgeAmount" ng-trim="true"
+                                                           ng-disabled="RewardPKgs.Backers != 0 || AllEditable == false">
+                                                    <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="rewardForm.PledgeAmount{{$index}}.$dirty && rewardForm.PledgeAmount{{$index}}.$valid"></span>
+                                                    <div ng-show="rewardForm.PledgeAmount{{$index}}.$dirty && rewardForm.PledgeAmount{{$index}}.$invalid" class="text-danger">
+                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                        <span ng-show="rewardForm.PledgeAmount{{$index}}.$invalid">Mục tiêu gây quỹ phải là chữ số và lớn hơn 0!</span>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-4 ">
                                                     <ul class="list-inline pull-right">
                                                         <!-- <li><a class="btn btn-info" href="">Edit</a></li> -->
-                                                        <li><a class="btn btn-danger" ng-click="deleteReward($index)">Delete</a></li>
+                                                        <li ng-if="AllEditable == true"><a class="btn btn-danger" ng-click="deleteReward($index)" ng-show="RewardPKgs.Backers == 0">Delete</a></li>
                                                     </ul>
                                                 </div>
                                             </div> <!-- end Pledge amount -->
                                             <div class="row">
                                                 <div class="col-md-4">Description</div>
                                                 <div class="col-md-8">
-                                                    <textarea class="form-control" rows="3" style="resize: none" name="RewardDesc"
-                                                              rows="2" ng-model="RewardPKgs.Description"></textarea>
+                                                    <textarea class="form-control" rows="3" style="resize: none" name="RewardDesc{{$index}}" ng-minlength="10" ng-maxlength="135" maxlength="135" ng-trim="true"
+                                                              rows="2" ng-model="RewardPKgs.Description" ng-disabled="RewardPKgs.Backers != 0 || AllEditable == false"></textarea>
+                                                    <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="rewardForm.RewardDesc{{$index}}.$dirty && rewardForm.RewardDesc{{$index}}.$valid"></span>
+                                                    <div ng-show="rewardForm.RewardDesc{{$index}}.$dirty && rewardForm.RewardDesc{{$index}}.$invalid" class="text-danger">
+                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                        <span ng-show="rewardForm.RewardDesc{{$index}}.$error.minlength">Mô tả tối thiểu 10 kí tự!</span>
+                                                        <span ng-show="rewardForm.RewardDesc{{$index}}.$error.maxlength">Mô tả tối đa 135 kí tự!</span>
+                                                    </div>
                                                 </div>
                                             </div> <!-- end Description -->
                                             <div class="row">
                                                 <div class="col-md-4">Thời gian giao hàng</div>
                                                 <div class="col-md-8">
-                                                    <input type="month" class="form-control" style="line-height: 15px;" ng-model="RewardPKgs.EstimatedDelivery" name="RewardDelivery">
+                                                    <input type="month" class="form-control delivery" style="line-height: 15px;" ng-model="RewardPKgs.EstimatedDelivery" name="RewardDelivery"
+                                                           ng-disabled="RewardPKgs.Backers != 0 || AllEditable == false">
                                                 </div>
                                             </div> <!-- end Estimated delivery -->
                                             <div class="row">
-                                                <div class="col-md-4">Backer</div>
+                                                <div class="col-md-4">Backers&nbsp;&nbsp;<b>{{RewardPKgs.Backers}}</b></div>
                                                 <div class="col-md-4">
                                                     <label class="checkbox">
-                                                        <input type="checkbox" ng-model="RewardPKgs.LimitQuantity" data-toggle="checkbox" class="custom-checkbox">
+                                                        <input type="checkbox" ng-model="RewardPKgs.LimitQuantity" data-toggle="checkbox" class="custom-checkbox" ng-disabled="RewardPKgs.Backers != 0 || AllEditable == false">
                                                         <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
                                                         Giới hạn số lượng
                                                     </label>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <input type="text" id="limit_quntity" class="form-control" ng-model="RewardPKgs.Quantity" ng-if="RewardPKgs.LimitQuantity == true">
+                                                    <input type="number" id="limit_quntity" class="form-control" min="0" ng-trim="true"
+                                                           name="quantity{{$index}}" ng-model="RewardPKgs.Quantity" ng-if="RewardPKgs.LimitQuantity == true" ng-disabled="AllEditable == false">
+                                                    <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="rewardForm.quantity{{$index}}.$dirty && rewardForm.quantity{{$index}}.$valid"></span>
+                                                    <div ng-show="rewardForm.quantity{{$index}}.$dirty && rewardForm.quantity{{$index}}.$invalid" class="text-danger">
+                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                        <span ng-show="rewardForm.quantity{{$index}}.$invalid">Số lượng phải là chữ số và lớn hơn 0!</span>
+                                                    </div>
                                                 </div>
                                             </div> <!-- end Backer -->
                                             <div class="row">
                                                 <div class="col-md-4">Acitve</div>
                                                 <div class="col-md-8">
                                                     <label class="checkbox">
-                                                        <input type="checkbox" ng-model="RewardPKgs.IsHide" data-toggle="checkbox" class="custom-checkbox">
+                                                        <input type="checkbox" ng-model="RewardPKgs.IsHide" data-toggle="checkbox" class="custom-checkbox" ng-disabled="AllEditable == false">
                                                         <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
                                                         Ẩn gói quà này
                                                     </label>
@@ -274,12 +325,12 @@
                                 </div>
                                 <div ng-if="rewardForm.$dirty">
                                     <button type="button" class="btn btn-success" ng-click="resetReward(rewardForm)">Discard</button>
-                                    <button type="button" class="btn btn-success" ng-click="updateReward(rewardForm)">Save changes</button>
+                                    <button type="button" ng-disabled="rewardForm.$invalid" class="btn btn-success" ng-click="updateReward(rewardForm)">Save changes</button>
                                 </div>
                             </form>
                             <div class="row border-grey border-dash">
                                 <div class="addReward txt-c">
-                                    <a class="btn btn-success" data-toggle="modal" data-target="#addReward">Add new reward</a>
+                                    <a class="btn btn-success" data-toggle="modal" data-target="#addReward" ng-disabled="AllEditable == false">Add new reward</a>
                                     <!-- add new reward dialog -->
                                     <div class="modal fade" id="addReward" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                         <form class="form-horizontal" role="form" name="CreateRewardForm" novalidate>
@@ -293,20 +344,33 @@
                                                             <div class="row">
                                                                 <div class="col-md-4">Pledge amount</div>
                                                                 <div class="col-md-4">
-                                                                    <input type="number" class="form-control" name="NewRewardPledge" ng-model="NewReward.PledgeAmount">
+                                                                    <input type="number" class="form-control" min="0" name="NewRewardPledge" ng-model="NewReward.PledgeAmount">
+                                                                    <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="CreateRewardForm.NewRewardPledge.$dirty && CreateRewardForm.NewRewardPledge.$valid"></span>
+                                                                    <div ng-show="CreateRewardForm.NewRewardPledge.$dirty && CreateRewardForm.NewRewardPledge.$invalid" class="text-danger">
+                                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                        <span ng-show="CreateRewardForm.NewRewardPledge.$invalid">Mục tiêu gây quỹ phải là chữ số và lớn hơn 0!</span>
+                                                                    </div>
                                                                 </div>
                                                             </div> <!-- end Pledge amount -->
                                                             <div class="row">
                                                                 <div class="col-md-4">Description</div>
                                                                 <div class="col-md-8">
-                                                                    <textarea class="form-control" rows="3" style="resize: none" name="NewRewardDes" ng-model="NewReward.Description"
+                                                                    <textarea class="form-control" rows="3" style="resize: none" name="NewRewardDes" ng-minlength="10"
+                                                                              ng-maxlength="135" maxlength="135" ng-trim="true"
+                                                                              ng-model="NewReward.Description"
                                                                               rows="2"></textarea>
+                                                                    <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="CreateRewardForm.NewRewardDes.$dirty && CreateRewardForm.NewRewardDes.$valid"></span>
+                                                                    <div ng-show="CreateRewardForm.NewRewardDes.$dirty && CreateRewardForm.NewRewardDes.$invalid" class="text-danger">
+                                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                        <span ng-show="CreateRewardForm.NewRewardDes.$error.minlength">Mô tả tối thiểu 10 kí tự!</span>
+                                                                        <span ng-show="CreateRewardForm.NewRewardDes.$error.maxlength">Mô tả tối đa 135 kí tự!</span>
+                                                                    </div>
                                                                 </div>
                                                             </div> <!-- end Description -->
                                                             <div class="row">
                                                                 <div class="col-md-4">Thời gian giao hàng</div>
                                                                 <div class="col-md-8">
-                                                                    <input type="month" class="form-control" style="line-height: 15px;" name="NewRewardDelivery" ng-model="NewReward.EstimatedDelivery">
+                                                                    <input type="month" min="{{toDay |  date:'yyyy-MM'}}" class="form-control delivery-date" style="line-height: 15px;" name="NewRewardDelivery" ng-model="NewReward.EstimatedDelivery">
                                                                 </div>
                                                             </div> <!-- end Estimated delivery -->
                                                             <div class="row">
@@ -319,7 +383,12 @@
                                                                     </label>
                                                                 </div>
                                                                 <div class="col-md-4">
-                                                                    <input type="text" id="limit_quntity" class="form-control" ng-model="NewReward.Quantity" ng-if="NewReward.LimitQuantity == true">
+                                                                    <input type="number" class="form-control" min="0" name="newQuantity" ng-model="NewReward.Quantity" ng-if="NewReward.LimitQuantity == true">
+                                                                    <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="CreateRewardForm.newQuantity.$dirty && CreateRewardForm.newQuantity.$valid"></span>
+                                                                    <div ng-show="CreateRewardForm.newQuantity.$dirty && CreateRewardForm.newQuantity.$invalid" class="text-danger">
+                                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                        <span ng-show="CreateRewardForm.newQuantity.$invalid">Số lượng phải là chữ số và lớn hơn 0!</span>
+                                                                    </div>
                                                                 </div>
                                                             </div> <!-- end Backer -->
                                                             <div class="row">
@@ -336,8 +405,7 @@
                                                     </div> <!-- end items -->
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-success" ng-click="createReward()"
-                                                                ng-disabled="!CreateRewardForm.$dirty || (CreateRewardForm.$dirty && CreateRewardForm.$invalid)">
+                                                        <button type="button" ng-disabled="CreateRewardForm.$invalid" class="btn btn-success" ng-click="createReward()">
                                                             Save changes
                                                         </button>
                                                     </div>
@@ -386,7 +454,7 @@
                     <h5 class="text-center">Every project must create something to share with others. </h5>
                     <h5 class="text-center">Use this space to tell the story behind your project.</h5>
                 </div> <!-- end-title -->
-                <form name="storyForm" ng-model="storyForm">
+                <form name="storyForm" ng-model="storyForm" novalidate>
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-9">
@@ -394,7 +462,7 @@
                                     <div class="col-md-4"><p class="title">Project video</p></div>
                                     <div class="col-md-8">
                                         <div class="responsive-video" style="z-index:2">
-                                            <iframe src="http://www.youtube.com/embed/jLHGnvnw-gI" frameborder="0"> </iframe>
+                                            <iframe src="{{trustSrc(ProjectStory.VideoUrl)}}" frameborder="0" allowfullscreen></iframe>
                                         </div>
                                         <div for="upload">
                                             <div class="asset_upload">
@@ -405,7 +473,7 @@
                                                     Launch demo modal
                                                     </button> -->
                                                     <strong class="center profile-photo" data-toggle="modal" data-target="#videoModal">
-                                                        Lựa chọn một hình ảnh từ máy tính của bạn
+                                                        Upload video của bạn lên Youtube và nhập link embed vào đây
                                                         <span> MOV, MPEG, AVI, MP4, 3GP, WMV, or FLV • 5GB file limit</span> <span>640x480 pixels • tỷ lệ màn hình 4:3</span>
                                                     </strong>
                                                     <!-- Modal upload Video -->
@@ -420,17 +488,17 @@
                                                                     <form>
                                                                         <div class="form-group">
                                                                             <label for="url" class="control-label fnt20">Url:</label>
-                                                                            <input type="text" class="form-control" ng-model="ProjectStory.VideoUrl">
+                                                                            <input type="text" class="form-control" ng-model="ProjectStory.VideoUrl" ng-disabled="AllEditable == false">
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label for="upload-pc" class="control-label fnt20">Tải từ máy tính:</label>
-                                                                            <input type="file">
+                                                                            <input type="file" ng-disabled="AllEditable == false">
                                                                         </div>
                                                                     </form>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                                                                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="checkVideoURL()" ng-disabled="AllEditable == false">Save changes</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -448,7 +516,12 @@
                                         <div class="help">
                                             Use your project description to share more about what you’re raising funds to do and how you plan to pull it off. It’s up to you to make the case for your project.
                                         </div>
-                                        <div text-angular name="StoryDesc" ng-model="ProjectStory.Description" ng-minlength="100" ng-required="true"></div>
+                                        <div text-angular ng-model="ProjectStory.Description" name="desc" ta-min-text="135" ta-disabled="AllEditable == false"></div>
+                                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="storyForm.desc.$dirty && storyForm.desc.$valid"></span>
+                                        <div ng-show="storyForm.desc.$dirty && storyForm.desc.$invalid" class="text-danger">
+                                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                                            <span ng-show="storyForm.desc.$invalid">Mô tả ít nhất 135 kí tự!</span>
+                                        </div>
                                     </div>
                                 </div> <!-- end Project Description -->
                                 <div class="row border-grey">
@@ -466,7 +539,12 @@
                                             <p>Addressing this from the start helps build a supportive community. Backers will understand your project is a work in progress and feel confident that you’ll work hard to follow through, even when faced with challenges.</p>
                                         </div>
                                         <div class="">
-                                            <textarea class="form-control fnt18" rows="7" style="resize: none" name="ProjectRisk" ng-model="ProjectStory.Risk"></textarea>
+                                            <textarea class="form-control fnt18" rows="7" style="resize: none" ng-trim="true" ng-minlength="135" name="ProjectRisk" ng-model="ProjectStory.Risk" ng-disabled="AllEditable == false"></textarea>
+                                            <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="storyForm.ProjectRisk.$dirty && storyForm.ProjectRisk.$valid"></span>
+                                            <div ng-show="storyForm.ProjectRisk.$dirty && storyForm.ProjectRisk.$invalid" class="text-danger">
+                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                <span ng-show="storyForm.ProjectRisk.$error.minlength">Mô tả ít nhất 135 kí tự!</span>
+                                            </div>
                                             <!-- <label for="" class="countText" style="top:610px">0/300</label> -->
                                         </div>
                                     </div>
@@ -481,7 +559,7 @@
                                 </div>
                                 <div ng-if="storyForm.$dirty">
                                     <button type="button" class="btn btn-success" ng-click="resetStory(storyForm)">Discard</button>
-                                    <button type="button" class="btn btn-success" ng-click="editProjectStory(storyForm)">Save changes</button>
+                                    <button type="button" ng-disabled="storyForm.$invalid" class="btn btn-success" ng-click="editProjectStory(storyForm)">Save changes</button>
                                 </div>
                             </div> <!-- end col-md-9 -->
                             <div class="col-md-3">
@@ -516,50 +594,75 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-9">
-                            <div class="row border-grey">
-                                <div class="col-md-2">
-                                    <p class="title">{{"Update #" + $index + 1}}</p>
-                                </div>
-                                <div class="col-md-10">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <p class="title">Title</p>
-                                        </div>
-                                        <div class="col-md-7">
-                                            <input type="text" name="project[name]" class="form-control" ng-model="UpdateLogs.Title" name="project[name]" class="form-control">
-                                        </div>
-                                        <div class="col-md-2"><a class="btn btn-danger form-control" href="">Delete</a></div>
-                                    </div> <!-- end Title -->
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <p class="title">Date</p>
-                                        </div>
-                                        <div class="col-md-7">
-                                            <input type="date" name="" class="form-control" style="line-height: 15px" ng-model="UpdateLogs.CreatedDate">
-                                        </div>
+                            <form name="updateLogForm" ng-model="updateLogForm" novalidate>
+                                <div ng-repeat="UpdateLogs in UpdateLogs">
+                                    <div class="row border-grey">
                                         <div class="col-md-2">
-                                            <a class="btn btn-info form-control" data-toggle="modal" data-target="#editModal">Edit</a>
+                                            <p class="title">Update #{{$index + 1}}</p>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <p class="title">Description</p>
-                                        </div>
-                                        <div class="col-md-9">
-                                            <div class="field-wrapper">
-                                                <textarea class="form-control" rows="5" style="resize: none" ng-model="UpdateLogs.Description"></textarea>
+                                        <div class="col-md-10">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <p class="title">Title</p>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <input type="text" class="form-control" ng-trim="true"
+                                                           ng-minlength="10" ng-maxlength="60" maxlength="60"
+                                                           name="title{{$index}}" ng-model="UpdateLogs.Title" ng-disabled="AllEditable == false">
+                                                    <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="updateLogForm.title{{$index}}.$dirty && updateLogForm.title{{$index}}.$valid"></span>
+                                                    <div ng-show="updateLogForm.title{{$index}}.$dirty && updateLogForm.title{{$index}}.$invalid" class="text-danger">
+                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                        <span ng-show="updateLogForm.title{{$index}}.$error.minlength">Tiêu đề ít nhất 10 kí tự!</span>
+                                                        <span ng-show="updateLogForm.title{{$index}}.$error.maxlength">Tiêu đề dài nhất 60 kí tự!</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <a class="btn btn-danger form-control" ng-click="deleteUpdateLog($index)" ng-if="AllEditable == true">Delete</a>
+                                                </div>
+                                            </div> <!-- end Title -->
+                                            @*<div class="row">
+                                                    <div class="col-md-3">
+                                                        <p class="title">Date</p>
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <input type="date" class="form-control" style="line-height: 15px" ng-model="UpdateLogs.CreatedDate" ng-disabled="AllEditable == false">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <a class="btn btn-info form-control">Edit</a>
+                                                    </div>
+                                                </div>*@
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <p class="title">Description</p>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <div class="field-wrapper">
+                                                        <textarea class="form-control" rows="5" style="resize: none" name="desc{{$index}}" ng-trim="true"
+                                                                  ng-minlength="10"
+                                                                  ng-model="UpdateLogs.Description" ng-disabled="AllEditable == false"></textarea>
+                                                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="updateLogForm.desc{{$index}}.$dirty && updateLogForm.desc{{$index}}.$valid"></span>
+                                                        <div ng-show="updateLogForm.desc{{$index}}.$dirty && updateLogForm.desc{{$index}}.$invalid" class="text-danger">
+                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                            <span ng-show="updateLogForm.desc{{$index}}.$error.minlength"> ít nhất 10 kí tự!</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                                <div ng-if="updateLogForm.$dirty">
+                                    <button type="button" class="btn btn-success" ng-click="resetUpdateLog(updateLogForm)">Discard</button>
+                                    <button type="button" ng-disabled="updateLogForm.$invalid" class="btn btn-success" ng-click="editUpdateLog(updateLogForm)">Save changes</button>
+                                </div>
+                            </form>
                             <div class="row border-grey border-dash">
                                 <div class="addReward">
                                     <div class="txt-c">
-                                        <a class="btn btn-success" data-toggle="modal" data-target="#addModal" href="">Add new update</a>
+                                        <a class="btn btn-success" data-toggle="modal" data-target="#updateModal" ng-disabled="AllEditable == false">Add new update</a>
                                     </div>
                                     <!-- add Modal -->
-                                    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                         <form name="CreateUpdateLogForm" novalidate>
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
@@ -571,21 +674,34 @@
                                                         <form>
                                                             <div class="form-group">
                                                                 <p class="title">Title:</p>
-                                                                <input type="text" class="form-control" ng-model="NewUpdateLog.Title">
+                                                                <input type="text" class="form-control" name="title" ng-trim="true"
+                                                                       ng-minlength="10" ng-maxlength="60" maxlength="60" ng-model="NewUpdateLog.Title">
+                                                                <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="CreateUpdateLogForm.title.$dirty && CreateUpdateLogForm.title.$valid"></span>
+                                                                <div ng-show="CreateUpdateLogForm.title.$dirty && CreateUpdateLogForm.title.$invalid" class="text-danger">
+                                                                    <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                    <span ng-show="updatCreateUpdateLogFormeLogForm.title.$error.minlength">Tiêu đề ít nhất 10 kí tự!</span>
+                                                                    <span ng-show="CreateUpdateLogForm.title.$error.maxlength">Tiêu đề dài nhất 60 kí tự!</span>
+                                                                </div>
                                                             </div>
-                                                            <div class="form-group">
-                                                                <p class="title">Date:</p>
-                                                                <input type="date" name="" class="form-control" style="line-height: 15px" ng-model="NewUpdateLog.CreatedDate">
-                                                            </div>
+                                                            @*<div class="form-group">
+                                                                    <p class="title">Date:</p>
+                                                                    <input type="date" name="" class="form-control" style="line-height: 15px" ng-model="NewUpdateLog.CreatedDate">
+                                                                </div>*@
                                                             <div class="form-group">
                                                                 <p class="title">Descritption:</p>
-                                                                <textarea class="form-control" ng-model="NewUpdateLog.Description"></textarea>
+                                                                <textarea class="form-control" name="desc" ng-trim="true"
+                                                                          ng-minlength="10" ng-model="NewUpdateLog.Description"></textarea>
+                                                                <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="CreateUpdateLogForm.desc.$dirty && CreateUpdateLogForm.desc.$valid"></span>
+                                                                <div ng-show="CreateUpdateLogForm.desc.$dirty && CreateUpdateLogForm.desc.$invalid" class="text-danger">
+                                                                    <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                    <span ng-show="CreateUpdateLogForm.title.$error.minlength">Tiêu đề ít nhất 10 kí tự!</span>
+                                                                </div>
                                                             </div>
                                                         </form>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary" ng-click="createUpdateLog()">Save changes</button>
+                                                        <button type="button" ng-disabled="CreateUpdateLogForm.$invalid" class="btn btn-primary" ng-click="createUpdateLog()">Save changes</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -636,38 +752,125 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-9">
-                            <div class="row border-grey">
-                                <div class="col-md-1"><p class="title">#1</p></div>
-                                <div class="col-md-11">
-                                    <div class="row pt5 pb5">
-                                        <div class="col-md-2"><p class="title">Câu hỏi</p></div>
-                                        <div class="col-md-10">
-                                            <div class="field-wrapper">
-                                                <textarea class="form-control" rows="5" style="resize:none"></textarea>
-                                            </div>
+                            <form name="questionForm" ng-model="questionForm" novalidate>
+                                <div ng-repeat="question in Question">
+                                    <div class="row border-grey">
+                                        <div class="col-md-1">
+                                            <p class="title">#{{$index + 1}}</p>
                                         </div>
-                                    </div> <!-- end Question -->
-                                    <div class="row pt5 pb5">
-                                        <div class="col-md-2"><p class="title">Trả lời</p></div>
-                                        <div class="col-md-10">
-                                            <div class="field-wrapper">
-                                                <textarea class="form-control" rows="5" style="resize:none"></textarea>
-                                            </div>
+                                        <div class="col-md-11">
+                                            <div class="row pt5 pb5">
+                                                <div class="col-md-2">
+                                                    <p class="title">Câu hỏi</p>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <div class="field-wrapper">
+                                                        <textarea class="form-control" rows="5" style="resize: none" name="question" ng-trim="true"
+                                                                  ng-minlength="10" ng-maxlength="300" maxlength="300"
+                                                                  ng-model="question.QuestionContent" ng-disabled="AllEditable == false"></textarea>
+                                                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="questionForm.question.$dirty && questionForm.question.$valid"></span>
+                                                        <div ng-show="questionForm.question.$dirty && questionForm.question.$invalid" class="text-danger">
+                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                            <span ng-show="questionForm.question.$error.minlength">Câu hỏi ít nhất 10 kí tự!</span>
+                                                            <span ng-show="questionForm.question.$error.maxlength">Câu hỏi dài nhất 300 kí tự!</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> <!-- end Question -->
+                                            <div class="row pt5 pb5">
+                                                <div class="col-md-2">
+                                                    <p class="title">Trả lời</p>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <div class="field-wrapper">
+                                                        <textarea class="form-control" rows="5" style="resize: none" name="answer" ng-trim="true"
+                                                                  ng-minlength="10" ng-maxlength="300" maxlength="300" ng-model="question.Answer" ng-disabled="AllEditable == false"></textarea>
+                                                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="questionForm.answer.$dirty && questionForm.answer.$valid"></span>
+                                                        <div ng-show="questionForm.answer.$dirty && questionForm.answer.$invalid" class="text-danger">
+                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                            <span ng-show="questionForm.answer.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
+                                                            <span ng-show="questionForm.answer.$error.maxlength">Trả lời dài nhất 300 kí tự!</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> <!-- end Answer -->
+                                            <div class="row pt5 pb5">
+                                                <div class="col-md-2">
+                                                    <p class="title"></p>
+                                                </div>
+                                                <div class="col-md-10 list-inline">
+                                                    @*<a class="btn btn-info btn-wide pl10 pr10 pt5 pb5" ng-click="editQuestion($index)">Edit</a>*@
+                                                    <a class="btn btn-danger btn-wide pl10 pr10 pt5 pb5" ng-click="deleteQuestion($index)" ng-if="AllEditable == true">Delete</a>
+                                                </div>
+                                            </div> <!-- end Action -->
                                         </div>
-                                    </div> <!-- end Answer -->
-                                    <div class="row pt5 pb5">
-                                        <div class="col-md-2"><p class="title"></p></div>
-                                        <div class="col-md-10 list-inline">
-                                            <a class="btn btn-info btn-wide pl10 pr10 pt5 pb5" href="">Edit</a>
-                                            <a class="btn btn-danger btn-wide pl10 pr10 pt5 pb5" href="">Delete</a>
-                                        </div>
-                                    </div> <!-- end Action -->
+                                    </div>
                                 </div>
-                            </div>
+                                <div ng-if="questionForm.$dirty">
+                                    <button type="button" class="btn btn-success" ng-click="resetQuestion(questionForm)">Discard</button>
+                                    <button type="button" ng-disabled="questionForm.$invalid" class="btn btn-success" ng-click="updateQuestion(questionForm)">Save changes</button>
+                                </div>
+                            </form>
                             <div class="row border-grey border-dash">
                                 <div class="addReward">
                                     <div class="txt-c">
-                                        <a class="btn btn-success" data-toggle="modal">Thêm hỏi đáp</a>
+                                        <a class="btn btn-success" data-toggle="modal" data-target="#addQuestion" ng-disabled="AllEditable == false">Thêm hỏi đáp</a>
+                                        <!-- add new reward dialog -->
+                                        <div class="modal fade" id="addQuestion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <form class="form-horizontal" role="form" name="CreateQuestionForm" novalidate>
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="row border-grey">
+                                                            <div class="col-md-2">
+                                                                <p class="title">Thêm mới hỏi đáp</p>
+                                                            </div>
+                                                            <div class="col-md-10">
+                                                                <div class="row pt5 pb5">
+                                                                    <div class="col-md-2">
+                                                                        <p class="title">Câu hỏi</p>
+                                                                    </div>
+                                                                    <div class="col-md-10">
+                                                                        <div class="field-wrapper">
+                                                                            <textarea class="form-control" rows="5" style="resize: none" name="question" ng-trim="true"
+                                                                                      ng-minlength="10" maxlength="300" ng-model="newQuestion.QuestionContent"></textarea>
+                                                                            <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="CreateQuestionForm.question.$dirty && CreateQuestionForm.question.$valid"></span>
+                                                                            <div ng-show="CreateQuestionForm.question.$dirty && CreateQuestionForm.question.$invalid" class="text-danger">
+                                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                                <span ng-show="CreateQuestionForm.question.$error.minlength">Câu hỏi ít nhất 10 kí tự!</span>
+                                                                                <span ng-show="CreateQuestionForm.question.$error.maxlength">Câu hỏi dài nhất 300 kí tự!</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div> <!-- end Question -->
+                                                                <div class="row pt5 pb5">
+                                                                    <div class="col-md-2">
+                                                                        <p class="title">Trả lời</p>
+                                                                    </div>
+                                                                    <div class="col-md-10">
+                                                                        <div class="field-wrapper">
+                                                                            <textarea class="form-control" rows="5" style="resize: none" name="answer" ng-trim="true"
+                                                                                      ng-minlength="10" ng-maxlength="300" maxlength="300" ng-model="newQuestion.Answer"></textarea>
+                                                                            <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="CreateQuestionForm.answer.$dirty && CreateQuestionForm.answer.$valid"></span>
+                                                                            <div ng-show="CreateQuestionForm.answer.$dirty && CreateQuestionForm.answer.$invalid" class="text-danger">
+                                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                                <span ng-show="CreateQuestionForm.answer.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
+                                                                                <span ng-show="CreateQuestionForm.answer.$error.maxlength">Trả lời dài nhất 300 kí tự!</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div> <!-- end Answer -->
+                                                        </div> <!-- end items -->
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                                                            <button type="button" ng-disabled="CreateQuestionForm.$invalid" class="btn btn-success" ng-click="createQuestion()">
+                                                                Save changes
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div> <!-- end addModal -->
                                     </div>
                                 </div>
                                 <!-- add reward at here -->
@@ -707,61 +910,179 @@
             @* begin tab timeline *@
             <div id="timelineTab" role="tabpanel" class="tab-pane fade in border-main">
                 <div>
-                    <h4 class="text-center">Tiến độ dự án</h4>
+                    <h4 class="text-center">Lịch trình dự án</h4>
                     <h5 class="text-center">Đây là thời gian cam kết hoàn thành tiến độ dự án</h5>
                 </div> <!-- end-title -->
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-9">
-                            <div class="row border-grey">
-                                <div class="col-md-2"><p class="title">#1</p></div>
-                                <div class="col-md-10">
-                                    <div class="row">
-                                        <div class="col-md-3"><p class="title">Tiêu đề</p></div>
-                                        <div class="col-md-9"><input type="text" class="form-control" placeholder=""></div>
-                                    </div> <!-- end Title and Delete-->
-                                    <div class="row">
-                                        <div class="col-md-3"><p class="title">Ngày</p></div>
-                                        <div class="col-md-9"><input type="date" name="" class="form-control" style="line-height: 15px"></div>
-                                    </div><!-- end Date -->
-                                    <div class="row pt5 pb5">
-                                        <div class="col-md-3"><p class="title">Ảnh</p></div>
-                                        <div class="col-md-9">
-                                            <div class="asset_upload">
-                                                <div class="image-clip pull-left">
-                                                    <img id="image-clip" src="../images/avatar/avatar1.png" alt="" class="img-responsive center-block">
+                            <form name="timelineForm" ng-model="timelineForm" novalidate>
+                                <div ng-repeat="timeline in Timeline">
+                                    <div class="row border-grey">
+                                        <div class="col-md-2">
+                                            <p class="title">#{{$index + 1}}</p>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <p class="title">Tiêu đề</p>
                                                 </div>
-                                                <div class="upload">
-                                                    <input class="avatar file" type="file">
-                                                    <strong class="center profile-photo">
-                                                        Lựa chọn một hình ảnh từ máy tính của bạn
-                                                        <span> JPEG, PNG, GIF, or BMP  •  50MB file limit</span>
-                                                    </strong>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control" name="title{{$index}}" ng-model="timeline.Title" ng-trim="true"
+                                                           ng-minlength="10" ng-maxlength="60" maxlength="60" id="title{{$index}}" disabled>
+                                                    <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="timelineForm.title{{$index}}.$dirty && timelineForm.title{{$index}}.$valid"></span>
+                                                    <div ng-show="timelineForm.title{{$index}}.$dirty && timelineForm.title{{$index}}.$invalid" class="text-danger">
+                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                        <span ng-show="timelineForm.title{{$index}}.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
+                                                        <span ng-show="timelineForm.title{{$index}}.$error.maxlength">Trả lời dài nhất 60 kí tự!</span>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </div> <!-- end Title and Delete-->
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <p class="title">Ngày</p>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <input type="date" class="form-control" style="line-height: 15px" ng-model="timeline.DueDate" id="date{{$index}}" disabled>
+                                                </div>
+                                            </div><!-- end Date -->
+                                            <div class="row pt5 pb5">
+                                                <div class="col-md-3">
+                                                    <p class="title">Ảnh</p>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <div class="asset_upload">
+                                                        <div class="image-clip pull-left">
+                                                            <img src="{{timeline.ImageUrl}}" class="img-responsive center-block">
+                                                        </div>
+                                                        <div class="upload">
+                                                            <input type="file" class="avatar file" ng-file-dirty
+                                                                   ng-file-select="onFileSelect($files)" accept="image/*" id="{{$index}}" disabled>
+                                                            @*<input class="avatar file" type="file">*@
+                                                            <strong class="center profile-photo">
+                                                                Lựa chọn một hình ảnh từ máy tính của bạn
+                                                                <span> JPEG, PNG, GIF, or BMP  •  50MB file limit</span>
+                                                            </strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> <!-- end Image -->
+                                            <div class="row pt5 pb5">
+                                                <div class="col-md-3">
+                                                    <p class="title">Mô tả</p>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <div class="field-wrapper">
+                                                        <textarea class="form-control" rows="5" style="resize: none" name="desc{{$index}}" ng-model="timeline.Description" ng-trim="true"
+                                                                  ng-minlength="10" ng-maxlength="135" maxlength="135" id="desc{{$index}}" disabled></textarea>
+                                                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="timelineForm.desc{{$index}}.$dirty && timelineForm.desc{{$index}}.$valid"></span>
+                                                        <div ng-show="timelineForm.desc{{$index}}.$dirty && timelineForm.desc{{$index}}.$invalid" class="text-danger">
+                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                            <span ng-show="timelineForm.desc{{$index}}.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
+                                                            <span ng-show="timelineForm.desc{{$index}}.$error.maxlength">Trả lời dài nhất 135 kí tự!</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> <!-- end Description -->
+                                            <div class="row pt5 pb5">
+                                                <div class="col-md-3"></div>
+                                                <div class="col-md-9">
+                                                    <a class="btn btn-info btn-sm btn-wide pl5 pr5" ng-click="turnEditTimeline($index)" ng-if="AllEditable == true">Sửa</a>
+                                                    <a class="btn btn-info btn-sm btn-wide pl5 pr5" ng-disabled="timelineForm.$invalid" ng-click="timelineForm.$valid && updateTimeline($index)" ng-if="editTimeline[$index] == true">Lưu</a>
+                                                    <a class="btn btn-danger btn-sm btn-wide pl5 pr5" ng-click="deleteTimeline($index)" ng-if="AllEditable == true">Xóa</a>
+                                                </div>
+                                            </div> <!-- end Action -->
                                         </div>
-                                    </div> <!-- end Image -->
-                                    <div class="row pt5 pb5">
-                                        <div class="col-md-3"><p class="title">Mô tả</p></div>
-                                        <div class="col-md-9">
-                                            <div class="field-wrapper">
-                                                <textarea class="form-control" rows="5" style="resize:none"></textarea>
-                                            </div>
-                                        </div>
-                                    </div> <!-- end Description -->
-                                    <div class="row pt5 pb5">
-                                        <div class="col-md-3"></div>
-                                        <div class="col-md-9">
-                                            <a class="btn btn-info btn-sm btn-wide pl5 pr5">Sửa</a>
-                                            <a class="btn btn-danger btn-sm btn-wide pl5 pr5">Xóa</a>
-                                        </div>
-                                    </div> <!-- end Action -->
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                             <div class="row border-grey border-dash">
                                 <div class="addReward">
                                     <div class="txt-c">
-                                        <a class="btn btn-success">Thêm timeline</a>
+                                        <a class="btn btn-success" data-toggle="modal" data-target="#addTimeline" ng-click="onNewPoint()" ng-disabled="AllEditable == false">Thêm timeline</a>
+                                        <!-- add new reward dialog -->
+                                        <div class="modal fade" id="addTimeline" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <form class="form-horizontal" role="form" name="CreateTimelineForm" novalidate>
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="row border-grey">
+                                                            <div class="col-md-2">
+                                                                <p class="title">Tạo mốc thời gian mới</p>
+                                                            </div>
+                                                            <div class="col-md-10">
+                                                                <div class="row">
+                                                                    <div class="col-md-3">
+                                                                        <p class="title">Tiêu đề</p>
+                                                                    </div>
+                                                                    <div class="col-md-9">
+                                                                        <input type="text" class="form-control" name="title" ng-trim="true"
+                                                                               ng-minlength="10" ng-maxlength="60" maxlength="60" ng-model="newTimeline.Title">
+                                                                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="CreateTimelineForm.title.$dirty && CreateTimelineForm.title.$valid"></span>
+                                                                        <div ng-show="CreateTimelineForm.title.$dirty && CreateTimelineForm.title.$invalid" class="text-danger">
+                                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                            <span ng-show="CreateTimelineForm.title.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
+                                                                            <span ng-show="CreateTimelineForm.title.$error.maxlength">Trả lời dài nhất 60 kí tự!</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div> <!-- end Title and Delete-->
+                                                                <div class="row">
+                                                                    <div class="col-md-3">
+                                                                        <p class="title">Ngày</p>
+                                                                    </div>
+                                                                    <div class="col-md-9">
+                                                                        <input type="date" class="form-control" min="{{toDay | date:'yyyy-MM-dd'}}" name="date"
+                                                                               style="line-height: 15px" ng-model="newTimeline.DueDate">
+                                                                    </div>
+                                                                </div><!-- end Date -->
+                                                                <div class="row pt5 pb5">
+                                                                    <div class="col-md-3">
+                                                                        <p class="title">Ảnh</p>
+                                                                    </div>
+                                                                    <div class="col-md-9">
+                                                                        <div class="asset_upload">
+                                                                            <div class="image-clip pull-left">
+                                                                                <img src="{{newTimeline.ImageUrl}}" class="img-responsive center-block">
+                                                                            </div>
+                                                                            <div class="upload">
+                                                                                <input type="file" class="avatar file" ng-file-dirty
+                                                                                       ng-file-select="onFileSelect($files)" accept="image/*">
+                                                                                <strong class="center profile-photo">
+                                                                                    Lựa chọn một hình ảnh từ máy tính của bạn
+                                                                                    <span> JPEG, PNG, GIF, or BMP  •  50MB file limit</span>
+                                                                                </strong>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div> <!-- end Image -->
+                                                                <div class="row pt5 pb5">
+                                                                    <div class="col-md-3">
+                                                                        <p class="title">Mô tả</p>
+                                                                    </div>
+                                                                    <div class="col-md-9">
+                                                                        <div class="field-wrapper">
+                                                                            <textarea class="form-control" rows="5" style="resize: none" name="desc" ng-trim="true"
+                                                                                      ng-minlength="10" ng-maxlength="135" maxlength="135" ng-model="newTimeline.Description"></textarea>
+                                                                            <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="CreateTimelineForm.desc.$dirty && CreateTimelineForm.desc.$valid"></span>
+                                                                            <div ng-show="CreateTimelineForm.desc.$dirty && CreateTimelineForm.desc.$invalid" class="text-danger">
+                                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                                <span ng-show="CreateTimelineForm.desc.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
+                                                                                <span ng-show="CreateTimelineForm.desc.$error.maxlength">Trả lời dài nhất 135 kí tự!</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div> <!-- end Description -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="offNewPoint()">Bỏ</button>
+                                                            <button type="button" ng-disabled="CreateTimelineForm.$invalid" class="btn btn-success" ng-click="createTimeline()">
+                                                                Tạo
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div> <!-- end addModal -->
                                     </div>
                                 </div>
                                 <!-- add reward at here -->
@@ -799,659 +1120,6 @@
                 </div>  <!-- end-content -->
             </div> <!-- end TIMELINE-TAB -->
             @* end TimeLine *@
-            <div id="preview" role="tabpanel" class="tab-pane fade in  border-main">
-                <div id="project-common" class="paddingNavbar padding-30">
-                    <div class="">
-                        <div id="gt1">
-                            <div class="title text-center">
-                                <h2 class="fnt30 mb0">
-                                    <a href="">Divinity: Original Sin 2</a>
-                                </h2>
-                                <p class="fnt18">
-                                    by <a class="fnt-b" href="profile_public.html">Larian Studios LLC</a>
-                                </p>
-                            </div> <!-- end TITLE -->
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div class="responsive-video">
-                                        <iframe src="http://www.youtube.com/embed/jLHGnvnw-gI" frameborder="0"> </iframe>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="">
-                                        <div class="pt0">
-                                            <data class="fnt45 fnt-800 h1" data-format="number" data-value="18337">18,337</data>
-                                            <p class="fnt-b mt0"><span>backers</span></p>
-                                        </div>
-                                        <div class="pt5">
-                                            <data class="fnt45 fnt-800 h1" data-currency="USD" data-format="shorter_money" data-precision="0" data-value="819039.32">$819,039</data>
-                                            <p class="fnt-b mt0">pledged of <span class="money usd no-code">$500,000</span> <span class="mobile-hide">goal</span></p>
-                                        </div>
-                                        <div class="pt5">
-                                            <data class="fnt45 fnt-800 h1" data-format="number" data-value="33">33</data>
-                                            <p class="fnt-b mt0"><span>days to go</span></p>
-                                        </div>
-                                    </div>
-                                    <div class="pt20">
-                                        <a class="btn btn-primary btn-lg" href="back-project.html">Back this project</a>
-                                        <a href="" class="grey-dark">&nbsp;&nbsp;<i class="fa fa-star"></i> Remind me</a>
-                                    </div>
-                                    <div class="pt10">
-                                        <p class="fnt15 grey-dark">
-                                            This project will be funded on <time class="js-adjust-time" data-format="llll z" datetime="2015-09-30T08:55:22-04:00">Wed, Sep 30 2015 7:55 PM +07:00</time>.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div> <!-- end VIDEO PROJECT -->
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <p class="fnt20 pt20">An epic RPG with turn-based combat, cooperative/competitive multiplayer; sequel to Divinity: Original Sin, GameSpot's PC Game of 2014.</p>
-                                    <div class="pt10 fnt16 fnt-b">
-                                        <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>Sacramento, CA</a>
-                                        &nbsp;&nbsp;
-                                        <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>Video Games</a>
-                                        &nbsp;&nbsp;
-                                        <a class="btn btn-info btn-sm" href=""><i class="fa fa-facebook-square"></i> Share this project</a>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 border-top">
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <h5><a class="fnt22 fnt-b" href="" data-toggle="modal" data-target="#creator">Larian Studios LLC</a></h5>
-                                            <p class="h5">
-                                                <span class="inline-block glyphicon glyphicon-copyright-mark"></span>
-                                                <span class="inline-block">
-                                                    <a class="grey-dark bold" href="">2 created</a>
-                                                    <span class="grey-dark">&nbsp;|&nbsp;</span>
-                                                </span>
-                                                <span class="inline-block">
-                                                    <a class="grey-dark bold" href="">14 backed</a>
-                                                </span>
-                                            </p>
-                                            <p class="h5">
-                                                <span class="inline-block glyphicon glyphicon-globe"></span>
-                                                <a class="grey-dark bold" href="">larian.com</a>
-                                            </p>
-                                            <p class="fnt15 fnt-b pt15">
-                                                <a class="inline-block" href="">See full bio</a>
-                                                &nbsp;&nbsp;
-                                                <a class="inline-block" href="">Contact me</a>
-                                            </p>
-                                        </div>
-                                        <div class="col-md-4 pt30">
-                                            <a href=""><img id="" src="../images/logoCompany.jpg" alt="" class="img-responsive img-circle center-block"></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> <!-- end CONTENT PROJECT -->
-                        </div> <!-- end GT1 -->
-                    </div>
-                </div> <!-- end PART1 PROJECT -->
-                <div id="project-tab">
-                    <div class="tab-center">
-                        <ul class="nav nav-pills">
-                            <li class="active"><a href="#campaignReview" data-toggle="tab">Campaign</a></li>
-                            <li><a href="#updateReview" data-toggle="tab">Update <span class="badge">5</span></a></li>
-                            <li><a href="#commentsReview" data-toggle="tab">Comments <span class="badge">10</span></a></li>
-                            <li><a href="#scheduleReview" data-toggle="tab">Schedule</a></li>
-                            <li><a href="#list-backersReview" data-toggle="tab">List Backers <span class="badge">10</span></a></li>
-                        </ul>
-                    </div>
-                </div><!-- end PROJECT-TABS -->
-                <div id="project-tabpanel">
-                    <div class="">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <!-- Tabs pane -->
-                                <div class="tab-content">
-                                    <!-- CAMPAIGN -->
-                                    <div id="campaignReview" role="tabpanel" class="tab-pane fade in active">
-                                        <div class="row">
-                                            <div class="col-md-8 project-tab-campaign">
-                                                <div>
-                                                    <h1 class="fnt25">About this project</h1>
-                                                </div> <!-- end About this project -->
-                                                <div id="load_content" class="pt15">
-                                                    <img src="../images/img1.jpg" alt="" class="img-responsive">
-                                                    <p class="pt30">Thank you for taking the time to check out Divinity: Original Sin 2, our biggest and most ambitious RPG to date!</p>
-                                                    <h1 class="fnt25">What the press says</h1>
-                                                    <p>
-                                                        "I can't help but think that another Kickstarter success could help make Divinity: Original Sin 2 one of the most engaging RPGs to date." - <a href="">PC Gamer</a>
-                                                    </p>
-                                                    <p>
-                                                        “This sequel has some wild new ideas and ambitions far beyond the scope of the already-impressive first game” - <a href="">Polygon</a>
-                                                    </p>
-                                                    <p>
-                                                        “This sequel has some wild new ideas and ambitions far beyond the scope of the already-impressive first game” - <a href="">Polygon</a>
-                                                    </p>
-                                                    <p>
-                                                        “This sequel has some wild new ideas and ambitions far beyond the scope of the already-impressive first game” - <a href="">Polygon</a>
-                                                    </p>
-                                                    <h1 class="fnt25">A couple of quick facts</h1>
-                                                    <p>Divinity: Original Sin 2 is a single- and multiplayer top-down, party-based role-playing game with pen & paper RPG-like levels of freedom.It features turn-based combat, a strong focus on systematic gameplay and a well-grounded narrative. </p>
-                                                    <p>Divinity: Original Sin 2 is the sequel to the critically acclaimed Divinity: Original Sin, winner of over 150 Game of the Year awards and nominations. Winner of GameSpot’s “PC Game of The Year 2014”.</p>
-                                                    <p>Divinity: Original Sin 2 is currently in development for PC in English. Subtitles will be available in German, French, and Russian. Other platforms and languages may be announced at a later stage, once development is more advanced. </p>
-                                                    <img src="../images/img2.jpg" alt="" class="img-responsive">
-                                                    <p>You'll be able to recruit up to three companions, each of whom is just as detailed as the character you're playing, with their own origin story and motivation to help you in your quest. </p>
-                                                    <p>This makes it possible for each companion to become a player character in multiplayer mode; every party member is equally important to the whole.</p>
-                                                    <img src="../images/img3.png" alt="" class="img-responsive">
-                                                </div> <!-- end load_content -->
-                                                <div id="riskandchallenges" class="padding30">
-                                                    <h1 class="fnt25">Risks and challenges</h1>
-                                                    <p>We're already funding the game ourselves and are coming to Kickstarter with the aim of expanding the game's feature-set and seeking funds to integrate community input. The biggest risks are that we'll be late (a real possibility), or that certain features that we are planning on now might be changed (or even cut) as we move ahead with development.</p>
-                                                    <p>If that happens, it'll be because we hit a real roadblock or because some other feature ended up taking significantly more time and resources than we expected. Those kinds of things happen, but they shouldn't affect our ability to finish and release an innovative game that'll be a whole world of fun.</p>
-                                                    <p class="bold">
-                                                        <a href="">Learn about accountability on DoI</a>
-                                                    </p>
-                                                    <p>
-                                                        <a class="btn btn-default" href="">Report this project</a>
-                                                    </p>
-                                                </div> <!-- end Risks and challeges -->
-                                            </div> <!-- end col-md-8 -->
-                                            <div class="col-md-4">
-                                                <div class="">
-                                                    <h3 class="fnt25">Rewards</h3>
-                                                </div> <!-- end REWARDS -->
-                                                <div id="#reward" class="our_menu">
-                                                    <ul class="menu">
-                                                        <li class="item">
-                                                            <div class="item-show">
-                                                                <h5 class="fnt20 c3" for="">Pledge $10 or more</h5>
-                                                                <p class="bold">
-                                                                    <span class="glyphicon glyphicon-asterisk"></span>24 backers
-                                                                </p>
-                                                                <div class="item-description">
-                                                                    <p>Thank the Seven! Err-- Five!</p>
-                                                                    <p>Thank you for your pledge! For this sign of support, we here at Larian Studios are truly grateful.</p>
-                                                                </div>
-                                                                <div class="item-extra-info">
-                                                                    <p class="">Estimated delivery:</p>
-                                                                    <p>Oct 2015</p>
-                                                                </div>
-                                                                <div class="item-expand pb10">
-                                                                    <form role="form">
-                                                                        <p class="fnt20 fnt-b pt10 c3">Pledge amount:</p>
-                                                                        <div class="input-group pb10">
-                                                                            <input type="text" class="form-control" placeholder="Nhập số tiền" value="10" />
-                                                                            <span class="input-group-addon">VNĐ</span>
-                                                                        </div>
-                                                                        <div class="input-group pb10">
-                                                                            <input type="text" class="form-control" placeholder="Nhập số lượng" value="1" />
-                                                                            <span class="input-group-addon">SP</span>
-                                                                        </div>
-                                                                        <a href="back-project.html" class="form-control btn btn-primary">Continue</a>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                    <ul class="menu">
-                                                        <li class="item">
-                                                            <div class="item-show">
-                                                                <h5 class="fnt20 c3" for="">Pledge $15 or more</h5>
-                                                                <p class="bold">
-                                                                    <span class="glyphicon glyphicon-asterisk"></span>24 backers
-                                                                </p>
-                                                                <div class="item-description">
-                                                                    <p>Thank the Seven! Err-- Five!</p>
-                                                                    <p>Thank you for your pledge! For this sign of support, we here at Larian Studios are truly grateful.</p>
-                                                                </div>
-                                                                <div class="item-extra-info">
-                                                                    <p class="">Estimated delivery:</p>
-                                                                    <p>Oct 2015</p>
-                                                                </div>
-                                                                <div class="item-expand pb10">
-                                                                    <form role="form">
-                                                                        <p class="fnt20 fnt-b pt10 c3 pb0">Plegde Infor:</p>
-                                                                        <div class="input-group pb10">
-                                                                            <input type="text" class="form-control" placeholder="Nhập số tiền" value="15" />
-                                                                            <span class="input-group-addon">VNĐ</span>
-                                                                        </div>
-                                                                        <div class="input-group pb10">
-                                                                            <input type="text" class="form-control" placeholder="Nhập số lượng" value="1" />
-                                                                            <span class="input-group-addon">SP</span>
-                                                                        </div>
-                                                                        <a href="back-project.html" class="form-control btn btn-primary">Continue</a>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                    <ul class="menu">
-                                                        <li class="item">
-                                                            <div class="item-show">
-                                                                <h5 class="fnt20 c3" for="">Pledge $20 or more</h5>
-                                                                <p class="bold">
-                                                                    <span class="glyphicon glyphicon-asterisk"></span>24 backers
-                                                                </p>
-                                                                <div class="item-description">
-                                                                    <p>Thank the Seven! Err-- Five!</p>
-                                                                    <p>Thank you for your pledge! For this sign of support, we here at Larian Studios are truly grateful.</p>
-                                                                </div>
-                                                                <div class="item-extra-info">
-                                                                    <p class="">Estimated delivery:</p>
-                                                                    <p>Oct 2015</p>
-                                                                </div>
-                                                                <div class="item-expand pb10">
-                                                                    <form role="form">
-                                                                        <p class="fnt20 fnt-b pt10 c3">Pledge amount:</p>
-                                                                        <div class="input-group pb10">
-                                                                            <input type="text" class="form-control" placeholder="Nhập số tiền" value="20" />
-                                                                            <span class="input-group-addon">VNĐ</span>
-                                                                        </div>
-                                                                        <div class="input-group pb10">
-                                                                            <input type="text" class="form-control" placeholder="Nhập số lượng" value="1" />
-                                                                            <span class="input-group-addon">SP</span>
-                                                                        </div>
-                                                                        <a href="back-project.html" class="form-control btn btn-primary">Continue</a>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                    <ul class="menu">
-                                                        <li class="item">
-                                                            <div class="item-show">
-                                                                <h5 class="fnt20 c3" for="">Pledge $50 or more</h5>
-                                                                <p class="bold">
-                                                                    <span class="glyphicon glyphicon-asterisk"></span>24 backers
-                                                                </p>
-                                                                <div class="item-description">
-                                                                    <p>Thank the Seven! Err-- Five!</p>
-                                                                    <p>Thank you for your pledge! For this sign of support, we here at Larian Studios are truly grateful.</p>
-                                                                </div>
-                                                                <div class="item-extra-info">
-                                                                    <p class="">Estimated delivery:</p>
-                                                                    <p>Oct 2015</p>
-                                                                </div>
-                                                                <div class="item-expand pb10">
-                                                                    <form role="form">
-                                                                        <p class="fnt20 fnt-b pt10 c3">Pledge amount:</p>
-                                                                        <div class="input-group pb10">
-                                                                            <input type="text" class="form-control" placeholder="Nhập số tiền" value="50" />
-                                                                            <span class="input-group-addon">VNĐ</span>
-                                                                        </div>
-                                                                        <div class="input-group pb10">
-                                                                            <input type="text" class="form-control" placeholder="Nhập số lượng" value="1" />
-                                                                            <span class="input-group-addon">SP</span>
-                                                                        </div>
-                                                                        <a href="back-project.html" class="form-control btn btn-primary">Continue</a>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div><!-- end OUR_MENU REWARD -->
-                                            </div> <!-- end col-md-4 -->
-                                        </div>
-                                    </div> <!-- endTabpanel CAMPAIGN -->
-                                    <!-- UPDATE -->
-                                    <div id="updateReview" role="tabpanel" class="tab-pane fade in">
-                                        <div class="pl15 pr15">
-                                            <div class="">
-                                                <h1 class="fnt25" id="timeline-Update">Timeline Update</h1>
-                                            </div>
-                                            <ul class="timeline">
-                                                <li>
-                                                    <div class="timeline-badge">
-                                                        <i class="glyphicon glyphicon-check"></i>
-                                                    </div>
-                                                    <div class="timeline-panel">
-                                                        <div class="timeline-heading">
-                                                            <h4 class="timeline-title">Update #5: Life after death, unlocked! Devline!</h4>
-                                                            <p>
-                                                                <small class="text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small>
-                                                            </p>
-                                                        </div>
-                                                        <div class="timeline-body">
-                                                            <p>
-                                                                It's celebration time, so grab a glass of hemlock tea and hie yourself to the nearest graveyard. You smashed through the next stretch goal, and now it's official: the Undead will be featured as a playable race in D:OS2.
-                                                            </p>
-                                                            <p>In this video, we learn a bit more about what's in store for the Undead in Rivellon from our lead writer Jan and concept artist Tania, and Swen gives us another peak into Larian's adventures at PAX.</p>
-                                                        </div>
-                                                        <br>
-                                                        <div class="like-comment">
-                                                            <p class="text-muted">74 Comments 104 Likes</p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="timeline-inverted">
-                                                    <div class="timeline-badge warning">
-                                                        <i class="glyphicon glyphicon-credit-card"></i>
-                                                    </div>
-                                                    <div class="timeline-panel">
-                                                        <div class="timeline-heading">
-                                                            <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                                                        </div>
-                                                        <div class="timeline-body">
-                                                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                                                            <p>Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Interagi no mé, cursus quis, vehicula ac nisi. Aenean vel dui dui. Nullam leo erat, aliquet quis tempus a, posuere ut mi. Ut scelerisque neque et turpis posuere pulvinar pellentesque nibh ullamcorper. Pharetra in mattis molestie, volutpat elementum justo. Aenean ut ante turpis. Pellentesque laoreet mé vel lectus scelerisque interdum cursus velit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ac mauris lectus, non scelerisque augue. Aenean justo massa.</p>
-                                                        </div>
-                                                        <br>
-                                                        <div class="like-comment">
-                                                            <p>74 Comments 104 Likes</p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="timeline-badge danger">
-                                                        <i class="glyphicon glyphicon-credit-card"></i>
-                                                    </div>
-                                                    <div class="timeline-panel">
-                                                        <div class="timeline-heading">
-                                                            <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                                                        </div>
-                                                        <div class="timeline-body">
-                                                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="timeline-inverted">
-                                                    <div class="timeline-panel">
-                                                        <div class="timeline-heading">
-                                                            <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                                                        </div>
-                                                        <div class="timeline-body">
-                                                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                                                        </div>
-                                                        <br>
-                                                        <div class="like-comment">
-                                                            <p class="text-muted">74 Comments 104 Likes</p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="timeline-badge info">
-                                                        <i class="glyphicon glyphicon-floppy-disk"></i>
-                                                    </div>
-                                                    <div class="timeline-panel">
-                                                        <div class="timeline-heading">
-                                                            <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                                                        </div>
-                                                        <div class="timeline-body">
-                                                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                                                            <hr>
-                                                            <div class="btn-group">
-                                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-                                                                    <i class="glyphicon glyphicon-cog"></i> <span class="caret"></span>
-                                                                </button>
-                                                                <ul class="dropdown-menu" role="menu">
-                                                                    <li><a href="#">Action</a></li>
-                                                                    <li><a href="#">Another action</a></li>
-                                                                    <li><a href="#">Something else here</a></li>
-                                                                    <li class="divider"></li>
-                                                                    <li><a href="#">Separated link</a></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="timeline-panel">
-                                                        <div class="timeline-heading">
-                                                            <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                                                        </div>
-                                                        <div class="timeline-body">
-                                                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="timeline-inverted">
-                                                    <div class="timeline-badge success">
-                                                        <i class="glyphicon glyphicon-thumbs-up"></i>
-                                                    </div>
-                                                    <div class="timeline-panel">
-                                                        <div class="timeline-heading">
-                                                            <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                                                        </div>
-                                                        <div class="timeline-body">
-                                                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                                                        </div>
-                                                        <br>
-                                                        <div class="like-comment">
-                                                            <p class="text-muted">74 Comments 104 Likes</p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div> <!-- endTabpanel UPDATE -->
-                                    <!-- COMMENT -->
-                                    <div id="commentsReview" role="tabpanel" class="tab-pane fade in">
-                                        <!-- Contenedor Principal -->
-                                        <div class="pl15 pr15">
-                                            <div class="">
-                                                <h1 class="fnt25" id="timeline-Update">Comments</h1>
-                                            </div>
-                                            <div id="comment-form">
-                                                <div class="media">
-                                                    <h3 class="fnt18">Post comment</h3>
-                                                    <div class="pull-left">
-                                                        <img class="avatar img-circle" src="../images/avatar/avatar3.png" alt="">
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <div class="well">
-                                                            <textarea rows="3" class="form-control" placeholder="Comment"></textarea>
-                                                            <button type="submit" class="btn btn-primary mt10">Submit Comment</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div><!--/#comment-form-->
-                                            <h3 class="fnt22">3 Comments</h3>
-                                            <div id="comments-list">
-                                                <div class="media">
-                                                    <div class="pull-left">
-                                                        <img class="avatar img-circle" src="../images/avatar/avatar1.png" alt="">
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <div class="well">
-                                                            <div class="media-heading">
-                                                                <strong>John Doe</strong>&nbsp; <small>27 Aug 2013</small>
-                                                                <ul class="list-inline pull-right">
-                                                                    <li><a href="#">Reply</a></li>
-                                                                    <li><a href="#">Edit</a></li>
-                                                                </ul>
-                                                            </div>
-                                                            <textarea class="form-control" name="" id="" cols="30" rows="5" style="resize: none"></textarea>
-                                                            <!-- <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p> -->
-                                                        </div>
-                                                        <div class="media">
-                                                            <div class="pull-left">
-                                                                <img class="avatar img-circle" src="../images/avatar/avatar3.png" alt="">
-                                                            </div>
-                                                            <div class="media-body">
-                                                                <div class="well">
-                                                                    <div class="media-heading">
-                                                                        <strong>John Doe</strong>&nbsp; <small>27 Aug 2013</small>
-                                                                        <a class="pull-right" href="#"><i class="icon-repeat"></i> Reply</a>
-                                                                    </div>
-                                                                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.</p>
-                                                                </div>
-                                                            </div>
-                                                        </div><!--/.media-->
-                                                    </div>
-                                                </div><!--/.media-->
-                                                <div class="media">
-                                                    <div class="pull-left">
-                                                        <img class="avatar img-circle" src="../images/avatar/avatar2.png" alt="">
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <div class="well">
-                                                            <div class="media-heading">
-                                                                <strong>John Doe</strong>&nbsp; <small>27 Aug 2013</small>
-                                                                <a class="pull-right" href="#"><i class="icon-repeat"></i> Reply</a>
-                                                            </div>
-                                                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
-                                                        </div>
-                                                    </div>
-                                                </div><!--/.media-->
-                                            </div><!--/#comments-list-->
-                                        </div>
-                                    </div> <!-- endTabpanel COMMENT -->
-                                    <!-- SCHEDULE -->
-                                    <div id="scheduleReview" role="tabpanel" class="tab-pane fade in">
-                                        <div class="ml10 mr10">
-                                            <div class="">
-                                                <h1 class="fnt25" id="scheduleTitle">Timeline Schedule</h1>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div id="timeline" style="margin: 0px 15px; overflow: auto; width: auto; height: auto">
-                                                        <ul id="dates" class="pull-right">
-                                                            <li><a href="#10102015">10/10/2015</a></li>
-                                                            <li><a href="#11102015">11/10/2015</a></li>
-                                                            <li><a href="#12102015">12/10/2015</a></li>
-                                                            <li><a href="#01102016">1/10/2016</a></li>
-                                                        </ul>
-                                                        <ul id="issues">
-                                                            <li class="issues-content" id="10102015">
-                                                                <img src="../images/Schedule/7.png" width="256" height="256" />
-                                                                <h1>10-10-2015</h1>
-                                                                <p>Donec semper quam scelerisque tortor dictum gravida. In hac habitasse platea dictumst. Nam pulvinar, odio sed rhoncus suscipit, sem diam ultrices mauris, eu consequat purus metus eu velit. Proin metus odio, aliquam eget molestie nec, gravida ut sapien. Phasellus quis est sed turpis sollicitudin venenatis sed eu odio. Praesent eget neque eu eros interdum malesuada non vel leo. Sed fringilla porta ligula.</p>
-                                                            </li>
-                                                            <li class="issues-content" id="11102015">
-                                                                <img src="../images/Schedule/8.png" width="256" height="256" />
-                                                                <h1>11/10/2015</h1>
-                                                                <p>Donec semper quam scelerisque tortor dictum gravida. In hac habitasse platea dictumst. Nam pulvinar, odio sed rhoncus suscipit, sem diam ultrices mauris, eu consequat purus metus eu velit. Proin metus odio, aliquam eget molestie nec, gravida ut sapien. Phasellus quis est sed turpis sollicitudin venenatis sed eu odio. Praesent eget neque eu eros interdum malesuada non vel leo. Sed fringilla porta ligula.</p>
-                                                            </li>
-                                                            <li class="issues-content" id="12102015">
-                                                                <img src="../images/Schedule/9.png" width="256" height="256" />
-                                                                <h1>12/10/2015</h1>
-                                                                <p>Donec semper quam scelerisque tortor dictum gravida. In hac habitasse platea dictumst. Nam pulvinar, odio sed rhoncus suscipit, sem diam ultrices mauris, eu consequat purus metus eu velit. Proin metus odio, aliquam eget molestie nec, gravida ut sapien. Phasellus quis est sed turpis sollicitudin venenatis sed eu odio. Praesent eget neque eu eros interdum malesuada non vel leo. Sed fringilla porta ligula.</p>
-                                                            </li>
-                                                            <li class="issues-content" id="01102016">
-                                                                <img src="../images/Schedule/10.png" width="256" height="256" />
-                                                                <h1>1/10/2016</h1>
-                                                                <p>Donec semper quam scelerisque tortor dictum gravida. In hac habitasse platea dictumst. Nam pulvinar, odio sed rhoncus suscipit, sem diam ultrices mauris, eu consequat purus metus eu velit. Proin metus odio, aliquam eget molestie nec, gravida ut sapien. Phasellus quis est sed turpis sollicitudin venenatis sed eu odio. Praesent eget neque eu eros interdum malesuada non vel leo. Sed fringilla porta ligula.</p>
-                                                            </li>
-                                                        </ul>
-                                                        <!-- <div id="grad_left"></div>
-                                                        <div id="grad_right"></div> -->
-                                                        <a href="#" id="next">+</a>
-                                                        <a href="#" id="prev">-</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!-- end SCHEDULE -->
-                                    <!-- LIST-BACKERS -->
-                                    <div id="list-backersReview" role="tabpanel" class="tab-pane fade in">
-                                        <div class="ml10 mr10">
-                                            <div>
-                                                <h3 class="fnt25">List Backers</h3>
-                                            </div> <!-- TITLE -->
-                                            <div id="backerlistchart" class="pb30" style="height: 250px">
-                                            </div> <!-- LINE CHART BACKERS -->
-                                            <table id="bankersTable" class="table table-striped table-bordered table-hover">
-                                                <thead>
-                                                    <tr style="background: #16a085; color: #FFF">
-                                                        <th style="width: 8%">.No</th>
-                                                        <th>Name</th>
-                                                        <th>Pledge amout</th>
-                                                        <th>Date</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>001</td>
-                                                        <td>Nguyen Van A</td>
-                                                        <td>1000$</td>
-                                                        <td>2015-02-09 10:30:00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>002</td>
-                                                        <td>Vu Cong Chinh</td>
-                                                        <td>100$</td>
-                                                        <td>2015-02-09 10:30:00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>003</td>
-                                                        <td>Nguyen Van B</td>
-                                                        <td>200$</td>
-                                                        <td>2015-02-09 10:30:00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>004</td>
-                                                        <td>Vu Cong Chinh</td>
-                                                        <td>1000$</td>
-                                                        <td>2015-02-09 10:30:00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>005</td>
-                                                        <td>Nguyen Van D</td>
-                                                        <td>1000$</td>
-                                                        <td>2015-02-09 10:30:00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>006</td>
-                                                        <td>Tran Van C</td>
-                                                        <td>1500$</td>
-                                                        <td>2015-02-09 10:30:00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>007</td>
-                                                        <td>Vu Cong Chinh</td>
-                                                        <td>2000$</td>
-                                                        <td>2015-02-09 10:30:00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>008</td>
-                                                        <td>Vu Cong Chinh</td>
-                                                        <td>1000$</td>
-                                                        <td>2015-02-09 10:30:00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>009</td>
-                                                        <td>Vu Cong Chinh</td>
-                                                        <td>1000$</td>
-                                                        <td>2015-02-09 10:30:00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>010</td>
-                                                        <td>Vu Cong Chinh</td>
-                                                        <td>1000$</td>
-                                                        <td>2015-02-09 10:30:00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>011</td>
-                                                        <td>Vu Cong Chinh</td>
-                                                        <td>1000$</td>
-                                                        <td>2015-02-09 10:30:00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>012</td>
-                                                        <td>Charles</td>
-                                                        <td>United Kingdom</td>
-                                                        <td>28000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>013</td>
-                                                        <td>Sravani</td>
-                                                        <td>Australia</td>
-                                                        <td>7000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>014</td>
-                                                        <td>Amar</td>
-                                                        <td>India</td>
-                                                        <td>18000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>015</td>
-                                                        <td>Lakshmi</td>
-                                                        <td>India</td>
-                                                        <td>12000</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table> <!-- TABLE BACKERS LIST -->
-                                        </div>
-                                    </div><!-- end BACKERS LIST -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> <!-- end PROJECT TABPANEL -->
-            </div>
         </div>
     </div>
 </div> <!-- end BASIC-TABPANEL -->

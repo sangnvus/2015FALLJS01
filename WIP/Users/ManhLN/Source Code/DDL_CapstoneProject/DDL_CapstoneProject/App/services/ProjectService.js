@@ -3,8 +3,16 @@
 app.service('ProjectService', function ($http) {
 
     // Function to get a project by ProjectID
-    this.getProject = function (projectID) {
-        return $http.get("/api/ProjectApi/GetProject/" + projectID);
+    this.getProject = function (code) {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/GetProjectBasic',
+            params: {
+                code: code
+            }
+        });
+
+        return request;
     }
 
     // Function to ger a project by ProjectCode
@@ -131,7 +139,7 @@ app.service('ProjectService', function ($http) {
     this.deleteUpdateLog = function (updateLogID) {
         return $http.delete("/api/ProjectApi/DeleteUpdateLog/" + updateLogID);
     }
-    
+
     this.GetProject = function (take, categoryid, orderby) {
         return $http.get('/api/ProjectApi/GetProject/', {
             params:
@@ -142,6 +150,90 @@ app.service('ProjectService', function ($http) {
                 }
         });
     };
+
+    // Function to get timeline
+    this.getTimeline = function (projectID) {
+        return $http.get("/api/ProjectApi/GetTimeLine/" + projectID);
+    }
+
+    // Function to create a new timeline point
+    this.createTimeline = function (projectId, timeline, file) {
+        var fdata = new FormData();
+        var url = "/api/ProjectApi/CreateTimeline/" + projectId;
+
+        fdata.append('file', file);
+        fdata.append('timeline', JSON.stringify(timeline));
+
+        return $http.post(url, fdata, {
+            transformRequest: angular.identity,
+            headers: { 'Content-Type': undefined }
+
+        })
+            .success(function (resp) {
+                //debugger;
+            })
+            .error(function (resp) {
+                //debugger;
+            });
+    }
+
+    // Function to update a timeline point
+    this.updateTimeline = function (timeline, file) {
+        var fdata = new FormData();
+        var url = "/api/ProjectApi/UpdateTimeline/";
+
+        fdata.append('file', file);
+        fdata.append('timeline', JSON.stringify(timeline));
+
+        return $http.post(url, fdata, {
+            transformRequest: angular.identity,
+            headers: { 'Content-Type': undefined }
+
+        })
+            .success(function (resp) {
+                //debugger;
+            })
+            .error(function (resp) {
+                //debugger;
+            });
+    }
+
+    // Funtion to delete a timeline point
+    this.deleteTimeline = function (TimelineID) {
+        return $http.delete("/api/ProjectApi/DeleteTimeline/" + TimelineID);
+    }
+
+    // Function to get questionList by ProjectID
+    this.getQuestion = function (projectID) {
+        return $http.get("/api/ProjectApi/GetQuestion/" + projectID);
+    }
+
+    // Function to create a question
+    this.createQuestion = function (projectId, newQuestion) {
+        var request = $http({
+            method: 'post',
+            url: '/api/ProjectApi/CreateQuestion/' + projectId,
+            data: newQuestion
+        });
+
+        return request;
+    }
+
+    // Function to edit question
+    this.editQuestion = function (question) {
+        var request = $http({
+            method: 'put',
+            url: '/api/ProjectApi/EditQuestion/',
+            data: question
+        });
+
+        return request;
+    }
+
+    // Funtion to delete a question
+    this.deleteQuestion = function (questionId) {
+        return $http.delete("/api/ProjectApi/DeleteQuestion/" + questionId);
+    }
 
     // Function to submit project
     this.submitProject = function (project) {
