@@ -3,16 +3,18 @@ var service = angular.module("DDLService", []);
 var directive = angular.module("DDLDirective", []);
 var app = angular.module("ClientApp", ["ngRoute", "ngAnimate", "ngSanitize", "DDLService",
     "DDLDirective", 'angular-loading-bar', 'textAngular', 'toastr', 'ui.bootstrap', 'monospaced.elastic',
-    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert','angular.morris-chart']);
+    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert', 'angular.morris-chart']);
 
 // Show Routing.
 app.config(["$routeProvider", function ($routeProvider) {
     $routeProvider.when("/home",
         {
+            caseInsensitiveMatch: true,
             redirectTo: "/"
         });
     $routeProvider.when("/",
         {
+            caseInsensitiveMatch: true,
             templateUrl: "/ClientPartial/Home",
             controller: 'HomeController',
             resolve: {
@@ -26,6 +28,7 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/discover",
         {
+            caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/Discover",
             controller: 'DiscoverController',
             resolve: {
@@ -42,16 +45,19 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/register",
         {
+            caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/Register",
             controller: "RegisterController"
         });
     $routeProvider.when("/register_success",
         {
+            caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/RegisterSuccess"
         });
 
     $routeProvider.when("/user/message",
         {
+            caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/Message",
             controller: "MessageController",
             resolve: {
@@ -68,6 +74,7 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/user/message/:id",
         {
+            caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/MessageDetail",
             controller: "MessageDetailController",
             resolve: {
@@ -77,18 +84,21 @@ app.config(["$routeProvider", function ($routeProvider) {
                 }]
             }
         });
-    $routeProvider.when("/project/create", {
-        templateUrl: "/ClientPartial/CreateProject",
-        controller: "CreateProjectController",
-        resolve: {
-            categories: ['$rootScope', '$route', '$q', 'CategoryService', 'CommmonService', function ($rootScope, $route, $q, CategoryService, CommmonService) {
-                var promise = CategoryService.GetCategoriesForCreate();
-                return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
-            }]
-        }
-    });
+    $routeProvider.when("/project/create",
+        {
+            caseInsensitiveMatch: true,
+            templateUrl: "/ClientPartial/CreateProject",
+            controller: "CreateProjectController",
+            resolve: {
+                categories: ['$rootScope', '$route', '$q', 'CategoryService', 'CommmonService', function ($rootScope, $route, $q, CategoryService, CommmonService) {
+                    var promise = CategoryService.GetCategoriesForCreate();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
+            }
+        });
     $routeProvider.when("/project/edit/:code",
         {
+            caseInsensitiveMatch: true,
             templateUrl: "/ClientPartial/EditProject",
             controller: "EditProjectController",
             resolve: {
@@ -104,6 +114,7 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/project/back/:code",
         {
+            caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/BackProject",
             controller: "BackProjectController",
             resolve: {
@@ -115,6 +126,7 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/project/detail/:code",
         {
+            caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/ProjectDetail",
             controller: "ProjectDetailController",
             resolve: {
@@ -131,6 +143,7 @@ app.config(["$routeProvider", function ($routeProvider) {
 
     $routeProvider.when("/user/publicprofile/:username",
         {
+            caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/PublicProfile",
             controller: 'PublicProfileController',
             resolve: {
@@ -142,6 +155,7 @@ app.config(["$routeProvider", function ($routeProvider) {
 
     $routeProvider.when("/user/editprofile/:username",
         {
+            caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/EditProfile",
             controller: 'EditProfileController',
             resolve: {
@@ -151,20 +165,22 @@ app.config(["$routeProvider", function ($routeProvider) {
                 }]
             }
         });
-  $routeProvider.when("/project/backedProject",
-       {
-           templateUrl: "ClientPartial/BackedProject",
-           controller: 'BackedProjectController',
-            resolve: {
-                listsBacked: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
-                    var promise = ProjectService.getBackedProject();
-                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
-                }]
-            }
-       });
+    $routeProvider.when("/project/backedProject",
+         {
+             caseInsensitiveMatch: true,
+             templateUrl: "ClientPartial/BackedProject",
+             controller: 'BackedProjectController',
+             resolve: {
+                 listsBacked: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
+                     var promise = ProjectService.getBackedProject();
+                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                 }]
+             }
+         });
 
     $routeProvider.when("/project/starredProject",
        {
+           caseInsensitiveMatch: true,
            templateUrl: "ClientPartial/StarredProject",
            controller: 'StarredProjectController',
            resolve: {
@@ -177,6 +193,7 @@ app.config(["$routeProvider", function ($routeProvider) {
 
     $routeProvider.when("/project/createdProject",
       {
+          caseInsensitiveMatch: true,
           templateUrl: "ClientPartial/CreatedProject",
           controller: 'CreatedProjectController',
           resolve: {
@@ -200,7 +217,7 @@ app.config(["$routeProvider", function ($routeProvider) {
     }]);
 }]);
 
-app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOptions', function ($rootScope, $window, $anchorScroll, UserService, DTDefaultOptions) {
+app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOptions', 'toastrConfig', function ($rootScope, $window, $anchorScroll, UserService, DTDefaultOptions, toastrConfig) {
     $rootScope.$on('$routeChangeError', function (e, curr, prev) {
         e.preventDefault();
     });
@@ -233,6 +250,11 @@ app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOpti
             "sSortAscending": ": activate to sort column ascending",
             "sSortDescending": ": activate to sort column descending"
         }
+    });
+
+    angular.extend(toastrConfig, {
+        maxOpened: 2,
+        closeButton: true,
     });
 
     // Base Url of web app.

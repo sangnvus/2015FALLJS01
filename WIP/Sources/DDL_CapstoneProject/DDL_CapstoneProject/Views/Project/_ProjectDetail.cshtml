@@ -93,8 +93,8 @@
         <div class="tab-center">
             <ul class="nav nav-pills">
                 <li class="active"><a showtab href="#campaign" data-toggle="tab">Thông tin</a></li>
-                <li><a showtab href="#update" data-toggle="tab">Cập nhật <span class="badge">{{Project.UpdateLogsList.length}}</span></a></li>
-                <li><a showtab href="#comments" data-toggle="tab">Bình luận <span class="badge">{{Project.CommentsList.length}}</span></a></li>
+                <li><a showtab href="#update" data-toggle="tab" ng-click="getUpdateLogList()">Cập nhật <span class="badge">{{Project.NumberUpdate}}</span></a></li>
+                <li><a showtab href="#comments" data-toggle="tab" ng-click="getCommentList()">Bình luận <span class="badge">{{Project.NumberComment}}</span></a></li>
                 <li><a showtab href="#schedule" data-toggle="tab">Tiến trình</a></li>
                 <li><a showtab href="#list-backers" data-toggle="tab">Ủng hộ <span class="badge">10</span></a></li>
             </ul>
@@ -288,10 +288,6 @@
                     <div id="comments" role="tabpanel" class="tab-pane fade in project-tab-border">
                         <!-- Contenedor Principal -->
                         <div class="pl15 pr15">
-                            @*<div class="">
-                                    <h1 class="fnt25" id="timeline-Update">Bình luận ({{Project.CommentsList.length}})</h1>
-                                </div>*@
-                            <!--New comment form-->
                             <div id="comment-form" ng-if="CurrentUser.IsAuthen">
                                 <div class="media">
                                     <h3 class="fnt18" style="padding-left: 60px">Bình luận về dự án này</h3>
@@ -321,7 +317,7 @@
                                 </div>
                             </div><!--/#comment-form-->
                             <!--Comment list-->
-                            <h3 class="fnt22">{{Project.CommentsList.length}} Bình luận</h3>
+                            <h3 class="fnt22">Danh sách bình luận</h3>
                             <div id="comments-list">
                                 <!--avatar-->
                                 <div class="media" ng-repeat="Comment in Project.CommentsList">
@@ -361,6 +357,7 @@
                                         </div>
                                     </div>
                                 </div><!--/.media-->
+                                <button class="btn btn-info center-block" ng-show="Project.CommentsList.length < Project.NumberComment" ng-click="loadMoreComment()">Tải thêm</button>
                             </div><!--/#comments-list-->
                         </div>
                     </div> <!-- endTabpanel COMMENT -->

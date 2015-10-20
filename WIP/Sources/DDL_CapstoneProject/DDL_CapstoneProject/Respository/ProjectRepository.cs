@@ -442,6 +442,8 @@ namespace DDL_CapstoneProject.Respository
                                      CategoryName = project.Category.Name,
                                      ProjectID = project.ProjectID,
                                      NumberBacked = project.Backings.Count,
+                                     NumberComment = project.Creator.Username == userName ?project.Comments.Count: project.Comments.Count(x => !x.IsHide),
+                                     NumberUpdate = project.UpdateLogs.Count,
                                      Creator = new CreatorDTO
                                      {
                                          FullName = project.Creator.UserInfo.FullName,
@@ -461,16 +463,61 @@ namespace DDL_CapstoneProject.Respository
             }
 
             // Get comments.
-            var commentsList = (userName != null && projectDetail.Creator.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase))
-                                ? GetComments(projectDetail.ProjectID, true)
-                                : GetComments(projectDetail.ProjectID, false);
+            //var commentsList = (userName != null && projectDetail.Creator.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase))
+            //                    ? GetComments(projectDetail.ProjectID, true)
+            //                    : GetComments(projectDetail.ProjectID, false);
 
-            // Insert list comments into project
-            projectDetail.CommentsList = commentsList;
+            //// Insert list comments into project
+            //projectDetail.CommentsList = commentsList;
+
+            //// Get updateLog list.
+            //var updateLogsList = (from updateLog in db.UpdateLogs
+            //                      where updateLog.ProjectID == projectDetail.ProjectID
+            //                      orderby updateLog.CreatedDate descending
+            //                      select new UpdateLogDTO
+            //                      {
+            //                          CreatedDate = updateLog.CreatedDate,
+            //                          Description = updateLog.Description,
+            //                          Title = updateLog.Title,
+            //                          UpdateLogID = updateLog.UpdateLogID
+            //                      }).ToList();
+
+            //// Insert updatelog list into projectDTO
+            //projectDetail.UpdateLogsList = updateLogsList;
+
+            // Set number exprire day.
+            var timespan = projectDetail.ExpireDate - DateTime.Today;
+            projectDetail.NumberDays = timespan.GetValueOrDefault().Days;
+
+            return projectDetail;
+        }
+
+        public List<CommentDTO> GetListComment(string projectCode, DateTime? lastDateTime, string userName)
+        {
+            var project = db.Projects.FirstOrDefault(x => x.ProjectCode == projectCode);
+            if (project == null)
+            {
+                throw new KeyNotFoundException();
+            }
+            // Get comments.
+            var commentsList = (userName != null && project.Creator.Username.Equals(userName, StringComparison.OrdinalIgnoreCase))
+                                ? GetComments(project.ProjectID, true, lastDateTime)
+                                : GetComments(project.ProjectID, false, lastDateTime);
+
+            return commentsList;
+        }
+
+        public List<UpdateLogDTO> GetListUpdateLog(string projectCode, string userName)
+        {
+            var project = db.Projects.FirstOrDefault(x => x.ProjectCode == projectCode);
+            if (project == null)
+            {
+                throw new KeyNotFoundException();
+            }
 
             // Get updateLog list.
             var updateLogsList = (from updateLog in db.UpdateLogs
-                                  where updateLog.ProjectID == projectDetail.ProjectID
+                                  where updateLog.ProjectID == project.ProjectID
                                   orderby updateLog.CreatedDate descending
                                   select new UpdateLogDTO
                                   {
@@ -480,15 +527,9 @@ namespace DDL_CapstoneProject.Respository
                                       UpdateLogID = updateLog.UpdateLogID
                                   }).ToList();
 
-            // Insert updatelog list into projectDTO
-            projectDetail.UpdateLogsList = updateLogsList;
-
-            // Set number exprire day.
-            var timespan = projectDetail.ExpireDate - DateTime.Today;
-            projectDetail.NumberDays = timespan.GetValueOrDefault().Days;
-
-            return projectDetail;
+            return updateLogsList;
         }
+
 
         // 17/10/2015 - MaiCTP - Get BackedProject
         public List<ProjectBasicViewDTO> GetBackedProject(String userName)
@@ -638,7 +679,7 @@ namespace DDL_CapstoneProject.Respository
 
         #region Comment
 
-        private List<CommentDTO> GetComments(int projectID, bool showHide)
+        private List<CommentDTO> GetComments(int projectID, bool showHide, DateTime? lastDateTime)
         {
             var commentsQuery = from comment in db.Comments
                                 where comment.ProjectID == projectID
@@ -655,8 +696,18 @@ namespace DDL_CapstoneProject.Respository
                                     IsEdited = comment.IsEdited
                                 };
 
+            if (!showHide)
+            {
+                commentsQuery = commentsQuery.Where(x => !x.IsHide);
+            }
+
+            if (lastDateTime != null)
+            {
+                commentsQuery = commentsQuery.Where(x => x.CreatedDate < lastDateTime);
+            }
+
             //var commentsList = showHide ? commentsQuery.Take(10).ToList() : commentsQuery.Where(x => !x.IsHide).Take(10).ToList();
-            var commentsList = showHide ? commentsQuery.ToList() : commentsQuery.Where(x => !x.IsHide).ToList();
+            var commentsList = commentsQuery.Take(10).ToList();
 
             return commentsList;
         }
