@@ -25,7 +25,6 @@ namespace DDL_CapstoneProject.Models.DTOs
         public string Description { get; set; }
         public string VideoUrl { get; set; }
         public int NumberBacked { get; set; }
-
         /// <summary>
         /// Status of a project
         /// include 6 statuses:
@@ -40,9 +39,12 @@ namespace DDL_CapstoneProject.Models.DTOs
 
         public int NumberDays { get; set; }
 
-        public List<CommentDTO> CommentsList { get; set; }
+        public int NumberUpdate { get; set; }
+        public int NumberComment { get; set; }
 
-        public List<UpdateLogDTO> UpdateLogsList { get; set; }
+        //public List<CommentDTO> CommentsList { get; set; }
+
+        //public List<UpdateLogDTO> UpdateLogsList { get; set; }
     }
 
     public class CreatorDTO

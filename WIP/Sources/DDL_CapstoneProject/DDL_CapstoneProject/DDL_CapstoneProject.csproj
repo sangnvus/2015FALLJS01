@@ -163,6 +163,7 @@
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\DDL_User.cs" />
     <Compile Include="Models\DTOs\AdminCategoryDTO.cs" />
+    <Compile Include="Models\DTOs\BackingDTO.cs" />
     <Compile Include="Models\DTOs\CategoryProjectCountDTO.cs" />
     <Compile Include="Models\DTOs\CommentDTO.cs" />
     <Compile Include="Models\DTOs\ConversationBasicDTO.cs" />
@@ -171,12 +172,12 @@
     <Compile Include="Models\DTOs\HttpMessageDTO.cs" />
     <Compile Include="Models\DTOs\MessageDTO.cs" />
     <Compile Include="Models\DTOs\NewMessageDTO.cs" />
-    <Compile Include="Models\DTOs\ProjectViewHistoryDTO.cs" />
     <Compile Include="Models\DTOs\ProjectBasicViewDTO.cs" />
     <Compile Include="Models\DTOs\ProjectCreateDTO.cs" />
     <Compile Include="Models\DTOs\ProjectDetailDTO.cs" />
     <Compile Include="Models\DTOs\ProjectStoryDTO.cs" />
     <Compile Include="Models\DTOs\ProjectEditDTO.cs" />
+    <Compile Include="Models\DTOs\ProjectViewHistoryDTO.cs" />
     <Compile Include="Models\DTOs\QuestionDTO.cs" />
     <Compile Include="Models\DTOs\ReplyDTO.cs" />
     <Compile Include="Models\DTOs\RewardPkgDTO.cs" />
@@ -200,6 +201,9 @@
     <Compile Include="Models\Timeline.cs" />
     <Compile Include="Models\UpdateLog.cs" />
     <Compile Include="Models\UserInfo.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Respository\QuestionRepository.cs" />
     <Compile Include="Respository\TimelineRepository.cs" />
@@ -218,8 +222,9 @@
     <Content Include="App\AdminModule.js" />
     <Content Include="App\controllers\admin\AdminCategoryController.js" />
     <Content Include="App\controllers\admin\AdminDashboardController.js" />
-    <Content Include="App\controllers\BackedProjectController.js" />
     <Content Include="App\controllers\BackedProjectHistoryProjectController.js" />
+    <Content Include="App\controllers\BackProjectController.js" />
+    <Content Include="App\controllers\BackedProjectController.js" />
     <Content Include="App\controllers\CreatedProjectController.js" />
     <Content Include="App\controllers\CreateProjectController.js" />
     <Content Include="App\controllers\DiscoverController.js" />
@@ -331,6 +336,9 @@
     <Content Include="images\slides\slider1.jpg" />
     <Content Include="images\slides\slider2.jpg" />
     <Content Include="images\slides\slider3.jpg" />
+    <Content Include="obj\Debug\DDL_CapstoneProject.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\DDL_CapstoneProject.dll" />
+    <Content Include="obj\Debug\DDL_CapstoneProject.pdb" />
     <Content Include="Scripts\admin-flex\flex.js" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
@@ -348,6 +356,7 @@
     <Content Include="Scripts\angular-messages.js" />
     <Content Include="Scripts\angular-messages.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular-morris-chart.min.js" />
     <Content Include="Scripts\angular-resource.js" />
     <Content Include="Scripts\angular-resource.min.js" />
     <Content Include="Scripts\angular-route.js" />
@@ -1168,6 +1177,9 @@
     <Content Include="fonts\glyphicons\flat-ui-icons-regular.woff" />
     <Content Include="fonts\glyphicons\selection.json" />
     <Content Include="Content\flat-ui.css.map" />
+    <Content Include="obj\Debug\DDL_CapstoneProject.csproj.GenerateResource.Cache" />
+    <Content Include="obj\Debug\DDL_CapstoneProject.csprojResolveAssemblyReference.cache" />
+    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <None Include="Scripts\jquery-1.11.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\jquery-1.11.1.min.js" />
@@ -1228,12 +1240,12 @@
     <Content Include="Views\Project\_BackedProject.cshtml" />
     <Content Include="Views\Project\_CreatedProject.cshtml" />
     <Content Include="Views\Project\_StarredProject.cshtml" />
-    <Content Include="Views\Project\_BackedProjectHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />
     <Folder Include="App_Data\" />
     <Folder Include="images\others\" />
+    <Folder Include="obj\Debug\TempPE\" />
     <Folder Include="Views\ClientPartial\" />
     <Folder Include="Views\Slider\" />
   </ItemGroup>
@@ -1245,6 +1257,7 @@
     <EmbeddedResource Include="Migrations\201510110856270_InitialCreate.resx">
       <DependentUpon>201510110856270_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="obj\Debug\DDL_CapstoneProject.Migrations.InitialCreate.resources" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

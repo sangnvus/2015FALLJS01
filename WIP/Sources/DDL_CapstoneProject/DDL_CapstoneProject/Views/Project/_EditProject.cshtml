@@ -16,7 +16,7 @@
 @* Wanrning *@
 <div class="alert alert-warning" role="alert" style="text-align: center" ng-if="Project.Status == 'rejected'">Dự án của bạn bị từ chối, xin hãy xem và chỉnh sửa lại trước khi submit lần tiếp theo. Nếu bạn cần giúp đỡ hãy liên hệ với chúng tôi qua email... hay SĐT...</div>
 <div class="alert alert-warning" role="alert" style="text-align: center" ng-if="Project.Status == 'pending'">Dự án của bạn đang trong thời gian kiểm duyệt(2-3 ngày từ ngày submit) vui lòng chờ kết quả từ chúng tôi!</div>
-<div class="alert alert-warning" role="alert" style="text-align: center" ng-if="errorListFlag == true">
+<div class="alert alert-warning" role="alert" style="text-align: center" ng-show="errorListFlag == true">
     <p ng-repeat="error in errorList">{{error}}</p>
 </div>
 <div id="create-tabs">
@@ -26,8 +26,8 @@
                 <li class="active"><a onclick="return false" href="#basic" data-toggle="tab">Thông tin</a></li>
                 <li><a onclick="return false" href="#reward" data-toggle="tab" ng-click="getReward()">Gói quà</a></li>
                 <li><a onclick="return false" href="#story" data-toggle="tab" ng-click="getStory()">Câu chuyện</a></li>
-                <li ng-if="Project.Status == 'approved'"><a onclick="return false" href="#update" data-toggle="tab" ng-click="getUpdateLog()">Cập nhật</a></li>
-                <li ng-if="Project.Status == 'approved'"><a onclick="return false" href="#quesion-answer" data-toggle="tab" ng-click="getQuestion()">Hỏi đáp</a></li>
+                <li ng-show="Project.Status == 'approved'"><a onclick="return false" href="#update" data-toggle="tab" ng-click="getUpdateLog()">Cập nhật</a></li>
+                <li ng-show="Project.Status == 'approved'"><a onclick="return false" href="#quesion-answer" data-toggle="tab" ng-click="getQuestion()">Hỏi đáp</a></li>
                 <li><a onclick="return false" href="#timelineTab" data-toggle="tab" ng-click="getTimeline()">Timeline</a></li>
                 @*<li><a onclick="return false" href="#preview" data-toggle="tab">Xem trước</a></li>*@
                 <a class="btn btn-primary" ng-click="submit()" ng-if="Project.Status == 'draft' || Project.Status == 'rejected'">submit for review</a>
@@ -86,7 +86,6 @@
                                             <input type="text" id="project_name" class="form-control fnt18 fnt-b" name="ProjectTitle" maxlength="60" ng-maxlength="60" ng-trim="true" ng-minlength="10"
                                                    ng-disabled="AllEditable == false" ng-model="Project.Title">
                                             <label for="" class="countText">{{Project.Title.length + "/60"}}</label>
-                                            <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="BasicForm.ProjectTitle.$dirty && BasicForm.ProjectTitle.$valid"></span>
                                             <div ng-show="BasicForm.ProjectTitle.$dirty && BasicForm.ProjectTitle.$invalid" class="text-danger">
                                                 <span class="glyphicon glyphicon-remove text-danger"></span>
                                                 <span ng-show="BasicForm.ProjectTitle.$error.minlength">Tên dự án tối thiểu 10 kí tự!</span>
@@ -108,7 +107,6 @@
                                             <textarea class="form-control fnt18" rows="3" style="resize: none" name="SubDes" ng-trim="true" ng-minlength="30"
                                                       rows="3" maxlength="135" ng-maxlength="135" ng-model="Project.SubDescription" ng-disabled="AllEditable == false"></textarea>
                                             <label for="" class="countText" style="top: 70px">{{Project.SubDescription.length + "/135"}}</label>
-                                            <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="BasicForm.SubDes.$dirty && BasicForm.SubDes.$valid"></span>
                                             <div ng-show="BasicForm.SubDes.$dirty && BasicForm.SubDes.$invalid" class="text-danger">
                                                 <span class="glyphicon glyphicon-remove text-danger"></span>
                                                 <span ng-show="BasicForm.SubDes.$error.minlength">Tên dự án tối thiểu 30 kí tự!</span>
@@ -137,13 +135,11 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="">
-                                            <input type="text" class="form-control fnt18 fnt-b" name="ProjectLocation" ng-minlength="10" ng-maxlength="60" maxlength="60" ng-trim="true"
+                                            <input type="text" class="form-control fnt18 fnt-b" name="ProjectLocation" ng-maxlength="60" maxlength="60" ng-trim="true"
                                                    ng-model="Project.Location" ng-autocomplete ng-disabled="AllEditable == false">
                                             <label for="" class="countText">{{Project.Location.length + "/60"}}</label>
-                                            <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="BasicForm.ProjectLocation.$dirty && BasicForm.ProjectLocation.$valid"></span>
                                             <div ng-show="BasicForm.ProjectLocation.$dirty && BasicForm.ProjectLocation.$invalid" class="text-danger">
                                                 <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                <span ng-show="BasicForm.ProjectLocation.$error.minlength">Tên dự án tối thiểu 10 kí tự!</span>
                                                 <span ng-show="BasicForm.ProjectLocation.$error.maxlength">Tên dự án tối đa 60 kí tự!</span>
                                             </div>
                                         </div>
@@ -170,7 +166,6 @@
                                     </div>
                                     <div class="col-md-8">
                                         <input type="number" class="form-control fnt-b" ng-trim="true" name="FundingGoal" min="1000000" ng-model="Project.FundingGoal" ng-disabled="AllEditable == false">
-                                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="BasicForm.FundingGoal.$dirty && BasicForm.FundingGoal.$valid"></span>
                                         <div ng-show="BasicForm.FundingGoal.$dirty && BasicForm.FundingGoal.$invalid" class="text-danger">
                                             <span class="glyphicon glyphicon-remove text-danger"></span>
                                             <span ng-show="BasicForm.FundingGoal.$invalid">Mục tiêu gây quỹ phải là chữ số và lớn hơn 1,000,000!</span>
@@ -223,7 +218,7 @@
                                                         <p class="fnt16 mt0 mb0">pledged</p>
                                                     </li>
                                                     <li>
-                                                        <p class="fnt16 fnt-b mt0 mb0 c00">30</p>
+                                                        <p class="fnt16 fnt-b mt0 mb0 c00">{{Project.NumberDays}}</p>
                                                         <p class="fnt16 mt0 mb0">days to go</p>
                                                     </li>
                                                 </ul>
@@ -258,7 +253,6 @@
                                                 <div class="col-md-4">
                                                     <input type="number" class="form-control" min="0" name="PledgeAmount{{$index}}" ng-model="RewardPKgs.PledgeAmount" ng-trim="true"
                                                            ng-disabled="RewardPKgs.Backers != 0 || AllEditable == false">
-                                                    <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="rewardForm.PledgeAmount{{$index}}.$dirty && rewardForm.PledgeAmount{{$index}}.$valid"></span>
                                                     <div ng-show="rewardForm.PledgeAmount{{$index}}.$dirty && rewardForm.PledgeAmount{{$index}}.$invalid" class="text-danger">
                                                         <span class="glyphicon glyphicon-remove text-danger"></span>
                                                         <span ng-show="rewardForm.PledgeAmount{{$index}}.$invalid">Mục tiêu gây quỹ phải là chữ số và lớn hơn 0!</span>
@@ -276,7 +270,6 @@
                                                 <div class="col-md-8">
                                                     <textarea class="form-control" rows="3" style="resize: none" name="RewardDesc{{$index}}" ng-minlength="10" ng-maxlength="135" maxlength="135" ng-trim="true"
                                                               rows="2" ng-model="RewardPKgs.Description" ng-disabled="RewardPKgs.Backers != 0 || AllEditable == false"></textarea>
-                                                    <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="rewardForm.RewardDesc{{$index}}.$dirty && rewardForm.RewardDesc{{$index}}.$valid"></span>
                                                     <div ng-show="rewardForm.RewardDesc{{$index}}.$dirty && rewardForm.RewardDesc{{$index}}.$invalid" class="text-danger">
                                                         <span class="glyphicon glyphicon-remove text-danger"></span>
                                                         <span ng-show="rewardForm.RewardDesc{{$index}}.$error.minlength">Mô tả tối thiểu 10 kí tự!</span>
@@ -284,10 +277,22 @@
                                                     </div>
                                                 </div>
                                             </div> <!-- end Description -->
+                                            @*<div class="row">
+                                                    <div class="col-md-4">Loại gói</div>
+                                                    <div class="col-md-8">
+                                                        <div class="field-wrapper">
+                                                            <select class="fform-control fnt-b ng-pristine ng-valid ng-touched" ng-model="RewardPKgs.Type" data-toggle="select">
+                                                                <option value="no-reward">No reward</option>
+                                                                <option value="limited">Limited</option>
+                                                                <option value="unlimited" selected>Unlimited</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>*@
                                             <div class="row">
                                                 <div class="col-md-4">Thời gian giao hàng</div>
                                                 <div class="col-md-8">
-                                                    <input type="month" class="form-control delivery" style="line-height: 15px;" ng-model="RewardPKgs.EstimatedDelivery" name="RewardDelivery"
+                                                    <input type="month" class="form-control delivery" style="line-height: 15px;" min="{{endDate | date:'yyyy-MM-dd'}}" ng-model="RewardPKgs.EstimatedDelivery" name="RewardDelivery"
                                                            ng-disabled="RewardPKgs.Backers != 0 || AllEditable == false">
                                                 </div>
                                             </div> <!-- end Estimated delivery -->
@@ -295,7 +300,8 @@
                                                 <div class="col-md-4">Backers&nbsp;&nbsp;<b>{{RewardPKgs.Backers}}</b></div>
                                                 <div class="col-md-4">
                                                     <label class="checkbox">
-                                                        <input type="checkbox" ng-model="RewardPKgs.LimitQuantity" data-toggle="checkbox" class="custom-checkbox" ng-disabled="RewardPKgs.Backers != 0 || AllEditable == false">
+                                                        <input type="checkbox" ng-model="RewardPKgs.LimitQuantity" data-toggle="checkbox" class="custom-checkbox"
+                                                               ng-disabled="RewardPKgs.Backers != 0 || AllEditable == false">
                                                         <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
                                                         Giới hạn số lượng
                                                     </label>
@@ -303,7 +309,6 @@
                                                 <div class="col-md-4">
                                                     <input type="number" id="limit_quntity" class="form-control" min="0" ng-trim="true"
                                                            name="quantity{{$index}}" ng-model="RewardPKgs.Quantity" ng-if="RewardPKgs.LimitQuantity == true" ng-disabled="AllEditable == false">
-                                                    <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="rewardForm.quantity{{$index}}.$dirty && rewardForm.quantity{{$index}}.$valid"></span>
                                                     <div ng-show="rewardForm.quantity{{$index}}.$dirty && rewardForm.quantity{{$index}}.$invalid" class="text-danger">
                                                         <span class="glyphicon glyphicon-remove text-danger"></span>
                                                         <span ng-show="rewardForm.quantity{{$index}}.$invalid">Số lượng phải là chữ số và lớn hơn 0!</span>
@@ -330,7 +335,7 @@
                             </form>
                             <div class="row border-grey border-dash">
                                 <div class="addReward txt-c">
-                                    <a class="btn btn-success" data-toggle="modal" data-target="#addReward" ng-disabled="AllEditable == false">Add new reward</a>
+                                    <a class="btn btn-success" data-toggle="modal" data-target="#addReward" ng-show="AllEditable == true">Add new reward</a>
                                     <!-- add new reward dialog -->
                                     <div class="modal fade" id="addReward" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                         <form class="form-horizontal" role="form" name="CreateRewardForm" novalidate>
@@ -345,7 +350,6 @@
                                                                 <div class="col-md-4">Pledge amount</div>
                                                                 <div class="col-md-4">
                                                                     <input type="number" class="form-control" min="0" name="NewRewardPledge" ng-model="NewReward.PledgeAmount">
-                                                                    <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="CreateRewardForm.NewRewardPledge.$dirty && CreateRewardForm.NewRewardPledge.$valid"></span>
                                                                     <div ng-show="CreateRewardForm.NewRewardPledge.$dirty && CreateRewardForm.NewRewardPledge.$invalid" class="text-danger">
                                                                         <span class="glyphicon glyphicon-remove text-danger"></span>
                                                                         <span ng-show="CreateRewardForm.NewRewardPledge.$invalid">Mục tiêu gây quỹ phải là chữ số và lớn hơn 0!</span>
@@ -359,7 +363,6 @@
                                                                               ng-maxlength="135" maxlength="135" ng-trim="true"
                                                                               ng-model="NewReward.Description"
                                                                               rows="2"></textarea>
-                                                                    <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="CreateRewardForm.NewRewardDes.$dirty && CreateRewardForm.NewRewardDes.$valid"></span>
                                                                     <div ng-show="CreateRewardForm.NewRewardDes.$dirty && CreateRewardForm.NewRewardDes.$invalid" class="text-danger">
                                                                         <span class="glyphicon glyphicon-remove text-danger"></span>
                                                                         <span ng-show="CreateRewardForm.NewRewardDes.$error.minlength">Mô tả tối thiểu 10 kí tự!</span>
@@ -517,7 +520,6 @@
                                             Use your project description to share more about what you’re raising funds to do and how you plan to pull it off. It’s up to you to make the case for your project.
                                         </div>
                                         <div text-angular ng-model="ProjectStory.Description" name="desc" ta-min-text="135" ta-disabled="AllEditable == false"></div>
-                                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="storyForm.desc.$dirty && storyForm.desc.$valid"></span>
                                         <div ng-show="storyForm.desc.$dirty && storyForm.desc.$invalid" class="text-danger">
                                             <span class="glyphicon glyphicon-remove text-danger"></span>
                                             <span ng-show="storyForm.desc.$invalid">Mô tả ít nhất 135 kí tự!</span>
@@ -540,7 +542,6 @@
                                         </div>
                                         <div class="">
                                             <textarea class="form-control fnt18" rows="7" style="resize: none" ng-trim="true" ng-minlength="135" name="ProjectRisk" ng-model="ProjectStory.Risk" ng-disabled="AllEditable == false"></textarea>
-                                            <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="storyForm.ProjectRisk.$dirty && storyForm.ProjectRisk.$valid"></span>
                                             <div ng-show="storyForm.ProjectRisk.$dirty && storyForm.ProjectRisk.$invalid" class="text-danger">
                                                 <span class="glyphicon glyphicon-remove text-danger"></span>
                                                 <span ng-show="storyForm.ProjectRisk.$error.minlength">Mô tả ít nhất 135 kí tự!</span>
@@ -609,7 +610,6 @@
                                                     <input type="text" class="form-control" ng-trim="true"
                                                            ng-minlength="10" ng-maxlength="60" maxlength="60"
                                                            name="title{{$index}}" ng-model="UpdateLogs.Title" ng-disabled="AllEditable == false">
-                                                    <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="updateLogForm.title{{$index}}.$dirty && updateLogForm.title{{$index}}.$valid"></span>
                                                     <div ng-show="updateLogForm.title{{$index}}.$dirty && updateLogForm.title{{$index}}.$invalid" class="text-danger">
                                                         <span class="glyphicon glyphicon-remove text-danger"></span>
                                                         <span ng-show="updateLogForm.title{{$index}}.$error.minlength">Tiêu đề ít nhất 10 kí tự!</span>
@@ -640,7 +640,6 @@
                                                         <textarea class="form-control" rows="5" style="resize: none" name="desc{{$index}}" ng-trim="true"
                                                                   ng-minlength="10"
                                                                   ng-model="UpdateLogs.Description" ng-disabled="AllEditable == false"></textarea>
-                                                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="updateLogForm.desc{{$index}}.$dirty && updateLogForm.desc{{$index}}.$valid"></span>
                                                         <div ng-show="updateLogForm.desc{{$index}}.$dirty && updateLogForm.desc{{$index}}.$invalid" class="text-danger">
                                                             <span class="glyphicon glyphicon-remove text-danger"></span>
                                                             <span ng-show="updateLogForm.desc{{$index}}.$error.minlength"> ít nhất 10 kí tự!</span>
@@ -676,10 +675,9 @@
                                                                 <p class="title">Title:</p>
                                                                 <input type="text" class="form-control" name="title" ng-trim="true"
                                                                        ng-minlength="10" ng-maxlength="60" maxlength="60" ng-model="NewUpdateLog.Title">
-                                                                <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="CreateUpdateLogForm.title.$dirty && CreateUpdateLogForm.title.$valid"></span>
                                                                 <div ng-show="CreateUpdateLogForm.title.$dirty && CreateUpdateLogForm.title.$invalid" class="text-danger">
                                                                     <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                                    <span ng-show="updatCreateUpdateLogFormeLogForm.title.$error.minlength">Tiêu đề ít nhất 10 kí tự!</span>
+                                                                    <span ng-show="CreateUpdateLogForm.title.$error.minlength">Tiêu đề ít nhất 10 kí tự!</span>
                                                                     <span ng-show="CreateUpdateLogForm.title.$error.maxlength">Tiêu đề dài nhất 60 kí tự!</span>
                                                                 </div>
                                                             </div>
@@ -691,7 +689,6 @@
                                                                 <p class="title">Descritption:</p>
                                                                 <textarea class="form-control" name="desc" ng-trim="true"
                                                                           ng-minlength="10" ng-model="NewUpdateLog.Description"></textarea>
-                                                                <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="CreateUpdateLogForm.desc.$dirty && CreateUpdateLogForm.desc.$valid"></span>
                                                                 <div ng-show="CreateUpdateLogForm.desc.$dirty && CreateUpdateLogForm.desc.$invalid" class="text-danger">
                                                                     <span class="glyphicon glyphicon-remove text-danger"></span>
                                                                     <span ng-show="CreateUpdateLogForm.title.$error.minlength">Tiêu đề ít nhất 10 kí tự!</span>
@@ -765,14 +762,13 @@
                                                 </div>
                                                 <div class="col-md-10">
                                                     <div class="field-wrapper">
-                                                        <textarea class="form-control" rows="5" style="resize: none" name="question" ng-trim="true"
+                                                        <textarea class="form-control" rows="5" style="resize: none" name="question{{$index}}" ng-trim="true"
                                                                   ng-minlength="10" ng-maxlength="300" maxlength="300"
                                                                   ng-model="question.QuestionContent" ng-disabled="AllEditable == false"></textarea>
-                                                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="questionForm.question.$dirty && questionForm.question.$valid"></span>
-                                                        <div ng-show="questionForm.question.$dirty && questionForm.question.$invalid" class="text-danger">
+                                                        <div ng-show="questionForm.question{{$index}}.$dirty && questionForm.question{{$index}}.$invalid" class="text-danger">
                                                             <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                            <span ng-show="questionForm.question.$error.minlength">Câu hỏi ít nhất 10 kí tự!</span>
-                                                            <span ng-show="questionForm.question.$error.maxlength">Câu hỏi dài nhất 300 kí tự!</span>
+                                                            <span ng-show="questionForm.question{{$index}}.$error.minlength">Câu hỏi ít nhất 10 kí tự!</span>
+                                                            <span ng-show="questionForm.question{{$index}}.$error.maxlength">Câu hỏi dài nhất 300 kí tự!</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -783,13 +779,12 @@
                                                 </div>
                                                 <div class="col-md-10">
                                                     <div class="field-wrapper">
-                                                        <textarea class="form-control" rows="5" style="resize: none" name="answer" ng-trim="true"
+                                                        <textarea class="form-control" rows="5" style="resize: none" name="answer{{$index}}" ng-trim="true"
                                                                   ng-minlength="10" ng-maxlength="300" maxlength="300" ng-model="question.Answer" ng-disabled="AllEditable == false"></textarea>
-                                                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="questionForm.answer.$dirty && questionForm.answer.$valid"></span>
-                                                        <div ng-show="questionForm.answer.$dirty && questionForm.answer.$invalid" class="text-danger">
+                                                        <div ng-show="questionForm.answer{{$index}}.$dirty && questionForm.answer{{$index}}.$invalid" class="text-danger">
                                                             <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                            <span ng-show="questionForm.answer.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
-                                                            <span ng-show="questionForm.answer.$error.maxlength">Trả lời dài nhất 300 kí tự!</span>
+                                                            <span ng-show="questionForm.answer{{$index}}.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
+                                                            <span ng-show="questionForm.answer{{$index}}.$error.maxlength">Trả lời dài nhất 300 kí tự!</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -833,7 +828,6 @@
                                                                         <div class="field-wrapper">
                                                                             <textarea class="form-control" rows="5" style="resize: none" name="question" ng-trim="true"
                                                                                       ng-minlength="10" maxlength="300" ng-model="newQuestion.QuestionContent"></textarea>
-                                                                            <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="CreateQuestionForm.question.$dirty && CreateQuestionForm.question.$valid"></span>
                                                                             <div ng-show="CreateQuestionForm.question.$dirty && CreateQuestionForm.question.$invalid" class="text-danger">
                                                                                 <span class="glyphicon glyphicon-remove text-danger"></span>
                                                                                 <span ng-show="CreateQuestionForm.question.$error.minlength">Câu hỏi ít nhất 10 kí tự!</span>
@@ -850,7 +844,6 @@
                                                                         <div class="field-wrapper">
                                                                             <textarea class="form-control" rows="5" style="resize: none" name="answer" ng-trim="true"
                                                                                       ng-minlength="10" ng-maxlength="300" maxlength="300" ng-model="newQuestion.Answer"></textarea>
-                                                                            <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="CreateQuestionForm.answer.$dirty && CreateQuestionForm.answer.$valid"></span>
                                                                             <div ng-show="CreateQuestionForm.answer.$dirty && CreateQuestionForm.answer.$invalid" class="text-danger">
                                                                                 <span class="glyphicon glyphicon-remove text-danger"></span>
                                                                                 <span ng-show="CreateQuestionForm.answer.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
@@ -930,7 +923,6 @@
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control" name="title{{$index}}" ng-model="timeline.Title" ng-trim="true"
                                                            ng-minlength="10" ng-maxlength="60" maxlength="60" id="title{{$index}}" disabled>
-                                                    <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="timelineForm.title{{$index}}.$dirty && timelineForm.title{{$index}}.$valid"></span>
                                                     <div ng-show="timelineForm.title{{$index}}.$dirty && timelineForm.title{{$index}}.$invalid" class="text-danger">
                                                         <span class="glyphicon glyphicon-remove text-danger"></span>
                                                         <span ng-show="timelineForm.title{{$index}}.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
@@ -975,7 +967,6 @@
                                                     <div class="field-wrapper">
                                                         <textarea class="form-control" rows="5" style="resize: none" name="desc{{$index}}" ng-model="timeline.Description" ng-trim="true"
                                                                   ng-minlength="10" ng-maxlength="135" maxlength="135" id="desc{{$index}}" disabled></textarea>
-                                                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="timelineForm.desc{{$index}}.$dirty && timelineForm.desc{{$index}}.$valid"></span>
                                                         <div ng-show="timelineForm.desc{{$index}}.$dirty && timelineForm.desc{{$index}}.$invalid" class="text-danger">
                                                             <span class="glyphicon glyphicon-remove text-danger"></span>
                                                             <span ng-show="timelineForm.desc{{$index}}.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
@@ -999,7 +990,7 @@
                             <div class="row border-grey border-dash">
                                 <div class="addReward">
                                     <div class="txt-c">
-                                        <a class="btn btn-success" data-toggle="modal" data-target="#addTimeline" ng-click="onNewPoint()" ng-disabled="AllEditable == false">Thêm timeline</a>
+                                        <a class="btn btn-success" data-toggle="modal" data-target="#addTimeline" ng-click="onNewPoint()" ng-show="AllEditable == true">Thêm timeline</a>
                                         <!-- add new reward dialog -->
                                         <div class="modal fade" id="addTimeline" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                             <form class="form-horizontal" role="form" name="CreateTimelineForm" novalidate>
@@ -1017,7 +1008,6 @@
                                                                     <div class="col-md-9">
                                                                         <input type="text" class="form-control" name="title" ng-trim="true"
                                                                                ng-minlength="10" ng-maxlength="60" maxlength="60" ng-model="newTimeline.Title">
-                                                                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="CreateTimelineForm.title.$dirty && CreateTimelineForm.title.$valid"></span>
                                                                         <div ng-show="CreateTimelineForm.title.$dirty && CreateTimelineForm.title.$invalid" class="text-danger">
                                                                             <span class="glyphicon glyphicon-remove text-danger"></span>
                                                                             <span ng-show="CreateTimelineForm.title.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
@@ -1062,7 +1052,6 @@
                                                                         <div class="field-wrapper">
                                                                             <textarea class="form-control" rows="5" style="resize: none" name="desc" ng-trim="true"
                                                                                       ng-minlength="10" ng-maxlength="135" maxlength="135" ng-model="newTimeline.Description"></textarea>
-                                                                            <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="CreateTimelineForm.desc.$dirty && CreateTimelineForm.desc.$valid"></span>
                                                                             <div ng-show="CreateTimelineForm.desc.$dirty && CreateTimelineForm.desc.$invalid" class="text-danger">
                                                                                 <span class="glyphicon glyphicon-remove text-danger"></span>
                                                                                 <span ng-show="CreateTimelineForm.desc.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
@@ -1123,3 +1112,8 @@
         </div>
     </div>
 </div> <!-- end BASIC-TABPANEL -->
+<div class="scroll-top-wrapper ">
+    <span class="scroll-top-inner">
+        <i class="fa fa-2x fa-arrow-circle-up"></i>
+    </span>
+</div> <!-- end SCROLL TO TOP -->

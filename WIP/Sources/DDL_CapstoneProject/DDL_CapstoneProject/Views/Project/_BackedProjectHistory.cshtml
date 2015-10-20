@@ -1,0 +1,58 @@
+﻿<div id="setting_container" class="paddingNavbar">
+    <div class="row pull-right">
+        <div class="col-sm-12 col-sm-offset-0">
+            <ul id="" class="list-inline fnt18 fnt-b">
+                <li class=""><a class="c-10" href="../#/project/createdProject">Dự án đã tạo</a></li>
+                <li class=""><a class="c3" href="../#/project/backedProject">Dự án đã ủng hộ</a></li>
+                <li class=""><a class="c-10" href="../#/project/starredProject">Dự án theo dõi</a></li>
+                <!-- <li class=""><a class="c-10" href="account.html">Setting</a></li> -->
+                <!-- <li class=""><a class="c-10" href="../Views/profile_public.html">Profile ( public )</a></li> -->
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="items-projects">
+    <section id="portfolio" class="container">
+        <h4 class="pt30">Backed projects:</h4>
+        <ul class="list-inline fnt18 fnt-b">
+            <li class=""><a class="c3" href="../#/project/backedProject">Dự án đã ủng hộ</a></li>
+            <li class=""><a class="c-10" href="../#/project/backedProjectHistory">Lịch sử ủng hộ</a></li>
+        </ul> <!-- end Selection -->
+        <table id="table_historyBacked" class="table table-striped table-bordered table-hover">
+            <thead style="background: #16a085; color: #FFF">
+                <tr>
+                    <th>STT</th>
+                    <th>Tên dự án</th>
+                    <th>Số tiền</th>
+                    <th>Thời gian</th>
+                    <th>Tình trạng dự án</th>
+                    <th>Xem</th>
+                </tr>
+            </thead>
+            <tbody ng-repeat="project in ListBackedProjectHistory ">
+                <tr>
+                    <td>001</td>
+                    <td>project.Title</td>
+                    <td>project.CurrentFunded</td>
+                    <td>project.BackedDate</td>
+                    <td>{{project.Status}}</td>
+                    <td>
+                        <div class="btn-group">
+                            <a href="project_detail.html" class="btn btn-danger btn-sm" type="button" title="View">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr> <!-- item -->
+               
+            </tbody>
+        </table>
+    </section><!--/#portfolio-->
+</div>
+
+<div class="scroll-top-wrapper ">
+    <span class="scroll-top-inner">
+        <i class="fa fa-2x fa-arrow-circle-up"></i>
+    </span>
+</div> <!-- end SCROLL TO TOP -->

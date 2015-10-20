@@ -49,6 +49,33 @@ namespace DDL_CapstoneProject.Respository
         }
 
         /// <summary>
+        /// Get rewardPkg of a project's code
+        /// </summary>
+        /// <returns>rewardList</returns>
+        public List<RewardPkgDTO> GetRewardPkgByCode(string code)
+        {
+            var project = db.Projects.SingleOrDefault(x => x.ProjectCode == code);
+
+            // Get rewardPkg list
+            var rewardList = from RewardPkg in db.RewardPkgs
+                             where RewardPkg.ProjectID == project.ProjectID
+                             orderby RewardPkg.PledgeAmount descending
+                             select new RewardPkgDTO()
+                             {
+                                 Description = RewardPkg.Description,
+                                 PledgeAmount = RewardPkg.PledgeAmount,
+                                 EstimatedDelivery = RewardPkg.EstimatedDelivery,
+                                 IsHide = RewardPkg.IsHide,
+                                 Quantity = RewardPkg.Quantity,
+                                 RewardPkgID = RewardPkg.RewardPkgID,
+                                 Type = RewardPkg.Type,
+                                 Backers = db.BackingDetails.Count(t => t.RewardPkgID == RewardPkg.RewardPkgID)
+                             };
+
+            return rewardList.ToList();
+        }
+
+        /// <summary>
         /// Create a new rewardPkg
         /// </summary>
         /// <param name="ProjectID"></param>

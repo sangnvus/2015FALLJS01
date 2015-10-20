@@ -79,8 +79,7 @@ namespace DDL_CapstoneProject.Respository
 
         public DDL_User GetByUserNameOrEmail(string userNameOrEmail)
         {
-            var user =
-                db.DDL_Users.FirstOrDefault(x => x.Username == userNameOrEmail || x.Email == userNameOrEmail);
+            var user =db.DDL_Users.FirstOrDefault(x => x.Username == userNameOrEmail || x.Email == userNameOrEmail);
 
             return user;
         }
