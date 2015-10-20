@@ -29,8 +29,11 @@ Date: 2015.10.01
 		box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
 		padding: 0px 100px;
 	}
-	#header a{
-		/*color: #FFFFFF;*/
+	
+	/*tip dropdow avatar menu*/
+	#header #profile_dropdown .dropdown:hover .dropdown-menu{
+	   display: block;
+	   margin-top: 0;
 	}
 	
 	/*Border-divider top*/
@@ -42,8 +45,8 @@ Date: 2015.10.01
 	}
 
 	#profile_dropdown:hover .dropdown-toggle{
-		color: #FFFFFF;
-		background: #16a085;
+		color: #16a085;
+		/*background: #16a085;*/
 		border-radius: 8px;
 	}
 	#profile_dropdown ul>li:hover>a{
@@ -248,8 +251,10 @@ Date: 2015.10.01
 	  position: relative;
 	  border-radius: 6px;
 	}
-	.portfolio-item img {
+	.portfolio-item .item-image img {
 	  width: 100%;
+	  /*width: 340px;*/
+	  /*height: 256px;*/
 	}
 
 	.portfolio-item .item-inner .item-expand{
@@ -321,16 +326,6 @@ Date: 2015.10.01
 	  -o-transition: opacity 300ms;
 	  transition: opacity 300ms;
 	}
-/*	.portfolio-item .overlay .preview {
-	  position: relative;
-	  top: 50%;
-	  display: inline-block;
-	  margin-top: -20px;
-	}
-	.portfolio-item:hover .overlay {
-	  opacity: 1;
-	}*/
-
 /* End Porfolio ---------------------------------------------- */
 
 
