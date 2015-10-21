@@ -3,7 +3,7 @@ var service = angular.module("DDLService", []);
 var directive = angular.module("DDLDirective", []);
 var app = angular.module("ClientApp", ["ngRoute", "ngAnimate", "ngSanitize", "DDLService",
     "DDLDirective", 'angular-loading-bar', 'textAngular', 'toastr', 'ui.bootstrap', 'monospaced.elastic',
-    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert', 'angular.morris-chart']);
+    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert', 'angular.morris-chart', 'blockUI']);
 
 // Show Routing.
 app.config(["$routeProvider", function ($routeProvider) {
@@ -133,9 +133,17 @@ app.config(["$routeProvider", function ($routeProvider) {
                 project: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
                     var promise = ProjectService.getProjectDetail($route.current.params.code);
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
-                }],
-                listbacker: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
-                    var promise = ProjectService.getListBacker($route.current.params.code);
+                }]
+            }
+        });
+
+    $routeProvider.when("/user/editpassword/:username",
+        {
+            templateUrl: "ClientPartial/EditPassword",
+            controller: 'EditPasswordController',
+            resolve: {
+                userpublicinfo: ['$rootScope', '$route', 'UserService', '$q', 'CommmonService', function ($rootScope, $route, UserService, $q, CommmonService) {
+                    var promise = UserService.getEditPassword();
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }]
             }
@@ -217,72 +225,81 @@ app.config(["$routeProvider", function ($routeProvider) {
     }]);
 }]);
 
-app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOptions', 'toastrConfig', function ($rootScope, $window, $anchorScroll, UserService, DTDefaultOptions, toastrConfig) {
-    $rootScope.$on('$routeChangeError', function (e, curr, prev) {
-        e.preventDefault();
-    });
+app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOptions', 'toastrConfig', 'blockUIConfig',
+    function ($rootScope, $window, $anchorScroll, UserService, DTDefaultOptions, toastrConfig, blockUIConfig) {
+        $rootScope.$on('$routeChangeError', function (e, curr, prev) {
+            e.preventDefault();
+        });
 
-    // Scroll top when route change.
-    $rootScope.$on("$locationChangeStart", function () {
-        $anchorScroll();
-    });
+        // Scroll top when route change.
+        $rootScope.$on("$locationChangeStart", function () {
+            $anchorScroll();
+        });
 
-    // Set language for table
-    DTDefaultOptions.setLanguage({
-        "sEmptyTable": "Không có dữ liệu",
-        "sInfo": "Hiển thị từ _START_ tới _END_ của _TOTAL_",
-        "sInfoEmpty": "Hiển thị từ 0 tới 0 của 0",
-        "sInfoFiltered": "(filtered from _MAX_ total entries)",
-        "sInfoPostFix": "",
-        "sInfoThousands": ",",
-        "sLengthMenu": "Hiển thị _MENU_",
-        "sLoadingRecords": "Đang tải...",
-        "sProcessing": "Đang xử lí...",
-        "sSearch": "Tìm kiếm:",
-        "sZeroRecords": "Không tìm thấy",
-        "oPaginate": {
-            "sFirst": "Đầu",
-            "sLast": "Cuối",
-            "sNext": "Tiếp",
-            "sPrevious": "Trước"
-        },
-        "oAria": {
-            "sSortAscending": ": activate to sort column ascending",
-            "sSortDescending": ": activate to sort column descending"
-        }
-    });
-
-    angular.extend(toastrConfig, {
-        maxOpened: 2,
-        closeButton: true,
-    });
-
-    // Base Url of web app.
-    $rootScope.BaseUrl = angular.element($('#BaseUrl')).val();
-
-    // Load authen info:
-    $rootScope.UserInfo = {
-        IsAuthen: false
-    };
-    // 1. define function
-    function checkLoginStatus() {
-        var promiseGet = UserService.checkLoginStatus();
-        promiseGet.then(
-            function (result) {
-                if (result.data.Status === "success") {
-                    // Save authen info into $rootScope
-                    $rootScope.UserInfo = result.data.Data;
-                    $rootScope.UserInfo.IsAuthen = true;
-                } else {
-                    $rootScope.UserInfo = {
-                        IsAuthen: false
-                    };
-                }
+        // Set language for table
+        DTDefaultOptions.setLanguage({
+            "sEmptyTable": "Không có dữ liệu",
+            "sInfo": "Hiển thị từ _START_ tới _END_ của _TOTAL_",
+            "sInfoEmpty": "Hiển thị từ 0 tới 0 của 0",
+            "sInfoFiltered": "(Lọc từ tổng số _MAX_ dữ liệu)",
+            "sInfoPostFix": "",
+            "sInfoThousands": ",",
+            "sLengthMenu": "Hiển thị _MENU_",
+            "sLoadingRecords": "Đang tải...",
+            "sProcessing": "Đang xử lí...",
+            "sSearch": "Tìm kiếm:",
+            "sZeroRecords": "Không tìm thấy",
+            "oPaginate": {
+                "sFirst": "Đầu",
+                "sLast": "Cuối",
+                "sNext": "Tiếp",
+                "sPrevious": "Trước"
             },
-            function (error) {
-                // todo here.
-            });
-    }
-    // 2. call function
-    checkLoginStatus();
-}]);
+            "oAria": {
+                "sSortAscending": ": activate to sort column ascending",
+                "sSortDescending": ": activate to sort column descending"
+            }
+        });
+
+        // Config angular-blockui.
+        blockUIConfig.delay = 100;
+        blockUIConfig.blockBrowserNavigation = true;
+        blockUIConfig.template = '<div class="spinner-loader">aaa…</div>';
+
+        // Config angular toarstr.
+        angular.extend(toastrConfig, {
+            maxOpened: 2,
+            closeButton: true,
+            newestOnTop: true,
+            autoDismiss: true
+        });
+
+        // Base Url of web app.
+        $rootScope.BaseUrl = angular.element($('#BaseUrl')).val();
+
+        // Load authen info:
+        $rootScope.UserInfo = {
+            IsAuthen: false
+        };
+        // 1. define function
+        function checkLoginStatus() {
+            var promiseGet = UserService.checkLoginStatus();
+            promiseGet.then(
+                function (result) {
+                    if (result.data.Status === "success") {
+                        // Save authen info into $rootScope
+                        $rootScope.UserInfo = result.data.Data;
+                        $rootScope.UserInfo.IsAuthen = true;
+                    } else {
+                        $rootScope.UserInfo = {
+                            IsAuthen: false
+                        };
+                    }
+                },
+                function (error) {
+                    // todo here.
+                });
+        }
+        // 2. call function
+        checkLoginStatus();
+    }]);

@@ -73,4 +73,12 @@ service.service('MessageService', function ($http) {
         return request;
     }
 
+    this.getEditPassword = function () {
+        var request = $http({
+            method: 'get',
+            url: '/api/UserApi/GetUserPasswordEdit'
+        });
+        return request;
+    }
+
 });

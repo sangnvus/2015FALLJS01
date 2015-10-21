@@ -22,6 +22,7 @@ namespace DDL_CapstoneProject.Models
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public bool IsExprired { get; set; }
+        public bool IsFunded { get; set; }
         public decimal CurrentFunded { get; set; }
         public DateTime? ExpireDate { get; set; }
         public decimal FundingGoal { get; set; }

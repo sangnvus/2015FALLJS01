@@ -653,11 +653,31 @@ namespace DDL_CapstoneProject.Respository
             }
         }
 
+        public void ReportProject(string userName, string projectCode, string content)
+        {
+            var userCurrent = db.DDL_Users.FirstOrDefault(x => x.Username.Equals(userName));
+            var project = db.Projects.FirstOrDefault(x => x.ProjectCode == projectCode);
+            var report = new ReportProject
+            {
+                Project = project,
+                Reporter = userCurrent,
+                ProjectID = project.ProjectID,
+                ReportContent = content,
+                ReportedDate = DateTime.Now,
+                ReporterID = userCurrent.DDL_UserID,
+                Status = "unread",
+                Subject = "Report " + project.Title
+            };
+            db.ReportProjects.Add(report);
+            db.SaveChanges();
+
+        }
+
         public List<BackingDTO> GetListBacker(string projectCode)
         {
             var project = db.Projects.FirstOrDefault(x => x.ProjectCode == projectCode);
             var remindInfo = db.Reminds.FirstOrDefault(x => x.ProjectID == project.ProjectID);
-            int number = 0;
+            decimal a = db.BackingDetails.FirstOrDefault(x => x.BackingID == 4).PledgedAmount;
 
             var list = new List<BackingDTO>();
             var listBacker = from backer in db.Backings
@@ -670,8 +690,6 @@ namespace DDL_CapstoneProject.Respository
                              };
             foreach (BackingDTO backer in listBacker)
             {
-                number = number + 1;
-                backer.No = number;
                 list.Add(backer);
             }
             return list;

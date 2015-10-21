@@ -148,6 +148,10 @@
     <Compile Include="Migrations\201510110856270_InitialCreate.Designer.cs">
       <DependentUpon>201510110856270_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510210055539_UpdateBackingBackingDetail.cs" />
+    <Compile Include="Migrations\201510210055539_UpdateBackingBackingDetail.designer.cs">
+      <DependentUpon>201510210055539_UpdateBackingBackingDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Backing.cs" />
     <Compile Include="Controllers\WebControllers\HomeController.cs" />
@@ -162,6 +166,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\DDL_User.cs" />
+    <Compile Include="Models\DTOs\EditPasswordDTO.cs" />
     <Compile Include="Models\DTOs\AdminCategoryDTO.cs" />
     <Compile Include="Models\DTOs\BackingDTO.cs" />
     <Compile Include="Models\DTOs\CategoryProjectCountDTO.cs" />
@@ -218,6 +223,7 @@
     <Content Include="App\AdminModule.js" />
     <Content Include="App\controllers\admin\AdminCategoryController.js" />
     <Content Include="App\controllers\admin\AdminDashboardController.js" />
+    <Content Include="App\controllers\EditPasswordController.js" />
     <Content Include="App\controllers\BackProjectController.js" />
     <Content Include="App\controllers\BackedProjectController.js" />
     <Content Include="App\controllers\CreatedProjectController.js" />
@@ -233,6 +239,7 @@
     <Content Include="App\controllers\RegisterController.js" />
     <Content Include="App\controllers\ResetPwController.js" />
     <Content Include="App\controllers\StarredProjectController.js" />
+    <Content Include="App\directives\angular-morris-chart.min.js" />
     <Content Include="App\directives\elastic.js" />
     <Content Include="App\directives\ngAutoComplete.js" />
     <Content Include="App\directives\ngEnter.js" />
@@ -297,6 +304,8 @@
     <Content Include="Content\images\sort_desc_disabled.png" />
     <Content Include="Content\Libraries\jquery.timelinr.css" />
     <Content Include="Content\main.css" />
+    <Content Include="Content\morris.css" />
+    <Content Include="Content\spinner\spinner.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\sweetalert.css" />
     <Content Include="Content\textAngular.css" />
@@ -348,7 +357,6 @@
     <Content Include="Scripts\angular-messages.js" />
     <Content Include="Scripts\angular-messages.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
-    <Content Include="Scripts\angular-morris-chart.min.js" />
     <Content Include="Scripts\angular-resource.js" />
     <Content Include="Scripts\angular-resource.min.js" />
     <Content Include="Scripts\angular-route.js" />
@@ -1181,6 +1189,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Libraries\jquery.timelinr-0.9.54.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\morris-chart\morris.js" />
+    <Content Include="Scripts\morris-chart\morris.min.js" />
+    <Content Include="Scripts\morris-chart\raphael-min.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\plugin\jquery.md5.js" />
     <Content Include="Scripts\respond.js" />
@@ -1230,6 +1241,7 @@
     <Content Include="Views\Project\_CreatedProject.cshtml" />
     <Content Include="Views\Project\_StarredProject.cshtml" />
     <Content Include="Views\Project\_BackProject.cshtml" />
+    <Content Include="Views\User\_EditPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />
@@ -1245,6 +1257,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201510110856270_InitialCreate.resx">
       <DependentUpon>201510110856270_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510210055539_UpdateBackingBackingDetail.resx">
+      <DependentUpon>201510210055539_UpdateBackingBackingDetail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -328,6 +328,39 @@ namespace DDL_CapstoneProject.Respository
             db.SaveChanges();
         }
 
+        public EditPasswordDTO GetUserPassword(string userName)
+        {
+            var userPublic = from user in db.DDL_Users
+                             where user.Username == userName
+                             select new EditPasswordDTO
+                             {
+                                 //CurrentPassword = user.Password,
+                                 Email = user.Email,
+                                 LoginType = user.LoginType
+                             };
+            if (!userPublic.Any())
+            {
+                throw new UserNotFoundException();
+            }
+
+            return userPublic.FirstOrDefault();
+        }
+
+        public Boolean ChangePassword(string userName, EditPasswordDTO newPass)
+        {
+            var userCurrent = db.DDL_Users.FirstOrDefault(x => x.Username.Equals(userName));
+            if (userCurrent.Password == newPass.CurrentPassword)
+            {
+                userCurrent.Password = newPass.NewPassword;
+                db.SaveChanges();
+            }
+            else
+            {
+                return false;
+            }
+            return true;
+        }
+
         #endregion
     }
 }
