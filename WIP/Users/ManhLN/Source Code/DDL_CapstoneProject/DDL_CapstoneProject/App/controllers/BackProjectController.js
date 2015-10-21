@@ -1,29 +1,41 @@
 ﻿"use strict";
 
-app.controller('BackProjectController', function ($scope, $rootScope, $location, toastr, CommmonService, ProjectService, rewardPkgs) {
+app.controller('BackProjectController', function ($scope, $route, $rootScope, $location, toastr, CommmonService, ProjectService, rewardPkgs) {
     // Get rewardPkgs
     $scope.RewardPkgs = rewardPkgs.data.Data;
 
-    $scope.save = function () {
-        $scope.Project.CategoryId = $scope.selectedOption.CategoryID;
+    // Back data
+    $scope.BackData = {};
 
-        var promisePost = ProjectService.createProject($scope.Project);
+    $scope.BackData.Quantity = 1;
 
-        promisePost.then(
-            function (result) {
-                if (result.data.Status === "success") {
-                    toastr.success('Bạn đã khởi tạo dự án thành công!', 'Thành công!');
-                    $location.path("/project/edit/" + result.data.Data).replace();
-                } else {
-                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                    $scope.Error = result.data.Message;
-                    toastr.error($scope.Error, 'Lỗi!');
-                }
-            },
-            function (error) {
-                $scope.Error = error.data.Message;
-                toastr.error($scope.Error, 'Lỗi!');
-            });
+    $scope.indexFlag = 1;
+
+    $scope.model = 1;
+
+    $scope.test = function (index) {
+        $scope.indexFlag = index;
+        $scope.BackData.Quantity = 1;
+        $scope.BackData.PledgeAmount = $scope.RewardPkgs[index - 1].PledgeAmount;
+    }
+
+    $scope.back = function (index) {
+        if (index == 'free') {
+            $scope.BackData.RewardPKgID = "nonRewardPKgs";
+            $scope.BackData.Quantity = 1;
+        } else {
+            $scope.BackData.RewardPKgID = $scope.RewardPkgs[index].RewardPkgID;
+        }
+
+        $scope.BackData.ProjectCode = $route.current.params.code;
+
+        var promisePost = ProjectService.addBack($scope.BackData);
+
+        if ($rootScope.UserInfo.IsAuthen == true) {
+            $location.path("/project/payment/" + $route.current.params.code).replace();
+        } else {
+            console.log("chua login");
+        }
     }
 
 });

@@ -134,7 +134,8 @@ app.controller('MessageController',
         }
 
         $scope.changeInboxSent = function (value) {
-            $scope.ListConversations = null;
+            $scope.selection = [];
+            addSelected(false);
             if (value === "inbox") {
                 getListReceivedConversation();
                 $scope.Sent = false;
@@ -142,8 +143,6 @@ app.controller('MessageController',
                 getListSentConversation();
                 $scope.Sent = true;
             }
-            $scope.selection = [];
-            addSelected(false);
         }
 
         $scope.Delete = function () {

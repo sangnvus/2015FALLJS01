@@ -14,8 +14,6 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
     // Detech create a new timeline point
     $scope.isCreateTimeline = false;
 
-
-
     // check error list
     $scope.errorListFlag = false;
 
