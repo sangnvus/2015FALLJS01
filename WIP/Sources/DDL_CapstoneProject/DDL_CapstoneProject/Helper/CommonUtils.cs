@@ -47,5 +47,33 @@ namespace DDL_CapstoneProject.Ultilities
             return string.Empty;
 
         }
+
+
+        public static DateTime ConvertDateTimeFromUtc(DateTime datetime)
+        {
+            var cetZone = TimeZoneInfo.FindSystemTimeZoneById(DDLConstants.TimeZoneId);
+            var cetTime = TimeZoneInfo.ConvertTimeFromUtc(datetime, cetZone);
+            return cetTime;
+        }
+        public static DateTime ConvertDateTimeToUtc(DateTime datetime)
+        {
+            var cetZone = TimeZoneInfo.FindSystemTimeZoneById(DDLConstants.TimeZoneId);
+            var cetTime = TimeZoneInfo.ConvertTimeToUtc(datetime, cetZone);
+            return cetTime;
+        }
+
+        public static DateTime DateTimeNowGMT7()
+        {
+            var cetZone = TimeZoneInfo.FindSystemTimeZoneById(DDLConstants.TimeZoneId);
+            var cetTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, cetZone);
+            return cetTime;
+        }
+
+        public static DateTime DateTodayGMT7()
+        {
+            var cetZone = TimeZoneInfo.FindSystemTimeZoneById(DDLConstants.TimeZoneId);
+            var cetTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow.Date, cetZone);
+            return cetTime;
+        }
     }
 }

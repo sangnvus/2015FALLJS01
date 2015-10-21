@@ -237,6 +237,8 @@ app.config(["$routeProvider", function ($routeProvider) {
 
         return taOptions;
     }]);
+}]).config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
+    cfpLoadingBarProvider.includeSpinner = false;
 }]);
 
 app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOptions', 'toastrConfig', 'blockUIConfig',
@@ -278,8 +280,13 @@ app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOpti
         // Config angular-blockui.
         blockUIConfig.delay = 100;
         blockUIConfig.blockBrowserNavigation = true;
-        blockUIConfig.template = '<div class="spinner-loader">aaa…</div>';
-
+        // Tell the blockUI service to ignore certain requests
+        blockUIConfig.requestFilter = function (config) {
+            // If the request starts with '/api/UserApi/GetListUserName' ...
+            if (config.url.match(/^\/api\/UserApi\/GetListUserName($|\/).*/)) {
+                return false; // ... don't block it.
+            }
+        };
         // Config angular toarstr.
         angular.extend(toastrConfig, {
             maxOpened: 2,

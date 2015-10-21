@@ -106,6 +106,7 @@ app.controller('MessageController',
                 function (result) {
                     if (result.data.Status === "success") {
                         $scope.ListConversations = result.data.Data;
+                        $scope.Sent = false;
                     } else {
                         CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         $scope.Error = result.data.Message;
@@ -123,6 +124,7 @@ app.controller('MessageController',
                 function (result) {
                     if (result.data.Status === "success") {
                         $scope.ListConversations = result.data.Data;
+                        $scope.Sent = true;
                     } else {
                         CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         $scope.Error = result.data.Message;
@@ -134,16 +136,13 @@ app.controller('MessageController',
         }
 
         $scope.changeInboxSent = function (value) {
-            $scope.ListConversations = null;
-            if (value === "inbox") {
-                getListReceivedConversation();
-                $scope.Sent = false;
-            } else {
-                getListSentConversation();
-                $scope.Sent = true;
-            }
             $scope.selection = [];
             addSelected(false);
+            if (value === "inbox") {
+                getListReceivedConversation();
+            } else {
+                getListSentConversation();
+            }
         }
 
         $scope.Delete = function () {

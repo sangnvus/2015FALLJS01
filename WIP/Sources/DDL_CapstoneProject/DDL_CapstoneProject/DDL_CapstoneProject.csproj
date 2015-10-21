@@ -242,6 +242,7 @@
     <Content Include="App\controllers\StarredProjectController.js" />
     <Content Include="App\directives\angular-morris-chart.min.js" />
     <Content Include="App\directives\elastic.js" />
+    <Content Include="App\directives\loading-bar.js" />
     <Content Include="App\directives\ngAutoComplete.js" />
     <Content Include="App\directives\ngEnter.js" />
     <Content Include="App\directives\ngFileDirty.js" />
@@ -304,6 +305,7 @@
     <Content Include="Content\images\sort_desc.png" />
     <Content Include="Content\images\sort_desc_disabled.png" />
     <Content Include="Content\Libraries\jquery.timelinr.css" />
+    <Content Include="Content\loading-bar.css" />
     <Content Include="Content\main.css" />
     <Content Include="Content\morris.css" />
     <Content Include="Content\spinner\spinner.css" />
@@ -324,6 +326,7 @@
     <Content Include="fonts\lato\lato-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\avatars\avatar_default.png" />
     <Content Include="images\avatars\avatar_test0001.jpg" />
     <Content Include="images\projects\projectimage1.jpg" />
     <Content Include="images\projects\projectimage2.jpg" />
@@ -1178,6 +1181,7 @@
     <Content Include="fonts\glyphicons\flat-ui-icons-regular.woff" />
     <Content Include="fonts\glyphicons\selection.json" />
     <Content Include="Content\flat-ui.css.map" />
+    <None Include="Properties\PublishProfiles\dandeliondemo.pubxml" />
     <None Include="Scripts\jquery-1.11.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\jquery-1.11.1.min.js" />

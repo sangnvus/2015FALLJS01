@@ -33,7 +33,7 @@ namespace DDL_CapstoneProject.Respository
             {
                 Username = string.Empty,
                 Email = string.Empty,
-                CreatedDate = DateTime.Now,
+                CreatedDate = DateTime.UtcNow,
                 IsActive = false,
                 IsVerify = false,
                 VerifyCode = string.Empty,
@@ -133,11 +133,11 @@ namespace DDL_CapstoneProject.Respository
             {
                 LoginType = DDLConstants.LoginType.FACEBOOK,
                 Email = me.email,
-                CreatedDate = DateTime.Now,
+                CreatedDate = DateTime.UtcNow,
                 IsActive = true,
                 Password = string.Empty,
                 IsVerify = true,
-                LastLogin = DateTime.Now,
+                LastLogin = DateTime.UtcNow,
                 UserType = DDLConstants.UserType.USER,
                 Username = me.id,
                 VerifyCode = string.Empty,
@@ -186,6 +186,7 @@ namespace DDL_CapstoneProject.Respository
                 newDLLUser.Email = newUser.Email;
                 newDLLUser.VerifyCode = verifyCode;
                 newDLLUser.UserInfo.FullName = newUser.FullName;
+                newDLLUser.UserInfo.ProfileImage = "avatar_default.png";
                 db.DDL_Users.Add(newDLLUser);
                 db.SaveChanges();
 
@@ -282,7 +283,10 @@ namespace DDL_CapstoneProject.Respository
                 throw new UserNotFoundException();
             }
 
-            return userPublic.FirstOrDefault();
+            var userPublicDTO = userPublic.FirstOrDefault();
+            userPublicDTO.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(userPublicDTO.CreatedDate);
+
+            return userPublicDTO;
         }
 
         public UserEditInfoDTO GetUserEditInfo(string userName)

@@ -42,12 +42,12 @@ namespace DDL_CapstoneProject.Migrations
                     IsVerify = true,
                     Email = "ngocmanh1712@gmail.com",
                     LoginType = DDLConstants.LoginType.NORMAL,
-                    CreatedDate = DateTime.Now,
+                    CreatedDate = DateTime.UtcNow,
                     UserInfo = new UserInfo
                     {           
                         Address = "Hung Yen",
                         Country = "Viet Nam",
-                        DateOfBirth = new DateTime(1993, 12, 17),
+                        DateOfBirth = DateTime.SpecifyKind(new DateTime(1993, 12, 17,12,0,0),DateTimeKind.Utc),
                         FullName = "Lưu Ngọc Mạnh",
                         Gender = DDLConstants.Gender.MALE,
                         ProfileImage = "avatar_manhmaluc.jpg",
@@ -67,12 +67,12 @@ namespace DDL_CapstoneProject.Migrations
                     IsVerify = true,
                     Email = "admin001@gmail.com",
                     LoginType = DDLConstants.LoginType.NORMAL,
-                    CreatedDate = DateTime.Now,
+                    CreatedDate = DateTime.UtcNow,
                     UserInfo = new UserInfo
                     {           
                         Address = "C213, Hoa Lac",
                         Country = "Viet Nam",
-                        DateOfBirth = new DateTime(1993, 12, 17),
+                        DateOfBirth = DateTime.SpecifyKind(new DateTime(1993, 12, 17,12,0,0),DateTimeKind.Utc),
                         FullName = "Administrator",
                         Gender = DDLConstants.Gender.MALE,
                         ProfileImage = "avatar_admin001.jpg",
@@ -91,12 +91,12 @@ namespace DDL_CapstoneProject.Migrations
                     IsVerify = true,
                     Email = "test0001@gmail.com",
                     LoginType = DDLConstants.LoginType.NORMAL,
-                    CreatedDate = DateTime.Now,
+                    CreatedDate = DateTime.UtcNow,
                     UserInfo = new UserInfo
                     {           
                         Address = "C213, Hoa Lac",
                         Country = "Viet Nam",
-                        DateOfBirth = new DateTime(1993, 12, 17),
+                        DateOfBirth = DateTime.SpecifyKind(new DateTime(1993, 12, 17,12,0,0),DateTimeKind.Utc),
                         FullName = "Test Accoumt",
                         Gender = DDLConstants.Gender.MALE,
                         ProfileImage = "avatar_test0001.jpg",
@@ -155,7 +155,7 @@ namespace DDL_CapstoneProject.Migrations
                     Title = "Emmett Louis Till, 1941–1955",
                     Description = "is murder catalyzed the civil rights movement. Help make the film that will tell his story.",
                     IsActive = true,
-                    CreatedDate = DateTime.Now,
+                    CreatedDate = DateTime.UtcNow,
                     ImageUrl = "/images/slides/slider1.jpg",
                     ButtonText = "View Project",
                     ButtonColor = "btn-success",
@@ -168,7 +168,7 @@ namespace DDL_CapstoneProject.Migrations
                     Title = "Eco - Global Survival Game",
                     Description = "Collaborate to build civilization in a simulated ecosystem, creating laws to make group decisions.",
                     IsActive = true,
-                    CreatedDate = DateTime.Now,
+                    CreatedDate = DateTime.UtcNow,
                     ImageUrl = "/images/slides/slider3.jpg",
                     ButtonText = "View Project",
                     ButtonColor = "btn-primary",
@@ -181,7 +181,7 @@ namespace DDL_CapstoneProject.Migrations
                     Title = "The World’s Cleanest Power Plant",
                     Description = "Support a team of architects who are working to reduce carbon emissions by making art in the sky.",
                     IsActive = true,
-                    CreatedDate = DateTime.Now,
+                    CreatedDate = DateTime.UtcNow,
                     ImageUrl = "/images/slides/slider2.jpg",
                     ButtonText = "Download",
                     ButtonColor = "btn-success",
@@ -193,14 +193,14 @@ namespace DDL_CapstoneProject.Migrations
 
             listSlides.ForEach(u => context.Slides.AddOrUpdate(x => x.Title, u));
             context.SaveChanges();
-			var listProject = new List<Project>();
+            var listProject = new List<Project>();
 
             var project = new Project
             {
                 CategoryID = 1,
                 CreatorID = 1,
-                CreatedDate = DateTime.Today,
-                ExpireDate = DateTime.Today.AddDays(30).AddHours(23).AddMinutes(59),
+                CreatedDate = DateTime.UtcNow.Date,
+                ExpireDate = DateTime.UtcNow.Date.AddDays(30).AddHours(23).AddMinutes(59),
                 CurrentFunded = 1000000,
                 FundingGoal = 100000000,
                 VideoUrl = "http://www.youtube.com/embed/jLHGnvnw-gI",
@@ -221,21 +221,21 @@ namespace DDL_CapstoneProject.Migrations
                     {
                         CommentContent = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?",
                         IsHide = false,
-                        CreatedDate = DateTime.Today,
+                        CreatedDate = DateTime.UtcNow,
                         UserID = 1,
                     }
                 }
             };
 
-    //context.Projects.AddOrUpdate(p => p.Title, project);
+            //context.Projects.AddOrUpdate(p => p.Title, project);
             //context.SaveChanges();
 
             var project2 = new Project
             {
                 CategoryID = 1,
                 CreatorID = 1,
-                CreatedDate = DateTime.Today,
-                ExpireDate = DateTime.Today.AddDays(30).AddHours(23).AddMinutes(59),
+                CreatedDate = DateTime.UtcNow.Date,
+                ExpireDate = DateTime.UtcNow.Date.AddDays(30).AddHours(23).AddMinutes(59),
                 CurrentFunded = 1000000,
                 FundingGoal = 100000000,
                 VideoUrl = "http://www.youtube.com/embed/jLHGnvnw-gI",
@@ -268,14 +268,14 @@ namespace DDL_CapstoneProject.Migrations
             //context.SaveChanges();
             listProject.ForEach(u => context.Projects.AddOrUpdate(x => x.Title, u));
             context.SaveChanges();
-      
+
 
             var comment = new Comment
             {
                 ProjectID = project.ProjectID,
                 CommentContent = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?",
                 IsHide = false,
-                CreatedDate = DateTime.Now,
+                CreatedDate = DateTime.UtcNow,
                 UserID = 1,
             };
 
@@ -287,7 +287,7 @@ namespace DDL_CapstoneProject.Migrations
                 new UpdateLog
                 {
                     Title = "Chỉnh sửa nội dung số 1!",
-                    CreatedDate = DateTime.Now,
+                    CreatedDate = DateTime.UtcNow,
                     Description = "Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. " +
                                   "Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, " +
                                   "in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. " +
@@ -303,7 +303,7 @@ namespace DDL_CapstoneProject.Migrations
                 new UpdateLog
                 {
                     Title = "Chỉnh sửa nội dung số 2!",
-                    CreatedDate = DateTime.Now.AddDays(10),
+                    CreatedDate = DateTime.UtcNow.AddDays(10),
                     Description = "Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. " +
                                   "Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, " +
                                   "in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. " +
@@ -319,7 +319,7 @@ namespace DDL_CapstoneProject.Migrations
                 new UpdateLog
                 {
                     Title = "Chỉnh sửa nội dung số 3!",
-                    CreatedDate = DateTime.Now.AddDays(15),
+                    CreatedDate = DateTime.UtcNow.AddDays(15),
                     Description = "Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. " +
                                   "Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, " +
                                   "in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. " +

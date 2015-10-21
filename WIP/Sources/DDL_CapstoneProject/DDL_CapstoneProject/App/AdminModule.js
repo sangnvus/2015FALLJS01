@@ -49,6 +49,8 @@ app.config(["$routeProvider", function ($routeProvider) {
 
         return taOptions;
     }]);
+}]).config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
+    cfpLoadingBarProvider.includeSpinner = false;
 }]);
 
 app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOptions', 'toastrConfig', 'blockUIConfig',

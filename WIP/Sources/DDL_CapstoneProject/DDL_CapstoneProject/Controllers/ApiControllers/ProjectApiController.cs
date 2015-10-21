@@ -867,7 +867,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         public IHttpActionResult GetCommentList(string code, string lastDateTime = "")
         {
             List<CommentDTO> result = null;
-            var datetime = !string.IsNullOrEmpty(lastDateTime) ? DateTime.Parse(lastDateTime) : DateTime.Now;
+            var datetime = !string.IsNullOrEmpty(lastDateTime) ? DateTime.Parse(lastDateTime) : CommonUtils.DateTimeNowGMT7();
             try
             {
                 // Get current user name.
