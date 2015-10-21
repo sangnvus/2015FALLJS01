@@ -26,6 +26,10 @@ app.controller('EditPasswordController', function ($scope, $sce, userpublicinfo,
             function (result) {
                 if (result.data.Status === "success") {
                     toastr.success('Thay đổi mật khẩu thành công');
+                    $scope.userPass.NewPassword = null;
+                    $scope.userPass.NewPasswordConfirm = null;
+                    $scope.userPass.CurrentPassword = null;
+                    $scope.ChangepassForm.$setPristine(true);
                 } else {
                     toastr.error('Mật khẩu hiện tại sai');
                 }
