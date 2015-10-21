@@ -232,7 +232,7 @@ app.config(["$routeProvider", function ($routeProvider) {
     $routeProvider.when("/project/backedProjectHistory",
       {
           templateUrl: "ClientPartial/BackedProjectHistory",
-          controller: 'BackedProjectHistoryProjectController',
+          controller: 'BackedHistoryProjectController',
           resolve: {
               projects: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
                   var promise = ProjectService.getBackedProjectHistory();

@@ -38,12 +38,13 @@ namespace DDL_CapstoneProject.Respository
         {
             Configuration.ProxyCreationEnabled = true;
             Configuration.LazyLoadingEnabled = true;
+            Database.SetInitializer<DDLDataContext>(null);
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+            
             // This line to remove "S" character of table name in database.
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             // This line set cascadedelete to false for all one-many relation.

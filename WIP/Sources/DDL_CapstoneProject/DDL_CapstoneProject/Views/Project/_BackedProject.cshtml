@@ -1,4 +1,5 @@
-﻿<div id="setting_container" class="paddingNavbar">
+﻿
+<div id="setting_container" class="paddingNavbar">
     <div class="row pull-right">
         <div class="col-sm-12 col-sm-offset-0">
             <ul id="" class="list-inline fnt18 fnt-b">
@@ -11,7 +12,6 @@
         </div>
     </div>
 </div>
-
 <div id="items-projects">
     <section id="portfolio" class="container">
         <h4 class="pt30">Backed projects:</h4>
@@ -19,45 +19,43 @@
             <li class=""><a class="c3" href="../#/project/backedProject">Dự án đã ủng hộ</a></li>
             <li class=""><a class="c-10" href="../#/project/backedProjectHistory">Lịch sử ủng hộ</a></li>
         </ul>
-        <ul class="portfolio-items col-4" ng-repeat="project in ListBackedProject">
-            <li class="portfolio-item apps">
-                <div class="item-inner">
-                    <div class="item-image column">
-                        <figure><img class="img-fit" src="\images\projects\{{project.ImageUrl}}" alt=""></figure>
+        <div ng-if="checkEmpty==0">Bạn chưa ủng hộ dự án nào</div>
+        <ul class="portfolio-items col-4">
+            <li class=" portfolio-item apps">
+                
+                <div class="item-inner" ng-if="checkEmpty>0" ng-repeat="project in ListBackedProject">
+                    <div class=" item-image hover01 column">
+                        <a href="project_detail.html"><figure><img class="img-fit" src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
                     </div>
                     <div class="item-title">
-                        <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
+                        <h5><a a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}} </a></h5>
                     </div>
-                    <div class="item-expand">
-                        <div class="item-content">
-                            <p class="fnt15">{{project.SubDescription}}</p>
+                    <div class="item-content">
+                        <p class="fnt15">{{project.SubDescription}}</p>
+                    </div>
+                    <div class="item-footer">
+                        <div class="mt10 mb5">
+                            <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
+                            &nbsp;&nbsp;
+                            <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
+                            &nbsp;&nbsp;
                         </div>
-                        <div class="item-footer">
-                            <div class="mt10 mb5">
-                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
-                                &nbsp;&nbsp;
-                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
-                                &nbsp;&nbsp;
+                        <div class="progress mt5 mb5">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="50" aria-valuemax="100" style="width: 50%">
+                                <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
                             </div>
-                            <div class="progress mt5 mb5">
-                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="50" aria-valuemax="100" style="width: 50%">
-                                    <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
-                                </div>
-                            </div>
-                            <ul class="list-inline">
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">đã được tài trợ</p></li>
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber | currency}}</p><p class="mt0 mb0">đã được gây quỹ</p></li>
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">ngày còn lại</p></li>
-                            </ul>
                         </div>
+                        <ul class="list-inline">
+                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">đã được tài trợ</p></li>
+                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber}}</p><p class="mt0 mb0">đã được gây quỹ</p></li>
+                            <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">ngày còn lại</p></li>
+                        </ul>
                     </div>
                 </div>
             </li><!--/.portfolio-item-->
+
         </ul>
     </section><!--/#portfolio-->
-    <div class="form-actions txt-c">
-        <a class="btn btn-transparent btn-sm" href="../#/project/backedProject">Xem thêm</a>
-    </div>
 </div>
 
 <div class="scroll-top-wrapper ">

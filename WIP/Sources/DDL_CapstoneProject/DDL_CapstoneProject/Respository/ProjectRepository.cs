@@ -586,12 +586,12 @@ namespace DDL_CapstoneProject.Respository
         }
 
         // 19/10/2015 - MaiCTP - Get BackedProjectHistory
-        public List<ProjectViewHistoryDTO> GetBackedProjectHistory(String userName)
+        public List<ProjectBasicViewDTO> GetBackedProjectHistory(String userName)
         {
                             var Project = (from backing in db.Backings
                            from project in db.Projects
                            where backing.User.Username == userName  && project.ProjectID == backing.ProjectID
-                           select new ProjectViewHistoryDTO
+                                           select new ProjectBasicViewDTO
                             {
                                 ProjectID = project.ProjectID,
                                 CreatorName = project.Creator.UserInfo.FullName,
@@ -603,6 +603,8 @@ namespace DDL_CapstoneProject.Respository
                          return Project;
 
         }
+
+        // 19/10/2015 - MaiCTP - Get BackedHistoryUser
 
         // 17/10/2015 - MaiCTP - Get BackedProject
         public List<ProjectBasicViewDTO> GetBackedProject(String userName)
@@ -696,6 +698,22 @@ namespace DDL_CapstoneProject.Respository
 
             return projectList.ToList();
 
+        }
+
+        //21/10/2015- MaiCTP - DeleteProjectReminded
+        public bool DeleteProjectReminded(int projectID)
+        {
+            var deleteProjectReminded = db.Reminds.SingleOrDefault(x => x.ProjectID == projectID);
+
+            if (deleteProjectReminded == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
+            db.Reminds.Remove(deleteProjectReminded);
+            db.SaveChanges();
+
+            return true;
         }
 
         public void RemindProject(string userName, string projectCode)

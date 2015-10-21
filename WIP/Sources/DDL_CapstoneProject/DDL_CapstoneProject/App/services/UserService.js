@@ -100,4 +100,11 @@ service.service('UserService', function ($http) {
         return request;
     }
 
+    this.getUserBackedInfo = function () {
+        var request = $http({
+            method: 'get',
+            url: '/api/UserApi/GetUserBackedInfo'
+        });
+        return request;
+    }
 });

@@ -360,6 +360,22 @@ namespace DDL_CapstoneProject.Respository
             return true;
         }
 
+        public UserBackedInfoDTO GetBackedUserInfo(string userName)
+        {
+            var currentUser = (from user in db.DDL_Users
+                               where user.Username.Equals(userName)
+                               select new UserBackedInfoDTO
+                               {
+                                   FullName = user.UserInfo.FullName,
+                                   ProfileImage = user.UserInfo.ProfileImage,
+                                   Email = user.Email,
+                                   Add = user.UserInfo.Address,
+                                   Phone = user.UserInfo.PhoneNumber
+                               }).FirstOrDefault();
+
+            return currentUser;
+        }
+
         #endregion
     }
 }

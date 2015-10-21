@@ -311,7 +311,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
         }
 
-        // Delete: api/ProjectApi/DeleteRewardPkg/:id 
+        // Delete: api/ProjectApi/DeleteProjectReminded/:id 
         [ResponseType(typeof(RewardPkgDTO))]
         [HttpDelete]
         public IHttpActionResult DeleteRewardPkg(int id)
@@ -922,11 +922,6 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
 
         //  17/10/2015 - MaiCTP - Get BAckedProject
-        //public IHttpActionResult GetBackedProject()
-        //{
-        //    var listBacked = ProjectRepository.Instance.GetBackedProject(User.Identity.Name);
-        //    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = listBacked });
-        //}
 
         [HttpGet]
         [ResponseType(typeof(ProjectBasicViewDTO))]
@@ -953,8 +948,8 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             try
             {
-                var ListBacked = ProjectRepository.Instance.GetBackedProject(User.Identity.Name);
-                listBacked = ListBacked;
+                listBacked = ProjectRepository.Instance.GetBackedProject(User.Identity.Name);
+                
                 
             }
             catch (ProjectNotFoundException)
@@ -976,14 +971,8 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [ResponseType(typeof(ProjectBasicViewDTO))]
         public IHttpActionResult GetBackedProjectHistory()
         {
-            List<ProjectViewHistoryDTO> listBacked = new List<ProjectViewHistoryDTO>();
+            List<ProjectBasicViewDTO> listBacked = new List<ProjectBasicViewDTO>();
 
-            var currentUser = getCurrentUser();
-
-            if (currentUser == null)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
-            }
 
             if (!ModelState.IsValid)
             {
@@ -997,9 +986,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             try
             {
-                var ListBacked = ProjectRepository.Instance.GetBackedProjectHistory(User.Identity.Name);
-                listBacked = ListBacked;
-
+                listBacked = ProjectRepository.Instance.GetBackedProjectHistory(User.Identity.Name);
             }
             catch (ProjectNotFoundException)
             {
@@ -1021,12 +1008,6 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         {
             List<ProjectBasicViewDTO> listStarred = new List<ProjectBasicViewDTO>();
 
-            var currentUser = getCurrentUser();
-
-            if (currentUser == null)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
-            }
 
             if (!ModelState.IsValid)
             {
@@ -1064,12 +1045,6 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         {
             List<ProjectBasicViewDTO> listCreated = new List<ProjectBasicViewDTO>();
 
-            var currentUser = getCurrentUser();
-
-            if (currentUser == null)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
-            }
 
             if (!ModelState.IsValid)
             {
@@ -1083,8 +1058,8 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             try
             {
-                var ListCreated = ProjectRepository.Instance.GetCreatedProject(User.Identity.Name);
-                listCreated = ListCreated;
+                listCreated = ProjectRepository.Instance.GetCreatedProject(User.Identity.Name);
+                
 
             }
             catch (ProjectNotFoundException)
@@ -1099,6 +1074,33 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = listCreated });
         }
+
+        //  21/10/2015 - MaiCTP - DeleteProjectReminded
+        
+        [ResponseType(typeof(ProjectBasicViewDTO))]
+        [HttpDelete]
+        public IHttpActionResult DeleteProjectReminded(int id)
+        {
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
+            try
+            {
+                var result = ProjectRepository.Instance.DeleteProjectReminded(id);
+
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
+        }
+
+
 
         [HttpGet]
         public IHttpActionResult RemindProject(string code)

@@ -433,12 +433,16 @@ app.service('ProjectService', function ($http) {
     this.getCreatedProject = function () {
         var request = $http({
             method: 'get',
-            url: '/api/ProjectApi/GetCreatedProject/'
+            url: '/api/ProjectApi/GetCreatedProject/',
 
         });
 
         return request;
 
+    }
+
+    this.deleteReminded = function (remindedProjectID) {
+        return $http.delete("/api/ProjectApi/DeleteProjectReminded/" + remindedProjectID);
     }
 
     this.remindProject = function (code) {
