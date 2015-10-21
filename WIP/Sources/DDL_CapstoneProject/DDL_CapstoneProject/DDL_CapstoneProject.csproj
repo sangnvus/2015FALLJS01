@@ -181,7 +181,6 @@
     <Compile Include="Models\DTOs\ProjectDetailDTO.cs" />
     <Compile Include="Models\DTOs\ProjectStoryDTO.cs" />
     <Compile Include="Models\DTOs\ProjectEditDTO.cs" />
-    <Compile Include="Models\DTOs\ProjectViewHistoryDTO.cs" />
     <Compile Include="Models\DTOs\QuestionDTO.cs" />
     <Compile Include="Models\DTOs\ReplyDTO.cs" />
     <Compile Include="Models\DTOs\ProjectBackDTO.cs" />
@@ -189,6 +188,7 @@
     <Compile Include="Models\DTOs\SlideDTO.cs" />
     <Compile Include="Models\DTOs\TimeLineDTO.cs" />
     <Compile Include="Models\DTOs\UpdateLogDTO.cs" />
+    <Compile Include="Models\DTOs\UserBackedInfoDTO.cs" />
     <Compile Include="Models\DTOs\UserBasicInfoDTO.cs" />
     <Compile Include="Models\DTOs\UserEditInfoDTO.cs" />
     <Compile Include="Models\DTOs\UserLoginDTO.cs" />
@@ -227,7 +227,7 @@
     <Content Include="App\AdminModule.js" />
     <Content Include="App\controllers\admin\AdminCategoryController.js" />
     <Content Include="App\controllers\admin\AdminDashboardController.js" />
-    <Content Include="App\controllers\BackedProjectHistoryProjectController.js" />
+    <Content Include="App\controllers\BackedHistoryProjectController.js" />
     <Content Include="App\controllers\EditPasswordController.js" />
     <Content Include="App\controllers\BackProjectController.js" />
     <Content Include="App\controllers\BackedProjectController.js" />
@@ -1254,6 +1254,8 @@
     <Content Include="Views\Project\_StarredProject.cshtml" />
     <Content Include="Views\User\_EditPassword.cshtml" />
     <Content Include="Views\Project\_PaymentProject.cshtml" />
+    <Content Include="Views\Project\_BackedProjectHistory.cshtml" />
+    <Content Include="Views\Project\_BackProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />
