@@ -39,16 +39,11 @@
                         <div for="email" class="pb20">
                             <label for="email" class="fnt18 fnt-b">Email</label>
                             <div class="input-group mt0">
-                                <input type="email" name="email" id="exampleInputEmail1" class="form-control " placeholder="Email liên lạc"
-                                       ng-model="UserEditInfo.Email"
-                                       required />
+                                <span type="email" name="email" id="exampleInputEmail1" class="form-control " placeholder="Email liên lạc">{{UserEditInfo.Email}}</span>
                                 <span class="input-group-btn">
                                     <button type="" class="btn"><span class="fui-mail"></span></button>
                                 </span>
                             </div>
-                            <span ng-show="myForm2.email.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
-                            <span style="color:red" ng-show="myForm2.email.$error.required">Bạn chưa nhập email!</span>
-                            <span style="color:red" ng-show="myForm2.email.$error.email">Email không đúng định dạng!</span>
                         </div>
                         <div for="image" class="pb30">
                             <label for="image" class="fnt18 fnt-b">Ảnh đại diện</label>
@@ -114,7 +109,8 @@
                                        placeholder="Địa chỉ liên hệ"
                                        name="address"
                                        ng-model="UserEditInfo.Addres"
-                                       required>
+                                       required ng-maxlength="60" maxlength="60" ng-trim="true"
+                                       ng-autocomplete ng-disabled="AllEditable == false">
                                 <span class="input-group-btn">
                                     <button type="" class="btn"><span class="fui-location"></span></button>
                                 </span>

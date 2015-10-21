@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, toastr, project, ProjectService, CommmonService) {
+app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, toastr, project, ProjectService, CommmonService, DTOptionsBuilder, DTColumnDefBuilder) {
     //Todo here.
     $scope.Project = project.data.Data;
     $scope.FirstUpdateLogs = false;
@@ -228,6 +228,16 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
             }
          );
     };
+
+    // Define table
+    $scope.dtOptions = DTOptionsBuilder.newOptions()
+    .withDisplayLength(10)
+    .withOption('order', [3, 'desc'])
+    .withBootstrap();
+
+    $scope.dtColumnDefs = [
+        DTColumnDefBuilder.newColumnDef(0).notSortable()
+    ];
     
     
 });
