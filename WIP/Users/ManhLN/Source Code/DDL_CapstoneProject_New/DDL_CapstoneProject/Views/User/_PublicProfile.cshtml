@@ -1,0 +1,35 @@
+﻿
+<div id="profile_public" class="paddingNavbar">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <img id="avatar-profile" ng-if="!checkHTTP(UserBasicInfo.ProfileImage)" ng-src="../images/avatars/{{UserBasicInfo.ProfileImage}}" alt="" class="img-responsive img-circle">
+                        <img id="avatar-profile" ng-if="checkHTTP(UserBasicInfo.ProfileImage)" ng-src="{{trustSrc(UserBasicInfo.ProfileImage)}}" alt="" class="img-responsive img-circle">
+                    </div>
+                    <div class="col-sm-8 pt10">
+                        <h3 class="fnt24 mt0 mb10">{{UserBasicInfo.FullName}}</h3>
+                        <p class="mt0 mb0">Đã tạo: {{UserBasicInfo.CountCreatedProject}} dự án</p>
+                        <p class="mt0 mb0">Đã ủng hộ: {{UserBasicInfo.CountBackedProject}} lượt</p>
+                        <p>Tham gia vào: {{UserBasicInfo.CreatedDate | date:"dd/MM/yyyy"}}</p>
+                    </div>
+                </div>
+                <div class="row pl10 pr10 pt20">
+                    <div class="readability">
+                        <h5 class="fnt22 fnt-b">Description lists</h5>
+                        <p style="word-break: break-word; white-space: pre-wrap;">{{UserBasicInfo.Biography}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="width:350px">
+                <div class="mt5 mb5 border-b"><i class="glyphicon glyphicon-lock"></i>&nbsp;&nbsp;Đăng nhập lần cuối: {{UserBasicInfo.LastLogin | date:"HH:mm dd/MM/yyyy"}}</div>
+                <div class="mt5 mb5 border-b"><i class="glyphicon glyphicon-globe"></i>&nbsp;&nbsp;<a href="{{UserBasicInfo.Website}}">{{UserBasicInfo.Website}}</a></div>
+                <div class="mt5 mb5 border-b" style="word-break: break-all"><i class="fa fa-facebook-square"></i>&nbsp;&nbsp;<a href="{{UserBasicInfo.FacebookUrl}}">{{UserBasicInfo.FullName}}</a></div>
+                <div class="mt5 mb5">
+                    <button class="btn btn-primary">Liên hệ với tôi</button>
+                </div>
+            </div>
+        </div> <!-- end ROW -->
+    </div> <!--end CONTAINER -->
+</div> <!-- end PROFILE PUBLIC -->

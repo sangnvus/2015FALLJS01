@@ -1,0 +1,203 @@
+﻿@{
+    ViewBag.Title = "Discover";
+}
+<div id="setting_container" class="container-fluid paddingNavbar">
+    <div id="discover-title">
+        <div class="container ">
+            <h3 class="txt-c">Discover</h3>
+            <h5 class="fnt20 fnt-bold txt-c">15 diverse categories. Thousands of amazing projects.</h5>
+        </div>
+    </div> <!-- Feature1 -->
+
+    <div id="item-category">
+        <section class="container">
+            <ul class="portfolio-items col-5">
+                <li ng-repeat="category in categoryprojectcount">
+                    <div class="item-inner pb20 pr20">
+                        <a href="search.html">
+                            <div class="thumbnail feature2_animation_box thumbnail_size">
+                                <div class="first_link fnt-b fnt20 c-10">{{category.Name}}</div>
+                                <div class="liveproject_art_font">{{category.projectCount}} live project</div>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </div> <!-- end Item-category -->
+
+    <div id="item-popular" class="pt30">
+        <section id="portfolio" class="container">
+            <h4 class="pull-left">What's popular:</h4>
+            <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="discover.html">See more</a>
+            <div class="clearfix"></div>
+            <ul class="portfolio-items col-3">
+                <li class="portfolio-item" ng-repeat="project in popularproject">
+                    <div class="item-inner">
+                        <div class="item-image hover01 column">
+                            <figure><img ng-src="/images/projects/{{project.ImageUrl}}" alt=""></figure>
+                        </div>
+                        <div class="item-title">
+                            <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
+                        </div>
+                        <div class="item-content">
+                            <p class="fnt15">{{project.SubDescription}}</p>
+                        </div>
+                        <div class="item-footer">
+                            <div class="mt10 mb5">
+                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
+                                &nbsp;&nbsp;
+                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
+                                &nbsp;&nbsp;
+                            </div>
+                            <div class="progress mt5 mb5">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
+                                    <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
+                                </div>
+                            </div>
+                            <ul class="list-inline">
+                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">funded</p></li>
+                                <li><p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p><p class="mt0 mb0">pledged</p></li>
+                                <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">days to go</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li><!--/.portfolio-item-->
+            </ul>
+            <div class="form-actions txt-c">
+            </div>
+        </section><!--/#portfolio-->
+    </div> <!-- end item-popular -->
+
+    <div id="item-newest" class="pt30">
+        <section id="portfolio" class="container">
+            <h4 class="pull-left">What's newest:</h4>
+            <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="discover.html">See more</a>
+            <div class="clearfix"></div>
+            <ul class="portfolio-items col-3">
+                <li class="portfolio-item" ng-repeat="project in newestproject">
+                    <div class="item-inner">
+                        <div class="item-image hover01 column">
+                            <figure><img ng-src="/images/projects/{{project.ImageUrl}}" alt=""></figure>
+                        </div>
+                        <div class="item-title">
+                            <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
+                        </div>
+                        <div class="item-content">
+                            <p class="fnt15">{{project.SubDescription}}</p>
+                        </div>
+                        <div class="item-footer">
+                            <div class="mt10 mb5">
+                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
+                                &nbsp;&nbsp;
+                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
+                                &nbsp;&nbsp;
+                            </div>
+                            <div class="progress mt5 mb5">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
+                                    <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
+                                </div>
+                            </div>
+                            <ul class="list-inline">
+                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">funded</p></li>
+                                <li><p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p><p class="mt0 mb0">pledged</p></li>
+                                <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">days to go</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li><!--/.portfolio-item-->
+            </ul>
+            <div class="form-actions txt-c">
+            </div>
+        </section><!--/#portfolio-->
+    </div> <!-- end item-newest -->
+
+    <div id="item-most-fund" class="pt30">
+        <section id="portfolio" class="container">
+            <h4 class="pull-left">What's most fund:</h4>
+            <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="discover.html">See more</a>
+            <div class="clearfix"></div>
+
+            <ul class="portfolio-items col-3">
+                <li class="portfolio-item" ng-repeat="project in mostfundproject">
+                    <div class="item-inner">
+                        <div class="item-image hover01 column">
+                            <figure><img ng-src="/images/projects/{{project.ImageUrl}}" alt=""></figure>
+                        </div>
+                        <div class="item-title">
+                            <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
+                        </div>
+                        <div class="item-content">
+                            <p class="fnt15">{{project.SubDescription}}</p>
+                        </div>
+                        <div class="item-footer">
+                            <div class="mt10 mb5">
+                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
+                                &nbsp;&nbsp;
+                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
+                                &nbsp;&nbsp;
+                            </div>
+                            <div class="progress mt5 mb5">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
+                                    <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
+                                </div>
+                            </div>
+                            <ul class="list-inline">
+                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">funded</p></li>
+                                <li><p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p><p class="mt0 mb0">pledged</p></li>
+                                <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">days to go</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li><!--/.portfolio-item-->
+            </ul>
+            <div class="form-actions txt-c">
+            </div>
+        </section><!--/#portfolio-->
+    </div> <!-- end item-most-fund -->
+
+    <div id="item-end-date" class="pt30 pb30">
+        <section id="portfolio" class="container">
+            <h4 class="pull-left">What's end date:</h4>
+            <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="discover.html">See more</a>
+            <div class="clearfix"></div>
+            <ul class="portfolio-items col-3">
+                <li class="portfolio-item" ng-repeat="project in enddateproject">
+                    <div class="item-inner">
+                        <div class="item-image hover01 column">
+                            <figure><img ng-src="/images/projects/{{project.ImageUrl}}" alt=""></figure>
+                        </div>
+                        <div class="item-title">
+                            <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
+                        </div>
+                        <div class="item-content">
+                            <p class="fnt15">{{project.SubDescription}}</p>
+                        </div>
+                        <div class="item-footer">
+                            <div class="mt10 mb5">
+                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
+                                &nbsp;&nbsp;
+                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
+                                &nbsp;&nbsp;
+                            </div>
+                            <div class="progress mt5 mb5">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
+                                    <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
+                                </div>
+                            </div>
+                            <ul class="list-inline">
+                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">funded</p></li>
+                                <li><p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p><p class="mt0 mb0">pledged</p></li>
+                                <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">days to go</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li><!--/.portfolio-item-->
+            </ul>
+
+            <div class="form-actions txt-c">
+            </div>
+        </section><!--/#portfolio-->
+    </div> <!-- end item-end-date -->
+
+</div>
