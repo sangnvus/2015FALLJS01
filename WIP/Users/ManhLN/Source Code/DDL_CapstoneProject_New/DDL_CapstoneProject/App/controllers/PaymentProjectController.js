@@ -1,8 +1,10 @@
 ﻿"use strict";
 
-app.controller('PaymentProjectController', function ($scope, $rootScope, $location, toastr, CommmonService, ProjectService, rewardPkgs, usereditinfo) {
+app.controller('PaymentProjectController', function ($scope, $rootScope, $route, $location, toastr, CommmonService, ProjectService, rewardPkgs, usereditinfo, project) {
     // Get rewardPkgs
     $scope.RewardPkgs = rewardPkgs.data.Data;
+    // Get Project basic information
+    $scope.Project = project.data.Data;
 
     // Get backingdata form backing page
     $scope.BackData = ProjectService.getBack();
@@ -13,11 +15,25 @@ app.controller('PaymentProjectController', function ($scope, $rootScope, $locati
     // Initial backing data record
     $scope.backingData = {};
 
-    $scope.paymentFrom = {};
-
     $scope.backingData.RewardPKgID = $scope.BackData.RewardPKgID;
     $scope.backingData.PledgeAmount = $scope.BackData.PledgeAmount;
     $scope.backingData.Quantity = $scope.BackData.Quantity;
+
+    for (var i = 0; i < $scope.RewardPkgs.length; i++) {
+        if ($scope.RewardPkgs[i].RewardPkgID == $scope.BackData.RewardPKgID) {
+            $scope.Packet = $scope.RewardPkgs[i];
+        }
+    }
+
+    if ($scope.BackData.PledgeAmount == null) {
+        $location.path("/project/back/" + $route.current.params.code).replace();
+    }
+
+    //$scope.enableSubmit = false;
+
+    //if ($scope.UserBasicInfo.Addres != null && $scope.UserBasicInfo.FullName != null && $scope.UserBasicInfo.Email != null && $scope.UserBasicInfo.ContactNumber != null) {
+    //    $scope.enableSubmit = true;
+    //}
 
     $scope.submit = function () {
         $scope.backingData.ProjectCode = $scope.BackData.ProjectCode;

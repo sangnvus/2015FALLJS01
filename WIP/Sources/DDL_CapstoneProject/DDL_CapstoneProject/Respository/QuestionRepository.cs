@@ -11,12 +11,10 @@ namespace DDL_CapstoneProject.Respository
 {
     public class QuestionRepository : SingletonBase<QuestionRepository>
     {
-        private DDLDataContext db;
 
         #region "Constructors"
         private QuestionRepository()
         {
-            db = new DDLDataContext();
         }
         #endregion
 
@@ -28,21 +26,24 @@ namespace DDL_CapstoneProject.Respository
         /// <returns>questionList</returns>
         public List<QuestionDTO> GetQuestion(int ProjectID)
         {
-            // Get rewardPkg list
-            var questionList = (from Question in db.Questions
-                                where Question.ProjectID == ProjectID
-                                orderby Question.CreatedDate ascending
-                                select new QuestionDTO
-                                {
-                                    Answer = Question.Answer,
-                                    CreatedDate = Question.CreatedDate,
-                                    QuestionContent = Question.QuestionContent,
-                                    QuestionID = Question.QuestionID
-                                }).ToList();
+            using (var db = new DDLDataContext())
+            {
+                // Get rewardPkg list
+                var questionList = (from Question in db.Questions
+                    where Question.ProjectID == ProjectID
+                    orderby Question.CreatedDate ascending
+                    select new QuestionDTO
+                    {
+                        Answer = Question.Answer,
+                        CreatedDate = Question.CreatedDate,
+                        QuestionContent = Question.QuestionContent,
+                        QuestionID = Question.QuestionID
+                    }).ToList();
 
-            questionList.ForEach(x => x.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(x.CreatedDate));
+                questionList.ForEach(x => x.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(x.CreatedDate));
 
-            return questionList.ToList();
+                return questionList.ToList();
+            }
         }
 
         /// <summary>
@@ -53,26 +54,29 @@ namespace DDL_CapstoneProject.Respository
         /// <returns>newQuestionDTO</returns>
         public QuestionDTO CreateQuestion(int ProjectID, QuestionDTO question)
         {
-            var newQuestion = db.Questions.Create();
-            newQuestion.ProjectID = ProjectID;
-            newQuestion.CreatedDate = DateTime.UtcNow;
-            newQuestion.QuestionContent = question.QuestionContent;
-            newQuestion.Answer = question.Answer;
-
-            db.Questions.Add(newQuestion);
-            db.SaveChanges();
-
-            var newQuestionDTO = new QuestionDTO
+            using (var db = new DDLDataContext())
             {
-                Answer = newQuestion.Answer,
-                CreatedDate = newQuestion.CreatedDate,
-                QuestionContent = newQuestion.QuestionContent,
-                QuestionID = newQuestion.QuestionID
-            };
+                var newQuestion = db.Questions.Create();
+                newQuestion.ProjectID = ProjectID;
+                newQuestion.CreatedDate = DateTime.UtcNow;
+                newQuestion.QuestionContent = question.QuestionContent;
+                newQuestion.Answer = question.Answer;
 
-            newQuestionDTO.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(newQuestionDTO.CreatedDate);
+                db.Questions.Add(newQuestion);
+                db.SaveChanges();
 
-            return newQuestionDTO;
+                var newQuestionDTO = new QuestionDTO
+                {
+                    Answer = newQuestion.Answer,
+                    CreatedDate = newQuestion.CreatedDate,
+                    QuestionContent = newQuestion.QuestionContent,
+                    QuestionID = newQuestion.QuestionID
+                };
+
+                newQuestionDTO.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(newQuestionDTO.CreatedDate);
+
+                return newQuestionDTO;
+            }
         }
 
         /// <summary>
@@ -81,23 +85,26 @@ namespace DDL_CapstoneProject.Respository
         /// <returns>boolean</returns>
         public bool EditQuestion(List<QuestionDTO> question)
         {
-            foreach (var qa in question)
+            using (var db = new DDLDataContext())
             {
-                var updateQuestion = db.Questions.SingleOrDefault(x => x.QuestionID == qa.QuestionID);
-
-                if (updateQuestion == null)
+                foreach (var qa in question)
                 {
-                    throw new KeyNotFoundException();
+                    var updateQuestion = db.Questions.SingleOrDefault(x => x.QuestionID == qa.QuestionID);
+
+                    if (updateQuestion == null)
+                    {
+                        throw new KeyNotFoundException();
+                    }
+
+                    updateQuestion.Answer = qa.Answer;
+                    updateQuestion.CreatedDate = DateTime.UtcNow;
+                    updateQuestion.QuestionContent = qa.QuestionContent;
+
+                    db.SaveChanges();
                 }
 
-                updateQuestion.Answer = qa.Answer;
-                updateQuestion.CreatedDate = DateTime.UtcNow;
-                updateQuestion.QuestionContent = qa.QuestionContent;
-
-                db.SaveChanges();
+                return true;
             }
-
-            return true;
         }
 
         /// <summary>
@@ -107,17 +114,20 @@ namespace DDL_CapstoneProject.Respository
         /// <returns>boolean</returns>
         public bool DeleteQuestion(int questionID)
         {
-            var deleteQuestion = db.Questions.SingleOrDefault(x => x.QuestionID == questionID);
-
-            if (deleteQuestion == null)
+            using (var db = new DDLDataContext())
             {
-                throw new KeyNotFoundException();
+                var deleteQuestion = db.Questions.SingleOrDefault(x => x.QuestionID == questionID);
+
+                if (deleteQuestion == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                db.Questions.Remove(deleteQuestion);
+                db.SaveChanges();
+
+                return true;
             }
-
-            db.Questions.Remove(deleteQuestion);
-            db.SaveChanges();
-
-            return true;
         }
 
         #endregion

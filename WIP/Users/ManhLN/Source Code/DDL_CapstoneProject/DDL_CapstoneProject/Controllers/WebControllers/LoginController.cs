@@ -25,7 +25,7 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
             for (int i = 0; i < limit; i++)
             {
                 var cookieName = Request.Cookies[i].Name;
-                var cookie = new HttpCookie(cookieName) { Expires = DateTime.Now.AddDays(-1) };
+                var cookie = new HttpCookie(cookieName) { Expires = DateTime.UtcNow.AddDays(-1) };
                 Response.Cookies.Add(cookie);
             }
             ViewBag.ReturnUrl = returnUrl;
@@ -59,8 +59,8 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
             }
             else
             {
-                FormsAuthentication.SetAuthCookie(user.Username, model.RememberMe); 
-                user.LastLogin = DateTime.Now;
+                FormsAuthentication.SetAuthCookie(user.Username, model.RememberMe);
+                user.LastLogin = DateTime.UtcNow;
                 UserRepository.Instance.UpdateUser(user);
                 if (string.IsNullOrEmpty(returnUrl))
                 {
@@ -164,7 +164,7 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
             {
                 newUser.LoginType = DDLConstants.LoginType.BOTH;
                 newUser.IsVerify = true;
-                newUser.LastLogin = DateTime.Now;
+                newUser.LastLogin = DateTime.UtcNow;
                 newUser.UserInfo.FacebookUrl = me.link;
                 newUser.UserInfo.ProfileImage = "https://graph.facebook.com/" + facebookId + "/picture?type=large";
                 newUser = UserRepository.Instance.UpdateUser(newUser);
@@ -179,7 +179,7 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
             // Set the auth cookie
 
             FormsAuthentication.SetAuthCookie(newUser.Username, false);
-            newUser.LastLogin = DateTime.Now;
+            newUser.LastLogin = DateTime.UtcNow;
             UserRepository.Instance.UpdateUser(newUser);
             //SessionHelper.RenewCurrentUser();
 
@@ -265,7 +265,7 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
             else
             {
                 FormsAuthentication.SetAuthCookie(user.Username, model.RememberMe);
-                user.LastLogin = DateTime.Now;
+                user.LastLogin = DateTime.UtcNow;
                 UserRepository.Instance.UpdateUser(user);
                 if (string.IsNullOrEmpty(returnUrl))
                 {

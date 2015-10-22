@@ -156,6 +156,10 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             {
                 return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
             }
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
             try
             {
                 userExist = UserRepository.Instance.GetUserPublicInfo(username);

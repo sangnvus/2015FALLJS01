@@ -13,12 +13,10 @@ namespace DDL_CapstoneProject.Respository
 {
     public class RewardPkgRepository : SingletonBase<RewardPkgRepository>
     {
-        private DDLDataContext db;
 
         #region "Constructors"
         private RewardPkgRepository()
         {
-            db = new DDLDataContext();
         }
         #endregion
 
@@ -30,26 +28,32 @@ namespace DDL_CapstoneProject.Respository
         /// <returns>rewardList</returns>
         public List<RewardPkgDTO> GetRewardPkg(int ProjectID)
         {
-            // Get rewardPkg list
-            var rewardList = (from RewardPkg in db.RewardPkgs
-                              where RewardPkg.ProjectID == ProjectID
-                              orderby RewardPkg.Type ascending
-                              select new RewardPkgDTO()
-                              {
-                                  Description = RewardPkg.Description,
-                                  PledgeAmount = RewardPkg.PledgeAmount,
-                                  EstimatedDelivery = RewardPkg.EstimatedDelivery,
-                                  IsHide = RewardPkg.IsHide,
-                                  Quantity = RewardPkg.Quantity,
-                                  RewardPkgID = RewardPkg.RewardPkgID,
-                                  Type = RewardPkg.Type,
-                                  CurrentQuantity = RewardPkg.CurrentQuantity,
-                                  Backers = db.BackingDetails.Count(t => t.RewardPkgID == RewardPkg.RewardPkgID)
-                              }).ToList();
+            using (var db = new DDLDataContext())
+            {
+                // Get rewardPkg list
+                var rewardList = (from RewardPkg in db.RewardPkgs
+                    where RewardPkg.ProjectID == ProjectID
+                    orderby RewardPkg.Type ascending
+                    select new RewardPkgDTO()
+                    {
+                        Description = RewardPkg.Description,
+                        PledgeAmount = RewardPkg.PledgeAmount,
+                        EstimatedDelivery = RewardPkg.EstimatedDelivery,
+                        IsHide = RewardPkg.IsHide,
+                        Quantity = RewardPkg.Quantity,
+                        RewardPkgID = RewardPkg.RewardPkgID,
+                        Type = RewardPkg.Type,
+                        CurrentQuantity = RewardPkg.CurrentQuantity,
+                        Backers = db.BackingDetails.Count(t => t.RewardPkgID == RewardPkg.RewardPkgID)
+                    }).ToList();
 
-            rewardList.ForEach(x => x.EstimatedDelivery = CommonUtils.ConvertDateTimeFromUtc(x.EstimatedDelivery.GetValueOrDefault()));
+                rewardList.ForEach(
+                    x =>
+                        x.EstimatedDelivery =
+                            CommonUtils.ConvertDateTimeFromUtc(x.EstimatedDelivery.GetValueOrDefault()));
 
-            return rewardList;
+                return rewardList;
+            }
         }
 
         /// <summary>
@@ -58,28 +62,34 @@ namespace DDL_CapstoneProject.Respository
         /// <returns>rewardList</returns>
         public List<RewardPkgDTO> GetRewardPkgByCode(string code)
         {
-            var project = db.Projects.SingleOrDefault(x => x.ProjectCode == code);
+            using (var db = new DDLDataContext())
+            {
+                var project = db.Projects.SingleOrDefault(x => x.ProjectCode == code);
 
-            // Get rewardPkg list
-            var rewardList = (from RewardPkg in db.RewardPkgs
-                              where RewardPkg.ProjectID == project.ProjectID && RewardPkg.IsHide == false
-                              orderby RewardPkg.PledgeAmount ascending
-                              select new RewardPkgDTO()
-                              {
-                                  Description = RewardPkg.Description,
-                                  PledgeAmount = RewardPkg.PledgeAmount,
-                                  EstimatedDelivery = RewardPkg.EstimatedDelivery,
-                                  IsHide = RewardPkg.IsHide,
-                                  Quantity = RewardPkg.Quantity,
-                                  RewardPkgID = RewardPkg.RewardPkgID,
-                                  Type = RewardPkg.Type,
-                                  CurrentQuantity = RewardPkg.CurrentQuantity,
-                                  Backers = db.BackingDetails.Count(t => t.RewardPkgID == RewardPkg.RewardPkgID)
-                              }).ToList();
+                // Get rewardPkg list
+                var rewardList = (from RewardPkg in db.RewardPkgs
+                    where RewardPkg.ProjectID == project.ProjectID && RewardPkg.IsHide == false
+                    orderby RewardPkg.PledgeAmount ascending
+                    select new RewardPkgDTO()
+                    {
+                        Description = RewardPkg.Description,
+                        PledgeAmount = RewardPkg.PledgeAmount,
+                        EstimatedDelivery = RewardPkg.EstimatedDelivery,
+                        IsHide = RewardPkg.IsHide,
+                        Quantity = RewardPkg.Quantity,
+                        RewardPkgID = RewardPkg.RewardPkgID,
+                        Type = RewardPkg.Type,
+                        CurrentQuantity = RewardPkg.CurrentQuantity,
+                        Backers = db.BackingDetails.Count(t => t.RewardPkgID == RewardPkg.RewardPkgID)
+                    }).ToList();
 
-            rewardList.ForEach(x => x.EstimatedDelivery = CommonUtils.ConvertDateTimeFromUtc(x.EstimatedDelivery.GetValueOrDefault()));
+                rewardList.ForEach(
+                    x =>
+                        x.EstimatedDelivery =
+                            CommonUtils.ConvertDateTimeFromUtc(x.EstimatedDelivery.GetValueOrDefault()));
 
-            return rewardList.ToList();
+                return rewardList.ToList();
+            }
         }
 
         /// <summary>
@@ -90,43 +100,47 @@ namespace DDL_CapstoneProject.Respository
         /// <returns>newRewardPkg</returns>
         public RewardPkgDTO CreateRewardPkg(int ProjectID, RewardPkgDTO rewardPkg)
         {
-            var newRewardPkg = db.RewardPkgs.Create();
-
-            newRewardPkg.ProjectID = ProjectID;
-            newRewardPkg.PledgeAmount = rewardPkg.PledgeAmount;
-            newRewardPkg.Description = rewardPkg.Description;
-            newRewardPkg.EstimatedDelivery = rewardPkg.EstimatedDelivery;
-            newRewardPkg.Quantity = rewardPkg.Quantity;
-            newRewardPkg.Type = rewardPkg.Type;
-            newRewardPkg.IsHide = rewardPkg.IsHide;
-
-            if (newRewardPkg.EstimatedDelivery != null)
+            using (var db = new DDLDataContext())
             {
-                newRewardPkg.EstimatedDelivery =
-                    CommonUtils.ConvertDateTimeToUtc(newRewardPkg.EstimatedDelivery.GetValueOrDefault());
+                var newRewardPkg = db.RewardPkgs.Create();
+
+                newRewardPkg.ProjectID = ProjectID;
+                newRewardPkg.PledgeAmount = rewardPkg.PledgeAmount;
+                newRewardPkg.Description = rewardPkg.Description;
+                newRewardPkg.EstimatedDelivery = rewardPkg.EstimatedDelivery;
+                newRewardPkg.Quantity = rewardPkg.Quantity;
+                newRewardPkg.Type = rewardPkg.Type;
+                newRewardPkg.IsHide = rewardPkg.IsHide;
+
+                if (newRewardPkg.EstimatedDelivery != null)
+                {
+                    newRewardPkg.EstimatedDelivery =
+                        CommonUtils.ConvertDateTimeToUtc(newRewardPkg.EstimatedDelivery.GetValueOrDefault());
+                }
+
+                db.RewardPkgs.Add(newRewardPkg);
+                db.SaveChanges();
+
+                var newRewardPkgDTO = new RewardPkgDTO
+                {
+                    Backers = db.BackingDetails.Count(t => t.RewardPkgID == newRewardPkg.RewardPkgID),
+                    PledgeAmount = newRewardPkg.PledgeAmount,
+                    Description = newRewardPkg.Description,
+                    EstimatedDelivery = newRewardPkg.EstimatedDelivery,
+                    Quantity = newRewardPkg.Quantity,
+                    Type = newRewardPkg.Type,
+                    IsHide = newRewardPkg.IsHide,
+                    RewardPkgID = newRewardPkg.RewardPkgID
+                };
+
+                if (newRewardPkgDTO.EstimatedDelivery != null)
+                {
+                    newRewardPkgDTO.EstimatedDelivery =
+                        CommonUtils.ConvertDateTimeFromUtc(newRewardPkgDTO.EstimatedDelivery.GetValueOrDefault());
+                }
+
+                return newRewardPkgDTO;
             }
-
-            db.RewardPkgs.Add(newRewardPkg);
-            db.SaveChanges();
-
-            var newRewardPkgDTO = new RewardPkgDTO
-            {
-                Backers = db.BackingDetails.Count(t => t.RewardPkgID == newRewardPkg.RewardPkgID),
-                PledgeAmount = newRewardPkg.PledgeAmount,
-                Description = newRewardPkg.Description,
-                EstimatedDelivery = newRewardPkg.EstimatedDelivery,
-                Quantity = newRewardPkg.Quantity,
-                Type = newRewardPkg.Type,
-                IsHide = newRewardPkg.IsHide,
-                RewardPkgID = newRewardPkg.RewardPkgID
-            };
-
-            if (newRewardPkgDTO.EstimatedDelivery != null)
-            {
-                newRewardPkgDTO.EstimatedDelivery = CommonUtils.ConvertDateTimeFromUtc(newRewardPkgDTO.EstimatedDelivery.GetValueOrDefault());
-            }
-
-            return newRewardPkgDTO;
         }
 
         /// <summary>
@@ -135,28 +149,32 @@ namespace DDL_CapstoneProject.Respository
         /// <returns></returns>
         public bool EditRewardPkg(RewardPkgDTO rewardPkg)
         {
-            var updateReward = db.RewardPkgs.SingleOrDefault(x => x.RewardPkgID == rewardPkg.RewardPkgID);
-
-            if (updateReward == null)
+            using (var db = new DDLDataContext())
             {
-                throw new KeyNotFoundException();
+                var updateReward = db.RewardPkgs.SingleOrDefault(x => x.RewardPkgID == rewardPkg.RewardPkgID);
+
+                if (updateReward == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                if (updateReward.EstimatedDelivery != null)
+                {
+                    updateReward.EstimatedDelivery =
+                        CommonUtils.ConvertDateTimeToUtc(updateReward.EstimatedDelivery.GetValueOrDefault());
+                }
+
+                updateReward.Description = rewardPkg.Description;
+                updateReward.EstimatedDelivery = rewardPkg.EstimatedDelivery;
+                updateReward.Quantity = rewardPkg.Quantity;
+                updateReward.IsHide = rewardPkg.IsHide;
+                updateReward.Type = rewardPkg.Type;
+                updateReward.PledgeAmount = rewardPkg.PledgeAmount;
+
+                db.SaveChanges();
+
+                return true;
             }
-
-            if (updateReward.EstimatedDelivery != null)
-            {
-                updateReward.EstimatedDelivery = CommonUtils.ConvertDateTimeToUtc(updateReward.EstimatedDelivery.GetValueOrDefault());
-            }
-
-            updateReward.Description = rewardPkg.Description;
-            updateReward.EstimatedDelivery = rewardPkg.EstimatedDelivery;
-            updateReward.Quantity = rewardPkg.Quantity;
-            updateReward.IsHide = rewardPkg.IsHide;
-            updateReward.Type = rewardPkg.Type;
-            updateReward.PledgeAmount = rewardPkg.PledgeAmount;
-
-            db.SaveChanges();
-
-            return true;
         }
 
         /// <summary>
@@ -166,17 +184,20 @@ namespace DDL_CapstoneProject.Respository
         /// <returns>boolean</returns>
         public bool DeleteRewardPkg(int rewardPkgID)
         {
-            var deleteRewardPkg = db.RewardPkgs.SingleOrDefault(x => x.RewardPkgID == rewardPkgID);
-
-            if (deleteRewardPkg == null)
+            using (var db = new DDLDataContext())
             {
-                throw new KeyNotFoundException();
+                var deleteRewardPkg = db.RewardPkgs.SingleOrDefault(x => x.RewardPkgID == rewardPkgID);
+
+                if (deleteRewardPkg == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                db.RewardPkgs.Remove(deleteRewardPkg);
+                db.SaveChanges();
+
+                return true;
             }
-
-            db.RewardPkgs.Remove(deleteRewardPkg);
-            db.SaveChanges();
-
-            return true;
         }
 
         #endregion

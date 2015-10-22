@@ -84,7 +84,7 @@ app.controller('MessageController',
                             if ($scope.Sent) {
                                 $scope.ListConversations.unshift(result.data.Data);
                             }
-                            toastr.success("Gửi tin nhắn thành công!", 'Thông báo!');
+                            toastr.success("Gửi tin nhắn thành công thành công");
                         } else {
                             CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                             $scope.Error = result.data.Message;

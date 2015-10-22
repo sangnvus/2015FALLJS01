@@ -106,7 +106,7 @@
                                     <span class="text-muted">- Hi again! I wanted to let you know that the order...</span>
                                 </a>
                             </td>
-                            <td class="date-col"> {{conversation.UpdatedDate | date:'shortDate'}}</td>
+                            <td class="date-col"> {{conversation.UpdatedDate | date:'dd/MM/yy'}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -149,6 +149,7 @@
                                        placeholder="Nhập tiêu đề..."
                                        name="Title"
                                        ng-model="NewMessage.Title"
+                                       ng-model-options="{ updateOn: 'change blur'}"
                                        required=""
                                        ng-minlength="8"
                                        ng-maxlength="50">

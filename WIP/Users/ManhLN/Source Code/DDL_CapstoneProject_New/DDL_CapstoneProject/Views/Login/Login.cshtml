@@ -30,6 +30,7 @@
                                 <input type="text" class="form-control login-field" id="login-name"
                                        placeholder="Tài khoản hoặc email"
                                        name="UserName"
+                                       ng-model-options="{ updateOn: 'change blur'}"
                                        ng-trim="true"
                                        required
                                        ng-model="User.UserName">
@@ -45,6 +46,7 @@
                                 <input type="password" class="form-control login-field" id="tbshowPassword"
                                        placeholder="Mật khẩu"
                                        name="showPassword"
+                                       ng-model-options="{ updateOn: 'change blur'}"
                                        required
                                        ng-model="User.Password">
                                 <label class="login-field-icon fui-lock" for="tbshowPassword"></label>
@@ -56,7 +58,7 @@
                             <!--ErrorSummary-->
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             <!--Remember me-->
-                            <label class="checkbox c-10" for="checkbox2">
+                            <label class="checkbox c-1" for="checkbox2">
                                 <input type="checkbox" value="true" name="RememberMe" id="checkbox2" data-toggle="checkbox">
                                 Lưu đăng nhập
                             </label>

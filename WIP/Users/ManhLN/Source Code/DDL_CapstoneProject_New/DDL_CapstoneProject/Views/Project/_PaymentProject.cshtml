@@ -1,14 +1,14 @@
 ﻿<div id="content" class="paddingNavbar">
-    <form name="paymentFrom" ng-model="paymentFrom" novalidate>
+    <form name="paymentFrom" novalidate>
         <div id="payment">
             <div id="infoBanker">
                 <div class="container">
                     <div class="panel panel-success">
-                        <div class="panel-heading bold">Infomation</div>
+                        <div class="panel-heading bold">Thông tin</div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h3>Information Banker</h3>
+                                    <h3>Thông tin người ủng hộ</h3>
                                     <div class="row">
                                         <div class="col-md-3 pt30">
                                             <img id="avatar1" ng-src="{{UserBasicInfo.ProfileImage}}" alt="" class="img-responsive img-circle center-block">
@@ -19,13 +19,10 @@
                                                    ng-trim="true"
                                                    ng-minlength="6"
                                                    ng-maxlength="30" placeholder="Name..." ng-model="UserBasicInfo.FullName">
-                                            <span ng-show="myForm.fullname.$dirty && myForm.fullname.$invalid">
-                                                <span ng-show="paymentFrom.fullname.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
-                                                <span style="color:red" ng-show="paymentFrom.fullname.$error.required">Bạn chưa nhập tên đầy đủ!</span><br ng-show="paymentFrom.fullname.$error.required" />
-                                                <span style="color:red" ng-show="paymentFrom.fullname.$error.minlength">Tên đầy đủ tối thiểu 6 kí tự!</span><br ng-show="paymentFrom.fullname.$error.minlength" />
-                                                <span style="color:red" ng-show="paymentFrom.fullname.$error.maxlength">Tên đầy đủ tối đa 20 kí tự!</span><br ng-show="paymentFrom.fullname.$error.maxlength" />
-                                                <span style="color:red" ng-show="paymentFrom.fullname.$error.pattern">Tên đầy đủ phải gồm cả họ và tên!</span><br ng-show="paymentFrom.fullname.$error.pattern" />
-                                            </span>
+                                            <span ng-show="paymentFrom.fullname.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
+                                            <span style="color:red" ng-show="paymentFrom.fullname.$error.required">Bạn chưa nhập tên đầy đủ!</span>
+                                            <span style="color:red" ng-show="paymentFrom.fullname.$error.minlength">Tên đầy đủ tối thiểu 6 kí tự!</span>
+                                            <span style="color:red" ng-show="paymentFrom.fullname.$error.maxlength">Tên đầy đủ tối đa 20 kí tự!</span>
                                             <br>
                                             <input type="email" class="form-control" name="email" placeholder="Email..." ng-model="UserBasicInfo.Email" required>
                                             <span ng-show="paymentFrom.email.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
@@ -36,17 +33,17 @@
 
                                     <div class="row pt15">
                                         <div class="col-md-8 pt10 pb10">
-                                            <input type="text" class="form-control" name="address" placeholder="Address..." ng-model="UserBasicInfo.Addres" required>
+                                            <input type="text" class="form-control" name="address" placeholder="Address..." ng-model="UserBasicInfo.Addres" ng-autocomplete required>
                                             <span ng-show="paymentFrom.address.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
                                             <span style="color:red" ng-show="paymentFrom.address.$error.required">Bạn chưa nhập địa chỉ!</span>
                                         </div>
                                         <div class="col-md-4 pt10 pb10">
-                                            <input type="number" class="form-control" placeholder="Phone number..." ng-minlength="10" ng-maxlength="10"
+                                            <input type="text" class="form-control" placeholder="Phone number..." ng-minlength="10" ng-maxlength="11"
                                                    name="PhoneNumber" ng-model="UserBasicInfo.ContactNumber" required>
                                             <span ng-show="paymentFrom.PhoneNumber.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
-                                            <span style="color:red" ng-show="paymentFrom.PhoneNumber.$error.required || paymentFrom.PhoneNumber.$error.number">Valid phone number is required</span>
+                                            <span style="color:red" ng-show="paymentFrom.PhoneNumber.$error.required || paymentFrom.PhoneNumber.$error.number">Xin hãy điền số điện thoại hợp lệ</span>
                                             <span style="color:red" ng-show="((paymentFrom.PhoneNumber.$error.minlength || paymentFrom.PhoneNumber.$error.maxlength) &&
-                                                  paymentFrom.PhoneNumber.$dirty) ">phone number should be 10 digits</span>
+                                                  paymentFrom.PhoneNumber.$dirty) ">Số điện thoại gồm 10 - 11 chữ số</span>
                                         </div>
                                     </div>
                                     @*<div class="row pt15">
@@ -56,7 +53,7 @@
                                         </div>*@
                                 </div>
                                 <div class="col-md-6">
-                                    <h3>More Information</h3>
+                                    <h3>Thông tin thêm</h3>
                                     <div class="row">
                                         <br>
                                         <div class="col-md-12">
@@ -66,7 +63,7 @@
                                             <span style="color:red" ng-show="paymentFrom.Des.$error.maxlength">Tối đa 135 kí tự!</span>
                                             <label class="checkbox" for="checkbox1">
                                                 <input type="checkbox" data-toggle="checkbox" value="" id="checkbox1" ng-model="backingData.IsPublic">
-                                                Anonymous, does not appear in the list of bankers.
+                                                Ẩn danh, tên bạn sẽ được ẩn bên danh sách người ủng hộ
                                             </label>
                                         </div>
                                     </div>
@@ -80,14 +77,13 @@
             <div id="paymentReward">
                 <div class="container">
                     <div class="panel panel-info">
-                        <div class="panel-heading bold">Rewards</div>
+                        <div class="panel-heading bold">Gói quà</div>
                         <div class="panel-body">
-                            <p class="fnt30 fnt-b txt-c c3 pt0 pb0 mt0 mb0">Project: "Divinity: Original Sin 2"</p>
-                            <p class="fnt18 fnt-b txt-c pt0 pb0 mt0 mb0">by Larian Studios LLC</p>
+                            <p class="fnt30 fnt-b txt-c c3 pt0 pb0 mt0 mb0">Project: "{{Project.Title}}"</p>
+                            <p class="fnt18 fnt-b txt-c pt0 pb0 mt0 mb0">by {{Project.Creator}}</p>
                             <p class="bold">Contents:</p>
-                            <p>
-                                Thank the Seven! Err-- Five!
-                                Thank you for your pledge! For this sign of support, we here at Larian Studios are truly grateful.
+                            <p style="word-break: break-word;">
+                                {{Packet.Description}}
                             </p>
                             <p><span class="bold">Pledge amount: </span><span class="bold"> {{BackData.PledgeAmount}}$ x {{BackData.Quantity}} = {{BackData.PledgeAmount*BackData.Quantity}}$</span></p>
                         </div>
@@ -98,7 +94,7 @@
             <div id="paymentMethod">
                 <div class="container">
                     <div class="panel panel-danger">
-                        <div class="panel-heading bold">Payment Method</div>
+                        <div class="panel-heading bold">Cách thức thanh toán</div>
                         <div class="panel-body">
                             <h2 class="fnt20 fnt-b">Chuyển khoản ngân hàng online bằng thẻ ATM hoặc Internet Banking</h2>
                             <p>
@@ -131,8 +127,10 @@
             <div id="paymentSubmit">
                 <div class="container">
                     <div class="pull-right">
-                        <a class="btn btn-success btn-wide" ng-disabled="!paymentFrom.$dirty || (paymentFrom.$dirty && paymentFrom.$invalid)"
-                           ng-click="submit()">Submit</a>
+                        <button class="btn btn-success btn-wide" ng-disabled="!paymentFrom.$dirty || (paymentFrom.$dirty && paymentFrom.$invalid)"
+                                ng-click="submit()">
+                            Submit
+                        </button>
                     </div>
                 </div>
                 <br>

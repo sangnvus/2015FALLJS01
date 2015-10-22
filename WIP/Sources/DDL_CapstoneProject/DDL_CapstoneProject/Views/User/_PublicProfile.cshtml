@@ -32,9 +32,57 @@
                 <div class="mt5 mb5 border-b"><i class="glyphicon glyphicon-bold"></i>&nbsp;&nbsp;{{UserBasicInfo.CountCreatedProject}} đã tạo</div>
                 <div class="mt5 mb5 border-b"><i class="fa fa-university"></i>&nbsp;&nbsp;{{UserBasicInfo.CountBackedProject}} đã ủng hộ</div>
                 <div class="mt5 mb5">
-                    <button class="btn btn-primary">Liên hệ với tôi</button>
+                    <button class="btn btn-primary" ng-click="showContactBox()">Gửi tin nhắn</button>
                 </div>
             </div>
         </div> <!-- end ROW -->
     </div> <!--end CONTAINER -->
 </div> <!-- end PROFILE PUBLIC -->
+<!-- Contact Modal -->
+<div class="container">
+    <div class="modal fade" id="sentBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <form name="NewMessageForm" novalidate class="form-horizontal">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #404040">
+                        <button type="button" class="close cFF" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title fnt18 cFF" id="myModalLabel">Gửi tin nhắn tới {{UserBasicInfo.FullName}}</h4>
+                    </div>
+                    <!--Body-->
+                    <div class="modal-body">
+                        <div class="form-group hide" style="border-bottom: 1px solid #cfcfcf">
+                            <label for="" class="col-sm-2 control-label fnt18 fnt-b fnt-b txt-l">Tới:</label>
+                            <div class="pl0 ml0 col-sm-10">
+                                <input type="hidden" class="pl0 ml0 form-control flat fnt18 fnt-b noboder" id=""
+                                       name="ToUser" ng-model="NewMessage.ToUser" ng-init="NewMessage.ToUser = UserBasicInfo.UserName" required="">
+                            </div>
+                        </div>
+                        <div class="form-group" style="border-bottom: 1px solid #cfcfcf">
+                            <label for="" class="pr0 col-sm-2 control-label fnt18 fnt-b txt-l">Tiêu đề:</label>
+                            <div class="pl0 ml0 col-sm-10">
+                                <input type="text" class="pl0 ml0 form-control fnt18 fnt-b flat noboder"
+                                       placeholder="Nhập tiêu đề..."
+                                       name="Title"
+                                       ng-model="NewMessage.Title"
+                                       required=""
+                                       ng-minlength="8"
+                                       ng-maxlength="50">
+                            </div>
+                        </div>
+                        <div>
+                            <div text-angular name="Content" ng-model="NewMessage.Content"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer pt5 pb5">
+                        <a href="" data-dismiss="modal">Hủy</a>
+                        <button type="button" class="btn btn-info btn-sm btn-wide btn18" ng-click="sendMessage()"
+                                ng-disabled="!NewMessageForm.$dirty || (NewMessageForm.$dirty && NewMessageForm.$invalid)">
+                            Gửi
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

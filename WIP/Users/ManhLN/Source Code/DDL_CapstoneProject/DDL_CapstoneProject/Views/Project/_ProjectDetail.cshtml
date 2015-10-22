@@ -74,8 +74,6 @@
                             </p>
                             <p class="fnt15 fnt-b pt15">
                                 <a class="inline-block" href="/#/user/publicprofile/{{Project.Creator.UserName}}">Xem thông tin</a>
-                                &nbsp;&nbsp;
-                                <a class="inline-block" href="">Liên hệ</a>
                             </p>
                         </div>
                         <div class="col-md-4 pt30">
@@ -291,13 +289,15 @@
                                                           ng-trim="true"
                                                           required
                                                           ng-minlength="10"
-                                                          ng-maxlength="200"
-                                                          max-length="200"
+                                                          ng-maxlength="500"
+                                                          maxlength="500"
                                                           msd-elastic="\n"></textarea>
-                                                <button type="submit" class="btn btn-primary mt10" ng-click="submitComment()"
+                                                <span class="text-danger">* Bình luận tối thiểu từ 10 đến 500 kí tự.</span>
+                                                <button type="submit" class="btn btn-primary mt10 pull-right" ng-click="submitComment()"
                                                         ng-disabled="!CommentForm.$dirty || (CommentForm.$dirty && CommentForm.$invalid)">
                                                     Bình luận
                                                 </button>
+                                                <div class="clearfix"></div>
                                             </div>
                                         </form>
                                     </div>
@@ -339,6 +339,7 @@
                                             <div ng-class="{'hide':IsEdit[$index] === true}" style="word-break: break-word; white-space: pre-wrap;">{{Comment.CommentContent}}</div>
                                             <div ng-if="CurrentUser.UserName == Comment.UserName" ng-class="{'hide':(IsEdit[$index] == null || IsEdit[$index] === false)}">
                                                 <textarea msd-elastic="\n" class="form-control" ng-model="Comment.EditedCommentContent" ng-enter="editComment($index)" style="resize: none"></textarea>
+                                                <span class="text-danger">* Bình luận tối thiểu từ 10 đến 500 kí tự.</span>
                                             </div>
                                             <!-- <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p> -->
                                         </div>
