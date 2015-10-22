@@ -28,7 +28,7 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/discover",
         {
-            caseInsensitiveMatch: true
+            caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/Discover",
             controller: 'DiscoverController',
             resolve: {
