@@ -57,6 +57,12 @@ namespace DDL_CapstoneProject.Respository
         {
             using (var db = new DDLDataContext())
             {
+                var project = db.Projects.SingleOrDefault(x => x.ProjectID == ProjectID);
+                if (project == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
                 var newTimeline = db.Timelines.Create();
                 newTimeline.ProjectID = ProjectID;
                 newTimeline.Description = timeline.Description;

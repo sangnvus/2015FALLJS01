@@ -15,41 +15,15 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
     $scope.editPkg = {};
     // initail reward type
     $scope.rewardTypes = [
-        { name: 'no reward', value: "no reward" },
-        { name: 'limited', value: "limited" },
-        { name: 'unlimited', value: "unlimited" },
+        { name: 'Không quà tặng', value: "no reward" },
+        { name: 'Giới hạn', value: "limited" },
+        { name: 'Không giới hạn', value: "unlimited" },
     ];
     // Detech create a new timeline point
     $scope.isCreateTimeline = false;
 
     // check error list
     $scope.errorListFlag = false;
-
-    $scope.Project = {};
-    $scope.Project.Status = "approved";
-
-    // Get project's basic record
-    $scope.Project = project.data.Data;
-
-    // Check project's status
-    $scope.AllEditable = true;
-    if ($scope.Project.Status === "expired" || $scope.Project.Status === "suspended" || $scope.Project.Status === "pending") {
-        $scope.AllEditable = false;
-    };
-
-    // Turn URL to trust Src
-    $scope.trustSrc = function (src) {
-        return $sce.trustAsResourceUrl(src);
-    }
-
-    // Embed video story url
-    $scope.checkVideoURL = function () {
-        var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]{11,11}).*/;
-        var match = $scope.ProjectStory.VideoUrl.match(regExp);
-        if (match) if (match.length >= 2) {
-            $scope.ProjectStory.VideoUrl = "https://www.youtube.com/embed/" + match[2];
-        }
-    };
 
     // Get current time
     $scope.toDay = new Date($.now());
@@ -73,6 +47,38 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
     });
 
     $scope.endDate = minDateYY + "-" + minDateMM + "-" + minDateDD;
+
+    $scope.Project = {};
+    $scope.Project.Status = "approved";
+
+    // Get project's basic record
+    $scope.Project = project.data.Data;
+
+    // Check project's status
+    $scope.AllEditable = true;
+    if ($scope.Project.Status === "expired" || $scope.Project.Status === "suspended" || $scope.Project.Status === "pending") {
+        $scope.AllEditable = false;
+    };
+
+    // Project is approved
+    $scope.PrjApprove = false;
+    if ($scope.Project.Status === "approved") {
+        $scope.PrjApprove = true;
+    }
+
+    // Turn URL to trust Src
+    $scope.trustSrc = function (src) {
+        return $sce.trustAsResourceUrl(src);
+    }
+
+    // Embed video story url
+    $scope.checkVideoURL = function () {
+        var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]{11,11}).*/;
+        var match = $scope.ProjectStory.VideoUrl.match(regExp);
+        if (match) if (match.length >= 2) {
+            $scope.ProjectStory.VideoUrl = "https://www.youtube.com/embed/" + match[2];
+        }
+    };
 
     // Get categories
     $scope.Categories = categories.data.Data;
@@ -107,6 +113,9 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         $scope.activeTab = $(e.target).attr("href");
     });
 
+    // check file's size is too big
+    $scope.fileIsBig = false;
+
     // Preview image file
     $scope.getFile = function (file, index) {
         $scope.file = file;
@@ -118,6 +127,11 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                               $scope.newTimeline.ImageUrl = result;
                           } else {
                               $scope.Project.ImageUrl = result;
+                          }
+                          if ($scope.file.size > 52428800) {
+                              $scope.fileIsBig = true;
+                          } else {
+                              $scope.fileIsBig = false;
                           }
                       });
     };
@@ -176,8 +190,6 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
 
     // Edit project's story
     $scope.editProjectStory = function (form) {
-        console.log("story: " + $scope.ProjectStory);
-        console.log("des: " + $scope.ProjectStory.Description);
         // Put update project's story
         var promisePutProjectStory = ProjectService.editProjectStory($scope.ProjectStory);
 
@@ -212,7 +224,6 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                     for (var i = 0; i < $scope.RewardPKgs.length; i++) {
                         if ($scope.RewardPKgs[i].EstimatedDelivery != null) {
                             $scope.RewardPKgs[i].EstimatedDelivery = new Date($filter('date')($scope.RewardPKgs[i].EstimatedDelivery, "yyyy-MM-dd"));
-                            console.log("date: " + $scope.RewardPKgs[i].EstimatedDelivery);
                         }
                     };
 
@@ -282,6 +293,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                     $('#addReward').modal('hide');
                     // reinitial newReward
                     $scope.NewReward = {};
+                    $scope.NewReward.Type = "no reward"
                     result.data.Data.EstimatedDelivery = new Date($filter('date')(result.data.Data.EstimatedDelivery, "yyyy-MM-dd"));
                     if (result.data.Data.Quantity > 0) {
                         result.data.Data.LimitQuantity = true;
@@ -325,7 +337,6 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         $scope.editPkg = angular.copy($scope.RewardPKgs[index]);
         $scope.editPkg.Index = index + 1;
         for (var i = 0; i < $scope.rewardTypes.length; i++) {
-            console.log("value " + $scope.rewardTypes[i].value);
             if ($scope.rewardTypes[i].value === $scope.editPkg.Type) {
                 $scope.selectedType = $scope.rewardTypes[i];
                 break;
@@ -482,7 +493,10 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
     };
     // Create new timeline point
     $scope.createTimeline = function () {
-        console.log("time " + $scope.newTimeline.DueDate);
+        if ($scope.newTimeline.DueDate == null) {
+            $scope.newTimeline.DueDate = new Date($.now($scope.Timeline));
+        }
+
         var promiseCreateTimeline = ProjectService.createTimeline($scope.Project.ProjectID, $scope.newTimeline, $scope.file);
 
         promiseCreateTimeline.then(
@@ -671,7 +685,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
     };
     // Prevent switch tab if tab's invalid
     $('#tablist a').click(function (e) {
-        if ($scope.Project.FundingGoal < 1000000) {
+        if ($scope.fileIsBig == true) {
             $scope.BasicForm.$invalid = true;
         }
         var form;
@@ -774,6 +788,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
 
                    form.$setPristine();
                    form.$setUntouched();
+                   $scope.fileIsBig = false;
                    // Switch tab
                    $scope.changeTab($scope.thisTab.context.hash);
                }
@@ -998,6 +1013,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
             var resetImg = $("#imgSelected");
             resetImg.replaceWith(resetImg = resetImg.clone(true));
             $scope.file = null;
+            $scope.fileIsBig = false;
         }
     };
     // Discard reward
@@ -1067,7 +1083,6 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                 } else {
                     $scope.errorListFlag = true;
                     $scope.errorList = result.data.Data;
-                    console.log("error" + $scope.errorList);
                     toastr.error($scope.Error, 'Lỗi!');
                 }
             },
