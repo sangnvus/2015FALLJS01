@@ -135,7 +135,7 @@ namespace DDL_CapstoneProject.Respository
             var totalFund = new ProjectBasicViewDTO();
             totalFund.CurrentFundedNumber = (Convert.ToDecimal(TotalFund.Sum()));
 
-            list.Add(HeightestFund.First());
+            list.Add(HeightestFund.FirstOrDefault());
             list.Add(totalFund);
             return list;
         }
