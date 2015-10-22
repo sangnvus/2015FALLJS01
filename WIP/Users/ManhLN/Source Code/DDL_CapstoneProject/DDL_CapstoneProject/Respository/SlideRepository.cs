@@ -15,7 +15,7 @@ namespace DDL_CapstoneProject.Respository
 
         private SlideRepository()
         {
-            db = new DDLDataContext();
+            db = DDLDataContextRepository.Instance.DbContext;
         }
 
         // GET: api/Slides

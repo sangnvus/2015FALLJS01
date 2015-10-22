@@ -57,8 +57,9 @@ namespace DDL_CapstoneProject.Ultilities
         }
         public static DateTime ConvertDateTimeToUtc(DateTime datetime)
         {
-            var cetZone = TimeZoneInfo.FindSystemTimeZoneById(DDLConstants.TimeZoneId);
-            var cetTime = TimeZoneInfo.ConvertTimeToUtc(datetime, cetZone);
+            //var cetZone = TimeZoneInfo.FindSystemTimeZoneById(DDLConstants.TimeZoneId);
+            datetime = datetime.AddHours(-7);
+            var cetTime = DateTime.SpecifyKind(datetime, DateTimeKind.Utc);
             return cetTime;
         }
 

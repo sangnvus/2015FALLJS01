@@ -19,7 +19,7 @@ namespace DDL_CapstoneProject.Respository
 
         private MessageRepository()
         {
-            db = new DDLDataContext();
+            db = DDLDataContextRepository.Instance.DbContext;
         }
 
         public ConversationBasicDTO CreateNewConversation(NewMessageDTO newMessage, string senderName)
@@ -35,8 +35,8 @@ namespace DDL_CapstoneProject.Respository
 
                 // Create conversation.
                 var newConversation = db.Conversations.Create();
-                newConversation.CreatedDate = DateTime.Now;
-                newConversation.UpdatedDate = DateTime.Now;
+                newConversation.CreatedDate = DateTime.UtcNow;
+                newConversation.UpdatedDate = DateTime.UtcNow;
                 newConversation.CreatorID = creator.DDL_UserID;
                 newConversation.ReceiverID = receiver.DDL_UserID;
                 newConversation.Subject = newMessage.Title;
@@ -47,7 +47,7 @@ namespace DDL_CapstoneProject.Respository
                 var message = db.Messages.Create();
                 message.MessageContent = newMessage.Content;
                 message.UserID = creator.DDL_UserID;
-                message.SentTime = DateTime.Now;
+                message.SentTime = DateTime.UtcNow;
 
                 // Add message into conversation.
                 newConversation.Messages = new List<Message>
@@ -55,33 +55,13 @@ namespace DDL_CapstoneProject.Respository
                     message
                 };
 
-                //var newConversation = new Conversation
-                //{
-                //    CreatedDate = DateTime.Now,
-                //    UpdatedDate = DateTime.Now,
-                //    CreatorID = creator.DDL_UserID,
-                //    ReceiverID = receiver.DDL_UserID,
-                //    Subject = newMessage.Title,
-                //    ViewStatus = DDLConstants.ConversationStatus.CREATOR,
-                //    DeleteStatus = DDLConstants.ConversationStatus.NO,
-                //    Messages = new List<Message>()
-                //    {
-                //        new Message
-                //        {
-                //            MessageContent = newMessage.Content,
-                //            UserID = creator.DDL_UserID,
-                //            SentTime = DateTime.Now
-                //        }
-                //    }
-                //};
-
                 db.Conversations.Add(newConversation);
                 db.SaveChanges();
 
                 var conversation = new ConversationBasicDTO
                 {
                     ConversationID = newConversation.ConversationID,
-                    UpdatedDate = newConversation.UpdatedDate,
+                    UpdatedDate = CommonUtils.ConvertDateTimeFromUtc(newConversation.UpdatedDate.GetValueOrDefault()),
                     Title = newConversation.Subject,
                     IsRead = true,
                     IsSent = true,
@@ -112,6 +92,8 @@ namespace DDL_CapstoneProject.Respository
                                                || conversation.ViewStatus == DDLConstants.ConversationStatus.BOTH
                                    };
 
+            listConversation.ForEach(x => x.UpdatedDate = CommonUtils.ConvertDateTimeFromUtc(x.UpdatedDate.GetValueOrDefault()));
+
             return listConversation.ToList();
         }
 
@@ -134,6 +116,8 @@ namespace DDL_CapstoneProject.Respository
                                                || (conversation.Creator.Username != userName && conversation.ViewStatus == DDLConstants.ConversationStatus.RECEIVER)
                                                || conversation.ViewStatus == DDLConstants.ConversationStatus.BOTH
                                    };
+
+            listConversation.ForEach(x => x.UpdatedDate = CommonUtils.ConvertDateTimeFromUtc(x.UpdatedDate.GetValueOrDefault()));
 
             return listConversation.ToList();
         }
@@ -173,7 +157,12 @@ namespace DDL_CapstoneProject.Respository
                                   SenderProfileImage = message.Sender.UserInfo.ProfileImage
                               };
 
-            conversationDTO.MessageList = listMessage.ToList();
+            var listMessageDTO = listMessage.ToList();
+
+            // Convert datetime to GMT+7
+            listMessageDTO.ForEach(x => x.SentTime = CommonUtils.ConvertDateTimeFromUtc(x.SentTime));
+
+            conversationDTO.MessageList = listMessageDTO;
 
             return conversationDTO;
         }
@@ -209,10 +198,10 @@ namespace DDL_CapstoneProject.Respository
             newMessage.ConversationID = reply.ConversationID;
             newMessage.MessageContent = reply.Content;
             newMessage.UserID = user.DDL_UserID;
-            newMessage.SentTime = DateTime.Now;
+            newMessage.SentTime = DateTime.UtcNow;
 
             // Change viewstate.
-            conversation.UpdatedDate = DateTime.Now;
+            conversation.UpdatedDate = DateTime.UtcNow;
             conversation.ViewStatus = conversation.Creator.Username == userName
                 ? DDLConstants.ConversationStatus.CREATOR
                 : DDLConstants.ConversationStatus.RECEIVER;
@@ -225,7 +214,7 @@ namespace DDL_CapstoneProject.Respository
             // Create return message data.
             var messageDTO = new MessageDTO
             {
-                SentTime = newMessage.SentTime,
+                SentTime = CommonUtils.ConvertDateTimeFromUtc(newMessage.SentTime),
                 Content = newMessage.MessageContent,
                 MessageID = newMessage.MessageID,
                 SenderID = user.DDL_UserID,

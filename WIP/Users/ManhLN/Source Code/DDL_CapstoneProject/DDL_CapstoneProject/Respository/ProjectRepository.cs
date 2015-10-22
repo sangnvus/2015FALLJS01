@@ -19,7 +19,7 @@ namespace DDL_CapstoneProject.Respository
         #region "Constructors"
         private ProjectRepository()
         {
-            db = new DDLDataContext();
+            db = DDLDataContextRepository.Instance.DbContext;
         }
         #endregion
 
@@ -517,31 +517,12 @@ namespace DDL_CapstoneProject.Respository
                 throw new KeyNotFoundException();
             }
 
-            // Get comments.
-            //var commentsList = (userName != null && projectDetail.Creator.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase))
-            //                    ? GetComments(projectDetail.ProjectID, true)
-            //                    : GetComments(projectDetail.ProjectID, false);
-
-            //// Insert list comments into project
-            //projectDetail.CommentsList = commentsList;
-
-            //// Get updateLog list.
-            //var updateLogsList = (from updateLog in db.UpdateLogs
-            //                      where updateLog.ProjectID == projectDetail.ProjectID
-            //                      orderby updateLog.CreatedDate descending
-            //                      select new UpdateLogDTO
-            //                      {
-            //                          CreatedDate = updateLog.CreatedDate,
-            //                          Description = updateLog.Description,
-            //                          Title = updateLog.Title,
-            //                          UpdateLogID = updateLog.UpdateLogID
-            //                      }).ToList();
-
-            //// Insert updatelog list into projectDTO
-            //projectDetail.UpdateLogsList = updateLogsList;
+            // Convert datetime to gmt+7
+            projectDetail.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(projectDetail.CreatedDate);
+            projectDetail.ExpireDate = CommonUtils.ConvertDateTimeFromUtc(projectDetail.ExpireDate.GetValueOrDefault());
 
             // Set number exprire day.
-            var timespan = projectDetail.ExpireDate - DateTime.Today;
+            var timespan = projectDetail.ExpireDate - CommonUtils.DateTodayGMT7();
             projectDetail.NumberDays = timespan.GetValueOrDefault().Days;
 
             return projectDetail;
@@ -581,7 +562,7 @@ namespace DDL_CapstoneProject.Respository
                                       Title = updateLog.Title,
                                       UpdateLogID = updateLog.UpdateLogID
                                   }).ToList();
-
+            updateLogsList.ForEach(x => x.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(x.CreatedDate));
             return updateLogsList;
         }
 
@@ -774,13 +755,17 @@ namespace DDL_CapstoneProject.Respository
                 commentsQuery = commentsQuery.Where(x => !x.IsHide);
             }
 
+            var lastDateTimeUtc = CommonUtils.ConvertDateTimeToUtc(lastDateTime.GetValueOrDefault());
+
             if (lastDateTime != null)
             {
-                commentsQuery = commentsQuery.Where(x => x.CreatedDate < lastDateTime);
+                commentsQuery = commentsQuery.Where(x => x.CreatedDate < lastDateTimeUtc);
             }
 
             //var commentsList = showHide ? commentsQuery.Take(10).ToList() : commentsQuery.Where(x => !x.IsHide).Take(10).ToList();
             var commentsList = commentsQuery.Take(10).ToList();
+
+            commentsList.ForEach(x => x.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(x.CreatedDate));
 
             return commentsList;
         }
@@ -809,21 +794,23 @@ namespace DDL_CapstoneProject.Respository
             // Create comment.
             var newComment = db.Comments.Create();
             newComment.CommentContent = comment.CommentContent;
-            newComment.CreatedDate = DateTime.Now;
+            newComment.CreatedDate = DateTime.UtcNow;
             newComment.IsHide = false;
             newComment.UserID = user.DDL_UserID;
             newComment.ProjectID = project.ProjectID;
             newComment.IsEdited = false;
-            newComment.UpdatedDate = DateTime.Now;
+            newComment.UpdatedDate = DateTime.UtcNow;
 
 
             // Add to DB.
             db.Comments.Add(newComment);
             db.SaveChanges();
 
+            var lastDatimeTimeUtc = CommonUtils.ConvertDateTimeToUtc(lastCommentDateTime);
+
             // Get list new comment.
             var commentsQuery = from commentItem in db.Comments
-                                where commentItem.Project.ProjectCode == projectCode && commentItem.CreatedDate > lastCommentDateTime
+                                where commentItem.Project.ProjectCode == projectCode && commentItem.CreatedDate > lastDatimeTimeUtc
                                 orderby commentItem.CreatedDate descending
                                 select new CommentDTO
                                 {
@@ -839,6 +826,8 @@ namespace DDL_CapstoneProject.Respository
             var commentsList = (comment.UserName == project.Creator.Username)
                 ? commentsQuery.ToList()
                 : commentsQuery.Where(c => !c.IsHide).ToList();
+
+            commentsList.ForEach(x => x.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(x.CreatedDate));
 
             return commentsList;
         }
@@ -876,7 +865,7 @@ namespace DDL_CapstoneProject.Respository
             {
                 IsHide = comment.IsHide,
                 FullName = comment.User.UserInfo.FullName,
-                CreatedDate = comment.CreatedDate,
+                CreatedDate = CommonUtils.ConvertDateTimeFromUtc(comment.CreatedDate),
                 ProfileImage = comment.User.UserInfo.ProfileImage,
                 UserName = comment.User.Username,
                 CommentContent = comment.CommentContent,
@@ -912,7 +901,7 @@ namespace DDL_CapstoneProject.Respository
 
             // Change content
             comment.CommentContent = content;
-            comment.UpdatedDate = DateTime.Now;
+            comment.UpdatedDate = DateTime.UtcNow;
             comment.IsEdited = true;
 
             // Save in DB
@@ -923,7 +912,7 @@ namespace DDL_CapstoneProject.Respository
             {
                 IsHide = comment.IsHide,
                 FullName = comment.User.UserInfo.FullName,
-                CreatedDate = comment.CreatedDate,
+                CreatedDate = CommonUtils.ConvertDateTimeFromUtc(comment.CreatedDate),
                 ProfileImage = comment.User.UserInfo.ProfileImage,
                 UserName = comment.User.Username,
                 CommentContent = comment.CommentContent,

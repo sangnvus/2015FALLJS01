@@ -10,7 +10,8 @@ namespace DDL_CapstoneProject.Ultilities
         // This class includes constants string of DDL system.
         public static readonly string ConnectionString = "DDLDataContext";
         public static string DatetimeFormat = "yyyy-MM-dd HH:mm:ss";
-        public static string DateFormat = "yyyy-MM-dd";
+        public static string DateFormat = "yyyy-MM-dd"; 
+        public static string TimeZoneId = "SE Asia Standard Time"; // GMT+7
 
         /// <summary>
         /// Login type constants

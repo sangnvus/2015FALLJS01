@@ -28,7 +28,7 @@ app.controller('MessageDetailController', function ($scope, $location, $sce, $ro
                     if (result.data.Status === "success") {
                         $scope.Conversation.MessageList.push(result.data.Data);
                         $scope.Reply.Content = "";
-                        toastr.success('Gửi tin nhắn trả lời!', 'Thành công!');
+                        toastr.success('Gửi tin nhắn trả lời thành công');
                     } else {
                         CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         $scope.Error = result.data.Message;
@@ -41,7 +41,7 @@ app.controller('MessageDetailController', function ($scope, $location, $sce, $ro
                     toastr.error($scope.Error, 'Lỗi!');
                 });
         } else {
-            toastr.warning("Bạn chưa nhập nội dung tin nhắn", 'Thông báo!');
+            toastr.warning("Bạn chưa nhập nội dung tin nhắn", 'Thông báo');
         }
     }
 

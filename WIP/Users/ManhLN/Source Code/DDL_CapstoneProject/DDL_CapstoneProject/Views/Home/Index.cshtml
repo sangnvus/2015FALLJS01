@@ -4,62 +4,72 @@
 @* All scripts is generated here. *@
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/angularjs")
+
+    <!-- Jquery scripts -->
+    <script src="~/Scripts/data-tables/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/sweetalert/sweetalert.min.js"></script>
+    <script src="~/Scripts/morris-chart/raphael-min.js"></script>
+    <script src="~/Scripts/morris-chart/morris.min.js"></script>
+    <script src="~/Scripts/Libraries/jquery.timelinr-0.9.54.js"></script>
     @Scripts.Render("~/bundles/md5")
+
+    <!-- Load angular scripts -->
+    @Scripts.Render("~/bundles/angularjs")
+    <script src="~/App/HomeModule.js"></script>
+
+    <!-- Directive -->
     <script src="~/App/directives/text-angular/textAngular-rangy.min.js"></script>
     <script src="~/App/directives/text-angular/textAngular-sanitize.min.js"></script>
     <script src="~/App/directives/text-angular/textAngular.min.js"></script>
-
-    <script src="~/App/HomeModule.js"></script>
-    <script src="~/App/controllers/RegisterController.js"></script>
-    <script src="~/App/services/CommonService.js"></script>
-    <script src="~/App/services/UserService.js"></script>
-    <script src="~/App/services/SlideSevice.js"></script>
-    <script src="~/App/services/CategoryService.js"></script>
     <script src="~/App/directives/passwordMatch.js"></script>
-    <script src="~/App/controllers/HomeController.js"></script>
-    <script src="~/App/controllers/DiscoverController.js"></script>
-    @* Need login *@
-    <script src="~/App/controllers/MessageController.js"></script>
-    <script src="~/App/services/MessageService.js"></script>
-    <script src="~/App/controllers/MessageDetailController.js"></script>
-    @* HuyNM *@
-    <script src="~/App/services/ProjectService.js"></script>
-    <script src="~/App/services/CategoryService.js"></script>
-    <script src="~/App/controllers/CreateProjectController.js"></script>
-    <script src="~/App/controllers/EditProjectController.js"></script>
     <script src="~/App/directives/ngAutocomplete.js"></script>
     <script src="~/App/directives/ngFileDirty.js"></script>
     <script src="~/App/directives/ngFileSelect.js"></script>
     <script src="~/Scripts/upload-img/upload-image.js"></script>
-    <script src="~/Scripts/sweetalert/sweetalert.min.js"></script>
     <script src="~/App/directives/SweetAlert.min.js"></script>
-    <script src="~/App/controllers/BackProjectController.js"></script>
-    <script src="~/App/controllers/PaymentProjectController.js"></script>
-
-    @* ManhLN *@
-    <script src="~/App/controllers/ProjectDetailController.js"></script>
     <script src="~/App/directives/showTabDirective.js"></script>
     <script src="~/App/directives/elastic.js"></script>
     <script src="~/App/directives/ngEnter.js"></script>
-    <script src="~/Scripts/data-tables/jquery.dataTables.min.js"></script>
     <script src="~/Scripts/data-tables/angular-datatables.min.js"></script>
     <script src="~/Scripts/data-tables/angular-datatables.bootstrap.js"></script>
-    <script src="~/Scripts/Libraries/jquery.timelinr-0.9.54.js"></script>
     <script src="~/App/directives/timelinr.js"></script>
-    <script src="~/Scripts/morris-chart/raphael-min.js"></script>
-    <script src="~/Scripts/morris-chart/morris.min.js"></script>
     <script src="~/App/directives/angular-morris-chart.min.js"></script>
+    <script src="~/App/directives/loading-bar.js"></script>
 
-    @* AnhDD *@
+    <!-- Service -->
+    <script src="~/App/services/CommonService.js"></script>
+    <script src="~/App/services/UserService.js"></script>
+    <script src="~/App/services/SlideSevice.js"></script>
+    <script src="~/App/services/CategoryService.js"></script>
+    <script src="~/App/services/ProjectService.js"></script>
+    <script src="~/App/services/CategoryService.js"></script>
+    <script src="~/App/services/MessageService.js"></script>
+
+    <!-- Controller -->
+    <script src="~/App/controllers/HomeController.js"></script>
+    <script src="~/App/controllers/DiscoverController.js"></script>
+    <script src="~/App/controllers/ProjectDetailController.js"></script>
     <script src="~/App/controllers/PublicProfileController.js"></script>
-    <script src="~/App/controllers/EditProfileController.js"></script>
-    <script src="~/App/controllers/EditPasswordController.js"></script>
 
-    @*MAiCTP*@
-    <script src="~/App/controllers/BackedProjectController.js"></script>
-    <script src="~/App/controllers/StarredProjectController.js"></script>
-    <script src="~/App/controllers/CreatedProjectController.js"></script>
+    @if (User.Identity != null && !string.IsNullOrEmpty(User.Identity.Name))
+    {
+        <!-- Controller -->
+        <script src="~/App/controllers/MessageController.js"></script>
+        <script src="~/App/controllers/MessageDetailController.js"></script>
+        <script src="~/App/controllers/BackProjectController.js"></script>
+        <script src="~/App/controllers/PaymentProjectController.js"></script>
+        <script src="~/App/controllers/EditProfileController.js"></script>
+        <script src="~/App/controllers/EditPasswordController.js"></script>
+        <script src="~/App/controllers/BackedProjectController.js"></script>
+        <script src="~/App/controllers/StarredProjectController.js"></script>
+        <script src="~/App/controllers/CreatedProjectController.js"></script>
+        <script src="~/App/controllers/CreateProjectController.js"></script>
+        <script src="~/App/controllers/EditProjectController.js"></script>
+    }
+    @if (User.Identity == null || string.IsNullOrEmpty(User.Identity.Name))
+    {
+        <script src="~/App/controllers/RegisterController.js"></script>
+    }
 }
 @section stylesheets{
     <link href="~/Content/timeline.css" rel="stylesheet" />
@@ -67,9 +77,8 @@
     <link href="~/Content/Libraries/jquery.timelinr.css" rel="stylesheet" />
     <link href="~/Content/textAngular.css" rel="stylesheet" />
     <link href="~/Content/sweetalert.css" rel="stylesheet" />
-    @*<link href="~/Content/profilepublic.css" rel="stylesheet" />*@
     <link href="~/Content/data-tables/datatables.bootstrap.min.css" rel="stylesheet">
     <link href="~/Content/spinner/spinner.css" rel="stylesheet">
     <link href="~/Content/morris.css" rel="stylesheet">
-    @*<link href="~/Content/data-tables/datatables.min.css" rel="stylesheet">*@
+    <link href="~/Content/loading-bar.css" rel="stylesheet" />
 }

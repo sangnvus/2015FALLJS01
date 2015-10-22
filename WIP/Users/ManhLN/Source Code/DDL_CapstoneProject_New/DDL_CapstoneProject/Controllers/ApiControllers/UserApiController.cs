@@ -156,6 +156,10 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             {
                 return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
             }
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
             try
             {
                 userExist = UserRepository.Instance.GetUserPublicInfo(username);
@@ -284,6 +288,21 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
             return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "", Data = userPass });
         }
+
+        #region TrungVn
+
+        /// <summary>
+        /// /api/UserApi/GetUserTop/?categoryID=xxx
+        /// </summary>
+        /// <param name="categoryid">categoryid</param>
+        /// <returns>Dictionary</returns>
+        [HttpGet]
+        public IHttpActionResult GetUserTop(string categoryid)
+        {
+            var listGetUserTop = UserRepository.Instance.GetUserTop(categoryid);
+            return Ok(new HttpMessageDTO { Status = "success", Data = listGetUserTop });
+        }
+        #endregion
 
     }
 }

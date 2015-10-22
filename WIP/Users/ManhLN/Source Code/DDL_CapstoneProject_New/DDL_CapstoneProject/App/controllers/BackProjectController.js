@@ -1,19 +1,34 @@
 ﻿"use strict";
 
-app.controller('BackProjectController', function ($scope, $route, $rootScope, $location, toastr, CommmonService, ProjectService, rewardPkgs) {
+app.controller('BackProjectController', function ($scope, $route, $rootScope, $location, toastr, CommmonService, ProjectService, rewardPkgs, project) {
     // Get rewardPkgs
     $scope.RewardPkgs = rewardPkgs.data.Data;
+    // Get Project basic information
+    $scope.Project = project.data.Data;
 
-    // Back data
+    // Initial Back data
     $scope.BackData = {};
 
+    // Set min quantity
     $scope.BackData.Quantity = 1;
 
+    // Flag to check select reward
     $scope.indexFlag = 1;
 
+    // Init selected reward
     $scope.model = 1;
 
-    $scope.test = function (index) {
+    // Select or not select a reward
+    var checkSelect = false;
+
+    $scope.rewardSelected = $route.current.params.reward;
+    if ($scope.rewardSelected != null) {
+        $scope.model = $scope.rewardSelected;
+        $scope.indexFlag = $scope.rewardSelected;
+    }
+    // Detech selected rewards
+    $scope.selectReward = function (index) {
+        checkSelect = true;
         $scope.indexFlag = index;
         $scope.BackData.Quantity = 1;
         $scope.BackData.PledgeAmount = $scope.RewardPkgs[index - 1].PledgeAmount;
@@ -25,6 +40,10 @@ app.controller('BackProjectController', function ($scope, $route, $rootScope, $l
             $scope.BackData.Quantity = 1;
         } else {
             $scope.BackData.RewardPKgID = $scope.RewardPkgs[index].RewardPkgID;
+        }
+
+        if (checkSelect === false) {
+            $scope.BackData.PledgeAmount = $scope.RewardPkgs[0].PledgeAmount;
         }
 
         $scope.BackData.ProjectCode = $route.current.params.code;

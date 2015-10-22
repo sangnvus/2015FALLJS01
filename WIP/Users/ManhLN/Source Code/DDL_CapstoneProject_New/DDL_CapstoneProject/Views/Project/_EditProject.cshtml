@@ -157,7 +157,12 @@
                                             </div>*@
                                         <div class="form-inline">
                                             <label for="enddate" class="fnt20">End:</label>
-                                            <input type='date' ng-model="Project.ExpireDate" name="ProjectDeadLine" id="ProjectDeadLine" class="form-control" style="line-height: 15px" ng-disabled="AllEditable == false" />
+                                            <input type='date' ng-model="Project.ExpireDate" name="ProjectDeadLine" id="ProjectDeadLine"
+                                                   class="form-control" style="line-height: 15px" ng-disabled="AllEditable == false" />
+                                            <div ng-show="BasicForm.ProjectDeadLine.$dirty && BasicForm.ProjectDeadLine.$invalid" class="text-danger">
+                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                <span ng-show="BasicForm.ProjectDeadLine.$invalid">Xin hãy nhập đúng chuẩn ngày tháng!</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div> <!-- end funding duration -->
@@ -166,10 +171,11 @@
                                         <p class="title">Funding goal</p>
                                     </div>
                                     <div class="col-md-8">
-                                        <input type="number" class="form-control fnt-b" ng-trim="true" name="FundingGoal" min="1000000" ng-model="Project.FundingGoal" ng-disabled="AllEditable == false">
-                                        <div ng-show="BasicForm.FundingGoal.$dirty && BasicForm.FundingGoal.$invalid" class="text-danger">
+                                        <input type="text" format="number" class="form-control fnt-b" ng-trim="true"
+                                               name="FundingGoal" min="1000000" ng-model="Project.FundingGoal" ng-disabled="AllEditable == false">
+                                        <div ng-show="BasicForm.FundingGoal.$dirty && Project.FundingGoal < 1000000" class="text-danger">
                                             <span class="glyphicon glyphicon-remove text-danger"></span>
-                                            <span ng-show="BasicForm.FundingGoal.$invalid">Mục tiêu gây quỹ phải là chữ số và lớn hơn 1,000,000!</span>
+                                            <span>Mục tiêu gây quỹ phải là chữ số và lớn hơn 1,000,000!</span>
                                         </div>
                                         <div for="tips">
                                             <p>Your funding goal should be the minimum amount needed to complete the project and fulfill (and ship!) all rewards. Because funding is all-or-nothing, you can always raise more than your goal but never less. Once your project has launched, it will not be possible to change your funding goal.</p>
@@ -179,7 +185,7 @@
                                 </div> <!-- end funding goals -->
                                 <div ng-if="BasicForm.$dirty">
                                     <button type="button" class="btn btn-success" ng-click="resetProjectBasic(BasicForm)">Discard</button>
-                                    <button type="button" ng-disabled="BasicForm.$invalid" class="btn btn-success" ng-click="editProjectBasic(BasicForm)">Save changes</button>
+                                    <button type="button" ng-disabled="BasicForm.$invalid || Project.FundingGoal < 1000000" class="btn btn-success" ng-click="editProjectBasic(BasicForm)">Save changes</button>
                                 </div>
                             </div>
                             <!-- end BASIC CONTENT -->
@@ -189,7 +195,7 @@
                                     <li class="portfolio-item" style="list-style: none">
                                         <div class="item-inner  ml0 mr0">
                                             <div class="item-image hover01 column">
-                                                <figure><img ng-src="{{Project.ImageUrl}}" class="projecImg-preview"></figure>
+                                                <figure><img ng-src="{{Project.ImageUrl}}" class="img-fit" alt=""></figure>
                                             </div> <!-- end item-image -->
                                             <div class="item-title">
                                                 <h5><a href="">{{Project.Title}}</a></h5>
@@ -201,7 +207,7 @@
                                                 <div class="mt10 mb5">
                                                     <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{Project.Location}}</a>
                                                     &nbsp;&nbsp;
-                                                    <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{Project.CategoryName}}</a>
+                                                    <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{selectedOption.Name}}</a>
                                                     &nbsp;&nbsp;
                                                 </div>
                                                 <div class="progress mt5 mb5">
@@ -243,89 +249,26 @@
                     <div class="row">
                         <div class="col-md-9">
                             <form name="rewardForm" ng-model="rewardForm" novalidate>
-                                <div ng-repeat="RewardPKgs in RewardPKgs">
+                                <div ng-repeat="rewardPkg in RewardPKgs">
                                     <div class="row border-grey">
                                         <div class="col-md-2">
                                             <p class="title">Gói #{{$index + 1}}</p>
                                         </div>
+
                                         <div class="col-md-10">
-                                            <div class="row">
-                                                <div class="col-md-4">Pledge amount</div>
-                                                <div class="col-md-4">
-                                                    <input type="number" class="form-control" min="0" name="PledgeAmount{{$index}}" ng-model="RewardPKgs.PledgeAmount" ng-trim="true"
-                                                           ng-disabled="RewardPKgs.Backers != 0 || AllEditable == false">
-                                                    <div ng-show="rewardForm.PledgeAmount{{$index}}.$dirty && rewardForm.PledgeAmount{{$index}}.$invalid" class="text-danger">
-                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                        <span ng-show="rewardForm.PledgeAmount{{$index}}.$invalid">Mục tiêu gây quỹ phải là chữ số và lớn hơn 0!</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 ">
-                                                    <ul class="list-inline pull-right">
-                                                        <!-- <li><a class="btn btn-info" href="">Edit</a></li> -->
-                                                        <li ng-if="AllEditable == true"><a class="btn btn-danger" ng-click="deleteReward($index)" ng-show="RewardPKgs.Backers == 0">Delete</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div> <!-- end Pledge amount -->
-                                            <div class="row">
-                                                <div class="col-md-4">Description</div>
-                                                <div class="col-md-8">
-                                                    <textarea class="form-control" rows="3" style="resize: none" name="RewardDesc{{$index}}" ng-minlength="10" ng-maxlength="135" maxlength="135" ng-trim="true"
-                                                              rows="2" ng-model="RewardPKgs.Description" ng-disabled="RewardPKgs.Backers != 0 || AllEditable == false"></textarea>
-                                                    <div ng-show="rewardForm.RewardDesc{{$index}}.$dirty && rewardForm.RewardDesc{{$index}}.$invalid" class="text-danger">
-                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                        <span ng-show="rewardForm.RewardDesc{{$index}}.$error.minlength">Mô tả tối thiểu 10 kí tự!</span>
-                                                        <span ng-show="rewardForm.RewardDesc{{$index}}.$error.maxlength">Mô tả tối đa 135 kí tự!</span>
-                                                    </div>
-                                                </div>
-                                            </div> <!-- end Description -->
-                                            @*<div class="row">
-                                                    <div class="col-md-4">Loại gói</div>
-                                                    <div class="col-md-8">
-                                                        <div class="field-wrapper">
-                                                            <select class="fform-control fnt-b ng-pristine ng-valid ng-touched" ng-model="RewardPKgs.Type" data-toggle="select">
-                                                                <option value="no-reward">No reward</option>
-                                                                <option value="limited">Limited</option>
-                                                                <option value="unlimited" selected>Unlimited</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>*@
-                                            <div class="row">
-                                                <div class="col-md-4">Thời gian giao hàng</div>
-                                                <div class="col-md-8">
-                                                    <input type="month" class="form-control delivery" style="line-height: 15px;" min="{{endDate | date:'yyyy-MM-dd'}}" ng-model="RewardPKgs.EstimatedDelivery" name="RewardDelivery"
-                                                           ng-disabled="RewardPKgs.Backers != 0 || AllEditable == false">
-                                                </div>
-                                            </div> <!-- end Estimated delivery -->
-                                            <div class="row">
-                                                <div class="col-md-4">Backers&nbsp;&nbsp;<b>{{RewardPKgs.Backers}}</b></div>
-                                                <div class="col-md-4">
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" ng-model="RewardPKgs.LimitQuantity" data-toggle="checkbox" class="custom-checkbox"
-                                                               ng-disabled="RewardPKgs.Backers != 0 || AllEditable == false">
-                                                        <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
-                                                        Giới hạn số lượng
-                                                    </label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <input type="number" id="limit_quntity" class="form-control" min="0" ng-trim="true"
-                                                           name="quantity{{$index}}" ng-model="RewardPKgs.Quantity" ng-if="RewardPKgs.LimitQuantity == true" ng-disabled="AllEditable == false">
-                                                    <div ng-show="rewardForm.quantity{{$index}}.$dirty && rewardForm.quantity{{$index}}.$invalid" class="text-danger">
-                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                        <span ng-show="rewardForm.quantity{{$index}}.$invalid">Số lượng phải là chữ số và lớn hơn 0!</span>
-                                                    </div>
-                                                </div>
-                                            </div> <!-- end Backer -->
-                                            <div class="row">
-                                                <div class="col-md-4">Acitve</div>
-                                                <div class="col-md-8">
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" ng-model="RewardPKgs.IsHide" data-toggle="checkbox" class="custom-checkbox" ng-disabled="AllEditable == false">
-                                                        <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
-                                                        Ẩn gói quà này
-                                                    </label>
-                                                </div>
-                                            </div> <!-- end Active -->
+                                            <div style="background: #FFF; border: 1px solid eee; padding: 10px; border-radius: 6px">
+                                                <p class="fnt-b mt0 mb0">Ủng hộ {{rewardPkg.PledgeAmount | currency}}&#8363; hoặc hơn</p>
+                                                <p class="mt0 mb0">{{rewardPkg.CurrentQuantity}} Đã ủng hộ <span ng-if="rewardPkg.Type == 'limited'">| Giới hạn: {{rewardPkg.Quantity}}</span><span ng-if="rewardPkg.Type == 'unlimited'">| Không giới hạn</span></p>
+                                                <p class="mt0 mb0">{{rewardPkg.Description}}</p>
+                                                <p class="mt0 mb0 pb0 pt0" ng-show="rewardPkg.Type != 'no reward'">Ngày giao: {{rewardPkg.EstimatedDelivery | date:'MM-yyyy'}}</p>
+                                                <p class="mt0 mb0 pb0 pt0">Kiểu: {{rewardPkg.Type}}</p>
+                                                <p class="mt0 mb0" ng-show="rewardPkg.IsHide == true"><span class="label label-warning">Hidden</span></p>
+                                            </div>
+                                            <ul class="list-inline pull-right mt0 mb0 pb0 pt0">
+                                                <li><a class="btn btn-default btn-xs" ng-click="updateReward($index)">Hide</a></li>
+                                                @*<li><a class="btn btn-danger btn-xs" href="">Delete</a></li>*@
+                                                <li><a class="btn btn-info btn-xs" href="" data-toggle="modal" ng-click="editRewardModal($index)" ng-show="AllEditable == true">Edit</a></li>
+                                            </ul>
                                         </div> <!-- end items -->
                                     </div> <!-- end items -->
                                 </div>
@@ -334,6 +277,86 @@
                                     <button type="button" ng-disabled="rewardForm.$invalid" class="btn btn-success" ng-click="updateReward(rewardForm)">Save changes</button>
                                 </div>
                             </form>
+                            <!-- add new reward dialog -->
+                            <div class="modal fade" id="editRewardModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <form class="form-horizontal" role="form" name="EditRewardModal" novalidate>
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="row border-grey">
+                                                <div class="col-md-2">
+                                                    <p class="title">Gói #{{editPkg.Index}}</p>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <div class="row pb5">
+                                                        <div class="col-md-4">Ủng hộ</div>
+                                                        <div class="col-md-8">
+                                                            <input type="text" format="number" id="pledge_amount" name="PledgeAmount" ng-model="editPkg.PledgeAmount" class="form-control">
+                                                            <div ng-show="EditRewardModal.PledgeAmount.$dirty && editPkg.PledgeAmount < 1000" class="text-danger">
+                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                <span>Phải là chữ số và lớn hơn 1,000!</span>
+                                                            </div>
+                                                        </div>
+                                                    </div> <!-- end Pledge amount -->
+                                                    <div class="row pb5">
+                                                        <div class="col-md-4">Description</div>
+                                                        <div class="col-md-8">
+                                                            <textarea class="form-control" rows="3" style="resize: none" name="NewRewardDes" ng-minlength="10"
+                                                                      ng-maxlength="135" maxlength="135" ng-trim="true" ng-model="editPkg.Description"></textarea>
+                                                            <div ng-show="EditRewardModal.NewRewardDes.$dirty && EditRewardModal.NewRewardDes.$invalid" class="text-danger">
+                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                <span ng-show="EditRewardModal.NewRewardDes.$error.minlength">Mô tả tối thiểu 10 kí tự!</span>
+                                                                <span ng-show="EditRewardModal.NewRewardDes.$error.maxlength">Mô tả tối đa 135 kí tự!</span>
+                                                            </div>
+                                                        </div>
+                                                    </div> <!-- end Description -->
+                                                    <div class="row pt5 pb5" ng-show="selectedType.value != 'no reward'">
+                                                        <div class="col-md-4">Ngày giao</div>
+                                                        <div class="col-md-8">
+                                                            @*<input type="month" class="form-control" min="{{toDay |  date:'yyyy-MM'}}" style="line-height: 15px;" name="deadline"
+                                                                ng-model="editPkg.EstimatedDelivery">*@
+                                                            <input type="month" class="form-control" style="line-height: 15px;" name="deadline"
+                                                                   ng-model="editPkg.EstimatedDelivery">
+                                                            <div ng-show="EditRewardModal.deadline.$dirty && EditRewardModal.deadline.$invalid" class="text-danger">
+                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                <span ng-show="EditRewardModal.deadline.$invalid">Xin hãy nhập đúng chuẩn ngày tháng!</span>
+                                                            </div>
+                                                        </div>
+                                                    </div> <!-- end Estimated delivery -->
+                                                    <div class="row pt5 pb5">
+                                                        <div class="col-sm-4 col-md-4"></div>
+                                                        <div class="col-sm-4 col-md-4">
+                                                            <div class="field-wrapper">
+                                                                <select class="form-control fnt-b" ng-model="selectedType"
+                                                                        ng-options="rewardType.name for rewardType in rewardTypes track by rewardType.value "></select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4" ng-show="selectedType.value == 'limited'">
+                                                            <input type="number" class="form-control" name="newQuantity" ng-model="editPkg.Quantity">
+                                                            @*<div ng-show="EditRewardModal.newQuantity.$dirty && EditRewardModal.newQuantity.$invalid" class="text-danger">
+                                                                    <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                    <span ng-show="EditRewardModal.newQuantity.$invalid">Số lượng phải là chữ số và lớn hơn 0!</span>
+                                                                </div>*@
+                                                        </div>
+                                                    </div> <!-- end Backer -->
+                                                    <div class="row pt5 pb5">
+                                                        <div class="col-md-12">
+                                                            <ul class="list-inline pull-right">
+                                                                <li><a class="btn btn-danger btn-sm" ng-click="deleteReward(editPkg.Index)">Delete</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div> <!-- end items -->
+                                            </div> <!-- end items -->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="resetReward(EditRewardModal)">Close</button>
+                                                <button type="button" ng-disabled="EditRewardModal.$invalid || editPkg.PledgeAmount < 1000" class="btn btn-success" ng-click="updateReward()">
+                                                    Save changes
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div> <!-- end editRewardModal -->
                             <div class="row border-grey border-dash">
                                 <div class="addReward txt-c">
                                     <a class="btn btn-success" data-toggle="modal" data-target="#addReward" ng-show="AllEditable == true">Add new reward</a>
@@ -344,20 +367,20 @@
                                                 <div class="modal-content">
                                                     <div class="row border-grey">
                                                         <div class="col-md-2">
-                                                            <p class="title">Gói mới</p>
+                                                            <p class="title">Tạo gói mới</p>
                                                         </div>
                                                         <div class="col-md-10">
-                                                            <div class="row">
+                                                            <div class="row pb5">
                                                                 <div class="col-md-4">Pledge amount</div>
-                                                                <div class="col-md-4">
-                                                                    <input type="number" class="form-control" min="0" name="NewRewardPledge" ng-model="NewReward.PledgeAmount">
-                                                                    <div ng-show="CreateRewardForm.NewRewardPledge.$dirty && CreateRewardForm.NewRewardPledge.$invalid" class="text-danger">
+                                                                <div class="col-md-8">
+                                                                    <input type="text" format="number" name="NewRewardPledge" ng-model="NewReward.PledgeAmount" class="form-control" min="1000">
+                                                                    <div ng-show="CreateRewardForm.NewRewardPledge.$dirty && NewReward.PledgeAmount < 1000" class="text-danger">
                                                                         <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                                        <span ng-show="CreateRewardForm.NewRewardPledge.$invalid">Mục tiêu gây quỹ phải là chữ số và lớn hơn 0!</span>
+                                                                        <span>Phải là chữ số và lớn hơn 1,000!</span>
                                                                     </div>
                                                                 </div>
                                                             </div> <!-- end Pledge amount -->
-                                                            <div class="row">
+                                                            <div class="row pb5">
                                                                 <div class="col-md-4">Description</div>
                                                                 <div class="col-md-8">
                                                                     <textarea class="form-control" rows="3" style="resize: none" name="NewRewardDes" ng-minlength="10"
@@ -371,23 +394,32 @@
                                                                     </div>
                                                                 </div>
                                                             </div> <!-- end Description -->
-                                                            <div class="row">
+                                                            <div class="row pt5 pb5" ng-show="NewReward.Type != 'no reward'">
                                                                 <div class="col-md-4">Thời gian giao hàng</div>
                                                                 <div class="col-md-8">
-                                                                    <input type="month" min="{{toDay |  date:'yyyy-MM'}}" class="form-control delivery-date" style="line-height: 15px;" name="NewRewardDelivery" ng-model="NewReward.EstimatedDelivery">
+                                                                    @*<input type="month" min="{{toDay |  date:'yyyy-MM'}}" class="form-control delivery-date" style="line-height: 15px;"
+                                                                        name="NewRewardDelivery" ng-model="NewReward.EstimatedDelivery">*@
+                                                                    <input type="month" class="form-control delivery-date" style="line-height: 15px;"
+                                                                           name="NewRewardDelivery" ng-model="NewReward.EstimatedDelivery">
+                                                                    <div ng-show="CreateRewardForm.NewRewardDelivery.$dirty && CreateRewardForm.NewRewardDelivery.$invalid" class="text-danger">
+                                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                        <span ng-show="CreateRewardForm.NewRewardDelivery.$invalid">Xin hãy nhập đúng chuẩn ngày tháng!</span>
+                                                                    </div>
                                                                 </div>
                                                             </div> <!-- end Estimated delivery -->
-                                                            <div class="row">
-                                                                <div class="col-md-4">Backer</div>
-                                                                <div class="col-md-4">
-                                                                    <label class="checkbox">
-                                                                        <input type="checkbox" ng-model="NewReward.LimitQuantity" data-toggle="checkbox" class="custom-checkbox">
-                                                                        <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
-                                                                        Giới hạn số lượng
-                                                                    </label>
+                                                            <div class="row pt5 pb5">
+                                                                <div class="col-sm-4 col-md-4"></div>
+                                                                <div class="col-sm-4 col-md-4">
+                                                                    <div class="field-wrapper">
+                                                                        <select class="form-control fnt-b" ng-model="NewReward.Type" ng-init="NewReward.Type='no reward'">
+                                                                            <option value="no reward" selected>No reward</option>
+                                                                            <option value="limited">Limited</option>
+                                                                            <option value="unlimited">Unlimited</option>
+                                                                        </select>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="col-md-4">
-                                                                    <input type="number" class="form-control" min="0" name="newQuantity" ng-model="NewReward.Quantity" ng-if="NewReward.LimitQuantity == true">
+                                                                    <input type="number" class="form-control" min="1" name="newQuantity" ng-model="NewReward.Quantity" ng-if="NewReward.Type == 'limited'">
                                                                     <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="CreateRewardForm.newQuantity.$dirty && CreateRewardForm.newQuantity.$valid"></span>
                                                                     <div ng-show="CreateRewardForm.newQuantity.$dirty && CreateRewardForm.newQuantity.$invalid" class="text-danger">
                                                                         <span class="glyphicon glyphicon-remove text-danger"></span>
@@ -395,22 +427,13 @@
                                                                     </div>
                                                                 </div>
                                                             </div> <!-- end Backer -->
-                                                            <div class="row">
-                                                                <div class="col-md-4">Acitve</div>
-                                                                <div class="col-md-8">
-                                                                    <label class="checkbox">
-                                                                        <input type="checkbox" ng-model="NewReward.IsHide" data-toggle="checkbox" class="custom-checkbox">
-                                                                        <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
-                                                                        Ẩn gói quà này
-                                                                    </label>
-                                                                </div>
-                                                            </div> <!-- end Active -->
                                                         </div> <!-- end items -->
                                                     </div> <!-- end items -->
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
-                                                        <button type="button" ng-disabled="CreateRewardForm.$invalid" class="btn btn-success" ng-click="createReward()">
-                                                            Save changes
+                                                        <button type="button" class="btn btn-success" data-dismiss="modal">Bỏ</button>
+
+                                                        <button type="button" ng-disabled="!CreateRewardForm.$dirty || (CreateRewardForm.$dirty && CreateRewardForm.$invalid) || NewReward.PledgeAmount < 1000" class="btn btn-success" ng-click="createReward()">
+                                                            Tạo
                                                         </button>
                                                     </div>
                                                 </div>
@@ -466,7 +489,7 @@
                                     <div class="col-md-4"><p class="title">Project video</p></div>
                                     <div class="col-md-8">
                                         <div class="responsive-video" style="z-index:2">
-                                            <iframe src="{{trustSrc(ProjectStory.VideoUrl)}}" frameborder="0" allowfullscreen></iframe>
+                                            <iframe ng-src="{{trustSrc(ProjectStory.VideoUrl)}}" frameborder="0" allowfullscreen></iframe>
                                         </div>
                                         <div for="upload">
                                             <div class="asset_upload">
@@ -568,7 +591,7 @@
                                 <div class="video-tout border-tips">
                                     <a class="link_to_school-video-dialog video_thumb_container">
                                         <!-- <img alt="Media - Video" class="play_button" src="https://d297h9he240fqh.cloudfront.net/assets/projects/button-playvideo-sm-c4ba88222413634953e9fda7e69a2bf49f9e3caf97dfd2ef63e38921db846595.png"> -->
-                                        <img alt="Video thumb school 757b761a8e7251582e9e3f9abcf0ff2a4f39bdd13f022020d3e544e47ae138e5" height="115" src="https://d297h9he240fqh.cloudfront.net/assets/projects/edit/video-thumb-school-757b761a8e7251582e9e3f9abcf0ff2a4f39bdd13f022020d3e544e47ae138e5.jpg" width="199">
+                                        <img alt="Video thumb school 757b761a8e7251582e9e3f9abcf0ff2a4f39bdd13f022020d3e544e47ae138e5" height="115" ng-src="https://d297h9he240fqh.cloudfront.net/assets/projects/edit/video-thumb-school-757b761a8e7251582e9e3f9abcf0ff2a4f39bdd13f022020d3e544e47ae138e5.jpg" width="199">
                                     </a>
                                     <a class="school-tout" href="/help/handbook/your_story" target="_blank"><span><span>How to:</span> Make an awesome video</span></a>
                                 </div>
@@ -936,7 +959,11 @@
                                                     <p class="title">Ngày</p>
                                                 </div>
                                                 <div class="col-md-9">
-                                                    <input type="date" class="form-control" style="line-height: 15px" ng-model="timeline.DueDate" id="date{{$index}}" disabled>
+                                                    <input type="date" class="form-control" style="line-height: 15px" name="duedate" ng-model="timeline.DueDate" id="date{{$index}}" disabled>
+                                                    <div ng-show="timelineForm.duedate.$dirty && timelineForm.duedate.$invalid" class="text-danger">
+                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                        <span ng-show="timelineForm.duedate.$invalid">Xin hãy nhập đúng chuẩn ngày tháng!</span>
+                                                    </div>
                                                 </div>
                                             </div><!-- end Date -->
                                             <div class="row pt5 pb5">
@@ -946,7 +973,7 @@
                                                 <div class="col-md-9">
                                                     <div class="asset_upload">
                                                         <div class="image-clip pull-left">
-                                                            <img src="{{timeline.ImageUrl}}" class="img-responsive center-block">
+                                                            <img ng-src="{{timeline.ImageUrl}}" class="img-responsive center-block">
                                                         </div>
                                                         <div class="upload">
                                                             <input type="file" class="avatar file" ng-file-dirty
@@ -1023,6 +1050,10 @@
                                                                     <div class="col-md-9">
                                                                         <input type="date" class="form-control" min="{{toDay | date:'yyyy-MM-dd'}}" name="date"
                                                                                style="line-height: 15px" ng-model="newTimeline.DueDate">
+                                                                        <div ng-show="CreateTimelineForm.date.$dirty && timelineForm.date.$invalid" class="text-danger">
+                                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                            <span ng-show="CreateTimelineForm.date.$invalid">Xin hãy nhập đúng chuẩn ngày tháng!</span>
+                                                                        </div>
                                                                     </div>
                                                                 </div><!-- end Date -->
                                                                 <div class="row pt5 pb5">
@@ -1032,7 +1063,7 @@
                                                                     <div class="col-md-9">
                                                                         <div class="asset_upload">
                                                                             <div class="image-clip pull-left">
-                                                                                <img src="{{newTimeline.ImageUrl}}" class="img-responsive center-block">
+                                                                                <img ng-src="{{newTimeline.ImageUrl}}" class="img-responsive center-block">
                                                                             </div>
                                                                             <div class="upload">
                                                                                 <input type="file" class="avatar file" ng-file-dirty

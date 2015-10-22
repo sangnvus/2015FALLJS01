@@ -7,10 +7,18 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
     $scope.NewUpdateLog = {};
     // initial newTimeline
     $scope.newTimeline = {};
-    // initail newQuestion
+    // initial newQuestion
     $scope.newQuestion = {};
     // initial edit timeline status list
     $scope.editTimeline = {};
+    // initail editRewardPkg
+    $scope.editPkg = {};
+    // initail reward type
+    $scope.rewardTypes = [
+        { name: 'no reward', value: "no reward" },
+        { name: 'limited', value: "limited" },
+        { name: 'unlimited', value: "unlimited" },
+    ];
     // Detech create a new timeline point
     $scope.isCreateTimeline = false;
 
@@ -81,13 +89,6 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         };
     }
     $scope.selectedCate();
-
-    //// Reward option
-    //$scope.rewardOption = [
-    //    { id: '1', name: 'no reward' },
-    //    { id: '2', name: 'unlimited' },
-    //    { id: '3', name: 'limited' }
-    //];
 
     // Set selected project category
     $scope.selectedOption = $scope.Categories[categoryIndex];
@@ -211,9 +212,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                     for (var i = 0; i < $scope.RewardPKgs.length; i++) {
                         if ($scope.RewardPKgs[i].EstimatedDelivery != null) {
                             $scope.RewardPKgs[i].EstimatedDelivery = new Date($filter('date')($scope.RewardPKgs[i].EstimatedDelivery, "yyyy-MM-dd"));
-                        }
-                        if ($scope.RewardPKgs[i].Quantity > 0) {
-                            $scope.RewardPKgs[i].LimitQuantity = true;
+                            console.log("date: " + $scope.RewardPKgs[i].EstimatedDelivery);
                         }
                     };
 
@@ -232,26 +231,33 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
 
     };
     // Edit rewardPkg
-    $scope.updateReward = function (form) {
+    $scope.updateReward = function (index) {
+        if ($scope.editPkg.Type != "limited") {
+            $scope.editPkg.Quantity = 0;
+        }
 
-        // Check if rewardPkg is not limit quantity
-        for (var i = 0; i < $scope.RewardPKgs.length; i++) {
-            if ($scope.RewardPKgs[i].LimitQuantity === false) {
-                $scope.RewardPKgs[i].Quantity = 0;
+        var promiseUpdateReward;
+        if (index != null) {
+            if ($scope.RewardPKgs[index].IsHide == true) {
+                $scope.RewardPKgs[index].IsHide = false;
+            } else {
+                $scope.RewardPKgs[index].IsHide = true;
             }
-        };
 
-        // Put update project
-        var promiseUpdateReward = ProjectService.editRewardPkgs($scope.RewardPKgs);
+            promiseUpdateReward = ProjectService.editRewardPkgs($scope.RewardPKgs[index]);
+        } else {
+            $scope.editPkg.Type = $scope.selectedType.value;
+            $scope.RewardPKgs[$scope.editPkg.Index - 1] = angular.copy($scope.editPkg);
+            promiseUpdateReward = ProjectService.editRewardPkgs($scope.editPkg);
+        }
 
         promiseUpdateReward.then(
             function (result) {
                 if (result.data.Status === "success") {
-                    toastr.success('Sửa thành công!', 'Thành công!');
+                    toastr.success('Sửa thành công!');
+                    $('#editRewardModal').modal('hide');
                     // re-set original project reward
                     $scope.originalReward = angular.copy($scope.RewardPKgs);
-                    form.$setPristine();
-                    form.$setUntouched();
                 } else {
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
@@ -264,12 +270,15 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
     };
     // Create a new reward
     $scope.createReward = function () {
+        if ($scope.NewReward.Type != "limited") {
+            $scope.NewReward.Quantity = 0;
+        }
         var promiseCreateReward = ProjectService.createReward($scope.Project.ProjectID, $scope.NewReward);
 
         promiseCreateReward.then(
             function (result) {
                 if (result.data.Status === "success") {
-                    toastr.success('Tạo reward thành công!', 'Thành công!');
+                    toastr.success('Tạo reward thành công!');
                     $('#addReward').modal('hide');
                     // reinitial newReward
                     $scope.NewReward = {};
@@ -291,13 +300,14 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
     };
     // Delete a rewardPkg
     $scope.deleteReward = function (index) {
-        var promiseDeleteReward = ProjectService.deleteRewardPkg($scope.RewardPKgs[index].RewardPkgID);
+        var promiseDeleteReward = ProjectService.deleteRewardPkg($scope.RewardPKgs[index - 1].RewardPkgID);
 
         promiseDeleteReward.then(
             function (result) {
                 if (result.data.Status === "success") {
-                    toastr.success('Xóa thành công!', 'Thành công!');
-                    $scope.RewardPKgs.splice(index, 1);
+                    toastr.success('Xóa thành công!');
+                    $('#editRewardModal').modal('hide');
+                    $scope.RewardPKgs.splice(index - 1, 1);
                     $scope.originalReward = angular.copy($scope.RewardPKgs);
                 } else {
                     $scope.Error = result.data.Message;
@@ -309,6 +319,19 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                 toastr.error($scope.Error, 'Lỗi!');
             });
     };
+    // Show edit rewardPkg modal
+    $scope.editRewardModal = function (index) {
+        $('#editRewardModal').modal('show');
+        $scope.editPkg = angular.copy($scope.RewardPKgs[index]);
+        $scope.editPkg.Index = index + 1;
+        for (var i = 0; i < $scope.rewardTypes.length; i++) {
+            console.log("value " + $scope.rewardTypes[i].value);
+            if ($scope.rewardTypes[i].value === $scope.editPkg.Type) {
+                $scope.selectedType = $scope.rewardTypes[i];
+                break;
+            }
+        };
+    }
 
     // Get updateLog records
     $scope.getUpdateLog = function () {
@@ -648,9 +671,14 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
     };
     // Prevent switch tab if tab's invalid
     $('#tablist a').click(function (e) {
+        if ($scope.Project.FundingGoal < 1000000) {
+            $scope.BasicForm.$invalid = true;
+        }
+        var form;
         if (!angular.equals($scope.originalProjectBasic, $scope.Project) || !angular.equals($scope.originalSelectedCate, $scope.selectedOption)) {
+            form = $scope.BasicForm;
             if ($scope.BasicForm.$invalid) {
-                $scope.checkForm();
+                $scope.checkForm(form);
             } else {
                 $scope.checkEditProjectBasic($scope.BasicForm);
             }
@@ -658,8 +686,9 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         }
 
         if (!angular.equals($scope.originalReward, $scope.RewardPKgs)) {
+            form = $scope.rewardForm;
             if ($scope.rewardForm.$invalid) {
-                $scope.checkForm();
+                $scope.checkForm(form);
             } else {
                 $scope.checkEditReward($scope.rewardForm);
             }
@@ -667,8 +696,9 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         }
 
         if (!angular.equals($scope.originalUpdateLog, $scope.UpdateLogs)) {
+            form = $scope.updateLogForm;
             if ($scope.updateLogForm.$invalid) {
-                $scope.checkForm();
+                $scope.checkForm(form);
             } else {
                 $scope.checkEditUpdateLog($scope.updateLogForm);
             }
@@ -676,8 +706,9 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         }
 
         if (!angular.equals($scope.originalStory, $scope.ProjectStory)) {
+            form = $scope.storyForm;
             if ($scope.storyForm.$invalid) {
-                $scope.checkForm();
+                $scope.checkForm(form);
             } else {
                 $scope.checkEditStory($scope.storyForm);
             }
@@ -685,8 +716,9 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         }
 
         if (!angular.equals($scope.originalQuestion, $scope.Question)) {
+            form = $scope.questionForm;
             if ($scope.questionForm.$invalid) {
-                $scope.checkForm();
+                $scope.checkForm(form);
             } else {
                 $scope.checkEditQuestion($scope.questionForm);
             }
@@ -694,8 +726,9 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         }
 
         if (!angular.equals($scope.originalTimeline, $scope.Timeline)) {
+            form = $scope.timelineForm;
             if ($scope.timelineForm.$invalid) {
-                $scope.checkForm();
+                $scope.checkForm(form);
             } else {
                 $scope.checkEditTimeline($scope.timelineForm);
             }
@@ -707,8 +740,44 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
     });
 
     // If form is dirty
-    $scope.checkForm = function () {
-        swal({ title: "Lỗi!", text: "Sai thông tin. Xin hãy xem lại!", type: "warning" });
+    $scope.checkForm = function (form) {
+        SweetAlert.swal({
+            title: "Bạn vừa chỉnh sửa sai dữ liệu!",
+            text: "Bạn có muốn chỉnh sửa lại không?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Có!",
+            cancelButtonText: "Không, Khôi phục dữ liệu cũ!",
+            closeOnConfirm: true,
+            closeOnCancel: true
+        },
+           function (isConfirm) {
+               if (isConfirm) {
+               } else {
+                   //SweetAlert.swal("Hủy Bỏ", "Project's basic is safe :)", "error");
+                   $scope.Project = angular.copy($scope.originalProjectBasic);
+                   $scope.selectedCate();
+                   $scope.selectedOption = angular.copy($scope.originalSelectedCate);
+                   $(".projecImg-preview").attr("src", $scope.Project.ImageUrl);
+                   //reset file field
+                   var resetImg = $("#imgSelected");
+                   resetImg.replaceWith(resetImg = resetImg.clone(true));
+                   $scope.file = null;
+
+                   $scope.RewardPKgs = angular.copy($scope.originalReward);
+                   $scope.UpdateLogs = angular.copy($scope.originalUpdateLog);
+                   $scope.ProjectStory = angular.copy($scope.originalStory);
+                   $scope.Question = angular.copy($scope.originalQuestion);
+                   $scope.Timeline = angular.copy($scope.originalTimeline);
+
+
+                   form.$setPristine();
+                   form.$setUntouched();
+                   // Switch tab
+                   $scope.changeTab($scope.thisTab.context.hash);
+               }
+           });
     };
 
     // If tab basic is dirty

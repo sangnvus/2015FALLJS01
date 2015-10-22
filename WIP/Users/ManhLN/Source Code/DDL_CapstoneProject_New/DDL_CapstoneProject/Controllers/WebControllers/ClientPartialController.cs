@@ -15,7 +15,17 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         }
         public ActionResult Discover()
         {
-            return PartialView("~/Views/Home/Discover.cshtml");
+            return PartialView("~/Views/Home/_Discover.cshtml");
+        }
+
+        public ActionResult Statistics()
+        {
+            return PartialView("~/Views/Home/_Statistics.cshtml");
+        }
+
+        public ActionResult Search()
+        {
+            return PartialView("~/Views/Home/_Search.cshtml");
         }
         // GET: ClientPartial
         public ActionResult Register()

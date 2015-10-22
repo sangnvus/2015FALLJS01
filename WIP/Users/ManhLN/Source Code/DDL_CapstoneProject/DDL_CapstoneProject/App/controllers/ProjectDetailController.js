@@ -147,7 +147,9 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
 
     // Function edit comment.
     $scope.editComment = function (index) {
-        if ($scope.Project.CommentsList[index].EditedCommentContent !== $scope.Project.CommentsList[index].CommentContent) {
+        if ($scope.Project.CommentsList[index].EditedCommentContent !== $scope.Project.CommentsList[index].CommentContent
+            && $scope.Project.CommentsList[index].EditedCommentContent.length >= 10
+            && $scope.Project.CommentsList[index].EditedCommentContent.length <= 500) {
             var promisePut = ProjectService.editComment($scope.Project.CommentsList[index].CommentID, $scope.Project.CommentsList[index].EditedCommentContent);
             promisePut.then(
                 function (result) {
@@ -165,7 +167,11 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                     $scope.Error = error.data.Message;
                     toastr.error($scope.Error, 'Lỗi');
                 });
-        } else {
+        } else if ($scope.Project.CommentsList[index].EditedCommentContent.length < 10
+                    || $scope.Project.CommentsList[index].EditedCommentContent.length > 500) {
+            // Do nothing.
+        }
+        else {
             $scope.showEditForm(index);
         }
     }
@@ -193,16 +199,16 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
 
     $scope.remind = function () {
         var promise = ProjectService.remindProject($scope.Project.ProjectCode);
-          promise.then(
-            function (result) {
+        promise.then(
+          function (result) {
               if (result.data.Status === "success") {
-               toastr.success('Theo dõi dự án', 'Thành công');
-            } else if (result.data.Status === "error") {
-                 $scope.Error = result.data.Message;
-               toastr.error($scope.Error, 'Lỗi');
-           }
+                  toastr.success('Theo dõi dự án thành công');
+              } else if (result.data.Status === "error") {
+                  $scope.Error = result.data.Message;
+                  toastr.error($scope.Error, 'Lỗi');
+              }
           }
-         );
+       );
     };
 
     $scope.Reminded = true;
@@ -211,10 +217,10 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
         promise.then(
             function (result) {
                 if (result.data.Status === "success") {
-                    toastr.success('Báo cáo sai phạm thành công!');
+                    toastr.success('Báo cáo sai phạm thành công');
                 } else if (result.data.Status === "error") {
                     $scope.Error = result.data.Message;
-                    toastr.error($scope.Error, 'Bạn chưa đăng nhập!');
+                    toastr.error($scope.Error, 'Bạn chưa đăng nhập');
                 }
             }
          );
@@ -238,6 +244,6 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
     $scope.dtColumnDefs = [
         DTColumnDefBuilder.newColumnDef(0).notSortable()
     ];
-    
-    
+
+
 });

@@ -12,7 +12,7 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/clientcss")
     @Scripts.Render("~/bundles/modernizr")
-    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.7.1/loading-bar.min.css' type='text/css' media='all' />
+    @*<link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.7.1/loading-bar.min.css' type='text/css' media='all' />*@
     @RenderSection("stylesheets", required: false)
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -160,7 +160,6 @@
                         <li><a href="about.html">About us</a></li>
                         <li><a href="#">Help</a></li>
                         <li><a href="#">Contact</a></li>
-                        <a id="gototop" class="gototop" href="#"><span class="glyphicon glyphicon-chevron-up"></span></a>
                     </ul>
                 </div>
             </div>
@@ -170,7 +169,7 @@
     @Scripts.Render("~/bundles/otherScripts")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-    <script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.7.1/loading-bar.min.js'></script>
+    @*<script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.7.1/loading-bar.min.js'></script>*@
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
 </body>
 </html>

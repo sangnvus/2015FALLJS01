@@ -14,19 +14,21 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 {
     public class CategoryApiController : BaseApiController
     {
+        
 
-        /// <summary>
-        /// GetCategoryProjectCount
-        /// </summary>
-        /// <returns></returns>
         // GET: api/CategoryApi/GetCategories
         [HttpGet]
         [ResponseType(typeof(CategoryDTO))]
-        public IHttpActionResult GetCategories()
+        public IHttpActionResult listDataForStatistic()
         {
-            var listCategoryDTO = CategoryRepository.Instance.GetCategories();
+            var listCategoryDTO = CategoryRepository.Instance.listDataForStatistic();
 
             return Ok(new HttpMessageDTO { Status = "success", Data = listCategoryDTO });
+        }
+        public IHttpActionResult getAllCategories()
+        {
+            var list = CategoryRepository.Instance.GetAllCategories();
+            return Ok(new HttpMessageDTO { Status = "success", Data = list });
         }
         public IHttpActionResult GetCategoryProjectCount()
         {
@@ -49,7 +51,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
             }
 
-            var listCategoryDTO = CategoryRepository.Instance.GetCategories();
+            var listCategoryDTO = CategoryRepository.Instance.GetAllCategories();
 
             return Ok(new HttpMessageDTO { Status = "success", Data = listCategoryDTO });
         }
