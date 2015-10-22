@@ -11,40 +11,41 @@ namespace DDL_CapstoneProject.Respository
 {
     public class SlideRepository : SingletonBase<SlideRepository>
     {
-        private DDLDataContext db;
 
         private SlideRepository()
         {
-            db = DDLDataContextRepository.Instance.DbContext;
         }
 
         // GET: api/Slides
         public List<SlideDTO> GetSlides()
         {
-            try
+            using (var db = new DDLDataContext())
             {
-                var SlideList = from slide in db.Slides
-                                where slide.IsActive
-                                orderby slide.Order
-                                select new SlideDTO
-                                {
-                                    Title = slide.Title,
-                                    ButtonColor = slide.ButtonColor,
-                                    SlideUrl = slide.SlideUrl,
-                                    ImageUrl = slide.ImageUrl,
-                                    ButtonText = slide.ButtonText,
-                                    Description = slide.Description,
-                                    TextColor = slide.TextColor,
-                                    VideoUrl = slide.VideoUrl,
-                                };
+                try
+                {
+                    var SlideList = from slide in db.Slides
+                        where slide.IsActive
+                        orderby slide.Order
+                        select new SlideDTO
+                        {
+                            Title = slide.Title,
+                            ButtonColor = slide.ButtonColor,
+                            SlideUrl = slide.SlideUrl,
+                            ImageUrl = slide.ImageUrl,
+                            ButtonText = slide.ButtonText,
+                            Description = slide.Description,
+                            TextColor = slide.TextColor,
+                            VideoUrl = slide.VideoUrl,
+                        };
 
-                return SlideList.ToList();
+                    return SlideList.ToList();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
+                return new List<SlideDTO>();
             }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            return new List<SlideDTO>();
         }
 
     }

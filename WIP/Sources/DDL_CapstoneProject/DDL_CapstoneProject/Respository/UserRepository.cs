@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
@@ -15,13 +16,10 @@ namespace DDL_CapstoneProject.Respository
 {
     public class UserRepository : SingletonBase<UserRepository>
     {
-        // data context.
-        private DDLDataContext db;
 
         #region "Contructors"
         private UserRepository()
         {
-            db = DDLDataContextRepository.Instance.DbContext;
         }
         #endregion
 
@@ -30,23 +28,39 @@ namespace DDL_CapstoneProject.Respository
 
         public Dictionary<string, List<UserBackInforDTO>> GetUserTop(string categoryid)
         {
-            categoryid = "|" + categoryid + "|";
-            bool allCategory = false;
-            if (categoryid.ToLower().Contains("all")) allCategory = true;
-            var UserTop = from user in db.DDL_Users
-                          select new UserBackInforDTO
-                          {
-                              Rank = "Rank A",
-                              Name = user.UserInfo.FullName,
-                              TotalFunded = user.CreatedProjects.Where(x => categoryid.Contains(x.CategoryID.ToString()) || allCategory).Sum(x => (decimal?)x.CurrentFunded) ?? 0,
-                              TotalBacked = user.Backings.Where(x => categoryid.Contains(x.Project.CategoryID.ToString()) || allCategory).Sum(x => (decimal?)x.BackingDetail.PledgedAmount) ?? 0
-                          };
-            int count = UserTop.Count();
-            if (count >= 10) count = 10;
-            Dictionary<string, List<UserBackInforDTO>> dic = new Dictionary<string, List<UserBackInforDTO>>();
-            dic.Add("UserTopBack", UserTop.Where(x => x.TotalBacked > 0).Take(count).OrderByDescending(x => x.TotalBacked).ThenByDescending(x => x.TotalFunded).ToList());
-            dic.Add("UserTopFund", UserTop.Where(x => x.TotalFunded > 0).Take(count).OrderByDescending(x => x.TotalFunded).ThenByDescending(x => x.TotalBacked).ToList());
-            return dic;
+            using (var db = new DDLDataContext())
+            {
+                categoryid = "|" + categoryid + "|";
+                bool allCategory = categoryid.ToLower().Contains("all");
+                var userTop = from user in db.DDL_Users
+                    select new UserBackInforDTO
+                    {
+                        Rank = "Rank A",
+                        Name = user.UserInfo.FullName,
+                        TotalFunded =
+                            user.CreatedProjects.Where(x => categoryid.Contains(x.CategoryID.ToString()) || allCategory)
+                                .Sum(x => (decimal?) x.CurrentFunded) ?? 0,
+                        TotalBacked =
+                            user.Backings.Where(x => categoryid.Contains(x.Project.CategoryID.ToString()) || allCategory)
+                                .Sum(x => (decimal?) x.BackingDetail.PledgedAmount) ?? 0
+                    };
+                int count = userTop.Count();
+                if (count >= 10) count = 10;
+                Dictionary<string, List<UserBackInforDTO>> dic = new Dictionary<string, List<UserBackInforDTO>>();
+                dic.Add("UserTopBack",
+                    userTop.Where(x => x.TotalBacked > 0)
+                        .Take(count)
+                        .OrderByDescending(x => x.TotalBacked)
+                        .ThenByDescending(x => x.TotalFunded)
+                        .ToList());
+                dic.Add("UserTopFund",
+                    userTop.Where(x => x.TotalFunded > 0)
+                        .Take(count)
+                        .OrderByDescending(x => x.TotalFunded)
+                        .ThenByDescending(x => x.TotalBacked)
+                        .ToList());
+                return dic;
+            }
         }
 
         #endregion
@@ -94,35 +108,45 @@ namespace DDL_CapstoneProject.Respository
 
         public DDL_User GetByUserNameOrEmail(string userNameOrEmail, string password)
         {
-            var user =
-                db.DDL_Users.FirstOrDefault(x => ((x.Username == userNameOrEmail || x.Email == userNameOrEmail) && x.Password == password));
+            using (var db = new DDLDataContext())
+            {
+                var user =
+                    db.DDL_Users.Include(x => x.UserInfo).FirstOrDefault(
+                        x => ((x.Username == userNameOrEmail || x.Email == userNameOrEmail) && x.Password == password));
 
-            return user;
+                return user;
+            }
         }
 
         public DDL_User GetByUserNameOrEmail(string userNameOrEmail)
         {
-            var user =
-                db.DDL_Users.FirstOrDefault(x => x.Username == userNameOrEmail || x.Email == userNameOrEmail);
+            using (var db = new DDLDataContext())
+            {
+                var user =
+                    db.DDL_Users.Include(x => x.UserInfo).FirstOrDefault(x => x.Username == userNameOrEmail || x.Email == userNameOrEmail);
 
-            return user;
+                return user;
+            }
         }
 
         public UserBasicInfoDTO GetBasicInfo(string userNameOrEmail)
         {
-            var currentUser = (from user in db.DDL_Users
-                               where user.Username.Equals(userNameOrEmail) || user.Email.Equals(userNameOrEmail)
-                               select new UserBasicInfoDTO
-                               {
-                                   FullName = user.UserInfo.FullName,
-                                   IsActive = user.IsActive,
-                                   LoginType = user.LoginType,
-                                   ProfileImage = user.UserInfo.ProfileImage,
-                                   UserName = user.Username,
-                                   Role = user.UserType
-                               }).FirstOrDefault();
+            using (var db = new DDLDataContext())
+            {
+                var currentUser = (from user in db.DDL_Users
+                    where user.Username.Equals(userNameOrEmail) || user.Email.Equals(userNameOrEmail)
+                    select new UserBasicInfoDTO
+                    {
+                        FullName = user.UserInfo.FullName,
+                        IsActive = user.IsActive,
+                        LoginType = user.LoginType,
+                        ProfileImage = user.UserInfo.ProfileImage,
+                        UserName = user.Username,
+                        Role = user.UserType
+                    }).FirstOrDefault();
 
-            return currentUser;
+                return currentUser;
+            }
         }
 
         //public DDL_User GetByUserNameOrEmailByLoginType(string userNameOrEmail, string loginType)
@@ -135,18 +159,21 @@ namespace DDL_CapstoneProject.Respository
 
         public DDL_User InsertUser(DDL_User newUser)
         {
-            try
+            using (var db = new DDLDataContext())
             {
-                db.DDL_Users.Add(newUser);
-                db.SaveChanges();
-            }
-            catch (Exception)
-            {
+                try
+                {
+                    db.DDL_Users.Add(newUser);
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
 
-                return null;
-            }
+                    return null;
+                }
 
-            return GetByUserNameOrEmail(newUser.Email); ;
+                return GetByUserNameOrEmail(newUser.Email);
+            }
         }
 
         public DDL_User RegisterFacebook(dynamic me)
@@ -187,207 +214,238 @@ namespace DDL_CapstoneProject.Respository
 
         public DDL_User Register(UserRegisterDTO newUser)
         {
-            DDL_User newDLLUser;
-
-            if (db.DDL_Users.Any(x => x.Username.Equals(newUser.Username, StringComparison.OrdinalIgnoreCase)))
+            using (var db = new DDLDataContext())
             {
-                throw new DuplicateUserNameException();
-            }
-            else if (db.DDL_Users.Any(x => x.Email.Equals(newUser.Email, StringComparison.OrdinalIgnoreCase)))
-            {
-                throw new DuplicateEmailException();
-            }
-            else
-            {
-                // Generate verify code.
-                var verifyCode = CommonUtils.GenerateVerifyCode();
+                DDL_User newDLLUser;
 
-                // Insert data.
-                newDLLUser = CreateEmptyUser();
-                newDLLUser.Username = newUser.Username;
-                newDLLUser.Password = newUser.Password;
-                newDLLUser.Email = newUser.Email;
-                newDLLUser.VerifyCode = verifyCode;
-                newDLLUser.UserInfo.FullName = newUser.FullName;
-                newDLLUser.UserInfo.ProfileImage = "avatar_default.png";
-                db.DDL_Users.Add(newDLLUser);
-                db.SaveChanges();
+                if (db.DDL_Users.Any(x => x.Username.Equals(newUser.Username, StringComparison.OrdinalIgnoreCase)))
+                {
+                    throw new DuplicateUserNameException();
+                }
+                else if (db.DDL_Users.Any(x => x.Email.Equals(newUser.Email, StringComparison.OrdinalIgnoreCase)))
+                {
+                    throw new DuplicateEmailException();
+                }
+                else
+                {
+                    // Generate verify code.
+                    var verifyCode = CommonUtils.GenerateVerifyCode();
 
-                // Send active link to email of user.
-                MailHelper.Instance.SendMailActive(newUser.Email, newUser.Username, verifyCode, newUser.FullName);
+                    // Insert data.
+                    newDLLUser = CreateEmptyUser();
+                    newDLLUser.Username = newUser.Username;
+                    newDLLUser.Password = newUser.Password;
+                    newDLLUser.Email = newUser.Email;
+                    newDLLUser.VerifyCode = verifyCode;
+                    newDLLUser.UserInfo.FullName = newUser.FullName;
+                    newDLLUser.UserInfo.ProfileImage = "avatar_default.png";
+                    db.DDL_Users.Add(newDLLUser);
+                    db.SaveChanges();
+
+                    // Send active link to email of user.
+                    MailHelper.Instance.SendMailActive(newUser.Email, newUser.Username, verifyCode, newUser.FullName);
+                }
+
+                return GetByUserNameOrEmail(newDLLUser.Email); ;
             }
-
-            return newDLLUser;
         }
 
         public bool VerifyAccount(string userName, string code)
         {
-            var user = GetByUserNameOrEmail(userName);
+            using (var db = new DDLDataContext())
+            {
+                var user = GetByUserNameOrEmail(userName);
 
-            // Check code.
-            if (user == null || !user.VerifyCode.Equals(code)) return false;
+                // Check code.
+                if (user == null || !user.VerifyCode.Equals(code)) return false;
 
-            // Update account status.
-            user.IsActive = true;
-            user.IsVerify = true;
-            db.SaveChanges();
+                // Update account status.
+                user.IsActive = true;
+                user.IsVerify = true;
+                db.SaveChanges();
 
-            return true;
+                return true;
+            }
         }
 
         public DDL_User UpdateUser(DDL_User user)
         {
-            try
+            using (var db = new DDLDataContext())
             {
-                db.DDL_Users.AddOrUpdate(user);
-                db.SaveChanges();
-            }
-            catch (Exception)
-            {
+                try
+                {
+                    db.DDL_Users.AddOrUpdate(user);
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
 
-                return null;
-            }
+                    return null;
+                }
 
-            return GetByUserNameOrEmail(user.Email); ;
+                return GetByUserNameOrEmail(user.Email);
+            }
         }
 
         public bool ResetPassword(string email)
         {
-            var user = GetByUserNameOrEmail(email);
-            if (user == null || user.LoginType == DDLConstants.LoginType.FACEBOOK)
+            using (var db = new DDLDataContext())
             {
-                throw new UserNotFoundException();
+                var user = GetByUserNameOrEmail(email);
+                if (user == null || user.LoginType == DDLConstants.LoginType.FACEBOOK)
+                {
+                    throw new UserNotFoundException();
+                }
+
+                string newPassword = GenerateNewPassword();
+                user.Password = CommonUtils.Md5(newPassword);
+                db.SaveChanges();
+
+                MailHelper.Instance.SendMailResetPassword(email, newPassword, user.UserInfo.FullName);
+
+                return true;
             }
-
-            string newPassword = GenerateNewPassword();
-            user.Password = CommonUtils.Md5(newPassword);
-            db.SaveChanges();
-
-            MailHelper.Instance.SendMailResetPassword(email, newPassword, user.UserInfo.FullName);
-
-            return true;
         }
 
         public List<UserNameDTO> GetListUserName(string username)
         {
-            var listUserName = from user in db.DDL_Users
-                               where user.Username.Contains(username) || user.UserInfo.FullName.Contains(username)
-                               orderby user.Username
-                               select new UserNameDTO
-                               {
-                                   UserName = user.Username,
-                                   FullName = user.UserInfo.FullName
-                               };
+            using (var db = new DDLDataContext())
+            {
+                var listUserName = from user in db.DDL_Users
+                    where user.Username.Contains(username) || user.UserInfo.FullName.Contains(username)
+                    orderby user.Username
+                    select new UserNameDTO
+                    {
+                        UserName = user.Username,
+                        FullName = user.UserInfo.FullName
+                    };
 
-            return listUserName.ToList();
+                return listUserName.ToList();
+            }
         }
 
         public UserPublicInfoDTO GetUserPublicInfo(string userName)
         {
-            var userPublic = from user in db.DDL_Users
-                             where user.Username == userName
-                             select new UserPublicInfoDTO
-                             {
-                                 IsActive = user.IsActive,
-                                 PhoneNumber = user.UserInfo.PhoneNumber,
-                                 FullName = user.UserInfo.FullName,
-                                 Biography = user.UserInfo.Biography,
-                                 CreatedDate = user.CreatedDate,
-                                 FacebookUrl = user.UserInfo.FacebookUrl,
-                                 LastLogin = user.LastLogin,
-                                 ProfileImage = user.UserInfo.ProfileImage,
-                                 CountBackedProject = user.Backings.Count,
-                                 CountCreatedProject = user.CreatedProjects.Count(x => x.Status != DDLConstants.ProjectStatus.DRAFT
-                                             && x.Status != DDLConstants.ProjectStatus.REJECTED
-                                             && x.Status != DDLConstants.ProjectStatus.PENDING),
-                                 UserName = user.Username,
-                                 Website = user.UserInfo.Website
-                             };
-            if (!userPublic.Any())
+            using (var db = new DDLDataContext())
             {
-                throw new UserNotFoundException();
+                var userPublic = from user in db.DDL_Users
+                    where user.Username == userName
+                    select new UserPublicInfoDTO
+                    {
+                        IsActive = user.IsActive,
+                        PhoneNumber = user.UserInfo.PhoneNumber,
+                        FullName = user.UserInfo.FullName,
+                        Biography = user.UserInfo.Biography,
+                        CreatedDate = user.CreatedDate,
+                        FacebookUrl = user.UserInfo.FacebookUrl,
+                        LastLogin = user.LastLogin,
+                        ProfileImage = user.UserInfo.ProfileImage,
+                        CountBackedProject = user.Backings.Count,
+                        CountCreatedProject =
+                            user.CreatedProjects.Count(x => x.Status != DDLConstants.ProjectStatus.DRAFT
+                                                            && x.Status != DDLConstants.ProjectStatus.REJECTED
+                                                            && x.Status != DDLConstants.ProjectStatus.PENDING),
+                        UserName = user.Username,
+                        Website = user.UserInfo.Website
+                    };
+                if (!userPublic.Any())
+                {
+                    throw new UserNotFoundException();
+                }
+
+                var userPublicDTO = userPublic.FirstOrDefault();
+                userPublicDTO.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(userPublicDTO.CreatedDate);
+
+                return userPublicDTO;
             }
-
-            var userPublicDTO = userPublic.FirstOrDefault();
-            userPublicDTO.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(userPublicDTO.CreatedDate);
-
-            return userPublicDTO;
         }
 
         public UserEditInfoDTO GetUserEditInfo(string userName)
         {
-            var userEdit = from user in db.DDL_Users
-                           where user.Username == userName
-                           select new UserEditInfoDTO
-                           {
-                               FullName = user.UserInfo.FullName,
-                               Biography = user.UserInfo.Biography,
-                               CreatedDate = user.CreatedDate,
-                               FacebookUrl = user.UserInfo.FacebookUrl,
-                               ProfileImage = user.UserInfo.ProfileImage,
-                               UserName = user.Username,
-                               DateOfBirth = user.UserInfo.DateOfBirth,
-                               Addres = user.UserInfo.Address,
-                               Email = user.Email,
-                               Website = user.UserInfo.Website,
-                               Gender = user.UserInfo.Gender,
-                               ContactNumber = user.UserInfo.PhoneNumber,
-                           };
-            return userEdit.First();
+            using (var db = new DDLDataContext())
+            {
+                var userEdit = from user in db.DDL_Users
+                    where user.Username == userName
+                    select new UserEditInfoDTO
+                    {
+                        FullName = user.UserInfo.FullName,
+                        Biography = user.UserInfo.Biography,
+                        CreatedDate = user.CreatedDate,
+                        FacebookUrl = user.UserInfo.FacebookUrl,
+                        ProfileImage = user.UserInfo.ProfileImage,
+                        UserName = user.Username,
+                        DateOfBirth = user.UserInfo.DateOfBirth,
+                        Addres = user.UserInfo.Address,
+                        Email = user.Email,
+                        Website = user.UserInfo.Website,
+                        Gender = user.UserInfo.Gender,
+                        ContactNumber = user.UserInfo.PhoneNumber,
+                    };
+                return userEdit.First();
+            }
         }
 
 
         //UserEditInfoDTO
         public void EditUserInfo(UserEditInfoDTO userCurrent, string uploadImageName)
         {
-            var userEdit = db.DDL_Users.FirstOrDefault(x => x.Username.Equals(userCurrent.UserName)).UserInfo;
-            if (uploadImageName != string.Empty)
+            using (var db = new DDLDataContext())
             {
-                userEdit.ProfileImage = uploadImageName;
-            }
-            userEdit.FullName = userCurrent.FullName;
-            userEdit.FacebookUrl = userCurrent.FacebookUrl;
-            userEdit.Website = userCurrent.Website;
-            userEdit.DateOfBirth = userCurrent.DateOfBirth;
-            userEdit.Biography = userCurrent.Biography;
-            userEdit.Address = userCurrent.Addres;
-            userEdit.Gender = userCurrent.Gender;
-            userEdit.PhoneNumber = userCurrent.ContactNumber;
+                var userEdit = db.DDL_Users.FirstOrDefault(x => x.Username.Equals(userCurrent.UserName)).UserInfo;
+                if (uploadImageName != string.Empty)
+                {
+                    userEdit.ProfileImage = uploadImageName;
+                }
+                userEdit.FullName = userCurrent.FullName;
+                userEdit.FacebookUrl = userCurrent.FacebookUrl;
+                userEdit.Website = userCurrent.Website;
+                userEdit.DateOfBirth = userCurrent.DateOfBirth;
+                userEdit.Biography = userCurrent.Biography;
+                userEdit.Address = userCurrent.Addres;
+                userEdit.Gender = userCurrent.Gender;
+                userEdit.PhoneNumber = userCurrent.ContactNumber;
 
-            db.SaveChanges();
+                db.SaveChanges();
+            }
         }
 
         public EditPasswordDTO GetUserPassword(string userName)
         {
-            var userPublic = from user in db.DDL_Users
-                             where user.Username == userName
-                             select new EditPasswordDTO
-                             {
-                                 //CurrentPassword = user.Password,
-                                 Email = user.Email,
-                                 LoginType = user.LoginType
-                             };
-            if (!userPublic.Any())
+            using (var db = new DDLDataContext())
             {
-                throw new UserNotFoundException();
-            }
+                var userPublic = from user in db.DDL_Users
+                    where user.Username == userName
+                    select new EditPasswordDTO
+                    {
+                        //CurrentPassword = user.Password,
+                        Email = user.Email,
+                        LoginType = user.LoginType
+                    };
+                if (!userPublic.Any())
+                {
+                    throw new UserNotFoundException();
+                }
 
-            return userPublic.FirstOrDefault();
+                return userPublic.FirstOrDefault();
+            }
         }
 
         public Boolean ChangePassword(string userName, EditPasswordDTO newPass)
         {
-            var userCurrent = db.DDL_Users.FirstOrDefault(x => x.Username.Equals(userName));
-            if (userCurrent.Password == newPass.CurrentPassword)
+            using (var db = new DDLDataContext())
             {
-                userCurrent.Password = newPass.NewPassword;
-                db.SaveChanges();
+                var userCurrent = db.DDL_Users.FirstOrDefault(x => x.Username.Equals(userName));
+                if (userCurrent.Password == newPass.CurrentPassword)
+                {
+                    userCurrent.Password = newPass.NewPassword;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    return false;
+                }
+                return true;
             }
-            else
-            {
-                return false;
-            }
-            return true;
         }
 
         #endregion

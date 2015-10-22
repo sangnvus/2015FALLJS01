@@ -12,12 +12,10 @@ namespace DDL_CapstoneProject.Respository
 {
     public class CategoryRepository : SingletonBase<CategoryRepository>
     {
-        private DDLDataContext db;
 
         #region "Constructor"
         private CategoryRepository()
         {
-            db = DDLDataContextRepository.Instance.DbContext;
         }
         #endregion
 
@@ -29,64 +27,77 @@ namespace DDL_CapstoneProject.Respository
 
         public List<CategoryProjectCountDTO> GetCategoryProjectCount()
         {
-            var CategoryList = new List<CategoryProjectCountDTO>();
-            var CategorySet = from category in db.Categories
-                              select new CategoryProjectCountDTO
-                              {
-                                  CategoryID = category.CategoryID,
-                                  Name = category.Name,
-                                  projectCount = (from pro in category.Projects
-                                                  where !pro.IsExprired
-                                                  select pro.ProjectID).Count()
-
-                              };
-            try
+            using (var db = new DDLDataContext())
             {
+                var CategoryList = new List<CategoryProjectCountDTO>();
+                var CategorySet = from category in db.Categories
+                    select new CategoryProjectCountDTO
+                    {
+                        CategoryID = category.CategoryID,
+                        Name = category.Name,
+                        projectCount = (from pro in category.Projects
+                            where !pro.IsExprired
+                            select pro.ProjectID).Count()
 
-                if (CategorySet.Any())
+                    };
+                try
                 {
-                    CategoryList = CategorySet.ToList();
-                }
-            }
-            catch (Exception ex)
-            {
 
+                    if (CategorySet.Any())
+                    {
+                        CategoryList = CategorySet.ToList();
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+                return CategoryList;
             }
-            return CategoryList;
         }
 
         public List<CategoryProjectCountDTO> GetCategoryProjectStatistic()
         {
-            var CategorySet = from category in db.Categories
-                              select new CategoryProjectCountDTO
-                              {
-                                  CategoryID = category.CategoryID,
-                                  Name = category.Name,
-                                  CategoryFailFunded = category.Projects.Where(x => x.IsExprired && !x.IsFunded).Sum(x => (decimal?)x.CurrentFunded) ?? 0,
-                                  CategorySuccessFunded = category.Projects.Where(x => x.IsExprired && x.IsFunded).Sum(x => (decimal?)x.CurrentFunded) ?? 0,
-                              };
-            return CategorySet.ToList();
+            using (var db = new DDLDataContext())
+            {
+                var CategorySet = from category in db.Categories
+                    select new CategoryProjectCountDTO
+                    {
+                        CategoryID = category.CategoryID,
+                        Name = category.Name,
+                        CategoryFailFunded =
+                            category.Projects.Where(x => x.IsExprired && !x.IsFunded)
+                                .Sum(x => (decimal?) x.CurrentFunded) ?? 0,
+                        CategorySuccessFunded =
+                            category.Projects.Where(x => x.IsExprired && x.IsFunded)
+                                .Sum(x => (decimal?) x.CurrentFunded) ?? 0,
+                    };
+                return CategorySet.ToList();
+            }
         }
 
 
         // GET: api/Category
         public List<CategoryProjectCountDTO> GetAllCategories()
         {
-            // Get rewardPkg list
-            var listCategories = db.Categories.Where(x => x.IsActive).ToList();
-
-            var listCategoryDTO = new List<CategoryProjectCountDTO>();
-
-            foreach (var Category in listCategories)
+            using (var db = new DDLDataContext())
             {
-                listCategoryDTO.Add(
-                    new CategoryProjectCountDTO
-                    {
-                        CategoryID = Category.CategoryID,
-                        Name = Category.Name,
-                    });
+                // Get rewardPkg list
+                var listCategories = db.Categories.Where(x => x.IsActive).ToList();
+
+                var listCategoryDTO = new List<CategoryProjectCountDTO>();
+
+                foreach (var Category in listCategories)
+                {
+                    listCategoryDTO.Add(
+                        new CategoryProjectCountDTO
+                        {
+                            CategoryID = Category.CategoryID,
+                            Name = Category.Name,
+                        });
+                }
+                return listCategoryDTO;
             }
-            return listCategoryDTO;
         }
         public Dictionary<string, List<CategoryProjectCountDTO>> listDataForStatistic()
         {
@@ -104,121 +115,138 @@ namespace DDL_CapstoneProject.Respository
         /// <returns></returns>
         public List<AdminCategoryDTO> GetCategoriesForAdmin()
         {
+            using (var db = new DDLDataContext())
+            {
+                // Get category list
 
-            // Get category list
+                var listCategoryDTO = (from category in db.Categories
+                    orderby category.CategoryID ascending
+                    select new AdminCategoryDTO
+                    {
+                        IsActive = category.IsActive,
+                        Description = category.Description,
+                        Name = category.Name,
+                        CategoryID = category.CategoryID,
+                        ProjectCount = category.Projects.Count
+                    }).ToList();
 
-            var listCategoryDTO = (from category in db.Categories
-                orderby category.CategoryID ascending
-                select new AdminCategoryDTO
-                {
-                    IsActive = category.IsActive,
-                    Description = category.Description,
-                    Name = category.Name,
-                    CategoryID = category.CategoryID,
-                    ProjectCount = category.Projects.Count
-                }).ToList();
-
-            return listCategoryDTO;
+                return listCategoryDTO;
+            }
         }
 
 
         // GET: api/Category
         public List<CategoryDTO> GetCategories()
         {
-            // Get rewardPkg list
-            var listCategories = db.Categories.Where(x => x.IsActive).ToList();
-
-            return listCategories.Select(Category => new CategoryDTO
+            using (var db = new DDLDataContext())
             {
-                CategoryID = Category.CategoryID,
-                Name = Category.Name,
-            }).ToList();
+                // Get rewardPkg list
+                var listCategories = db.Categories.Where(x => x.IsActive).ToList();
+
+                return listCategories.Select(Category => new CategoryDTO
+                {
+                    CategoryID = Category.CategoryID,
+                    Name = Category.Name,
+                }).ToList();
+            }
         }
 
         public AdminCategoryDTO ChangeCategoryStatus(int id)
         {
-            var category = db.Categories.FirstOrDefault(x => x.CategoryID == id);
-            if (category == null) throw new KeyNotFoundException();
-
-            category.IsActive = !category.IsActive;
-            db.SaveChanges();
-            var categoryDTO = new AdminCategoryDTO
+            using (var db = new DDLDataContext())
             {
-                CategoryID = category.CategoryID,
-                IsActive = category.IsActive,
-                Description = category.Description,
-                Name = category.Name,
-                ProjectCount = category.Projects.Count
-            };
+                var category = db.Categories.FirstOrDefault(x => x.CategoryID == id);
+                if (category == null) throw new KeyNotFoundException();
 
-            return categoryDTO;
+                category.IsActive = !category.IsActive;
+                db.SaveChanges();
+                var categoryDTO = new AdminCategoryDTO
+                {
+                    CategoryID = category.CategoryID,
+                    IsActive = category.IsActive,
+                    Description = category.Description,
+                    Name = category.Name,
+                    ProjectCount = category.Projects.Count
+                };
+
+                return categoryDTO;
+            }
         }
 
         public AdminCategoryDTO AddNewCategory(AdminCategoryDTO category)
         {
-            // Check duplicate.
-            if (db.Categories.Any(x => x.Name.Equals(category.Name, StringComparison.OrdinalIgnoreCase)))
+            using (var db = new DDLDataContext())
             {
-                throw new DuplicateNameException();
+                // Check duplicate.
+                if (db.Categories.Any(x => x.Name.Equals(category.Name, StringComparison.OrdinalIgnoreCase)))
+                {
+                    throw new DuplicateNameException();
+                }
+
+                // Create new.
+                var newCategory = db.Categories.Create();
+                newCategory.Name = category.Name;
+                newCategory.Description = category.Description;
+                newCategory.IsActive = false;
+
+                db.Categories.Add(newCategory);
+                db.SaveChanges();
+                // Return data.
+                category.IsActive = newCategory.IsActive;
+                category.CategoryID = newCategory.CategoryID;
+
+                return category;
             }
-
-            // Create new.
-            var newCategory = db.Categories.Create();
-            newCategory.Name = category.Name;
-            newCategory.Description = category.Description;
-            newCategory.IsActive = false;
-
-            db.Categories.Add(newCategory);
-            db.SaveChanges();
-            // Return data.
-            category.IsActive = newCategory.IsActive;
-            category.CategoryID = newCategory.CategoryID;
-
-            return category;
         }
 
         public bool DeleteCategory(int id)
         {
-            var category = db.Categories.FirstOrDefault(x => x.CategoryID == id);
-            if (category == null)
+            using (var db = new DDLDataContext())
             {
-                throw new KeyNotFoundException();
+                var category = db.Categories.FirstOrDefault(x => x.CategoryID == id);
+                if (category == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                // Check number projects in category
+                // only delete when there aren't any project in this category.
+                if (category.Projects.Count > 0)
+                {
+                    throw new Exception();
+                }
+
+                db.Categories.Remove(category);
+                db.SaveChanges();
+
+                return true;
             }
-
-            // Check number projects in category
-            // only delete when there aren't any project in this category.
-            if (category.Projects.Count > 0)
-            {
-                throw new Exception();
-            }
-
-            db.Categories.Remove(category);
-            db.SaveChanges();
-
-            return true;
         }
 
         public AdminCategoryDTO EditCategory(AdminCategoryDTO category)
         {
-            var categoryresult = db.Categories.FirstOrDefault(x => x.CategoryID == category.CategoryID);
-            if (categoryresult == null)
+            using (var db = new DDLDataContext())
             {
-                throw new KeyNotFoundException();
+                var categoryresult = db.Categories.FirstOrDefault(x => x.CategoryID == category.CategoryID);
+                if (categoryresult == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                // Edit category.
+                categoryresult.Description = category.Description;
+                categoryresult.Name = category.Name;
+
+                db.Categories.AddOrUpdate(categoryresult);
+                db.SaveChanges();
+
+                // update model.
+                category.IsActive = categoryresult.IsActive;
+                category.Name = categoryresult.Name;
+                category.Description = categoryresult.Description;
+
+                return category;
             }
-
-            // Edit category.
-            categoryresult.Description = category.Description;
-            categoryresult.Name = category.Name;
-
-            db.Categories.AddOrUpdate(categoryresult);
-            db.SaveChanges();
-
-            // update model.
-            category.IsActive = categoryresult.IsActive;
-            category.Name = categoryresult.Name;
-            category.Description = categoryresult.Description;
-
-            return category;
         }
         #endregion
 
