@@ -26,7 +26,7 @@ namespace DDL_CapstoneProject.Models.DTOs
         public string VideoUrl { get; set; }
         public int NumberBacked { get; set; }
         public List<RewardPkgDTO> RewardDetail { get; set; }
-        public int Reminded { get; set; }
+        public bool Reminded { get; set; }
 
         /// <summary>
         /// Status of a project

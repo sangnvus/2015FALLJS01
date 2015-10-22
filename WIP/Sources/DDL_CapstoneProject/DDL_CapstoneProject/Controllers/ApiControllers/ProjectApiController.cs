@@ -1091,14 +1091,14 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpGet]
         public IHttpActionResult RemindProject(string code)
         {
-
+            bool Reminded;
             if (User.Identity == null || !User.Identity.IsAuthenticated)
             {
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
             }
             try
             {
-                ProjectRepository.Instance.RemindProject(User.Identity.Name, code);
+                Reminded = ProjectRepository.Instance.RemindProject(User.Identity.Name, code);
             }
             catch (UserNotFoundException)
             {
@@ -1108,8 +1108,11 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             {
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
             }
-
-            return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "" });
+            if (Reminded == true)
+            {
+                return Ok(new HttpMessageDTO { Status = "success", Message = "reminded", Type = "" });
+            }
+            return Ok(new HttpMessageDTO { Status = "success", Message = "notremind", Type = "" });
         }
 
         [HttpGet]

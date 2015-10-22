@@ -30,8 +30,12 @@
                     <div class="pt20">
                         <a class="btn btn-primary btn-lg" href="@Url.Content("/#/project/back/{{Project.ProjectCode}}")">Ủng hộ dự án</a>
                         <button class="btn btn-danger btn-lg" disabled ng-if="Project.IsExprired" href="back_project.html">Dự án đã hết hạn</button>
-                        <a ng-show="Project.Reminded != 1" href="" class="grey-dark" ng-click="remind()">&nbsp;&nbsp;<i class="fa fa-star"></i> Đánh dấu</a>
-                        <a ng-hide="Project.Reminded != 1" href="" style="color : #16a085" class="grey-dark" ng-click="remind()">&nbsp;&nbsp;<i class="fa fa-star"></i> Đánh dấu</a>
+                        <span ng-hide="Project.Reminded">
+                            <a href="" class="grey-dark" ng-click="remind()">&nbsp;&nbsp;<i class="fa fa-star"></i> Đánh dấu</a>
+                        </span>
+                        <span ng-show="Project.Reminded">
+                            <a href="" style="color : #16a085" class="grey-dark" ng-click="remind()">&nbsp;&nbsp;<i class="fa fa-star"></i> Đánh dấu</a>
+                        </span>
                     </div>
                     <div class="pt10">
                         <p class="fnt15 grey-dark" ng-if="!Project.IsExprired">

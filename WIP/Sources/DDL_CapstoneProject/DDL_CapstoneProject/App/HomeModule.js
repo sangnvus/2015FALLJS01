@@ -230,7 +230,7 @@ app.config(["$routeProvider", function ($routeProvider) {
             }
         });
 
-    $routeProvider.when("/user/editpassword/:username",
+    $routeProvider.when("/user/editpassword/",
         {
             templateUrl: "ClientPartial/EditPassword",
             controller: 'EditPasswordController',
@@ -242,7 +242,7 @@ app.config(["$routeProvider", function ($routeProvider) {
             }
         });
 
-    $routeProvider.when("/user/publicprofile/:username",
+    $routeProvider.when("/user/publicprofile/",
         {
             caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/PublicProfile",

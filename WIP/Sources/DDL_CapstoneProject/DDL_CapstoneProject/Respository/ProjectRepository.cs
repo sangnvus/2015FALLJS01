@@ -614,8 +614,13 @@ namespace DDL_CapstoneProject.Respository
                                              && x.Status != DDLConstants.ProjectStatus.PENDING),
                                          ProfileImage = project.Creator.UserInfo.ProfileImage
                                      },
-                                     Reminded = project.Reminds.Count(x => x.ProjectID == project.ProjectID && x.UserID == userCurrent.DDL_UserID),
                                  }).FirstOrDefault();
+            if (userCurrent != null)
+            {
+                projectDetail.Reminded = db.Reminds.Any(x => x.UserID == userCurrent.DDL_UserID && x.ProjectID == projectDetail.ProjectID);
+            }
+            else projectDetail.Reminded = false;
+
             List<RewardPkg> rewardDetail = db.RewardPkgs.Where(x => x.Project.ProjectCode == projectCode).ToList();
             List<RewardPkgDTO> RewardDTO = new List<RewardPkgDTO>();
             foreach (RewardPkg reward in rewardDetail)
@@ -782,7 +787,7 @@ namespace DDL_CapstoneProject.Respository
 
         }
 
-        public void RemindProject(string userName, string projectCode)
+        public bool RemindProject(string userName, string projectCode)
         {
             var userCurrent = db.DDL_Users.FirstOrDefault(x => x.Username.Equals(userName));
             var project = db.Projects.FirstOrDefault(x => x.ProjectCode == projectCode);
@@ -791,6 +796,7 @@ namespace DDL_CapstoneProject.Respository
             {
                 db.Reminds.Remove(reminded);
                 db.SaveChanges();
+                return false;
             }
             else
             {
@@ -807,6 +813,7 @@ namespace DDL_CapstoneProject.Respository
                 db.Reminds.Add(reminded);
                 db.SaveChanges();
             }
+            return true;
         }
 
         public void ReportProject(string userName, string projectCode, string content)

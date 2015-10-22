@@ -193,16 +193,23 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
 
     $scope.remind = function () {
         var promise = ProjectService.remindProject($scope.Project.ProjectCode);
-          promise.then(
-            function (result) {
-              if (result.data.Status === "success") {
-               toastr.success('Theo dõi dự án', 'Thành công');
-            } else if (result.data.Status === "error") {
-                 $scope.Error = result.data.Message;
-               toastr.error($scope.Error, 'Lỗi');
-           }
+        promise.then(
+          function (result) {
+              if (result.data.Status == "success" && result.data.Message == "reminded") {
+                  $scope.Project.Reminded = true;
+                  toastr.success('Theo dõi dự án', 'Thành công');
+
+              }
+              else if (result.data.Status == "success" && result.data.Message == "notremind") {
+                  $scope.Project.Reminded = false;
+                  toastr.success('Hủy theo dõi dự án', 'Thành công');
+              }
+              else if (result.data.Status == "error") {
+                  $scope.Error = result.data.Message;
+                  toastr.error($scope.Error, 'Lỗi');
+              }
           }
-         );
+       );
     };
 
     $scope.Reminded = true;
