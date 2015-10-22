@@ -28,19 +28,88 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/discover",
         {
-            caseInsensitiveMatch: true,
+            caseInsensitiveMatch: true
             templateUrl: "ClientPartial/Discover",
             controller: 'DiscoverController',
             resolve: {
                 projectstatisticlist: ['ProjectService', function (ProjectService) {
                     return ProjectService.GetProjectStatisticList();
                 }],
-                //popularprojectwithcategory: ['ProjectService', function (ProjectService) {
-                //    return ProjectService.GetProjectByCategory();
-                //}],
                 categoryprojectcount: ['CategoryService', function (CategoryService) {
                     return CategoryService.GetCategoryProjectCount();
                 }]
+            }
+        });
+    $routeProvider.when("/statistics",
+        {
+            templateUrl: "ClientPartial/Statistics",
+            controller: 'StatisticsController',
+            resolve: {
+                projectSucesedCount: ['ProjectService', function (ProjectService) {
+                    return ProjectService.getStatisticsInfor();
+                }],
+                projectTopList: ['ProjectService', function (ProjectService) {
+                    return ProjectService.getProjectTop("All");
+                }],
+                categoryStatistic: ['CategoryService', function (CategoryService) {
+                    return CategoryService.listDataForStatistic();
+                }],
+                UserTopList: ['UserService', function (UserService) {
+                    return UserService.getUserTop("All");
+                }],
+            }
+        });
+    $routeProvider.when("/search",
+        {
+            templateUrl: "ClientPartial/Search",
+            controller: 'SearchController',
+            resolve: {
+                projectbycategory: ['ProjectService', '$route', function (ProjectService, $route) {
+                    var params = $route.current.params;
+                    console.log($route.current)
+                    if (typeof (params.categoryid) == "undefined") {
+                        params.categoryid = ["all"];
+                    }
+                    if (typeof (params.order) == "undefined") {
+                        params.order = "Magic";
+                    }
+                    var projectList = ProjectService.SearchProject("|" + params.categoryid + "|", params.order, "null");
+                    return projectList;
+                }],
+                categoryList: ['CategoryService', function (CategoryService) {
+                    return CategoryService.getAllCategories();
+                }],
+                isAdvance: ['$route', function ($route) {
+                    var params = $route.current.params;
+                    if (params.advance) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }],
+                selectedorder: ['$route', function ($route) {
+                    var params = $route.current.params;
+                    if (typeof (params.order) == "undefined") {
+                        params.order = "Magic";
+                    }
+                    return params.order;
+                }],
+                selectcategory: ['$route', function ($route) {
+                    var params = $route.current.params;
+                    if (typeof (params.categoryid) == "undefined") {
+                        params.categoryid = ["all"];
+                    }
+                    return params.categoryid;
+                }],
+                searchkey: ['$route', '$rootScope', function ($route, $rootScope) {
+                    //  console.log($rootScope);
+                    var params = $route.current.params;
+                    if (typeof (params.searchkey) == "undefined") {
+                        params.searchkey = [""];
+                    }
+                    return "di";
+                }],
+
             }
         });
     $routeProvider.when("/register",

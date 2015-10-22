@@ -793,11 +793,17 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         #endregion
 
 
-        //TrungVN
+        #region TrungVN
+        [HttpGet]
 
-        public IHttpActionResult GetProject(int take, int categoryid, string orderby)
+        public IHttpActionResult GetProjectTop(string categoryid)
         {
-            var listGetProject = ProjectRepository.Instance.GetProject(take, categoryid, orderby);
+            var listGetProjectTop = ProjectRepository.Instance.GetProjectTop(categoryid);
+            return Ok(new HttpMessageDTO { Status = "success", Data = listGetProjectTop });
+        }
+        public IHttpActionResult GetProject(int take, int from, string categoryid, string orderby, string searchkey, string status, bool isExprired, string isFunded)
+        {
+            var listGetProject = ProjectRepository.Instance.GetProject(take, from, categoryid, orderby, searchkey, status, isExprired, isFunded);
             return Ok(new HttpMessageDTO { Status = "success", Data = listGetProject });
         }
         public IHttpActionResult GetProjectByCategory()
@@ -805,6 +811,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             var listGetProjectByCategory = ProjectRepository.Instance.GetProjectByCategory();
             return Ok(new HttpMessageDTO { Status = "success", Data = listGetProjectByCategory });
         }
+
         public IHttpActionResult GetProjectStatisticList()
         {
             var listGetProjectStatistic = ProjectRepository.Instance.GetProjectStatisticList();
@@ -815,8 +822,14 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             var listStatisticForHome = ProjectRepository.Instance.GetStatisticListForHome();
             return Ok(new HttpMessageDTO { Status = "success", Data = listStatisticForHome });
         }
+        public IHttpActionResult getStatisticsInfor()
+        {
+            var projectsuccesed = ProjectRepository.Instance.getStatisticsInfor();
+            return Ok(new HttpMessageDTO { Status = "success", Data = projectsuccesed });
+        }
 
-        //Trungvn
+
+        #endregion
 
 
         // GET: api/ProjectApi/GetProjectDetail?code=code

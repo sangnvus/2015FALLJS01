@@ -22,24 +22,11 @@ namespace DDL_CapstoneProject.Respository
         #endregion
 
         #region "Methods"
-        public List<CategoryDTO> GetCategories()
-        {
-            // Get rewardPkg list
-            var listCategories = db.Categories.Where(x => x.IsActive).ToList();
 
-            var listCategoryDTO = new List<CategoryDTO>();
 
-            foreach (var Category in listCategories)
-            {
-                listCategoryDTO.Add(
-                    new CategoryDTO
-                    {
-                        CategoryID = Category.CategoryID,
-                        Name = Category.Name,
-                    });
-            }
-            return listCategoryDTO;
-        }
+        //TrungVn
+
+
         public List<CategoryProjectCountDTO> GetCategoryProjectCount()
         {
             var CategoryList = new List<CategoryProjectCountDTO>();
@@ -68,6 +55,49 @@ namespace DDL_CapstoneProject.Respository
             return CategoryList;
         }
 
+        public List<CategoryProjectCountDTO> GetCategoryProjectStatistic()
+        {
+            var CategorySet = from category in db.Categories
+                              select new CategoryProjectCountDTO
+                              {
+                                  CategoryID = category.CategoryID,
+                                  Name = category.Name,
+                                  CategoryFailFunded = category.Projects.Where(x => x.IsExprired && !x.IsFunded).Sum(x => (decimal?)x.CurrentFunded) ?? 0,
+                                  CategorySuccessFunded = category.Projects.Where(x => x.IsExprired && x.IsFunded).Sum(x => (decimal?)x.CurrentFunded) ?? 0,
+                              };
+            return CategorySet.ToList();
+        }
+
+
+        // GET: api/Category
+        public List<CategoryProjectCountDTO> GetAllCategories()
+        {
+            // Get rewardPkg list
+            var listCategories = db.Categories.Where(x => x.IsActive).ToList();
+
+            var listCategoryDTO = new List<CategoryProjectCountDTO>();
+
+            foreach (var Category in listCategories)
+            {
+                listCategoryDTO.Add(
+                    new CategoryProjectCountDTO
+                    {
+                        CategoryID = Category.CategoryID,
+                        Name = Category.Name,
+                    });
+            }
+            return listCategoryDTO;
+        }
+        public Dictionary<string, List<CategoryProjectCountDTO>> listDataForStatistic()
+        {
+            Dictionary<string, List<CategoryProjectCountDTO>> dic = new Dictionary<string, List<CategoryProjectCountDTO>>();
+            dic.Add("GetAllCategories", GetAllCategories());
+            dic.Add("GetCategoryProjectStatistic", GetCategoryProjectStatistic());
+            return dic;
+        }
+        //endTrungVN
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -88,6 +118,27 @@ namespace DDL_CapstoneProject.Respository
                     ProjectCount = category.Projects.Count
                 }).ToList();
 
+            return listCategoryDTO;
+        }
+
+
+        // GET: api/Category
+        public List<CategoryDTO> GetCategories()
+        {
+            // Get rewardPkg list
+            var listCategories = db.Categories.Where(x => x.IsActive).ToList();
+
+            var listCategoryDTO = new List<CategoryDTO>();
+
+            foreach (var Category in listCategories)
+            {
+                listCategoryDTO.Add(
+                    new CategoryDTO
+                    {
+                        CategoryID = Category.CategoryID,
+                        Name = Category.Name,
+                    });
+            }
             return listCategoryDTO;
         }
 

@@ -24,13 +24,74 @@ namespace DDL_CapstoneProject.Respository
         #endregion
 
         #region "Methods"
+        #region TrungVN
 
-        //TrungVn
-        public List<ProjectBasicViewDTO> GetProject(int take, int categoryid, string order)
+        public Dictionary<string, int> getStatisticsInfor()
         {
+            Dictionary<string, int> dic = new Dictionary<string, int>();
+            //projectSuccesedCount
+            int projectSuccesedCount = GetProject(0, 0, "All", "", "", "", true, "true").Count;
+            //total funded
+            var totalFund = from project in db.Projects
+                            select project.CurrentFunded;
+            //backingusercount and userbackmuchcount 
+            var backingUser = from backing in db.Backings
+                              group backing by backing.UserID into b
+                              select b;
+            int backingUserCount = backingUser.Count();
+            var backingUserCount2 = (from backing in backingUser
+                                     select backing.GroupBy(x => x.ProjectID)).ToList();
+            List<int> UserBackmuchList = new List<int>();
+            foreach (var item in backingUserCount2)
+            {
+                if (item.Count() >= 2)
+                    UserBackmuchList.Add(item.Count());
+            }
+            int UserBackmuchCount = UserBackmuchList.Count();
+
+            //numberofbacking
+            int NumberOfBacking = (from backing in db.Backings
+                                   select backing.BackingID).Count();
+
+            dic.Add("SuccesedCount", projectSuccesedCount);
+            dic.Add("TotalFunded", Convert.ToInt32(totalFund.Sum()));
+            dic.Add("BackingUserCount", backingUserCount);
+            dic.Add("UserBackmuchCount", UserBackmuchCount);
+            dic.Add("NumberOfBacking", NumberOfBacking);
+            return dic;
+        }
+
+
+        public List<ProjectBasicViewDTO> GetProjectTop(String categoryid)
+        {
+            categoryid = "|" + categoryid + "|";
+            return GetProject(10, 0, categoryid, "CurrentFunded", "", "", true, "");
+        }
+
+
+
+        public List<ProjectBasicViewDTO> GetProject(int take, int from, String categoryidList, string order,
+                                                    string pathofprojectname, string status,
+                                                    bool isExprired, string isFunded)
+        {
+            if (pathofprojectname == null)
+            {
+                pathofprojectname = "";
+            }
+            else
+            {
+                if (pathofprojectname == "null")
+                    pathofprojectname = "";
+            }
+            if (status == null) status = "";
+            if (isFunded == null) isFunded = "";
+
+
             DateTime currentDate = DateTime.Now;
             var ProjectList = from project in db.Projects
-                              where !project.IsExprired && (categoryid == 0 || project.CategoryID == categoryid)
+                              where (categoryidList.ToLower().Contains("all") || categoryidList.Contains("|" + project.CategoryID + "|"))
+                              && project.IsExprired == isExprired && project.Title.Contains(pathofprojectname)
+                              && project.Status.Contains(status) && project.IsFunded.ToString().ToLower().Contains(isFunded)
                               select new ProjectBasicViewDTO
                               {
                                   ProjectID = project.ProjectID,
@@ -49,15 +110,13 @@ namespace DDL_CapstoneProject.Respository
                                   CreatedDate = project.CreatedDate,
                                   PopularPoint = project.PopularPoint
                               };
-            try
-            {
-                if (ProjectList.Any())
-                {
-                    return orderBy(order, ProjectList).Take(take).ToList();
-                }
-            }
-            catch (Exception ex) { }
-            return new List<ProjectBasicViewDTO>();
+            int leng = ProjectList.Count();
+            if (take == 0)
+                take = leng;
+            else if (take > leng)
+                take = leng;
+
+            return orderBy(order, ProjectList).Take(take).ToList();
         }
 
 
@@ -65,36 +124,19 @@ namespace DDL_CapstoneProject.Respository
         {
             var list = new List<ProjectBasicViewDTO>();
             var HeightestFund = from project in db.Projects
-                                where project.IsExprired && project.CurrentFunded > project.FundingGoal
+                                where project.IsExprired && project.IsFunded
                                 orderby project.CurrentFunded
                                 select new ProjectBasicViewDTO
                                 {
                                     CurrentFundedNumber = project.CurrentFunded
                                 };
-            try
-            {
-                if (HeightestFund.Any())
-                {
-                    list.Add(HeightestFund.Take(1).ToList()[0]);
-                }
-            }
-            catch (Exception ex) { Debug.WriteLine(ex); }
             var TotalFund = from project in db.Projects
                             select project.CurrentFunded;
-            try
-            {
-                var pro = new ProjectBasicViewDTO();
-                if (TotalFund.Any())
-                {
-                    pro.CurrentFundedNumber = (Convert.ToDecimal(TotalFund.Sum()));
-                }
-                list.Add(pro);
-            }
-            catch (Exception ex) { Debug.WriteLine(ex); }
-            if (!list.Any())
-            {
-                list.Add(new ProjectBasicViewDTO());
-            }
+            var totalFund = new ProjectBasicViewDTO();
+            totalFund.CurrentFundedNumber = (Convert.ToDecimal(TotalFund.Sum()));
+
+            list.Add(HeightestFund.First());
+            list.Add(totalFund);
             return list;
         }
 
@@ -140,7 +182,7 @@ namespace DDL_CapstoneProject.Respository
                 List<Category> cat = db.Categories.ToList();
                 for (int i = 0; i < cat.Count(); i++)
                 {
-                    List<ProjectBasicViewDTO> getProject = GetProject(1, cat[i].CategoryID, "PopularPoint");
+                    List<ProjectBasicViewDTO> getProject = GetProject(1, 0, "|" + cat[i].CategoryID + "|", "PopularPoint", "", "", false, "");
                     if (getProject.Any())
                         ProjectList.Add(getProject[0]);
                 }
@@ -152,26 +194,27 @@ namespace DDL_CapstoneProject.Respository
             return ProjectList;
         }
 
+
         public List<List<ProjectBasicViewDTO>> GetProjectStatisticList()
         {
             var ProjectList = new List<List<ProjectBasicViewDTO>>();
-            ProjectList.Add(GetProject(3, 0, "PopularPoint"));
-            ProjectList.Add(GetProject(3, 0, "CreatedDate"));
-            ProjectList.Add(GetProject(3, 0, "CurrentFunded"));
-            ProjectList.Add(GetProject(3, 0, "ExpireDate"));
+            ProjectList.Add(GetProject(3, 0, "All", "PopularPoint", "", "", false, ""));
+            ProjectList.Add(GetProject(3, 0, "All", "CreatedDate", "", "", false, ""));
+            ProjectList.Add(GetProject(3, 0, "All", "CurrentFunded", "", "", false, ""));
+            ProjectList.Add(GetProject(3, 0, "All", "ExpireDate", "", "", false, ""));
 
             return ProjectList;
         }
         public List<List<ProjectBasicViewDTO>> GetStatisticListForHome()
         {
             var ProjectList = new List<List<ProjectBasicViewDTO>>();
-            ProjectList.Add(GetProject(3, 0, "PopularPoint"));
+            ProjectList.Add(GetProject(3, 0, "All", "PopularPoint", "", "", false, ""));
             ProjectList.Add(GetProjectByCategory());
-            ProjectList.Add(GetProject(1, 0, "CurrentFunded"));
+            ProjectList.Add(GetProject(1, 0, "All", "CurrentFunded", "", "", false, ""));
             ProjectList.Add(GetProjectHightestAndTotalFund());
             return ProjectList;
         }
-        //TrungVn
+        #endregion
 
         #region HuyNM
         /// <summary>

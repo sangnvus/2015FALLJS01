@@ -26,7 +26,30 @@ namespace DDL_CapstoneProject.Respository
         #endregion
 
         #region "Methods"
+        #region TrungVN
 
+        public Dictionary<string, List<UserBackInforDTO>> GetUserTop(string categoryid)
+        {
+            categoryid = "|" + categoryid + "|";
+            bool allCategory = false;
+            if (categoryid.ToLower().Contains("all")) allCategory = true;
+            var UserTop = from user in db.DDL_Users
+                          select new UserBackInforDTO
+                          {
+                              Rank = "Rank A",
+                              Name = user.UserInfo.FullName,
+                              TotalFunded = user.CreatedProjects.Where(x => categoryid.Contains(x.CategoryID.ToString()) || allCategory).Sum(x => (decimal?)x.CurrentFunded) ?? 0,
+                              TotalBacked = user.Backings.Where(x => categoryid.Contains(x.Project.CategoryID.ToString()) || allCategory).Sum(x => (decimal?)x.BackingDetail.PledgedAmount) ?? 0
+                          };
+            int count = UserTop.Count();
+            if (count >= 10) count = 10;
+            Dictionary<string, List<UserBackInforDTO>> dic = new Dictionary<string, List<UserBackInforDTO>>();
+            dic.Add("UserTopBack", UserTop.Where(x => x.TotalBacked > 0).Take(count).OrderByDescending(x => x.TotalBacked).ThenByDescending(x => x.TotalFunded).ToList());
+            dic.Add("UserTopFund", UserTop.Where(x => x.TotalFunded > 0).Take(count).OrderByDescending(x => x.TotalFunded).ThenByDescending(x => x.TotalBacked).ToList());
+            return dic;
+        }
+
+        #endregion
         public DDL_User CreateEmptyUser()
         {
             var user = new DDL_User

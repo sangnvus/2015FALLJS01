@@ -2,6 +2,51 @@
 
 app.service('ProjectService', function ($http) {
 
+
+    //Trungvn
+
+    this.getProjectTop = function (categoryID) {
+        return $http.get("/api/ProjectApi/getProjectTop/?categoryID=" + categoryID);
+    }
+
+    this.GetProject = function (take, from, categoryid, orderby, searchkey, status, isExprired, isFunded) {
+        if (typeof (searchkey) == "undefined") {
+            searchkey = "null";
+        }
+        return $http.get('/api/ProjectApi/GetProject', {
+            params:
+                {
+                    take: take,
+                    from: from,
+                    categoryid: categoryid,
+                    orderby: orderby,
+                    searchkey: searchkey,
+                    status: status,
+                    isExprired: isExprired,
+                    isFunded: isFunded
+                }
+        });
+    };
+
+    this.GetProjectStatisticList = function () {
+        return $http.get('/api/ProjectApi/GetProjectStatisticList');
+    };
+    this.GetProjectByCategory = function () {
+        return $http.get('/api/ProjectApi/GetProjectByCategory');
+    };
+    this.GetStatisticListForHome = function () {
+        return $http.get('/api/ProjectApi/GetStatisticListForHome');
+    };
+    this.getStatisticsInfor = function () {
+        return $http.get('/api/ProjectApi/getStatisticsInfor');
+    };
+    this.SearchProject = function (categoryidlist, orderby, searchkey) {
+        return this.GetProject(0, 0, categoryidlist, orderby, searchkey, "", false, "");
+    }
+    //EndTrungVn
+
+
+
     // Function to get a project by ProjectID
     this.getProject = function (code) {
         var request = $http({
@@ -183,17 +228,6 @@ app.service('ProjectService', function ($http) {
         return $http.delete("/api/ProjectApi/DeleteUpdateLog/" + updateLogID);
     }
 
-    this.GetProject = function (take, categoryid, orderby) {
-        return $http.get('/api/ProjectApi/GetProject/', {
-            params:
-                {
-                    categoryid: categoryid,
-                    take: take,
-                    orderby: orderby
-                }
-        });
-    };
-
     // Function to get timeline
     this.getTimeline = function (projectID) {
         return $http.get("/api/ProjectApi/GetTimeLine/" + projectID);
@@ -328,16 +362,6 @@ app.service('ProjectService', function ($http) {
 
         return request;
     }
-
-    this.GetProjectStatisticList = function () {
-        return $http.get('/api/ProjectApi/GetProjectStatisticList');
-    };
-    this.GetProjectByCategory = function () {
-        return $http.get('/api/ProjectApi/GetProjectByCategory');
-    };
-    this.GetStatisticListForHome = function () {
-        return $http.get('/api/ProjectApi/GetStatisticListForHome');
-    };
 
     // Function to post comment to server.
     this.Comment = function (code, commment, lastCommentDatetime) {

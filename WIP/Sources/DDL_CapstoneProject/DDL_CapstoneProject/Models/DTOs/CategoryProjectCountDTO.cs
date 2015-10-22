@@ -10,5 +10,7 @@ namespace DDL_CapstoneProject.Models.DTOs
         public int CategoryID { get; set; }
         public string Name { get; set; }
         public int projectCount { get; set; }
+        public decimal CategoryFailFunded { get; set; }
+        public decimal CategorySuccessFunded { get; set; }
     }
 }
