@@ -29,17 +29,19 @@ namespace DDL_CapstoneProject.Respository
         public List<TimeLineDTO> GetTimeLine(int ProjectID)
         {
             // Get rewardPkg list
-            var timelineList = from Timeline in db.Timelines
-                               where Timeline.ProjectID == ProjectID
-                               orderby Timeline.DueDate ascending
-                               select new TimeLineDTO()
-                               {
-                                   ImageUrl = Timeline.ImageUrl,
-                                   DueDate = Timeline.DueDate,
-                                   Description = Timeline.Description,
-                                   Title = Timeline.Title,
-                                   TimelineID = Timeline.TimelineID
-                               };
+            var timelineList = (from Timeline in db.Timelines
+                                where Timeline.ProjectID == ProjectID
+                                orderby Timeline.DueDate ascending
+                                select new TimeLineDTO()
+                                {
+                                    ImageUrl = Timeline.ImageUrl,
+                                    DueDate = Timeline.DueDate,
+                                    Description = Timeline.Description,
+                                    Title = Timeline.Title,
+                                    TimelineID = Timeline.TimelineID
+                                }).ToList();
+
+            timelineList.ForEach(x => x.DueDate = CommonUtils.ConvertDateTimeFromUtc(x.DueDate));
 
             return timelineList.ToList();
         }
@@ -52,13 +54,17 @@ namespace DDL_CapstoneProject.Respository
         /// <returns>newRewardPkg</returns>
         public TimeLineDTO CreateTimeline(int ProjectID, TimeLineDTO timeline, string img)
         {
-
             var newTimeline = db.Timelines.Create();
             newTimeline.ProjectID = ProjectID;
             newTimeline.Description = timeline.Description;
             newTimeline.DueDate = timeline.DueDate;
             newTimeline.ImageUrl = img;
             newTimeline.Title = timeline.Title;
+
+            if (newTimeline.DueDate != null)
+            {
+                newTimeline.DueDate = CommonUtils.ConvertDateTimeToUtc(newTimeline.DueDate);                
+            }
 
             db.Timelines.Add(newTimeline);
             db.SaveChanges();
@@ -71,6 +77,8 @@ namespace DDL_CapstoneProject.Respository
                 Title = newTimeline.Title,
                 TimelineID = newTimeline.TimelineID
             };
+
+            newTimelineDTO.DueDate = CommonUtils.ConvertDateTimeFromUtc(newTimelineDTO.DueDate);
 
             return newTimelineDTO;
         }
@@ -96,6 +104,8 @@ namespace DDL_CapstoneProject.Respository
             updateTimeline.Description = timeline.Description;
             updateTimeline.DueDate = timeline.DueDate;
             updateTimeline.Title = timeline.Title;
+
+            updateTimeline.DueDate = CommonUtils.ConvertDateTimeToUtc(updateTimeline.DueDate);
 
             db.SaveChanges();
 

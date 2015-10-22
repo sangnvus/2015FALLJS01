@@ -128,18 +128,11 @@ namespace DDL_CapstoneProject.Respository
             // Get rewardPkg list
             var listCategories = db.Categories.Where(x => x.IsActive).ToList();
 
-            var listCategoryDTO = new List<CategoryDTO>();
-
-            foreach (var Category in listCategories)
+            return listCategories.Select(Category => new CategoryDTO
             {
-                listCategoryDTO.Add(
-                    new CategoryDTO
-                    {
-                        CategoryID = Category.CategoryID,
-                        Name = Category.Name,
-                    });
-            }
-            return listCategoryDTO;
+                CategoryID = Category.CategoryID,
+                Name = Category.Name,
+            }).ToList();
         }
 
         public AdminCategoryDTO ChangeCategoryStatus(int id)

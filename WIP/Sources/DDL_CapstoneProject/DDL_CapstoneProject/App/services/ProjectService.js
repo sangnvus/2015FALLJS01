@@ -60,6 +60,19 @@ app.service('ProjectService', function ($http) {
         return request;
     }
 
+    // Function to get backing project information by ProjectID
+    this.getBackProjectInfo = function (code) {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/GetBackProjectInfo',
+            params: {
+                code: code
+            }
+        });
+
+        return request;
+    }
+
     // Function to ger a project by ProjectCode
     this.getProjectDetail = function (code) {
         var request = $http({
@@ -318,6 +331,19 @@ app.service('ProjectService', function ($http) {
             method: 'put',
             url: '/api/ProjectApi/SubmitProject/',
             data: project
+        });
+
+        return request;
+    }
+
+    // Function to get rewardPkgs by projectCode
+    this.getRewardPkgByCode = function (code) {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/GetRewardPkgByCode',
+            params: {
+                code: code
+            }
         });
 
         return request;

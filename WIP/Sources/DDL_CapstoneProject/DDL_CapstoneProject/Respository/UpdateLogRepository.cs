@@ -29,16 +29,18 @@ namespace DDL_CapstoneProject.Respository
         public List<UpdateLogDTO> GetUpdateLog(int ProjectID)
         {
             // Get updatelog list
-            var updateLogList = from UpdateLog in db.UpdateLogs
-                                where UpdateLog.ProjectID == ProjectID
-                                orderby UpdateLog.CreatedDate descending
-                                select new UpdateLogDTO()
-                                {
-                                    Description = UpdateLog.Description,
-                                    Title = UpdateLog.Title,
-                                    CreatedDate = UpdateLog.CreatedDate,
-                                    UpdateLogID = UpdateLog.UpdateLogID,
-                                };
+            var updateLogList = (from UpdateLog in db.UpdateLogs
+                                 where UpdateLog.ProjectID == ProjectID
+                                 orderby UpdateLog.CreatedDate descending
+                                 select new UpdateLogDTO()
+                                 {
+                                     Description = UpdateLog.Description,
+                                     Title = UpdateLog.Title,
+                                     CreatedDate = UpdateLog.CreatedDate,
+                                     UpdateLogID = UpdateLog.UpdateLogID,
+                                 }).ToList();
+
+            updateLogList.ForEach(x => x.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(x.CreatedDate));
 
             return updateLogList.ToList();
         }
@@ -49,19 +51,28 @@ namespace DDL_CapstoneProject.Respository
         /// <param name="ProjectID"></param>
         /// <param name="updateLog"></param>
         /// <returns>newRewardPkg</returns>
-        public UpdateLog CreateUpdateLog(int ProjectID, UpdateLogDTO newUpdateLog)
+        public UpdateLogDTO CreateUpdateLog(int ProjectID, UpdateLogDTO newUpdateLog)
         {
-            var updateLog = new UpdateLog
-            {
-                ProjectID = ProjectID,
-                Description = newUpdateLog.Description,
-                CreatedDate = DateTime.Today,
-                Title = newUpdateLog.Title
-            };
+            var updateLog = db.UpdateLogs.Create();
+            updateLog.ProjectID = ProjectID;
+            updateLog.Description = newUpdateLog.Description;
+            updateLog.CreatedDate = DateTime.UtcNow;
+            updateLog.Title = newUpdateLog.Title;
+
             db.UpdateLogs.Add(updateLog);
             db.SaveChanges();
 
-            return updateLog;
+            var updateLogDTO = new UpdateLogDTO
+            {
+                Description = updateLog.Description,
+                Title = updateLog.Title,
+                CreatedDate = updateLog.CreatedDate,
+                UpdateLogID = updateLog.UpdateLogID
+            };
+
+            updateLogDTO.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(updateLogDTO.CreatedDate);
+
+            return updateLogDTO;
         }
 
         /// <summary>
@@ -74,9 +85,16 @@ namespace DDL_CapstoneProject.Respository
             {
                 var editLog = db.UpdateLogs.SingleOrDefault(x => x.UpdateLogID == update.UpdateLogID);
 
+                if (editLog == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
                 editLog.Description = update.Description;
                 editLog.Title = update.Title;
                 editLog.CreatedDate = update.CreatedDate;
+
+                editLog.CreatedDate = CommonUtils.ConvertDateTimeToUtc(editLog.CreatedDate);
 
                 db.SaveChanges();
             }

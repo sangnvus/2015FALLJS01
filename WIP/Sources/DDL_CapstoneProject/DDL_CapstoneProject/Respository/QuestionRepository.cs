@@ -29,16 +29,18 @@ namespace DDL_CapstoneProject.Respository
         public List<QuestionDTO> GetQuestion(int ProjectID)
         {
             // Get rewardPkg list
-            var questionList = from Question in db.Questions
-                               where Question.ProjectID == ProjectID
-                               orderby Question.CreatedDate ascending
-                               select new QuestionDTO
-                               {
-                                   Answer = Question.Answer,
-                                   CreatedDate = Question.CreatedDate,
-                                   QuestionContent = Question.QuestionContent,
-                                   QuestionID = Question.QuestionID
-                               };
+            var questionList = (from Question in db.Questions
+                                where Question.ProjectID == ProjectID
+                                orderby Question.CreatedDate ascending
+                                select new QuestionDTO
+                                {
+                                    Answer = Question.Answer,
+                                    CreatedDate = Question.CreatedDate,
+                                    QuestionContent = Question.QuestionContent,
+                                    QuestionID = Question.QuestionID
+                                }).ToList();
+
+            questionList.ForEach(x => x.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(x.CreatedDate));
 
             return questionList.ToList();
         }
@@ -51,13 +53,12 @@ namespace DDL_CapstoneProject.Respository
         /// <returns>newQuestionDTO</returns>
         public QuestionDTO CreateQuestion(int ProjectID, QuestionDTO question)
         {
-            var newQuestion = new Question
-            {
-                ProjectID = ProjectID,
-                CreatedDate = DateTime.Today,
-                QuestionContent = question.QuestionContent,
-                Answer = question.Answer,
-            };
+            var newQuestion = db.Questions.Create();
+            newQuestion.ProjectID = ProjectID;
+            newQuestion.CreatedDate = DateTime.UtcNow;
+            newQuestion.QuestionContent = question.QuestionContent;
+            newQuestion.Answer = question.Answer;
+
             db.Questions.Add(newQuestion);
             db.SaveChanges();
 
@@ -68,6 +69,8 @@ namespace DDL_CapstoneProject.Respository
                 QuestionContent = newQuestion.QuestionContent,
                 QuestionID = newQuestion.QuestionID
             };
+
+            newQuestionDTO.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(newQuestionDTO.CreatedDate);
 
             return newQuestionDTO;
         }
@@ -88,7 +91,7 @@ namespace DDL_CapstoneProject.Respository
                 }
 
                 updateQuestion.Answer = qa.Answer;
-                updateQuestion.CreatedDate = DateTime.Today;
+                updateQuestion.CreatedDate = DateTime.UtcNow;
                 updateQuestion.QuestionContent = qa.QuestionContent;
 
                 db.SaveChanges();

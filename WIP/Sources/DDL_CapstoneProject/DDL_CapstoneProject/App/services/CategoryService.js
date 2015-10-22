@@ -24,4 +24,8 @@ service.service("CategoryService", function ($http) {
         return $http.get("api/CategoryApi/listDataForStatistic ");
     };
 
+    //Read all Categories  for create page
+    this.GetCategoriesForCreate = function () {
+        return $http.get('/api/CategoryApi/GetCategoriesForCreate');
+    };
 });

@@ -229,7 +229,8 @@ namespace DDL_CapstoneProject.Respository
             project.CategoryID = 0;
             project.CreatorID = 0;
             project.Title = string.Empty;
-            project.CreatedDate = DateTime.Today;
+            project.CreatedDate = DateTime.UtcNow;
+            project.UpdatedDate = DateTime.UtcNow;
             project.Risk = string.Empty;
             project.ImageUrl = string.Empty;
             project.SubDescription = string.Empty;
@@ -249,13 +250,19 @@ namespace DDL_CapstoneProject.Respository
         /// Create a new project
         /// </summary>
         /// <returns>project</returns>
-        public string CreatProject(ProjectCreateDTO newProject)
+        public string CreatProject(ProjectCreateDTO newProject, string username)
         {
+            var user = db.DDL_Users.SingleOrDefault(x => x.Username == username);
+            if (user == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
             var project = CreateEmptyProject();
             project.CreatorID = newProject.CategoryID;
             project.Title = newProject.Title;
             project.CategoryID = newProject.CategoryID;
-            project.CreatorID = newProject.CreatorID;
+            project.CreatorID = user.DDL_UserID;
             project.FundingGoal = newProject.FundingGoal;
 
             db.Projects.Add(project);
@@ -298,7 +305,12 @@ namespace DDL_CapstoneProject.Respository
             updateProject.Status = project.Status;
             updateProject.SubDescription = project.SubDescription;
             updateProject.Title = project.Title;
-            updateProject.UpdatedDate = DateTime.Today;
+            updateProject.UpdatedDate = DateTime.UtcNow;
+
+            if (updateProject.ExpireDate != null)
+            {
+                updateProject.ExpireDate = CommonUtils.ConvertDateTimeToUtc(updateProject.ExpireDate.GetValueOrDefault());
+            }
 
             db.SaveChanges();
 
@@ -316,6 +328,8 @@ namespace DDL_CapstoneProject.Respository
                 ImageUrl = updateProject.ImageUrl,
                 CurrentFunded = project.CurrentFunded,
             };
+
+            updateProjectDTO.ExpireDate = CommonUtils.ConvertDateTimeFromUtc(updateProjectDTO.ExpireDate.GetValueOrDefault());
 
             // Set number exprire day.
             var timespan = updateProjectDTO.ExpireDate - DateTime.Today;
@@ -341,6 +355,7 @@ namespace DDL_CapstoneProject.Respository
             updateProject.Risk = project.Risk;
             updateProject.VideoUrl = project.VideoUrl;
             updateProject.Description = project.Description;
+            updateProject.UpdatedDate = DateTime.UtcNow;
 
             db.SaveChanges();
 
@@ -391,6 +406,8 @@ namespace DDL_CapstoneProject.Respository
                 CurrentFunded = project.CurrentFunded,
             };
 
+            projectDTO.ExpireDate = CommonUtils.ConvertDateTimeFromUtc(projectDTO.ExpireDate.GetValueOrDefault());
+
             // Set number exprire day.
             var timespan = projectDTO.ExpireDate - DateTime.Today;
             projectDTO.NumberDays = timespan.GetValueOrDefault().Days;
@@ -418,6 +435,11 @@ namespace DDL_CapstoneProject.Respository
             return projectBasicDTO;
         }
 
+        /// <summary>
+        /// Submit a project
+        /// </summary>
+        /// <param name="submitProject"></param>
+        /// <returns>errorList</returns>
         public List<string> SubmitProject(ProjectEditDTO submitProject)
         {
             var project = db.Projects.SingleOrDefault(u => u.ProjectID == submitProject.ProjectID);
@@ -464,6 +486,37 @@ namespace DDL_CapstoneProject.Respository
             return mylist;
         }
 
+        public ProjectInfoBackDTO GetBackProjectInfo(string code)
+        {
+            var project = db.Projects.SingleOrDefault(x => x.ProjectCode == code);
+
+            if (project == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
+            var user = db.DDL_Users.SingleOrDefault(x => x.DDL_UserID == project.CreatorID);
+
+            if (user == null)
+            {
+                throw new NotPermissionException();
+            }
+
+            var projectInforDTO = new ProjectInfoBackDTO
+            {
+                ProjectCode = project.ProjectCode,
+                Title = project.Title,
+                Creator = user.UserInfo.FullName
+            };
+
+            return projectInforDTO;
+        }
+
+        /// <summary>
+        /// Back a project
+        /// </summary>
+        /// <param name="backingData"></param>
+        /// <returns>projectCode</returns>
         public string BackProject(ProjectBackDTO backingData)
         {
             var project = db.Projects.SingleOrDefault(x => x.ProjectCode == backingData.ProjectCode);
@@ -483,7 +536,7 @@ namespace DDL_CapstoneProject.Respository
             var backing = db.Backings.Create();
             backing.UserID = user.DDL_UserID;
             backing.ProjectID = project.ProjectID;
-            backing.BackedDate = DateTime.Today;
+            backing.BackedDate = DateTime.UtcNow;
             backing.IsPublic = backingData.IsPublic;
 
             // Create new backingDetail recored
@@ -503,6 +556,15 @@ namespace DDL_CapstoneProject.Respository
 
             // Caculate project current fund
             project.CurrentFunded += backingDetail.PledgedAmount;
+
+            // Caculate reward quantity
+            var rewardPkg = db.RewardPkgs.SingleOrDefault(u => u.RewardPkgID == backingDetail.RewardPkgID);
+            if (rewardPkg == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
+            rewardPkg.CurrentQuantity += backingDetail.Quantity;
 
             db.SaveChanges();
 
