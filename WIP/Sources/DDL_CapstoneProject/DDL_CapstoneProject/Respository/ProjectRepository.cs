@@ -473,7 +473,7 @@ namespace DDL_CapstoneProject.Respository
             {
                 throw new KeyNotFoundException();
             }
-
+            var userCurrent = db.DDL_Users.FirstOrDefault(x => x.Username == userName);
             // Create Project query from dB.
             var projectDetail = (from project in db.Projects
                                  where project.ProjectCode.Equals(projectCode.ToUpper())
@@ -508,9 +508,24 @@ namespace DDL_CapstoneProject.Respository
                                              && x.Status != DDLConstants.ProjectStatus.REJECTED
                                              && x.Status != DDLConstants.ProjectStatus.PENDING),
                                          ProfileImage = project.Creator.UserInfo.ProfileImage
-                                     }
+                                     },
+                                     Reminded = project.Reminds.Count(x => x.ProjectID == project.ProjectID && x.UserID == userCurrent.DDL_UserID),
                                  }).FirstOrDefault();
-
+            List<RewardPkg> rewardDetail = db.RewardPkgs.Where(x => x.Project.ProjectCode == projectCode).ToList();
+            List<RewardPkgDTO> RewardDTO = new List<RewardPkgDTO>();
+            foreach (RewardPkg reward in rewardDetail)
+            {
+                RewardPkgDTO Reward = new RewardPkgDTO
+                {
+                    Backers = reward.BackingDetails.Count(),
+                    Description = reward.Description,
+                    EstimatedDelivery = CommonUtils.ConvertDateTimeFromUtc(reward.EstimatedDelivery.GetValueOrDefault()),
+                    PledgeAmount = reward.PledgeAmount,
+                    Quantity = reward.Quantity
+                };
+                RewardDTO.Add(Reward);
+            }
+            projectDetail.RewardDetail = RewardDTO;
             // Check project exist?
             if (projectDetail == null)
             {
@@ -726,6 +741,7 @@ namespace DDL_CapstoneProject.Respository
                              };
             foreach (BackingDTO backer in listBacker)
             {
+                backer.Date = CommonUtils.ConvertDateTimeFromUtc(backer.Date.GetValueOrDefault());
                 list.Add(backer);
             }
             return list;

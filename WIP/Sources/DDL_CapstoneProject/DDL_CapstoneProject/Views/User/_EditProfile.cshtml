@@ -3,8 +3,9 @@
         <h4>Thiết lập</h4>
         <div class="row pl15">
             <ul class="list-inline">
-                <li><a href="account.html" class="fnt18 fnt-b link-gray-dark">Tài khoản</a></li>
-                <li><a href="editprofile.html" class="fnt18 fnt-b">Sửa thông tin cá nhân</a></li>
+                <li><a href="@Url.Content("/#/user/editpassword/" + User.Identity.Name)" class="fnt18 fnt-b link-gray-dark">Tài khoản</a></li>
+                <li><a href="@Url.Content("/#/user/editprofile/" + User.Identity.Name)" class="fnt18 fnt-b">Sửa thông tin cá nhân</a></li>
+                <li><a href="@Url.Content("/#/user/publicprofile/" + User.Identity.Name)" class="fnt18 fnt-b link-gray-dark">Thông tin công khai</a></li>
             </ul>
         </div>
     </div> <!-- end SETTING -->
@@ -139,7 +140,8 @@
             </div>
         </div>
         <div class="pt20 pb20">
-            <a class="btn btn-primary" ng-click="submit()" href="@Url.Content("/#/user/editprofile/" + User.Identity.Name)">Lưu thiết lập</a>
+            <button class="btn btn-primary" ng-click="submit()"
+               ng-disabled="!myForm.$dirty || (myForm.$dirty && myForm.$invalid)">Lưu thiết lập</button>
         </div>
     </div>
 

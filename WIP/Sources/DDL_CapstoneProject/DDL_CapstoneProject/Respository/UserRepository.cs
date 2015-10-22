@@ -265,6 +265,8 @@ namespace DDL_CapstoneProject.Respository
                              where user.Username == userName
                              select new UserPublicInfoDTO
                              {
+                                 IsActive = user.IsActive,
+                                 PhoneNumber = user.UserInfo.PhoneNumber,
                                  FullName = user.UserInfo.FullName,
                                  Biography = user.UserInfo.Biography,
                                  CreatedDate = user.CreatedDate,

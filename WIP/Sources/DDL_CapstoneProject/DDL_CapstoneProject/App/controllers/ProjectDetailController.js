@@ -212,6 +212,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
             function (result) {
                 if (result.data.Status === "success") {
                     toastr.success('Báo cáo sai phạm thành công!');
+
                 } else if (result.data.Status === "error") {
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Bạn chưa đăng nhập!');
