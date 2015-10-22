@@ -19,7 +19,7 @@ namespace DDL_CapstoneProject.Respository
 
         private MessageRepository()
         {
-            db = new DDLDataContext();
+            db = DDLDataContextRepository.Instance.DbContext;
         }
 
         public ConversationBasicDTO CreateNewConversation(NewMessageDTO newMessage, string senderName)

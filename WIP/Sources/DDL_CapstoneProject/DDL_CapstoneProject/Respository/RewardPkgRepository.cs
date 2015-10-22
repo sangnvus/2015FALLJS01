@@ -18,7 +18,7 @@ namespace DDL_CapstoneProject.Respository
         #region "Constructors"
         private RewardPkgRepository()
         {
-            db = new DDLDataContext();
+            db = DDLDataContextRepository.Instance.DbContext;
         }
         #endregion
 

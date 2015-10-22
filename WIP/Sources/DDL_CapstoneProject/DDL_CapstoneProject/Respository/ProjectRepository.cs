@@ -19,7 +19,7 @@ namespace DDL_CapstoneProject.Respository
         #region "Constructors"
         private ProjectRepository()
         {
-            db = new DDLDataContext();
+            db = DDLDataContextRepository.Instance.DbContext;
         }
         #endregion
 
@@ -615,17 +615,23 @@ namespace DDL_CapstoneProject.Respository
                                          ProfileImage = project.Creator.UserInfo.ProfileImage
                                      },
                                  }).FirstOrDefault();
-            if (userCurrent != null)
-            {
-                projectDetail.Reminded = db.Reminds.Any(x => x.UserID == userCurrent.DDL_UserID && x.ProjectID == projectDetail.ProjectID);
-            }
-            else projectDetail.Reminded = false;
 
-            List<RewardPkg> rewardDetail = db.RewardPkgs.Where(x => x.Project.ProjectCode == projectCode).ToList();
-            List<RewardPkgDTO> RewardDTO = new List<RewardPkgDTO>();
-            foreach (RewardPkg reward in rewardDetail)
+
+            // Check project exist?
+            if (projectDetail == null)
             {
-                RewardPkgDTO Reward = new RewardPkgDTO
+                throw new KeyNotFoundException();
+            }
+
+            // Check current user remind.
+            projectDetail.Reminded = userCurrent != null && db.Reminds.Any(x => x.UserID == userCurrent.DDL_UserID && x.ProjectID == projectDetail.ProjectID);
+
+            // Get rewards.
+            var rewardDetail = db.RewardPkgs.Where(x => x.ProjectID == projectDetail.ProjectID && !x.IsHide).ToList();
+            var rewardDto = new List<RewardPkgDTO>();
+            foreach (var reward in rewardDetail)
+            {
+                var Reward = new RewardPkgDTO
                 {
                     Backers = reward.BackingDetails.Count(),
                     Description = reward.Description,
@@ -633,14 +639,9 @@ namespace DDL_CapstoneProject.Respository
                     PledgeAmount = reward.PledgeAmount,
                     Quantity = reward.Quantity
                 };
-                RewardDTO.Add(Reward);
+                rewardDto.Add(Reward);
             }
-            projectDetail.RewardDetail = RewardDTO;
-            // Check project exist?
-            if (projectDetail == null)
-            {
-                throw new KeyNotFoundException();
-            }
+            projectDetail.RewardDetail = rewardDto;
 
             // Convert datetime to gmt+7
             projectDetail.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(projectDetail.CreatedDate);

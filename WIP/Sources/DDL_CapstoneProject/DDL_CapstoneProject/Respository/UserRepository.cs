@@ -21,7 +21,7 @@ namespace DDL_CapstoneProject.Respository
         #region "Contructors"
         private UserRepository()
         {
-            db = new DDLDataContext();
+            db = DDLDataContextRepository.Instance.DbContext;
         }
         #endregion
 

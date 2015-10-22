@@ -9,7 +9,7 @@
                         </div>
                         <div id="login-facebook" class="mt20 mb0 pt0 pb0">
                             <a href="@Url.Content("~/Login/AuthenFacebook/")" class="btn btn-info btn-lg">
-                                <i class="fa fa-facebook-official"></i> 
+                                <i class="fa fa-facebook-official"></i>
                                 <span> Đăng nhập với Facebook</span>
                             </a>
                             <p class="text-center tip-info" style="">
@@ -29,19 +29,20 @@
                                 <input type="text" class="form-control login-field" id="UserName" placeholder="Tên tài khoản"
                                        name="UserName"
                                        ng-model="User.UserName"
+                                       ng-model-options="{ updateOn: 'change blur'}"
                                        ng-trim="true"
                                        required
                                        ng-minlength="8"
-                                       ng-maxlength="20"
+                                       ngmaxlength="20"
                                        ng-pattern="/^[a-zA-Z0-9]+$/">
                                 <label class="login-field-icon fui-user" for="UserName"></label>
                                 @*<span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-if="RegisterForm.UserName.$dirty && RegisterForm.UserName.$valid"></span>*@
                                 <div ng-show="RegisterForm.UserName.$dirty && RegisterForm.UserName.$invalid" class="text-danger">
                                     <span class="glyphicon glyphicon-remove text-danger"></span>
-                                    <span ng-show="RegisterForm.UserName.$error.required">Bạn chưa nhập tài khoản!</span>
-                                    <span ng-show="RegisterForm.UserName.$error.minlength">Tên tài khoản tối thiểu 8 kí tự!</span>
-                                    <span ng-show="RegisterForm.UserName.$error.maxlength">Tên tài khoản tối đa 20 kí tự!</span>
-                                    <span ng-show="RegisterForm.UserName.$error.pattern">Tên tài khoản chỉ gồm chữ và số!</span>
+                                    <span ng-show="RegisterForm.UserName.$error.required">Bạn chưa nhập tài khoản</span>
+                                    <span ng-show="RegisterForm.UserName.$error.minlength">Tên tài khoản từ 8 đến 20 kí tự</span>
+                                    <span ng-show="RegisterForm.UserName.$error.maxlength">Tên tài khoản từ 8 đến 20 kí tự</span>
+                                    <span ng-show="RegisterForm.UserName.$error.pattern">Tên tài khoản chỉ gồm chữ và số</span>
                                 </div>
                             </div>
                             <!--Password-->
@@ -49,26 +50,33 @@
                                 <input type="password" class="form-control login-field" id="Password" placeholder="Mật khẩu"
                                        name="Password"
                                        ng-model="Password"
+                                       ng-minlength="8"
+                                       ng-maxlength="20"
+                                       maxlength="20"
+                                       ng-model-options="{ updateOn: 'change blur'}"
                                        required>
                                 <label class="login-field-icon fui-lock" for="Password"></label>
                                 @*<span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="RegisterForm.Password.$dirty && RegisterForm.Password.$valid"></span>*@
                                 <div ng-show="RegisterForm.Password.$dirty && RegisterForm.Password.$invalid" class="text-danger">
                                     <span class="glyphicon glyphicon-remove text-danger"></span>
-                                    <span ng-show="RegisterForm.Password.$error.required">Bạn chưa nhập mật khẩu!</span>
+                                    <span ng-show="RegisterForm.UserName.$error.minlength">Mật khẩu từ 8 đến 20 kí tự</span>
+                                    <span ng-show="RegisterForm.UserName.$error.maxlength">Mật khẩu từ 8 đến 20 kí tự</span>
+                                    <span ng-show="RegisterForm.Password.$error.required">Bạn chưa nhập mật khẩu</span>
                                 </div>
                             </div>
                             <!--Re-Password-->
                             <div class="form-group">
                                 <input type="password" class="form-control login-field" id="rePassword" placeholder="Nhập lại mật khẩu"
                                        ng-model="rePassword"
+                                       ng-model-options="{ updateOn: 'change blur'}"
                                        name="rePassword"
                                        password-match="Password">
                                 <label class="login-field-icon fui-lock" for="rePassword"></label>
                                 @*<span class="glyphicon glyphicon-ok text-success form-control-feedback"
-                                      ng-show="RegisterForm.rePassword.$dirty && RegisterForm.rePassword.$valid"></span>*@
+                                    ng-show="RegisterForm.rePassword.$dirty && RegisterForm.rePassword.$valid"></span>*@
                                 <div ng-show="RegisterForm.rePassword.$dirty && RegisterForm.rePassword.$invalid" class="text-danger">
                                     <span class="glyphicon glyphicon-remove text-danger"></span>
-                                    <span ng-show="RegisterForm.rePassword.$error.unique">Mật khẩu không giống nhau!</span>
+                                    <span ng-show="RegisterForm.rePassword.$error.unique">Mật khẩu không giống nhau</span>
                                 </div>
                             </div>
                             <!--Email-->
@@ -76,15 +84,16 @@
                                 <input type="email" class="form-control fui-mail login-field" id="Email" placeholder="Email"
                                        ng-model="User.Email"
                                        name="Email"
+                                       ng-model-options="{ updateOn: 'change blur'}"
                                        required
                                        ng-trim="true">
                                 <label class="login-field-icon fui-user" for="Email"></label>
                                 @*<span class="glyphicon glyphicon-ok text-success form-control-feedback"
-                                      ng-show="RegisterForm.Email.$dirty && RegisterForm.Email.$valid"></span>*@
+                                    ng-show="RegisterForm.Email.$dirty && RegisterForm.Email.$valid"></span>*@
                                 <div ng-show="RegisterForm.Email.$dirty && RegisterForm.Email.$invalid" class="text-danger">
                                     <span class="glyphicon glyphicon-remove text-danger"></span>
                                     <span ng-show="RegisterForm.Email.$error.required">Bạn chưa nhập Email!</span>
-                                    <span ng-show="RegisterForm.Email.$error.email">Email sai định dạng!</span>
+                                    <span ng-show="RegisterForm.Email.$error.email">Email sai định dạng</span>
                                 </div>
                             </div>
                             <!--FullName-->
@@ -92,25 +101,26 @@
                                 <input type="text" class="form-control login-field" id="FullName" placeholder="Tên đầy đủ"
                                        ng-model="User.FullName"
                                        name="FullName"
+                                       ng-model-options="{ updateOn: 'change blur'}"
                                        required
                                        ng-trim="true">
                                 <label class="login-field-icon fui-user" for="FullName"></label>
                                 @*<span class="glyphicon glyphicon-ok text-success form-control-feedback"
-                                      ng-show="RegisterForm.FullName.$dirty && RegisterForm.FullName.$valid"></span>*@
+                                    ng-show="RegisterForm.FullName.$dirty && RegisterForm.FullName.$valid"></span>*@
                                 <div ng-show="RegisterForm.FullName.$dirty && RegisterForm.FullName.$invalid" class="text-danger">
                                     <span class="glyphicon glyphicon-remove text-danger"></span>
-                                    <span ng-show="RegisterForm.FullName.$error.required">Bạn chưa nhập tên!</span>
+                                    <span ng-show="RegisterForm.FullName.$error.required">Bạn chưa nhập tên</span>
                                 </div>
                             </div>
 
-                            <a class="btn btn-primary btn-lg btn-block" ng-click="submit()"
-                               ng-disabled="!RegisterForm.$dirty || (RegisterForm.$dirty && RegisterForm.$invalid)">
+                            <button class="btn btn-primary btn-lg btn-block" ng-click="submit()"
+                                    ng-disabled="!RegisterForm.$dirty || (RegisterForm.$dirty && RegisterForm.$invalid)">
                                 <i class="fa fa-sign-in"></i> Đăng ký
-                            </a>
+                            </button>
                         </form>
-@*                        <p class="text-center tip-info">*@
-@*                            By signing up you agree to our <a>terms of use</a> , <a>privacy policy</a> , and <a>cookie policy</a> .*@
-@*                        </p>*@
+                        @*                        <p class="text-center tip-info">*@
+                        @*                            By signing up you agree to our <a>terms of use</a> , <a>privacy policy</a> , and <a>cookie policy</a> .*@
+                        @*                        </p>*@
                         <div class="text-center">
                             <div class="boderbottom"></div>
                             <p>Có tài khoản? <a href="@Url.Content("/login")">Đăng nhập ngay</a></p>

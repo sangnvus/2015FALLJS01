@@ -16,7 +16,7 @@ namespace DDL_CapstoneProject.Respository
         #region "Constructors"
         private TimeLineRepository()
         {
-            db = new DDLDataContext();
+            db = DDLDataContextRepository.Instance.DbContext;
         }
         #endregion
 

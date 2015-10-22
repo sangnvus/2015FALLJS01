@@ -16,7 +16,7 @@ namespace DDL_CapstoneProject.Respository
         #region "Constructors"
         private UpdateLogRepository()
         {
-            db = new DDLDataContext();
+            db = DDLDataContextRepository.Instance.DbContext;
         }
         #endregion
 
