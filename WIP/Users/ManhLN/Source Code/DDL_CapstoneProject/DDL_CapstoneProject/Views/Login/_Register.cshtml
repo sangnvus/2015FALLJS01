@@ -9,7 +9,7 @@
                         </div>
                         <div id="login-facebook" class="mt20 mb0 pt0 pb0">
                             <a href="@Url.Content("~/Login/AuthenFacebook/")" class="btn btn-info btn-lg">
-                                <i class="fa fa-facebook-official"></i> 
+                                <i class="fa fa-facebook-official"></i>
                                 <span> Đăng nhập với Facebook</span>
                             </a>
                             <p class="text-center tip-info" style="">
@@ -73,7 +73,7 @@
                                        password-match="Password">
                                 <label class="login-field-icon fui-lock" for="rePassword"></label>
                                 @*<span class="glyphicon glyphicon-ok text-success form-control-feedback"
-                                      ng-show="RegisterForm.rePassword.$dirty && RegisterForm.rePassword.$valid"></span>*@
+                                    ng-show="RegisterForm.rePassword.$dirty && RegisterForm.rePassword.$valid"></span>*@
                                 <div ng-show="RegisterForm.rePassword.$dirty && RegisterForm.rePassword.$invalid" class="text-danger">
                                     <span class="glyphicon glyphicon-remove text-danger"></span>
                                     <span ng-show="RegisterForm.rePassword.$error.unique">Mật khẩu không giống nhau</span>
@@ -89,7 +89,7 @@
                                        ng-trim="true">
                                 <label class="login-field-icon fui-user" for="Email"></label>
                                 @*<span class="glyphicon glyphicon-ok text-success form-control-feedback"
-                                      ng-show="RegisterForm.Email.$dirty && RegisterForm.Email.$valid"></span>*@
+                                    ng-show="RegisterForm.Email.$dirty && RegisterForm.Email.$valid"></span>*@
                                 <div ng-show="RegisterForm.Email.$dirty && RegisterForm.Email.$invalid" class="text-danger">
                                     <span class="glyphicon glyphicon-remove text-danger"></span>
                                     <span ng-show="RegisterForm.Email.$error.required">Bạn chưa nhập Email!</span>
@@ -106,7 +106,7 @@
                                        ng-trim="true">
                                 <label class="login-field-icon fui-user" for="FullName"></label>
                                 @*<span class="glyphicon glyphicon-ok text-success form-control-feedback"
-                                      ng-show="RegisterForm.FullName.$dirty && RegisterForm.FullName.$valid"></span>*@
+                                    ng-show="RegisterForm.FullName.$dirty && RegisterForm.FullName.$valid"></span>*@
                                 <div ng-show="RegisterForm.FullName.$dirty && RegisterForm.FullName.$invalid" class="text-danger">
                                     <span class="glyphicon glyphicon-remove text-danger"></span>
                                     <span ng-show="RegisterForm.FullName.$error.required">Bạn chưa nhập tên</span>
@@ -114,13 +114,13 @@
                             </div>
 
                             <button class="btn btn-primary btn-lg btn-block" ng-click="submit()"
-                               ng-disabled="!RegisterForm.$dirty || (RegisterForm.$dirty && RegisterForm.$invalid)">
+                                    ng-disabled="!RegisterForm.$dirty || (RegisterForm.$dirty && RegisterForm.$invalid)">
                                 <i class="fa fa-sign-in"></i> Đăng ký
                             </button>
                         </form>
-@*                        <p class="text-center tip-info">*@
-@*                            By signing up you agree to our <a>terms of use</a> , <a>privacy policy</a> , and <a>cookie policy</a> .*@
-@*                        </p>*@
+                        @*                        <p class="text-center tip-info">*@
+                        @*                            By signing up you agree to our <a>terms of use</a> , <a>privacy policy</a> , and <a>cookie policy</a> .*@
+                        @*                        </p>*@
                         <div class="text-center">
                             <div class="boderbottom"></div>
                             <p>Có tài khoản? <a href="@Url.Content("/login")">Đăng nhập ngay</a></p>

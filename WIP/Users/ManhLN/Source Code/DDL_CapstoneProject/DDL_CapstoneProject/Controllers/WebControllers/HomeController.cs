@@ -33,7 +33,7 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         public ActionResult Discover()
         {
 
-            return PartialView("Discover");
+            return PartialView("_Discover");
         }
         public ActionResult About()
         {

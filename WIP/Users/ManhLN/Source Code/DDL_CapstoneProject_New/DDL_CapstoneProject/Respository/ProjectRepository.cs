@@ -438,7 +438,10 @@ namespace DDL_CapstoneProject.Respository
                     CurrentFunded = project.CurrentFunded,
                 };
 
-                projectDTO.ExpireDate = CommonUtils.ConvertDateTimeFromUtc(projectDTO.ExpireDate.GetValueOrDefault());
+                if (projectDTO.ExpireDate != null)
+                {
+                    projectDTO.ExpireDate = CommonUtils.ConvertDateTimeFromUtc(projectDTO.ExpireDate.GetValueOrDefault());
+                }
 
                 // Set number exprire day.
                 var timespan = projectDTO.ExpireDate - DateTime.Today;
@@ -487,38 +490,59 @@ namespace DDL_CapstoneProject.Respository
                     throw new KeyNotFoundException();
                 }
 
+                if (project.ExpireDate != null)
+                {
+                    project.ExpireDate = CommonUtils.ConvertDateTimeFromUtc(project.ExpireDate.GetValueOrDefault());
+                }
+
                 List<string> mylist = new List<string>();
 
+                var expireDateLaw = DateTime.UtcNow.AddDays(10);
+                expireDateLaw = CommonUtils.ConvertDateTimeFromUtc(expireDateLaw);
+
                 string messageBasic = string.Empty;
-                if (string.IsNullOrEmpty(project.Title) || string.IsNullOrEmpty(project.ImageUrl) ||
-                    string.IsNullOrEmpty(project.SubDescription)
-                    || string.IsNullOrEmpty(project.Location) || project.ExpireDate == null || project.FundingGoal <= 0)
+                if (string.IsNullOrEmpty(project.Title) || project.Title.Length < 10 || project.Title.Length > 60
+                    || string.IsNullOrEmpty(project.ImageUrl)
+                    || string.IsNullOrEmpty(project.SubDescription) || project.SubDescription.Length < 30 || project.SubDescription.Length > 135
+                    || string.IsNullOrEmpty(project.Location)
+                    || project.ExpireDate == null || project.ExpireDate < expireDateLaw
+                    || project.FundingGoal < 1000000)
                 {
-                    messageBasic =
-                        "Xin hãy xem lại trang thông tin cơ bản, các trường (kể cả ảnh dự án) PHẢI được điền đầy đủ và hợp lệ";
+                    messageBasic = "Xin hãy xem lại trang thông tin cơ bản, các trường (kể cả ảnh dự án) PHẢI được điền đầy đủ và hợp lệ";
                     mylist.Add(messageBasic);
 
                 }
 
                 var rewardList = RewardPkgRepository.Instance.GetRewardPkg(project.ProjectID);
+                rewardList.ForEach(x => x.EstimatedDelivery = CommonUtils.ConvertDateTimeFromUtc(x.EstimatedDelivery.GetValueOrDefault()));
                 string messageReward = string.Empty;
-                if (rewardList.Any(reward => reward.PledgeAmount <= 0 || string.IsNullOrEmpty(reward.Description)
-                                             || reward.EstimatedDelivery < project.ExpireDate))
+
+                if (rewardList.Count == 0)
                 {
-                    messageReward =
-                        "Xin hãy xem lại trang gói quà! Tất cả các trường PHẢI được điền đầy đủ và hợp lệ(Ngày giao phải sau ngày đóng gây quỹ)";
+                    messageReward = "Xin hãy xem lại trang gói quà! Cần ít nhất 1 gói quà!";
+                    mylist.Add(messageReward);
+                }
+
+                if (rewardList.Any(reward => reward.PledgeAmount < 1000
+                    || string.IsNullOrEmpty(reward.Description) || reward.Description.Length < 10 || reward.Description.Length > 135
+                    || (reward.EstimatedDelivery < project.ExpireDate && reward.Type != DDLConstants.RewardType.NO_REWARD)
+                    || (reward.Type == DDLConstants.RewardType.NO_REWARD && reward.Quantity < 1)
+                    ))
+                {
+                    messageReward = "Xin hãy xem lại trang gói quà! Tất cả các trường PHẢI được điền đầy đủ và hợp lệ(Ngày giao phải sau ngày đóng gây quỹ)";
                     mylist.Add(messageReward);
                 }
 
                 string messageStory = string.Empty;
-                if (string.IsNullOrEmpty(project.Description) || string.IsNullOrEmpty(project.Risk))
+                if (string.IsNullOrEmpty(project.Description) || project.Description.Length < 135
+                    || string.IsNullOrEmpty(project.Risk) || project.Risk.Length < 135
+                    )
                 {
                     messageStory = "Xin hãy xem lại trang câu chuyện! Các trường PHẢI được nhập đầy đủ (trừ video)";
                     mylist.Add(messageStory);
                 }
 
-                if (string.IsNullOrEmpty(messageBasic) && string.IsNullOrEmpty(messageReward) &&
-                    string.IsNullOrEmpty(messageStory))
+                if (string.IsNullOrEmpty(messageBasic) && string.IsNullOrEmpty(messageReward) && string.IsNullOrEmpty(messageStory))
                 {
                     project.Status = DDLConstants.ProjectStatus.PENDING;
 
@@ -927,27 +951,57 @@ namespace DDL_CapstoneProject.Respository
 
         }
 
-        public List<BackingDTO> GetListBacker(string projectCode)
+        public BackingDTO GetListBacker(string projectCode)
         {
             using (var db = new DDLDataContext())
             {
                 var project = db.Projects.FirstOrDefault(x => x.ProjectCode == projectCode);
-                var remindInfo = db.Reminds.FirstOrDefault(x => x.ProjectID == project.ProjectID);
-                decimal a = db.BackingDetails.FirstOrDefault(x => x.BackingID == 4).PledgedAmount;
 
-                var list = new List<BackingDTO>();
-                var listBacker = from backer in db.Backings
-                    where project.ProjectID == backer.ProjectID
-                    select new BackingDTO
+                var list = new BackingDTO();
+                var listBackerLinQ = from backer in db.Backings
+                                     where project.ProjectID == backer.ProjectID
+                                     select new BackerDTO
+                                     {
+                                         Amount = backer.BackingDetail.PledgedAmount,
+                                         Date = backer.BackedDate,
+                                         FullName = backer.User.UserInfo.FullName,
+                                     };
+
+                var query = listBackerLinQ.Where(x => x.Date.HasValue)
+                  .GroupBy(x => new { x.Date.Value.Day, x.Date.Value.Month })
+                  .Select(grp => new
+                  {
+                      Day = grp.Key.Day,
+                      Month = grp.Key.Month,
+                      Total = grp.Sum(x => x.Amount)
+                  });
+                var listAmount = new List<SumAmount>();
+
+                foreach (var amount in query)
+                {
+                    var sum = new SumAmount
                     {
-                        Amount = backer.BackingDetail.PledgedAmount,
-                        Date = backer.BackedDate,
-                        FullName = backer.User.UserInfo.FullName,
+                        Amount = amount.Total,
+                        Day = amount.Day,
+                        Month = amount.Month
                     };
-                foreach (BackingDTO backer in listBacker)
+                    listAmount.Add(sum);
+                }
+               var listBacker = new List<BackerDTO>();
+                foreach (var backer in listBackerLinQ)
                 {
                     backer.Date = CommonUtils.ConvertDateTimeFromUtc(backer.Date.GetValueOrDefault());
-                    list.Add(backer);
+                    listBacker.Add(backer);
+                }
+                list.sumAmount = listAmount;
+                list.listBacker = listBacker;
+                list.Amount = new List<decimal>();
+                list.Date = new List<string>();
+                foreach (var item in listAmount)
+                {
+                    var date = item.Day.ToString() + '/' + item.Month.ToString();
+                    list.Date.Add(date);
+                    list.Amount.Add(item.Amount);
                 }
                 return list;
             }

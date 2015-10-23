@@ -23,9 +23,14 @@
                 </div>
             </div>
             <div class="col-md-6" style="width:350px">
+                <div ng-show="UserBasicInfo.IsActive" class="mt5 mb5 border-b"><i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Đã kích hoạt</div>
+                <div ng-hide="UserBasicInfo.IsActive" class="mt5 mb5 border-b"><i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Đang bị khóa</div>
                 <div class="mt5 mb5 border-b"><i class="glyphicon glyphicon-lock"></i>&nbsp;&nbsp;Đăng nhập lần cuối: {{UserBasicInfo.LastLogin | date:"HH:mm dd/MM/yyyy"}}</div>
                 <div class="mt5 mb5 border-b"><i class="glyphicon glyphicon-globe"></i>&nbsp;&nbsp;<a href="{{UserBasicInfo.Website}}">{{UserBasicInfo.Website}}</a></div>
                 <div class="mt5 mb5 border-b" style="word-break: break-all"><i class="fa fa-facebook-square"></i>&nbsp;&nbsp;<a href="{{UserBasicInfo.FacebookUrl}}">{{UserBasicInfo.FullName}}</a></div>
+                <div class="mt5 mb5 border-b"><i class="glyphicon glyphicon-phone"></i>&nbsp;&nbsp;{{UserBasicInfo.PhoneNumber}}</div>
+                <div class="mt5 mb5 border-b"><i class="glyphicon glyphicon-bold"></i>&nbsp;&nbsp;{{UserBasicInfo.CountCreatedProject}} đã tạo</div>
+                <div class="mt5 mb5 border-b"><i class="fa fa-university"></i>&nbsp;&nbsp;{{UserBasicInfo.CountBackedProject}} đã ủng hộ</div>
                 <div class="mt5 mb5">
                     <button class="btn btn-primary" ng-click="showContactBox()">Gửi tin nhắn</button>
                 </div>
@@ -33,7 +38,6 @@
         </div> <!-- end ROW -->
     </div> <!--end CONTAINER -->
 </div> <!-- end PROFILE PUBLIC -->
-
 <!-- Contact Modal -->
 <div class="container">
     <div class="modal fade" id="sentBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">

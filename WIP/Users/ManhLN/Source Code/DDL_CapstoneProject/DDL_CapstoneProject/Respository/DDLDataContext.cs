@@ -52,13 +52,13 @@ namespace DDL_CapstoneProject.Respository
         }
     }
 
-    public class DDLDataContextRepository : SingletonBase<DDLDataContextRepository>
-    {
-        public DDLDataContext DbContext { get; set; }
-        private DDLDataContextRepository()
-        {
-            DbContext = new DDLDataContext();
-        }
-    }
 
+    //public class DDLDataContextRepository : SingletonBase<DDLDataContextRepository>
+    //{
+    //    public DDLDataContext DbContext { get; set; }
+    //    private DDLDataContextRepository()
+    //    {
+    //        DbContext = new DDLDataContext();
+    //    }
+    //}
 }

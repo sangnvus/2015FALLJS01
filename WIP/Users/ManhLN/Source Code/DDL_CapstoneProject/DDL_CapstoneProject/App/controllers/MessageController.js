@@ -7,6 +7,7 @@ app.controller('MessageController',
         //Atrributes
         $scope.ListConversations = conversations.data.Data;
         $scope.Sent = $route.current.params.list === "sent" ? true : false;
+        $scope.NumberNewMessage = $rootScope.UserInfo.NumberNewMessage;
         $scope.Unread = $scope.ListConversations.length;
         $scope.checkAll = false;
         $scope.selection = [];
@@ -84,7 +85,7 @@ app.controller('MessageController',
                             if ($scope.Sent) {
                                 $scope.ListConversations.unshift(result.data.Data);
                             }
-                            toastr.success("Gửi tin nhắn thành công");
+                            toastr.success("Gửi tin nhắn thành công thành công");
                         } else {
                             CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                             $scope.Error = result.data.Message;

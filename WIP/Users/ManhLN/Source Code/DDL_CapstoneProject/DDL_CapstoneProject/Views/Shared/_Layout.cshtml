@@ -71,16 +71,16 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navbar-collapse-5">
                 <ul class="nav navbar-nav">
-                    <li><a href="@Url.Content("/#/discover/")">Discover</a></li>
-                    <li><a href="@Url.Content("/#/project/create/")">Tạo</a></li>
+                    <li><a href="@Url.Content("/#/discover")">Discover</a></li>
+                    <li><a href="@Url.Content("/#/project/create")">Tạo</a></li>
                     <li role="separator" class="hidden-xs divider-vertical"></li>
                 </ul>
-                <form class="navbar-form navbar-left" action="search-advance.html" role="search">
+                <form class="navbar-form navbar-left" action="@Url.Content("/#/search?advance=true/")" role="Search">
                     <div class="form-group">
                         <div class="input-group">
-                            <input class="form-control" id="navbarInput-01" type="search" placeholder="Tìm kiếm...">
+                            <input class="form-control" id="navbarInput-01" type="Search" placeholder="Tìm kiếm...">
                             <span class="input-group-btn">
-                                <button type="" class="btn"><span class="fui-search"></span></button>
+                                <button type="" class="btn"><span class="fui-Search"></span></button>
                             </span>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                     {
                         <ul class="nav navbar-nav navbar-right">
                             <!-- Login and Regiter -->
-                            <form role="search" class="navbar-form navbar-right">
+                            <form role="Search" class="navbar-form navbar-right">
                                 <a id="btnLogin" href="@Url.Content("/login/")" class="btn btn-success btn-sm btn-wide" style="padding: 8px 0px;" role="button"><span class="glyphicon glyphicon-log-in"></span><span class="hidden-sm"> Đăng nhập</span></a>
                                 <a id="btnRegister" href="@Url.Content("/#/register/")" class="btn btn-default btn-sm btn-wide" style="padding: 8px 0px;" role="button" type=""><i class="fa fa-key"></i><span class="hidden-sm"> Đăng ký</span></a>
                             </form>
@@ -116,14 +116,14 @@
 
                                 <ul class="dropdown-menu">
                                     <h5 class="c3">My stuff</h5>
-                                    <li><a href="@Url.Content("/#/user/message")">Tin nhắn <span class="badge">3</span></a></li>
-                                    <li><a href="@Url.Content("/#/project/backedbroject")">Dự án đã ủng hộ</a></li>
+                                    <li><a href="@Url.Content("/#/user/message")">Tin nhắn <span ng-show="UserInfo.NumberNewMessage.Total > 0" class="badge">{{UserInfo.NumberNewMessage.Total}}</span></a></li>
+                                    <li><a href="@Url.Content("/#/project/backedproject")">Dự án đã ủng hộ</a></li>
                                     <li><a href="@Url.Content("/#/project/createdproject")">Dự án đã tạo</a></li>
                                     <li><a href="@Url.Content("/#/project/starredproject")">Dự án theo dõi</a></li>
                                     <li class="divider"></li>
                                     <h5 class="c3">Chỉnh sửa</h5>
-                                    <li><a href="@Url.Content("/#/user/editpassword/" + User.Identity.Name)">Mật khẩu</a></li>
-                                    <li><a href="@Url.Content("/#/user/editprofile/" + User.Identity.Name)">Thông tin cá nhân</a></li>
+                                    <li><a href="@Url.Content("/#/user/editpassword")">Tài Khoản</a></li>
+                                    <li><a href="@Url.Content("/#/user/editprofile")">Thông tin cá nhân</a></li>
                                     <li class="divider"></li>
                                     <p class="no-wrap">Bạn đang đăng nhập với <b>@User.Identity.Name</b> | <a class="fnt-b" href="@Url.Content("/logout")">Thoát</a></p>
                                 </ul>

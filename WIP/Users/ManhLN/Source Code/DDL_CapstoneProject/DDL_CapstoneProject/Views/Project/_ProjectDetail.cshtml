@@ -30,8 +30,12 @@
                     <div class="pt20">
                         <a class="btn btn-primary btn-lg" href="@Url.Content("/#/project/back/{{Project.ProjectCode}}")">Ủng hộ dự án</a>
                         <button class="btn btn-danger btn-lg" disabled ng-if="Project.IsExprired" href="back_project.html">Dự án đã hết hạn</button>
-                        <a ng-hide="Reminded" href="" class="grey-dark" ng-click="remind()">&nbsp;&nbsp;<i class="fa fa-star"></i> Đánh dấu</a>
-                        <a ng-show="Reminded" href="" style="color : #16a085" class="grey-dark" ng-click="remind()">&nbsp;&nbsp;<i class="fa fa-star"></i> Đánh dấu</a>
+                        <span ng-hide="Project.Reminded">
+                            <a href="" class="grey-dark" ng-click="remind()">&nbsp;&nbsp;<i class="fa fa-star"></i> Đánh dấu</a>
+                        </span>
+                        <span ng-show="Project.Reminded">
+                            <a href="" style="color : #16a085" class="grey-dark" ng-click="remind()">&nbsp;&nbsp;<i class="fa fa-star"></i> Đánh dấu</a>
+                        </span>
                     </div>
                     <div class="pt10">
                         <p class="fnt15 grey-dark" ng-if="!Project.IsExprired">
@@ -95,7 +99,7 @@
                 <li><a showtab href="#update" data-toggle="tab" ng-click="getUpdateLogList()">Cập nhật <span class="badge">{{Project.NumberUpdate}}</span></a></li>
                 <li><a showtab href="#comments" data-toggle="tab" ng-click="getCommentList()">Bình luận <span class="badge">{{Project.NumberComment}}</span></a></li>
                 <li><a showtab href="#schedule" data-toggle="tab">Tiến trình</a></li>
-                <li><a showtab href="#list-backers" data-toggle="tab" ng-click="loadlistBacker()">Ủng hộ <span class="badge">10</span></a></li>
+                <li><a showtab href="#list-backers" data-toggle="tab" ng-click="loadlistBacker()">Ủng hộ <span class="badge">{{Project.NumberBacked}}</span></a></li>
             </ul>
         </div>
     </div>
@@ -122,27 +126,56 @@
                                         <h1 class="fnt25">Rủi ro và thách thức</h1>
                                         <p style="word-break: break-word; white-space: pre-wrap;">{{Project.Risk}}</p>
                                     </div> <!-- end Risks and challeges -->
-                                    <!-- Report Modal -->
-                                    <p><a class="btn btn-default" data-toggle="modal" data-target="#reportModal">Báo cáo sai phạm</a></p>
-                                    <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    <h5 class="modal-title" id="myModalLabel">Báo cáo dự án sai phạm</h5>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <h5 class="fnt20"><span class="fnt-n">Dự Án:</span> {{Project.Title}}</h5>
-                                                    <h5 class="fnt20 fnt-n">Nội dung:</h5>
-                                                    <textarea class="form-control" style="resize:none" name="" id="" cols="30" rows="5" ng-model="ReportContent"></textarea>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                                                    <button type="button" class="btn btn-primary" ng-click="report()">Gửi báo cáo</button>
+                                    @if (User.Identity != null && !string.IsNullOrEmpty(User.Identity.Name))
+                                    {
+                                        <p>
+                                            <a class="btn btn-info" data-toggle="modal" data-target="#sendQuestion">Gửi câu hỏi</a>
+                                            <a class="btn btn-default" data-toggle="modal" data-target="#reportModal">Báo cáo sai phạm</a>
+                                        </p>
+                                    <!-- Ask question -->
+                                        <div class="modal fade" id="sendQuestion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h5 class="modal-title" id="myModalLabel">Gửi câu hỏi về dự án {{Project.Title}}</h5>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <h5 class="fnt20"><span class="fnt-n">Tới: {{Project.Creator.FullName}}</span> </h5>
+                                                        <h5 class="fnt20 fnt-n">Nội dung:</h5>
+                                                        <textarea class="form-control" style="resize: none" name="" id="" cols="30" rows="5"
+                                                                  ng-model="NewQuestion.Content"></textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                                                        <button type="button" class="btn btn-info" ng-click="sendQuestion()">Gửi câu hỏi</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> <!-- end report modal -->
+                                    <!-- end report modal -->
+                                    <!-- Report Modal -->
+                                        <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h5 class="modal-title" id="myModalLabel">Báo cáo dự án sai phạm</h5>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <h5 class="fnt20"><span class="fnt-n">Dự Án:</span> {{Project.Title}}</h5>
+                                                        <h5 class="fnt20 fnt-n">Nội dung:</h5>
+                                                        <textarea class="form-control" style="resize:none" name="" id="" cols="30" rows="5" ng-model="ReportContent"></textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                                        <button type="button" class="btn btn-primary" ng-click="report()">Gửi báo cáo</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end report modal -->
+                                    }
                                 </div> <!-- end col-md-8 -->
 
                                 <div class="col-md-4">
@@ -152,82 +185,16 @@
                                     <!-- start our menu here-->
                                     <div id="#reward" class="our_menu">
                                         <ul class="menu">
-                                            <li class="item">
+                                            <li ng-repeat="reward in Project.RewardDetail" class="item">
                                                 <div class="item-show">
-                                                    <h5 class="fnt20 c3" for="">Pledge $10 or more</h5>
-                                                    <p class="bold"><span class="glyphicon glyphicon-asterisk"></span>24 backers</p>
+                                                    <h5 class="fnt20 c3" for="">Ủng hộ {{reward.PledgeAmount}} <span class="money usd no-code">&#8363;</span> hoặc nhiều hơn</h5>
+                                                    <p class="bold"><span class="glyphicon glyphicon-asterisk"></span> {{reward.Backers}}  backers</p>
                                                     <div class="item-description">
-                                                        <p>Thank the Seven! Err-- Five!</p>
-                                                        <p>Thank you for your pledge! For this sign of support, we here at Larian Studios are truly grateful.</p>
+                                                        {{reward.Description}}
                                                     </div>
                                                     <div class="item-extra-info">
-                                                        <p class="">Estimated delivery:</p>
-                                                        <p>Oct 2015</p>
-                                                    </div>
-                                                </div> <!-- end main Reward -->
-                                                <a href="back-project.html">
-                                                    <div class="hoverReward">
-                                                        <span class="titleHover">Chọn gói quà này</span>
-                                                    </div>
-                                                </a> <!-- end hover Reward -->
-                                            </li>
-                                        </ul>
-                                        <ul class="menu">
-                                            <li class="item">
-                                                <div class="item-show">
-                                                    <h5 class="fnt20 c3" for="">Pledge $15 or more</h5>
-                                                    <p class="bold"><span class="glyphicon glyphicon-asterisk"></span>24 backers</p>
-                                                    <div class="item-description">
-                                                        <p>Thank the Seven! Err-- Five!</p>
-                                                        <p>Thank you for your pledge! For this sign of support, we here at Larian Studios are truly grateful.</p>
-                                                    </div>
-                                                    <div class="item-extra-info">
-                                                        <p class="">Estimated delivery:</p>
-                                                        <p>Oct 2015</p>
-                                                    </div>
-                                                </div> <!-- end main Reward -->
-                                                <a href="back-project.html">
-                                                    <div class="hoverReward">
-                                                        <span class="titleHover">Chọn gói quà này</span>
-                                                    </div>
-                                                </a> <!-- end hover Reward -->
-                                            </li>
-                                        </ul>
-                                        <ul class="menu">
-                                            <li class="item">
-                                                <div class="item-show">
-                                                    <h5 class="fnt20 c3" for="">Pledge $20 or more</h5>
-                                                    <p class="bold"><span class="glyphicon glyphicon-asterisk"></span>24 backers</p>
-                                                    <div class="item-description">
-                                                        <p>Thank the Seven! Err-- Five!</p>
-                                                        <p>Thank you for your pledge! For this sign of support, we here at Larian Studios are truly grateful.</p>
-                                                    </div>
-                                                    <div class="item-extra-info">
-                                                        <p class="">Estimated delivery:</p>
-                                                        <p>Oct 2015</p>
-                                                    </div>
-                                                </div> <!-- end main Reward -->
-                                                <a href="back-project.html">
-                                                    <div class="hoverReward">
-                                                        <span class="titleHover">Chọn gói quà này</span>
-                                                    </div>
-                                                </a> <!-- end hover Reward -->
-                                            </li>
-                                        </ul>
-                                        <ul class="menu">
-                                            <li class="item">
-                                                <div class="item-show">
-                                                    <h5 class="fnt20 c3" for="">Pledge $50 or more</h5>
-                                                    <p class="bold">
-                                                        <span class="glyphicon glyphicon-asterisk"></span>24 backers
-                                                    </p>
-                                                    <div class="item-description">
-                                                        <p>Thank the Seven! Err-- Five!</p>
-                                                        <p>Thank you for your pledge! For this sign of support, we here at Larian Studios are truly grateful.</p>
-                                                    </div>
-                                                    <div class="item-extra-info">
-                                                        <p class="">Estimated delivery:</p>
-                                                        <p>Oct 2015</p>
+                                                        <p class="">Thời gian giao hàng ước tính :</p>
+                                                        <p>{{reward.EstimatedDelivery | date:"'Tháng' MM/yyyy"}} </p>
                                                     </div>
                                                 </div> <!-- end main Reward -->
                                                 <a href="back-project.html">
@@ -292,7 +259,7 @@
                                                           ng-maxlength="500"
                                                           maxlength="500"
                                                           msd-elastic="\n"></textarea>
-                                                <span class="text-danger">* Bình luận tối thiểu từ 10 đến 500 kí tự.</span>
+                                                <span class="text-danger">* Bình luận chỉ từ 10 đến 500 kí tự.</span>
                                                 <button type="submit" class="btn btn-primary mt10 pull-right" ng-click="submitComment()"
                                                         ng-disabled="!CommentForm.$dirty || (CommentForm.$dirty && CommentForm.$invalid)">
                                                     Bình luận
@@ -418,7 +385,7 @@
                                         <td>{{$index + 1}}</td>
                                         <td>{{x.FullName}}</td>
                                         <td>{{x.Amount}}</td>
-                                        <td>{{x.Date}}</td>
+                                        <td>{{x.Date | date:"dd/MM/yyyy"}}</td>
                                     </tr>
                                 </tbody>
                             </table>  <!-- TABLE BACKERS LIST -->

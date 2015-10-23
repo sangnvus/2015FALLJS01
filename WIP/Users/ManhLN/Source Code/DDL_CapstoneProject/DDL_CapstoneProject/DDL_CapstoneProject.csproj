@@ -151,6 +151,10 @@
     <Compile Include="Migrations\201510210055539_UpdateBackingBackingDetail.designer.cs">
       <DependentUpon>201510210055539_UpdateBackingBackingDetail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510220931488_CurrentQuantity.cs" />
+    <Compile Include="Migrations\201510220931488_CurrentQuantity.Designer.cs">
+      <DependentUpon>201510220931488_CurrentQuantity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Backing.cs" />
     <Compile Include="Controllers\WebControllers\HomeController.cs" />
@@ -176,9 +180,11 @@
     <Compile Include="Models\DTOs\HttpMessageDTO.cs" />
     <Compile Include="Models\DTOs\MessageDTO.cs" />
     <Compile Include="Models\DTOs\NewMessageDTO.cs" />
+    <Compile Include="Models\DTOs\NewMessageNumberDTO.cs" />
     <Compile Include="Models\DTOs\ProjectBasicViewDTO.cs" />
     <Compile Include="Models\DTOs\ProjectCreateDTO.cs" />
     <Compile Include="Models\DTOs\ProjectDetailDTO.cs" />
+    <Compile Include="Models\DTOs\ProjectInfoBackDTO.cs" />
     <Compile Include="Models\DTOs\ProjectStoryDTO.cs" />
     <Compile Include="Models\DTOs\ProjectEditDTO.cs" />
     <Compile Include="Models\DTOs\QuestionDTO.cs" />
@@ -188,6 +194,7 @@
     <Compile Include="Models\DTOs\SlideDTO.cs" />
     <Compile Include="Models\DTOs\TimeLineDTO.cs" />
     <Compile Include="Models\DTOs\UpdateLogDTO.cs" />
+    <Compile Include="Models\DTOs\UserBackInforDTO.cs" />
     <Compile Include="Models\DTOs\UserBasicInfoDTO.cs" />
     <Compile Include="Models\DTOs\UserEditInfoDTO.cs" />
     <Compile Include="Models\DTOs\UserLoginDTO.cs" />
@@ -239,9 +246,12 @@
     <Content Include="App\controllers\PublicProfileController.js" />
     <Content Include="App\controllers\RegisterController.js" />
     <Content Include="App\controllers\ResetPwController.js" />
+    <Content Include="App\controllers\SearchController.js" />
     <Content Include="App\controllers\StarredProjectController.js" />
+    <Content Include="App\controllers\StatisticsController.js" />
     <Content Include="App\directives\angular-morris-chart.min.js" />
     <Content Include="App\directives\elastic.js" />
+    <Content Include="App\directives\format.js" />
     <Content Include="App\directives\loading-bar.js" />
     <Content Include="App\directives\ngAutoComplete.js" />
     <Content Include="App\directives\ngEnter.js" />
@@ -1194,6 +1204,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Libraries\jquery.timelinr-0.9.54.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\morris-chart\chartangular.js" />
     <Content Include="Scripts\morris-chart\morris.js" />
     <Content Include="Scripts\morris-chart\morris.min.js" />
     <Content Include="Scripts\morris-chart\raphael-min.js" />
@@ -1236,7 +1247,7 @@
     <Content Include="Views\Project\_ProjectDetail.cshtml" />
     <Content Include="Views\User\_EditProfile.cshtml" />
     <Content Include="Views\User\_PublicProfile.cshtml" />
-    <Content Include="Views\Home\Discover.cshtml" />
+    <Content Include="Views\Home\_Discover.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Login\AdminLogin.cshtml" />
     <Content Include="Views\Home\AdminIndex.cshtml" />
@@ -1248,6 +1259,8 @@
     <Content Include="Views\Project\_BackProject.cshtml" />
     <Content Include="Views\User\_EditPassword.cshtml" />
     <Content Include="Views\Project\_PaymentProject.cshtml" />
+    <Content Include="Views\Home\_Statistics.cshtml" />
+    <Content Include="Views\Home\_Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />
@@ -1266,6 +1279,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510210055539_UpdateBackingBackingDetail.resx">
       <DependentUpon>201510210055539_UpdateBackingBackingDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510220931488_CurrentQuantity.resx">
+      <DependentUpon>201510220931488_CurrentQuantity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

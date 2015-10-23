@@ -264,5 +264,34 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
         }
+
+        /// <summary>
+        /// GetNumberNewMessage
+        /// </summary>
+        /// <returns>HttpMessageDTO</returns>
+        [ResponseType(typeof(HttpMessageDTO))]
+        [HttpGet]
+        public IHttpActionResult GetNumberNewMessage()
+        {
+            NewMessageNumberDTO numberNewMessage;
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
+            try
+            {
+                numberNewMessage = MessageRepository.Instance.GetNumberNewMessgae(User.Identity.Name);
+            }
+            catch (UserNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không tìm thấy địa chỉ người nhận!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = numberNewMessage });
+        }
     }
 }

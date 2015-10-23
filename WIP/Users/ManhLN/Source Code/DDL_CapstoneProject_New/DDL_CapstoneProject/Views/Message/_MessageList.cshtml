@@ -17,14 +17,14 @@
                     <li ng-click="changeInboxSent('inbox')" ng-class="{'active': !Sent}">
                         <a>
                             <i class="icon fa fa-inbox fa-2x fa-fw"></i>
-                            <span class="toggle">Hộp thư đến</span>
+                            <span class="toggle">Hộp thư đến <span ng-show="NumberNewMessage.ReceivedMessage > 0" class="badge">{{NumberNewMessage.ReceivedMessage}}</span></span>
                         </a>
                     </li>
 
                     <li ng-click="changeInboxSent('sent')" ng-class="{'active': !Sent}">
                         <a>
                             <i class="icon fa fa-paper-plane fa-2x fa-fw"></i>
-                            <span class="toggle">Hộp thư đi</span>
+                            <span class="toggle">Hộp thư đi <span ng-show="NumberNewMessage.SentMessage > 0" class="badge">{{NumberNewMessage.SentMessage}}</span></span>
                         </a>
                     </li>
 

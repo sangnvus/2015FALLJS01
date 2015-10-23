@@ -79,26 +79,26 @@ namespace DDL_CapstoneProject.Respository
             using (var db = new DDLDataContext())
             {
                 var listConversation = from conversation in db.Conversations
-                    orderby conversation.UpdatedDate descending
-                    where conversation.Creator.Username == userName
-                          && (conversation.DeleteStatus == DDLConstants.ConversationStatus.NO
-                              || conversation.DeleteStatus == DDLConstants.ConversationStatus.RECEIVER)
-                    select new ConversationBasicDTO
-                    {
-                        ConversationID = conversation.ConversationID,
-                        SenderName = conversation.Creator.UserInfo.FullName,
-                        ReceiverName = conversation.Receiver.UserInfo.FullName,
-                        Title = conversation.Subject,
-                        UpdatedDate = conversation.UpdatedDate,
-                        IsSent = conversation.Creator.Username == userName,
-                        IsRead =
-                            (conversation.Creator.Username == userName &&
-                             conversation.ViewStatus == DDLConstants.ConversationStatus.CREATOR)
-                            ||
-                            (conversation.Creator.Username != userName &&
-                             conversation.ViewStatus == DDLConstants.ConversationStatus.RECEIVER)
-                            || conversation.ViewStatus == DDLConstants.ConversationStatus.BOTH
-                    };
+                                       orderby conversation.UpdatedDate descending
+                                       where conversation.Creator.Username == userName
+                                             && (conversation.DeleteStatus == DDLConstants.ConversationStatus.NO
+                                                 || conversation.DeleteStatus == DDLConstants.ConversationStatus.RECEIVER)
+                                       select new ConversationBasicDTO
+                                       {
+                                           ConversationID = conversation.ConversationID,
+                                           SenderName = conversation.Creator.UserInfo.FullName,
+                                           ReceiverName = conversation.Receiver.UserInfo.FullName,
+                                           Title = conversation.Subject,
+                                           UpdatedDate = conversation.UpdatedDate,
+                                           IsSent = conversation.Creator.Username == userName,
+                                           IsRead =
+                                               (conversation.Creator.Username == userName &&
+                                                conversation.ViewStatus == DDLConstants.ConversationStatus.CREATOR)
+                                               ||
+                                               (conversation.Creator.Username != userName &&
+                                                conversation.ViewStatus == DDLConstants.ConversationStatus.RECEIVER)
+                                               || conversation.ViewStatus == DDLConstants.ConversationStatus.BOTH
+                                       };
 
                 listConversation.ForEach(
                     x => x.UpdatedDate = CommonUtils.ConvertDateTimeFromUtc(x.UpdatedDate.GetValueOrDefault()));
@@ -112,26 +112,26 @@ namespace DDL_CapstoneProject.Respository
             using (var db = new DDLDataContext())
             {
                 var listConversation = from conversation in db.Conversations
-                    orderby conversation.UpdatedDate descending
-                    where conversation.Receiver.Username == userName
-                          && (conversation.DeleteStatus == DDLConstants.ConversationStatus.CREATOR
-                              || conversation.DeleteStatus == DDLConstants.ConversationStatus.NO)
-                    select new ConversationBasicDTO
-                    {
-                        ConversationID = conversation.ConversationID,
-                        SenderName = conversation.Creator.UserInfo.FullName,
-                        ReceiverName = conversation.Receiver.UserInfo.FullName,
-                        Title = conversation.Subject,
-                        UpdatedDate = conversation.UpdatedDate,
-                        IsSent = conversation.Creator.Username == userName,
-                        IsRead =
-                            (conversation.Creator.Username == userName &&
-                             conversation.ViewStatus == DDLConstants.ConversationStatus.CREATOR)
-                            ||
-                            (conversation.Creator.Username != userName &&
-                             conversation.ViewStatus == DDLConstants.ConversationStatus.RECEIVER)
-                            || conversation.ViewStatus == DDLConstants.ConversationStatus.BOTH
-                    };
+                                       orderby conversation.UpdatedDate descending
+                                       where conversation.Receiver.Username == userName
+                                             && (conversation.DeleteStatus == DDLConstants.ConversationStatus.CREATOR
+                                                 || conversation.DeleteStatus == DDLConstants.ConversationStatus.NO)
+                                       select new ConversationBasicDTO
+                                       {
+                                           ConversationID = conversation.ConversationID,
+                                           SenderName = conversation.Creator.UserInfo.FullName,
+                                           ReceiverName = conversation.Receiver.UserInfo.FullName,
+                                           Title = conversation.Subject,
+                                           UpdatedDate = conversation.UpdatedDate,
+                                           IsSent = conversation.Creator.Username == userName,
+                                           IsRead =
+                                               (conversation.Creator.Username == userName &&
+                                                conversation.ViewStatus == DDLConstants.ConversationStatus.CREATOR)
+                                               ||
+                                               (conversation.Creator.Username != userName &&
+                                                conversation.ViewStatus == DDLConstants.ConversationStatus.RECEIVER)
+                                               || conversation.ViewStatus == DDLConstants.ConversationStatus.BOTH
+                                       };
 
                 listConversation.ForEach(
                     x => x.UpdatedDate = CommonUtils.ConvertDateTimeFromUtc(x.UpdatedDate.GetValueOrDefault()));
@@ -165,17 +165,17 @@ namespace DDL_CapstoneProject.Respository
 
                 // Get list messages.
                 var listMessage = from message in db.Messages
-                    where message.ConversationID == conversationID
-                    orderby message.SentTime ascending
-                    select new MessageDTO
-                    {
-                        MessageID = message.MessageID,
-                        Content = message.MessageContent,
-                        SentTime = message.SentTime,
-                        SenderID = message.Sender.DDL_UserID,
-                        SenderName = message.Sender.UserInfo.FullName,
-                        SenderProfileImage = message.Sender.UserInfo.ProfileImage
-                    };
+                                  where message.ConversationID == conversationID
+                                  orderby message.SentTime ascending
+                                  select new MessageDTO
+                                  {
+                                      MessageID = message.MessageID,
+                                      Content = message.MessageContent,
+                                      SentTime = message.SentTime,
+                                      SenderID = message.Sender.DDL_UserID,
+                                      SenderName = message.Sender.UserInfo.FullName,
+                                      SenderProfileImage = message.Sender.UserInfo.ProfileImage
+                                  };
 
                 var listMessageDTO = listMessage.ToList();
 
@@ -349,6 +349,50 @@ namespace DDL_CapstoneProject.Respository
                 db.SaveChanges();
 
                 return true;
+            }
+        }
+
+        public NewMessageNumberDTO GetNumberNewMessgae(string userName)
+        {
+            using (var db = new DDLDataContext())
+            {
+                // Select conversation created or received.
+                var numberNewMessage =
+                    db.Conversations.Where(conversation => (conversation.Receiver.Username == userName
+                                                            &&
+                                                            (conversation.DeleteStatus ==
+                                                             DDLConstants.ConversationStatus.CREATOR
+                                                             ||
+                                                             conversation.DeleteStatus ==
+                                                             DDLConstants.ConversationStatus.NO))
+                                                           || (conversation.Creator.Username == userName
+                                                               &&
+                                                               (conversation.DeleteStatus ==
+                                                                DDLConstants.ConversationStatus.NO
+                                                                ||
+                                                                conversation.DeleteStatus ==
+                                                                DDLConstants.ConversationStatus.RECEIVER)));
+
+
+                // Select conversation unread.
+                var numberNewMessageReceived =
+                    numberNewMessage.Where(
+                        conversation => conversation.Creator.Username != userName
+                                        && conversation.ViewStatus == DDLConstants.ConversationStatus.CREATOR);
+
+                var numberNewMessageSent =
+                    numberNewMessage.Where(
+                        conversation => conversation.Creator.Username == userName
+                            && conversation.ViewStatus == DDLConstants.ConversationStatus.RECEIVER);
+
+
+                var numberList = new NewMessageNumberDTO
+                {
+                    ReceivedMessage = numberNewMessageReceived.Count(),
+                    SentMessage = numberNewMessageSent.Count(),
+                };
+
+                return numberList;
             }
         }
     }
