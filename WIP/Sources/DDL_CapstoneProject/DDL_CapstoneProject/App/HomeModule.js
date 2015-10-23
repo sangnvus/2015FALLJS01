@@ -242,7 +242,7 @@ app.config(["$routeProvider", function ($routeProvider) {
             }
         });
 
-    $routeProvider.when("/user/publicprofile/",
+    $routeProvider.when("/user/publicprofile/:username",
         {
             caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/PublicProfile",
@@ -254,14 +254,14 @@ app.config(["$routeProvider", function ($routeProvider) {
             }
         });
 
-    $routeProvider.when("/user/editprofile/:username",
+    $routeProvider.when("/user/editprofile",
         {
             caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/EditProfile",
             controller: 'EditProfileController',
             resolve: {
                 usereditinfo: ['$rootScope', '$route', 'UserService', '$q', 'CommmonService', function ($rootScope, $route, UserService, $q, CommmonService) {
-                    var promise = UserService.getProfileInformation($route.current.params.username);
+                    var promise = UserService.getProfileInformation();
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }]
             }
@@ -320,8 +320,8 @@ app.config(["$routeProvider", function ($routeProvider) {
     cfpLoadingBarProvider.includeSpinner = false;
 }]);
 
-app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOptions', 'toastrConfig', 'blockUIConfig',
-    function ($rootScope, $window, $anchorScroll, UserService, DTDefaultOptions, toastrConfig, blockUIConfig) {
+app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOptions', 'toastrConfig', 'blockUIConfig', 'MessageService',
+    function ($rootScope, $window, $anchorScroll, UserService, DTDefaultOptions, toastrConfig, blockUIConfig, MessageService) {
         $rootScope.$on('$routeChangeError', function (e, curr, prev) {
             e.preventDefault();
         });
@@ -330,6 +330,25 @@ app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOpti
         $rootScope.$on("$locationChangeStart", function () {
             $anchorScroll();
         });
+
+        //$rootScope.$on('$routeChangeSuccess', function (e, curr, prev) {
+            //if ($rootScope.UserInfo.IsAuthen === true) {
+            //    var promiseGet = MessageService.getNumberNewMessage();
+            //    promiseGet.then(
+            //        function (result) {
+            //            if (result.data.Status === "success") {
+            //                // Save authen info into $rootScope
+            //                $rootScope.UserInfo.NumberNewMessage = result.data.Data;
+            //                $rootScope.UserInfo.NumberNewMessage.Total = result.data.Data.ReceivedMessage + result.data.Data.SentMessage;
+            //            } else {
+            //                $rootScope.UserInfo.NumberNewMessage = 0;
+            //            }
+            //        },
+            //        function (error) {
+            //            $rootScope.UserInfo.NumberNewMessage = 0;
+            //        });
+            //}
+        //});
 
         // Set language for table
         DTDefaultOptions.setLanguage({

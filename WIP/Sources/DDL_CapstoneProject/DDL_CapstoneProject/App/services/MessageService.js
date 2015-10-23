@@ -73,11 +73,12 @@ service.service('MessageService', function ($http) {
         return request;
     }
 
-    this.getEditPassword = function () {
+    this.getNumberNewMessage = function () {
         var request = $http({
             method: 'get',
-            url: '/api/UserApi/GetUserPasswordEdit'
+            url: '/api/MessageApi/GetNumberNewMessage'
         });
+
         return request;
     }
 

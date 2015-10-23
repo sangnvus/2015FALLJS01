@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, toastr, project, ProjectService, CommmonService, DTOptionsBuilder, DTColumnDefBuilder, $filter) {
+app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, toastr, project, ProjectService, CommmonService, DTOptionsBuilder, DTColumnDefBuilder, $filter, MessageService) {
     //Todo here.
     $scope.Project = project.data.Data;
     $scope.FirstUpdateLogs = false;
@@ -239,7 +239,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
         var promise = ProjectService.getListBacker($scope.Project.ProjectCode);
         promise.then(
             function (result) {
-                $scope.ListBacker = result.data.Data;
+                $scope.ListBacker = result.data.Data.listBacker;
                 $scope.labels = result.data.Data.Date;
                 $scope.series = ['Số tiền đã ủng hộ'];
                 $scope.data = [result.data.Data.Amount];
@@ -259,5 +259,38 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
         DTColumnDefBuilder.newColumnDef(0).notSortable()
     ];
 
+    $scope.NewQuestion = {
+        Title: "",
+        Content: ""
+    }
+
+    // Function request 
+    $scope.sendQuestion = function () {
+        if ($scope.NewQuestion.Content.trim() !== "") {
+            $scope.NewQuestion.ToUser = $scope.Project.Creator.UserName;
+            $scope.NewQuestion.Title = "Gửi câu hỏi về dự án \"" + $scope.Project.Title + "\"";
+            var promisePost = MessageService.sendMessage($scope.NewQuestion);
+            promisePost.then(
+                function (result) {
+                    if (result.data.Status === "success") {
+                        $('#sendQuestion').modal('hide');
+                        $scope.NewQuestion = {
+                            Title: "",
+                            Content: ""
+                        }
+                        toastr.success("Gửi câu hỏi thành công");
+                    } else {
+                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        $scope.Error = result.data.Message;
+                        toastr.error($scope.Error, 'Lỗi!');
+                    }
+                },
+                function (error) {
+                    $scope.Error = error.data.Message;
+                });
+        } else {
+            toastr.warning("Bạn chưa nhập nội dung câu hỏi", 'Thông báo!');
+        }
+    }
 
 });

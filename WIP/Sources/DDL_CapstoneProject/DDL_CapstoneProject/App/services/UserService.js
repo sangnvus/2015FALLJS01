@@ -65,7 +65,7 @@ service.service('UserService', function ($http) {
         return request;
     }
 
-    this.getProfileInformation = function (user) {
+    this.getProfileInformation = function () {
         var request = $http({
             method: 'get',
             url: '/api/UserApi/GetUserInfoEdit'

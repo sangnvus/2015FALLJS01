@@ -956,9 +956,8 @@ namespace DDL_CapstoneProject.Respository
             using (var db = new DDLDataContext())
             {
                 var project = db.Projects.FirstOrDefault(x => x.ProjectCode == projectCode);
-                var remindInfo = db.Reminds.FirstOrDefault(x => x.ProjectID == project.ProjectID);
 
-                BackingDTO list = new BackingDTO();
+                var list = new BackingDTO();
                 var listBackerLinQ = from backer in db.Backings
                                      where project.ProjectID == backer.ProjectID
                                      select new BackerDTO
@@ -976,18 +975,20 @@ namespace DDL_CapstoneProject.Respository
                       Month = grp.Key.Month,
                       Total = grp.Sum(x => x.Amount)
                   });
-                List<SumAmount> listAmount = new List<SumAmount>();
+                var listAmount = new List<SumAmount>();
 
                 foreach (var amount in query)
                 {
-                    SumAmount sum = new SumAmount();
-                    sum.Amount = amount.Total;
-                    sum.Day = amount.Day;
-                    sum.Month = amount.Month;
+                    var sum = new SumAmount
+                    {
+                        Amount = amount.Total,
+                        Day = amount.Day,
+                        Month = amount.Month
+                    };
                     listAmount.Add(sum);
                 }
-                List<BackerDTO> listBacker = new List<BackerDTO>();
-                foreach (BackerDTO backer in listBackerLinQ)
+               var listBacker = new List<BackerDTO>();
+                foreach (var backer in listBackerLinQ)
                 {
                     backer.Date = CommonUtils.ConvertDateTimeFromUtc(backer.Date.GetValueOrDefault());
                     listBacker.Add(backer);
@@ -998,7 +999,7 @@ namespace DDL_CapstoneProject.Respository
                 list.Date = new List<string>();
                 foreach (var item in listAmount)
                 {
-                    string date = item.Day.ToString() + '/' + item.Month.ToString();
+                    var date = item.Day.ToString() + '/' + item.Month.ToString();
                     list.Date.Add(date);
                     list.Amount.Add(item.Amount);
                 }

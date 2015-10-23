@@ -180,6 +180,7 @@
     <Compile Include="Models\DTOs\HttpMessageDTO.cs" />
     <Compile Include="Models\DTOs\MessageDTO.cs" />
     <Compile Include="Models\DTOs\NewMessageDTO.cs" />
+    <Compile Include="Models\DTOs\NewMessageNumberDTO.cs" />
     <Compile Include="Models\DTOs\ProjectBasicViewDTO.cs" />
     <Compile Include="Models\DTOs\ProjectCreateDTO.cs" />
     <Compile Include="Models\DTOs\ProjectDetailDTO.cs" />

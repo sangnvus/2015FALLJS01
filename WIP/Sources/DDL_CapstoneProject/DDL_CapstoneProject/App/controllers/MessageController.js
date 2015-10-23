@@ -7,6 +7,7 @@ app.controller('MessageController',
         //Atrributes
         $scope.ListConversations = conversations.data.Data;
         $scope.Sent = $route.current.params.list === "sent" ? true : false;
+        $scope.NumberNewMessage = $rootScope.UserInfo.NumberNewMessage;
         $scope.Unread = $scope.ListConversations.length;
         $scope.checkAll = false;
         $scope.selection = [];

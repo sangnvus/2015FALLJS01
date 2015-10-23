@@ -131,7 +131,7 @@
                                         <h1 class="fnt25">Bạn có thắc mắc cần được giải đáp ?</h1>
                                         <div ng-show="Project.Question.length == 0" class="fnt-b">Nếu những thông tin trên không giúp bạn có câu trả lời , hãy trực tiếp đặt câu hỏi với chủ dự án .</div>
                                     </p>
-                                    <ul style="list-style :none">
+                                    <ul style="list-style: none">
                                         <li ng-repeat="question in Project.Question">
                                             <div class="questionItem">
                                                 <div class="panel-heading" role="tab" id="question1">
@@ -155,27 +155,57 @@
                                             </div>
                                         </li>
                                     </ul>
-                                    <!-- Report Modal -->
-                                    <p><a class="btn btn-default" data-toggle="modal" data-target="#reportModal">Báo cáo sai phạm</a></p>
-                                    <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    <h5 class="modal-title" id="myModalLabel">Báo cáo dự án sai phạm</h5>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <h5 class="fnt20"><span class="fnt-n">Dự Án:</span> {{Project.Title}}</h5>
-                                                    <h5 class="fnt20 fnt-n">Nội dung:</h5>
-                                                    <textarea class="form-control" style="resize:none" name="" id="" cols="30" rows="5" ng-model="ReportContent"></textarea>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                                                    <button type="button" class="btn btn-primary" ng-click="report()">Gửi báo cáo</button>
+                                    @if (User.Identity != null && !string.IsNullOrEmpty(User.Identity.Name))
+                                    {
+                                        <p>
+                                            <a class="btn btn-info" data-toggle="modal" data-target="#sendQuestion">Gửi câu hỏi</a>
+                                        <p><a class="btn btn-default" data-toggle="modal" data-target="#reportModal">Báo cáo sai phạm</a></p>
+                                        </p>
+                                    <!-- Ask question -->
+                                        <div class="modal fade" id="sendQuestion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h5 class="modal-title" id="myModalLabel">Gửi câu hỏi về dự án {{Project.Title}}</h5>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <h5 class="fnt20"><span class="fnt-n">Tới: {{Project.Creator.FullName}}</span> </h5>
+                                                        <h5 class="fnt20 fnt-n">Nội dung:</h5>
+                                                        <textarea class="form-control" style="resize: none" name="" id="" cols="30" rows="5"
+                                                                  ng-model="NewQuestion.Content"></textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                                                        <button type="button" class="btn btn-info" ng-click="sendQuestion()">Gửi câu hỏi</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> <!-- end report modal -->
+                                    <!-- end question modal -->
+                                    <!-- Report Modal -->
+                                        <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h5 class="modal-title" id="myModalLabel">Báo cáo dự án sai phạm</h5>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <h5 class="fnt20"><span class="fnt-n">Dự Án:</span> {{Project.Title}}</h5>
+                                                        <h5 class="fnt20 fnt-n">Nội dung:</h5>
+                                                        <textarea class="form-control" style="resize:none" name="" id="" cols="30" rows="5" ng-model="ReportContent"></textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                                        <button type="button" class="btn btn-primary" ng-click="report()">Gửi báo cáo</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> <!-- end report modal -->
+                                        <!-- end report modal -->
+                                    }
+
                                 </div> <!-- end col-md-8 -->
 
                                 <div class="col-md-4">
@@ -189,7 +219,7 @@
                                                 <div class="item-show">
                                                     <h5 class="fnt20 c3" for="">Ủng hộ {{reward.PledgeAmount}} <span class="money usd no-code">&#8363;</span> hoặc nhiều hơn</h5>
                                                     <p class="bold"><span class="glyphicon glyphicon-asterisk"></span> {{reward.Backers}}  backers</p>
-                                                    <div class="item-description">
+                                                    <div style="word-break: break-word; white-space: pre-wrap;" class="item-description">
                                                         {{reward.Description}}
                                                     </div>
                                                     <div class="item-extra-info">
@@ -255,11 +285,11 @@
                                                           ng-model="NewComment.CommentContent"
                                                           ng-trim="true"
                                                           required
-                                                          ng-minlength="10" 
+                                                          ng-minlength="10"
                                                           ng-maxlength="500"
                                                           maxlength="500"
                                                           msd-elastic="\n"></textarea>
-                                                <span class="text-danger">* Bình luận tối thiểu từ 10 đến 500 kí tự.</span>
+                                                <span class="text-danger">* Bình luận chỉ từ 10 đến 500 kí tự.</span>
                                                 <button type="submit" class="btn btn-primary mt10 pull-right" ng-click="submitComment()"
                                                         ng-disabled="!CommentForm.$dirty || (CommentForm.$dirty && CommentForm.$invalid)">
                                                     Bình luận
@@ -384,7 +414,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="x in ListBacker track by $index">
+                                    <tr ng-repeat="x in ListBacker">
                                         <td>{{$index + 1}}</td>
                                         <td>{{x.FullName}}</td>
                                         <td>{{x.Amount}}</td>
