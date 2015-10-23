@@ -951,27 +951,56 @@ namespace DDL_CapstoneProject.Respository
 
         }
 
-        public List<BackingDTO> GetListBacker(string projectCode)
+        public BackingDTO GetListBacker(string projectCode)
         {
             using (var db = new DDLDataContext())
             {
                 var project = db.Projects.FirstOrDefault(x => x.ProjectCode == projectCode);
                 var remindInfo = db.Reminds.FirstOrDefault(x => x.ProjectID == project.ProjectID);
-                decimal a = db.BackingDetails.FirstOrDefault(x => x.BackingID == 4).PledgedAmount;
 
-                var list = new List<BackingDTO>();
-                var listBacker = from backer in db.Backings
-                    where project.ProjectID == backer.ProjectID
-                    select new BackingDTO
-                    {
-                        Amount = backer.BackingDetail.PledgedAmount,
-                        Date = backer.BackedDate,
-                        FullName = backer.User.UserInfo.FullName,
-                    };
-                foreach (BackingDTO backer in listBacker)
+                BackingDTO list = new BackingDTO();
+                var listBackerLinQ = from backer in db.Backings
+                                     where project.ProjectID == backer.ProjectID
+                                     select new BackerDTO
+                                     {
+                                         Amount = backer.BackingDetail.PledgedAmount,
+                                         Date = backer.BackedDate,
+                                         FullName = backer.User.UserInfo.FullName,
+                                     };
+
+                var query = listBackerLinQ.Where(x => x.Date.HasValue)
+                  .GroupBy(x => new { x.Date.Value.Day, x.Date.Value.Month })
+                  .Select(grp => new
+                  {
+                      Day = grp.Key.Day,
+                      Month = grp.Key.Month,
+                      Total = grp.Sum(x => x.Amount)
+                  });
+                List<SumAmount> listAmount = new List<SumAmount>();
+
+                foreach (var amount in query)
+                {
+                    SumAmount sum = new SumAmount();
+                    sum.Amount = amount.Total;
+                    sum.Day = amount.Day;
+                    sum.Month = amount.Month;
+                    listAmount.Add(sum);
+                }
+                List<BackerDTO> listBacker = new List<BackerDTO>();
+                foreach (BackerDTO backer in listBackerLinQ)
                 {
                     backer.Date = CommonUtils.ConvertDateTimeFromUtc(backer.Date.GetValueOrDefault());
-                    list.Add(backer);
+                    listBacker.Add(backer);
+                }
+                list.sumAmount = listAmount;
+                list.listBacker = listBacker;
+                list.Amount = new List<decimal>();
+                list.Date = new List<string>();
+                foreach (var item in listAmount)
+                {
+                    string date = item.Day.ToString() + '/' + item.Month.ToString();
+                    list.Date.Add(date);
+                    list.Amount.Add(item.Amount);
                 }
                 return list;
             }

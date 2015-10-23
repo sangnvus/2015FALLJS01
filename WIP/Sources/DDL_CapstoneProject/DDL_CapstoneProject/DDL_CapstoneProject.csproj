@@ -248,6 +248,7 @@
     <Content Include="App\controllers\SearchController.js" />
     <Content Include="App\controllers\StarredProjectController.js" />
     <Content Include="App\controllers\StatisticsController.js" />
+    <Content Include="App\directives\angular-chart.js" />
     <Content Include="App\directives\angular-morris-chart.min.js" />
     <Content Include="App\directives\elastic.js" />
     <Content Include="App\directives\format.js" />
@@ -273,6 +274,7 @@
     <Content Include="Content\admin\plugin.css" />
     <Content Include="Content\angular-block-ui.css" />
     <Content Include="Content\angular-block-ui.min.css" />
+    <Content Include="Content\angular-chart.css" />
     <Content Include="Content\angular-toastr.css" />
     <Content Include="Content\angular-toastr.min.css" />
     <Content Include="Content\animate.css" />
@@ -389,6 +391,7 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\data-tables\angular-datatables.bootstrap.js" />
     <Content Include="Scripts\data-tables\angular-datatables.bootstrap.min.js" />
     <Content Include="Scripts\data-tables\angular-datatables.js" />

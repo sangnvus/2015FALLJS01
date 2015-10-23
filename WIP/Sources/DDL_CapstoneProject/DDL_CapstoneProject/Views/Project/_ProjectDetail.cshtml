@@ -368,7 +368,10 @@
                             <div>
                                 <h3 class="fnt25">List Backers</h3>
                             </div> <!-- TITLE -->
-                            <div id="backerlistchart" class="pb30" style="height: 300px">
+                            <div id="backerlistchart" class="pb30">
+                                <canvas id="line" class="chart chart-line" chart-data="data" height="100px"
+                                        chart-labels="labels" chart-legend="true" chart-series="series" chart-colours="colors"
+                                        chart-click="onClick"></canvas>
                             </div> <!-- LINE CHART BACKERS -->
                             <table id="backersTable" class="table table-striped table-bordered table-hover"
                                    datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">

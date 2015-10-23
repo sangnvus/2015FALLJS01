@@ -233,13 +233,20 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
          );
     };
 
+    $scope.checkLoadlist = false;
     $scope.loadlistBacker = function () {
+        if($scope.checkLoadlist == false){
         var promise = ProjectService.getListBacker($scope.Project.ProjectCode);
         promise.then(
             function (result) {
                 $scope.ListBacker = result.data.Data;
+                $scope.labels = result.data.Data.Date;
+                $scope.series = ['Số tiền đã ủng hộ'];
+                $scope.data = [result.data.Data.Amount];
+                $scope.checkLoadlist = true;
             }
          );
+        }
     };
 
     // Define table

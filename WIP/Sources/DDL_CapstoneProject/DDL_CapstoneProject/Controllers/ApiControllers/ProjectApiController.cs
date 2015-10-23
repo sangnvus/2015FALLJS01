@@ -1119,7 +1119,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpGet]
         public IHttpActionResult GetListBacker(string code)
         {
-            var listBacker = new List<BackingDTO>();
+            var listBacker = new BackingDTO();
             try
             {
                 listBacker = ProjectRepository.Instance.GetListBacker(code);
