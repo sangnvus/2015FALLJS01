@@ -867,6 +867,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 // Get current user name.
                 var currentUser = User.Identity != null ? User.Identity.Name : null;
                 projectDetail = ProjectRepository.Instance.GetProjectByCode(code, currentUser);
+                projectDetail.Question = QuestionRepository.Instance.GetQuestion(projectDetail.ProjectID);
                 if (User.Identity == null || !User.Identity.IsAuthenticated)
                 {
                     projectDetail.Creator.IsOwner = false;

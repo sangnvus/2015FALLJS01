@@ -27,6 +27,7 @@ namespace DDL_CapstoneProject.Models.DTOs
         public int NumberBacked { get; set; }
         public List<RewardPkgDTO> RewardDetail { get; set; }
         public bool Reminded { get; set; }
+        public List<QuestionDTO> Question { get; set; }
 
         /// <summary>
         /// Status of a project
