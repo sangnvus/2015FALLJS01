@@ -167,6 +167,7 @@
                                                 <span class="glyphicon glyphicon-remove text-danger"></span>
                                                 <span ng-show="BasicForm.ProjectDeadLine.$invalid">Xin hãy nhập đúng chuẩn ngày tháng!</span>
                                             </div>
+                                            <p>Ngày hết hạn dự án phải xét ít nhất sau 10 ngày từ ngày gửi duyệt dự án</p>
                                         </div>
                                     </div>
                                 </div> <!-- end funding duration -->
@@ -271,16 +272,16 @@
                                                 <p class="mt0 mb0" ng-show="rewardPkg.IsHide == true"><span class="label label-warning">Hidden</span></p>
                                             </div>
                                             <ul class="list-inline pull-right mt0 mb0 pb0 pt0">
-                                                <li><button class="btn btn-default btn-sm" ng-click="updateReward($index)">Ẩn</button></li>
+                                                <li><button class="btn btn-default btn-sm" ng-show="AllEditable == true" ng-click="updateReward($index)">Ẩn</button></li>
                                                 <li>
                                                     <button class="btn btn-danger btn-sm" ng-click="deleteReward($index)"
-                                                            ng-show="AllEditable == true || rewardPkg.CurrentQuantity != 0">
+                                                            ng-disabled="AllEditable == true && rewardPkg.CurrentQuantity != 0">
                                                         Xóa
                                                     </button>
                                                 </li>
                                                 <li>
                                                     <button class="btn btn-info btn-sm" data-toggle="modal" ng-click="editRewardModal($index)"
-                                                            ng-show="AllEditable == true || rewardPkg.CurrentQuantity != 0">
+                                                            ng-disabled="AllEditable == true && rewardPkg.CurrentQuantity != 0">
                                                         Sửa
                                                     </button>
                                                 </li>
@@ -336,7 +337,7 @@
                                                                    ng-model="editPkg.EstimatedDelivery">
                                                             <div ng-show="EditRewardModal.deadline.$dirty && EditRewardModal.deadline.$invalid" class="text-danger">
                                                                 <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                                <span ng-show="EditRewardModal.deadline.$invalid">Xin hãy nhập đúng chuẩn ngày tháng!</span>
+                                                                <span ng-show="EditRewardModal.deadline.$invalid">Xin hãy nhập đúng chuẩn ngày tháng</span>
                                                             </div>
                                                             <p>Ngày giao hàng cần đặt sau ngày hết hạn dự án.</p>
                                                         </div>
@@ -425,7 +426,7 @@
                                                                            name="NewRewardDelivery" ng-model="NewReward.EstimatedDelivery">
                                                                     <div ng-show="CreateRewardForm.NewRewardDelivery.$dirty && CreateRewardForm.NewRewardDelivery.$invalid" class="text-danger">
                                                                         <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                                        <span ng-show="CreateRewardForm.NewRewardDelivery.$invalid">Xin hãy nhập đúng chuẩn ngày tháng!</span>
+                                                                        <span ng-show="CreateRewardForm.NewRewardDelivery.$invalid">Xin hãy nhập đúng chuẩn ngày tháng</span>
                                                                     </div>
                                                                     <p>Ngày giao hàng cần đặt sau ngày hết hạn dự án.</p>
                                                                 </div>
@@ -597,7 +598,7 @@
                                         </div>
                                     </div>
                                 </div> <!-- end Risks and challenges -->
-                                <div class="row border-grey">
+                                <div class="row border-grey" ng-show="PrjApprove == false">
                                     <div class="col-md-4">
                                         <p class="title">Hỏi đáp</p>
                                     </div>
@@ -984,7 +985,7 @@
                                                     <input type="date" class="form-control" style="line-height: 15px" name="duedate" ng-model="timeline.DueDate" id="date{{$index}}" disabled>
                                                     <div ng-show="timelineForm.duedate.$dirty && timelineForm.duedate.$invalid" class="text-danger">
                                                         <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                        <span ng-show="timelineForm.duedate.$invalid">Xin hãy nhập đúng chuẩn ngày tháng!</span>
+                                                        <span ng-show="timelineForm.duedate.$invalid">Xin hãy nhập đúng chuẩn ngày tháng</span>
                                                     </div>
                                                 </div>
                                             </div><!-- end Date -->
@@ -995,7 +996,7 @@
                                                 <div class="col-md-9">
                                                     <div class="asset_upload">
                                                         <div class="image-clip pull-left">
-                                                            <img ng-src="{{timeline.ImageUrl}}" class="img-responsive center-block">
+                                                            <img src="{{timeline.ImageUrl}}" class="img-responsive center-block">
                                                         </div>
                                                         <div class="upload">
                                                             <input type="file" class="avatar file" ng-file-dirty
@@ -1074,7 +1075,7 @@
                                                                                style="line-height: 15px" ng-model="newTimeline.DueDate">
                                                                         <div ng-show="CreateTimelineForm.date.$dirty && timelineForm.date.$invalid" class="text-danger">
                                                                             <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                                            <span ng-show="CreateTimelineForm.date.$invalid">Xin hãy nhập đúng chuẩn ngày tháng!</span>
+                                                                            <span ng-show="CreateTimelineForm.date.$invalid">Xin hãy nhập đúng chuẩn ngày tháng</span>
                                                                         </div>
                                                                     </div>
                                                                 </div><!-- end Date -->
@@ -1085,7 +1086,7 @@
                                                                     <div class="col-md-9">
                                                                         <div class="asset_upload">
                                                                             <div class="image-clip pull-left">
-                                                                                <img ng-src="{{newTimeline.ImageUrl}}" class="img-responsive center-block">
+                                                                                <img id="#newTimelineImg" src="{{newTimeline.ImageUrl}}" class="img-responsive center-block">
                                                                             </div>
                                                                             <div class="upload">
                                                                                 <input type="file" class="avatar file" ng-file-dirty
