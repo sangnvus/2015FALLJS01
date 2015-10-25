@@ -71,8 +71,8 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navbar-collapse-5">
                 <ul class="nav navbar-nav">
-                    <li><a href="@Url.Content("/#/discover")">Discover</a></li>
-                    <li><a href="@Url.Content("/#/project/create")">Tạo</a></li>
+                    <li><a href="@Url.Content("/#/discover/")">Discover</a></li>
+                    <li><a href="@Url.Content("/#/project/create/")">Tạo</a></li>
                     <li role="separator" class="hidden-xs divider-vertical"></li>
                 </ul>
                 <form class="navbar-form navbar-left" action="@Url.Content("/#/search?advance=true/")" role="Search">
@@ -122,10 +122,10 @@
                                     <li><a href="@Url.Content("/#/project/starredproject")">Dự án theo dõi</a></li>
                                     <li class="divider"></li>
                                     <h5 class="c3">Chỉnh sửa</h5>
-                                    <li><a href="@Url.Content("/#/user/editpassword")">Tài Khoản</a></li>
-                                    <li><a href="@Url.Content("/#/user/editprofile")">Thông tin cá nhân</a></li>
+                                    <li><a href="@Url.Content("/#/user/editpassword/")">Tài Khoản</a></li>
+                                    <li><a href="@Url.Content("/#/user/editprofile/")">Thông tin cá nhân</a></li>
                                     <li class="divider"></li>
-                                    <p class="no-wrap">Bạn đang đăng nhập với <b>@User.Identity.Name</b> | <a class="fnt-b" href="@Url.Content("/logout")">Thoát</a></p>
+                                    <p class="no-wrap">Bạn đang đăng nhập với <b>@ViewBag.CurrentUser.FullName</b> | <a class="fnt-b" href="@Url.Content("/logout")">Thoát</a></p>
                                 </ul>
                             </li>
                         </ul>

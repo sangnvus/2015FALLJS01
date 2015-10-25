@@ -32,25 +32,22 @@ namespace DDL_CapstoneProject.Respository
             {
                 // Get rewardPkg list
                 var rewardList = (from RewardPkg in db.RewardPkgs
-                    where RewardPkg.ProjectID == ProjectID
-                    orderby RewardPkg.Type ascending
-                    select new RewardPkgDTO()
-                    {
-                        Description = RewardPkg.Description,
-                        PledgeAmount = RewardPkg.PledgeAmount,
-                        EstimatedDelivery = RewardPkg.EstimatedDelivery,
-                        IsHide = RewardPkg.IsHide,
-                        Quantity = RewardPkg.Quantity,
-                        RewardPkgID = RewardPkg.RewardPkgID,
-                        Type = RewardPkg.Type,
-                        CurrentQuantity = RewardPkg.CurrentQuantity,
-                        Backers = db.BackingDetails.Count(t => t.RewardPkgID == RewardPkg.RewardPkgID)
-                    }).ToList();
+                                  where RewardPkg.ProjectID == ProjectID
+                                  orderby RewardPkg.PledgeAmount ascending
+                                  select new RewardPkgDTO()
+                                  {
+                                      Description = RewardPkg.Description,
+                                      PledgeAmount = RewardPkg.PledgeAmount,
+                                      EstimatedDelivery = RewardPkg.EstimatedDelivery,
+                                      IsHide = RewardPkg.IsHide,
+                                      Quantity = RewardPkg.Quantity,
+                                      RewardPkgID = RewardPkg.RewardPkgID,
+                                      Type = RewardPkg.Type,
+                                      CurrentQuantity = RewardPkg.CurrentQuantity,
+                                      Backers = db.BackingDetails.Count(t => t.RewardPkgID == RewardPkg.RewardPkgID)
+                                  }).ToList();
 
-                rewardList.ForEach(
-                    x =>
-                        x.EstimatedDelivery =
-                            CommonUtils.ConvertDateTimeFromUtc(x.EstimatedDelivery.GetValueOrDefault()));
+                rewardList.ForEach(x => x.EstimatedDelivery = CommonUtils.ConvertDateTimeFromUtc(x.EstimatedDelivery.GetValueOrDefault()));
 
                 return rewardList;
             }
@@ -68,25 +65,22 @@ namespace DDL_CapstoneProject.Respository
 
                 // Get rewardPkg list
                 var rewardList = (from RewardPkg in db.RewardPkgs
-                    where RewardPkg.ProjectID == project.ProjectID && RewardPkg.IsHide == false
-                    orderby RewardPkg.PledgeAmount ascending
-                    select new RewardPkgDTO()
-                    {
-                        Description = RewardPkg.Description,
-                        PledgeAmount = RewardPkg.PledgeAmount,
-                        EstimatedDelivery = RewardPkg.EstimatedDelivery,
-                        IsHide = RewardPkg.IsHide,
-                        Quantity = RewardPkg.Quantity,
-                        RewardPkgID = RewardPkg.RewardPkgID,
-                        Type = RewardPkg.Type,
-                        CurrentQuantity = RewardPkg.CurrentQuantity,
-                        Backers = db.BackingDetails.Count(t => t.RewardPkgID == RewardPkg.RewardPkgID)
-                    }).ToList();
+                                  where RewardPkg.ProjectID == project.ProjectID && RewardPkg.IsHide == false
+                                  orderby RewardPkg.PledgeAmount ascending
+                                  select new RewardPkgDTO()
+                                  {
+                                      Description = RewardPkg.Description,
+                                      PledgeAmount = RewardPkg.PledgeAmount,
+                                      EstimatedDelivery = RewardPkg.EstimatedDelivery,
+                                      IsHide = RewardPkg.IsHide,
+                                      Quantity = RewardPkg.Quantity,
+                                      RewardPkgID = RewardPkg.RewardPkgID,
+                                      Type = RewardPkg.Type,
+                                      CurrentQuantity = RewardPkg.CurrentQuantity,
+                                      Backers = db.BackingDetails.Count(t => t.RewardPkgID == RewardPkg.RewardPkgID)
+                                  }).ToList();
 
-                rewardList.ForEach(
-                    x =>
-                        x.EstimatedDelivery =
-                            CommonUtils.ConvertDateTimeFromUtc(x.EstimatedDelivery.GetValueOrDefault()));
+                rewardList.ForEach(x => x.EstimatedDelivery = CommonUtils.ConvertDateTimeFromUtc(x.EstimatedDelivery.GetValueOrDefault()));
 
                 return rewardList.ToList();
             }
@@ -135,8 +129,7 @@ namespace DDL_CapstoneProject.Respository
 
                 if (newRewardPkgDTO.EstimatedDelivery != null)
                 {
-                    newRewardPkgDTO.EstimatedDelivery =
-                        CommonUtils.ConvertDateTimeFromUtc(newRewardPkgDTO.EstimatedDelivery.GetValueOrDefault());
+                    newRewardPkgDTO.EstimatedDelivery = CommonUtils.ConvertDateTimeFromUtc(newRewardPkgDTO.EstimatedDelivery.GetValueOrDefault());
                 }
 
                 return newRewardPkgDTO;
@@ -160,8 +153,7 @@ namespace DDL_CapstoneProject.Respository
 
                 if (updateReward.EstimatedDelivery != null)
                 {
-                    updateReward.EstimatedDelivery =
-                        CommonUtils.ConvertDateTimeToUtc(updateReward.EstimatedDelivery.GetValueOrDefault());
+                    updateReward.EstimatedDelivery = CommonUtils.ConvertDateTimeToUtc(updateReward.EstimatedDelivery.GetValueOrDefault());
                 }
 
                 updateReward.Description = rewardPkg.Description;

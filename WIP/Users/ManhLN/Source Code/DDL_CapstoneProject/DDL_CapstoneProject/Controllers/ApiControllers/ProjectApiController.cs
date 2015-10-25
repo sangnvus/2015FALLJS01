@@ -473,7 +473,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = timeline });
         }
 
-        // PUT: api/ProjectApi/CreateTimeline/:id  
+        // PUT: api/ProjectApi/CreateTimeline/:id
         [ResponseType(typeof(TimeLineDTO))]
         [HttpPost]
         public IHttpActionResult CreateTimeline(int id)
@@ -486,7 +486,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             var httpRequest = HttpContext.Current.Request;
 
-            TimeLineDTO newTimeLine = null;
+            var newTimeLine = new TimeLineDTO();
 
             if (httpRequest.Form.Count <= 0)
             {
@@ -501,13 +501,17 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
             }
 
-            string imageName = "imgTimeline_" + timeline.TimelineID;
+            string imageName = "imgTimeline";
             var file = httpRequest.Files["file"];
-            var uploadImageName = CommonUtils.UploadImage(file, imageName, DDLConstants.FileType.PROJECT);
+            //var uploadImageName = CommonUtils.UploadImage(file, imageName, DDLConstants.FileType.PROJECT);
 
             try
             {
-                newTimeLine = TimeLineRepository.Instance.CreateTimeline(id, timeline, uploadImageName);
+                newTimeLine = TimeLineRepository.Instance.CreateTimeline(id, timeline, imageName);
+                var uploadImageName = CommonUtils.UploadImage(file, newTimeLine.ImageUrl, DDLConstants.FileType.PROJECT);
+                bool editTimeline = TimeLineRepository.Instance.EditTimeline(newTimeLine, uploadImageName);
+                newTimeLine.ImageUrl = uploadImageName;
+
                 if (newTimeLine.ImageUrl != string.Empty)
                 {
                     newTimeLine.ImageUrl = DDLConstants.FileType.PROJECT + newTimeLine.ImageUrl;
@@ -867,6 +871,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 // Get current user name.
                 var currentUser = User.Identity != null ? User.Identity.Name : null;
                 projectDetail = ProjectRepository.Instance.GetProjectByCode(code, currentUser);
+                projectDetail.Question = QuestionRepository.Instance.GetQuestion(projectDetail.ProjectID);
                 if (User.Identity == null || !User.Identity.IsAuthenticated)
                 {
                     projectDetail.Creator.IsOwner = false;
@@ -1118,7 +1123,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpGet]
         public IHttpActionResult GetListBacker(string code)
         {
-            var listBacker = new List<BackingDTO>();
+            var listBacker = new BackingDTO();
             try
             {
                 listBacker = ProjectRepository.Instance.GetListBacker(code);
