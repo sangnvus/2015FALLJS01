@@ -265,6 +265,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
         }
 
+
         /// <summary>
         /// GetNumberNewMessage
         /// </summary>

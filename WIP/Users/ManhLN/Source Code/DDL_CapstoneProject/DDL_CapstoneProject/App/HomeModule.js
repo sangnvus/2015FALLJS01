@@ -3,7 +3,7 @@ var service = angular.module("DDLService", []);
 var directive = angular.module("DDLDirective", []);
 var app = angular.module("ClientApp", ["ngRoute", "ngAnimate", "ngSanitize", "DDLService",
     "DDLDirective", 'angular-loading-bar', 'textAngular', 'toastr', 'ui.bootstrap', 'monospaced.elastic',
-    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert', 'angular.morris-chart', 'blockUI']);
+    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert', 'angular.morris-chart', 'blockUI', 'chart.js']);
 
 // Show Routing.
 app.config(["$routeProvider", function ($routeProvider) {
@@ -23,7 +23,7 @@ app.config(["$routeProvider", function ($routeProvider) {
                 }],
                 liststatisticforhome: ['ProjectService', function (ProjectService) {
                     return ProjectService.GetStatisticListForHome();
-                }]
+                }],
             }
         });
     $routeProvider.when("/discover",
@@ -230,7 +230,7 @@ app.config(["$routeProvider", function ($routeProvider) {
             }
         });
 
-    $routeProvider.when("/user/editpassword",
+    $routeProvider.when("/user/editpassword/",
         {
             templateUrl: "ClientPartial/EditPassword",
             controller: 'EditPasswordController',
@@ -320,19 +320,18 @@ app.config(["$routeProvider", function ($routeProvider) {
     cfpLoadingBarProvider.includeSpinner = false;
 }]);
 
-app.run(['$rootScope', '$window','$anchorScroll', 'UserService', 'DTDefaultOptions', 'toastrConfig', 'blockUIConfig', 'MessageService',
+app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOptions', 'toastrConfig', 'blockUIConfig', 'MessageService',
     function ($rootScope, $window, $anchorScroll, UserService, DTDefaultOptions, toastrConfig, blockUIConfig, MessageService) {
-
         $rootScope.$on('$routeChangeError', function (e, curr, prev) {
             e.preventDefault();
         });
 
         // Scroll top when route change.
-        $rootScope.$on("$locationChangeStart", function() {
+        $rootScope.$on("$locationChangeStart", function () {
             $anchorScroll();
         });
 
-        $rootScope.$on('$routeChangeSuccess', function (e, curr, prev) {
+        //$rootScope.$on('$routeChangeSuccess', function (e, curr, prev) {
             //if ($rootScope.UserInfo.IsAuthen === true) {
             //    var promiseGet = MessageService.getNumberNewMessage();
             //    promiseGet.then(
@@ -349,7 +348,7 @@ app.run(['$rootScope', '$window','$anchorScroll', 'UserService', 'DTDefaultOptio
             //            $rootScope.UserInfo.NumberNewMessage = 0;
             //        });
             //}
-        });
+        //});
 
         // Set language for table
         DTDefaultOptions.setLanguage({
@@ -396,7 +395,6 @@ app.run(['$rootScope', '$window','$anchorScroll', 'UserService', 'DTDefaultOptio
 
         // Base Url of web app.
         $rootScope.BaseUrl = angular.element($('#BaseUrl')).val();
-
 
         // Load authen info:
         $rootScope.UserInfo = {

@@ -233,13 +233,20 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
          );
     };
 
+    $scope.checkLoadlist = false;
     $scope.loadlistBacker = function () {
+        if($scope.checkLoadlist == false){
         var promise = ProjectService.getListBacker($scope.Project.ProjectCode);
         promise.then(
             function (result) {
-                $scope.ListBacker = result.data.Data;
+                $scope.ListBacker = result.data.Data.listBacker;
+                $scope.labels = result.data.Data.Date;
+                $scope.series = ['Số tiền đã ủng hộ'];
+                $scope.data = [result.data.Data.Amount];
+                $scope.checkLoadlist = true;
             }
          );
+        }
     };
 
     // Define table
@@ -261,7 +268,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
     $scope.sendQuestion = function () {
         if ($scope.NewQuestion.Content.trim() !== "") {
             $scope.NewQuestion.ToUser = $scope.Project.Creator.UserName;
-            $scope.NewQuestion.Title = "Gửi câu hỏi về dự án \"" + $scope.Project.Title +"\"";
+            $scope.NewQuestion.Title = "Gửi câu hỏi về dự án \"" + $scope.Project.Title + "\"";
             var promisePost = MessageService.sendMessage($scope.NewQuestion);
             promisePost.then(
                 function (result) {

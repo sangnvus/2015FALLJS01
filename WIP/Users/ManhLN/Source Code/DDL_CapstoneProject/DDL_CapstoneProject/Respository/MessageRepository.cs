@@ -351,6 +351,7 @@ namespace DDL_CapstoneProject.Respository
                 return true;
             }
         }
+
         public NewMessageNumberDTO GetNumberNewMessgae(string userName)
         {
             using (var db = new DDLDataContext())
@@ -376,12 +377,12 @@ namespace DDL_CapstoneProject.Respository
                 // Select conversation unread.
                 var numberNewMessageReceived =
                     numberNewMessage.Where(
-                        conversation => conversation.Creator.Username != userName 
+                        conversation => conversation.Creator.Username != userName
                                         && conversation.ViewStatus == DDLConstants.ConversationStatus.CREATOR);
 
                 var numberNewMessageSent =
                     numberNewMessage.Where(
-                        conversation =>conversation.Creator.Username == userName 
+                        conversation => conversation.Creator.Username == userName
                             && conversation.ViewStatus == DDLConstants.ConversationStatus.RECEIVER);
 
 
