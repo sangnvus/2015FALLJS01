@@ -793,39 +793,47 @@ namespace DDL_CapstoneProject.Respository
         // 19/10/2015 - MaiCTP - Get BackedProjectHistory
         public List<ProjectBasicViewDTO> GetBackedProjectHistory(String userName)
         {
-                            var Project = (from backing in db.Backings
-                           from project in db.Projects
-                           where backing.User.Username == userName  && project.ProjectID == backing.ProjectID
-                                           select new ProjectBasicViewDTO
-                            {
-                                ProjectID = project.ProjectID,
-                                CreatorName = project.Creator.UserInfo.FullName,
-                                Title = project.Title,
-                                CurrentFunded= project.CurrentFunded,
-                                BackedDate = backing.BackedDate,
-                                Status = project.Status
-                            }).Distinct().ToList();
-                         return Project;
+
+            using (var db = new DDLDataContext())
+            {
+                var Project = (from backing in db.Backings
+                               from project in db.Projects
+                               where backing.User.Username == userName && project.ProjectID == backing.ProjectID
+                               select new ProjectBasicViewDTO
+                {
+                    ProjectID = project.ProjectID,
+                    CreatorName = project.Creator.UserInfo.FullName,
+                    Title = project.Title,
+                    CurrentFunded = project.CurrentFunded,
+                    BackedDate = backing.BackedDate,
+                    Status = project.Status
+                }).Distinct().ToList();
+                return Project;
+            }
 
         }
 
         // 24/10/2015 - MaiCTP - Get BackingInfo
         public List<BackingInfoDTO> BackingInfo(int projectId)
-        { 
-            var Backing = (from backing in db.Backings
-                            from rewad in db.RewardPkgs
-                           where backing.ProjectID == projectId && rewad.RewardPkgID==backing.BackingDetail.RewardPkgID
-                           select new BackingInfoDTO
-                           {
-                             
-                               RewadDiscription = rewad.Description,
-                               PledgeAmount = rewad.PledgeAmount,
-                               Quantity = backing.BackingDetail.Quantity,
-                               BackedDate = backing.BackedDate,
-                               TotalAmount = backing.BackingDetail.Quantity * rewad.PledgeAmount,
-                               BackingDiscription = backing.BackingDetail.Description
-                           }).Distinct().ToList();
-            return Backing;
+        {
+
+            using (var db = new DDLDataContext())
+            {
+                var Backing = (from backing in db.Backings
+                               from rewad in db.RewardPkgs
+                               where backing.ProjectID == projectId && rewad.RewardPkgID == backing.BackingDetail.RewardPkgID
+                               select new BackingInfoDTO
+                               {
+
+                                   RewadDiscription = rewad.Description,
+                                   PledgeAmount = rewad.PledgeAmount,
+                                   Quantity = backing.BackingDetail.Quantity,
+                                   BackedDate = backing.BackedDate,
+                                   TotalAmount = backing.BackingDetail.Quantity * rewad.PledgeAmount,
+                                   BackingDiscription = backing.BackingDetail.Description
+                               }).Distinct().ToList();
+                return Backing;
+            }
 
         }
 
@@ -833,29 +841,32 @@ namespace DDL_CapstoneProject.Respository
         public List<ProjectBasicViewDTO> GetBackedProject(String userName)
         {
 
-            var Project = (from backing in db.Backings
-                           from project in db.Projects
-                           where backing.User.Username == userName && project.ProjectID == backing.ProjectID
-                           select new ProjectBasicViewDTO
-                           {
-                               ProjectID = project.ProjectID,
-                               Title = project.Title,
-                               CreatorName = project.Creator.UserInfo.FullName,
-                               ImageUrl = project.ImageUrl,
-                               SubDescription = project.SubDescription,
-                               Location = project.Location,
-                               CurrentFunded = Decimal.Round((project.CurrentFunded / project.FundingGoal) * 100),
-                               CurrentFundedNumber = project.CurrentFunded,
-                               ExpireDate = DbFunctions.DiffDays(DateTime.Now, project.ExpireDate),
-                               FundingGoal = project.FundingGoal,
-                               Category = project.Category.Name,
-                               Backers = project.Backings.Count,
-                               CreatedDate = project.CreatedDate,
-                               PopularPoint = project.PopularPoint
-                           }).Distinct().ToList();
+            using (var db = new DDLDataContext())
+            {
+                var Project = (from backing in db.Backings
+                               from project in db.Projects
+                               where backing.User.Username == userName && project.ProjectID == backing.ProjectID
+                               select new ProjectBasicViewDTO
+                               {
+                                   ProjectID = project.ProjectID,
+                                   Title = project.Title,
+                                   CreatorName = project.Creator.UserInfo.FullName,
+                                   ImageUrl = project.ImageUrl,
+                                   SubDescription = project.SubDescription,
+                                   Location = project.Location,
+                                   CurrentFunded = Decimal.Round((project.CurrentFunded / project.FundingGoal) * 100),
+                                   CurrentFundedNumber = project.CurrentFunded,
+                                   ExpireDate = DbFunctions.DiffDays(DateTime.Now, project.ExpireDate),
+                                   FundingGoal = project.FundingGoal,
+                                   Category = project.Category.Name,
+                                   Backers = project.Backings.Count,
+                                   CreatedDate = project.CreatedDate,
+                                   PopularPoint = project.PopularPoint
+                               }).Distinct().ToList();
 
 
-            return Project;
+                return Project;
+            }
 
         }
 
@@ -897,8 +908,6 @@ namespace DDL_CapstoneProject.Respository
         {
             using (var db = new DDLDataContext())
             {
-                List<ProjectBasicViewDTO> ProjectList = new List<ProjectBasicViewDTO>();
-
             var projectList = (from project in db.Projects
                                where project.Creator.Username.Equals(userName, StringComparison.OrdinalIgnoreCase)
                                select new ProjectBasicViewDTO
@@ -932,17 +941,21 @@ namespace DDL_CapstoneProject.Respository
         //21/10/2015- MaiCTP - DeleteProjectReminded
         public bool DeleteProjectReminded(int projectID)
         {
-            var deleteProjectReminded = db.Reminds.SingleOrDefault(x => x.ProjectID == projectID);
 
-            if (deleteProjectReminded == null)
+            using (var db = new DDLDataContext())
             {
-                throw new KeyNotFoundException();
+                var deleteProjectReminded = db.Reminds.SingleOrDefault(x => x.ProjectID == projectID);
+
+                if (deleteProjectReminded == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                db.Reminds.Remove(deleteProjectReminded);
+                db.SaveChanges();
+
+                return true;
             }
-
-            db.Reminds.Remove(deleteProjectReminded);
-            db.SaveChanges();
-
-            return true;
         }
 
         //// 22/10/2015 - MaiCTP - Get BackedProjectDetail
@@ -974,7 +987,7 @@ namespace DDL_CapstoneProject.Respository
 
         //}
 
-        public void RemindProject(string userName, string projectCode)
+        public bool RemindProject(string userName, string projectCode)
         {
             using (var db = new DDLDataContext())
             {
@@ -1007,6 +1020,7 @@ namespace DDL_CapstoneProject.Respository
                 return true;
             }
         }
+
 
         public void ReportProject(string userName, string projectCode, string content)
         {
