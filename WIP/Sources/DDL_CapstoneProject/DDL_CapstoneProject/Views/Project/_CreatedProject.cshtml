@@ -124,7 +124,8 @@
                         </div>
                         <div class="item-title">
                             <h5><a href="project_detail.html">{{project.Title}}</a></h5>
-                            <a class="btn btn-primary btn-xs" href="list_Backers.html">Danh sách ủng hộ</a>
+                            <a class="btn btn-info btn-xs" href="create_project2.html">Sửa</a>
+                            <a class="btn btn-info btn-xs" href="javascript:window.location.reload();" ng-click="deleteReminded(project.ProjectID)">Xóa</a>
                         </div>
                         <div class="item-content">
                             <p class="fnt15">{{project.SubDescription}}</p>

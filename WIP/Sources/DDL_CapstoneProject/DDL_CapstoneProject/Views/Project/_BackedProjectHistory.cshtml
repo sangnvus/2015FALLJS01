@@ -102,7 +102,7 @@
                             <button class="btn btn-danger btn-sm btn_view_detail" type="button" data-toggle="modal" data-target="#infoBanker" ng-click="getBackingInfo(project.ProjectID)" title="View">
                                 <i class="fa fa-eye"></i>
                             </button>
-                            <input type="hidden" value="{{project.ProjectID}}" class="project_id" />
+                         
                         </div>
                     </td>
                 </tr> <!-- item -->
@@ -124,24 +124,5 @@
             $("#project_title_target").text(wrapper.find(".project_title_source").text());
         });
 
-        $('#table_historyBacked').dataTable({
-            "language": {
-                "lengthMenu": "Hiển thị _MENU_ dòng trên 1 trang",
-                "zeroRecords": "Không tìm thấy!",
-                "info": "Hiển thị trang _PAGE_ của _PAGES_",
-                "infoEmpty": "Không có dữ liệu",
-                "infoFiltered": "(filtered from _MAX_ total records)",
-                "search": "Tìm kiếm:",
-                "paginate": {
-                    "first": "Đầu",
-                    "last": "Cuối",
-                    "next": "Sau",
-                    "previous": "Trước"
-                }
-            }
-        });
     });
 </script>
-
-<script src="/Scripts/Libraries/jquery.dataTables.min.js"></script>
-<script src="/Scripts/Libraries/dataTables.bootstrap.min.js"></script>
