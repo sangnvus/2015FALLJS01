@@ -71,7 +71,6 @@ namespace DDL_CapstoneProject.Respository
         }
 
 
-
         public List<ProjectBasicViewDTO> GetProject(int take, int from, String categoryidList, string order,
                                                     string pathofprojectname, string status,
                                                     bool isExprired, string isFunded)
@@ -93,35 +92,37 @@ namespace DDL_CapstoneProject.Respository
 
                 DateTime currentDate = DateTime.Now;
                 var ProjectList = from project in db.Projects
-                    where
-                        (categoryidList.ToLower().Contains("all") ||
-                         categoryidList.Contains("|" + project.CategoryID + "|"))
-                        && project.IsExprired == isExprired && project.Title.Contains(pathofprojectname)
-                        && project.Status.Contains(status) && project.IsFunded.ToString().ToLower().Contains(isFunded)
-                    select new ProjectBasicViewDTO
-                    {
-                        ProjectID = project.ProjectID,
-                        ProjectCode = project.ProjectCode,
-                        CreatorName = project.Creator.UserInfo.FullName,
-                        Title = project.Title,
-                        ImageUrl = project.ImageUrl,
-                        SubDescription = project.SubDescription,
-                        Location = project.Location,
-                        CurrentFunded = Decimal.Round((project.CurrentFunded/project.FundingGoal)*100),
-                        CurrentFundedNumber = project.CurrentFunded,
-                        ExpireDate = DbFunctions.DiffDays(DateTime.Now, project.ExpireDate),
-                        FundingGoal = project.FundingGoal,
-                        Category = project.Category.Name,
-                        Backers = project.Backings.Count,
-                        CreatedDate = project.CreatedDate,
-                        PopularPoint = project.PopularPoint
-                    };
+                                  where
+                                      (categoryidList.ToLower().Contains("all") ||
+                                       categoryidList.Contains("|" + project.CategoryID + "|"))
+                                      && project.IsExprired == isExprired && project.Title.Contains(pathofprojectname)
+                                      && project.Status.Contains(status) && project.IsFunded.ToString().ToLower().Contains(isFunded)
+                                  select new ProjectBasicViewDTO
+                                  {
+                                      ProjectID = project.ProjectID,
+                                      ProjectCode = project.ProjectCode,
+                                      CreatorName = project.Creator.UserInfo.FullName,
+                                      Title = project.Title,
+                                      ImageUrl = project.ImageUrl,
+                                      SubDescription = project.SubDescription,
+                                      Location = project.Location,
+                                      CurrentFunded = Decimal.Round((project.CurrentFunded / project.FundingGoal) * 100),
+                                      CurrentFundedNumber = project.CurrentFunded,
+                                      ExpireDate = DbFunctions.DiffDays(DateTime.Now, project.ExpireDate),
+                                      FundingGoal = project.FundingGoal,
+                                      Category = project.Category.Name,
+                                      Backers = project.Backings.Count,
+                                      CreatedDate = project.CreatedDate,
+                                      PopularPoint = project.PopularPoint
+                                  };
 
-                var listProject = take == 0
-                    ? orderBy(order, ProjectList).ToList()
-                    : orderBy(order, ProjectList).Take(take).ToList();
-
-                return listProject;
+                if (from >= ProjectList.Count())
+                {
+                    return new List<ProjectBasicViewDTO>();
+                }
+                var listProject = orderBy(order, ProjectList).Take(take + from).ToList();
+                listProject.RemoveRange(0, from);
+                return listProject.ToList();
             }
         }
 
@@ -958,34 +959,6 @@ namespace DDL_CapstoneProject.Respository
             }
         }
 
-        //// 22/10/2015 - MaiCTP - Get BackedProjectDetail
-        //public List<ProjectBasicViewDTO> GetBackedProjectDetail(String userName)
-        //{
-
-        //    var Project = (from backing in db.Backings
-        //                   where backing.User.Username == userName && project.ProjectID == backing.ProjectID
-        //                   select new ProjectBasicViewDTO
-        //                   {
-        //                       ProjectID = project.ProjectID,
-        //                       Title = project.Title,
-        //                       CreatorName = project.Creator.UserInfo.FullName,
-        //                       ImageUrl = project.ImageUrl,
-        //                       SubDescription = project.SubDescription,
-        //                       Location = project.Location,
-        //                       CurrentFunded = Decimal.Round((project.CurrentFunded / project.FundingGoal) * 100),
-        //                       CurrentFundedNumber = project.CurrentFunded,
-        //                       ExpireDate = DbFunctions.DiffDays(DateTime.Now, project.ExpireDate),
-        //                       FundingGoal = project.FundingGoal,
-        //                       Category = project.Category.Name,
-        //                       Backers = project.Backings.Count,
-        //                       CreatedDate = project.CreatedDate,
-        //                       PopularPoint = project.PopularPoint
-        //                   }).Distinct().ToList();
-
-
-        //    return Project;
-
-        //}
 
         public bool RemindProject(string userName, string projectCode)
         {

@@ -3,7 +3,7 @@ var service = angular.module("DDLService", []);
 var directive = angular.module("DDLDirective", []);
 var app = angular.module("ClientApp", ["ngRoute", "ngAnimate", "ngSanitize", "DDLService",
     "DDLDirective", 'angular-loading-bar', 'textAngular', 'toastr', 'ui.bootstrap', 'monospaced.elastic',
-    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert', 'angular.morris-chart', 'blockUI', 'chart.js']);
+    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert', 'angular.morris-chart', 'blockUI', 'chart.js','ui.select']);
 
 // Show Routing.
 app.config(["$routeProvider", function ($routeProvider) {
@@ -59,21 +59,27 @@ app.config(["$routeProvider", function ($routeProvider) {
                 }],
             }
         });
+
     $routeProvider.when("/search",
         {
+            caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/Search",
             controller: 'SearchController',
             resolve: {
-                projectbycategory: ['ProjectService', '$route', function (ProjectService, $route) {
+                projectbycategory: ['ProjectService', 'CategoryService', '$route', function (ProjectService, CategoryService, $route) {
                     var params = $route.current.params;
-                    console.log($route.current)
                     if (typeof (params.categoryid) == "undefined") {
-                        params.categoryid = ["all"];
+                        params.categoryid = "all";
                     }
                     if (typeof (params.order) == "undefined") {
-                        params.order = "Magic";
+                        params.order = "PopularPoint";
                     }
-                    var projectList = ProjectService.SearchProject("|" + params.categoryid + "|", params.order, "null");
+                    var searchkey = params.searchkey;
+                    if (typeof (params.searchkey) == "undefined") {
+                        searchkey = "null";
+                        params.searchkey = [""];
+                    }
+                    var projectList = ProjectService.SearchProject(0, "|" + params.categoryid + "|", params.order, searchkey);
                     return projectList;
                 }],
                 categoryList: ['CategoryService', function (CategoryService) {
@@ -88,26 +94,13 @@ app.config(["$routeProvider", function ($routeProvider) {
                     }
                 }],
                 selectedorder: ['$route', function ($route) {
-                    var params = $route.current.params;
-                    if (typeof (params.order) == "undefined") {
-                        params.order = "Magic";
-                    }
-                    return params.order;
+                    return $route.current.params.order;
                 }],
                 selectcategory: ['$route', function ($route) {
-                    var params = $route.current.params;
-                    if (typeof (params.categoryid) == "undefined") {
-                        params.categoryid = ["all"];
-                    }
-                    return params.categoryid;
+                    return $route.current.params.categoryid;
                 }],
-                searchkey: ['$route', '$rootScope', function ($route, $rootScope) {
-                    //  console.log($rootScope);
-                    var params = $route.current.params;
-                    if (typeof (params.searchkey) == "undefined") {
-                        params.searchkey = [""];
-                    }
-                    return "di";
+                searchkey: ['$route', function ($route) {
+                    return $route.current.params.searchkey;
                 }],
 
             }

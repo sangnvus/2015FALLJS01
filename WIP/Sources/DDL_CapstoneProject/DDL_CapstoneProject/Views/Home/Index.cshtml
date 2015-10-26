@@ -11,7 +11,7 @@
     <script src="~/Scripts/morris-chart/raphael-min.js"></script>
     <script src="~/Scripts/morris-chart/morris.min.js"></script>
     <script src="~/Scripts/Libraries/jquery.timelinr-0.9.54.js"></script>
-<script src="~/Scripts/Chart.js"></script>
+    <script src="~/Scripts/Chart.js"></script>
     @Scripts.Render("~/bundles/md5")
 
     <!-- Load angular scripts -->
@@ -37,7 +37,8 @@
     <script src="~/App/directives/angular-morris-chart.min.js"></script>
     <script src="~/App/directives/loading-bar.js"></script>
     <script src="~/App/directives/format.js"></script>
-<script src="~/App/directives/angular-chart.js"></script>
+    <script src="~/App/directives/angular-chart.js"></script>
+    <script src="~/App/directives/select.js"></script>
 
     <!-- Service -->
     <script src="~/App/services/CommonService.js"></script>
@@ -55,6 +56,7 @@
     <script src="~/App/controllers/SearchController.js"></script>
     <script src="~/App/controllers/ProjectDetailController.js"></script>
     <script src="~/App/controllers/PublicProfileController.js"></script>
+    <script src="~/App/controllers/SearchBarController.js"></script>
 
     @if (User.Identity != null && !string.IsNullOrEmpty(User.Identity.Name))
     {
@@ -87,5 +89,6 @@
     <link href="~/Content/spinner/spinner.css" rel="stylesheet">
     <link href="~/Content/morris.css" rel="stylesheet">
     <link href="~/Content/loading-bar.css" rel="stylesheet" />
-<link href="~/Content/angular-chart.css" rel="stylesheet" />
+    <link href="~/Content/angular-chart.css" rel="stylesheet" />
+    <link href="~/Content/select.css" rel="stylesheet" />
 }

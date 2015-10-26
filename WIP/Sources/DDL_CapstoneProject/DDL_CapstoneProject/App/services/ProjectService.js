@@ -27,7 +27,6 @@ app.service('ProjectService', function ($http) {
                 }
         });
     };
-
     this.GetProjectStatisticList = function () {
         return $http.get('/api/ProjectApi/GetProjectStatisticList');
     };
@@ -40,8 +39,8 @@ app.service('ProjectService', function ($http) {
     this.getStatisticsInfor = function () {
         return $http.get('/api/ProjectApi/getStatisticsInfor');
     };
-    this.SearchProject = function (categoryidlist, orderby, searchkey) {
-        return this.GetProject(0, 0, categoryidlist, orderby, searchkey, "", false, "");
+    this.SearchProject = function (from, categoryidlist, orderby, searchkey) {
+        return this.GetProject(10, from, categoryidlist, orderby, searchkey, "", false, "");
     }
     //EndTrungVn
 
