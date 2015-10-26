@@ -75,16 +75,19 @@
                     <li><a href="@Url.Content("/#/project/create/")">Tạo</a></li>
                     <li role="separator" class="hidden-xs divider-vertical"></li>
                 </ul>
-                <form class="navbar-form navbar-left" action="@Url.Content("/#/search?advance=true/")" role="Search">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input class="form-control" id="navbarInput-01" type="Search" placeholder="Tìm kiếm...">
-                            <span class="input-group-btn">
-                                <button type="" class="btn"><span class="fui-Search"></span></button>
-                            </span>
+
+                <div ng-controller="SearchBarController">
+                    <form class="navbar-form navbar-left" role="Search" novalidate ng-submit="submit(searchkey)">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input class="form-control" id="navbarInput-01" ng-model="searchkey" type="Search" placeholder="Tìm kiếm..." />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn"><span class="fui-Search"></span></button>
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
                 <!-- Login/Logout/Profile -->
                 @{
                     if (User.Identity == null || !User.Identity.IsAuthenticated)

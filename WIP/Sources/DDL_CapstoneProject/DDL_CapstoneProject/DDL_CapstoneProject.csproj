@@ -246,6 +246,7 @@
     <Content Include="App\controllers\PublicProfileController.js" />
     <Content Include="App\controllers\RegisterController.js" />
     <Content Include="App\controllers\ResetPwController.js" />
+    <Content Include="App\controllers\SearchBarController.js" />
     <Content Include="App\controllers\SearchController.js" />
     <Content Include="App\controllers\StarredProjectController.js" />
     <Content Include="App\controllers\StatisticsController.js" />
@@ -259,6 +260,7 @@
     <Content Include="App\directives\ngFileDirty.js" />
     <Content Include="App\directives\ngFileSelect.js" />
     <Content Include="App\directives\passwordMatch.js" />
+    <Content Include="App\directives\select.js" />
     <Content Include="App\directives\showTabDirective.js" />
     <Content Include="App\directives\SweetAlert.min.js" />
     <Content Include="App\directives\text-angular\textAngular-sanitize.min.js" />
@@ -320,6 +322,7 @@
     <Content Include="Content\loading-bar.css" />
     <Content Include="Content\main.css" />
     <Content Include="Content\morris.css" />
+    <Content Include="Content\select.css" />
     <Content Include="Content\spinner\spinner.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\sweetalert.css" />
