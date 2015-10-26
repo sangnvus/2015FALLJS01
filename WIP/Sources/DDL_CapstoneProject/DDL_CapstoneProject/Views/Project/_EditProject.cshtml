@@ -24,17 +24,17 @@
         <div class="tab-center" id="tablist">
             <ul class="nav nav-tabs">
                 <li class="active"><a onclick="return false" href="#basic" data-toggle="tab">Thông tin</a></li>
-                <li><a onclick="return false" href="#reward" data-toggle="tab" ng-click="getReward()">Gói quà</a></li>
-                <li><a onclick="return false" href="#story" data-toggle="tab" ng-click="getStory()">Câu chuyện</a></li>
+                <li><a onclick="return false" href="#reward" data-toggle="tab" ng-click="getReward()">Mức ủng hộ</a></li>
+                <li><a onclick="return false" href="#story" data-toggle="tab" ng-click="getStory()">Mô tả chỉ tiết</a></li>
                 <li ng-show="Project.Status == 'approved'"><a onclick="return false" href="#update" data-toggle="tab" ng-click="getUpdateLog()">Cập nhật</a></li>
                 <li ng-show="Project.Status == 'approved'"><a onclick="return false" href="#quesion-answer" data-toggle="tab" ng-click="getQuestion()">Hỏi đáp</a></li>
-                <li><a onclick="return false" href="#timelineTab" data-toggle="tab" ng-click="getTimeline()">Timeline</a></li>
+                <li><a onclick="return false" href="#timelineTab" data-toggle="tab" ng-click="getTimeline()">Lịch trình</a></li>
                 @*<li><a onclick="return false" href="#preview" data-toggle="tab">Xem trước</a></li>*@
-                <a class="btn btn-primary" ng-click="submit()" ng-if="Project.Status == 'draft' || Project.Status == 'rejected'">submit for review</a>
+                <a class="btn btn-primary" ng-click="submit()" ng-if="Project.Status == 'draft' || Project.Status == 'rejected'">Gửi dự án</a>
                 <a class="btn btn-primary" ng-if="Project.Status == 'pending'">Chờ kiểm duyệt</a>
-                <a class="btn btn-primary" ng-if="Project.Status == 'approved'">Approved</a>
-                <a class="btn btn-primary" ng-if="Project.Status == 'suspended'">Suspend</a>
-                <a class="btn btn-primary" ng-if="Project.Status == 'expired'">Expired</a>
+                <a class="btn btn-primary" ng-if="Project.Status == 'approved'">Đã xác nhận</a>
+                <a class="btn btn-primary" ng-if="Project.Status == 'suspended'">Đình chỉ</a>
+                <a class="btn btn-primary" ng-if="Project.Status == 'expired'">Hết hạn</a>
             </ul>
         </div>
     </div>
@@ -105,7 +105,7 @@
                                 </div> <!-- end project title -->
                                 <div class="row border-grey">
                                     <div class="col-md-4">
-                                        <p class="title">Short blurb</p>
+                                        <p class="title">Mô tả ngắn</p>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="field-wrapper">
@@ -173,7 +173,7 @@
                                 </div> <!-- end funding duration -->
                                 <div class="row border-grey">
                                     <div class="col-md-4">
-                                        <p class="title">Funding goal</p>
+                                        <p class="title">Mục tiêu gây quỹ</p>
                                     </div>
                                     <div class="col-md-8">
                                         <input type="text" format="number" class="form-control fnt-b" ng-trim="true"
@@ -218,8 +218,8 @@
                                                     &nbsp;&nbsp;
                                                 </div>
                                                 <div class="progress mt5 mb5">
-                                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="50" aria-valuemax="100" style="width: 120%">
-                                                        <span class="sr-only">120% Complete (success)</span>
+                                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{ Project.CurrentFunded*100/Project.FundingGoal}}" aria-valuemax="100" style="width: {{Project.CurrentFunded*100/Project.FundingGoal}}%">
+                                                        <span class="sr-only">{{ Project.CurrentFunded*100/Project.FundingGoal | number:0}}% Complete (success)</span>
                                                     </div>
                                                 </div>
                                                 <ul class="list-inline">
@@ -236,6 +236,9 @@
                                                         <p class="fnt16 mt0 mb0">ngày còn lại</p>
                                                     </li>
                                                 </ul>
+                                                <div>
+                                                    <span class="label label-primary" ng-bind="Project.ProjectCode"></span>
+                                                </div>
                                             </div> <!-- end item-footer -->
                                         </div>
                                     </li><!--/.portfolio-item-->
@@ -254,7 +257,7 @@
                 </div> <!-- end-TITLE -->
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col-md-12">
                             <form name="rewardForm" ng-model="rewardForm" novalidate>
                                 <div ng-repeat="rewardPkg in RewardPKgs">
                                     <div class="row border-grey">
@@ -469,7 +472,7 @@
                                 </div>
                             </div> <!-- end ADD REWARD -->
                         </div> <!-- end CONTENT -->
-                        <div class="col-md-3">
+                        <!-- <div class="col-md-3">
                             <div class="border-tips">
                                 <p>How to:</p>
                                 <a href=""><b>Create greate rewards</b></a>
@@ -495,7 +498,7 @@
                                 <h5><b>Need ideas for rewards?</b></h5>
                                 <p>Campus has a discussion on that — and plenty more.</p>
                             </div>
-                        </div><!-- end TIPS -->
+                        </div>end TIPS -->
                     </div>
                 </div> <!-- end CONTENT -->
             </div>
@@ -509,10 +512,10 @@
                 <form name="storyForm" ng-model="storyForm" novalidate>
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-12">
                                 <div class="row border-grey">
-                                    <div class="col-md-4"><p class="title">Project video</p></div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-3"><p class="title">Video dự án</p></div>
+                                    <div class="col-md-9">
                                         <div class="responsive-video" style="z-index:2">
                                             <iframe ng-src="{{trustSrc(ProjectStory.VideoUrl)}}" frameborder="0" allowfullscreen></iframe>
                                         </div>
@@ -561,10 +564,10 @@
                                     </div>
                                 </div> <!-- end Project video -->
                                 <div class="row border-grey">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <p class="title">Mô tả chi tiết</p>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-9">
                                         <div class="help">
                                             <p>Hãy mô tả chi tiết dự án của bạn ở đây. Bạn cần gây quỹ cho dự án như thế nào và làm như thế nào bạn hoàn thành nó.</p>
                                             <p>Mô tả chi tiết cần ít nhất 135 kí tự</p>
@@ -577,10 +580,10 @@
                                     </div>
                                 </div> <!-- end Project Description -->
                                 <div class="row border-grey">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <p class="title">Khó khăn và thử thách</p>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-9">
                                         <div class="help">
                                             <p>
                                                 <b>Khó khăn bạn đang gặp phải là gì và làm thế nào bạn vượt qua nó?</b>
@@ -611,24 +614,24 @@
                                     <button type="button" ng-disabled="storyForm.$invalid" class="btn btn-success" ng-click="editProjectStory(storyForm)">Lưu</button>
                                 </div>
                             </div> <!-- end col-md-9 -->
-                            <div class="col-md-3">
-                                <div class="video-tout border-tips">
-                                    <a class="link_to_school-video-dialog video_thumb_container">
-                                        <!-- <img alt="Media - Video" class="play_button" src="https://d297h9he240fqh.cloudfront.net/assets/projects/button-playvideo-sm-c4ba88222413634953e9fda7e69a2bf49f9e3caf97dfd2ef63e38921db846595.png"> -->
-                                        <img alt="Video thumb school 757b761a8e7251582e9e3f9abcf0ff2a4f39bdd13f022020d3e544e47ae138e5" height="115" ng-src="https://d297h9he240fqh.cloudfront.net/assets/projects/edit/video-thumb-school-757b761a8e7251582e9e3f9abcf0ff2a4f39bdd13f022020d3e544e47ae138e5.jpg" width="199">
-                                    </a>
-                                    <a class="school-tout" href="/help/handbook/your_story" target="_blank"><span><span>How to:</span> Make an awesome video</span></a>
-                                </div>
-                                <div class="help">
-                                    <h5><b>Looking for advice?</b></h5>
-                                    <p>Visit Campus to read about making great videos and more.</p>
-                                    <br>
-                                    <h5><b>Important reminder</b></h5>
-                                    <p>Kickstarter is a global community, and including translations of your description and rewards, or using our Captions & Subtitles to make your videos more accessible, will help your project have a wider appeal. If you're including text or audio in a language outside of those that we currently support (English, French, German, and Spanish), we also ask that you include English translations or subtitles.</p>
-                                    <p>Don't use music, images, video, or other content that you don't have the rights to. Reusing copyrighted material is almost always against the law and can lead to expensive lawsuits down the road. The easiest way to avoid copyright troubles is to create all the content yourself or use content that is free for public use.</p>
-                                    <p>For legal, mostly free alternatives, check out some of these great resources: SoundCloud, Vimeo Music Store, Free Music Archive, and ccMixter.</p>
-                                </div>
-                            </div> <!-- end col-md-3 -->
+                            @*<div class="col-md-3">
+                                    <div class="video-tout border-tips">
+                                        <a class="link_to_school-video-dialog video_thumb_container">
+                                            <!-- <img alt="Media - Video" class="play_button" src="https://d297h9he240fqh.cloudfront.net/assets/projects/button-playvideo-sm-c4ba88222413634953e9fda7e69a2bf49f9e3caf97dfd2ef63e38921db846595.png"> -->
+                                            <img alt="Video thumb school 757b761a8e7251582e9e3f9abcf0ff2a4f39bdd13f022020d3e544e47ae138e5" height="115" ng-src="https://d297h9he240fqh.cloudfront.net/assets/projects/edit/video-thumb-school-757b761a8e7251582e9e3f9abcf0ff2a4f39bdd13f022020d3e544e47ae138e5.jpg" width="199">
+                                        </a>
+                                        <a class="school-tout" href="/help/handbook/your_story" target="_blank"><span><span>How to:</span> Make an awesome video</span></a>
+                                    </div>
+                                    <div class="help">
+                                        <h5><b>Looking for advice?</b></h5>
+                                        <p>Visit Campus to read about making great videos and more.</p>
+                                        <br>
+                                        <h5><b>Important reminder</b></h5>
+                                        <p>Kickstarter is a global community, and including translations of your description and rewards, or using our Captions & Subtitles to make your videos more accessible, will help your project have a wider appeal. If you're including text or audio in a language outside of those that we currently support (English, French, German, and Spanish), we also ask that you include English translations or subtitles.</p>
+                                        <p>Don't use music, images, video, or other content that you don't have the rights to. Reusing copyrighted material is almost always against the law and can lead to expensive lawsuits down the road. The easiest way to avoid copyright troubles is to create all the content yourself or use content that is free for public use.</p>
+                                        <p>For legal, mostly free alternatives, check out some of these great resources: SoundCloud, Vimeo Music Store, Free Music Archive, and ccMixter.</p>
+                                    </div>
+                                </div> <!-- end col-md-3 -->*@
                         </div> <!-- end-content -->
                     </div><!-- end-tabpanel-Basic -->
                 </form>
@@ -642,7 +645,7 @@
                 </div> <!-- end-title -->
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col-md-12">
                             <form name="updateLogForm" ng-model="updateLogForm" novalidate>
                                 <div ng-repeat="UpdateLogs in UpdateLogs">
                                     <div class="row border-grey">
@@ -755,8 +758,7 @@
                                 <!-- add reward at here -->
                             </div>
                         </div> <!-- end col-md-9 -->
-
-                        <div class="col-md-3">
+                        <!--<div class="col-md-3">
                             <div class="border-tips">
                                 <p>How to:</p>
                                 <a href=""><b>Create greate rewards</b></a>
@@ -782,7 +784,7 @@
                                 <h5><b>Need ideas for rewards?</b></h5>
                                 <p>Campus has a discussion on that — and plenty more.</p>
                             </div>
-                        </div><!-- end col-md-3 -->
+                        </div> end col-md-3 -->
                     </div>
                 </div> <!-- end-content -->
             </div>
@@ -795,7 +797,7 @@
                 </div> <!-- end-title -->
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col-md-12">
                             <form name="questionForm" ng-model="questionForm" novalidate>
                                 <div ng-repeat="question in Question">
                                     <div class="row border-grey">
@@ -916,9 +918,8 @@
                                 <!-- add reward at here -->
                             </div>
                         </div> <!-- end col-md-9 -->
-
-                        <div class="col-md-3">
-                            <!-- <div class="border-tips">
+                        <!--<div class="col-md-3">
+                             <div class="border-tips">
                               <p>How to:</p>
                               <a href=""><b>Create greate rewards</b></a>
                             </div>
@@ -942,8 +943,8 @@
                               </ul>
                               <h5><b>Need ideas for rewards?</b></h5>
                               <p>Campus has a discussion on that — and plenty more.</p>
-                            </div> -->
-                        </div><!-- end col-md-3 -->
+                            </div>
+                        </div> end col-md-3 -->
                     </div>
                 </div>  <!-- end-content -->
             </div> <!-- end QUESTION AND ANSWER -->

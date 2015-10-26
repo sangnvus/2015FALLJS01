@@ -36,6 +36,52 @@ app.config(["$routeProvider", function ($routeProvider) {
                 }]
             }
         });
+    $routeProvider.when("/project",
+        {
+            templateUrl: "/AdminPartial/ProjectDashboard",
+            controller: 'AdminProjectDashboardController',
+            activeTab: 'dashboard',
+            breadcrumb: ['Quản lí dự án', 'Thông tin chung'],
+            title: 'Thông tin chung',
+            resolve: {
+                listproject: ['$rootScope', '$q', 'AdminProjectService', 'CommmonService', function ($rootScope, $q, AdminProjectService, CommmonService) {
+                    var promise = AdminProjectService.getPendingProjectList();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }],
+                basicInfo: ['$rootScope', '$q', 'AdminProjectService', 'CommmonService', function ($rootScope, $q, AdminProjectService, CommmonService) {
+                    var promise = AdminProjectService.getBasicStatisticProject();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
+            }
+        });
+    $routeProvider.when("/project/all",
+        {
+            templateUrl: "/AdminPartial/ProjectList",
+            controller: 'AdminProjectListController',
+            activeTab: 'projectList',
+            breadcrumb: ['Danh sách dự án', 'Danh sách dự án'],
+            title: 'Thông tin chung',
+            resolve: {
+                listproject: ['$rootScope', '$q', 'AdminProjectService', 'CommmonService', function ($rootScope, $q, AdminProjectService, CommmonService) {
+                    var promise = AdminProjectService.getProjectList();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
+            }
+        });
+    $routeProvider.when("/project/:code",
+       {
+           templateUrl: "/AdminPartial/ProjectDetail",
+           controller: 'AdminProjectDetailController',
+           activeTab: 'projectList',
+           breadcrumb: ['Danh sách dự án', 'Chi tiết dự án'],
+           title: 'Chi tiết dự án',
+           resolve: {
+               project: ['$rootScope', '$route', '$q', 'AdminProjectService', 'CommmonService', function ($rootScope, $route, $q, AdminProjectService, CommmonService) {
+                   var promise = AdminProjectService.getProjectDetail($route.current.params.code);
+                   return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+               }]
+           }
+       });
 
     $routeProvider.otherwise({
         redirectTo: "/"

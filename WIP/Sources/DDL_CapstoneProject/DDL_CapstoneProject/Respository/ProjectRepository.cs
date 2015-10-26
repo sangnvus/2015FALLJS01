@@ -359,7 +359,7 @@ namespace DDL_CapstoneProject.Respository
                     CommonUtils.ConvertDateTimeFromUtc(updateProjectDTO.ExpireDate.GetValueOrDefault());
 
                 // Set number exprire day.
-                var timespan = updateProjectDTO.ExpireDate - DateTime.Today;
+                var timespan = updateProjectDTO.ExpireDate - CommonUtils.DateTodayGMT7();
                 updateProjectDTO.NumberDays = timespan.GetValueOrDefault().Days;
 
                 return updateProjectDTO;
@@ -445,7 +445,7 @@ namespace DDL_CapstoneProject.Respository
                 }
 
                 // Set number exprire day.
-                var timespan = projectDTO.ExpireDate - DateTime.Today;
+                var timespan = projectDTO.ExpireDate - CommonUtils.DateTodayGMT7();
                 projectDTO.NumberDays = timespan.GetValueOrDefault().Days;
 
                 return projectDTO;
@@ -554,6 +554,11 @@ namespace DDL_CapstoneProject.Respository
             }
         }
 
+        /// <summary>
+        /// Get bacsic information of project
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns>projectInforDTO</returns>
         public ProjectInfoBackDTO GetBackProjectInfo(string code)
         {
             using (var db = new DDLDataContext())
@@ -639,11 +644,113 @@ namespace DDL_CapstoneProject.Respository
 
                 rewardPkg.CurrentQuantity += backingDetail.Quantity;
 
+                // Set project is funded
+                project.IsFunded = true;
+
                 db.SaveChanges();
 
                 return project.ProjectCode;
             }
         }
+
+
+        #region Admin
+
+        /// <summary>
+        /// Get basic statistic of project for admin
+        /// </summary>
+        /// <returns>AdminProjectInfoDTO</returns>
+        public AdminProjectGeneralInfoDTO AdminProjectGeneralInfo()
+        {
+            using (var db = new DDLDataContext())
+            {
+                var pending = db.Projects.Count(x => x.Status == DDLConstants.ProjectStatus.PENDING);
+                var approved = db.Projects.Count(x => x.Status == DDLConstants.ProjectStatus.APPROVED);
+                var suspended = db.Projects.Count(x => x.Status == DDLConstants.ProjectStatus.SUSPENDED);
+                var funded = db.Projects.Count(x => x.IsFunded == true);
+                var total = db.Projects.Count();
+                var expired = db.Projects.Count(x => x.Status == DDLConstants.ProjectStatus.EXPIRED);
+
+                var AdminProjectInfoDTO = new AdminProjectGeneralInfoDTO
+                {
+                    ApprovedProject = approved,
+                    ExpriredProject = expired,
+                    FundedProject = funded,
+                    PendingProject = pending,
+                    SuspendedProject = suspended,
+                    TotalProject = total
+                };
+
+                return AdminProjectInfoDTO;
+            }
+        }
+
+        /// <summary>
+        /// Get pending project list
+        /// </summary>
+        /// <returns>pendingList</returns>
+        public List<ProjectBasicListDTO> GetPendingProjectList()
+        {
+            using (var db = new DDLDataContext())
+            {
+                // Get rewardPkg list
+                var pendingList = (from Project in db.Projects
+                                   where Project.Status == DDLConstants.ProjectStatus.PENDING || Project.Status == DDLConstants.ProjectStatus.REJECTED
+                                   orderby Project.CreatedDate descending
+                                   select new ProjectBasicListDTO
+                                   {
+                                       ProjectCode = Project.ProjectCode,
+                                       ProjectID = Project.ProjectID,
+                                       Title = Project.Title,
+                                       Category = Project.Category.Name,
+                                       CreatorEmail = Project.Creator.Email,
+                                       FundingGoal = Project.FundingGoal,
+                                       ExpireDate = Project.ExpireDate,
+                                       Status = Project.Status,
+                                       CurrentFunded = Project.CurrentFunded
+                                   }).ToList();
+
+                pendingList.ForEach(x => x.ExpireDate = CommonUtils.ConvertDateTimeFromUtc(x.ExpireDate.GetValueOrDefault()));
+
+                return pendingList;
+            }
+        }
+
+        /// <summary>
+        /// Get project list
+        /// </summary>
+        /// <returns></returns>
+        public List<ProjectBasicListDTO> GetProjectList()
+        {
+            using (var db = new DDLDataContext())
+            {
+                // Get rewardPkg list
+                var projectList = (from Project in db.Projects
+                                   where Project.Status != DDLConstants.ProjectStatus.DRAFT
+                                   orderby Project.CreatedDate descending
+                                   select new ProjectBasicListDTO
+                                   {
+                                       ProjectCode = Project.ProjectCode,
+                                       ProjectID = Project.ProjectID,
+                                       Title = Project.Title,
+                                       Category = Project.Category.Name,
+                                       CreatorEmail = Project.Creator.Email,
+                                       FundingGoal = Project.FundingGoal,
+                                       ExpireDate = Project.ExpireDate,
+                                       Status = Project.Status,
+                                       CurrentFunded = Project.CurrentFunded,
+                                       PledgeAmount = Project.CurrentFunded,
+                                       TotalBacking = Project.Backings.Count
+                                   }).ToList();
+
+                projectList.ForEach(x => x.ExpireDate = CommonUtils.ConvertDateTimeFromUtc(x.ExpireDate.GetValueOrDefault()));
+
+                return projectList;
+            }
+        }
+        #endregion
+
+
         #endregion
 
         public ProjectDetailDTO GetProjectByCode(string projectCode, string userName)

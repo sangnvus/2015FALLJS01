@@ -19,5 +19,23 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         {
             return PartialView("~/Views/AdminPartial/_Category.cshtml");
         }
+
+        // GET: AdminPartial/ProjectDashboard
+        public ActionResult ProjectDashboard()
+        {
+            return PartialView("~/Views/AdminPartial/Project/_ProjectDashboard.cshtml");
+        }
+
+        // GET: AdminPartial/ProjectList
+        public ActionResult ProjectList()
+        {
+            return PartialView("~/Views/AdminPartial/Project/_ProjectList.cshtml");
+        }
+
+        // GET: AdminPartial/ProjectDetail
+        public ActionResult ProjectDetail()
+        {
+            return PartialView("~/Views/AdminPartial/Project/_ProjectDetail.cshtml");
+        }
     }
 }
