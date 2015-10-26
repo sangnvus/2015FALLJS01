@@ -10,14 +10,14 @@
                     <li>
                         <a href="/#/user/message/">
                             <i class="icon fa fa-inbox fa-2x fa-fw"></i>
-                            <span class="toggle">Hộp thư đến</span>
+                            <span class="toggle">Hộp thư đến <span ng-show="NumberNewMessage.ReceivedMessage > 0" class="badge">{{NumberNewMessage.ReceivedMessage}}</span></span>
                         </a>
                     </li>
 
                     <li>
                         <a href="/#/user/message?list=sent">
                             <i class="icon fa fa-paper-plane fa-2x fa-fw"></i>
-                            <span class="toggle">Hộp thư đi</span>
+                            <span class="toggle">Hộp thư đi <span ng-show="NumberNewMessage.SentMessage > 0" class="badge">{{NumberNewMessage.SentMessage}}</span></span>
                         </a>
                     </li>
 
@@ -55,12 +55,12 @@
                                                     <img style="width: 45px; height: 45px" ng-if="checkHTTP(Message.SenderProfileImage)" ng-src="{{trustSrc(Message.SenderProfileImage)}}" a alt="" />
                                                     <img style="width: 45px; height: 45px" ng-if="!checkHTTP(Message.SenderProfileImage)" ng-src="../images/avatars/{{Message.SenderProfileImage}}" alt="" />
                                                 </div>
-                                                <div class="col-sm-9">
+                                                <div class="col-sm-7">
                                                     <p class="mb0">{{Message.SenderName}}</p>
                                                     @*<span class="text-muted">Order Status Update: Order #231</span>*@
                                                 </div>
-                                                <div class="col-sm-2">
-                                                    {{Message.SentTime | date:'shortDate'}}
+                                                <div class="col-sm-4 text-right">
+                                                    {{Message.SentTime | date:"'lúc' HH:mm 'ngày' dd/MM/yyyy"}}
                                                 </div>
                                             </div>
                                         </a>

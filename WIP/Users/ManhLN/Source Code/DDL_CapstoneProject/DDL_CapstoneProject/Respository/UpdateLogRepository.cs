@@ -11,12 +11,10 @@ namespace DDL_CapstoneProject.Respository
 {
     public class UpdateLogRepository : SingletonBase<UpdateLogRepository>
     {
-        private DDLDataContext db;
-
         #region "Constructors"
         private UpdateLogRepository()
         {
-            db = new DDLDataContext();
+
         }
         #endregion
 
@@ -28,19 +26,24 @@ namespace DDL_CapstoneProject.Respository
         /// <returns>updateLogList</returns>
         public List<UpdateLogDTO> GetUpdateLog(int ProjectID)
         {
-            // Get updatelog list
-            var updateLogList = from UpdateLog in db.UpdateLogs
-                                where UpdateLog.ProjectID == ProjectID
-                                orderby UpdateLog.CreatedDate descending
-                                select new UpdateLogDTO()
-                                {
-                                    Description = UpdateLog.Description,
-                                    Title = UpdateLog.Title,
-                                    CreatedDate = UpdateLog.CreatedDate,
-                                    UpdateLogID = UpdateLog.UpdateLogID,
-                                };
+            using (var db = new DDLDataContext())
+            {
+                // Get updatelog list
+                var updateLogList = (from UpdateLog in db.UpdateLogs
+                    where UpdateLog.ProjectID == ProjectID
+                    orderby UpdateLog.CreatedDate descending
+                    select new UpdateLogDTO()
+                    {
+                        Description = UpdateLog.Description,
+                        Title = UpdateLog.Title,
+                        CreatedDate = UpdateLog.CreatedDate,
+                        UpdateLogID = UpdateLog.UpdateLogID,
+                    }).ToList();
 
-            return updateLogList.ToList();
+                updateLogList.ForEach(x => x.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(x.CreatedDate));
+
+                return updateLogList.ToList();
+            }
         }
 
         /// <summary>
@@ -49,19 +52,31 @@ namespace DDL_CapstoneProject.Respository
         /// <param name="ProjectID"></param>
         /// <param name="updateLog"></param>
         /// <returns>newRewardPkg</returns>
-        public UpdateLog CreateUpdateLog(int ProjectID, UpdateLogDTO newUpdateLog)
+        public UpdateLogDTO CreateUpdateLog(int ProjectID, UpdateLogDTO newUpdateLog)
         {
-            var updateLog = new UpdateLog
+            using (var db = new DDLDataContext())
             {
-                ProjectID = ProjectID,
-                Description = newUpdateLog.Description,
-                CreatedDate = DateTime.Today,
-                Title = newUpdateLog.Title
-            };
-            db.UpdateLogs.Add(updateLog);
-            db.SaveChanges();
+                var updateLog = db.UpdateLogs.Create();
+                updateLog.ProjectID = ProjectID;
+                updateLog.Description = newUpdateLog.Description;
+                updateLog.CreatedDate = DateTime.UtcNow;
+                updateLog.Title = newUpdateLog.Title;
 
-            return updateLog;
+                db.UpdateLogs.Add(updateLog);
+                db.SaveChanges();
+
+                var updateLogDTO = new UpdateLogDTO
+                {
+                    Description = updateLog.Description,
+                    Title = updateLog.Title,
+                    CreatedDate = updateLog.CreatedDate,
+                    UpdateLogID = updateLog.UpdateLogID
+                };
+
+                updateLogDTO.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(updateLogDTO.CreatedDate);
+
+                return updateLogDTO;
+            }
         }
 
         /// <summary>
@@ -70,33 +85,46 @@ namespace DDL_CapstoneProject.Respository
         /// <returns>boolean</returns>
         public bool EditUpdateLog(List<UpdateLogDTO> updateLog)
         {
-            foreach (var update in updateLog)
+            using (var db = new DDLDataContext())
             {
-                var editLog = db.UpdateLogs.SingleOrDefault(x => x.UpdateLogID == update.UpdateLogID);
+                foreach (var update in updateLog)
+                {
+                    var editLog = db.UpdateLogs.SingleOrDefault(x => x.UpdateLogID == update.UpdateLogID);
 
-                editLog.Description = update.Description;
-                editLog.Title = update.Title;
-                editLog.CreatedDate = update.CreatedDate;
+                    if (editLog == null)
+                    {
+                        throw new KeyNotFoundException();
+                    }
 
-                db.SaveChanges();
+                    editLog.Description = update.Description;
+                    editLog.Title = update.Title;
+                    editLog.CreatedDate = update.CreatedDate;
+
+                    editLog.CreatedDate = CommonUtils.ConvertDateTimeToUtc(editLog.CreatedDate);
+
+                    db.SaveChanges();
+                }
+
+                return true;
             }
-
-            return true;
         }
 
         public bool DeleteUpdateLog(int updateLogID)
         {
-            var deleteUpdateLog = db.UpdateLogs.SingleOrDefault(x => x.UpdateLogID == updateLogID);
-
-            if (deleteUpdateLog == null)
+            using (var db = new DDLDataContext())
             {
-                throw new KeyNotFoundException();
+                var deleteUpdateLog = db.UpdateLogs.SingleOrDefault(x => x.UpdateLogID == updateLogID);
+
+                if (deleteUpdateLog == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                db.UpdateLogs.Remove(deleteUpdateLog);
+                db.SaveChanges();
+
+                return true;
             }
-
-            db.UpdateLogs.Remove(deleteUpdateLog);
-            db.SaveChanges();
-
-            return true;
         }
 
         #endregion

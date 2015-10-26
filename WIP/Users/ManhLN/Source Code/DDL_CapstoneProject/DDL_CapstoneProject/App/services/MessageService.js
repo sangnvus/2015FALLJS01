@@ -73,4 +73,13 @@ service.service('MessageService', function ($http) {
         return request;
     }
 
+    this.getNumberNewMessage = function () {
+        var request = $http({
+            method: 'get',
+            url: '/api/MessageApi/GetNumberNewMessage'
+        });
+
+        return request;
+    }
+
 });

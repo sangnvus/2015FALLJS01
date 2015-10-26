@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
+using DDL_CapstoneProject.Helpers;
 using DDL_CapstoneProject.Models;
 using DDL_CapstoneProject.Ultilities;
 
@@ -51,4 +52,14 @@ namespace DDL_CapstoneProject.Respository
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
     }
+
+
+    //public class DDLDataContextRepository : SingletonBase<DDLDataContextRepository>
+    //{
+    //    public DDLDataContext DbContext { get; set; }
+    //    private DDLDataContextRepository()
+    //    {
+    //        DbContext = new DDLDataContext();
+    //    }
+    //}
 }

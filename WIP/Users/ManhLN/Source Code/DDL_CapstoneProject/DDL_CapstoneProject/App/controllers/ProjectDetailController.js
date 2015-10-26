@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, toastr, project, ProjectService, CommmonService, listbacker) {
+app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, toastr, project, ProjectService, CommmonService, DTOptionsBuilder, DTColumnDefBuilder, $filter, MessageService) {
     //Todo here.
     $scope.Project = project.data.Data;
     $scope.FirstUpdateLogs = false;
@@ -147,7 +147,9 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
 
     // Function edit comment.
     $scope.editComment = function (index) {
-        if ($scope.Project.CommentsList[index].EditedCommentContent !== $scope.Project.CommentsList[index].CommentContent) {
+        if ($scope.Project.CommentsList[index].EditedCommentContent !== $scope.Project.CommentsList[index].CommentContent
+            && $scope.Project.CommentsList[index].EditedCommentContent.length >= 10
+            && $scope.Project.CommentsList[index].EditedCommentContent.length <= 500) {
             var promisePut = ProjectService.editComment($scope.Project.CommentsList[index].CommentID, $scope.Project.CommentsList[index].EditedCommentContent);
             promisePut.then(
                 function (result) {
@@ -165,6 +167,9 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                     $scope.Error = error.data.Message;
                     toastr.error($scope.Error, 'Lỗi');
                 });
+        } else if ($scope.Project.CommentsList[index].EditedCommentContent.length < 10
+                    || $scope.Project.CommentsList[index].EditedCommentContent.length > 500) {
+            // Do nothing.
         } else {
             $scope.showEditForm(index);
         }
@@ -193,18 +198,99 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
 
     $scope.remind = function () {
         var promise = ProjectService.remindProject($scope.Project.ProjectCode);
-          promisePost.then(
-            function (result) {
-              if (result.data.Status === "success") {
-               toastr.success('Theo dõi dự án', 'Thành công');
-            } else if (result.data.Status === "error") {
-                 $scope.Error = result.data.Message;
-               toastr.error($scope.Error, 'Lỗi');
-           }
+        promise.then(
+          function (result) {
+              if (result.data.Status == "success" && result.data.Message == "reminded") {
+                  $scope.Project.Reminded = true;
+                  toastr.success('Theo dõi dự án thành công');
+
+              }
+              else if (result.data.Status == "success" && result.data.Message == "notremind") {
+                  $scope.Project.Reminded = false;
+                  toastr.success('Hủy theo dõi dự án thành công');
+              }
+              else if (result.data.Status == "error") {
+                  $scope.Error = result.data.Message;
+                  toastr.error($scope.Error, 'Lỗi');
+              }
           }
+       );
+    };
+
+    $scope.Reminded = true;
+    $scope.report = function () {
+        var promise = ProjectService.reportProject($scope.Project.ProjectCode, $scope.ReportContent);
+        promise.then(
+            function (result) {
+                if (result.data.Status === "success") {
+                    toastr.success('Báo cáo sai phạm thành công');
+
+                } else if (result.data.Status === "error") {
+                    $scope.Error = result.data.Message;
+                    toastr.error($scope.Error, 'Bạn chưa đăng nhập');
+                }
+            }
          );
     };
-    $scope.ListBacker = listbacker.data.Data;
-    
-    
+
+    $scope.checkLoadlist = false;
+    $scope.loadlistBacker = function () {
+        if($scope.checkLoadlist == false){
+        var promise = ProjectService.getListBacker($scope.Project.ProjectCode);
+        promise.then(
+            function (result) {
+                $scope.ListBacker = result.data.Data.listBacker;
+                $scope.labels = result.data.Data.Date;
+                $scope.series = ['Số tiền đã ủng hộ'];
+                $scope.data = [result.data.Data.Amount];
+                $scope.checkLoadlist = true;
+            }
+         );
+        }
+    };
+
+    // Define table
+    $scope.dtOptions = DTOptionsBuilder.newOptions()
+    .withDisplayLength(10)
+    .withOption('order', [3, 'desc'])
+    .withBootstrap();
+
+    $scope.dtColumnDefs = [
+        DTColumnDefBuilder.newColumnDef(0).notSortable()
+    ];
+
+    $scope.NewQuestion = {
+        Title: "",
+        Content: ""
+    }
+
+    // Function request 
+    $scope.sendQuestion = function () {
+        if ($scope.NewQuestion.Content.trim() !== "") {
+            $scope.NewQuestion.ToUser = $scope.Project.Creator.UserName;
+            $scope.NewQuestion.Title = "Gửi câu hỏi về dự án \"" + $scope.Project.Title + "\"";
+            var promisePost = MessageService.sendMessage($scope.NewQuestion);
+            promisePost.then(
+                function (result) {
+                    if (result.data.Status === "success") {
+                        $('#sendQuestion').modal('hide');
+                        $scope.NewQuestion = {
+                            Title: "",
+                            Content: ""
+                        }
+                        toastr.success("Gửi câu hỏi thành công");
+                    } else {
+                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        $scope.Error = result.data.Message;
+                        toastr.error($scope.Error, 'Lỗi!');
+                    }
+                },
+                function (error) {
+                    $scope.Error = error.data.Message;
+                });
+        } else {
+            toastr.warning("Bạn chưa nhập nội dung câu hỏi", 'Thông báo!');
+        }
+    }
+
 });

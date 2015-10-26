@@ -10,17 +10,20 @@
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")
 
-    @* Jquery scripts *@
+    <!-- Jquery scripts -->
     <script src="~/Scripts/data-tables/jquery.dataTables.min.js"></script>
     <script src="~/Scripts/sweetalert/sweetalert.min.js"></script>
+    <script src="~/Scripts/morris-chart/raphael-min.js"></script>
+    <script src="~/Scripts/morris-chart/morris.min.js"></script>
+
     <!-- THEME SCRIPTS -->
     <script src="/Scripts/admin-flex/flex.js"></script>
 
-    @* Load angular scripts *@
+    <!-- Load angular scripts -->
     @Scripts.Render("~/bundles/angularjs")
     <script src="~/App/AdminModule.js"></script>
 
-    @* Directive *@
+    <!-- Directive  -->
     <script src="~/App/directives/text-angular/textAngular.min.js"></script>
     <script src="~/App/directives/text-angular/textAngular-rangy.min.js"></script>
     <script src="~/App/directives/ngAutocomplete.js"></script>
@@ -28,14 +31,15 @@
     <script src="~/App/directives/ngFileDirty.js"></script>
     <script src="~/App/directives/ngFileSelect.js"></script>
     <script src="~/Scripts/upload-img/upload-image.js"></script>
-    <script src="~/App/directives/ui-bootstrap(-tpls).js"></script>
     <script src="~/App/directives/showTabDirective.js"></script>
     <script src="~/App/directives/elastic.js"></script>
     <script src="~/App/directives/ngEnter.js"></script>
     <script src="~/Scripts/data-tables/angular-datatables.min.js"></script>
     <script src="~/Scripts/data-tables/angular-datatables.bootstrap.js"></script>
+    <script src="~/App/directives/loading-bar.js"></script>
+    <script src="~/App/directives/angular-morris-chart.min.js"></script>
 
-    @* Service *@
+    <!-- Service  -->
     <script src="~/App/services/CommonService.js"></script>
     <script src="~/App/services/UserService.js"></script>
     <script src="~/App/services/SlideSevice.js"></script>
@@ -45,7 +49,7 @@
     <script src="~/App/services/CategoryService.js"></script>
     <script src="~/App/services/Admin/AdminCategoryService.js"></script>
 
-    @* Controller *@
+    <!-- Controller  -->
     <script src="~/App/controllers/admin/AdminDashboardController.js"></script>
     <script src="~/App/controllers/admin/AdminCategoryController.js"></script>
 
@@ -57,5 +61,7 @@
     <link href="~/Content/textAngular.css" rel="stylesheet" />
     <link href="~/Content/sweetalert.css" rel="stylesheet" />
     <link href="~/Content/data-tables/datatables.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/spinner/spinner.css" rel="stylesheet">
+    <link href="~/Content/loading-bar.css" rel="stylesheet" />
 }
 

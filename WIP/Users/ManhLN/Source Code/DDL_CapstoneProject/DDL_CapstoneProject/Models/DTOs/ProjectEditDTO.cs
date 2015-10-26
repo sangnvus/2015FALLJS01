@@ -20,5 +20,6 @@ namespace DDL_CapstoneProject.Models.DTOs
         public int CategoryID { get; set; }
         public decimal CurrentFunded { get; set; }
         public int NumberDays { get; set; }
+        public string CreatorName { get; set; }
     }
 }

@@ -17,6 +17,8 @@ namespace DDL_CapstoneProject.Models.DTOs
         public int CountCreatedProject { get; set; }
         public int CountBackedProject { get; set; }
         public string Website { get; set; }
+        public string PhoneNumber { get; set; }
+        public bool IsActive { get; set; }
 
     }
 }

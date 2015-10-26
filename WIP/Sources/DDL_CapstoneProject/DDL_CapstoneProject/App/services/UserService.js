@@ -2,6 +2,14 @@
 
 service.service('UserService', function ($http) {
 
+    //TrungVN
+
+    this.getUserTop = function (categoryID) {
+        return $http.get("/api/UserApi/GetUserTop?categoryID=" + categoryID);
+    }
+    //End TrungVN
+
+
     // Function to create new Account
     this.register = function (newUser) {
         var request = $http({
@@ -57,7 +65,7 @@ service.service('UserService', function ($http) {
         return request;
     }
 
-    this.getProfileInformation = function (user) {
+    this.getProfileInformation = function () {
         var request = $http({
             method: 'get',
             url: '/api/UserApi/GetUserInfoEdit'

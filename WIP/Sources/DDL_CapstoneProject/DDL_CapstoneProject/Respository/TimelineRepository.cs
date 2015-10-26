@@ -11,12 +11,10 @@ namespace DDL_CapstoneProject.Respository
 {
     public class TimeLineRepository : SingletonBase<TimeLineRepository>
     {
-        private DDLDataContext db;
 
         #region "Constructors"
         private TimeLineRepository()
         {
-            db = new DDLDataContext();
         }
         #endregion
 
@@ -28,20 +26,25 @@ namespace DDL_CapstoneProject.Respository
         /// <returns>timelineList</returns>
         public List<TimeLineDTO> GetTimeLine(int ProjectID)
         {
-            // Get rewardPkg list
-            var timelineList = from Timeline in db.Timelines
-                               where Timeline.ProjectID == ProjectID
-                               orderby Timeline.DueDate ascending
-                               select new TimeLineDTO()
-                               {
-                                   ImageUrl = Timeline.ImageUrl,
-                                   DueDate = Timeline.DueDate,
-                                   Description = Timeline.Description,
-                                   Title = Timeline.Title,
-                                   TimelineID = Timeline.TimelineID
-                               };
+            using (var db = new DDLDataContext())
+            {
+                // Get rewardPkg list
+                var timelineList = (from Timeline in db.Timelines
+                                    where Timeline.ProjectID == ProjectID
+                                    orderby Timeline.DueDate ascending
+                                    select new TimeLineDTO()
+                                    {
+                                        ImageUrl = Timeline.ImageUrl,
+                                        DueDate = Timeline.DueDate,
+                                        Description = Timeline.Description,
+                                        Title = Timeline.Title,
+                                        TimelineID = Timeline.TimelineID
+                                    }).ToList();
 
-            return timelineList.ToList();
+                timelineList.ForEach(x => x.DueDate = CommonUtils.ConvertDateTimeFromUtc(x.DueDate));
+
+                return timelineList.ToList();
+            }
         }
 
         /// <summary>
@@ -50,29 +53,46 @@ namespace DDL_CapstoneProject.Respository
         /// <param name="ProjectID"></param>
         /// <param name="timeline"></param>
         /// <returns>newRewardPkg</returns>
-        public TimeLineDTO CreateTimeline(int ProjectID, TimeLineDTO timeline, string img)
+        public TimeLineDTO CreateTimeline(int id, TimeLineDTO timeline, string img)
         {
-
-            var newTimeline = db.Timelines.Create();
-            newTimeline.ProjectID = ProjectID;
-            newTimeline.Description = timeline.Description;
-            newTimeline.DueDate = timeline.DueDate;
-            newTimeline.ImageUrl = img;
-            newTimeline.Title = timeline.Title;
-
-            db.Timelines.Add(newTimeline);
-            db.SaveChanges();
-
-            var newTimelineDTO = new TimeLineDTO
+            using (var db = new DDLDataContext())
             {
-                Description = newTimeline.Description,
-                DueDate = newTimeline.DueDate,
-                ImageUrl = newTimeline.ImageUrl,
-                Title = newTimeline.Title,
-                TimelineID = newTimeline.TimelineID
-            };
+                var project = db.Projects.SingleOrDefault(x => x.ProjectID == id);
+                if (project == null)
+                {
+                    throw new KeyNotFoundException();
+                }
 
-            return newTimelineDTO;
+                var newTimeline = db.Timelines.Create();
+                newTimeline.ProjectID = project.ProjectID;
+                newTimeline.Description = timeline.Description;
+                newTimeline.DueDate = timeline.DueDate;
+                newTimeline.ImageUrl = img;
+                newTimeline.Title = timeline.Title;
+
+                if (newTimeline.DueDate != null)
+                {
+                    newTimeline.DueDate = CommonUtils.ConvertDateTimeToUtc(newTimeline.DueDate);
+                }
+
+                db.Timelines.Add(newTimeline);
+                db.SaveChanges();
+
+                newTimeline.ImageUrl = newTimeline.ImageUrl + "_" + newTimeline.TimelineID;
+
+                var newTimelineDTO = new TimeLineDTO
+                {
+                    Description = newTimeline.Description,
+                    DueDate = newTimeline.DueDate,
+                    ImageUrl = newTimeline.ImageUrl,
+                    Title = newTimeline.Title,
+                    TimelineID = newTimeline.TimelineID
+                };
+
+                newTimelineDTO.DueDate = CommonUtils.ConvertDateTimeFromUtc(newTimelineDTO.DueDate);
+
+                return newTimelineDTO;
+            }
         }
 
         /// <summary>
@@ -81,26 +101,31 @@ namespace DDL_CapstoneProject.Respository
         /// <returns>boolean</returns>
         public bool EditTimeline(TimeLineDTO timeline, string img)
         {
-            var updateTimeline = db.Timelines.SingleOrDefault(x => x.TimelineID == timeline.TimelineID);
-
-            if (updateTimeline == null)
+            using (var db = new DDLDataContext())
             {
-                throw new KeyNotFoundException();
+                var updateTimeline = db.Timelines.SingleOrDefault(x => x.TimelineID == timeline.TimelineID);
+
+                if (updateTimeline == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                if (img != string.Empty)
+                {
+                    updateTimeline.ImageUrl = img;
+                }
+
+                updateTimeline.Description = timeline.Description;
+                updateTimeline.DueDate = timeline.DueDate;
+                updateTimeline.Title = timeline.Title;
+
+                updateTimeline.DueDate = CommonUtils.ConvertDateTimeToUtc(updateTimeline.DueDate);
+
+                db.SaveChanges();
+
+
+                return true;
             }
-
-            if (img != string.Empty)
-            {
-                updateTimeline.ImageUrl = img;
-            }
-
-            updateTimeline.Description = timeline.Description;
-            updateTimeline.DueDate = timeline.DueDate;
-            updateTimeline.Title = timeline.Title;
-
-            db.SaveChanges();
-
-
-            return true;
         }
 
         /// <summary>
@@ -110,17 +135,20 @@ namespace DDL_CapstoneProject.Respository
         /// <returns>boolean</returns>
         public bool DeleteTimeline(int timelineID)
         {
-            var deleteTimeline = db.Timelines.SingleOrDefault(x => x.TimelineID == timelineID);
-
-            if (deleteTimeline == null)
+            using (var db = new DDLDataContext())
             {
-                throw new KeyNotFoundException();
+                var deleteTimeline = db.Timelines.SingleOrDefault(x => x.TimelineID == timelineID);
+
+                if (deleteTimeline == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                db.Timelines.Remove(deleteTimeline);
+                db.SaveChanges();
+
+                return true;
             }
-
-            db.Timelines.Remove(deleteTimeline);
-            db.SaveChanges();
-
-            return true;
         }
 
         #endregion

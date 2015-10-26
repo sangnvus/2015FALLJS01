@@ -3,8 +3,9 @@
         <h4>Thiết lập</h4>
         <div class="row pl15">
             <ul class="list-inline">
-                <li><a href="account.html" class="fnt18 fnt-b link-gray-dark">Tài khoản</a></li>
-                <li><a href="editprofile.html" class="fnt18 fnt-b">Sửa thông tin cá nhân</a></li>
+                <li><a href="@Url.Content("/#/user/editpassword/")" class="fnt18 fnt-b link-gray-dark">Tài khoản</a></li>
+                <li><a href="@Url.Content("/#/user/editprofile/")" class="fnt18 fnt-b">Sửa thông tin cá nhân</a></li>
+                <li><a href="@Url.Content("/#/user/publicprofile/" + User.Identity.Name)" class="fnt18 fnt-b link-gray-dark">Thông tin công khai</a></li>
             </ul>
         </div>
     </div> <!-- end SETTING -->
@@ -39,16 +40,11 @@
                         <div for="email" class="pb20">
                             <label for="email" class="fnt18 fnt-b">Email</label>
                             <div class="input-group mt0">
-                                <input type="email" name="email" id="exampleInputEmail1" class="form-control " placeholder="Email liên lạc"
-                                       ng-model="UserEditInfo.Email"
-                                       required />
+                                <span type="email" name="email" id="exampleInputEmail1" class="form-control " placeholder="Email liên lạc">{{UserEditInfo.Email}}</span>
                                 <span class="input-group-btn">
                                     <button type="" class="btn"><span class="fui-mail"></span></button>
                                 </span>
                             </div>
-                            <span ng-show="myForm2.email.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
-                            <span style="color:red" ng-show="myForm2.email.$error.required">Bạn chưa nhập email!</span>
-                            <span style="color:red" ng-show="myForm2.email.$error.email">Email không đúng định dạng!</span>
                         </div>
                         <div for="image" class="pb30">
                             <label for="image" class="fnt18 fnt-b">Ảnh đại diện</label>
@@ -74,7 +70,7 @@
                                 <textarea class="form-control" style="resize:none" name="" id="" cols="30" rows="5"
                                           placeholder="Giới thiệu ngắn gọn về bản thân"
                                           ng-model="UserEditInfo.Biography"
-                                          {{UserEditInfo.Biography}}></textarea>
+                                          >{{UserEditInfo.Biography}}</textarea>
                             </p>
                         </div>
 
@@ -82,7 +78,7 @@
                 </form>
             </div>
             <div class="col-md-6">
-                <form action="">
+                <form name="myForm2" action="">
                     <div class="form-group ">
                         <div for="name" class="pb20">
                             <label for="name" class="fnt18 fnt-b">Giới tính</label>
@@ -104,8 +100,8 @@
                                     <button type="" class="btn"><span class="fui-calendar"></span></button>
                                 </span>
                             </div>
-                            <span ng-show="myForm2.DoB.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
-                            <span style="color:red" ng-show="myForm2.DoB.$error.required">Bạn chưa nhập ngày tháng năm sinh!</span>
+                            @*<span ng-show="myForm2.DoB.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
+                            <span style="color:red" ng-show="myForm2.DoB.$error.required">Bạn chưa nhập ngày tháng năm sinh!</span>*@
                         </div>
                         <div for="address" class="pb20">
                             <label for="address" class="fnt18 fnt-b">Địa chỉ</label>
@@ -114,13 +110,14 @@
                                        placeholder="Địa chỉ liên hệ"
                                        name="address"
                                        ng-model="UserEditInfo.Addres"
-                                       required>
+                                       required ng-maxlength="60" maxlength="60" ng-trim="true"
+                                       ng-autocomplete ng-disabled="AllEditable == false">
                                 <span class="input-group-btn">
                                     <button type="" class="btn"><span class="fui-location"></span></button>
                                 </span>
                             </div>
-                            <span ng-show="myForm2.address.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
-                            <span style="color:red" ng-show="myForm2.address.$error.required">Bạn chưa nhập địa chỉ!</span>
+                            @*<span ng-show="myForm2.address.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
+                            <span style="color:red" ng-show="myForm2.address.$error.required">Bạn chưa nhập địa chỉ!</span>*@
                         </div>
                         <div for="phonenumber" class="">
                             <label for="phonenumber" class="fnt18 fnt-b">Số điện thoại</label>
@@ -143,7 +140,10 @@
             </div>
         </div>
         <div class="pt20 pb20">
-            <a class="btn btn-primary" ng-click="submit()" href="@Url.Content("/#/user/editprofile/" + User.Identity.Name)">Lưu thiết lập</a>
+            <button class="btn btn-primary" ng-click="submit()"
+                    ng-disabled="(!myForm.$dirty && !myForm2.$dirty) || (myForm.$dirty && myForm.$invalid) ">
+                Lưu thiết lập
+            </button>
         </div>
     </div>
 

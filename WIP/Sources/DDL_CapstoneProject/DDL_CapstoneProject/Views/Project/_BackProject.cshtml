@@ -2,57 +2,18 @@
     <div id="back_project">
         <div class="container">
             <div class="title text-center">
-                <h3 class="fnt30 mb0 pb0"><a href="project_detail.html">Divinity: Original Sin 2</a></h3>
-                <p class="fnt18 mt0 pt0">by <a class="fnt-b" href="">Larian Studios LLC</a></p>
+                <h3 class="fnt30 mb0 pb0"><a href="project_detail.html">{{Project.Title}}</a></h3>
+                <p class="fnt18 mt0 pt0">by <a class="fnt-b" href="">{{Project.Creator}}</a></p>
             </div>
             <div class="row mr30 ml30">
                 <div class="col-md-8 pull-left">
-                    <p class="fnt22 fnt-b">Let's choose your reward!</p>
+                    <p class="fnt22 fnt-b">Hãy chọn gói quà!</p>
                     <div id="choose_reward">
                         <div class="form-group">
-                            @*<div class="item-radio mt20 mb20">
-                                    <div class="radio" for="radio100">
-                                        <input name="optionsRadios2" type="radio" ng-model="indexFlag" data-toggle="radio" value="0" id="radio0" ng-click="test(0)" required checked>
-                                        <div class=" row pb20">
-                                            <div class="col-md-8">
-                                                <div class="fnt18"><span class="fnt-b">No thanks, </span><span>I just want to help the project.</span></div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <!-- <p class="mt0 pt0">Estimated delivery</p>
-                                                        <p class="mt0 pt0">Dec 2016</p> -->
-                                            </div>
-                                        </div>
-                                        <!-- expand -->
-                                        <div class="item-expand pt10 bt-dash" ng-show="indexFlag == 0">
-                                            <form class="form-inline" name="helpProjectFrom" novalidate role="form">
-                                                <p class="fnt18 fnt-b pt0 pp0">Plegde Infor:</p>
-                                                <div class="form-group pb10">
-                                                    <div class="input-group pl10">
-                                                        <input type="number" class="form-control" name="PledgeAmount" ng-model="BackData.PledgeAmount" required placeholder="Nhập số tiền" value="1000" min="1000" />
-                                                        <span class="input-group-addon">VNĐ</span>
-                                                        <div ng-show="helpProjectFrom.PledgeAmount.$dirty && helpProjectFrom.PledgeAmount.$invalid" class="text-danger">
-                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                            <span ng-show="helpProjectFrom.PledgeAmount.$error.required">Bạn chưa nhập số tiền!</span>
-                                                            <span ng-show="helpProjectFrom.PledgeAmount.$error.min">Số tiền phải là chữ số và lớn hơn 1000!</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group pb10 pl10">
-                                                    <div class="input-group">
-                                                        <input type="number" class="form-control" placeholder="Nhập số lượng" value="1" min="1" />
-                                                        <span class="input-group-addon">SP</span>
-                                                    </div>
-                                                </div>
-                                                <a class="form-control btn btn-primary mb10" ng-disabled="!helpProjectFrom.$dirty || (helpProjectFrom.$dirty && helpProjectFrom.$invalid)"
-                                                   ng-click="back('free')">Continue</a>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div> <!-- item-radio -->*@
                             <div class="item-radio mt20 mb20" ng-repeat="reward in RewardPkgs">
                                 <label class="radio" for="radio{{$index + 1}}">
                                     <input name="optionsRadios2" class="custom-radio"
-                                           type="radio" ng-model="$parent.model" data-toggle="radio" value="{{$index + 1}}" id="radio{{$index + 1}}" ng-click="test($index+1)" required>
+                                           type="radio" ng-model="$parent.model" data-toggle="radio" value="{{$index + 1}}" id="radio{{$index + 1}}" ng-click="selectReward($index+1)" required>
                                     <span class="icons">
                                         <span class="icon-unchecked"></span>
                                         <span class="icon-checked"></span>
@@ -60,45 +21,65 @@
                                     <div class="row pb20">
                                         <div class="col-md-8">
                                             <div class="fnt18"><span class="fnt-b">{{reward.PledgeAmount}}</span></div>
-                                            <p>Backers: {{reward.Backers}} <span>| {{reward.Quantity}}</span></p>
-                                            <p>{{reward.Description}}</p>
+                                            <p>Đã ủng hộ: {{reward.CurrentQuantity}} <span>| {{reward.Quantity}}</span></p>
+                                            <p style="word-break: break-word;">{{reward.Description}}</p>
+                                            <p ng-if="reward.Quantity<= reward.CurrentQuantity && reward.Type == 'limited'">
+                                                <span class="label label-danger">Gói quà đã hết. Xin chọn gói quà khác!</span>
+                                            </p>
                                         </div>
                                         <div class="col-md-4" ng-show="reward.EstimatedDelivery != null">
-                                            <p class="fnt-b mt0 pt0">Estimated delivery</p>
-                                            <p class="mt0 pt0">{{reward.EstimatedDelivery | date:"dd/MM/yyyy"}}</p>
+                                            <p class="fnt-b mt0 pt0">Thời gian giao hàng ước tính</p>
+                                            <p class="mt0 pt0">{{reward.EstimatedDelivery | date:"MM/yyyy"}}</p>
                                         </div>
                                     </div>
                                     <!-- expand -->
                                     <div class="item-expand pt10 bt-dash" ng-show="indexFlag == $index + 1">
-                                        <form class="form-inline" name="rewardFrom" role="form" novalidate>
-                                            <p class="fnt18 fnt-b pt0 pp0">Plegde Infor:</p>
-                                            <div class="form-group pb10">
-                                                <div class="input-group pl10">
-
-                                                    <input type="number" class="form-control" ng-model="BackData.PledgeAmount" placeholder="Nhập số tiền" ng-trim="true" required name="PledgeAmount{{$index}}"
-                                                           value="{{reward.PledgeAmount}}" min="{{reward.PledgeAmount*BackData.Quantity}}" />
-                                                    <span class="input-group-addon">VNĐ</span>
-                                                    <div ng-show="rewardFrom.PledgeAmount{{$index}}.$dirty && rewardFrom.PledgeAmount{{$index}}.$invalid" class="text-danger">
-                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                        <span ng-show="rewardFrom.PledgeAmount{{$index}}.$error.required">Bạn chưa nhập số tiền!</span>
-                                                        <span ng-show="rewardFrom.PledgeAmount{{$index}}.$error.min">Số tiền phải là chữ số và lớn hơn {{reward.PledgeAmount*BackData.Quantity}}!</span>
+                                        <div ng-hide="reward.Quantity <= reward.CurrentQuantity && reward.Type == 'limited'">
+                                            <form class="form-inline" name="rewardFrom" role="form" novalidate>
+                                                <p class="fnt18 fnt-b pt0 pp0">Ủng hộ:</p>
+                                                <div class="form-group pb10">
+                                                    <div class="input-group pl10">
+                                                        <input type="number" class="form-control" ng-model="BackData.PledgeAmount" placeholder="Nhập số tiền" ng-trim="true" required name="PledgeAmount{{$index}}"
+                                                               min="{{reward.PledgeAmount*BackData.Quantity}}" />
+                                                        <span class="input-group-addon">&#8363;</span>
+                                                        <div ng-show="rewardFrom.PledgeAmount{{$index}}.$dirty && rewardFrom.PledgeAmount{{$index}}.$invalid" class="text-danger">
+                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                            <span ng-show="rewardFrom.PledgeAmount{{$index}}.$error.required">Bạn chưa nhập số tiền</span>
+                                                            <span ng-show="rewardFrom.PledgeAmount{{$index}}.$error.min">Số tiền phải là chữ số và lớn hơn {{reward.PledgeAmount*BackData.Quantity}}</span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group pb10 pl10">
-                                                <div class="input-group">
-                                                    <input type="number" class="form-control" ng-model="BackData.Quantity" placeholder="Nhập số lượng" name="Quantity{{$index}}" value="1" min="1" required />
-                                                    <span class="input-group-addon">SP</span>
-                                                    <div ng-show="rewardFrom.Quantity{{$index}}.$dirty && rewardFrom.Quantity{{$index}}.$invalid" class="text-danger">
-                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                        <span ng-show="rewardFrom.Quantity{{$index}}.$error.required">Bạn chưa nhập số lượng!</span>
-                                                        <span ng-show="rewardFrom.Quantity{{$index}}.$error.min">Số lượng phải là chữ số và lớn hơn 1!</span>
+                                                <div class="form-group pb10 pl10" ng-show="reward.Type != 'no reward'">
+                                                    <div class="input-group" ng-if="reward.Type != 'limited'">
+                                                        <input type="number" class="form-control" ng-model="BackData.Quantity" placeholder="Nhập số lượng" name="Quantity{{$index}}" value="1" min="1" required />
+                                                        <span class="input-group-addon">SP</span>
+                                                        <div ng-show="rewardFrom.Quantity{{$index}}.$dirty && rewardFrom.Quantity{{$index}}.$invalid" class="text-danger">
+                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                            <span ng-show="rewardFrom.Quantity{{$index}}.$error.required">Bạn chưa nhập số lượng</span>
+                                                            <span ng-show="rewardFrom.Quantity{{$index}}.$error.min">Số lượng phải là chữ số và lớn hơn 1</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-group" ng-if="reward.Type == 'limited'">
+                                                        <input type="number" class="form-control" ng-model="BackData.Quantity"
+                                                               placeholder="Nhập số lượng"
+                                                               name="Quantity{{$index}}"
+                                                               value="1" ng-min="1"
+                                                               ng-max="{{reward.Quantity - reward.CurrentQuantity}}" required />
+                                                        <span class="input-group-addon">SP</span>
+                                                        <div ng-show="rewardFrom.Quantity{{$index}}.$dirty && rewardFrom.Quantity{{$index}}.$invalid" class="text-danger">
+                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                            <span ng-show="rewardFrom.Quantity{{$index}}.$error.required">Bạn chưa nhập số lượng</span>
+                                                            <span ng-show="rewardFrom.Quantity{{$index}}.$error.min">Số lượng phải là chữ số và lớn hơn  hoặc bằng 1</span>
+                                                            <span ng-show="rewardFrom.Quantity{{$index}}.$error.max">Số lượng phải là chữ số và nhờ hơn hoặc bằng {{reward.Quantity - reward.CurrentQuantity}}</span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <a class="form-control btn btn-primary mb10" ng-disabled="(rewardFrom.$dirty && rewardFrom.$invalid)"
-                                               ng-click="back($index)">Continue</a>
-                                        </form>
+                                                <button class="form-control btn btn-primary mb10" ng-disabled="rewardFrom.$invalid && rewardFrom.$dirty"
+                                                        ng-click="back($index)">
+                                                    Tiếp tục
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </label>
                             </div> <!-- item-radio -->

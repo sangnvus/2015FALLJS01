@@ -151,6 +151,10 @@
     <Compile Include="Migrations\201510210055539_UpdateBackingBackingDetail.designer.cs">
       <DependentUpon>201510210055539_UpdateBackingBackingDetail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510220931488_CurrentQuantity.cs" />
+    <Compile Include="Migrations\201510220931488_CurrentQuantity.Designer.cs">
+      <DependentUpon>201510220931488_CurrentQuantity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Backing.cs" />
     <Compile Include="Controllers\WebControllers\HomeController.cs" />
@@ -177,9 +181,11 @@
     <Compile Include="Models\DTOs\HttpMessageDTO.cs" />
     <Compile Include="Models\DTOs\MessageDTO.cs" />
     <Compile Include="Models\DTOs\NewMessageDTO.cs" />
+    <Compile Include="Models\DTOs\NewMessageNumberDTO.cs" />
     <Compile Include="Models\DTOs\ProjectBasicViewDTO.cs" />
     <Compile Include="Models\DTOs\ProjectCreateDTO.cs" />
     <Compile Include="Models\DTOs\ProjectDetailDTO.cs" />
+    <Compile Include="Models\DTOs\ProjectInfoBackDTO.cs" />
     <Compile Include="Models\DTOs\ProjectStoryDTO.cs" />
     <Compile Include="Models\DTOs\ProjectEditDTO.cs" />
     <Compile Include="Models\DTOs\QuestionDTO.cs" />
@@ -189,6 +195,7 @@
     <Compile Include="Models\DTOs\SlideDTO.cs" />
     <Compile Include="Models\DTOs\TimeLineDTO.cs" />
     <Compile Include="Models\DTOs\UpdateLogDTO.cs" />
+    <Compile Include="Models\DTOs\UserBackInforDTO.cs" />
     <Compile Include="Models\DTOs\UserBackedInfoDTO.cs" />
     <Compile Include="Models\DTOs\UserBasicInfoDTO.cs" />
     <Compile Include="Models\DTOs\UserEditInfoDTO.cs" />
@@ -245,9 +252,14 @@
     <Content Include="App\controllers\PublicProfileController.js" />
     <Content Include="App\controllers\RegisterController.js" />
     <Content Include="App\controllers\ResetPwController.js" />
+    <Content Include="App\controllers\SearchController.js" />
     <Content Include="App\controllers\StarredProjectController.js" />
+    <Content Include="App\controllers\StatisticsController.js" />
+    <Content Include="App\directives\angular-chart.js" />
     <Content Include="App\directives\angular-morris-chart.min.js" />
     <Content Include="App\directives\elastic.js" />
+    <Content Include="App\directives\format.js" />
+    <Content Include="App\directives\loading-bar.js" />
     <Content Include="App\directives\ngAutoComplete.js" />
     <Content Include="App\directives\ngEnter.js" />
     <Content Include="App\directives\ngFileDirty.js" />
@@ -269,6 +281,7 @@
     <Content Include="Content\admin\plugin.css" />
     <Content Include="Content\angular-block-ui.css" />
     <Content Include="Content\angular-block-ui.min.css" />
+    <Content Include="Content\angular-chart.css" />
     <Content Include="Content\angular-toastr.css" />
     <Content Include="Content\angular-toastr.min.css" />
     <Content Include="Content\animate.css" />
@@ -311,6 +324,7 @@
     <Content Include="Content\images\sort_desc_disabled.png" />
     <Content Include="Content\Libraries\jquery.dataTables.min.css" />
     <Content Include="Content\Libraries\jquery.timelinr.css" />
+    <Content Include="Content\loading-bar.css" />
     <Content Include="Content\main.css" />
     <Content Include="Content\morris.css" />
     <Content Include="Content\spinner\spinner.css" />
@@ -331,6 +345,7 @@
     <Content Include="fonts\lato\lato-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\avatars\avatar_default.png" />
     <Content Include="images\avatars\avatar_test0001.jpg" />
     <Content Include="images\projects\projectimage1.jpg" />
     <Content Include="images\projects\projectimage2.jpg" />
@@ -387,6 +402,7 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\data-tables\angular-datatables.bootstrap.js" />
     <Content Include="Scripts\data-tables\angular-datatables.bootstrap.min.js" />
     <Content Include="Scripts\data-tables\angular-datatables.js" />
@@ -1188,6 +1204,7 @@
     <Content Include="fonts\glyphicons\flat-ui-icons-regular.woff" />
     <Content Include="fonts\glyphicons\selection.json" />
     <Content Include="Content\flat-ui.css.map" />
+    <None Include="Properties\PublishProfiles\dandeliondemo.pubxml" />
     <Content Include="obj\Debug\DDL_CapstoneProject.csproj.GenerateResource.Cache" />
     <Content Include="obj\Debug\DDL_CapstoneProject.csprojResolveAssemblyReference.cache" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
@@ -1205,6 +1222,7 @@
     <Content Include="Scripts\Libraries\jquery.dataTables.min.js" />
     <Content Include="Scripts\Libraries\jquery.timelinr-0.9.54.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\morris-chart\chartangular.js" />
     <Content Include="Scripts\morris-chart\morris.js" />
     <Content Include="Scripts\morris-chart\morris.min.js" />
     <Content Include="Scripts\morris-chart\raphael-min.js" />
@@ -1247,7 +1265,7 @@
     <Content Include="Views\Project\_ProjectDetail.cshtml" />
     <Content Include="Views\User\_EditProfile.cshtml" />
     <Content Include="Views\User\_PublicProfile.cshtml" />
-    <Content Include="Views\Home\Discover.cshtml" />
+    <Content Include="Views\Home\_Discover.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Login\AdminLogin.cshtml" />
     <Content Include="Views\Home\AdminIndex.cshtml" />
@@ -1258,6 +1276,8 @@
     <Content Include="Views\Project\_StarredProject.cshtml" />
     <Content Include="Views\User\_EditPassword.cshtml" />
     <Content Include="Views\Project\_PaymentProject.cshtml" />
+    <Content Include="Views\Home\_Statistics.cshtml" />
+    <Content Include="Views\Home\_Search.cshtml" />
     <Content Include="Views\Project\_BackedProjectHistory.cshtml" />
     <Content Include="Views\Project\_BackProject.cshtml" />
   </ItemGroup>
@@ -1280,6 +1300,9 @@
     <EmbeddedResource Include="obj\Debug\DDL_CapstoneProject.Migrations.InitialCreate.resources" />
     <EmbeddedResource Include="Migrations\201510210055539_UpdateBackingBackingDetail.resx">
       <DependentUpon>201510210055539_UpdateBackingBackingDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510220931488_CurrentQuantity.resx">
+      <DependentUpon>201510220931488_CurrentQuantity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

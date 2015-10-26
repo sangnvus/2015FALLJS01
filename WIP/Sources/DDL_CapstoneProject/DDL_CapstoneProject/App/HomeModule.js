@@ -3,7 +3,7 @@ var service = angular.module("DDLService", []);
 var directive = angular.module("DDLDirective", []);
 var app = angular.module("ClientApp", ["ngRoute", "ngAnimate", "ngSanitize", "DDLService",
     "DDLDirective", 'angular-loading-bar', 'textAngular', 'toastr', 'ui.bootstrap', 'monospaced.elastic',
-    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert', 'angular.morris-chart', 'blockUI']);
+    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert', 'angular.morris-chart', 'blockUI', 'chart.js']);
 
 // Show Routing.
 app.config(["$routeProvider", function ($routeProvider) {
@@ -35,12 +35,81 @@ app.config(["$routeProvider", function ($routeProvider) {
                 projectstatisticlist: ['ProjectService', function (ProjectService) {
                     return ProjectService.GetProjectStatisticList();
                 }],
-                //popularprojectwithcategory: ['ProjectService', function (ProjectService) {
-                //    return ProjectService.GetProjectByCategory();
-                //}],
                 categoryprojectcount: ['CategoryService', function (CategoryService) {
                     return CategoryService.GetCategoryProjectCount();
                 }]
+            }
+        });
+    $routeProvider.when("/statistics",
+        {
+            templateUrl: "ClientPartial/Statistics",
+            controller: 'StatisticsController',
+            resolve: {
+                projectSucesedCount: ['ProjectService', function (ProjectService) {
+                    return ProjectService.getStatisticsInfor();
+                }],
+                projectTopList: ['ProjectService', function (ProjectService) {
+                    return ProjectService.getProjectTop("All");
+                }],
+                categoryStatistic: ['CategoryService', function (CategoryService) {
+                    return CategoryService.listDataForStatistic();
+                }],
+                UserTopList: ['UserService', function (UserService) {
+                    return UserService.getUserTop("All");
+                }],
+            }
+        });
+    $routeProvider.when("/search",
+        {
+            templateUrl: "ClientPartial/Search",
+            controller: 'SearchController',
+            resolve: {
+                projectbycategory: ['ProjectService', '$route', function (ProjectService, $route) {
+                    var params = $route.current.params;
+                    console.log($route.current)
+                    if (typeof (params.categoryid) == "undefined") {
+                        params.categoryid = ["all"];
+                    }
+                    if (typeof (params.order) == "undefined") {
+                        params.order = "Magic";
+                    }
+                    var projectList = ProjectService.SearchProject("|" + params.categoryid + "|", params.order, "null");
+                    return projectList;
+                }],
+                categoryList: ['CategoryService', function (CategoryService) {
+                    return CategoryService.getAllCategories();
+                }],
+                isAdvance: ['$route', function ($route) {
+                    var params = $route.current.params;
+                    if (params.advance) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }],
+                selectedorder: ['$route', function ($route) {
+                    var params = $route.current.params;
+                    if (typeof (params.order) == "undefined") {
+                        params.order = "Magic";
+                    }
+                    return params.order;
+                }],
+                selectcategory: ['$route', function ($route) {
+                    var params = $route.current.params;
+                    if (typeof (params.categoryid) == "undefined") {
+                        params.categoryid = ["all"];
+                    }
+                    return params.categoryid;
+                }],
+                searchkey: ['$route', '$rootScope', function ($route, $rootScope) {
+                    //  console.log($rootScope);
+                    var params = $route.current.params;
+                    if (typeof (params.searchkey) == "undefined") {
+                        params.searchkey = [""];
+                    }
+                    return "di";
+                }],
+
             }
         });
     $routeProvider.when("/register",
@@ -103,7 +172,7 @@ app.config(["$routeProvider", function ($routeProvider) {
             controller: "EditProjectController",
             resolve: {
                 categories: ['$rootScope', '$route', '$q', 'CategoryService', 'CommmonService', function ($rootScope, $route, $q, CategoryService, CommmonService) {
-                    var promise = CategoryService.getCategories();
+                    var promise = CategoryService.getAllCategories();
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
                 project: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
@@ -114,17 +183,23 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/project/back/:code",
         {
+            caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/BackProject",
             controller: "BackProjectController",
             resolve: {
                 rewardPkgs: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
                     var promise = ProjectService.getRewardPkgByCode($route.current.params.code);
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
-                }]
+                }],
+                project: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
+                    var promise = ProjectService.getBackProjectInfo($route.current.params.code);
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }],
             }
         });
     $routeProvider.when("/project/payment/:code",
         {
+            caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/PaymentProject",
             controller: "PaymentProjectController",
             resolve: {
@@ -135,7 +210,11 @@ app.config(["$routeProvider", function ($routeProvider) {
                 usereditinfo: ['$rootScope', '$route', 'UserService', '$q', 'CommmonService', function ($rootScope, $route, UserService, $q, CommmonService) {
                     var promise = UserService.getProfileInformation();
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
-                }]
+                }],
+                project: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
+                    var promise = ProjectService.getBackProjectInfo($route.current.params.code);
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }],
             }
         });
     $routeProvider.when("/project/detail/:code",
@@ -151,7 +230,7 @@ app.config(["$routeProvider", function ($routeProvider) {
             }
         });
 
-    $routeProvider.when("/user/editpassword/:username",
+    $routeProvider.when("/user/editpassword/",
         {
             templateUrl: "ClientPartial/EditPassword",
             controller: 'EditPasswordController',
@@ -175,14 +254,14 @@ app.config(["$routeProvider", function ($routeProvider) {
             }
         });
 
-    $routeProvider.when("/user/editprofile/:username",
+    $routeProvider.when("/user/editprofile",
         {
             caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/EditProfile",
             controller: 'EditProfileController',
             resolve: {
                 usereditinfo: ['$rootScope', '$route', 'UserService', '$q', 'CommmonService', function ($rootScope, $route, UserService, $q, CommmonService) {
-                    var promise = UserService.getProfileInformation($route.current.params.username);
+                    var promise = UserService.getProfileInformation();
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }]
             }
@@ -252,10 +331,12 @@ app.config(["$routeProvider", function ($routeProvider) {
 
         return taOptions;
     }]);
+}]).config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
+    cfpLoadingBarProvider.includeSpinner = false;
 }]);
 
-app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOptions', 'toastrConfig', 'blockUIConfig',
-    function ($rootScope, $window, $anchorScroll, UserService, DTDefaultOptions, toastrConfig, blockUIConfig) {
+app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOptions', 'toastrConfig', 'blockUIConfig', 'MessageService',
+    function ($rootScope, $window, $anchorScroll, UserService, DTDefaultOptions, toastrConfig, blockUIConfig, MessageService) {
         $rootScope.$on('$routeChangeError', function (e, curr, prev) {
             e.preventDefault();
         });
@@ -264,6 +345,25 @@ app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOpti
         $rootScope.$on("$locationChangeStart", function () {
             $anchorScroll();
         });
+
+        //$rootScope.$on('$routeChangeSuccess', function (e, curr, prev) {
+            //if ($rootScope.UserInfo.IsAuthen === true) {
+            //    var promiseGet = MessageService.getNumberNewMessage();
+            //    promiseGet.then(
+            //        function (result) {
+            //            if (result.data.Status === "success") {
+            //                // Save authen info into $rootScope
+            //                $rootScope.UserInfo.NumberNewMessage = result.data.Data;
+            //                $rootScope.UserInfo.NumberNewMessage.Total = result.data.Data.ReceivedMessage + result.data.Data.SentMessage;
+            //            } else {
+            //                $rootScope.UserInfo.NumberNewMessage = 0;
+            //            }
+            //        },
+            //        function (error) {
+            //            $rootScope.UserInfo.NumberNewMessage = 0;
+            //        });
+            //}
+        //});
 
         // Set language for table
         DTDefaultOptions.setLanguage({
@@ -293,8 +393,13 @@ app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOpti
         // Config angular-blockui.
         blockUIConfig.delay = 100;
         blockUIConfig.blockBrowserNavigation = true;
-        blockUIConfig.template = '<div class="spinner-loader">aaa…</div>';
-
+        // Tell the blockUI service to ignore certain requests
+        blockUIConfig.requestFilter = function (config) {
+            // If the request starts with '/api/UserApi/GetListUserName' ...
+            if (config.url.match(/^\/api\/UserApi\/GetListUserName($|\/).*/)) {
+                return false; // ... don't block it.
+            }
+        };
         // Config angular toarstr.
         angular.extend(toastrConfig, {
             maxOpened: 2,
