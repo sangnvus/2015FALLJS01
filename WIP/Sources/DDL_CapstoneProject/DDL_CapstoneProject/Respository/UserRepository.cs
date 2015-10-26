@@ -360,6 +360,7 @@ namespace DDL_CapstoneProject.Respository
             return true;
         }
 
+        // 22/10/2015 - MaiCTP - get User info for projectBacked page
         public UserBackedInfoDTO GetBackedUserInfo(string userName)
         {
             var currentUser = (from user in db.DDL_Users

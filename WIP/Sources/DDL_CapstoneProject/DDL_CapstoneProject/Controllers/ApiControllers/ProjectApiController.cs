@@ -1100,6 +1100,44 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
         }
 
+        //  24/10/2015 - MaiCTP - Get BackingInfo
+        [HttpGet]
+        [ResponseType(typeof(BackingInfoDTO))]
+        public IHttpActionResult GetBackingInfo(int projectId)
+        {
+            List<BackingInfoDTO> listBacking = new List<BackingInfoDTO>();
+
+
+            if (!ModelState.IsValid)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Chưa đăng nhập", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
+            try
+            {
+                listBacking = ProjectRepository.Instance.BackingInfo(projectId);
+
+
+            }
+            catch (ProjectNotFoundException)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Missing Backing information", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = listBacking });
+        }
+
+
 
 
         [HttpGet]

@@ -37,7 +37,7 @@
                             &nbsp;&nbsp;
                         </div>
                         <div class="progress mt5 mb5">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="50" aria-valuemax="100" style="width: 50%">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: 50%">
                                 <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
                             </div>
                         </div>
@@ -47,14 +47,19 @@
                             <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">ngày còn lại</p></li>
                         </ul>
                     </div>
+
+
                     <div class="titleHoverItem">
-                        <a href="../#/project/starredProject" ng-click="deleteReminded(project.ProjectID)"><i class="fa fa-times"></i></a>
+
+                        <a href="javascript:window.location.reload();" ng-click="deleteReminded(project.ProjectID)"><i class="fa fa-times"></i></a>
+
                     </div><!-- end hover Reward -->
-                </div>
+                </div>    
+                
 
 
 </ul>
-    <div ng-if="length==0">Bạn chưa theo dõi dự án nào</div>
+  
         <div class="clearfix"></div>
     </section><!--/#portfolio-->
 </div>

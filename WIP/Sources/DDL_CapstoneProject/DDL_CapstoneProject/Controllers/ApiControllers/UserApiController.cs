@@ -285,7 +285,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "", Data = userPass });
         }
 
-        public IHttpActionResult GetUserBackedInfo()
+        public IHttpActionResult GetBackedUserInfo()
         {
             UserBackedInfoDTO userCurrent = null;
             if (!ModelState.IsValid)

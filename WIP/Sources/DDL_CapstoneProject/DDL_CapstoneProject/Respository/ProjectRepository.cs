@@ -604,7 +604,25 @@ namespace DDL_CapstoneProject.Respository
 
         }
 
-        // 19/10/2015 - MaiCTP - Get BackedHistoryUser
+        // 24/10/2015 - MaiCTP - Get BackingInfo
+        public List<BackingInfoDTO> BackingInfo(int projectId)
+        { 
+            var Backing = (from backing in db.Backings
+                            from rewad in db.RewardPkgs
+                           where backing.ProjectID == projectId && rewad.RewardPkgID==backing.BackingDetail.RewardPkgID
+                           select new BackingInfoDTO
+                           {
+                             
+                               RewadDiscription = rewad.Description,
+                               PledgeAmount = rewad.PledgeAmount,
+                               Quantity = backing.BackingDetail.Quantity,
+                               BackedDate = backing.BackedDate,
+                               TotalAmount = backing.BackingDetail.Quantity * rewad.PledgeAmount,
+                               BackingDiscription = backing.BackingDetail.Description
+                           }).Distinct().ToList();
+            return Backing;
+
+        }
 
         // 17/10/2015 - MaiCTP - Get BackedProject
         public List<ProjectBasicViewDTO> GetBackedProject(String userName)
@@ -715,6 +733,35 @@ namespace DDL_CapstoneProject.Respository
 
             return true;
         }
+
+        //// 22/10/2015 - MaiCTP - Get BackedProjectDetail
+        //public List<ProjectBasicViewDTO> GetBackedProjectDetail(String userName)
+        //{
+
+        //    var Project = (from backing in db.Backings
+        //                   where backing.User.Username == userName && project.ProjectID == backing.ProjectID
+        //                   select new ProjectBasicViewDTO
+        //                   {
+        //                       ProjectID = project.ProjectID,
+        //                       Title = project.Title,
+        //                       CreatorName = project.Creator.UserInfo.FullName,
+        //                       ImageUrl = project.ImageUrl,
+        //                       SubDescription = project.SubDescription,
+        //                       Location = project.Location,
+        //                       CurrentFunded = Decimal.Round((project.CurrentFunded / project.FundingGoal) * 100),
+        //                       CurrentFundedNumber = project.CurrentFunded,
+        //                       ExpireDate = DbFunctions.DiffDays(DateTime.Now, project.ExpireDate),
+        //                       FundingGoal = project.FundingGoal,
+        //                       Category = project.Category.Name,
+        //                       Backers = project.Backings.Count,
+        //                       CreatedDate = project.CreatedDate,
+        //                       PopularPoint = project.PopularPoint
+        //                   }).Distinct().ToList();
+
+
+        //    return Project;
+
+        //}
 
         public void RemindProject(string userName, string projectCode)
         {
