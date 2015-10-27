@@ -42,8 +42,10 @@
                             &nbsp;&nbsp;
                         </div>
                         <div class="progress mt5 mb5">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: 50%">
-                                <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
+                            <div class="progress mt5 mb5">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
+                                    <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
+                                </div>
                             </div>
                         </div>
                         <ul class="list-inline">
@@ -52,6 +54,7 @@
                             <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">ngày còn lại</p></li>
                         </ul>
                     </div>
+                   
                 </div>
             </li><!--/.portfolio-item-->
 

@@ -910,6 +910,7 @@ namespace DDL_CapstoneProject.Respository
                                select new ProjectBasicViewDTO
                 {
                     ProjectID = project.ProjectID,
+                    ProjectCode = project.ProjectCode,
                     CreatorName = project.Creator.UserInfo.FullName,
                     Title = project.Title,
                     CurrentFunded = project.CurrentFunded,
@@ -957,6 +958,7 @@ namespace DDL_CapstoneProject.Respository
                                select new ProjectBasicViewDTO
                                {
                                    ProjectID = project.ProjectID,
+                                   ProjectCode = project.ProjectCode,
                                    Title = project.Title,
                                    CreatorName = project.Creator.UserInfo.FullName,
                                    ImageUrl = project.ImageUrl,
@@ -972,8 +974,9 @@ namespace DDL_CapstoneProject.Respository
                                    PopularPoint = project.PopularPoint
                                }).Distinct().ToList();
 
-
+                
                 return Project;
+
             }
 
         }
