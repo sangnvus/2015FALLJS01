@@ -77,7 +77,7 @@
 <!-- Advanced Modal Trigger -->
 <!-- Flex Modal -->
 <!--Modal add new category-->
-<div class="modal modal-flex fade" id="newCategoryModal" tabindex="-1" role="dialog" aria-labelledby="flexModalLabel" aria-hidden="true">
+<div class="modal modal-flex fade" id="newCategoryModal" tabindex="-1" role="dialog" aria-labelledby="flexModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <form role="form" name="NewCategoryForm" novalidate>
@@ -90,44 +90,46 @@
                 <div class="modal-body">
                     <!--Category Name-->
                     <div class="form-group has-feedback">
-                        <label for="CategoryName">Tên danh mục:</label>
+                        <label for="CategoryName">Tên danh mục(*):</label>
                         <input type="text" class="form-control" id="CategoryName" name="Name" placeholder="..." ng-model="NewCategory.Name"
                                ng-trim="true"
                                required
+                               ng-model-options="{ updateOn: 'change blur'}"
                                ng-maxlength="40"
                                max-length="40"
-                               ng-minlength="5"/>
+                               ng-minlength="5" />
                         <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-if="NewCategoryForm.Name.$dirty && NewCategoryForm.Name.$valid"></span>
                         <div ng-show="NewCategoryForm.Name.$dirty && NewCategoryForm.Name.$invalid" class="text-danger">
                             <span class="glyphicon glyphicon-remove text-danger"></span>
-                            <span ng-show="NewCategoryForm.Name.$error.required">Bạn chưa nhập tên danh mục!</span>
-                            <span ng-show="NewCategoryForm.Name.$error.minlength">Tên danh mục chỉ từ 5 đến 40 kí tự!</span>
-                            <span ng-show="NewCategoryForm.Name.$error.maxlength">Tên danh mục chỉ từ 5 đến 40 kí tự!</span>
+                            <span ng-show="NewCategoryForm.Name.$error.required">Bạn chưa nhập tên danh mục</span>
+                            <span ng-show="NewCategoryForm.Name.$error.minlength">Tên danh mục chỉ từ 5 đến 40 kí tự</span>
+                            <span ng-show="NewCategoryForm.Name.$error.maxlength">Tên danh mục chỉ từ 5 đến 40 kí tự</span>
                         </div>
                     </div>
                     <!--Description-->
                     <div class="form-group has-feedback">
-                        <label for="CategoryDescription">Mô tả:</label>
+                        <label for="CategoryDescription">Mô tả(*):</label>
                         <textarea class="form-control" id="CategoryDescription" name="Description"
                                   placeholder="..." ng-model="NewCategory.Description" style="resize: none"
                                   ng-trim="true"
                                   required
+                                  ng-model-options="{ updateOn: 'change blur'}"
                                   ng-maxlength="200"
                                   max-length="200"
-                                  ng-minlenght="10"
+                                  ng-minlength="10"
                                   msd-elastic="\n"></textarea>
                         <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-if="NewCategoryForm.Description.$dirty && NewCategoryForm.Description.$valid"></span>
                         <div ng-show="NewCategoryForm.Description.$dirty && NewCategoryForm.Description.$invalid" class="text-danger">
                             <span class="glyphicon glyphicon-remove text-danger"></span>
-                            <span ng-show="NewCategoryForm.Description.$error.required">Bạn chưa nhập mô tả!</span>
-                            <span ng-show="NewCategoryForm.Description.$error.minlength">Mô tả từ 10 đến 200 kí tự!</span>
+                            <span ng-show="NewCategoryForm.Description.$error.required">Bạn chưa nhập mô tả</span>
+                            <span ng-show="NewCategoryForm.Description.$error.minlength">Mô tả từ 10 đến 200 kí tự</span>
                             <span ng-show="NewCategoryForm.Description.$error.maxlength">Mô tả từ 10 đến 200 kí tự!</span>
                         </div>
                     </div>
                     <!--Error Message-->
                     <div class="alert alert-danger alert-dismissible" role="alert" ng-show="NewCategoryError != null">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                        <span class="sr-only">Error:</span>
+                        <span class="sr-only">Lỗi:</span>
                         {{NewCategoryError}}
                     </div>
                 </div>
@@ -158,7 +160,7 @@
                     <input type="hidden" ng-model="EditCategory.CategoryID" />
                     <!--Category Name-->
                     <div class="form-group has-feedback">
-                        <label for="CategoryName2">Tên danh mục:</label>
+                        <label for="CategoryName2">Tên danh mục(*):</label>
                         <input type="text" class="form-control" id="CategoryName2" name="Name"
                                placeholder="..." ng-model="EditCategory.Name"
                                ng-trim="true"
@@ -170,14 +172,14 @@
                         <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-if="EditCategoryForm.Name.$dirty && EditCategoryForm.Name.$valid"></span>
                         <div ng-show="EditCategoryForm.Name.$dirty && EditCategoryForm.Name.$invalid" class="text-danger">
                             <span class="glyphicon glyphicon-remove text-danger"></span>
-                            <span ng-show="EditCategoryForm.Name.$error.required">Bạn chưa nhập tên danh mục!</span>
-                            <span ng-show="EditCategoryForm.Name.$error.minlength">Tên danh mục chỉ từ 5 đến 40 kí tự!</span>
-                            <span ng-show="EditCategoryForm.Name.$error.maxlength">Tên danh mục chỉ từ 5 đến 40 kí tự!</span>
+                            <span ng-show="EditCategoryForm.Name.$error.required">Bạn chưa nhập tên danh mục</span>
+                            <span ng-show="EditCategoryForm.Name.$error.minlength">Tên danh mục chỉ từ 5 đến 40 kí tự</span>
+                            <span ng-show="EditCategoryForm.Name.$error.maxlength">Tên danh mục chỉ từ 5 đến 40 kí tự</span>
                         </div>
                     </div>
                     <!--Description-->
                     <div class="form-group has-feedback">
-                        <label for="CategoryDescription2">Mô tả:</label>
+                        <label for="CategoryDescription2">Mô tả(*):</label>
                         <textarea class="form-control" id="CategoryDescription2" name="Description"
                                   placeholder="..." ng-model="EditCategory.Description" style="resize: none"
                                   ng-trim="true"
@@ -190,9 +192,9 @@
                         <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-if="EditCategoryForm.Description.$dirty && EditCategoryForm.Description.$valid"></span>
                         <div ng-show="EditCategoryForm.Description.$dirty && EditCategoryForm.Description.$invalid" class="text-danger">
                             <span class="glyphicon glyphicon-remove text-danger"></span>
-                            <span ng-show="EditCategoryForm.Description.$error.required">Bạn chưa nhập mô tả!</span>
-                            <span ng-show="EditCategoryForm.Description.$error.minlength">Mô tả từ 10 đến 200 kí tự!</span>
-                            <span ng-show="EditCategoryForm.Description.$error.maxlength">Mô tả từ 10 đến 200 kí tự!</span>
+                            <span ng-show="EditCategoryForm.Description.$error.required">Bạn chưa nhập mô tả</span>
+                            <span ng-show="EditCategoryForm.Description.$error.minlength">Mô tả từ 10 đến 200 kí tự</span>
+                            <span ng-show="EditCategoryForm.Description.$error.maxlength">Mô tả từ 10 đến 200 kí tự</span>
                         </div>
                     </div>
                     <!--Error Message-->

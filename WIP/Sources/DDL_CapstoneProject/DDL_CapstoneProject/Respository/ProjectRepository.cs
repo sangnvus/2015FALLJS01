@@ -90,7 +90,6 @@ namespace DDL_CapstoneProject.Respository
                 if (isFunded == null) isFunded = "";
 
 
-                DateTime currentDate = DateTime.Now;
                 var ProjectList = from project in db.Projects
                                   where
                                       (categoryidList.ToLower().Contains("all") ||
@@ -108,7 +107,7 @@ namespace DDL_CapstoneProject.Respository
                                       Location = project.Location,
                                       CurrentFunded = Decimal.Round((project.CurrentFunded / project.FundingGoal) * 100),
                                       CurrentFundedNumber = project.CurrentFunded,
-                                      ExpireDate = DbFunctions.DiffDays(DateTime.Now, project.ExpireDate),
+                                      ExpireDate = DbFunctions.DiffDays(DateTime.UtcNow, project.ExpireDate),
                                       FundingGoal = project.FundingGoal,
                                       Category = project.Category.Name,
                                       Backers = project.Backings.Count,
@@ -122,7 +121,9 @@ namespace DDL_CapstoneProject.Respository
                 }
                 var listProject = orderBy(order, ProjectList).Take(take + from).ToList();
                 listProject.RemoveRange(0, from);
-                return listProject.ToList();
+                // Convert datetime to GMT+7
+                listProject.ForEach(x => x.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(x.CreatedDate));
+                return listProject;
             }
         }
 

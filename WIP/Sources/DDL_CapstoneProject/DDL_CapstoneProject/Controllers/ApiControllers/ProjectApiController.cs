@@ -70,7 +70,8 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
 
             var projectJson = httpRequest.Form["project"];
-            var project = new JavaScriptSerializer().Deserialize<ProjectEditDTO>(projectJson);
+            var serializer = new JavaScriptSerializer { MaxJsonLength = Int32.MaxValue };
+            var project = serializer.Deserialize<ProjectEditDTO>(projectJson);
 
             if (project == null)
             {

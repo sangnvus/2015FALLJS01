@@ -30,7 +30,7 @@ service.service("AdminCategoryService", function ($http) {
         return request;
     }
 
-    // Add new category
+    // delete category
     this.deleteCategory = function (id) {
         var request = $http({
             method: 'delete',
