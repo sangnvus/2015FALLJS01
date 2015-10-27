@@ -272,6 +272,19 @@ app.config(["$routeProvider", function ($routeProvider) {
              }
          });
 
+    $routeProvider.when("/project/listBacker",
+        {
+            caseInsensitiveMatch: true,
+            templateUrl: "ClientPartial/ListBacker",
+            controller: 'ListBackerController',
+            resolve: {
+                projects: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
+                    var promise = ProjectService.getListBacker();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
+            }
+        });
+
     $routeProvider.when("/project/starredProject",
        {
            caseInsensitiveMatch: true,

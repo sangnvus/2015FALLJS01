@@ -15,13 +15,13 @@
 <div id="items-projects">
     <section id="portfolio" class="container">
         <h4 class="pt30">Dự án theo dõi</h4>
-    <ul ng-if="length==0">Bạn hiện không theo dõi dự án nào</ul>
         <ul class="portfolio-items col-4">
+            <li ng-if="length==0">Bạn hiện không theo dõi dự án nào</li>
             <li class="portfolio-item apps" ng-repeat="project in ListStarredProject">
                 
                 <div class="item-inner">
                     <div class="item-image hover01 column">
-                        <a href="project_detail.html"><figure><img class="img-fit" src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
+                        <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
                     </div>
                     <div class="item-title">
                         <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
@@ -51,7 +51,7 @@
 
                     <div class="titleHoverItem">
 
-                        <a href="javascript:window.location.reload();" ng-click="deleteReminded(project.ProjectID)"><i class="fa fa-times"></i></a>
+                        <a href="" ng-click="deleteReminded($index)"><i class="fa fa-times"></i></a>
 
                     </div><!-- end hover Reward -->
                 </div>    

@@ -1056,7 +1056,7 @@ namespace DDL_CapstoneProject.Respository
 
             using (var db = new DDLDataContext())
             {
-                var deleteProjectReminded = db.Reminds.SingleOrDefault(x => x.ProjectID == projectID);
+                var deleteProjectReminded =  db.Reminds.FirstOrDefault(x => x.ProjectID == projectID);
 
                 if (deleteProjectReminded == null)
                 {

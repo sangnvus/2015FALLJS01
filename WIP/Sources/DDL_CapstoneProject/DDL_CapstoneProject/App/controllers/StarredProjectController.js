@@ -2,15 +2,14 @@
 
 app.controller('StarredProjectController', function ($scope, project, toastr, ProjectService) {
     $scope.ListStarredProject = project.data.Data;
-    //$scope.length = $scope.ListStarredProject.length;
-    $scope.length = $scope.ListStarredProject.length;
-    $scope.deleteReminded = function (projectID) {
-        var promiseDeleteReminded = ProjectService.deleteReminded(projectID);
+    $scope.deleteReminded = function (index) {
+        var promiseDeleteReminded = ProjectService.deleteReminded($scope.ListStarredProject[index].ProjectID);
 
         promiseDeleteReminded.then(
             function (result) {
                 
-                if (result.data.Status === "success") {                  
+                if (result.data.Status === "success") {
+                    $scope.ListStarredProject.splice(index, 1);
                     toastr.success('Xóa thành công!', 'Thành công!');
                 } else {
                     $scope.Error = result.data.Message;
@@ -22,4 +21,5 @@ app.controller('StarredProjectController', function ($scope, project, toastr, Pr
                 toastr.error($scope.Error, 'Lỗi!');
             });
     };
+    $scope.length = $scope.ListStarredProject.length;
 });
