@@ -646,7 +646,10 @@ namespace DDL_CapstoneProject.Respository
                 rewardPkg.CurrentQuantity += backingDetail.Quantity;
 
                 // Set project is funded
-                project.IsFunded = true;
+                if (project.CurrentFunded >= project.FundingGoal)
+                {
+                    project.IsFunded = true;
+                }
 
                 db.SaveChanges();
 
@@ -728,7 +731,7 @@ namespace DDL_CapstoneProject.Respository
                 // Get rewardPkg list
                 var projectList = (from Project in db.Projects
                                    where Project.Status != DDLConstants.ProjectStatus.DRAFT
-                                   orderby Project.CreatedDate descending
+                                   orderby Project.CreatedDate ascending 
                                    select new ProjectBasicListDTO
                                    {
                                        ProjectCode = Project.ProjectCode,
@@ -747,6 +750,25 @@ namespace DDL_CapstoneProject.Respository
                 projectList.ForEach(x => x.ExpireDate = CommonUtils.ConvertDateTimeFromUtc(x.ExpireDate.GetValueOrDefault()));
 
                 return projectList;
+            }
+        }
+
+        public bool AdminChangeProjectStatus(ProjectEditDTO project)
+        {
+            using (var db = new DDLDataContext())
+            {
+                var updateProject = db.Projects.SingleOrDefault(x => x.ProjectID == project.ProjectID);
+
+                if (updateProject == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                updateProject.Status = project.Status;
+
+                db.SaveChanges();
+
+                return true;
             }
         }
         #endregion

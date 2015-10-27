@@ -6,15 +6,15 @@
         <div class="portlet portlet-default">
             <div class="portlet-heading">
                 <div class="portlet-title">
-                    <h4>Projects List</h4>
+                    <h4>Danh sách dự án</h4>
                 </div>
                 <div class="portlet-widgets">
-                    <a href="#" class="btn btn-blue btn-sm">Export</a>
-                    <a data-toggle="collapse" data-parent="#accordion" href="#NewProjectTable"><i class="fa fa-chevron-down"></i></a>
+                    <a onclick="return false" href="" class="btn btn-blue btn-sm">Export</a>
+                    <a onclick="return false" data-toggle="collapse" data-parent="#accordion" href="#NewProjectTable"><i class="fa fa-chevron-down"></i></a>
                 </div>
                 <div class="clearfix"></div>
             </div>
-            <div id="#NewProjectTable">
+            <div id="NewProjectTable">
                 <div class="portlet-body">
                     <div class="table-responsive">
                         <table id="example-table" class="table table-striped table-bordered table-hover table-green"
@@ -26,11 +26,11 @@
                                     <th>Lĩnh vực</th>
                                     <th>Người tạo</th>
                                     <th>Mục tiêu</th>
-                                    <th>Kì hạn</th>
+                                    <th>Ngày kết thúc</th>
                                     <th>Lượt ủng hộ</th>
                                     <th>Tiền được ủng hộ</th>
                                     <th>Trạng thái</th>
-                                    <th>Action</th>
+                                    <th>Hành động</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,10 +41,10 @@
                                     <td class="center">{{project.CreatorEmail}}</td>
                                     <td class="center">{{project.FundingGoal}}</td>
                                     <td class="center">{{project.ExpireDate}}</td>
-                                    <td class="center">{{project.TotalBacking}}</td>
-                                    <td class="center">{{project.PledgeAmount}}</td>
+                                    <td class="center">{{project.TotalBacking | currency:"":0}}</td>
+                                    <td class="center">{{project.PledgeAmount | currency:"":0}}</td>
                                     <td class="center">
-                                        <span class="label label-success center-block">{{project.Status}}</span>
+                                        <span class="label label-success center-block" style="padding: 9px">{{project.Status}}</span>
                                     </td>
                                     <td class="center">
                                         <a href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")">

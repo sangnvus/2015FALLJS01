@@ -228,7 +228,7 @@
                                                         <p class="fnt16 mt0 mb0">trên tổng số</p>
                                                     </li>
                                                     <li>
-                                                        <p class="fnt16 fnt-b mt0 mb0 c00">{{Project.CurrentFunded}}</p>
+                                                        <p class="fnt16 fnt-b mt0 mb0 c00">{{Project.CurrentFunded | currency:"":0}}</p>
                                                         <p class="fnt16 mt0 mb0">đã được gây quỹ</p>
                                                     </li>
                                                     <li>
@@ -267,10 +267,10 @@
 
                                         <div class="col-md-10">
                                             <div style="background: #FFF; border: 1px solid eee; padding: 10px; border-radius: 6px">
-                                                <p class="fnt-b mt0 mb0">Ủng hộ {{rewardPkg.PledgeAmount | currency}}&#8363; hoặc hơn</p>
-                                                <p class="mt0 mb0">{{rewardPkg.CurrentQuantity}} Đã ủng hộ <span ng-if="rewardPkg.Type == 'limited'">| Giới hạn: {{rewardPkg.Quantity}}</span><span ng-if="rewardPkg.Type == 'unlimited'">| Không giới hạn</span></p>
+                                                <p class="fnt-b mt0 mb0">Ủng hộ {{rewardPkg.PledgeAmount | currency:"":0}}&#8363; hoặc hơn</p>
+                                                <p class="mt0 mb0">{{rewardPkg.CurrentQuantity | currency:"":0}} Đã ủng hộ <span ng-if="rewardPkg.Type == 'limited'">| Giới hạn: {{rewardPkg.Quantity | currency:"":0}}</span><span ng-if="rewardPkg.Type == 'unlimited'">| Không giới hạn</span></p>
                                                 <p class="mt0 mb0">{{rewardPkg.Description}}</p>
-                                                <p class="mt0 mb0 pb0 pt0" ng-show="rewardPkg.Type != 'no reward'">Ngày giao: {{rewardPkg.EstimatedDelivery | date:'MM-yyyy'}}</p>
+                                                <p class="mt0 mb0 pb0 pt0" ng-show="rewardPkg.Type != 'no reward'">Thời gian giao hàng: {{rewardPkg.EstimatedDelivery | date:'MM-yyyy'}}</p>
                                                 <p class="mt0 mb0 pb0 pt0">Kiểu: {{rewardPkg.Type}}</p>
                                                 <p class="mt0 mb0" ng-show="rewardPkg.IsHide == true"><span class="label label-warning">Hidden</span></p>
                                             </div>
@@ -315,7 +315,7 @@
                                                                     <span class="glyphicon glyphicon-remove text-danger"></span>
                                                                     <span>Phải là chữ số và lớn hơn 1,000!</span>
                                                                 </div>*@
-                                                            <p>Mức ủng hộ ít nhất là 1000&#8363;.</p>
+                                                            <p>Mức ủng hộ ít nhất là 1,000&#8363;.</p>
                                                         </div>
                                                     </div> <!-- end Pledge amount -->
                                                     <div class="row pb5">
@@ -332,11 +332,11 @@
                                                         </div>
                                                     </div> <!-- end Description -->
                                                     <div class="row pt5 pb5" ng-show="selectedType.value != 'no reward'">
-                                                        <div class="col-md-4">Ngày giao</div>
+                                                        <div class="col-md-4">Thời gian giao hàng</div>
                                                         <div class="col-md-8">
                                                             @*<input type="month" class="form-control" min="{{toDay |  date:'yyyy-MM'}}" style="line-height: 15px;" name="deadline"
                                                                 ng-model="editPkg.EstimatedDelivery">*@
-                                                            <input type="month" class="form-control" style="line-height: 15px;" name="deadline"
+                                                            <input type="month" class="form-control" min="{{editPkg.EstimatedDelivery | date:'yyyy-MM'}}" style="line-height: 15px;" name="deadline"
                                                                    ng-model="editPkg.EstimatedDelivery">
                                                             <div ng-show="EditRewardModal.deadline.$dirty && EditRewardModal.deadline.$invalid" class="text-danger">
                                                                 <span class="glyphicon glyphicon-remove text-danger"></span>
@@ -421,11 +421,11 @@
                                                                 </div>
                                                             </div> <!-- end Description -->
                                                             <div class="row pt5 pb5" ng-show="NewReward.Type != 'no reward'">
-                                                                <div class="col-md-4">Ngày giao</div>
+                                                                <div class="col-md-4">Thời gian giao hàng</div>
                                                                 <div class="col-md-8">
                                                                     @*<input type="month" min="{{toDay |  date:'yyyy-MM'}}" class="form-control delivery-date" style="line-height: 15px;"
                                                                         name="NewRewardDelivery" ng-model="NewReward.EstimatedDelivery">*@
-                                                                    <input type="month" class="form-control delivery-date" style="line-height: 15px;"
+                                                                    <input type="month" min="{{toDay |  date:'yyyy-MM'}}" value="{{toDay | date:'yyyy-MM'}}" class="form-control delivery-date" style="line-height: 15px;"
                                                                            name="NewRewardDelivery" ng-model="NewReward.EstimatedDelivery">
                                                                     <div ng-show="CreateRewardForm.NewRewardDelivery.$dirty && CreateRewardForm.NewRewardDelivery.$invalid" class="text-danger">
                                                                         <span class="glyphicon glyphicon-remove text-danger"></span>
