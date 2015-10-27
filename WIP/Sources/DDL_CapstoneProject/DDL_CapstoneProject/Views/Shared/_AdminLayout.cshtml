@@ -33,6 +33,24 @@
 
         .table-responsive {
             overflow: inherit;
+            border: none;
+        }
+
+        .table-responsive th {
+            text-align: center;
+            vertical-align: top !important;
+        }
+
+        .table-responsive td {
+            word-break: break-all;
+        }
+
+        table.dataTable thead .sorting:after, 
+        table.dataTable thead .sorting_asc:after, 
+        table.dataTable thead .sorting_desc:after, 
+        table.dataTable thead .sorting_asc_disabled:after, 
+        table.dataTable thead .sorting_desc_disabled:after {
+            top: 8px;
         }
     </style>
 </head>
@@ -203,7 +221,7 @@
                     <!-- end CATEGORIES DROPDOWN -->
                     <!-- begin SLIDERS DROPDOWN -->
                     <li class="panel">
-                        <a href="slider.html" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#charts">
+                        <a href="~/admin/#/slide/" ng-class="{'active': Page.activeTab == 'slide'}">
                             <i class="fa fa-bar-chart-o"></i> Slider
                             <!-- <i class="fa fa-caret-down"></i> -->
                         </a>

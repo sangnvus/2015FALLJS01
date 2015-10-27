@@ -309,6 +309,22 @@ app.config(["$routeProvider", function ($routeProvider) {
               }]
           }
       });
+
+    $routeProvider.when("/slide",
+        {
+            templateUrl: "/AdminPartial/Slide",
+            controller: 'AdminSlideController',
+            activeTab: 'slide',
+            breadcrumb: ['Quản lý Slide', 'Danh sách Slide'],
+            title: 'Quản lý Slide',
+            resolve: {
+                slides: ['$rootScope', '$q', 'AdminSlideService', 'CommmonService', function ($rootScope, $q, AdminSlideService, CommmonService) {
+                    var promise = AdminSlideService.getSlides();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
+            }
+        });
+
     $routeProvider.otherwise({
         redirectTo: "/"
     });

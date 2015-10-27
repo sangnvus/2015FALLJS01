@@ -37,5 +37,11 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         {
             return PartialView("~/Views/AdminPartial/Project/_ProjectDetail.cshtml");
         }
+        
+        // GET: AdminPartial/Category
+        public ActionResult Slide()
+        {
+            return PartialView("~/Views/AdminPartial/_Slide.cshtml");
+        }
     }
 }

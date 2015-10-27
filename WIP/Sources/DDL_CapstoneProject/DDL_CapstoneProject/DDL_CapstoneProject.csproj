@@ -240,6 +240,7 @@
     <Content Include="App\controllers\admin\AdminProjectDashboardController.js" />
     <Content Include="App\controllers\admin\AdminProjectDetailController.js" />
     <Content Include="App\controllers\admin\AdminProjectListController.js" />
+    <Content Include="App\controllers\admin\AdminSlideController.js" />
     <Content Include="App\controllers\BackedHistoryProjectController.js" />
     <Content Include="App\controllers\EditPasswordController.js" />
     <Content Include="App\controllers\BackProjectController.js" />
@@ -279,6 +280,7 @@
     <Content Include="App\HomeModule.js" />
     <Content Include="App\services\Admin\AdminCategoryService.js" />
     <Content Include="App\services\Admin\AdminProjectService.js" />
+    <Content Include="App\services\Admin\AdminSlideService.js" />
     <Content Include="App\services\CategoryService.js" />
     <Content Include="App\services\CommonService.js" />
     <Content Include="App\services\ProjectService.js" />
@@ -1292,6 +1294,7 @@
     <Content Include="Views\AdminPartial\Project\_ProjectDashboard.cshtml" />
     <Content Include="Views\AdminPartial\Project\_ProjectDetail.cshtml" />
     <Content Include="Views\AdminPartial\Project\_ProjectList.cshtml" />
+    <Content Include="Views\AdminPartial\_Slide.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />
