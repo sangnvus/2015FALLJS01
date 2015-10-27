@@ -18,31 +18,45 @@
                                             <input type="text" class="form-control" name="fullname" required
                                                    ng-trim="true"
                                                    ng-minlength="6"
-                                                   ng-maxlength="30" placeholder="Name..." ng-model="UserBasicInfo.FullName">
+                                                   ng-model-options="{ updateOn: 'change blur'}"
+                                                   ng-maxlength="30"
+                                                   placeholder="Name..."
+                                                   ng-model="UserBasicInfo.FullName">
                                             <span ng-show="paymentFrom.fullname.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
-                                            <span style="color:red" ng-show="paymentFrom.fullname.$error.required">Bạn chưa nhập tên đầy đủ!</span>
-                                            <span style="color:red" ng-show="paymentFrom.fullname.$error.minlength">Tên đầy đủ tối thiểu 6 kí tự!</span>
-                                            <span style="color:red" ng-show="paymentFrom.fullname.$error.maxlength">Tên đầy đủ tối đa 20 kí tự!</span>
+                                            <span style="color:red" ng-show="paymentFrom.fullname.$error.required">Bạn chưa nhập tên đầy đủ</span>
+                                            <span style="color:red" ng-show="paymentFrom.fullname.$error.minlength">Tên đầy đủ tối thiểu 6 kí tự</span>
+                                            <span style="color: red" ng-show="paymentFrom.fullname.$error.maxlength">Tên đầy đủ tối đa 20 kí tự</span>
                                             <br>
                                             <input type="email" class="form-control" name="email" placeholder="Email..." ng-model="UserBasicInfo.Email" required>
                                             <span ng-show="paymentFrom.email.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
-                                            <span style="color:red" ng-show="paymentFrom.email.$error.required">Bạn chưa nhập email!</span>
-                                            <span style="color:red" ng-show="paymentFrom.email.$error.email">Email không đúng định dạng!</span>
+                                            <span style="color:red" ng-show="paymentFrom.email.$error.required">Bạn chưa nhập email</span>
+                                            <span style="color: red" ng-show="paymentFrom.email.$error.email">Email không đúng định dạng</span>
+                                            <span style="color: red" ng-show="paymentFrom.email.$error.email">Email sai định dạng</span>
                                         </div>
                                     </div>
 
                                     <div class="row pt15">
                                         <div class="col-md-8 pt10 pb10">
-                                            <input type="text" class="form-control" name="address" placeholder="Address..." ng-model="UserBasicInfo.Addres" ng-autocomplete required>
+                                            <input type="text" class="form-control"
+                                                   name="address"
+                                                   placeholder="Address..."
+                                                   ng-model="UserBasicInfo.Addres"
+                                                   ng-model-options="{ updateOn: 'change blur'}"
+                                                   ng-autocomplete required>
                                             <span ng-show="paymentFrom.address.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
-                                            <span style="color:red" ng-show="paymentFrom.address.$error.required">Bạn chưa nhập địa chỉ!</span>
+                                            <span style="color:red" ng-show="paymentFrom.address.$error.required">Bạn chưa nhập địa chỉ</span>
                                         </div>
                                         <div class="col-md-4 pt10 pb10">
-                                            <input type="text" class="form-control" placeholder="Phone number..." ng-minlength="10" ng-maxlength="11"
-                                                   name="PhoneNumber" ng-model="UserBasicInfo.ContactNumber" required>
+                                            <input type="text" class="form-control"
+                                                   placeholder="Phone number..."
+                                                   ng-minlength="10"
+                                                   ng-maxlength="11"
+                                                   name="PhoneNumber"
+                                                   ng-model="UserBasicInfo.ContactNumber"
+                                                   required>
                                             <span ng-show="paymentFrom.PhoneNumber.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
-                                            <span style="color:red" ng-show="paymentFrom.PhoneNumber.$error.required || paymentFrom.PhoneNumber.$error.number">Xin hãy điền số điện thoại hợp lệ</span>
-                                            <span style="color:red" ng-show="((paymentFrom.PhoneNumber.$error.minlength || paymentFrom.PhoneNumber.$error.maxlength) &&
+                                            <span style="color:red" ng-show="paymentFrom.PhoneNumber.$error.required">Xin hãy điền số điện thoại</span>
+                                            <span style="color: red" ng-show="((paymentFrom.PhoneNumber.$error.minlength || paymentFrom.PhoneNumber.$error.maxlength) &&
                                                   paymentFrom.PhoneNumber.$dirty) ">Số điện thoại gồm 10 - 11 chữ số</span>
                                         </div>
                                     </div>
@@ -60,7 +74,7 @@
                                             <textarea class="form-control" rows="4" placeholder="Contents..." name="Des" ng-maxlength="135" maxlength="135"
                                                       ng-model="backingData.Description"></textarea>
                                             <span ng-show="paymentFrom.Des.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
-                                            <span style="color:red" ng-show="paymentFrom.Des.$error.maxlength">Tối đa 135 kí tự!</span>
+                                            <span style="color:red" ng-show="paymentFrom.Des.$error.maxlength">Tối đa 135 kí tự</span>
                                             <label class="checkbox" for="checkbox1">
                                                 <input type="checkbox" data-toggle="checkbox" value="" id="checkbox1" ng-model="backingData.IsPublic">
                                                 Ẩn danh, tên bạn sẽ được ẩn bên danh sách người ủng hộ
@@ -79,13 +93,13 @@
                     <div class="panel panel-info">
                         <div class="panel-heading bold">Gói quà</div>
                         <div class="panel-body">
-                            <p class="fnt30 fnt-b txt-c c3 pt0 pb0 mt0 mb0">Project: "{{Project.Title}}"</p>
-                            <p class="fnt18 fnt-b txt-c pt0 pb0 mt0 mb0">by {{Project.Creator}}</p>
-                            <p class="bold">Contents:</p>
+                            <p class="fnt30 fnt-b txt-c c3 pt0 pb0 mt0 mb0">Dự án: "{{Project.Title}}"</p>
+                            <p class="fnt18 fnt-b txt-c pt0 pb0 mt0 mb0">Chủ dự án {{Project.Creator}}</p>
+                            <p class="bold">Chi tiết gói quà:</p>
                             <p style="word-break: break-word;">
                                 {{Packet.Description}}
                             </p>
-                            <p><span class="bold">Pledge amount: </span><span class="bold"> {{BackData.PledgeAmount}}$ x {{BackData.Quantity}} = {{BackData.PledgeAmount*BackData.Quantity}}$</span></p>
+                            <p><span class="bold">Ủng hộ: </span><span class="bold"> {{BackData.PledgeAmount}}&#8363;</span><span ng-show="Packet.Type != 'no reward'">| Số lượng: {{BackData.Quantity}}</span></p>
                         </div>
                     </div>
                 </div>

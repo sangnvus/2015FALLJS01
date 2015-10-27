@@ -6,7 +6,7 @@
                 <li showtab data-target="#main-slider" data-slide-to="{{$index}}" ng-repeat="slide in Slides track by $index" ng-class="{'active': $first}"></li>
             </ol>
             <div class="carousel-inner">
-                <div class="item" ng-style="{'background-image': 'url({{slide.ImageUrl}})'}" ng-repeat="slide in Slides track by $index" ng-class="{'active': $first}">
+                <div class="item" ng-style="{'background-image': 'url(images/slides/{{slide.ImageUrl}})'}" ng-repeat="slide in Slides track by $index" ng-class="{'active': $first}">
                     <div class="container">
                         <div class="row">
                             <div ng-class="$index == 2 ? 'col-sm-6': 'col-sm-12'">
@@ -102,7 +102,7 @@
                 <li class="portfolio-item apps" ng-repeat="project in popularproject">
                     <div class="item-inner">
                         <div class="item-image hover01 column">
-                            <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
+                            <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt="" style="width: 341px; height: 255.75px;"></figure></a>
                         </div>
                         <div class="item-title">
                             <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>

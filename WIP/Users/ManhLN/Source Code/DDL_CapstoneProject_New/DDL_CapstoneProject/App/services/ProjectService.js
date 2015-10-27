@@ -27,7 +27,6 @@ app.service('ProjectService', function ($http) {
                 }
         });
     };
-
     this.GetProjectStatisticList = function () {
         return $http.get('/api/ProjectApi/GetProjectStatisticList');
     };
@@ -40,8 +39,8 @@ app.service('ProjectService', function ($http) {
     this.getStatisticsInfor = function () {
         return $http.get('/api/ProjectApi/getStatisticsInfor');
     };
-    this.SearchProject = function (categoryidlist, orderby, searchkey) {
-        return this.GetProject(0, 0, categoryidlist, orderby, searchkey, "", false, "");
+    this.SearchProject = function (from, categoryidlist, orderby, searchkey) {
+        return this.GetProject(10, from, categoryidlist, orderby, searchkey, "", false, "");
     }
     //EndTrungVn
 
@@ -455,6 +454,18 @@ app.service('ProjectService', function ($http) {
 
     }
 
+    // 19/10/2015 - MaiCTP - get BackedProjectHistory
+    this.getBackedProjectHistory = function () {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/GetBackedProjectHistory/'
+
+        });
+
+        return request;
+
+    }
+
     // 18/10/2015 - MaiCTP - get StarredProject
     this.getStarredProject = function () {
         var request = $http({
@@ -471,7 +482,7 @@ app.service('ProjectService', function ($http) {
     this.getCreatedProject = function () {
         var request = $http({
             method: 'get',
-            url: '/api/ProjectApi/GetCreatedProject/'
+            url: '/api/ProjectApi/GetCreatedProject/',
 
         });
 
@@ -479,6 +490,12 @@ app.service('ProjectService', function ($http) {
 
     }
 
+    // 22/10/2015 - MaiCTP - delete RemindedProject
+    this.deleteReminded = function (remindedProjectID) {
+        return $http.delete("/api/ProjectApi/DeleteProjectReminded/" + remindedProjectID);
+    }
+
+    // 20/10/2015 - MaiCTP - get RemindedProject
     this.remindProject = function (code) {
         var request = $http({
             method: 'get',
@@ -489,6 +506,19 @@ app.service('ProjectService', function ($http) {
         });
         return request;
     }
+
+    // 24/10/2015 - MaiCTP - get BackingInfo
+    this.backingInfo = function (projectId) {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/GetBackingInfo',
+            params: {
+                projectId: projectId
+            }
+        });
+        return request;
+    }
+
 
     this.getListBacker = function (code) {
         var request = $http({

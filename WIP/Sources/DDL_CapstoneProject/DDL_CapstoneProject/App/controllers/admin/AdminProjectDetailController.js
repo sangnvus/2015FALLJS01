@@ -80,26 +80,40 @@ app.controller('AdminProjectDetailController',
             }
         }
 
-        $scope.save = function () {
-            //$scope.Project.CategoryId = $scope.selectedOption.CategoryID;
+        // function to get backing event
+        $scope.loadlistBacker = function () {
+            var promise = AdminProjectService.getListBacker($scope.Project.ProjectCode);
+            promise.then(
+                function (result) {
+                    $scope.ListBacker = result.data.Data.listBacker;
+                    $scope.labels = result.data.Data.Date;
+                    console.log("label " + $scope.labels);
+                    $scope.series = ['Số tiền đã ủng hộ'];
+                    $scope.data = [result.data.Data.Amount];
+                }
+            );
+        };
 
-            //var promisePost = ProjectService.createProject($scope.Project);
+        $scope.loadlistBacker();
 
-            //promisePost.then(
-            //    function (result) {
-            //        if (result.data.Status === "success") {
-            //            toastr.success('Bạn đã khởi tạo dự án thành công!', 'Thành công!');
-            //            $location.path("/project/edit/" + result.data.Data).replace();
-            //        } else {
-            //            CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-            //            $scope.Error = result.data.Message;
-            //            toastr.error($scope.Error, 'Lỗi!');
-            //        }
-            //    },
-            //    function (error) {
-            //        $scope.Error = error.data.Message;
-            //        toastr.error($scope.Error, 'Lỗi!');
-            //    });
+        $scope.change = function (status) {
+            $scope.Project.Status = status;
+            var promisePost = AdminProjectService.changeProjectStatus($scope.Project);
+
+            promisePost.then(
+                function (result) {
+                    if (result.data.Status === "success") {
+                        toastr.success('Chỉnh sửa thành công!');
+                        //$location.path("/project/edit/" + result.data.Data).replace();
+                    } else {
+                        $scope.Error = result.data.Message;
+                        toastr.error($scope.Error, 'Lỗi!');
+                    }
+                },
+                function (error) {
+                    $scope.Error = error.data.Message;
+                    toastr.error($scope.Error, 'Lỗi!');
+                });
         }
 
     });

@@ -29,11 +29,11 @@ app.controller('AdminCategoryController',
                 function (result) {
                     if (result.data.Status === "success") {
                         $scope.ListCategory[index] = result.data.Data;
-                        toastr.success("Thành công!");
+                        toastr.success("Thành công");
                     } else {
                         CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         $scope.Error = result.data.Message;
-                        toastr.error($scope.Error, 'Lỗi!');
+                        toastr.error($scope.Error, 'Lỗi');
                     }
                 },
                 function (error) {
@@ -57,12 +57,12 @@ app.controller('AdminCategoryController',
                 function (result) {
                     if (result.data.Status === "success") {
                         $scope.ListCategory.push(result.data.Data);
-                        toastr.success("Tạo danh mục thành công!");
+                        toastr.success("Tạo danh mục thành công");
                         $('#newCategoryModal').modal('hide');
                     } else {
                         CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         $scope.NewCategoryError = result.data.Message;
-                        toastr.error($scope.NewCategoryError, 'Lỗi!');
+                        toastr.error($scope.NewCategoryError, 'Lỗi');
                     }
                 },
                 function (error) {
@@ -77,10 +77,10 @@ app.controller('AdminCategoryController',
                 function (result) {
                     if (result.data.Status === "success") {
                         $scope.ListCategory.splice(index);
-                        toastr.success("Xóa hành công!");
+                        toastr.success("Xóa thành công");
                     } else {
                         CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        toastr.error($scope.NewCategoryError, 'Lỗi!');
+                        toastr.error($scope.NewCategoryError, 'Lỗi');
                     }
                 },
                 function (error) {
@@ -111,11 +111,11 @@ app.controller('AdminCategoryController',
                 function (result) {
                     if (result.data.Status === "success") {
                         $scope.ListCategory[$scope.EditIndex] = result.data.Data;
-                        toastr.success("Sửa thành công!");
+                        toastr.success("Sửa thành công");
                         $('#EditCategoryModal').modal('hide');
                     } else {
                         CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        toastr.error($scope.NewCategoryError, 'Lỗi!');
+                        toastr.error($scope.NewCategoryError, 'Lỗi');
                     }
                 },
                 function (error) {

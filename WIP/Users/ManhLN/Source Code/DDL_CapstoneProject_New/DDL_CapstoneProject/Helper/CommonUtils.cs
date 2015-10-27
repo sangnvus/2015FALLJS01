@@ -48,6 +48,27 @@ namespace DDL_CapstoneProject.Ultilities
 
         }
 
+        public static bool DeleteFile(string fileName, string uploadPath)
+        {
+            try
+            {
+                if (File.Exists(Path.Combine(HttpContext.Current.Request.MapPath(uploadPath), fileName)))
+                {
+                    File.Delete(Path.Combine(HttpContext.Current.Request.MapPath(uploadPath), fileName));
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+
+        }
 
         public static DateTime ConvertDateTimeFromUtc(DateTime datetime)
         {

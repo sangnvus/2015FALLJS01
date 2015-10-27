@@ -227,7 +227,7 @@
                                                         <p>{{reward.EstimatedDelivery | date:"'Tháng' MM/yyyy"}} </p>
                                                     </div>
                                                 </div> <!-- end main Reward -->
-                                                <a href="back-project.html">
+                                                <a href="@Url.Content("/#/project/back/{{Project.ProjectCode}}?reward={{$index+1}}")">
                                                     <div class="hoverReward">
                                                         <span class="titleHover">Chọn gói quà này</span>
                                                     </div>

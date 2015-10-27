@@ -3,6 +3,7 @@
 app.controller("EditProjectController", function ($scope, $filter, $sce, $location, toastr, CommmonService, $routeParams, ProjectService, categories, project, fileReader, SweetAlert) {
     // initial newReward
     $scope.NewReward = {};
+
     // initial newUpdateLog
     $scope.NewUpdateLog = {};
     // initial newTimeline
@@ -25,8 +26,16 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
     // check error list
     $scope.errorListFlag = false;
 
+    // Check first load
+    $scope.FirstLoadReward = false;
+    $scope.FirstLoadUpdate = false;
+    $scope.FirstLoadQA = false;
+    $scope.FirstLoadTimeLine = false;
+    $scope.FirstLoadStory = false;
+
     // Get current time
     $scope.toDay = new Date($.now());
+    $scope.NewReward.EstimatedDelivery = angular.copy($scope.toDay);
 
     // Set min deadline : current time + 10 days
     var minDate = new Date(new Date().getTime() + (10 * 24 * 60 * 60 * 1000));
@@ -122,6 +131,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         fileReader.readAsDataUrl($scope.file, $scope)
                       .then(function (result) {
                           console.log("index: " + $scope.Timeline[index]);
+                          console.log("name: " + result);
                           if ($scope.activeTab === "#timelineTab" && $scope.isCreateTimeline === false) {
                               $scope.Timeline[index].ImageUrl = result;
                           } else if ($scope.activeTab === "#timelineTab" && $scope.isCreateTimeline === true) {
@@ -170,23 +180,26 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
 
     // Get project's story
     $scope.getStory = function () {
-        var promiseGetProjectStory = ProjectService.getProjectStory($scope.Project.ProjectID);
+        if (!$scope.FirstLoadStory) {
+            var promiseGetProjectStory = ProjectService.getProjectStory($scope.Project.ProjectID);
 
-        promiseGetProjectStory.then(
-            function (result) {
-                if (result.data.Status === "success") {
-                    $scope.ProjectStory = result.data.Data;
-                    // Copy original project's basic
-                    $scope.originalStory = angular.copy($scope.ProjectStory);
-                } else {
-                    $scope.Error = result.data.Message;
+            promiseGetProjectStory.then(
+                function (result) {
+                    if (result.data.Status === "success") {
+                        $scope.ProjectStory = result.data.Data;
+                        // Copy original project's basic
+                        $scope.originalStory = angular.copy($scope.ProjectStory);
+                        $scope.FirstLoadStory = true;
+                    } else {
+                        $scope.Error = result.data.Message;
+                        toastr.error($scope.Error, 'Lỗi!');
+                    }
+                },
+                function (error) {
+                    $scope.Error = error.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
-                }
-            },
-            function (error) {
-                $scope.Error = error.data.Message;
-                toastr.error($scope.Error, 'Lỗi!');
-            });
+                });
+        }
     };
 
     // Edit project's story
@@ -215,32 +228,33 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
 
     // Get rewardPkgs record
     $scope.getReward = function () {
-        var promiseGetReward = ProjectService.getRewardPkgs($scope.Project.ProjectID);
+        if (!$scope.FirstLoadReward) {
+            var promiseGetReward = ProjectService.getRewardPkgs($scope.Project.ProjectID);
 
-        promiseGetReward.then(
-            function (result) {
-                if (result.data.Status === "success") {
-                    $scope.RewardPKgs = result.data.Data;
-                    // convert datetime to date
-                    for (var i = 0; i < $scope.RewardPKgs.length; i++) {
-                        if ($scope.RewardPKgs[i].EstimatedDelivery != null) {
-                            $scope.RewardPKgs[i].EstimatedDelivery = new Date($filter('date')($scope.RewardPKgs[i].EstimatedDelivery, "yyyy-MM-dd"));
-                        }
-                    };
+            promiseGetReward.then(
+                function (result) {
+                    if (result.data.Status === "success") {
+                        $scope.RewardPKgs = result.data.Data;
+                        // convert datetime to date
+                        for (var i = 0; i < $scope.RewardPKgs.length; i++) {
+                            if ($scope.RewardPKgs[i].EstimatedDelivery != null) {
+                                $scope.RewardPKgs[i].EstimatedDelivery = new Date($filter('date')($scope.RewardPKgs[i].EstimatedDelivery, "yyyy-MM-dd"));
+                            }
+                        };
+                        // Copy original project reward
+                        $scope.originalReward = angular.copy($scope.RewardPKgs);
+                        $scope.FirstLoadReward = true;
 
-                    // Copy original project reward
-                    $scope.originalReward = angular.copy($scope.RewardPKgs);
-
-                } else {
-                    $scope.Error = result.data.Message;
+                    } else {
+                        $scope.Error = result.data.Message;
+                        toastr.error($scope.Error, 'Lỗi!');
+                    }
+                },
+                function (error) {
+                    $scope.Error = error.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
-                }
-            },
-            function (error) {
-                $scope.Error = error.data.Message;
-                toastr.error($scope.Error, 'Lỗi!');
-            });
-
+                });
+        }
     };
     // Edit rewardPkg
     $scope.updateReward = function (index) {
@@ -268,6 +282,9 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                 if (result.data.Status === "success") {
                     toastr.success('Sửa thành công!');
                     $('#editRewardModal').modal('hide');
+                    $scope.RewardPKgs.sort(function (a, b) {
+                        return parseFloat(a.PledgeAmount) - parseFloat(b.PledgeAmount);
+                    });
                     // re-set original project reward
                     $scope.originalReward = angular.copy($scope.RewardPKgs);
                 } else {
@@ -296,11 +313,16 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                     $scope.NewReward = {};
                     $scope.NewReward.Type = "no reward"
                     result.data.Data.EstimatedDelivery = new Date($filter('date')(result.data.Data.EstimatedDelivery, "yyyy-MM-dd"));
+                    console.log("new date: " + result.data.Data.EstimatedDelivery);
                     if (result.data.Data.Quantity > 0) {
                         result.data.Data.LimitQuantity = true;
                     }
                     $scope.RewardPKgs.push(result.data.Data);
+                    $scope.RewardPKgs.sort(function (a, b) {
+                        return parseFloat(a.PledgeAmount) - parseFloat(b.PledgeAmount);
+                    });
                     $scope.originalReward = angular.copy($scope.RewardPKgs);
+                    $scope.NewReward.EstimatedDelivery = angular.copy($scope.toDay);
                 } else {
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
@@ -313,14 +335,14 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
     };
     // Delete a rewardPkg
     $scope.deleteReward = function (index) {
-        var promiseDeleteReward = ProjectService.deleteRewardPkg($scope.RewardPKgs[index - 1].RewardPkgID);
+        var promiseDeleteReward = ProjectService.deleteRewardPkg($scope.RewardPKgs[index].RewardPkgID);
 
         promiseDeleteReward.then(
             function (result) {
                 if (result.data.Status === "success") {
                     toastr.success('Xóa thành công!');
                     $('#editRewardModal').modal('hide');
-                    $scope.RewardPKgs.splice(index - 1, 1);
+                    $scope.RewardPKgs.splice(index, 1);
                     $scope.originalReward = angular.copy($scope.RewardPKgs);
                 } else {
                     $scope.Error = result.data.Message;
@@ -347,28 +369,31 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
 
     // Get updateLog records
     $scope.getUpdateLog = function () {
-        // Put update project
-        var promiseGetUpdateLog = ProjectService.getUpdateLogs($scope.Project.ProjectID);
+        if (!$scope.FirstLoadUpdate) {
+            // Put update project
+            var promiseGetUpdateLog = ProjectService.getUpdateLogs($scope.Project.ProjectID);
 
-        promiseGetUpdateLog.then(
-            function (result) {
-                if (result.data.Status === "success") {
-                    $scope.UpdateLogs = result.data.Data;
-                    // convert datetime to date
-                    for (var i = 0; i < $scope.UpdateLogs.length; i++) {
-                        $scope.UpdateLogs[i].CreatedDate = new Date($filter('date')($scope.UpdateLogs[i].CreatedDate, "yyyy-MM-dd"));
-                    };
-                    // Copy original update log
-                    $scope.originalUpdateLog = angular.copy($scope.UpdateLogs);
-                } else {
-                    $scope.Error = result.data.Message;
+            promiseGetUpdateLog.then(
+                function (result) {
+                    if (result.data.Status === "success") {
+                        $scope.UpdateLogs = result.data.Data;
+                        // convert datetime to date
+                        for (var i = 0; i < $scope.UpdateLogs.length; i++) {
+                            $scope.UpdateLogs[i].CreatedDate = new Date($filter('date')($scope.UpdateLogs[i].CreatedDate, "yyyy-MM-dd"));
+                        };
+                        // Copy original update log
+                        $scope.originalUpdateLog = angular.copy($scope.UpdateLogs);
+                        $scope.FirstLoadUpdate = true;
+                    } else {
+                        $scope.Error = result.data.Message;
+                        toastr.error($scope.Error, 'Lỗi!');
+                    }
+                },
+                function (error) {
+                    $scope.Error = error.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
-                }
-            },
-            function (error) {
-                $scope.Error = error.data.Message;
-                toastr.error($scope.Error, 'Lỗi!');
-            });
+                });
+        }
     };
     // Edit updateLog
     $scope.editUpdateLog = function (form) {
@@ -441,27 +466,30 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
 
     // Get timeline records
     $scope.getTimeline = function () {
-        var promiseGetTimeline = ProjectService.getTimeline($scope.Project.ProjectID);
+        if (!$scope.FirstLoadTimeLine) {
+            var promiseGetTimeline = ProjectService.getTimeline($scope.Project.ProjectID);
 
-        promiseGetTimeline.then(
-            function (result) {
-                if (result.data.Status === "success") {
-                    $scope.Timeline = result.data.Data;
-                    // convert datetime to date
-                    for (var i = 0; i < $scope.Timeline.length; i++) {
-                        $scope.Timeline[i].DueDate = new Date($filter('date')($scope.Timeline[i].DueDate, "yyyy-MM-dd"));
-                    };
-                    // Copy original update log
-                    $scope.originalTimeline = angular.copy($scope.Timeline);
-                } else {
-                    $scope.Error = result.data.Message;
+            promiseGetTimeline.then(
+                function (result) {
+                    if (result.data.Status === "success") {
+                        $scope.Timeline = result.data.Data;
+                        // convert datetime to date
+                        for (var i = 0; i < $scope.Timeline.length; i++) {
+                            $scope.Timeline[i].DueDate = new Date($filter('date')($scope.Timeline[i].DueDate, "yyyy-MM-dd"));
+                        };
+                        // Copy original update log
+                        $scope.originalTimeline = angular.copy($scope.Timeline);
+                        $scope.FirstLoadTimeLine = true;
+                    } else {
+                        $scope.Error = result.data.Message;
+                        toastr.error($scope.Error, 'Lỗi!');
+                    }
+                },
+                function (error) {
+                    $scope.Error = error.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
-                }
-            },
-            function (error) {
-                $scope.Error = error.data.Message;
-                toastr.error($scope.Error, 'Lỗi!');
-            });
+                });
+        }
     };
     // Update timeline
     $scope.updateTimeline = function (index) {
@@ -473,6 +501,9 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
             function (result) {
                 if (result.data.Status === "success") {
                     toastr.success('Sửa thành công!');
+                    $scope.Timeline.sort(function (a, b) {
+                        return new Date(a.DueDate) - new Date(b.DueDate);
+                    });
                     // re-set original timeline
                     $scope.originalTimeline = angular.copy($scope.Timeline);
                     $scope.file = null;
@@ -507,12 +538,20 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                     $('#addTimeline').modal('hide');
                     // reinitial new timeline point
                     $scope.newTimeline = {};
+                    // Add new timeline to list
                     result.data.Data.DueDate = new Date($filter('date')(result.data.Data.DueDate, "yyyy-MM-dd"));
                     $scope.Timeline.push(result.data.Data);
+                    $scope.Timeline.sort(function (a, b) {
+                        return new Date(a.DueDate) - new Date(b.DueDate);
+                    });
+                    // Reset original timeline
                     $scope.originalTimeline = angular.copy($scope.Timeline);
+                    // reset file
                     $scope.file = null;
+                    // reset field input img
                     var resetImg = $("#newTimelineImg");
                     resetImg.replaceWith(resetImg = resetImg.clone(true));
+                    $scope.isCreateTimeline = false;
                 } else {
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
@@ -547,22 +586,25 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
 
     // Get question records
     $scope.getQuestion = function () {
-        var promiseGetQuestion = ProjectService.getQuestion($scope.Project.ProjectID);
+        if (!$scope.FirstLoadQA) {
+            var promiseGetQuestion = ProjectService.getQuestion($scope.Project.ProjectID);
 
-        promiseGetQuestion.then(
-            function (result) {
-                if (result.data.Status === "success") {
-                    $scope.Question = result.data.Data;
-                    $scope.originalQuestion = angular.copy($scope.Question);
-                } else {
-                    $scope.Error = result.data.Message;
+            promiseGetQuestion.then(
+                function (result) {
+                    if (result.data.Status === "success") {
+                        $scope.Question = result.data.Data;
+                        $scope.originalQuestion = angular.copy($scope.Question);
+                        $scope.FirstLoadQA = true;
+                    } else {
+                        $scope.Error = result.data.Message;
+                        toastr.error($scope.Error, 'Lỗi!');
+                    }
+                },
+                function (error) {
+                    $scope.Error = error.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
-                }
-            },
-            function (error) {
-                $scope.Error = error.data.Message;
-                toastr.error($scope.Error, 'Lỗi!');
-            });
+                });
+        }
     };
     // Edit question
     $scope.updateQuestion = function (form) {
@@ -632,9 +674,14 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
 
     // check dirty form
     $scope.dirtyForm = function () {
+        if ($scope.fileIsBig == true) {
+            $scope.BasicForm.$invalid = true;
+        }
+        var form;
         if (!angular.equals($scope.originalProjectBasic, $scope.Project) || !angular.equals($scope.originalSelectedCate, $scope.selectedOption)) {
+            form = $scope.BasicForm;
             if ($scope.BasicForm.$invalid) {
-                $scope.checkForm();
+                $scope.checkForm(form);
             } else {
                 $scope.checkEditProjectBasic($scope.BasicForm);
             }
@@ -642,8 +689,9 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         }
 
         if (!angular.equals($scope.originalReward, $scope.RewardPKgs)) {
+            form = $scope.rewardForm;
             if ($scope.rewardForm.$invalid) {
-                $scope.checkForm();
+                $scope.checkForm(form);
             } else {
                 $scope.checkEditReward($scope.rewardForm);
             }
@@ -651,8 +699,9 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         }
 
         if (!angular.equals($scope.originalUpdateLog, $scope.UpdateLogs)) {
+            form = $scope.updateLogForm;
             if ($scope.updateLogForm.$invalid) {
-                $scope.checkForm();
+                $scope.checkForm(form);
             } else {
                 $scope.checkEditUpdateLog($scope.updateLogForm);
             }
@@ -660,8 +709,9 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         }
 
         if (!angular.equals($scope.originalStory, $scope.ProjectStory)) {
+            form = $scope.storyForm;
             if ($scope.storyForm.$invalid) {
-                $scope.checkForm();
+                $scope.checkForm(form);
             } else {
                 $scope.checkEditStory($scope.storyForm);
             }
@@ -669,8 +719,9 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         }
 
         if (!angular.equals($scope.originalQuestion, $scope.Question)) {
+            form = $scope.questionForm;
             if ($scope.questionForm.$invalid) {
-                $scope.checkForm();
+                $scope.checkForm(form);
             } else {
                 $scope.checkEditQuestion($scope.questionForm);
             }
@@ -678,8 +729,9 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         }
 
         if (!angular.equals($scope.originalTimeline, $scope.Timeline)) {
+            form = $scope.timelineForm;
             if ($scope.timelineForm.$invalid) {
-                $scope.checkForm();
+                $scope.checkForm(form);
             } else {
                 $scope.checkEditTimeline($scope.timelineForm);
             }

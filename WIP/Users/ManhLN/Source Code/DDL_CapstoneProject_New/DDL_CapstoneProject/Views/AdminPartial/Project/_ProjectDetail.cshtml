@@ -1,0 +1,302 @@
+﻿<!-- content -->
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="portlet portlet-default">
+            <div class="portlet-body">
+                <ul id="userTab" class="nav nav-tabs">
+                    <li class="active"><a onclick="return false" href="#overview" data-toggle="tab">Tổng quan</a></li>
+                    <li><a onclick="return false" href="#campaign" data-toggle="tab">Nội dung dự án</a></li>
+                    <li><a onclick="return false" href="#updates" data-toggle="tab" ng-click="getUpdateLogList()">Cập nhật</a></li>
+                    <li><a onclick="return false" href="#comments" data-toggle="tab" ng-click="getCommentList()">Bình luận</a></li>
+                </ul>
+                <div id="userTabContent" class="tab-content">
+                    <!-- tab overview -->
+                    <div class="tab-pane fade in active" id="overview">
+
+                        <!-- begin project detail row -->
+                        <div class="row">
+                            <div class="title text-center">
+                                <h2>{{Project.Title}}</h2>
+                                <p>by <a href="userprofile.html">{{Project.Creator.FullName}}</a> - <span class="badge green">{{Project.CategoryName}}</span> - <span class="badge blue">{{Project.Status}}</span></p>
+                            </div>
+                            <div class="col-lg-7">
+                                <div class="responsive-video">
+                                    <iframe ng-src="{{trustSrc(Project.VideoUrl)}}" frameborder="0"></iframe>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <!-- circle title -->
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="circle-tile">
+                                            <a href="#">
+                                                <div class="circle-tile-heading orange">
+                                                    <i class="fa fa-bell fa-fw fa-3x"></i>
+                                                </div>
+                                            </a>
+                                            <div class="circle-tile-content orange">
+                                                <div class="circle-tile-description text-faded">
+                                                    Days To Go
+                                                </div>
+                                                <div class="circle-tile-number text-faded">
+                                                    {{Project.NumberDays}}
+                                                </div>
+                                                <a href="#" class="circle-tile-footer">Running <i class="fa fa-chevron-circle-right"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="circle-tile">
+                                            <a href="#">
+                                                <div class="circle-tile-heading red">
+                                                    <i class="fa fa-shopping-cart fa-fw fa-3x"></i>
+                                                </div>
+                                            </a>
+                                            <div class="circle-tile-content red">
+                                                <div class="circle-tile-description text-faded">
+                                                    Pledge Amount
+                                                </div>
+                                                <div class="circle-tile-number text-faded">
+                                                    {{Project.CurrentFunded | currency:"&#8363;":0}}
+                                                    <span id="sparklineC"></span>
+                                                </div>
+                                                <a href="#" class="circle-tile-footer">Running <i class="fa fa-chevron-circle-right"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="circle-tile">
+                                            <a href="#">
+                                                <div class="circle-tile-heading green">
+                                                    <i class="fa fa-money fa-fw fa-3x"></i>
+                                                </div>
+                                            </a>
+                                            <div class="circle-tile-content green">
+                                                <div class="circle-tile-description text-faded">
+                                                    Funding Goal
+                                                </div>
+                                                <div class="circle-tile-number text-faded">
+                                                    {{Project.FundingGoal | currency:"&#8363;":0}}
+                                                </div>
+                                                <a href="#" class="circle-tile-footer">Running <i class="fa fa-chevron-circle-right"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="circle-tile">
+                                            <a href="project-backers.html">
+                                                <div class="circle-tile-heading dark-blue">
+                                                    <i class="fa fa-users fa-fw fa-3x"></i>
+                                                </div>
+                                            </a>
+                                            <div class="circle-tile-content dark-blue">
+                                                <div class="circle-tile-description text-faded">
+                                                    Backers
+                                                </div>
+                                                <div class="circle-tile-number text-faded">
+                                                    {{Project.NumberBacked}}
+                                                    <span id="sparklineA"></span>
+                                                </div>
+                                                <a href="project-backers.html" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end circle title -->
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12">
+                                        <button class="btn btn-danger btn-lg pull-right" data-toggle="modal"
+                                                data-target="#ConfirmModal" ng-if="Project.Status == 'approved'">
+                                            Ngừng dự án
+                                        </button>
+                                        <button class="btn btn-danger btn-lg pull-right" data-toggle="modal"
+                                                data-target="#ConfirmModal" ng-if="Project.Status == 'suspended'">
+                                            Tiếp tục
+                                        </button>
+                                        <button class="btn btn-danger btn-lg pull-right" data-toggle="modal"
+                                                data-target="#ConfirmModal" ng-if="Project.Status == 'pending' || Project.Status == 'rejected'">
+                                            Từ chối
+                                        </button>
+                                        <button class="btn btn-danger btn-lg pull-right" data-toggle="modal" style="margin-right: 15px;"
+                                                data-target="#ConfirmModal" ng-if="Project.Status == 'pending' || Project.Status == 'rejected'">
+                                            Chấp nhận
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end project detail row -->
+                        <!-- project chart -->
+                        @*<div class="row">
+                                <!-- Line Chart Example -->
+                                <div class="col-lg-12">
+                                    <div class="portlet portlet-green">
+                                        <div class="portlet-heading">
+                                            <div class="portlet-title">
+                                                <h4>Daily Statistic Chart</h4>
+                                            </div>
+                                            <div class="portlet-widgets">
+                                                <a href="javascript:;"><i class="fa fa-refresh"></i></a>
+                                                <span class="divider"></span>
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#lineChart"><i class="fa fa-chevron-down"></i></a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div id="lineChart" class="panel-collapse collapse in">
+                                            <div class="portlet-body">
+                                                <div id="morris-chart-line"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.col-lg-12 -->
+                            </div>*@
+                        <!-- end project chart -->
+
+                    </div>
+                    <!-- end tab overview -->
+                    <!-- tab campaign -->
+                    <div class="tab-pane fade" id="campaign">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="padding10">
+                                    <h3>Thông tin dự án</h3>
+                                </div> <!-- end About this project -->
+                                <!-- end About this project -->
+                                <div id="load_content" class="pt15" ta-bind ng-model="Project.Description"></div>
+                                <!-- end load_content -->
+                                <div id="riskandchallenges" class="padding30">
+                                    <h3 class="fnt25">Rủi ro và thách thức</h3>
+                                    <p style="word-break: break-word; white-space: pre-wrap;">{{Project.Risk}}</p>
+                                </div> <!-- end Risks and challeges -->
+                                @*Question*@
+                                <p>
+                                    <h3 class="fnt25">Thắc mắc và Giải đáp</h3>
+                                    <div ng-show="Project.Question.length == 0" class="fnt-b">Nếu những thông tin trên không giúp bạn có câu trả lời , hãy trực tiếp đặt câu hỏi với chủ dự án .</div>
+                                </p>
+                                <ul style="list-style: none">
+                                    <li ng-repeat="question in Project.Question">
+                                        <div class="questionItem">
+                                            <div class="panel-heading" role="tab" id="question1">
+                                                <div class="tab-content">
+                                                    <a style="color: #00a0ff" class="fnt-n"
+                                                       role="button" data-toggle="collapse" data-target="#Question{{question.QuestionID}}">
+                                                        <span class="glyphicon glyphicon-chevron-right fnt-b "></span>
+                                                        @*<span ng-show="question.loadAnswer" class="glyphicon glyphicon-chevron-down fnt-b "></span>*@
+                                                        {{question.QuestionContent}}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div id="Question{{question.QuestionID}}" class="panel-collapse collapse" role="tabpanel">
+                                                <div class="panel-body">
+                                                    <div class="answer">
+                                                        {{question.Answer}}
+                                                    </div>
+                                                    <div class="link-gray-dark fnt16 pt10">{{question.CreatedDate |date:"'Cập nhật lần cuối lúc :' dd/MM/yyyy" }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div> <!-- end col-md-8 -->
+
+                            <div class="col-md-4">
+                                <div class="padding10">
+                                    <h3>Rewards</h3>
+                                </div> <!-- end Rewards -->
+                                <div>
+                                    <div class="well" ng-repeat="reward in Project.RewardDetail">
+                                        <label for="">Pledge {{reward.PledgeAmount | currency:"&#8363;":0}} hoặc hơn</label>
+                                        <p><span class="glyphicon glyphicon-asterisk"></span>{{reward.Backers}} người ủng hộ</p>
+                                        <p>{{reward.Description}}</p>
+                                        <div class="padding20">
+                                            <label>Thời gian giao hàng ước tính :</label>
+                                            <p>{{reward.EstimatedDelivery | date:"'Tháng' MM/yyyy"}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- end col-md-8 -->
+                        </div>
+                    </div>
+                    <!-- end tab campaign -->
+                    <!-- tab updates -->
+                    <div class="tab-pane fade" id="updates">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                    <div class="panel panel-default" ng-repeat="UpdateLog in Project.UpdateLogsList">
+                                        <div class="panel-heading" role="tab" id="headingOne{{$index}}">
+                                            <h4 class="panel-title">
+                                                <a onclick="return false" role="button" data-toggle="collapse"
+                                                   data-parent="#accordion" href="#collapseOne{{$index}}" aria-expanded="false" aria-controls="collapseOne{{$index}}">
+                                                    {{UpdateLog.Title}}
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseOne{{$index}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne{{$index}}">
+                                            <div class="panel-body">
+                                                {{UpdateLog.Description}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end tab updated -->
+                    <!-- tab comments -->
+                    <div class="tab-pane fade" id="comments">
+                        <!--avatar-->
+                        <div class="media" ng-repeat="Comment in Project.CommentsList">
+                            <div class="pull-left">
+                                <img class="avatar img-circle" ng-if="checkHTTP(Comment.ProfileImage)" ng-src="{{trustSrc(Comment.ProfileImage)}}" alt="" />
+                                <img class="avatar img-circle" ng-if="!checkHTTP(Comment.ProfileImage)" ng-src="../images/avatars/{{Comment.ProfileImage}}" alt="" />
+                            </div>
+                            <div class="media-body">
+                                <div class="well" ng-class="{'hided-comment':Comment.IsHide}">
+                                    <!--Comment header-->
+                                    <div class="media-heading">
+                                        <strong>
+                                            <a ng-class="{'by-author':Comment.UserName == Project.Creator.UserName}" href="/#/user/publicprofile/{{Comment.FullName}}">{{Comment.FullName}}</a>
+                                            <span ng-if="Comment.UserName == Project.Creator.UserName" class="label label-primary">chủ</span>
+                                        </strong>
+                                        <small>&nbsp;- lúc {{Comment.CreatedDate | date:"HH:mm 'ngày' dd/MM/yyyy"}}</small>
+                                        <span ng-show="Comment.IsEdited" style="margin-top: 8px">&nbsp;- đã chỉnh sửa</span>
+                                        <!--Action-->
+                                        <ul class="list-inline pull-right">
+                                            <!--Show hide/comment-->
+                                            <li ng-if="!Comment.IsHide && CurrentUser.UserName == Project.Creator.UserName"><a href="" ng-click="showHideComment($index)">Ẩn</a></li>
+                                            <li ng-if="Comment.IsHide && CurrentUser.UserName == Project.Creator.UserName"><a href="" ng-click="showHideComment($index)">Hiện</a></li>
+                                            <!--Delete comment-->
+                                            <li ng-if="CurrentUser.UserName == Comment.UserName"><a href="" ng-click="deleteComment($index)">Xóa</a></li>
+                                            <!--Edit comment-->
+                                            <li ng-if="CurrentUser.UserName == Comment.UserName" ng-class="{'hide':IsEdit[$index] === true}"><a href="" ng-click="showEditForm($index)">Sửa</a></li>
+                                            <li ng-if="CurrentUser.UserName == Comment.UserName" ng-class="{'hide':(IsEdit[$index] == null || IsEdit[$index] === false)}"><a href="" ng-click="showEditForm($index)">Hủy</a></li>
+                                            <li ng-if="CurrentUser.UserName == Comment.UserName" ng-class="{'hide':(IsEdit[$index] == null || IsEdit[$index] === false)}"><a href="" ng-click="editComment($index)">Lưu</a></li>
+                                        </ul>
+                                    </div>
+                                    <!--Comment content-->
+                                    <div ng-class="{'hide':IsEdit[$index] === true}" style="word-break: break-word; white-space: pre-wrap;">{{Comment.CommentContent}}</div>
+                                    <div ng-if="CurrentUser.UserName == Comment.UserName" ng-class="{'hide':(IsEdit[$index] == null || IsEdit[$index] === false)}">
+                                        <textarea msd-elastic="\n" class="form-control" ng-model="Comment.EditedCommentContent" ng-enter="editComment($index)" style="resize: none"></textarea>
+                                        <span class="text-danger">* Bình luận tối thiểu từ 10 đến 500 kí tự.</span>
+                                    </div>
+                                    <!-- <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p> -->
+                                </div>
+                            </div>
+                        </div><!--/.media-->
+                        <button class="btn btn-info center-block" ng-show="Project.CommentsList.length < Project.NumberComment" ng-click="loadMoreComment()">Tải thêm</button>
+                    </div>
+                    <!-- end tab comments -->
+                </div>
+            </div>
+            <!-- /.portlet-body -->
+        </div>
+        <!-- /.portlet -->
+
+
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.content -->

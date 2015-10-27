@@ -108,4 +108,11 @@ service.service('UserService', function ($http) {
         return request;
     }
 
+    this.getBackedUserInfo = function () {
+        var request = $http({
+            method: 'get',
+            url: '/api/UserApi/GetBackedUserInfo'
+        });
+        return request;
+    }
 });

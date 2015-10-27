@@ -30,20 +30,20 @@ namespace DDL_CapstoneProject.Respository
             {
                 // Get rewardPkg list
                 var timelineList = (from Timeline in db.Timelines
-                    where Timeline.ProjectID == ProjectID
-                    orderby Timeline.DueDate ascending
-                    select new TimeLineDTO()
-                    {
-                        ImageUrl = Timeline.ImageUrl,
-                        DueDate = Timeline.DueDate,
-                        Description = Timeline.Description,
-                        Title = Timeline.Title,
-                        TimelineID = Timeline.TimelineID
-                    }).ToList();
+                                    where Timeline.ProjectID == ProjectID
+                                    orderby Timeline.DueDate ascending
+                                    select new TimeLineDTO()
+                                    {
+                                        ImageUrl = Timeline.ImageUrl,
+                                        DueDate = Timeline.DueDate,
+                                        Description = Timeline.Description,
+                                        Title = Timeline.Title,
+                                        TimelineID = Timeline.TimelineID
+                                    }).ToList();
 
                 timelineList.ForEach(x => x.DueDate = CommonUtils.ConvertDateTimeFromUtc(x.DueDate));
 
-                return timelineList.ToList();
+                return timelineList;
             }
         }
 
@@ -53,18 +53,18 @@ namespace DDL_CapstoneProject.Respository
         /// <param name="ProjectID"></param>
         /// <param name="timeline"></param>
         /// <returns>newRewardPkg</returns>
-        public TimeLineDTO CreateTimeline(int ProjectID, TimeLineDTO timeline, string img)
+        public TimeLineDTO CreateTimeline(int id, TimeLineDTO timeline, string img)
         {
             using (var db = new DDLDataContext())
             {
-                var project = db.Projects.SingleOrDefault(x => x.ProjectID == ProjectID);
+                var project = db.Projects.SingleOrDefault(x => x.ProjectID == id);
                 if (project == null)
                 {
                     throw new KeyNotFoundException();
                 }
 
                 var newTimeline = db.Timelines.Create();
-                newTimeline.ProjectID = ProjectID;
+                newTimeline.ProjectID = project.ProjectID;
                 newTimeline.Description = timeline.Description;
                 newTimeline.DueDate = timeline.DueDate;
                 newTimeline.ImageUrl = img;
@@ -77,6 +77,8 @@ namespace DDL_CapstoneProject.Respository
 
                 db.Timelines.Add(newTimeline);
                 db.SaveChanges();
+
+                newTimeline.ImageUrl = newTimeline.ImageUrl + "_" + newTimeline.TimelineID;
 
                 var newTimelineDTO = new TimeLineDTO
                 {

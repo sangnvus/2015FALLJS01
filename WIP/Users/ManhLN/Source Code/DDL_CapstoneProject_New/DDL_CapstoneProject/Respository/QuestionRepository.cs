@@ -30,19 +30,19 @@ namespace DDL_CapstoneProject.Respository
             {
                 // Get rewardPkg list
                 var questionList = (from Question in db.Questions
-                    where Question.ProjectID == ProjectID
-                    orderby Question.CreatedDate ascending
-                    select new QuestionDTO
-                    {
-                        Answer = Question.Answer,
-                        CreatedDate = Question.CreatedDate,
-                        QuestionContent = Question.QuestionContent,
-                        QuestionID = Question.QuestionID
-                    }).ToList();
+                                    where Question.ProjectID == ProjectID
+                                    orderby Question.CreatedDate ascending
+                                    select new QuestionDTO
+                                    {
+                                        Answer = Question.Answer,
+                                        CreatedDate = Question.CreatedDate,
+                                        QuestionContent = Question.QuestionContent,
+                                        QuestionID = Question.QuestionID
+                                    }).ToList();
 
                 questionList.ForEach(x => x.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(x.CreatedDate));
 
-                return questionList.ToList();
+                return questionList;
             }
         }
 
