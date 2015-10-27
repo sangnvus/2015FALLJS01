@@ -36,7 +36,67 @@ app.config(["$routeProvider", function ($routeProvider) {
                 }]
             }
         });
+    $routeProvider.when("/project",
+        {
+            templateUrl: "/AdminPartial/ProjectDashboard",
+            controller: 'AdminProjectDashboardController',
+            activeTab: 'dashboard',
+            breadcrumb: ['Quản lí dự án', 'Thông tin chung'],
+            title: 'Thông tin chung',
+            resolve: {
+                listproject: ['$rootScope', '$q', 'AdminProjectService', 'CommmonService', function ($rootScope, $q, AdminProjectService, CommmonService) {
+                    var promise = AdminProjectService.getPendingProjectList();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }],
+                basicInfo: ['$rootScope', '$q', 'AdminProjectService', 'CommmonService', function ($rootScope, $q, AdminProjectService, CommmonService) {
+                    var promise = AdminProjectService.getBasicStatisticProject();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
+            }
+        });
+    $routeProvider.when("/project/all",
+        {
+            templateUrl: "/AdminPartial/ProjectList",
+            controller: 'AdminProjectListController',
+            activeTab: 'projectList',
+            breadcrumb: ['Danh sách dự án', 'Danh sách dự án'],
+            title: 'Thông tin chung',
+            resolve: {
+                listproject: ['$rootScope', '$q', 'AdminProjectService', 'CommmonService', function ($rootScope, $q, AdminProjectService, CommmonService) {
+                    var promise = AdminProjectService.getProjectList();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
+            }
+        });
+    $routeProvider.when("/project/:code",
+       {
+           templateUrl: "/AdminPartial/ProjectDetail",
+           controller: 'AdminProjectDetailController',
+           activeTab: 'projectList',
+           breadcrumb: ['Danh sách dự án', 'Chi tiết dự án'],
+           title: 'Chi tiết dự án',
+           resolve: {
+               project: ['$rootScope', '$route', '$q', 'AdminProjectService', 'CommmonService', function ($rootScope, $route, $q, AdminProjectService, CommmonService) {
+                   var promise = AdminProjectService.getProjectDetail($route.current.params.code);
+                   return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+               }]
+           }
+       });
 
+    $routeProvider.when("/slide",
+        {
+            templateUrl: "/AdminPartial/Slide",
+            controller: 'AdminSlideController',
+            activeTab: 'slide',
+            breadcrumb: ['Quản lý Slide', 'Danh sách Slide'],
+            title: 'Quản lý Slide',
+            resolve: {
+                slides: ['$rootScope', '$q', 'AdminSlideService', 'CommmonService', function ($rootScope, $q, AdminSlideService, CommmonService) {
+                    var promise = AdminSlideService.getSlides();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
+            }
+        });
     $routeProvider.otherwise({
         redirectTo: "/"
     });
@@ -53,8 +113,8 @@ app.config(["$routeProvider", function ($routeProvider) {
     cfpLoadingBarProvider.includeSpinner = false;
 }]);
 
-app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOptions', 'toastrConfig', 'blockUIConfig',
-    function ($rootScope, $window, $anchorScroll, UserService, DTDefaultOptions, toastrConfig, blockUIConfig) {
+app.run(['$rootScope', '$window', '$anchorScroll', 'DTDefaultOptions', 'toastrConfig', 'blockUIConfig',
+    function ($rootScope, $window, $anchorScroll, DTDefaultOptions, toastrConfig, blockUIConfig) {
 
         $rootScope.$on('$routeChangeError', function (e, curr, prev) {
             e.preventDefault();
@@ -120,24 +180,24 @@ app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOpti
             IsAuthen: false
         };
         // 1. define function
-        function checkLoginStatus() {
-            var promiseGet = UserService.checkLoginStatus();
-            promiseGet.then(
-                function (result) {
-                    if (result.data.Status === "success") {
-                        // Save authen info into $rootScope
-                        $rootScope.UserInfo = result.data.Data;
-                        $rootScope.UserInfo.IsAuthen = true;
-                    } else {
-                        $rootScope.UserInfo = {
-                            IsAuthen: false
-                        };
-                    }
-                },
-                function (error) {
-                    // todo here.
-                });
-        }
+        //function checkLoginStatus() {
+        //    var promiseGet = UserService.checkLoginStatus();
+        //    promiseGet.then(
+        //        function (result) {
+        //            if (result.data.Status === "success") {
+        //                // Save authen info into $rootScope
+        //                $rootScope.UserInfo = result.data.Data;
+        //                $rootScope.UserInfo.IsAuthen = true;
+        //            } else {
+        //                $rootScope.UserInfo = {
+        //                    IsAuthen: false
+        //                };
+        //            }
+        //        },
+        //        function (error) {
+        //            // todo here.
+        //        });
+        //}
         // 2. call function
         //checkLoginStatus();
     }]);

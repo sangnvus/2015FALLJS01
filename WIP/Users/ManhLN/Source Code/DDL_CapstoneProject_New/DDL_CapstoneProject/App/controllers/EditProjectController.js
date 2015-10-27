@@ -121,6 +121,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         $scope.file = file;
         fileReader.readAsDataUrl($scope.file, $scope)
                       .then(function (result) {
+                          console.log("index: " + $scope.Timeline[index]);
                           if ($scope.activeTab === "#timelineTab" && $scope.isCreateTimeline === false) {
                               $scope.Timeline[index].ImageUrl = result;
                           } else if ($scope.activeTab === "#timelineTab" && $scope.isCreateTimeline === true) {
@@ -146,7 +147,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         promisePut.then(
             function (result) {
                 if (result.data.Status === "success") {
-                    toastr.success('Sửa thành công!', 'Thành công!');
+                    toastr.success('Sửa thành công!');
                     $scope.Project = result.data.Data;
                     $scope.selectedCate();
                     $scope.selectedOption = $scope.Categories[categoryIndex];
@@ -196,7 +197,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         promisePutProjectStory.then(
             function (result) {
                 if (result.data.Status === "success") {
-                    toastr.success('Sửa thành công!', 'Thành công!');
+                    toastr.success('Sửa thành công!');
                     // re-set original project story
                     $scope.originalStory = angular.copy($scope.ProjectStory);
                     form.$setPristine();
@@ -289,7 +290,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         promiseCreateReward.then(
             function (result) {
                 if (result.data.Status === "success") {
-                    toastr.success('Tạo reward thành công!');
+                    toastr.success('Tạo gói quà thành công!');
                     $('#addReward').modal('hide');
                     // reinitial newReward
                     $scope.NewReward = {};
@@ -377,7 +378,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         promiseEditUpdateLog.then(
             function (result) {
                 if (result.data.Status === "success") {
-                    toastr.success('Sửa updateLog thành công!', 'Thành công!');
+                    toastr.success('Sửa updateLog thành công!');
                     // re-set original update log
                     $scope.originalUpdateLog = angular.copy($scope.UpdateLogs);
                     form.$setPristine();
@@ -399,7 +400,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         promiseCreateUpdateLog.then(
             function (result) {
                 if (result.data.Status === "success") {
-                    toastr.success('Tạo updateLog thành công!', 'Thành công!');
+                    toastr.success('Tạo updateLog thành công!');
                     $('#updateModal').modal('hide');
                     // reinitial newUpdateLog
                     $scope.NewUpdateLog = {};
@@ -424,7 +425,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         promiseDeleteUpdateLog.then(
             function (result) {
                 if (result.data.Status === "success") {
-                    toastr.success('Xóa thành công!', 'Thành công!');
+                    toastr.success('Xóa thành công!');
                     $scope.UpdateLogs.splice(index, 1);
                     $scope.originalUpdateLog = angular.copy($scope.UpdateLogs);
                 } else {
@@ -471,7 +472,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         promiseUpdateTimeline.then(
             function (result) {
                 if (result.data.Status === "success") {
-                    toastr.success('Sửa thành công!', 'Thành công!');
+                    toastr.success('Sửa thành công!');
                     // re-set original timeline
                     $scope.originalTimeline = angular.copy($scope.Timeline);
                     $scope.file = null;
@@ -502,7 +503,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         promiseCreateTimeline.then(
             function (result) {
                 if (result.data.Status === "success") {
-                    toastr.success('Tạo reward thành công!', 'Thành công!');
+                    toastr.success('Tạo mốc lịch trình thành công!');
                     $('#addTimeline').modal('hide');
                     // reinitial new timeline point
                     $scope.newTimeline = {};
@@ -510,6 +511,8 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                     $scope.Timeline.push(result.data.Data);
                     $scope.originalTimeline = angular.copy($scope.Timeline);
                     $scope.file = null;
+                    var resetImg = $("#newTimelineImg");
+                    resetImg.replaceWith(resetImg = resetImg.clone(true));
                 } else {
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
@@ -527,7 +530,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         promiseDeleteReward.then(
             function (result) {
                 if (result.data.Status === "success") {
-                    toastr.success('Xóa thành công!', 'Thành công!');
+                    toastr.success('Xóa thành công!');
                     $scope.Timeline.splice(index, 1);
                     // re-set original timeline
                     $scope.originalTimeline = angular.copy($scope.Timeline);
@@ -568,7 +571,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         promiseUpdateQuestion.then(
             function (result) {
                 if (result.data.Status === "success") {
-                    toastr.success('Sửa thành công!', 'Thành công!');
+                    toastr.success('Sửa thành công!');
                     // re-set original project reward
                     $scope.originalQuestion = angular.copy($scope.Question);
                     form.$setPristine();
@@ -590,7 +593,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         promiseCreateQuestion.then(
             function (result) {
                 if (result.data.Status === "success") {
-                    toastr.success('Tạo reward thành công!', 'Thành công!');
+                    toastr.success('Tạo hỏi đáp thành công!');
                     $('#addQuestion').modal('hide');
                     // reinitial newReward
                     $scope.newQuestion = {};
@@ -613,7 +616,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         promiseDeleteQuestion.then(
             function (result) {
                 if (result.data.Status === "success") {
-                    toastr.success('Xóa thành công!', 'Thành công!');
+                    toastr.success('Xóa thành công!');
                     $scope.Question.splice(index, 1);
                     $scope.originalQuestion = angular.copy($scope.Question);
                 } else {
@@ -798,13 +801,13 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
     // If tab basic is dirty
     $scope.checkEditProjectBasic = function (form) {
         SweetAlert.swal({
-            title: "You have changed something!",
-            text: "Project's basic will be edit!",
+            title: "Bạn vừa thay đổi trang thông tin cơ bản!",
+            text: "Thông tin cơ bản của dự án sẽ bị chỉnh sửa!",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, Edit it!",
-            cancelButtonText: "No, cancel plx!",
+            confirmButtonText: "Có!",
+            cancelButtonText: "Không!",
             closeOnConfirm: true,
             closeOnCancel: true
         },
@@ -833,13 +836,13 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
     // If tab reward is dirty
     $scope.checkEditReward = function (form) {
         SweetAlert.swal({
-            title: "You have changed something!",
-            text: "Project's reward will be edit!",
+            title: "Bạn vừa thay đổi thông tin gói quà!",
+            text: "Thông tin gói quà của dự án sẽ bị chỉnh sửa!",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, Edit it!",
-            cancelButtonText: "No, cancel plx!",
+            confirmButtonText: "Có!",
+            cancelButtonText: "Không!",
             closeOnConfirm: true,
             closeOnCancel: true
         },
@@ -861,8 +864,8 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
     // If tab update log is dirty
     $scope.checkEditUpdateLog = function (form) {
         SweetAlert.swal({
-            title: "You have changed something!",
-            text: "Project's update log will be edit!",
+            title: "Bạn vừa thay đổi cập nhật dự án!",
+            text: "Nội dung cập nhật dự án sẽ bị thay đổi!",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
@@ -889,13 +892,13 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
     // If tab story is dirty
     $scope.checkEditStory = function (form) {
         SweetAlert.swal({
-            title: "You have changed something!",
-            text: "Project's story will be edit!",
+            title: "Bạn vừa thay đổi mô tả chi tiết dự án!",
+            text: "Nội dung chi tiết dự án sẽ bị chỉnh sửa!",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, Edit it!",
-            cancelButtonText: "No, cancel plx!",
+            confirmButtonText: "Có!",
+            cancelButtonText: "Không!",
             closeOnConfirm: true,
             closeOnCancel: true
         },
@@ -917,13 +920,13 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
     // If tab story is dirty
     $scope.checkEditQuestion = function (form) {
         SweetAlert.swal({
-            title: "You have changed something!",
-            text: "Project's Q&A will be edit!",
+            title: "Bạn vừa thay đổi mục hỏi đáp!",
+            text: "Nội dung hỏi đáp sẽ bị thay đổi!",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, Edit it!",
-            cancelButtonText: "No, cancel plx!",
+            confirmButtonText: "Có!",
+            cancelButtonText: "Không!",
             closeOnConfirm: true,
             closeOnCancel: true
         },
@@ -945,13 +948,13 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
     // If tab timeline is dirty
     $scope.checkEditTimeline = function (form) {
         SweetAlert.swal({
-            title: "You have changed something!",
-            text: "Project's timeline will be edit!",
+            title: "Bạn vừa thay đổi mốc lịch trình!",
+            text: "Lịch trình dự án sẽ bị chỉnh sửa!",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, Edit it!",
-            cancelButtonText: "No, cancel plx!",
+            confirmButtonText: "Có!",
+            cancelButtonText: "Không!",
             closeOnConfirm: true,
             closeOnCancel: true
         },
@@ -1074,7 +1077,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         promisePut.then(
             function (result) {
                 if (result.data.Status === "success") {
-                    toastr.success('Submit thành công!', 'Thành công!');
+                    toastr.success('Gửi dự án thành công!');
                     $scope.Project = result.data.Data;
                     $scope.errorListFlag = false;
                     $scope.AllEditable = false;

@@ -80,6 +80,11 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
             return PartialView("~/Views/Project/_BackedProject.cshtml");
         }
 
+        public ActionResult BackedProjectHistory()
+        {
+            return PartialView("~/Views/Project/_BackedProjectHistory.cshtml");
+        }
+
         public ActionResult StarredProject()
         {
             return PartialView("~/Views/Project/_StarredProject.cshtml");

@@ -24,18 +24,17 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         public IHttpActionResult NewMessage(NewMessageDTO newMessage)
         {
             ConversationBasicDTO result = null;
-            if (!ModelState.IsValid)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
-            }
-
-            if (User.Identity == null || !User.Identity.IsAuthenticated) 
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
-            }
-
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+                }
+
+                if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                }
                 result = MessageRepository.Instance.CreateNewConversation(newMessage, User.Identity.Name);
             }
             catch (UserNotFoundException)
@@ -58,18 +57,17 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         public IHttpActionResult GetListSentConversations()
         {
             List<ConversationBasicDTO> listSentConversation = null;
-            if (!ModelState.IsValid)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
-            }
-
-            if (User.Identity == null || !User.Identity.IsAuthenticated)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
-            }
-
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+                }
+
+                if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                }
                 listSentConversation = MessageRepository.Instance.GetListSentConversation(User.Identity.Name);
             }
             catch (UserNotFoundException)
@@ -92,18 +90,17 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         public IHttpActionResult GetListReceivedConversations()
         {
             List<ConversationBasicDTO> listReceivedConversation = null;
-            if (!ModelState.IsValid)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
-            }
-
-            if (User.Identity == null || !User.Identity.IsAuthenticated)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
-            }
-
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+                }
+
+                if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                }
                 listReceivedConversation = MessageRepository.Instance.GetListReceivedConversation(User.Identity.Name);
             }
             catch (UserNotFoundException)
@@ -133,19 +130,18 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         public IHttpActionResult GetConversation(int Id)
         {
             ConversationDetailDTO conversationDetail = null;
-            if (!ModelState.IsValid)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
-            }
-
-            if (User.Identity == null || !User.Identity.IsAuthenticated)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
-            }
-
             try
             {
-                conversationDetail = MessageRepository.Instance.GetConveration(Id,User.Identity.Name);
+                if (!ModelState.IsValid)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+                }
+
+                if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                }
+                conversationDetail = MessageRepository.Instance.GetConveration(Id, User.Identity.Name);
             }
             catch (KeyNotFoundException)
             {
@@ -174,14 +170,16 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         public IHttpActionResult Reply(ReplyDTO reply)
         {
             MessageDTO result = null;
-
-            if (User.Identity == null || !User.Identity.IsAuthenticated)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
-            }
-
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return Ok(new HttpMessageDTO { Status = "error", Message = "", Type = "Bad-Request" });
+                }
+                if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                }
                 result = MessageRepository.Instance.ReplyMessage(reply, User.Identity.Name);
             }
             catch (UserNotFoundException)
@@ -198,7 +196,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = result });
         }
-        
+
         /// <summary>
         /// Delete Message
         /// </summary>
@@ -208,13 +206,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpDelete]
         public IHttpActionResult DeleteMessage(int id)
         {
-            if (User.Identity == null || !User.Identity.IsAuthenticated)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
-            }
-
             try
             {
+                if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                }
                 var result = MessageRepository.Instance.Delete(id, User.Identity.Name);
             }
             catch (UserNotFoundException)
@@ -229,7 +226,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             {
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
             }
-            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = ""});
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
         }
 
         /// <summary>
@@ -241,13 +238,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpDelete]
         public IHttpActionResult DeleteMessageList([FromUri] int[] ids)
         {
-            if (User.Identity == null || !User.Identity.IsAuthenticated)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
-            }
-
             try
             {
+                if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                }
                 var result = MessageRepository.Instance.DeleteMessageList(ids, User.Identity.Name);
             }
             catch (UserNotFoundException)
@@ -275,13 +271,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         public IHttpActionResult GetNumberNewMessage()
         {
             NewMessageNumberDTO numberNewMessage;
-            if (User.Identity == null || !User.Identity.IsAuthenticated)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
-            }
-
             try
             {
+                if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                }
                 numberNewMessage = MessageRepository.Instance.GetNumberNewMessgae(User.Identity.Name);
             }
             catch (UserNotFoundException)

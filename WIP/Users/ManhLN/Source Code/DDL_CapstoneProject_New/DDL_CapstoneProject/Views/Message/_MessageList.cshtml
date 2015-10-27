@@ -128,7 +128,7 @@
                     <!--Body-->
                     <div class="modal-body">
                         <div class="form-group" style="border-bottom: 1px solid #cfcfcf">
-                            <label for="" class="col-sm-2 control-label fnt18 fnt-b fnt-b txt-l">Tới:</label>
+                            <label for="" class="col-sm-2 control-label fnt18 fnt-b fnt-b txt-l">Tới(*):</label>
                             <div class="pl0 ml0 col-sm-10">
                                 <input type="text" class="pl0 ml0 form-control flat fnt18 fnt-b noboder" id=""
                                        placeholder="Tên người nhận..."
@@ -143,20 +143,19 @@
                             </div>
                         </div>
                         <div class="form-group" style="border-bottom: 1px solid #cfcfcf">
-                            <label for="" class="pr0 col-sm-2 control-label fnt18 fnt-b txt-l">Tiêu đề:</label>
+                            <label for="" class="pr0 col-sm-2 control-label fnt18 fnt-b txt-l">Tiêu đề(*):</label>
                             <div class="pl0 ml0 col-sm-10">
                                 <input type="text" class="pl0 ml0 form-control fnt18 fnt-b flat noboder"
                                        placeholder="Nhập tiêu đề..."
                                        name="Title"
                                        ng-model="NewMessage.Title"
-                                       ng-model-options="{ updateOn: 'change blur'}"
                                        required=""
-                                       ng-minlength="8"
+                                       ng-minlength="1"
                                        ng-maxlength="50">
                             </div>
                         </div>
                         <div>
-                            <div text-angular name="Content" ng-model="NewMessage.Content"></div>
+                            <div text-angular required name="Content" ng-model="NewMessage.Content"></div>
                         </div>
                     </div>
                     <div class="modal-footer pt5 pb5">

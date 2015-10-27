@@ -1,14 +1,11 @@
-﻿
-
-<div id="setting_container" class="paddingNavbar">
+﻿<div id="setting_container" class="paddingNavbar">
     <div class="row pull-right">
         <div class="col-sm-12 col-sm-offset-0">
             <ul id="" class="list-inline fnt18 fnt-b">
+
                 <li class=""><a class="c-3" href="../#/project/createdProject">Dự án đã tạo</a></li>
                 <li class=""><a class="c-10" href="../#/project/backedProject">Dự án đã ủng hộ</a></li>
                 <li class=""><a class="c-10" href="../#/project/starredProject">Dự án theo dõi</a></li>
-                <li class=""><a class="c-10" href="account.html">Cài đặt</a></li>
-                <li class=""><a class="c-10" href="../project/profilePublic.html">Thông tin cá nhân ( Công khai )</a></li>
             </ul>
         </div>
     </div>
@@ -16,47 +13,154 @@
 
 <div id="items-projects">
     <section id="portfolio" class="container">
-        <h4>Created projects:</h4>
+        <h4 class="pt30">Created projects:</h4>
 
-        <ul class="portfolio-items col-4" ng-repeat="project in ListCreatedProject">
-            <li class="portfolio-item apps">
+        <h4 class="pt30">Dự án nháp:</h4>
+        <ul ng-show="checkEmptyDraft==0">Không có dự án nào</ul>
+        <ul class="portfolio-items col-4">
+            <li class="portfolio-item apps" ng-repeat="project in ListCreatedProjectDraft">
+
                 <div class="item-inner">
-                    <div class="item-image column">
-                        <figure><img src="\images\projects\{{project.ImageUrl}}" alt=""></figure>
+                    <div class=" item-image hover01 column">
+                        <figure><img class="img-fit" src="\images\projects\{{project.ImageUrl}}" alt=""></figure>
                     </div>
                     <div class="item-title">
-                        <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
+                        <h5><a href="project_detail.html">{{project.Title}}</a></h5>
+                        <a class="btn btn-info btn-xs" href="create_project2.html">Sửa</a>
+                        <a class="btn btn-info btn-xs" href="javascript:window.location.reload();" ng-click="deleteReminded(project.ProjectID)">Xóa</a>
+
                     </div>
-                    <div class="item-expand">
-                        <div class="item-content">
-                            <p class="fnt15">{{project.SubDescription}}</p>
+                    <div class="item-content">
+                        <p class="fnt15">{{project.SubDescription}}</p>
+                    </div>
+                    <div class="item-footer">
+                        <div class="mt10 mb5">
+                            <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
+                            &nbsp;&nbsp;
+                            <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
+                            &nbsp;&nbsp;
                         </div>
-                        <div class="item-footer">
-                            <div class="mt10 mb5">
-                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
-                                &nbsp;&nbsp;
-                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
-                                &nbsp;&nbsp;
+                        <div class="progress mt5 mb5">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
+                                <span class=" sr-only">
+                                    {{project.CurrentFunded}}% Complete (success)
+                                </span>
                             </div>
-                            <div class="progress mt5 mb5">
-                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="50" aria-valuemax="100" style="width: 50%">
-                                    <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
-                                </div>
-                            </div>
-                            <ul class="list-inline">
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">đã được tài trợ</p></li>
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber | currency}}</p><p class="mt0 mb0">đã được gây quỹ</p></li>
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">ngày còn lại</p></li>
-                            </ul>
                         </div>
+                        <ul class="list-inline">
+                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">ủng hộ</p></li>
+                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber}}</p><p class="mt0 mb0">gây quỹ</p></li>
+                            <li><p class="fnt-b mt0 mb0 c00">Thành công</p><p class="mt0 mb0">{{project.ExpireDate}}</p></li>
+                        </ul>
                     </div>
                 </div>
             </li><!--/.portfolio-item-->
         </ul>
+
+
+        <h4 class="pt30">Dự án đang hoạt động:</h4>
+        <ul ng-if="checkEmptyApproved==0">Không có dự án nào</ul>
+        <ul class="portfolio-items col-4">
+
+            <li class="portfolio-item apps" ng-repeat="project in ListCreatedProjectApproved">
+                <div class="item-inner">
+                    <div class="item-image hover01 column">
+                        <a href="project_detail.html"><figure><img src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
+                    </div>
+                    <div class="item-title">
+                        <h5><a href="#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
+                    </div>
+                    <div class="item-content">
+                        <a class="btn btn-primary btn-xs" href="\#\project\listBackers">Danh sách ủng hộ</a>
+                        <a class="btn btn-info btn-xs" href="\#\project\createProject2.html">Sửa</a>
+                        <p class="fnt15">{{project.SubDescription}}</p>
+                    </div>
+                    <div class="item-footer">
+                        <div class="mt10 mb5">
+                            <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
+                            &nbsp;&nbsp;
+                            <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
+                            &nbsp;&nbsp;
+                        </div>
+                        <div class="progress mt5 mb5">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
+                                <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
+                            </div>
+                        </div>
+                        <ul class="list-inline">
+                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">ủng hộ</p></li>
+                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber}}</p><p class="mt0 mb0">gây quỹ</p></li>
+                            <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">ngày còn lại</p></li>
+                        </ul>
+                    </div>
+                </div>
+            </li><!--/.portfolio-item-->
+
+        </ul>
+
+        <div class="clearfix"></div>
+        @*<div class="form-actions txt-c">
+                <a class="btn btn-transparent btn-sm" href="#">Thêm</a>
+            </div>*@
+
+        <h4 class="pt30">Dự án đã kết thúc:</h4>
+        <ul ng-if="checkEmptyExpired==0">Không có dự án nào</ul>
+        <ul class="portfolio-items col-4">
+
+            <li class="portfolio-item apps" ng-repeat="project in ListCreatedProjectExpired">
+
+                <div class="item-inner">
+                    <div class=" item-image hover01 column">
+                        <figure><img class="img-fit" src="\images\projects\{{project.ImageUrl}}" alt=""></figure>
+                    </div>
+                    <div class="item-title">
+                        <h5><a href="project_detail.html">{{project.Title}}</a></h5>
+                        <a class="btn btn-primary btn-xs" href="\#\project\listBackers">Danh sách ủng hộ</a>
+                    </div>
+                    <div class="item-content">
+                        <p class="fnt15">{{project.SubDescription}}</p>
+                    </div>
+                    <div class="item-footer">
+                        <div class="mt10 mb5">
+                            <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
+                            &nbsp;&nbsp;
+                            <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
+                            &nbsp;&nbsp;
+                        </div>
+                        <div class="progress mt5 mb5">
+
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%" ng-if="project.CurrentFunded >= 100">
+                                <span class="sr-only">{{project.CurrentFunded}}% Complete (Thành công)</span>
+                            </div>
+
+                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%" ng-if="project.CurrentFunded < 100">
+                                <span class="sr-only">{{project.CurrentFunded}}% Complete (thất bại)</span>
+                            </div>
+
+                        </div>
+                        <ul class="list-inline">
+                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">ủng hộ</p></li>
+                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber}}</p><p class="mt0 mb0">gây quỹ</p></li>
+                            <li><p class="fnt-b mt0 mb0 c00" ng-if="project.CurrentFunded >= 100">Thành công</p><p class="fnt-b mt0 mb0 c00" ng-if="project.CurrentFunded < 100">Thất bại</p><p class="mt0 mb0">{{project.CreatedDate | date : format : shortDate}}</p></li>
+
+                        </ul>
+                    </div>
+                </div>
+            </li><!--/.portfolio-item-->
+
+
+        </ul>
+
+        <div class="clearfix"></div>
+        @*<div class="form-actions txt-c">
+                <a class="btn btn-transparent btn-sm" href="#">Thêm</a>
+            </div>*@
+
+        <div class="clearfix"></div>
+        @*<div class="form-actions txt-c">
+                <a class="btn btn-transparent btn-sm" href="#">Thêm</a>
+            </div>*@
     </section><!--/#portfolio-->
-    <div class="form-actions txt-c">
-        <a class="btn btn-transparent btn-sm" href="../#/project/createdProject">Xem thêm</a>
-    </div>
 </div>
 
 <div class="scroll-top-wrapper ">

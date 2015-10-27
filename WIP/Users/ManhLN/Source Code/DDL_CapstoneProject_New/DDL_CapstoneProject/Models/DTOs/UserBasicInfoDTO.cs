@@ -13,5 +13,6 @@ namespace DDL_CapstoneProject.Models.DTOs
         public string LoginType { get; set; }
         public string FullName { get; set; }
         public string ProfileImage { get; set; }
+        public string Email { get; set; }
     }
 }

@@ -448,6 +448,27 @@ namespace DDL_CapstoneProject.Respository
             }
         }
 
+        // 22/10/2015 - MaiCTP - get User info for projectBacked page
+        public UserBackedInfoDTO GetBackedUserInfo(string userName)
+        {
+
+            using (var db = new DDLDataContext())
+            {
+                var currentUser = (from user in db.DDL_Users
+                                   where user.Username.Equals(userName)
+                                   select new UserBackedInfoDTO
+                                   {
+                                       FullName = user.UserInfo.FullName,
+                                       ProfileImage = user.UserInfo.ProfileImage,
+                                       Email = user.Email,
+                                       Add = user.UserInfo.Address,
+                                       Phone = user.UserInfo.PhoneNumber
+                                   }).FirstOrDefault();
+
+                return currentUser;
+            }
+        }
+
         #endregion
     }
 }
