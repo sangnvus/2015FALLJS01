@@ -136,6 +136,7 @@
     <Compile Include="Controllers\ApiControllers\MessageApiController.cs" />
     <Compile Include="Controllers\ApiControllers\CategoryApiController.cs" />
     <Compile Include="Controllers\ApiControllers\ProjectApiController.cs" />
+    <Compile Include="Controllers\ApiControllers\ReportApiController.cs" />
     <Compile Include="Controllers\ApiControllers\SlideApiController.cs" />
     <Compile Include="Controllers\ApiControllers\UserApiController.cs" />
     <Compile Include="Controllers\WebControllers\AdminPartialController.cs" />
@@ -193,6 +194,8 @@
     <Compile Include="Models\DTOs\QuestionDTO.cs" />
     <Compile Include="Models\DTOs\ReplyDTO.cs" />
     <Compile Include="Models\DTOs\ProjectBackDTO.cs" />
+    <Compile Include="Models\DTOs\ReportProjectDTO.cs" />
+    <Compile Include="Models\DTOs\ReportUserDTO.cs" />
     <Compile Include="Models\DTOs\RewardPkgDTO.cs" />
     <Compile Include="Models\DTOs\SlideDTO.cs" />
     <Compile Include="Models\DTOs\TimeLineDTO.cs" />
@@ -221,6 +224,7 @@
     <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Respository\QuestionRepository.cs" />
+    <Compile Include="Respository\ReportResponsitoy.cs" />
     <Compile Include="Respository\TimelineRepository.cs" />
     <Compile Include="Respository\UpdateLogRepository.cs" />
     <Compile Include="Respository\RewardPkgRepository.cs" />
@@ -240,6 +244,8 @@
     <Content Include="App\controllers\admin\AdminProjectDashboardController.js" />
     <Content Include="App\controllers\admin\AdminProjectDetailController.js" />
     <Content Include="App\controllers\admin\AdminProjectListController.js" />
+    <Content Include="App\controllers\admin\AdminReportProjectController.js" />
+    <Content Include="App\controllers\admin\AdminReportUserController.js" />
     <Content Include="App\controllers\admin\AdminSlideController.js" />
     <Content Include="App\controllers\BackedHistoryProjectController.js" />
     <Content Include="App\controllers\EditPasswordController.js" />
@@ -280,6 +286,7 @@
     <Content Include="App\HomeModule.js" />
     <Content Include="App\services\Admin\AdminCategoryService.js" />
     <Content Include="App\services\Admin\AdminProjectService.js" />
+    <Content Include="App\services\Admin\AdminReportService.js" />
     <Content Include="App\services\Admin\AdminSlideService.js" />
     <Content Include="App\services\CategoryService.js" />
     <Content Include="App\services\CommonService.js" />
@@ -1295,6 +1302,8 @@
     <Content Include="Views\AdminPartial\Project\_ProjectDetail.cshtml" />
     <Content Include="Views\AdminPartial\Project\_ProjectList.cshtml" />
     <Content Include="Views\AdminPartial\_Slide.cshtml" />
+    <Content Include="Views\AdminPartial\_ReportProject.cshtml" />
+    <Content Include="Views\AdminPartial\_ReportUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />

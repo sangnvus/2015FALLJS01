@@ -22,6 +22,37 @@ app.config(["$routeProvider", function ($routeProvider) {
             }
         });
 
+    $routeProvider.when("/reportproject",
+        {
+            caseInsensitiveMatch: true,
+            templateUrl: "/AdminPartial/ReportProject",
+            controller: 'AdminReportProjectController',
+            activeTab: 'reportproject',
+            breadcrumb: ['Quản lý chung', 'Báo xấu dự án'],
+            title: 'Báo xấu dự án',
+            resolve: {
+                listReport: ['$rootScope', '$q', 'AdminReportService', 'CommmonService', function ($rootScope, $q, AdminReportService, CommmonService) {
+                    var promise = AdminReportService.GetReportProjects();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
+            }
+        });
+
+    $routeProvider.when("/reportuser",
+        {
+            caseInsensitiveMatch: true,
+            templateUrl: "/AdminPartial/ReportUser",
+            controller: 'AdminReportUserController',
+            activeTab: 'reportuser',
+            breadcrumb: ['Quản lý chung', 'Báo xấu người dùng'],
+            title: 'Báo xấu người dùng',
+            resolve: {
+                listReport: ['$rootScope', '$q', 'AdminReportService', 'CommmonService', function ($rootScope, $q, AdminReportService, CommmonService) {
+                    var promise = AdminReportService.GetReportUsers();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
+            }
+        });
     $routeProvider.when("/category",
         {
             templateUrl: "/AdminPartial/Category",
