@@ -20,6 +20,45 @@ Date: 2015.10.01
 
 
 
+/* Error Page (error-page.html)
+---------------------------------------------------------- */
+	.content-error p{
+		/*margin: 18px 0px 45px 0px;*/
+	}
+	.content-error p{
+		font-family: "Century Gothic";
+		font-size:2em;
+		color:#666;
+		text-align:center;
+	}
+	.content-error p span{
+		color:#e54040;
+	}
+	.content-error{
+		text-align:center;
+		padding:100px 0px 0px 0px;
+	}
+	.content-error a{
+		color:#fff;
+		font-family: "Century Gothic";
+		background: #666666; /* Old browsers */
+		background: -moz-linear-gradient(top,  #666666 0%, #666666 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#666666), color-stop(100%,#666666)); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top,  #666666 0%,#666666 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top,  #666666 0%,#666666 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top,  #666666 0%,#666666 100%); /* IE10+ */
+		background: linear-gradient(to bottom,  #666666 0%,#666666 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#666666', endColorstr='#666666',GradientType=0 ); /* IE6-9 */
+		padding: 15px 20px;
+		border-radius: 1em;
+	}
+	.content-error a:hover{
+		color:#e54040;
+	}
+/* End error page ------------------------------------------ */
+
+
+
 /* Header navbar
 ---------------------------------------------------------- */
 	#header nav{
