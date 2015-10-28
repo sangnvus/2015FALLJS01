@@ -170,6 +170,12 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\DDL_User.cs" />
+    <Compile Include="Models\DTOs\AdminUserBackedListDTO.cs" />
+    <Compile Include="Models\DTOs\AdminUserBackingDetailDTO.cs" />
+    <Compile Include="Models\DTOs\AdminUserCreatedListDTO.cs" />
+    <Compile Include="Models\DTOs\AdminUserDashboardDTO.cs" />
+    <Compile Include="Models\DTOs\AdminUserListDTO.cs" />
+    <Compile Include="Models\DTOs\AdminUserProfileDTO.cs" />
     <Compile Include="Models\DTOs\ProjectBasicListDTO.cs" />
     <Compile Include="Models\DTOs\AdminProjectGeneralInfoDTO.cs" />
     <Compile Include="Models\DTOs\BackingInfoDTO.cs" />
@@ -249,6 +255,9 @@
     <Content Include="App\controllers\admin\AdminReportProjectController.js" />
     <Content Include="App\controllers\admin\AdminReportUserController.js" />
     <Content Include="App\controllers\admin\AdminSlideController.js" />
+    <Content Include="App\controllers\admin\AdminUserDashboardController.js" />
+    <Content Include="App\controllers\admin\AdminUserListController.js" />
+    <Content Include="App\controllers\admin\AdminUserProfileController.js" />
     <Content Include="App\controllers\BackedHistoryProjectController.js" />
     <Content Include="App\controllers\EditPasswordController.js" />
     <Content Include="App\controllers\BackProjectController.js" />
@@ -286,6 +295,7 @@
     <Content Include="App\directives\text-angular\textAngular-sanitize.min.js" />
     <Content Include="App\directives\timelinr.js" />
     <Content Include="App\HomeModule.js" />
+    <Content Include="App\services\Admin\AdminUserService.js" />
     <Content Include="App\services\Admin\AdminCategoryService.js" />
     <Content Include="App\services\Admin\AdminMessageService.js" />
     <Content Include="App\services\Admin\AdminProjectService.js" />
@@ -1307,6 +1317,9 @@
     <Content Include="Views\AdminPartial\_ReportUser.cshtml" />
     <Content Include="Views\AdminPartial\Message\_MessageDetail.cshtml" />
     <Content Include="Views\AdminPartial\Message\_MessageList.cshtml" />
+    <Content Include="Views\AdminPartial\User\_UserList.cshtml" />
+    <Content Include="Views\AdminPartial\User\_UserDashboard.cshtml" />
+    <Content Include="Views\AdminPartial\User\_UserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />

@@ -170,6 +170,52 @@ app.config(["$routeProvider", function ($routeProvider) {
                 }]
             }
         });
+
+    $routeProvider.when("/userlist",
+      {
+          templateUrl: "/AdminPartial/UserList",
+          controller: 'AdminUserListController',
+          activeTab: 'userlist',
+          breadcrumb: ['Quản lý người dùng', 'Danh sách người dùng'],
+          title: 'Danh sách người dùng',
+          resolve: {
+              listuser: ['$rootScope', '$q', 'AdminUserService', 'CommmonService', function ($rootScope, $q, AdminUserService, CommmonService) {
+                  var promise = AdminUserService.getUserlist();
+                  return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+              }]
+          }
+      });
+
+    $routeProvider.when("/userprofile/:username",
+      {
+          templateUrl: "/AdminPartial/UserProfile",
+          controller: 'AdminUserProfileController',
+          activeTab: 'userlist ',
+          breadcrumb: ['Quản lý người dùng', 'Thông tin người dùng'],
+          title: 'Thông tin người dùng',
+          resolve: {
+              userprofile: ['$route', '$rootScope', '$q', 'AdminUserService', 'CommmonService', function ($route, $rootScope, $q, AdminUserService, CommmonService) {
+                  var promise = AdminUserService.getUserprofile($route.current.params.username);
+                  return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+              }]
+          }
+      });
+
+    $routeProvider.when("/userdashboard",
+      {
+          templateUrl: "/AdminPartial/UserDashboard",
+          controller: 'AdminUserDashboardController',
+          activeTab: 'userdashboard',
+          breadcrumb: ['Bảng điều khiển', 'Bảng điều khiển người dùng'],
+          title: 'Bảng điều khiển người dùng',
+          resolve: {
+              userdashboard: ['$route', '$rootScope', '$q', 'AdminUserService', 'CommmonService', function ($route, $rootScope, $q, AdminUserService, CommmonService) {
+                  var promise = AdminUserService.getUserDasboard();
+                  return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+              }]
+          }
+      });
+
     $routeProvider.otherwise({
         redirectTo: "/"
     });

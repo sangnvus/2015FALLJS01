@@ -64,5 +64,20 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         {
             return PartialView("~/Views/AdminPartial/Message/_MessageDetail.cshtml");
         }
+
+        public ActionResult UserList()
+        {
+            return PartialView("~/Views/AdminPartial/User/_UserList.cshtml");
+        }
+
+        public ActionResult UserProfile()
+        {
+            return PartialView("~/Views/AdminPartial/User/_UserProfile.cshtml");
+        }
+
+        public ActionResult UserDashboard()
+        {
+            return PartialView("~/Views/AdminPartial/User/_UserDashboard.cshtml");
+        }
     }
 }
