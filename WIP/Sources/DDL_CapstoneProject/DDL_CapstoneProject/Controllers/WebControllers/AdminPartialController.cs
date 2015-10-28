@@ -8,6 +8,16 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
 {
     public class AdminPartialController : Controller
     {
+        // GET: AdminPartial/ReportProject
+        public ActionResult ReportProject()
+        {
+            return PartialView("~/Views/AdminPartial/_ReportProject.cshtml");
+        }
+        // GET: AdminPartial/ReportUser
+        public ActionResult ReportUser()
+        {
+            return PartialView("~/Views/AdminPartial/_ReportUser.cshtml");
+        }
         // GET: AdminPartial/Dashboard
         public ActionResult Dashboard()
         {
