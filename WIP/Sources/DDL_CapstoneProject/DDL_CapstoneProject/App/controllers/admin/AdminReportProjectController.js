@@ -29,14 +29,14 @@ app.controller('AdminReportProjectController',
                     $scope.reportContent = $scope.listReport[i];
                     $scope.newReply.ToUser = $scope.reportContent.ReporterUsername;
                     $scope.newReply.Title = "Trả lời về việc báo xấu dự án \"" + $scope.reportContent.ProjectTitle + "\"";
-                    if ($scope.reportContent.Status == "Waiting" || $scope.reportContent.Status == "")
-                        $scope.changeReportStatus($scope.reportContent.ReportID, "Viewed");
+                    if ($scope.listReport[i].Status != "rejected" && $scope.listReport[i].Status != "done")
+                        $scope.changeReportStatus($scope.reportContent.ReportID, "viewed");
                 }
             }
         }
         $scope.sendReply = function () {
             if ($scope.newReply.Content.trim() !== "") {
-                
+
                 var promisePost = MessageService.sendMessage($scope.newReply);
                 promisePost.then(
                     function (result) {
@@ -64,19 +64,19 @@ app.controller('AdminReportProjectController',
 
 
 
-        $scope.changeReportStatus = function (id,status) {
-            var promise = AdminReportService.changeReportStatus(id, status,"Project");
+        $scope.changeReportStatus = function (id, status) {
+            var promise = AdminReportService.changeReportStatus(id, status, "Project");
             promise.then(
                 function (result) {
                     if (result.data.Status === "success") {
                         for (var i = 0; i < $scope.listReport.length; i++) {
                             if ($scope.listReport[i].ReportID == id) {
-                                if ($scope.listReport[i].Status != "Confirmed" && $scope.listReport[i].Status != "Canceled")
+                                if ($scope.listReport[i].Status != "done" && $scope.listReport[i].Status != "rejected")
                                     $scope.listReport[i].Status = status;
                                 break;
                             }
                         }
-                        
+
                     } else {
                         CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         $scope.Error = result.data.Message;

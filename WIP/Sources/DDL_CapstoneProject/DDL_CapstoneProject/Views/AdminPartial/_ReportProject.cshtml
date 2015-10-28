@@ -6,7 +6,7 @@
         <div class="portlet portlet-default">
             <div class="portlet-heading">
                 <div class="portlet-title">
-                    <h4>Created Projects</h4>
+                    <h4>Danh sách dự án bị báo xấu</h4>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -18,34 +18,42 @@
 
                         <thead>
                             <tr>
-                                <th>User reported</th>
-                                <th>Reported Project</th>
-                                <th>Creator</th>
-                                <th>Reason</th>
-                                <th>Reported Date</th>
-                                <th>Status</th>
-                                <th style="width: 250px">Action</th>
+                                <th>Người báo xấu</th>
+                                <th>Dự án bị báo xấu</th>
+                                <th>Người tạo dự án</th>
+                                <th>Lý do</th>
+                                <th>Ngày báo</th>
+                                <th style="width: 72px">Trạng thái</th>
+                                <th style="width: 85px"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="report in listReport">
                                 <td><a href="/admin/#/userprofile/{{report.ReporterUsername}}">{{report.reporterName}}</a></td>
                                 <td><a href="project-detail.html">{{report.ProjectTitle}}</a></td>
-                                <td><a href="userprofile.html">{{report.CreatorName}}</a></td>
+                                <td><a href="/admin/#/userprofile/{{report.ReporterUsername}}">{{report.CreatorName}}</a></td>
                                 <td>{{report.Subject}}</td>
                                 <td>{{report.ReportedDate}}</td>
-                                <td>
-                                    <a class="btn btn-xs"
-                                       ng-class="{
-                                       'btn-blue': report.Status == 'Viewed'
-                                       ,'btn-red': report.Status == 'Waiting'
-                                       ,'btn-purple': report.Status == 'Canceled'
-                                       ,'btn-default': report.Status == 'Confirmed'}">{{report.Status}}</a>
+                                <td align="center">
+                                    <a style="width: 72px;height: 25px" class="btn btn-xs btn-red" ng-if="report.Status != 'rejected' && report.Status != 'done' && report.Status != 'viewed'">Chưa xem</a>
+                                    <a style="width: 72px;height: 25px" class="btn btn-xs btn-blue" ng-if="report.Status == 'viewed'">Đã xem</a>
+                                    <a style="width: 72px;height: 25px" class="btn btn-xs btn-purple" ng-if="report.Status == 'done'">Đã đồng ý</a>
+                                    <a style="width: 72px;height: 25px" class="btn btn-xs btn-default" ng-if="report.Status == 'rejected'">Đã Hủy</a>
                                 </td>
                                 <td>
-                                    <button class="btn btn-blue" data-toggle="modal" data-target="#viewMessageModal" ng-click="loadReportContent(report.ReportID)">View</button>
-                                    <button class="btn btn-default" ng-click="changeReportStatus(report.ReportID,'Confirmed')" ng-if="report.Status != 'Canceled' && report.Status != 'Confirmed' ">Confirmed</button>
-                                    <button class="btn btn-purple" ng-click="changeReportStatus(report.ReportID,'Canceled')" ng-if="report.Status != 'Canceled' && report.Status != 'Confirmed' ">Cancel</button>
+
+                                    <button class="btn btn-primary btn-sm" type="button" tooltip="Chi tiết" tooltip-append-to-body="true" tooltip-placement="left"
+                                            ng-click="loadReportContent(report.ReportID)" data-toggle="modal" data-target="#viewMessageModal">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                    <button class="btn btn-primary btn-sm" type="button" tooltip="Đồng ý" tooltip-append-to-body="true" tooltip-placement="left"
+                                            ng-click="changeReportStatus(report.ReportID,'done')" ng-if="report.Status != 'rejected' && report.Status != 'done' ">
+                                        <i class="fa fa-check"></i>
+                                    </button>
+                                    <button class="btn btn-primary btn-sm" type="button" tooltip="Hủy" tooltip-append-to-body="true" tooltip-placement="left"
+                                            ng-click="changeReportStatus(report.ReportID,'rejected')" ng-if="report.Status != 'rejected' && report.Status != 'done' ">
+                                        <i class="fa fa-times"></i>
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>

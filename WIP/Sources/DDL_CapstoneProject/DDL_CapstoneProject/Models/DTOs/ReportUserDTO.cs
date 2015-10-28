@@ -15,7 +15,7 @@ namespace DDL_CapstoneProject.Models.DTOs
         public string ReportedFullname { get; set; }
         public string Subject { get; set; }
         public string ReportContent { get; set; }
-        public DateTime ReportedDate { get; set; }
+        public string ReportedDate { get; set; }
         public string Status { get; set; }
         public int ReportID { get; set; }
     }

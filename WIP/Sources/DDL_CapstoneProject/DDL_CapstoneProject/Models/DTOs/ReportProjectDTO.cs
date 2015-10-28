@@ -14,6 +14,7 @@ namespace DDL_CapstoneProject.Models.DTOs
         public string ProjectTitle { get; set; }
         public int CreatorID { get; set; }
         public string CreatorName { get; set; }
+        public string CreatorUsername { get; set; }
         public string Subject { get; set; }
         public string ReportContent { get; set; }
         public string ReportedDate { get; set; }

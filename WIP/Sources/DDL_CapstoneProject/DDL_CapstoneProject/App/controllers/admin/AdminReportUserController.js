@@ -29,8 +29,8 @@ app.controller('AdminReportUserController',
                     $scope.reportContent = $scope.listReport[i];
                     $scope.newReply.ToUser = $scope.reportContent.ReporterUsername;
                     $scope.newReply.Title = "Trả lời về việc báo xấu người dùng \"" + $scope.reportContent.ReportedUsername + "\"";
-                    if ($scope.reportContent.Status == "Waiting" || $scope.reportContent.Status == "")
-                        $scope.changeReportStatus($scope.reportContent.ReportID, "Viewed");
+                    if ($scope.listReport[i].Status != "rejected" && $scope.listReport[i].Status != "done")
+                        $scope.changeReportStatus($scope.reportContent.ReportID, "viewed");
                 }
             }
         }
@@ -61,13 +61,13 @@ app.controller('AdminReportUserController',
             }
         }
         $scope.changeReportStatus = function (id, status) {
-            var promise = AdminReportService.changeReportStatus(id, status,"User");
+            var promise = AdminReportService.changeReportStatus(id, status, "User");
             promise.then(
                 function (result) {
                     if (result.data.Status === "success") {
                         for (var i = 0; i < $scope.listReport.length; i++) {
                             if ($scope.listReport[i].ReportID == id) {
-                                if ($scope.listReport[i].Status != "Confirmed" && $scope.listReport[i].Status != "Canceled")
+                                if ($scope.listReport[i].Status != "done" && $scope.listReport[i].Status != "rejected")
                                     $scope.listReport[i].Status = status;
                                 break;
                             }
