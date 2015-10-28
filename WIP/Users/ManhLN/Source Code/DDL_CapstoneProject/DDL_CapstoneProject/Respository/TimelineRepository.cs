@@ -43,7 +43,7 @@ namespace DDL_CapstoneProject.Respository
 
                 timelineList.ForEach(x => x.DueDate = CommonUtils.ConvertDateTimeFromUtc(x.DueDate));
 
-                return timelineList.ToList();
+                return timelineList;
             }
         }
 

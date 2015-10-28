@@ -7,7 +7,7 @@
             </div>
             <div class="row mr30 ml30">
                 <div class="col-md-8 pull-left">
-                    <p class="fnt22 fnt-b">Hãy chọn gói quà!</p>
+                    <p class="fnt22 fnt-b">Hãy chọn mức ủng hộ!</p>
                     <div id="choose_reward">
                         <div class="form-group">
                             <div class="item-radio mt20 mb20" ng-repeat="reward in RewardPkgs">
@@ -24,7 +24,7 @@
                                             <p>Đã ủng hộ: {{reward.CurrentQuantity}} <span>| {{reward.Quantity}}</span></p>
                                             <p style="word-break: break-word;">{{reward.Description}}</p>
                                             <p ng-if="reward.Quantity<= reward.CurrentQuantity && reward.Type == 'limited'">
-                                                <span class="label label-danger">Gói quà đã hết. Xin chọn gói quà khác!</span>
+                                                <span class="label label-danger">Gói đã hết. Xin chọn gói khác!</span>
                                             </p>
                                         </div>
                                         <div class="col-md-4" ng-show="reward.EstimatedDelivery != null">

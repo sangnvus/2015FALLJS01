@@ -88,13 +88,16 @@
     @Scripts.Render("~/bundles/angularjs")
     @Scripts.Render("~/bundles/md5")
     <script>
-        $("#LoginForm").submit(function (event) {
+        $("#LoginForm").submit(function(event) {
             var password = $('#tbshowPassword').val();
             var md5 = $.md5(password);
             $('#tbPassword').val(md5);
             return true;
         });
-
-        angular.module("ClientApp", []);
+        var service = angular.module("DDLService", []);
+        var directive = angular.module("DDLDirective", []);
+        var app = angular.module("ClientApp", ["DDLDirective", "DDLService"]);
     </script>
+    <script src="~/App/controllers/SearchBarController.js"></script>
+    <script src="~/App/directives/ngEnter.js"></script>
 }

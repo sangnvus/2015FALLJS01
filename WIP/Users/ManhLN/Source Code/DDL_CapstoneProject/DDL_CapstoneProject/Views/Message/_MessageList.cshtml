@@ -10,7 +10,7 @@
                         <a class="link">
                             <i class=" icon fa fa-edit fa-2x fa-fw">
                             </i>
-                            <span class="toggle">Tạo mới</span>
+                            <span class="toggle">Soạn tin nhắn</span>
                         </a>
                     </li>
 
@@ -21,7 +21,7 @@
                         </a>
                     </li>
 
-                    <li ng-click="changeInboxSent('sent')" ng-class="{'active': !Sent}">
+                    <li ng-click="changeInboxSent('sent')" ng-class="{'active': Sent}">
                         <a>
                             <i class="icon fa fa-paper-plane fa-2x fa-fw"></i>
                             <span class="toggle">Hộp thư đi <span ng-show="NumberNewMessage.SentMessage > 0" class="badge">{{NumberNewMessage.SentMessage}}</span></span>
@@ -60,7 +60,7 @@
 
                     <button class="toggle-link btn btn-primary"><i class="icon fa fa-bars"></i></button>
                     <button class="btn btn-primary btn18"><i class="icon fa fa-refresh"></i></button>
-                    <button class="btn btn-danger btn18" ng-click="Delete()"><i class="icon fa fa-trash-o"></i> Delete</button>
+                    <button class="btn btn-danger btn18" ng-click="Delete()"><i class="icon fa fa-trash-o"></i> Xóa tin nhắn</button>
                 </div>
 
                 <!--Conversation table-->
@@ -119,7 +119,7 @@
 <div class="container">
     <div class="modal fade" id="sentBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
-            <form name="NewMessageForm" novalidate class="form-horizontal">
+            <form name="NewMessageForm" novalidate role="form">
                 <div class="modal-content">
                     <div class="modal-header" style="background: #404040">
                         <button type="button" class="close cFF" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -127,40 +127,41 @@
                     </div>
                     <!--Body-->
                     <div class="modal-body">
-                        <div class="form-group" style="border-bottom: 1px solid #cfcfcf">
-                            <label for="" class="col-sm-2 control-label fnt18 fnt-b fnt-b txt-l">Tới:</label>
-                            <div class="pl0 ml0 col-sm-10">
-                                <input type="text" class="pl0 ml0 form-control flat fnt18 fnt-b noboder" id=""
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">Tới (*):</span>
+                                <input type="text" class="form-control" autofocus
                                        placeholder="Tên người nhận..."
                                        name="ToUser" ng-model="NewMessage.ToUser"
                                        typeahead="user.UserName as user.UserName for user in getUserName($viewValue)"
                                        typeahead-loading="loadingLocations" typeahead-no-results="noResults"
                                        typeahead-template-url="customTemplate.html" required="">
-                                <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
-                                <div ng-show="noResults">
-                                    <i class="glyphicon glyphicon-remove text-danger"></i> Tài khoản không tồn tại
-                                </div>
+                            </div>
+                            <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh text-info"></i>
+                            <div ng-show="noResults" class="text-danger">
+                                <i class="glyphicon glyphicon-remove"></i> Người nhận không tồn tại
                             </div>
                         </div>
-                        <div class="form-group" style="border-bottom: 1px solid #cfcfcf">
-                            <label for="" class="pr0 col-sm-2 control-label fnt18 fnt-b txt-l">Tiêu đề:</label>
-                            <div class="pl0 ml0 col-sm-10">
-                                <input type="text" class="pl0 ml0 form-control fnt18 fnt-b flat noboder"
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">Tiêu đề (*):</span>
+                                <input type="text" class="form-control"
                                        placeholder="Nhập tiêu đề..."
                                        name="Title"
                                        ng-model="NewMessage.Title"
-                                       ng-model-options="{ updateOn: 'change blur'}"
                                        required=""
-                                       ng-minlength="8"
+                                       ng-minlength="1"
                                        ng-maxlength="50">
                             </div>
+                            <span class="text-danger">* Tối đa 50 kí tự</span>
                         </div>
+                        <hr>
                         <div>
-                            <div text-angular name="Content" ng-model="NewMessage.Content"></div>
+                            <div text-angular required name="Content" ng-model="NewMessage.Content"></div>
                         </div>
                     </div>
                     <div class="modal-footer pt5 pb5">
-                        @* <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>*@
+                         <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
                         <button type="button" class="btn btn-info btn-sm btn-wide btn18" ng-click="sendMessage()"
                                 ng-disabled="!NewMessageForm.$dirty || (NewMessageForm.$dirty && NewMessageForm.$invalid)">
                             Gửi

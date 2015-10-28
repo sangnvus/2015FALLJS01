@@ -1,0 +1,378 @@
+﻿
+
+<div class="row">
+
+    <div class="col-lg-12">
+
+        <div class="portlet portlet-default">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4>Danh sách Slide</h4>
+                </div>
+                <div class="portlet-widgets">
+                    <button class="btn btn-green btn-sm" data-toggle="modal" data-target="#newSliderModal" ng-click="resetNewSlideForm(NewSlideForm)"><i class="fa fa-plus"></i> Thêm Slide</button>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#NewProjectTable" onclick="return false;"><i class="fa fa-chevron-down"></i></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div id="NewProjectTable" class="panel-collapse collapse in">
+                <div class="portlet-body">
+                    <div class="table-responsive">
+                        <table id="example-table" class="table table-striped table-bordered table-hover table-green"
+                               datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
+                            <thead>
+                                <tr>
+                                    <th style="width: 15px">#</th>
+                                    <th>Tiêu đề</th>
+                                    <th>Mô tả</th>
+                                    <th style="width: 125px">Ảnh</th>
+                                    <!-- <th>Hyper Link</th> -->
+                                    <!-- <th>Button Color</th> -->
+                                    <th style="width: 75px">Trạng thái</th>
+                                    <th style="width: 30px">Thứ tự</th>
+                                    <th style="width: 65px"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="slide in ListSlides track by $index" ng-class-odd="'odd'" ng-class-even="'even'">
+                                    <td class="col-number">{{slide.Order}}</td>
+                                    <td>{{slide.Title}}</td>
+                                    <td>{{slide.Description}}</td>
+                                    <td>
+                                        <img style="width: 150px; height: 100px" ng-src="../images/slides/{{slide.ImageUrl}}" class="" alt=""></img>
+                                    </td>
+                                    <td>
+                                        <button ng-if="slide.IsActive" class="btn btn-success btn-sm btn-block" type="button"
+                                                ng-click="changeSlideStatus(slide.SlideID,$index)"
+                                                tooltip="Nhấp để khóa" tooltip-append-to-body="true" tooltip-placement="left">
+                                            Mở
+                                        </button>
+                                        <button ng-if="!slide.IsActive" class="btn btn-default btn-sm btn-block" type="button"
+                                                ng-click="changeSlideStatus(slide.SlideID,$index)"
+                                                tooltip="Nhấp để mở" tooltip-append-to-body="true" tooltip-placement="left">
+                                            Khóa
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button ng-show="{{slide.Order}} != 1" class="btn btn-green btn-sm btn-square" type="button"
+                                                ng-click="changeOrder($index,'up')">
+                                            <i class="fa fa-arrow-up"></i>
+                                        </button>
+                                        <button ng-show="{{slide.Order}} != ListSlides.length" class="btn btn-success btn-sm btn-square" type="button"
+                                                ng-click="changeOrder($index,'down')">
+                                            <i class="fa fa-arrow-down"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary btn-sm" type="button" tooltip="Sửa" tooltip-append-to-body="true" tooltip-placement="left"
+                                                    ng-click="showEditDialog($index,EditSlideForm)">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm" type="button" tooltip-placement="right"
+                                                    tooltip="Xóa" tooltip-append-to-body="true" ng-if="ListSlides.length > 1"
+                                                    ng-click="deleteSlide(slide.SlideID, $index)">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.portlet-body -->
+            </div>
+        </div>
+        <!-- /.portlet -->
+
+    </div>
+    <!-- /.col-lg-12 -->
+
+</div>
+<!-- start Modals -->
+<!-- Advanced Modal Trigger -->
+<!-- Flex Modal -->
+<div class="modal modal-flex fade" id="newSliderModal" tabindex="-1" role="dialog" aria-labelledby="flexModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form role="form" name="NewSlideForm" novalidate>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="flexModalLabel">Tạo Slide mới</h4>
+                </div>
+                <div class="modal-body">
+                    <!--Title-->
+                    <div class="form-group has-feedback">
+                        <label for="SlideTitle">Tiêu đề(*):</label>
+                        <input type="text" class="form-control" id="SlideTitle" name="Title" placeholder="Nhập tiêu đề..." ng-model="NewSlide.Title"
+                               ng-trim="true"
+                               required
+                               ng-model-options="{ updateOn: 'change blur'}"
+                               ng-maxlength="40"
+                               max-length="40"
+                               ng-minlength="5">
+                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-if="NewSlideForm.Title.$dirty && NewSlideForm.Title.$valid"></span>
+                        <div ng-show="NewSlideForm.Title.$dirty && NewSlideForm.Title.$invalid" class="text-danger">
+                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                            <span ng-show="NewSlideForm.Title.$error.required">Bạn chưa nhập tiêu đề</span>
+                            <span ng-show="NewSlideForm.Title.$error.minlength">Tiêu đề chỉ từ 5 đến 40 kí tự</span>
+                            <span ng-show="NewSlideForm.Title.$error.maxlength">Tiêu đề chỉ từ 5 đến 40 kí tự</span>
+                        </div>
+                    </div>
+                    <!--Description-->
+                    <div class="form-group has-feedback">
+                        <label for="SlideDescription">Mô tả(*):</label>
+                        <textarea class="form-control" id="SlideDescription" name="Description"
+                                  placeholder="Nhập mô tả..." ng-model="NewSlide.Description" style="resize: none"
+                                  ng-trim="true"
+                                  required
+                                  ng-model-options="{ updateOn: 'change blur'}"
+                                  ng-maxlength="200"
+                                  max-length="200"
+                                  ng-minlength="10"
+                                  msd-elastic="\n"></textarea>
+                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-if="NewSlideForm.Description.$dirty && NewSlideForm.Description.$valid"></span>
+                        <div ng-show="NewSlideForm.Description.$dirty && NewSlideForm.Description.$invalid" class="text-danger">
+                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                            <span ng-show="NewSlideForm.Description.$error.required">Bạn chưa nhập mô tả</span>
+                            <span ng-show="NewSlideForm.Description.$error.minlength">Mô tả từ 10 đến 200 kí tự</span>
+                            <span ng-show="NewSlideForm.Description.$error.maxlength">Mô tả từ 10 đến 200 kí tự</span>
+                        </div>
+                    </div>
+                    <!--Slide Url-->
+                    <div class="form-group has-feedback">
+                        <label for="SlideUrl">Đường dẫn của Slide(*):</label>
+                        <input type="url" class="form-control" id="SlideUrl" name="SlideUrl"
+                               placeholder="http://..." ng-model="NewSlide.SlideUrl"
+                               ng-trim="true"
+                               required
+                               ng-model-options="{ updateOn: 'change blur'}">
+                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-if="NewSlideForm.SlideUrl.$dirty && NewSlideForm.SlideUrl.$valid"></span>
+                        <div ng-show="NewSlideForm.SlideUrl.$dirty && NewSlideForm.SlideUrl.$invalid" class="text-danger">
+                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                            <span ng-show="NewSlideForm.SlideUrl.$error.required">Bạn chưa nhập đường dẫn</span>
+                            <span ng-show="NewSlideForm.SlideUrl.$error.url">Sai định dạng đường dẫn</span>
+                        </div>
+                    </div>
+                    <!--Text color-->
+                    <div class="form-group has-feedback">
+                        <label for="exampleInputFile">Màu chữ(*):</label>
+                        <select class="form-control" ng-model="NewSlide.TextColor" ng-init="NewSlide.TextColor = 'light'">
+                            <option value="light" selected>Sáng</option>
+                            <option value="dark">Tối</option>
+                        </select>
+                    </div>
+                    <!--Image cover-->
+                    <div class="form-group has-feedback">
+                        <label for="imgSelected">Ảnh bìa(*):</label>
+                        <input id="imgSelected" name="ImageUrl" ng-file-dirty ng-file-select="onFileSelect($files)" accept="image/*"
+                               type="file">
+
+                        <img ng-src="{{NewSlide.ImageUrl}}" alt="" class="img-responsive" style="max-height: 200px">
+                    </div>
+                    <!--Video-->
+                    <div class="form-group has-feedback">
+                        <label for="VideoUrl">Video (nếu có):</label>
+                        <input type="url" class="form-control" id="VideoUrl" name="VideoUrl"
+                               placeholder="youtube..." ng-model="NewSlide.VideoUrl"
+                               ng-trim="true"
+                               ng-model-options="{ updateOn: 'change blur'}">
+                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-if="NewSlideForm.VideoUrl.$dirty && NewSlideForm.VideoUrl.$valid"></span>
+                        <div ng-show="NewSlideForm.VideoUrl.$dirty && NewSlideForm.VideoUrl.$invalid" class="text-danger">
+                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                            <span ng-show="NewSlideForm.VideoUrl.$error.url">Sai định dạng đường dẫn</span>
+                        </div>
+                    </div>
+                    <!--Button text-->
+                    <div class="form-group has-feedback">
+                        <label for="ButtonText">Chữ trong nút bấm(*):</label>
+                        <input type="text" class="form-control" id="ButtonText" name="ButtonText"
+                               placeholder="Chữ gì đó..." ng-model="NewSlide.ButtonText"
+                               ng-trim="true"
+                               ng-model-options="{ updateOn: 'change blur'}"
+                               required
+                               ng-maxlength="20"
+                               maxlength="20"
+                               ng-minlength="2" />
+                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-if="NewSlideForm.ButtonText.$dirty && NewSlideForm.ButtonText.$valid"></span>
+                        <div ng-show="NewSlideForm.ButtonText.$dirty && NewSlideForm.ButtonText.$invalid" class="text-danger">
+                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                            <span ng-show="NewSlideForm.ButtonText.$error.required">Bạn chưa nhập chữ trong nút bấm</span>
+                            <span ng-show="NewSlideForm.ButtonText.$error.minlength">Chỉ từ 2 đến 20 kí tự</span>
+                            <span ng-show="NewSlideForm.ButtonText.$error.maxlength">Chỉ từ 2 đến 20 kí tự</span>
+                        </div>
+                    </div>
+                    <!--Button color-->
+                    <div class="form-group has-feedback">
+                        <label for="exampleInputFile">Màu nút(*):</label>
+                        <select class="form-control" ng-model="NewSlide.ButtonColor" ng-init="NewSlide.ButtonColor = 'btn-success'">
+                            <option value="btn-success" selected>Xanh lục</option>
+                            <option value="btn-info">Xanh lam</option>
+                            <option value="btn-default">Trắng</option>
+                        </select>
+                    </div>
+                    <!--Error-->
+                    <div class="alert alert-danger alert-dismissible" role="alert" ng-show="NewSlideError != null">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Lỗi:</span>
+                        {{NewSlideError}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-green" ng-click="addNewSlide()"
+                            ng-disabled="!NewSlideForm.$dirty || (NewSlideForm.$dirty && NewSlideForm.$invalid)">
+                        Tạo mới
+                    </button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<div class="modal modal-flex fade" id="EditSliderModal" tabindex="-1" role="dialog" aria-labelledby="flexModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form role="form" name="EditSlideForm" novalidate>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="flexModalLabel">Tạo Slide mới</h4>
+                </div>
+                <div class="modal-body">
+                    <!--Title-->
+                    <div class="form-group has-feedback">
+                        <label for="SlideTitle2">Tiêu đề(*):</label>
+                        <input type="text" class="form-control" id="SlideTitle2" name="Title" placeholder="Nhập tiêu đề..." ng-model="EditSlide.Title"
+                               ng-trim="true"
+                               required
+                               ng-model-options="{ updateOn: 'change blur'}"
+                               ng-maxlength="40"
+                               max-length="40"
+                               ng-minlength="5">
+                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-if="EditSlideForm.Title.$dirty && EditSlideForm.Title.$valid"></span>
+                        <div ng-show="EditSlideForm.Title.$dirty && EditSlideForm.Title.$invalid" class="text-danger">
+                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                            <span ng-show="EditSlideForm.Title.$error.required">Bạn chưa nhập tiêu đề</span>
+                            <span ng-show="EditSlideForm.Title.$error.minlength">Tiêu đề chỉ từ 5 đến 40 kí tự</span>
+                            <span ng-show="EditSlideForm.Title.$error.maxlength">Tiêu đề chỉ từ 5 đến 40 kí tự</span>
+                        </div>
+                    </div>
+                    <!--Description-->
+                    <div class="form-group has-feedback">
+                        <label for="SlideDescription">Mô tả(*):</label>
+                        <textarea class="form-control" id="SlideDescription" name="Description"
+                                  placeholder="Nhập mô tả..." ng-model="EditSlide.Description" style="resize: none"
+                                  ng-trim="true"
+                                  required
+                                  ng-model-options="{ updateOn: 'change blur'}"
+                                  ng-maxlength="200"
+                                  max-length="200"
+                                  ng-minlength="10"
+                                  msd-elastic="\n"></textarea>
+                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-if="EditSlideForm.Description.$dirty && EditSlideForm.Description.$valid"></span>
+                        <div ng-show="EditSlideForm.Description.$dirty && EditSlideForm.Description.$invalid" class="text-danger">
+                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                            <span ng-show="EditSlideForm.Description.$error.required">Bạn chưa nhập mô tả</span>
+                            <span ng-show="EditSlideForm.Description.$error.minlength">Mô tả từ 10 đến 200 kí tự</span>
+                            <span ng-show="EditSlideForm.Description.$error.maxlength">Mô tả từ 10 đến 200 kí tự</span>
+                        </div>
+                    </div>
+                    <!--Slide Url-->
+                    <div class="form-group has-feedback">
+                        <label for="SlideUrl">Đường dẫn của Slide(*):</label>
+                        <input type="url" class="form-control" id="SlideUrl" name="SlideUrl"
+                               placeholder="http://..." ng-model="EditSlide.SlideUrl"
+                               ng-trim="true"
+                               required
+                               ng-model-options="{ updateOn: 'change blur'}">
+                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-if="EditSlideForm.SlideUrl.$dirty && EditSlideForm.SlideUrl.$valid"></span>
+                        <div ng-show="EditSlideForm.SlideUrl.$dirty && EditSlideForm.SlideUrl.$invalid" class="text-danger">
+                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                            <span ng-show="EditSlideForm.SlideUrl.$error.required">Bạn chưa nhập đường dẫn</span>
+                            <span ng-show="EditSlideForm.SlideUrl.$error.url">Sai định dạng đường dẫn</span>
+                        </div>
+                    </div>
+                    <!--Text color-->
+                    <div class="form-group has-feedback">
+                        <label for="exampleInputFile">Màu chữ(*):</label>
+                        <select class="form-control" ng-model="EditSlide.TextColor" ng-init="EditSlide.TextColor = 'light'">
+                            <option value="light" selected>Sáng</option>
+                            <option value="dark">Tối</option>
+                        </select>
+                    </div>
+                    <!--Image cover-->
+                    <div class="form-group has-feedback">
+                        <label for="imgSelected">Ảnh bìa(*):</label>
+                        <input id="imgSelected" name="ImageUrl" ng-file-dirty ng-file-select="onFileSelect($files)" accept="image/*"
+                               type="file">
+
+                        <img ng-src="{{EditSlide.ImageUrl}}" alt="" class="img-responsive" style="max-height: 200px">
+                    </div>
+                    <!--Video-->
+                    <div class="form-group has-feedback">
+                        <label for="VideoUrl">Video (nếu có):</label>
+                        <input type="url" class="form-control" id="VideoUrl" name="VideoUrl"
+                               placeholder="youtube..." ng-model="EditSlide.VideoUrl"
+                               ng-trim="true"
+                               ng-model-options="{ updateOn: 'change blur'}">
+                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-if="EditSlideForm.VideoUrl.$dirty && EditSlideForm.VideoUrl.$valid"></span>
+                        <div ng-show="EditSlideForm.VideoUrl.$dirty && EditSlideForm.VideoUrl.$invalid" class="text-danger">
+                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                            <span ng-show="EditSlideForm.VideoUrl.$error.url">Sai định dạng đường dẫn</span>
+                        </div>
+                    </div>
+                    <!--Button text-->
+                    <div class="form-group has-feedback">
+                        <label for="ButtonText">Chữ trong nút bấm(*):</label>
+                        <input type="text" class="form-control" id="ButtonText" name="ButtonText"
+                               placeholder="Chữ gì đó..." ng-model="EditSlide.ButtonText"
+                               ng-trim="true"
+                               ng-model-options="{ updateOn: 'change blur'}"
+                               required
+                               ng-maxlength="20"
+                               maxlength="20"
+                               ng-minlength="2" />
+                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-if="EditSlideForm.ButtonText.$dirty && EditSlideForm.ButtonText.$valid"></span>
+                        <div ng-show="EditSlideForm.ButtonText.$dirty && EditSlideForm.ButtonText.$invalid" class="text-danger">
+                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                            <span ng-show="EditSlideForm.ButtonText.$error.required">Bạn chưa nhập chữ trong nút bấm</span>
+                            <span ng-show="EditSlideForm.ButtonText.$error.minlength">Chỉ từ 2 đến 20 kí tự</span>
+                            <span ng-show="EditSlideForm.ButtonText.$error.maxlength">Chỉ từ 2 đến 20 kí tự</span>
+                        </div>
+                    </div>
+                    <!--Button color-->
+                    <div class="form-group has-feedback">
+                        <label for="exampleInputFile">Màu nút(*):</label>
+                        <select class="form-control" ng-model="EditSlide.ButtonColor" ng-init="EditSlide.ButtonColor = 'btn-success'">
+                            <option value="btn-success" selected>Xanh lục</option>
+                            <option value="btn-info">Xanh lam</option>
+                            <option value="btn-default">Trắng</option>
+                        </select>
+                    </div>
+                    <!--Error-->
+                    <div class="alert alert-danger alert-dismissible" role="alert" ng-show="EditSlideError != null">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Lỗi:</span>
+                        {{EditSlideError}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-green" ng-click="editSlide()"
+                            ng-disabled="!EditSlideForm.$dirty || (EditSlideForm.$dirty && EditSlideForm.$invalid)">
+                        Sửa
+                    </button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- Flex Modal -->

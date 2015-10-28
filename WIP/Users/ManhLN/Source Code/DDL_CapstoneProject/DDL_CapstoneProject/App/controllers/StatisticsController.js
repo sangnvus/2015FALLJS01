@@ -49,4 +49,13 @@ app.controller('StatisticsController',
             ykeys: ['CategorySuccessFunded', 'CategoryFailFunded'],
             labels: ['Số tiền ủng hộ dự án thành công', 'Số tiền ủng hộ dự án không thành công']
         };
+        $scope.getRank = function (fundingGoal) {
+            if (fundingGoal <= 50000000)
+                return "Rank D";
+            if (fundingGoal <= 100000000 && fundingGoal > 50000000)
+                return "Rank C";
+            if (fundingGoal <= 500000000 && fundingGoal > 100000000)
+                return "Rank B";
+            else return "Rank A";
+        }
     });

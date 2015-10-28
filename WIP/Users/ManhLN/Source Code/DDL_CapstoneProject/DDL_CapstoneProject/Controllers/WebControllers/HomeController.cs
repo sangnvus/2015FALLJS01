@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using DDL_CapstoneProject.Helper;
 using DDL_CapstoneProject.Respository;
+using DDL_CapstoneProject.Ultilities;
 
 namespace DDL_CapstoneProject.Controllers.WebControllers
 {
@@ -25,7 +26,11 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
             {
                 return Redirect("/admin/login");
             }
-            getCurrentUser();
+            var currentUser = getCurrentUser();
+            if (currentUser.UserType != DDLConstants.UserType.ADMIN)
+            {
+                return Redirect("/admin/login");
+            }
             ViewBag.BaseUrl = GetBaseUrl() + "admin/";
             return View();
         }
@@ -34,18 +39,6 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         {
 
             return PartialView("_Discover");
-        }
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
     }
 }

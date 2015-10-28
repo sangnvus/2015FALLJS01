@@ -13,7 +13,7 @@
                 <br/>
                 Bạn có thể ngay lập tức đăng nhập và sử dụng website.
                 <br/>
-                <br />
+                <br/>
                 <a href="@Url.Content("~/Login/")" class="btn btn-primary btn-lg">
                     <span>Đăng nhập ngay</span>
                 </a>
@@ -21,3 +21,14 @@
         </div>
     </div>
 </div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/angularjs")
+    <script>
+        var service = angular.module("DDLService", []);
+        var directive = angular.module("DDLDirective", []);
+        var app = angular.module("ClientApp", ["DDLDirective", "DDLService"]);
+    </script>
+    <script src="~/App/controllers/SearchBarController.js"></script>
+    <script src="~/App/directives/ngEnter.js"></script>
+}
