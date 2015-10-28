@@ -338,8 +338,18 @@ app.config(["$routeProvider", function ($routeProvider) {
             }
         });
 
+    $routeProvider.when("/error",
+        {
+            caseInsensitiveMatch: true,
+            templateUrl: "/ClientPartial/Error"
+        });
+    $routeProvider.when("/notfound",
+        {
+            caseInsensitiveMatch: true,
+            templateUrl: "/ClientPartial/NotFound"
+        });
     $routeProvider.otherwise({
-        redirectTo: "/"
+        redirectTo: "/notfound"
     });
 
     //$locationProvider.html5Mode(false).hashPrefix("!");

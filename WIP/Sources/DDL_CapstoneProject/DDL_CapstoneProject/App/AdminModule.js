@@ -215,9 +215,25 @@ app.config(["$routeProvider", function ($routeProvider) {
               }]
           }
       });
+    $routeProvider.when("/notfound",
+        {
+            caseInsensitiveMatch: true,
+            templateUrl: "/AdminPartial/NotFound",
+            activeTab: 'error',
+            breadcrumb: ['Quản lí', 'Trang không tìm thấy'],
+            title: 'Trang không tìm thấy'
+        });
+    $routeProvider.when("/error",
+        {
+            caseInsensitiveMatch: true,
+            templateUrl: "/AdminPartial/Error",
+            activeTab: 'error',
+            breadcrumb: ['Quản lí', 'Lỗi'],
+            title: 'Lỗi'
+        });
 
     $routeProvider.otherwise({
-        redirectTo: "/"
+        redirectTo: "/notfound"
     });
 
     //$locationProvider.html5Mode(false).hashPrefix("!");
@@ -240,7 +256,7 @@ app.run(['$rootScope', '$window', '$anchorScroll', 'DTDefaultOptions', 'toastrCo
         });
 
         // Scroll top when route change.
-        $rootScope.$on("$locationChangeStart", function (e, curr, prev) {
+        $rootScope.$on("$locationChangeSuccess", function () {
             $anchorScroll();
         });
 
