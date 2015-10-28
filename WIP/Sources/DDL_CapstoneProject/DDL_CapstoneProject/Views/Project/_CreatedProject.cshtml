@@ -92,7 +92,7 @@
                         </div>
                         <ul class="list-inline">
                             <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">ủng hộ</p></li>
-                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber}}</p><p class="mt0 mb0">gây quỹ</p></li>
+                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber | currency:"&#8363;":0}}</p><p class="mt0 mb0">gây quỹ</p></li>
                             <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">ngày còn lại</p></li>
                         </ul>
                     </div>
@@ -143,7 +143,7 @@
                         </div>
                         <ul class="list-inline">
                             <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">ủng hộ</p></li>
-                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber}}</p><p class="mt0 mb0">gây quỹ</p></li>
+                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber| currency:"&#8363;":0}}</p><p class="mt0 mb0">gây quỹ</p></li>
                             <li><p class="fnt-b mt0 mb0 c00" ng-if="project.CurrentFunded >= 100">Thành công</p><p class="fnt-b mt0 mb0 c00" ng-if="project.CurrentFunded < 100">Thất bại</p><p class="mt0 mb0">{{project.CreatedDate | date : format : shortDate}}</p></li>
 
                         </ul>
