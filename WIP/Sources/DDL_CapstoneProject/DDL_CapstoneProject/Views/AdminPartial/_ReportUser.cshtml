@@ -25,8 +25,8 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="report in listReport">
-                                <td><a href="userprofile.html">{{report.ReporterFullname}}</a></td>
-                                <td><a href="project-detail.html">{{report.ReportedFullname}}</a></td>
+                                <td><a href="/admin/#/userprofile/{{report.ReporterUsername}}">{{report.ReporterFullname}}</a></td>
+                                <td><a href="/admin/#/userprofile/{{report.ReportedUsername}}">{{report.ReportedFullname}}</a></td>
                                 <td>{{report.Subject}}</td>
                                 <td>{{report.ReportedDate}}</td>
                                 <td>
