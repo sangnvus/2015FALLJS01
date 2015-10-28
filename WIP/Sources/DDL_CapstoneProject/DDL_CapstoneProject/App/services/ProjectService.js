@@ -495,6 +495,10 @@ app.service('ProjectService', function ($http) {
         return $http.delete("/api/ProjectApi/DeleteProjectReminded/" + remindedProjectID);
     }
 
+    // 24/10/2015 - MaiCTP - DeleteProjectDraft
+    this.deleteDraft = function (draftProjectID) {
+        return $http.delete("/api/ProjectApi/DeleteProjectDraft/" + draftProjectID);
+    }
     // 20/10/2015 - MaiCTP - get RemindedProject
     this.remindProject = function (code) {
         var request = $http({
@@ -508,17 +512,16 @@ app.service('ProjectService', function ($http) {
     }
 
     // 24/10/2015 - MaiCTP - get BackingInfo
-    this.backingInfo = function (projectId) {
+    this.backingInfo = function (projectCode) {
         var request = $http({
             method: 'get',
             url: '/api/ProjectApi/GetBackingInfo',
             params: {
-                projectId: projectId
+                projectCode: projectCode
             }
         });
         return request;
     }
-
 
     this.getListBacker = function (code) {
         var request = $http({

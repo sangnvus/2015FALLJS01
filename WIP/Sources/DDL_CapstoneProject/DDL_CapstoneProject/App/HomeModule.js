@@ -272,14 +272,14 @@ app.config(["$routeProvider", function ($routeProvider) {
              }
          });
 
-    $routeProvider.when("/project/listBacker",
+    $routeProvider.when("/project/listBacker/:code",
         {
             caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/ListBacker",
             controller: 'ListBackerController',
             resolve: {
                 projects: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
-                    var promise = ProjectService.getListBacker();
+                    var promise = ProjectService.getListBacker($route.current.params.code);
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }]
             }

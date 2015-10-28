@@ -2,6 +2,7 @@
 
 app.controller('StarredProjectController', function ($scope, project, toastr, ProjectService) {
     $scope.ListStarredProject = project.data.Data;
+
     $scope.deleteReminded = function (index) {
         var promiseDeleteReminded = ProjectService.deleteReminded($scope.ListStarredProject[index].ProjectID);
 

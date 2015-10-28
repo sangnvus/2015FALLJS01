@@ -1394,8 +1394,33 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = listCreated });
         }
 
-        //  21/10/2015 - MaiCTP - DeleteProjectReminded
+        //  24/10/2015 - MaiCTP - DeleteProjectDraft
         
+        [ResponseType(typeof(ProjectBasicViewDTO))]
+        [HttpDelete]
+        public IHttpActionResult DeleteProjectDraft(int id)
+        {
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
+            try
+            {
+                var result = ProjectRepository.Instance.DeleteProjectDraft(id);
+
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
+        }
+
+        //  21/10/2015 - MaiCTP - DeleteProjectReminded
+
         [ResponseType(typeof(ProjectBasicViewDTO))]
         [HttpDelete]
         public IHttpActionResult DeleteProjectReminded(int id)
@@ -1423,7 +1448,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         //  24/10/2015 - MaiCTP - Get BackingInfo
         [HttpGet]
         [ResponseType(typeof(BackingInfoDTO))]
-        public IHttpActionResult GetBackingInfo(int projectId)
+        public IHttpActionResult GetBackingInfo(string  projectCode)
         {
             List<BackingInfoDTO> listBacking = new List<BackingInfoDTO>();
 
@@ -1440,9 +1465,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             try
             {
-                listBacking = ProjectRepository.Instance.BackingInfo(projectId);
-
-
+                listBacking = ProjectRepository.Instance.BackingInfo(projectCode);
             }
             catch (ProjectNotFoundException)
             {
@@ -1456,9 +1479,6 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = listBacking });
         }
-
-
-
 
         [HttpGet]
         public IHttpActionResult RemindProject(string code)

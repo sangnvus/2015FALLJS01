@@ -22,12 +22,12 @@
 
                 <div class="item-inner">
                     <div class=" item-image hover01 column">
-                        <figure><img class="img-fit" src="\images\projects\{{project.ImageUrl}}" alt=""></figure>
+                        <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
                     </div>
                     <div class="item-title">
                         <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
                         <a class="btn btn-info btn-xs" href="/#/project/edit/{{project.ProjectCode}}">Sửa</a>
-                        <a class="btn btn-info btn-xs" href="" ng-click="deleteReminded($index)">Xóa</a>
+                        <a class="btn btn-info btn-xs" href="" ng-click="deleteDraft($index)">Xóa</a>
 
                     </div>
                     <div class="item-content">
@@ -74,7 +74,7 @@
                         <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
                     </div>
                     <div class="item-content">
-                        <a class="btn btn-primary btn-xs" href="/#/project/listBackers">Danh sách ủng hộ</a>
+                        <a class="btn btn-primary btn-xs" href="/#/project/listBacker/{{project.ProjectCode}}">Danh sách ủng hộ</a>
                         <a class="btn btn-info btn-xs" href="/#/project/edit/{{project.ProjectCode}}">Sửa</a>
                         <p class="fnt15">{{project.SubDescription}}</p>
                     </div>
@@ -118,7 +118,7 @@
                     </div>
                     <div class="item-title">
                         <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
-                        <a class="btn btn-primary btn-xs" href="/#/project/listBackers">Danh sách ủng hộ</a>
+                        <a class="btn btn-primary btn-xs" href="/#/project/listBacker/{{project.ProjectCode}}">Danh sách ủng hộ</a>
                     </div>
                     <div class="item-content">
                         <p class="fnt15">{{project.SubDescription}}</p>

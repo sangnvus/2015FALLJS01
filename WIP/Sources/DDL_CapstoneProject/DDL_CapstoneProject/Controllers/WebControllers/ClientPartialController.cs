@@ -95,6 +95,11 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
             return PartialView("~/Views/Project/_CreatedProject.cshtml");
         }
 
+        public ActionResult ListBacker()
+        {
+            return PartialView("~/Views/Project/_ListBacker.cshtml");
+        }
+
         public ActionResult BackProject()
         {
             return PartialView("~/Views/Project/_BackProject.cshtml");
