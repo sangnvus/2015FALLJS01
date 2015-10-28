@@ -28,8 +28,12 @@ app.controller('AdminCategoryController',
             promise.then(
                 function (result) {
                     if (result.data.Status === "success") {
-                        $scope.ListCategory[index] = result.data.Data;
-                        toastr.success("Thành công");
+                        $scope.ListCategory[index].IsActive = result.data.Data.IsActive;
+                        if ($scope.ListCategory[index].IsActive) {
+                            toastr.success("Đã mở khóa");
+                        } else {
+                            toastr.success("Đã khóa");
+                        }
                     } else {
                         CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         $scope.Error = result.data.Message;

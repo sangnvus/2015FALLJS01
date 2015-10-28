@@ -113,5 +113,15 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         {
             return PartialView("~/Views/User/_EditPassword.cshtml");
         }
+
+        public ActionResult Error()
+        {
+            return PartialView("~/Views/Shared/_Error.cshtml");
+        }
+
+        public ActionResult NotFound()
+        {
+            return PartialView("~/Views/Shared/_NotFound.cshtml");
+        }
     }
 }

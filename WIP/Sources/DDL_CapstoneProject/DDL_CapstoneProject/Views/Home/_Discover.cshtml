@@ -31,7 +31,7 @@
             <h4 class="pull-left">What's popular:</h4>
             <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="@Url.Content("/#/search?categoryid=all&order=PopularPoint")">See more</a>
             <div class="clearfix"></div>
-            <ul class="portfolio-items col-3">
+            <ul class="portfolio-items col-4">
                 <li class="portfolio-item" ng-repeat="project in popularproject">
                     <div class="item-inner">
                         <div class="item-image hover01 column">
@@ -51,14 +51,23 @@
                                 &nbsp;&nbsp;
                             </div>
                             <div class="progress mt5 mb5">
-                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: { {project.CurrentFunded}}% ">
                                     <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
                                 </div>
                             </div>
                             <ul class="list-inline">
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">funded</p></li>
-                                <li><p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p><p class="mt0 mb0">pledged</p></li>
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">days to go</p></li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p>
+                                    <p class="mt0 mb0">funded</p>
+                                </li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p>
+                                    <p class="mt0 mb0">pledged</p>
+                                </li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p>
+                                    <p class="mt0 mb0">days to go</p>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -74,7 +83,7 @@
             <h4 class="pull-left">What's newest:</h4>
             <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="@Url.Content("/#/search?categoryid=all&order=CreatedDate")">See more</a>
             <div class="clearfix"></div>
-            <ul class="portfolio-items col-3">
+            <ul class="portfolio-items col-4">
                 <li class="portfolio-item" ng-repeat="project in newestproject">
                     <div class="item-inner">
                         <div class="item-image hover01 column">
@@ -94,14 +103,23 @@
                                 &nbsp;&nbsp;
                             </div>
                             <div class="progress mt5 mb5">
-                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: { {project.CurrentFunded}}% ">
                                     <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
                                 </div>
                             </div>
                             <ul class="list-inline">
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">funded</p></li>
-                                <li><p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p><p class="mt0 mb0">pledged</p></li>
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">days to go</p></li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p>
+                                    <p class="mt0 mb0">funded</p>
+                                </li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p>
+                                    <p class="mt0 mb0">pledged</p>
+                                </li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p>
+                                    <p class="mt0 mb0">days to go</p>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -118,7 +136,7 @@
             <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="@Url.Content("/#/search?categoryid=all&order=CurrentFunded")">See more</a>
             <div class="clearfix"></div>
 
-            <ul class="portfolio-items col-3">
+            <ul class="portfolio-items col-4">
                 <li class="portfolio-item" ng-repeat="project in mostfundproject">
                     <div class="item-inner">
                         <div class="item-image hover01 column">
@@ -138,14 +156,23 @@
                                 &nbsp;&nbsp;
                             </div>
                             <div class="progress mt5 mb5">
-                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: { {project.CurrentFunded}}% ">
                                     <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
                                 </div>
                             </div>
                             <ul class="list-inline">
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">funded</p></li>
-                                <li><p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p><p class="mt0 mb0">pledged</p></li>
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">days to go</p></li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p>
+                                    <p class="mt0 mb0">funded</p>
+                                </li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p>
+                                    <p class="mt0 mb0">pledged</p>
+                                </li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p>
+                                    <p class="mt0 mb0">days to go</p>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -161,7 +188,7 @@
             <h4 class="pull-left">What's end date:</h4>
             <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="@Url.Content("/#/search?categoryid=all&order=ExpireDate")">See more</a>
             <div class="clearfix"></div>
-            <ul class="portfolio-items col-3">
+            <ul class="portfolio-items col-4">
                 <li class="portfolio-item" ng-repeat="project in enddateproject">
                     <div class="item-inner">
                         <div class="item-image hover01 column">
@@ -181,14 +208,23 @@
                                 &nbsp;&nbsp;
                             </div>
                             <div class="progress mt5 mb5">
-                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: { {project.CurrentFunded}}% ">
                                     <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
                                 </div>
                             </div>
                             <ul class="list-inline">
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">funded</p></li>
-                                <li><p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p><p class="mt0 mb0">pledged</p></li>
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">days to go</p></li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p>
+                                    <p class="mt0 mb0">funded</p>
+                                </li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p>
+                                    <p class="mt0 mb0">pledged</p>
+                                </li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p>
+                                    <p class="mt0 mb0">days to go</p>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -201,3 +237,6 @@
     </div> <!-- end item-end-date -->
 
 </div>
+<script>
+    $(window).trigger('resize');
+</script>

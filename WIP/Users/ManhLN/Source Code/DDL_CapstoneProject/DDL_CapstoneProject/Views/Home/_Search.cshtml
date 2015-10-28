@@ -1,29 +1,42 @@
-﻿<div id="content" class="paddingNavbar">
+﻿
+
+
+
+<div id="content" class="paddingNavbar">
     <div id="search">
+
         <div class="searchbar">
             <div class="container">
                 <form ng-submit="Search(selectcategory,selectedorder,searchkey)">
                     <div class="control-group form-inline pt20 pb20">
                         <group ng-if="isAdvance">
                             <lable class="control-label fnt30 fnt-b">Tìm kiếm </lable>
-                            <input ng-model="$parent.searchkey" type="text" class="form-control" placeholder="dandelion..." value="Dandelion" />
+                            <input ng-model="$parent.searchkey" type="text" class="form-control" placeholder="dandelion..." value="Dandelion" ng-enter="Search(selectcategory,selectedorder,searchkey)" />
+
                         </group>
-                        <lable class="control-label fnt30 fnt-b">Hiển thị các dự án </lable>
-                        <select data-toggle="select" multiple class="form-control multiselect-default" ng-change="Search(selectcategory,selectedorder,searchkey)" ng-model="selectcategory">
-                            <option value="all" selected>All</option>
-                            <option value="{{category.CategoryID}}" ng-repeat="category in categoryList">{{category.Name}} </option>
-                        </select>
-                        <lable class="control-label fnt30 fnt-b"> sắp xếp theo </lable>
-                        <select class="form-control fnt20" id="" ng-change="Search(selectcategory,selectedorder,searchkey)" ng-model="selectedorder">
-                            <option value="Magic" selected>Magic</option>
-                            <option value="PopularPoint">Popularity</option>
-                            <option value="CreatedDate">Newest</option>
-                            <option value="ExpireDate">End Date</option>
-                            <option value="CurrentFunded">Most Funded</option>
-                        </select>
+                        <group>
+                            <lable class="control-label fnt30 fnt-b">Hiển thị các dự án </lable>
+                            <ui-select multiple ng-model="$parent.selectcategory" theme="bootstrap" ng-disabled="disabled" close-on-select="false" style="width: 200px;" title="Choose a category" ng-change="Search(selectcategory,selectedorder,searchkey)">
+                                <ui-select-match placeholder="Choose a category...">{{$item.Name}}</ui-select-match>
+                                <ui-select-choices repeat="cat in categoryList | highlight: $select.search">
+                                    {{cat.Name}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </group>
+                        <group>
+                            <lable class="control-label fnt30 fnt-b"> sắp xếp theo </lable>
+                            <select class="form-control fnt20" id="" ng-change="Search(selectcategory,selectedorder,searchkey)" ng-model="selectedorder">
+                                <option value="PopularPoint">Popularity</option>
+                                <option value="CreatedDate">Newest</option>
+                                <option value="ExpireDate">End Date</option>
+                                <option value="CurrentFunded">Most Funded</option>
+                            </select>
+                        </group>
                     </div>
                 </form>
             </div>
+
+
             <div id="item-search" class="pt30 pb30">
                 <section id="portfolio" class="container">
                     <div class="explore">
@@ -34,7 +47,7 @@
                         <li class="portfolio-item" ng-repeat="project in projectbycategory">
                             <div class="item-inner">
                                 <div class="item-image hover01 column">
-                                    <figure><a href="project_detail.html"><img src="/images/projects/{{project.ImageUrl}}" alt=""></a></figure>
+                                    <figure><a href="project_detail.html"><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></a></figure>
                                 </div>
                                 <div class="item-title">
                                     <h5><a href="project_detail.html">{{project.Title}}</a></h5>
@@ -68,8 +81,16 @@
                         <a class="btn btn-transparent btn-sm" href="discover.html">See more</a>
                     </div> -->
                 </section><!--/#portfolio-->
+                <a class="btn btn-transparent btn-sm" ng-if="showLoadMoreButton" ng-click="Loadmore(projectResultListSize,selectcategory,selectedorder,searchkey)" href="">See more</a>
+
             </div> <!-- end item-popular -->
+
+
         </div>
 
     </div> <!-- end content -->
 </div>
+
+<script>
+    $(window).trigger('resize');
+</script>

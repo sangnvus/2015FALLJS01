@@ -75,16 +75,19 @@
                     <li><a href="@Url.Content("/#/project/create/")">Tạo</a></li>
                     <li role="separator" class="hidden-xs divider-vertical"></li>
                 </ul>
-                <form class="navbar-form navbar-left" action="@Url.Content("/#/search?advance=true/")" role="Search">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input class="form-control" id="navbarInput-01" type="Search" placeholder="Tìm kiếm...">
-                            <span class="input-group-btn">
-                                <button type="" class="btn"><span class="fui-Search"></span></button>
-                            </span>
+
+                <div ng-controller="SearchBarController">
+                    <form class="navbar-form navbar-left" role="Search" novalidate ng-submit="submit(searchkey)">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input class="form-control" id="navbarInput-01" ng-model="searchkey" type="Search" placeholder="Tìm kiếm..." />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn"><span class="fui-Search"></span></button>
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
                 <!-- Login/Logout/Profile -->
                 @{
                     if (User.Identity == null || !User.Identity.IsAuthenticated)
@@ -117,9 +120,9 @@
                                 <ul class="dropdown-menu">
                                     <h5 class="c3">My stuff</h5>
                                     <li><a href="@Url.Content("/#/user/message")">Tin nhắn <span ng-show="UserInfo.NumberNewMessage.Total > 0" class="badge">{{UserInfo.NumberNewMessage.Total}}</span></a></li>
-                                    <li><a href="@Url.Content("/#/project/backedproject")">Dự án đã ủng hộ</a></li>
-                                    <li><a href="@Url.Content("/#/project/createdproject")">Dự án đã tạo</a></li>
-                                    <li><a href="@Url.Content("/#/project/starredproject")">Dự án theo dõi</a></li>
+                                    <li><a href="@Url.Content("/#/project/backedProject")">Dự án đã ủng hộ</a></li>
+                                    <li><a href="@Url.Content("/#/project/createdProject")">Dự án đã tạo</a></li>
+                                    <li><a href="@Url.Content("/#/project/starredProject")">Dự án theo dõi</a></li>
                                     <li class="divider"></li>
                                     <h5 class="c3">Chỉnh sửa</h5>
                                     <li><a href="@Url.Content("/#/user/editpassword/")">Tài Khoản</a></li>
@@ -134,7 +137,7 @@
             </div><!-- /.navbar-collapse -->
         </nav>
     </div>
-    <div style="min-height: 577px">
+    <div style="min-height: 577px; margin-bottom: 50px">
         @RenderBody()
         @RenderSection("SPAViews", required: false)
     </div>
@@ -152,14 +155,13 @@
             <div class="row">
                 <div class="col-md-6">
                     <p class="fnt30 fnt-b dark-cyan">DLL - Dandelion</p>
-                    <a href="">Hosted by DDL</a>
                 </div>
                 <div class="col-md-6">
                     <ul class="pull-right list-inline">
-                        <li><a href="home.html">Home</a></li>
-                        <li><a href="about.html">About us</a></li>
-                        <li><a href="#">Help</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><a href="/">Trang chủ</a></li>
+                        <li><a href="#">Về chúng tôi</a></li>
+                        <li><a href="#">Giúp đỡ</a></li>
+                        <li><a href="#">Liên hệ</a></li>
                     </ul>
                 </div>
             </div>

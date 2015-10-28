@@ -73,8 +73,8 @@
                                         <td>{{$index}}</td>
                                         <td>{{project.ProjectCode}}</td>
                                         <td>{{project.Category}}</td>
-                                        <td>{{project.PopularPoint}}</td>
-                                        <td><a href="project_detail.html">{{project.Name}}</a></td>
+                                        <td>{{getRank(project.PopularPoint)}}</td>
+                                        <td><a href="project_detail.html">{{project.Title}}</a></td>
                                         <td>${{project.CurrentFundedNumber}}</td>
                                         <td>{{project.Backers}}</td>
                                         <td>Success</td>
@@ -107,7 +107,6 @@
                             <thead style="background: #16a085; color: #FFF">
                                 <tr>
                                     <th>.STT</th>
-                                    <th>Xếp hạng</th>
                                     <th>Tên người ủng hộ</th>
                                     <th>Tổng số tiền gây quỹ</th>
                                     <th>Tổng số tiền ủng hộ</th>
@@ -116,7 +115,6 @@
                             <tbody>
                                 <tr ng-repeat="user in UserTopBackList track by $index">
                                     <td>{{$index}}</td>
-                                    <td>{{user.Rank}}</td>
                                     <td><a href="profile_public.html">{{user.Name}}</a></td>
                                     <td>${{user.TotalFunded}}</td>
                                     <td>{{user.TotalBacked}}</td>
@@ -148,7 +146,6 @@
                             <thead style="background: #16a085; color: #FFF">
                                 <tr>
                                     <th>.STT</th>
-                                    <th>Xếp hạng</th>
                                     <th>Tên người ủng hộ</th>
                                     <th>Tổng số tiền gây quỹ</th>
                                     <th>Tổng số tiền ủng hộ</th>
@@ -157,7 +154,6 @@
                             <tbody>
                                 <tr ng-repeat="user in UserTopFundList track by $index">
                                     <td>{{$index}}</td>
-                                    <td>{{user.Rank}}</td>
                                     <td><a href="profile_public.html">{{user.Name}}</a></td>
                                     <td>${{user.TotalFunded}}</td>
                                     <td>{{user.TotalBacked}}</td>

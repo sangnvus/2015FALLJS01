@@ -15,6 +15,7 @@
     <script src="~/Scripts/sweetalert/sweetalert.min.js"></script>
     <script src="~/Scripts/morris-chart/raphael-min.js"></script>
     <script src="~/Scripts/morris-chart/morris.min.js"></script>
+    <script src="~/Scripts/Chart.js"></script>
 
     <!-- THEME SCRIPTS -->
     <script src="/Scripts/admin-flex/flex.js"></script>
@@ -38,20 +39,34 @@
     <script src="~/Scripts/data-tables/angular-datatables.bootstrap.js"></script>
     <script src="~/App/directives/loading-bar.js"></script>
     <script src="~/App/directives/angular-morris-chart.min.js"></script>
+    <script src="~/App/directives/angular-chart.js"></script>
 
     <!-- Service  -->
     <script src="~/App/services/CommonService.js"></script>
     <script src="~/App/services/UserService.js"></script>
-    <script src="~/App/services/SlideSevice.js"></script>
-    <script src="~/App/services/CategoryService.js"></script>
-    <script src="~/App/services/MessageService.js"></script>
-    <script src="~/App/services/ProjectService.js"></script>
-    <script src="~/App/services/CategoryService.js"></script>
+    @* <script src="~/App/services/SlideSevice.js"></script>
+        <script src="~/App/services/CategoryService.js"></script>
+        <script src="~/App/services/ProjectService.js"></script>
+        <script src="~/App/services/CategoryService.js"></script>*@
     <script src="~/App/services/Admin/AdminCategoryService.js"></script>
+    <script src="~/App/services/Admin/AdminProjectService.js"></script>
+    <script src="~/App/services/Admin/AdminSlideService.js"></script>
+    <script src="~/App/services/Admin/AdminReportService.js"></script>
+    <script src="~/App/services/MessageService.js"></script>
+    <script src="~/App/services/Admin/AdminMessageService.js"></script>
+    <script src="~/App/services/MessageService.js"></script>
 
     <!-- Controller  -->
     <script src="~/App/controllers/admin/AdminDashboardController.js"></script>
     <script src="~/App/controllers/admin/AdminCategoryController.js"></script>
+    <script src="~/App/controllers/admin/AdminProjectDashboardController.js"></script>
+    <script src="~/App/controllers/admin/AdminProjectListController.js"></script>
+    <script src="~/App/controllers/admin/AdminProjectDetailController.js"></script>
+    <script src="~/App/controllers/admin/AdminSlideController.js"></script>
+    <script src="~/App/controllers/admin/AdminReportProjectController.js"></script>
+    <script src="~/App/controllers/admin/AdminReportUserController.js"></script>
+    <script src="~/App/controllers/admin/AdminMessageController.js"></script>
+    <script src="~/App/controllers/admin/AdminMessageDetailController.js"></script>
 
 }
 @section stylesheets{
@@ -63,5 +78,6 @@
     <link href="~/Content/data-tables/datatables.bootstrap.min.css" rel="stylesheet">
     <link href="~/Content/spinner/spinner.css" rel="stylesheet">
     <link href="~/Content/loading-bar.css" rel="stylesheet" />
+    <link href="~/Content/angular-chart.css" rel="stylesheet" />
 }
 

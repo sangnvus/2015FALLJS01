@@ -18,7 +18,25 @@ Date: 2015.10.01
 	}
 /* End html page ------------------------------------------ */
 
-
+/* Error Page (error-page.html)
+---------------------------------------------------------- */
+	.content-error p{
+		/*margin: 18px 0px 45px 0px;*/
+	}
+	.content-error p{
+		/*font-family: "Century Gothic";*/
+		font-size:2em;
+		color:#666;
+		text-align:center;
+	}
+	.content-error p span{
+		color:#e54040;
+	}
+	.content-error{
+		text-align:center;
+		padding:100px 0px 0px 0px;
+	}
+/* End error page ------------------------------------------ */
 
 /* Header navbar
 ---------------------------------------------------------- */

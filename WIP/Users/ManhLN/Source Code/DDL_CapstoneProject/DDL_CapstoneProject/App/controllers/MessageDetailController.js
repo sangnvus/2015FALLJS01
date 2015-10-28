@@ -28,17 +28,17 @@ app.controller('MessageDetailController', function ($scope, $location, $sce, $ro
                     if (result.data.Status === "success") {
                         $scope.Conversation.MessageList.push(result.data.Data);
                         $scope.Reply.Content = "";
-                        toastr.success('Gửi tin nhắn trả lời thành công');
+                        toastr.success('Đã gửi');
                     } else {
                         CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         $scope.Error = result.data.Message;
-                        toastr.error($scope.Error, 'Lỗi!');
+                        toastr.error($scope.Error, 'Lỗi');
                     }
                 },
                 function (error) {
                     $scope.Error = error.data.Message;
                     $scope.Error = result.data.Message;
-                    toastr.error($scope.Error, 'Lỗi!');
+                    toastr.error($scope.Error, 'Lỗi');
                 });
         } else {
             toastr.warning("Bạn chưa nhập nội dung tin nhắn", 'Thông báo');
@@ -55,13 +55,13 @@ app.controller('MessageDetailController', function ($scope, $location, $sce, $ro
                 } else {
                     CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
-                    toastr.error($scope.Error, 'Lỗi!');
+                    toastr.error($scope.Error, 'Lỗi');
                 }
             },
             function (error) {
                 $scope.Error = error.data.Message;
                 $scope.Error = result.data.Message;
-                toastr.error($scope.Error, 'Lỗi!');
+                toastr.error($scope.Error, 'Lỗi');
             });
     }
 });

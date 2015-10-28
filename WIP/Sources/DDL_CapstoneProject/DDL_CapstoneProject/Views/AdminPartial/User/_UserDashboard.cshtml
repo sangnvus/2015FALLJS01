@@ -1,0 +1,296 @@
+﻿<div class="row">
+    <div class="col-lg-6 col-sm-6">
+        <div class="col-lg-6 col-sm-9">
+            <div class="circle-tile">
+                <a>
+                    <div class="circle-tile-heading orange">
+                        <i class="fa fa-bell fa-fw fa-3x"></i>
+                    </div>
+                </a>
+                <div class="circle-tile-content orange">
+                    <div class="circle-tile-description text-faded">
+                        Người dùng mới
+                    </div>
+                    <div class="circle-tile-number text-faded">
+                        {{Dashboard.NewUser}}
+                    </div>
+                    @*<a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>*@
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-sm-9">
+            <div class="circle-tile">
+                <a>
+                    <div class="circle-tile-heading blue">
+                        <i class="fa fa-tasks fa-fw fa-3x"></i>
+                    </div>
+                </a>
+                <div class="circle-tile-content blue">
+                    <div class="circle-tile-description text-faded">
+                        Người dùng chưa kích hoạt
+                    </div>
+                    <div class="circle-tile-number text-faded">
+                        {{Dashboard.NotVerifiedUser}}
+                        <span id="sparklineB"></span>
+                    </div>
+                    @*<a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>*@
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-sm-9">
+            <div class="circle-tile">
+                <a>
+                    <div class="circle-tile-heading purple">
+                        <i class="fa fa-comments fa-fw fa-3x"></i>
+                    </div>
+                </a>
+                <div class="circle-tile-content purple">
+                    <div class="circle-tile-description text-faded">
+                        Người dùng đã kích hoạt
+                    </div>
+                    <div class="circle-tile-number text-faded">
+                        {{Dashboard.VerifiedUser}}
+                        <span id="sparklineD"></span>
+                    </div>
+                    @*<a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>*@
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-sm-9">
+            <div class="circle-tile">
+                <a>
+                    <div class="circle-tile-heading dark-blue">
+                        <i class="fa fa-users fa-fw fa-3x"></i>
+                    </div>
+                </a>
+                <div class="circle-tile-content dark-blue">
+                    <div class="circle-tile-description text-faded">
+                        Tổng số người dùng
+                    </div>
+                    <div class="circle-tile-number text-faded">
+                        {{Dashboard.TotalUser}}
+                        <span id="sparklineA"></span>
+                    </div>
+                    @*<a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Donut Chart Example -->
+    <div class="col-lg-6 col-sm-12">
+        <div class="portlet portlet-orange">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4>Biểu đồ :</h4>
+                </div>
+                <div class="portlet-widgets">
+                    <a href="javascript:;"><i class="fa fa-refresh"></i></a>
+                    <span class="divider"></span>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#donutChart"><i class="fa fa-chevron-down"></i></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <canvas id="pie" class="chart chart-pie"
+                    chart-data="data" chart-labels="labels"></canvas>
+        </div>
+    </div>
+    <!-- /.col-lg-6 -->
+</div>
+<!-- end DASHBOARD CIRCLE TILES -->
+<!-- begin NEW USER TABLES ROW -->
+<div class="row">
+    <div class="col-lg-6">
+        <div class="portlet portlet-green">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4><i class="fa fa-exchange fa-fw"></i>Người dùng vừa đăng nhập</h4>
+                </div>
+                <div class="portlet-widgets">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet"><i class="fa fa-chevron-down"></i></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div id="transactionsPortlet" class="panel-collapse collapse in">
+                <div class="portlet-body">
+                    <div class="table-responsive dashboard-demo-table">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Lần đănh nhập cuối</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="user in Dashboard.RecentUser">
+                                    <td style="width:35%">
+                                        <a class="pull-left" href="@Url.Content("/admin/#/userprofile/{{user.UserName}}")">
+                                            <img style="width : 40px; height:40px" ng-if="!checkHTTP(user.AvartaURL)" ng-src="../images/avatars/{{user.AvartaURL}}" alt="" class="media-object img-circle">
+                                            <img style="width : 40px; height:40px" ng-if="checkHTTP(user.AvartaURL)" ng-src="{{trustSrc(user.AvartaURL)}}" alt="" class="media-object img-circle">
+                                        </a>
+                                        <h5>{{user.FullName}}</h5>
+                                    </td>
+                                    <td>{{user.LastLogin | date: "hh:mm 'ngày' dd-MM-yyyy"}}</td>
+                                    <td>
+                                        <a ng-show="user.Status" class="btn btn-xs btn-green">Bình thường</a>
+                                        <a ng-hide="user.Status" class="btn btn-xs btn-red">Đã bị khóa</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Recent Backing -->
+    <div class="col-lg-6">
+        <div class="portlet portlet-green">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4><i class="fa fa-exchange fa-fw"></i>Người dùng ủng hộ nhièu nhất</h4>
+                </div>
+                <div class="portlet-widgets">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet2"><i class="fa fa-chevron-down"></i></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div id="transactionsPortlet2" class="panel-collapse collapse in">
+                <div class="portlet-body">
+                    <div class="table-responsive dashboard-demo-table">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Tổng dự án đã ủng hộ</th>
+                                    <th>Tổng số tiền đã ủng hộ</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="user in Dashboard.TopBacker">
+                                    <td style="width:35%">
+                                        <a class="pull-left" href="@Url.Content("/admin/#/userprofile/{{user.UserName}}")">
+                                            <img style="width : 40px; height:40px" ng-if="!checkHTTP(user.AvartaURL)" ng-src="../images/avatars/{{user.AvartaURL}}" alt="" class="media-object img-circle">
+                                            <img style="width : 40px; height:40px" ng-if="checkHTTP(user.AvartaURL)" ng-src="{{trustSrc(user.AvartaURL)}}" alt="" class="media-object img-circle">
+                                        </a>
+                                        <h5>{{user.FullName}}</h5>
+                                    </td>
+                                    <td>{{user.TotalProject}}</td>
+                                    <td>{{user.TotalPledgedAmount}}</td>
+                                    <td>
+                                        <a ng-show="user.Status" class="btn btn-xs btn-green">Bình thường</a>
+                                        <a ng-hide="user.Status" class="btn btn-xs btn-red">Đã bị khóa</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.col-lg-12 -->
+                </div>
+<!-- /.row -->
+<!-- new users and top creator -->
+<div class="row">
+    <!-- new users -->
+    <div class="col-lg-6">
+        <div class="portlet portlet-green">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4><i class="fa fa-exchange fa-fw"></i> Người dùng mới</h4>
+                </div>
+                <div class="portlet-widgets">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet3"><i class="fa fa-chevron-down"></i></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div id="transactionsPortlet3" class="panel-collapse collapse in">
+                <div class="portlet-body">
+                    <div class="table-responsive dashboard-demo-table">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Ngày khởi tạo</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="user in Dashboard.ListNewUser">
+                                    <td style="width:35%">
+                                        <a class="pull-left" href="@Url.Content("/admin/#/userprofile/{{user.UserName}}")">
+                                            <img style="width : 40px; height:40px" ng-if="!checkHTTP(user.AvartaURL)" ng-src="../images/avatars/{{user.AvartaURL}}" alt="" class="media-object img-circle">
+                                            <img style="width : 40px; height:40px" ng-if="checkHTTP(user.AvartaURL)" ng-src="{{trustSrc(user.AvartaURL)}}" alt="" class="media-object img-circle">
+                                        </a>
+                                        <h5>{{user.FullName}}</h5>
+                                    </td>
+                                    <td>{{user.CreatedDate | date : "hh:mm 'ngày' dd-MM-yyyy"}}</td>
+                                    <td>
+                                        <a ng-show="user.Status" class="btn btn-xs btn-green">Bình thường</a>
+                                        <a ng-hide="user.Status" class="btn btn-xs btn-red">Đã bị khóa</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end new users -->
+    <!-- top creators -->
+    <div class="col-lg-6">
+        <div class="portlet portlet-green">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4><i class="fa fa-exchange fa-fw"></i> Người dùng thành công nhất</h4>
+                </div>
+                <div class="portlet-widgets">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet4"><i class="fa fa-chevron-down"></i></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div id="transactionsPortlet4" class="panel-collapse collapse in">
+                <div class="portlet-body">
+                    <div class="table-responsive dashboard-demo-table">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Số dự án đã thành công</th>
+                                    <th>Tổng số tiền gây quỹ thành công</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="user in Dashboard.TopCreator">
+                                    <td style="width:35%">
+                                        <a class="pull-left" href="@Url.Content("/admin/#/userprofile/{{user.UserName}}")">
+                                            <img style="width : 40px; height:40px" ng-if="!checkHTTP(user.AvartaURL)" ng-src="../images/avatars/{{user.AvartaURL}}" alt="" class="media-object img-circle">
+                                            <img style="width : 40px; height:40px" ng-if="checkHTTP(user.AvartaURL)" ng-src="{{trustSrc(user.AvartaURL)}}" alt="" class="media-object img-circle">
+                                        </a>
+                                        <h5>{{user.FullName}}</h5>
+                                    </td>
+                                    <td>{{user.TotalSuccessProject}}</td>
+                                    <td>{{user.TotalPledgedAmount}}</td>
+                                    <td>
+                                        <a ng-show="user.Status" class="btn btn-xs btn-green">Bình thường</a>
+                                        <a ng-hide="user.Status" class="btn btn-xs btn-red">Đã bị khóa</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end top creators -->
+</div>
+<!-- end new users and top creator -->
+<!-- /.page-content -->

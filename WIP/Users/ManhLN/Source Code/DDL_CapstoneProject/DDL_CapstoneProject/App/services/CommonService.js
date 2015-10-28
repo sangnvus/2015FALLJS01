@@ -1,5 +1,5 @@
 ﻿
-service.service("CommmonService", function ($http, $window, $location) {
+service.service("CommmonService", function ($http, $window, $location, SweetAlert) {
 
     //Read all Categories  
     this.checkHttpResult = function ($q, promise, baseUrl) {
@@ -16,6 +16,7 @@ service.service("CommmonService", function ($http, $window, $location) {
                             $location.path("/notfound").replace();
                             deferred.reject();
                         } else {
+                            $location.path("/error").replace();
                             deferred.reject();
                         }
                     },
@@ -29,9 +30,9 @@ service.service("CommmonService", function ($http, $window, $location) {
         if (result === "not-authen") {
             $window.location.href = baseUrl + "login?returnUrl=" + $location.url();
         } else if (result === "not-found") {
-            //$location.path("/notfound").replace();
-        } else {
-            //$location.path("/error").replace();
+            SweetAlert.swal("Không tìm thấy", "Dữ liệu bạn truy cập không tồn tại", "warning");
+        } else if (result === "bad-request") {
+            SweetAlert.swal("Đã có lỗi xảy ra", "Bạn hãy thử lại sau", "warning");
         }
     }
 

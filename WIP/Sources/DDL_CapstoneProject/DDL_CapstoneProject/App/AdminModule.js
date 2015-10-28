@@ -9,10 +9,12 @@ var app = angular.module("AdminApp", ["ngRoute", "ngAnimate", "ngSanitize", "DDL
 app.config(["$routeProvider", function ($routeProvider) {
     $routeProvider.when("/dashboard",
         {
+            caseInsensitiveMatch: true,
             redirectTo: "/"
         });
     $routeProvider.when("/",
         {
+            caseInsensitiveMatch: true,
             templateUrl: "/AdminPartial/Dashboard",
             controller: 'AdminDashBoardController',
             activeTab: 'dashboard',
@@ -22,8 +24,40 @@ app.config(["$routeProvider", function ($routeProvider) {
             }
         });
 
+    $routeProvider.when("/reportproject",
+        {
+            caseInsensitiveMatch: true,
+            templateUrl: "/AdminPartial/ReportProject",
+            controller: 'AdminReportProjectController',
+            activeTab: 'reportproject',
+            breadcrumb: ['Quản lý chung', 'Báo xấu dự án'],
+            title: 'Báo xấu dự án',
+            resolve: {
+                listReport: ['$rootScope', '$q', 'AdminReportService', 'CommmonService', function ($rootScope, $q, AdminReportService, CommmonService) {
+                    var promise = AdminReportService.GetReportProjects();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
+            }
+        });
+
+    $routeProvider.when("/reportuser",
+        {
+            caseInsensitiveMatch: true,
+            templateUrl: "/AdminPartial/ReportUser",
+            controller: 'AdminReportUserController',
+            activeTab: 'reportuser',
+            breadcrumb: ['Quản lý chung', 'Báo xấu người dùng'],
+            title: 'Báo xấu người dùng',
+            resolve: {
+                listReport: ['$rootScope', '$q', 'AdminReportService', 'CommmonService', function ($rootScope, $q, AdminReportService, CommmonService) {
+                    var promise = AdminReportService.GetReportUsers();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
+            }
+        });
     $routeProvider.when("/category",
         {
+            caseInsensitiveMatch: true,
             templateUrl: "/AdminPartial/Category",
             controller: 'AdminCategoryController',
             activeTab: 'category',
@@ -38,6 +72,7 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/project",
         {
+            caseInsensitiveMatch: true,
             templateUrl: "/AdminPartial/ProjectDashboard",
             controller: 'AdminProjectDashboardController',
             activeTab: 'dashboard',
@@ -56,6 +91,7 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/project/all",
         {
+            caseInsensitiveMatch: true,
             templateUrl: "/AdminPartial/ProjectList",
             controller: 'AdminProjectListController',
             activeTab: 'projectList',
@@ -70,6 +106,7 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/project/:code",
        {
+           caseInsensitiveMatch: true,
            templateUrl: "/AdminPartial/ProjectDetail",
            controller: 'AdminProjectDetailController',
            activeTab: 'projectList',
@@ -85,6 +122,7 @@ app.config(["$routeProvider", function ($routeProvider) {
 
     $routeProvider.when("/slide",
         {
+            caseInsensitiveMatch: true,
             templateUrl: "/AdminPartial/Slide",
             controller: 'AdminSlideController',
             activeTab: 'slide',
@@ -97,8 +135,105 @@ app.config(["$routeProvider", function ($routeProvider) {
                 }]
             }
         });
+    $routeProvider.when("/message",
+        {
+            caseInsensitiveMatch: true,
+            templateUrl: "/AdminPartial/MessageList",
+            controller: 'AdminMessageController',
+            activeTab: 'message',
+            breadcrumb: ['Tin nhắn', 'Danh sách tin nhắn'],
+            title: 'Tin nhắn',
+            resolve: {
+                conversations: ['$route', '$rootScope', '$q', 'MessageService', 'CommmonService', function ($route, $rootScope, $q, MessageService, CommmonService) {
+                    var promise;
+                    if ($route.current.params.list == null || $route.current.params.list !== "sent") {
+                        promise = MessageService.getListReceivedConversations();
+                    } else {
+                        promise = MessageService.getListSentConversations();
+                    }
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
+            }
+        });
+    $routeProvider.when("/message/:id",
+        {
+            caseInsensitiveMatch: true,
+            templateUrl: "/AdminPartial/MessageDetail",
+            controller: "AdminMessageDetailController",
+            activeTab: 'message',
+            breadcrumb: ['Tin nhắn', 'Nội dung tin nhắn'],
+            title: 'Tin nhắn',
+            resolve: {
+                conversation: ['$rootScope', '$route', '$q', 'MessageService', 'CommmonService', function ($rootScope, $route, $q, MessageService, CommmonService) {
+                    var promise = MessageService.getConversation($route.current.params.id);
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
+            }
+        });
+
+    $routeProvider.when("/userlist",
+      {
+          templateUrl: "/AdminPartial/UserList",
+          controller: 'AdminUserListController',
+          activeTab: 'userlist',
+          breadcrumb: ['Quản lý người dùng', 'Danh sách người dùng'],
+          title: 'Danh sách người dùng',
+          resolve: {
+              listuser: ['$rootScope', '$q', 'AdminUserService', 'CommmonService', function ($rootScope, $q, AdminUserService, CommmonService) {
+                  var promise = AdminUserService.getUserlist();
+                  return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+              }]
+          }
+      });
+
+    $routeProvider.when("/userprofile/:username",
+      {
+          templateUrl: "/AdminPartial/UserProfile",
+          controller: 'AdminUserProfileController',
+          activeTab: 'userlist ',
+          breadcrumb: ['Quản lý người dùng', 'Thông tin người dùng'],
+          title: 'Thông tin người dùng',
+          resolve: {
+              userprofile: ['$route', '$rootScope', '$q', 'AdminUserService', 'CommmonService', function ($route, $rootScope, $q, AdminUserService, CommmonService) {
+                  var promise = AdminUserService.getUserprofile($route.current.params.username);
+                  return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+              }]
+          }
+      });
+
+    $routeProvider.when("/userdashboard",
+      {
+          templateUrl: "/AdminPartial/UserDashboard",
+          controller: 'AdminUserDashboardController',
+          activeTab: 'userdashboard',
+          breadcrumb: ['Bảng điều khiển', 'Bảng điều khiển người dùng'],
+          title: 'Bảng điều khiển người dùng',
+          resolve: {
+              userdashboard: ['$route', '$rootScope', '$q', 'AdminUserService', 'CommmonService', function ($route, $rootScope, $q, AdminUserService, CommmonService) {
+                  var promise = AdminUserService.getUserDasboard();
+                  return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+              }]
+          }
+      });
+    $routeProvider.when("/notfound",
+        {
+            caseInsensitiveMatch: true,
+            templateUrl: "/AdminPartial/NotFound",
+            activeTab: 'error',
+            breadcrumb: ['Quản lí', 'Trang không tìm thấy'],
+            title: 'Trang không tìm thấy'
+        });
+    $routeProvider.when("/error",
+        {
+            caseInsensitiveMatch: true,
+            templateUrl: "/AdminPartial/Error",
+            activeTab: 'error',
+            breadcrumb: ['Quản lí', 'Lỗi'],
+            title: 'Lỗi'
+        });
+
     $routeProvider.otherwise({
-        redirectTo: "/"
+        redirectTo: "/notfound"
     });
 
     //$locationProvider.html5Mode(false).hashPrefix("!");
@@ -121,7 +256,7 @@ app.run(['$rootScope', '$window', '$anchorScroll', 'DTDefaultOptions', 'toastrCo
         });
 
         // Scroll top when route change.
-        $rootScope.$on("$locationChangeStart", function (e, curr, prev) {
+        $rootScope.$on("$locationChangeSuccess", function () {
             $anchorScroll();
         });
 
@@ -163,13 +298,21 @@ app.run(['$rootScope', '$window', '$anchorScroll', 'DTDefaultOptions', 'toastrCo
         // Config angular-blockui.
         blockUIConfig.delay = 100;
         blockUIConfig.blockBrowserNavigation = true;
+        // Tell the blockUI service to ignore certain requests
+        blockUIConfig.requestFilter = function (config) {
+            // If the request starts with '/api/UserApi/GetListUserName' ...
+            if (config.url.match(/^\/api\/UserApi\/GetListUserName($|\/).*/)) {
+                return false; // ... don't block it.
+            }
+        };
 
         // Config angular toarstr.
         angular.extend(toastrConfig, {
             maxOpened: 1,
             closeButton: true,
             newestOnTop: true,
-            autoDismiss: true
+            autoDismiss: true,
+            progressBar: true
         });
 
         // Base Url of web app.

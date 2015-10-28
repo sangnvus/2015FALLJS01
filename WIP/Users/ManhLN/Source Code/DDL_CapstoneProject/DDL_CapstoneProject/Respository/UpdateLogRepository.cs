@@ -30,19 +30,19 @@ namespace DDL_CapstoneProject.Respository
             {
                 // Get updatelog list
                 var updateLogList = (from UpdateLog in db.UpdateLogs
-                    where UpdateLog.ProjectID == ProjectID
-                    orderby UpdateLog.CreatedDate descending
-                    select new UpdateLogDTO()
-                    {
-                        Description = UpdateLog.Description,
-                        Title = UpdateLog.Title,
-                        CreatedDate = UpdateLog.CreatedDate,
-                        UpdateLogID = UpdateLog.UpdateLogID,
-                    }).ToList();
+                                     where UpdateLog.ProjectID == ProjectID
+                                     orderby UpdateLog.CreatedDate descending
+                                     select new UpdateLogDTO()
+                                     {
+                                         Description = UpdateLog.Description,
+                                         Title = UpdateLog.Title,
+                                         CreatedDate = UpdateLog.CreatedDate,
+                                         UpdateLogID = UpdateLog.UpdateLogID,
+                                     }).ToList();
 
                 updateLogList.ForEach(x => x.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(x.CreatedDate));
 
-                return updateLogList.ToList();
+                return updateLogList;
             }
         }
 
