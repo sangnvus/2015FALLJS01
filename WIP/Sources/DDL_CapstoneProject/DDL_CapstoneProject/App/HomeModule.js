@@ -424,7 +424,8 @@ app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOpti
             maxOpened: 2,
             closeButton: true,
             newestOnTop: true,
-            autoDismiss: true
+            autoDismiss: true,
+            progressBar: true
         });
 
         // Base Url of web app.

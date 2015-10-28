@@ -5,19 +5,43 @@ String.prototype.repeat = function (num) {
 };
 
 (function ($) {
-
+    //Backgourd Min-Height
+    // -------------------------------------------------------------
+    $(document).ready(function () {
+        function bg_minHeight() {
+            var bg_minHeight = $(".bg-min-height");
+            var height = $(window).height();
+            if (height > 0) {
+                bg_minHeight.css({
+                    'min-height': height + 'px'
+                });
+            }
+        }
+        $(window).bind("load", function () {
+            bg_minHeight();
+        });
+        $(window).resize(function () {
+            bg_minHeight();
+        });
+    });
+    // end Backgourd Min-Height --------------------------------------------
     //Sticky Footer
     // -------------------------------------------------------------
     $(document).ready(function () {
         function stickyFooter() {
             var footer = $("#footer");
+            var bg_minHeight = $(".bg-min-height");
             var pos = footer.position();
             var height = $(window).height();
+            if (pos == null) { return; }
             height = height - pos.top;
             height = height - footer.height();
             if (height > 0) {
                 footer.css({
                     'margin-top': height + 'px'
+                });
+                bg_minHeight.css({
+                    'min-height': $(window).height() + 'px'
                 });
             }
         }

@@ -81,12 +81,16 @@
                         <a class="btn btn-transparent btn-sm" href="discover.html">See more</a>
                     </div> -->
                 </section><!--/#portfolio-->
-            <a class="btn btn-transparent btn-sm" ng-if="showLoadMoreButton" ng-click="Loadmore(projectResultListSize,selectcategory,selectedorder,searchkey)" href="">See more</a>
+                <a class="btn btn-transparent btn-sm" ng-if="showLoadMoreButton" ng-click="Loadmore(projectResultListSize,selectcategory,selectedorder,searchkey)" href="">See more</a>
 
             </div> <!-- end item-popular -->
 
 
-           </div>
+        </div>
 
     </div> <!-- end content -->
 </div>
+
+<script>
+    $(window).trigger('resize');
+</script>

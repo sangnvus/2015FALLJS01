@@ -1,38 +1,20 @@
 ﻿"use strict";
 
-app.controller('MessageController',
-    function ($scope, $location, $rootScope, $route, toastr, conversations, MessageService, CommmonService, UserService, DTOptionsBuilder, DTColumnDefBuilder) {
-        //Todo here
+app.controller('AdminMessageController',
+    function ($scope, $location, $rootScope, $route, toastr, conversations,
+        UserService,MessageService, CommmonService, DTOptionsBuilder, DTColumnDefBuilder) {
 
-        //Atrributes
         $scope.ListConversations = conversations.data.Data;
         $scope.Sent = $route.current.params.list === "sent" ? true : false;
-        $scope.NumberNewMessage = $rootScope.UserInfo.NumberNewMessage;
-        $scope.Unread = $scope.ListConversations.length;
         $scope.checkAll = false;
         $scope.selection = [];
 
         // Define table
         $scope.dtOptions = DTOptionsBuilder.newOptions()
-        .withDisplayLength(10)
+        .withDisplayLength(50)
         .withOption('bLengthChange', false)
         .withOption('order', [3, 'desc'])
         .withBootstrap();
-
-        $scope.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(0).notSortable()
-        ];
-
-        // Functions reset new message form
-        function resetNewMessageModel() {
-            $scope.NewMessage = {
-                ToUser: "",
-                Title: "",
-                Content: ""
-            }
-        }
-        // call function
-        resetNewMessageModel();
 
         // Add selected column to table with value true/false
         function addSelected(bool) {
@@ -54,11 +36,6 @@ app.controller('MessageController',
             });
         }, true);
 
-        $scope.searchFilter = function (obj) {
-            var re = new RegExp($scope.searchText, 'i');
-            return !$scope.searchText || re.test(obj.SenderName) || re.test(obj.ReceiverName) || re.test(obj.Title);
-        };
-
         // Check all checkbox
         $scope.checkAllClick = function (boolAll) {
             if (boolAll) {
@@ -68,37 +45,9 @@ app.controller('MessageController',
             }
         }
 
-        // Change to message detail
-        $scope.showConversationDetail = function (id) {
-            $location.path("/user/message/" + id).replace();
-        }
-
-        // Function request 
-        $scope.sendMessage = function () {
-            if ($scope.NewMessage.Content.trim() !== "") {
-                var promisePost = MessageService.sendMessage($scope.NewMessage);
-                promisePost.then(
-                    function (result) {
-                        if (result.data.Status === "success") {
-                            $('#sentBox').modal('hide');
-                            resetNewMessageModel();
-                            if ($scope.Sent) {
-                                $scope.ListConversations.unshift(result.data.Data);
-                            }
-                            toastr.success("Đã gửi");
-                        } else {
-                            CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                            $scope.Error = result.data.Message;
-                            toastr.error($scope.Error, 'Lỗi!');
-                        }
-                    },
-                    function (error) {
-                        $scope.Error = error.data.Message;
-                    });
-            } else {
-                toastr.warning("Bạn chưa nhập nội dung tin nhắn", 'Thông báo!');
-            }
-        }
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0).notSortable()
+        ];
 
         function getListReceivedConversation() {
             var promiseGet = MessageService.getListReceivedConversations();
@@ -151,7 +100,7 @@ app.controller('MessageController',
             promise.then(
                 function (result) {
                     if (result.data.Status === "success") {
-                        toastr.success('Đã xóa');
+                        toastr.success('Đã xóa thành công!');
                         if ($scope.Sent === true) {
                             getListSentConversation();
                         } else {
@@ -184,4 +133,42 @@ app.controller('MessageController',
                     toastr.error($scope.Error, 'Lỗi!');
                 });
         };
+
+        // Functions reset new message form
+        function resetNewMessageModel() {
+            $scope.NewMessage = {
+                ToUser: "",
+                Title: "",
+                Content: ""
+            }
+        }
+        // call function
+        resetNewMessageModel();
+
+        // Function request 
+        $scope.sendMessage = function () {
+            if ($scope.NewMessage.Content.trim() !== "") {
+                var promisePost = MessageService.sendMessage($scope.NewMessage);
+                promisePost.then(
+                    function (result) {
+                        if (result.data.Status === "success") {
+                            $('#newMesageModal').modal('hide');
+                            resetNewMessageModel();
+                            if ($scope.Sent) {
+                                $scope.ListConversations.unshift(result.data.Data);
+                            }
+                            toastr.success("Đã gửi");
+                        } else {
+                            CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                            $scope.Error = result.data.Message;
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
+                    },
+                    function (error) {
+                        $scope.Error = error.data.Message;
+                    });
+            } else {
+                toastr.warning("Bạn chưa nhập nội dung tin nhắn", 'Thông báo');
+            }
+        }
     });

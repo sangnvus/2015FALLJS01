@@ -48,10 +48,21 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
             return PartialView("~/Views/AdminPartial/Project/_ProjectDetail.cshtml");
         }
         
-        // GET: AdminPartial/Category
+        // GET: AdminPartial/Slide
         public ActionResult Slide()
         {
             return PartialView("~/Views/AdminPartial/_Slide.cshtml");
+        }
+        // GET: AdminPartial/MessageList
+        public ActionResult MessageList()
+        {
+            return PartialView("~/Views/AdminPartial/Message/_MessageList.cshtml");
+        }
+
+        // GET: AdminPartial/MessageDetail
+        public ActionResult MessageDetail()
+        {
+            return PartialView("~/Views/AdminPartial/Message/_MessageDetail.cshtml");
         }
     }
 }

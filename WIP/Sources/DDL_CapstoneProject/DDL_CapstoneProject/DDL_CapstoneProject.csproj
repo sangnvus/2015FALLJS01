@@ -241,6 +241,8 @@
     <Content Include="App\AdminModule.js" />
     <Content Include="App\controllers\admin\AdminCategoryController.js" />
     <Content Include="App\controllers\admin\AdminDashboardController.js" />
+    <Content Include="App\controllers\admin\AdminMessageController.js" />
+    <Content Include="App\controllers\admin\AdminMessageDetailController.js" />
     <Content Include="App\controllers\admin\AdminProjectDashboardController.js" />
     <Content Include="App\controllers\admin\AdminProjectDetailController.js" />
     <Content Include="App\controllers\admin\AdminProjectListController.js" />
@@ -285,6 +287,7 @@
     <Content Include="App\directives\timelinr.js" />
     <Content Include="App\HomeModule.js" />
     <Content Include="App\services\Admin\AdminCategoryService.js" />
+    <Content Include="App\services\Admin\AdminMessageService.js" />
     <Content Include="App\services\Admin\AdminProjectService.js" />
     <Content Include="App\services\Admin\AdminReportService.js" />
     <Content Include="App\services\Admin\AdminSlideService.js" />
@@ -1266,8 +1269,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Login\Login.cshtml" />
@@ -1304,6 +1305,8 @@
     <Content Include="Views\AdminPartial\_Slide.cshtml" />
     <Content Include="Views\AdminPartial\_ReportProject.cshtml" />
     <Content Include="Views\AdminPartial\_ReportUser.cshtml" />
+    <Content Include="Views\AdminPartial\Message\_MessageDetail.cshtml" />
+    <Content Include="Views\AdminPartial\Message\_MessageList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />

@@ -73,8 +73,7 @@
                             <div text-angular name="Content" ng-model="NewMessage.Content"></div>
                         </div>
                     </div>
-                    <div class="modal-footer pt5 pb5">
-                        <a href="" data-dismiss="modal">Hủy</a>
+                    <div class="modal-footer pt5 pb5"><button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
                         <button type="button" class="btn btn-info btn-sm btn-wide btn18" ng-click="sendMessage()"
                                 ng-disabled="!NewMessageForm.$dirty || (NewMessageForm.$dirty && NewMessageForm.$invalid)">
                             Gửi

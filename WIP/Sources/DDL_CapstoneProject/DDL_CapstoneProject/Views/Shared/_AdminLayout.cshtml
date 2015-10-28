@@ -186,7 +186,7 @@
                     <!-- begin PROJECTS DROPDOWN -->
                     <li class="panel">
                         <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#projects">
-                            <i class="fa fa-bar-chart-o"></i> Quản lí dự án
+                            <i class="fa fa-bar-chart-o"></i> Dự án
                             <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="collapse nav" id="projects">
@@ -206,7 +206,7 @@
                     <!-- begin BACKINGS DROPDOWN -->
                     <li class="panel">
                         <a href="backing.html">
-                            <i class="fa fa-bar-chart-o"></i> Backing
+                            <i class="fa fa-bar-chart-o"></i> Ủng hộ
                             <!-- <i class="fa fa-caret-down"></i> -->
                         </a>
                     </li>
@@ -214,7 +214,7 @@
                     <!-- begin CATEGORIES DROPDOWN -->
                     <li class="panel">
                         <a href="~/admin/#/category/" ng-class="{'active': Page.activeTab == 'category'}">
-                            <i class="fa fa-bar-chart-o"></i> Category
+                            <i class="fa fa-bar-chart-o"></i> Danh mục
                             <!-- <i class="fa fa-caret-down"></i> -->
                         </a>
                     </li>
@@ -222,15 +222,15 @@
                     <!-- begin SLIDERS DROPDOWN -->
                     <li class="panel">
                         <a href="~/admin/#/slide/" ng-class="{'active': Page.activeTab == 'slide'}">
-                            <i class="fa fa-bar-chart-o"></i> Slider
+                            <i class="fa fa-bar-chart-o"></i> Slide
                             <!-- <i class="fa fa-caret-down"></i> -->
                         </a>
                     </li>
                     <!-- end SLIDERS DROPDOWN -->
                     <!-- begin MESSAGES DROPDOWN -->
                     <li class="panel">
-                        <a href="message.html" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#charts">
-                            <i class="fa fa-bar-chart-o"></i> Message
+                        <a href="~/admin/#/message/" ng-class="{'active': Page.activeTab == 'message'}">
+                            <i class="fa fa-bar-chart-o"></i> Tin nhắn
                             <!-- <i class="fa fa-caret-down"></i> -->
                         </a>
                     </li>
@@ -271,9 +271,9 @@
                         <h1 ng-bind="Page.title"></h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i><a href="index-2.html" ng-bind="Page.breadcrumb[0]"></a>
+                                <i class="fa fa-dashboard"></i><span ng-bind="Page.breadcrumb[0]"></span>
                             </li>
-                            <li class="active" ng-bind="Page.breadcrumb[0]"></li>
+                            <li class="active" ng-bind="Page.breadcrumb[1]"></li>
                         </ol>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-app.controller('MessageDetailController', function ($scope, $location, $sce, $rootScope, conversation, toastr, MessageService, CommmonService) {
+app.controller('AdminMessageDetailController', function ($scope, $location, $sce, $rootScope, conversation, toastr, MessageService, CommmonService) {
     //Todo here.
     $scope.Conversation = conversation.data.Data;
     $scope.CurrentUser = $rootScope.UserInfo;
@@ -28,17 +28,16 @@ app.controller('MessageDetailController', function ($scope, $location, $sce, $ro
                     if (result.data.Status === "success") {
                         $scope.Conversation.MessageList.push(result.data.Data);
                         $scope.Reply.Content = "";
-                        toastr.success('Đã gửi');
+                        toastr.success('Trả lời thành công');
                     } else {
                         CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         $scope.Error = result.data.Message;
-                        toastr.error($scope.Error, 'Lỗi');
+                        toastr.error($scope.Error, 'Lỗi!');
                     }
                 },
                 function (error) {
                     $scope.Error = error.data.Message;
-                    $scope.Error = result.data.Message;
-                    toastr.error($scope.Error, 'Lỗi');
+                    toastr.error($scope.Error, 'Lỗi!');
                 });
         } else {
             toastr.warning("Bạn chưa nhập nội dung tin nhắn", 'Thông báo');
@@ -51,7 +50,7 @@ app.controller('MessageDetailController', function ($scope, $location, $sce, $ro
         promise.then(
             function (result) {
                 if (result.data.Status === "success") {
-                    $location.path("/user/message").replace();
+                    $location.path("/message").replace();
                 } else {
                     CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
@@ -60,7 +59,6 @@ app.controller('MessageDetailController', function ($scope, $location, $sce, $ro
             },
             function (error) {
                 $scope.Error = error.data.Message;
-                $scope.Error = result.data.Message;
                 toastr.error($scope.Error, 'Lỗi');
             });
     }

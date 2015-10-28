@@ -19,194 +19,239 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         [Route("Login")]
         public ActionResult Login(string returnUrl = "")
         {
-            FormsAuthentication.SignOut();
-            // Remove all cookies.
-            var limit = Request.Cookies.Count;
-            for (int i = 0; i < limit; i++)
+            try
             {
-                var cookieName = Request.Cookies[i].Name;
-                var cookie = new HttpCookie(cookieName) { Expires = DateTime.UtcNow.AddDays(-1) };
-                Response.Cookies.Add(cookie);
+                FormsAuthentication.SignOut();
+                // Remove all cookies.
+                var limit = Request.Cookies.Count;
+                for (int i = 0; i < limit; i++)
+                {
+                    var cookieName = Request.Cookies[i].Name;
+                    var cookie = new HttpCookie(cookieName) { Expires = DateTime.UtcNow.AddDays(-1) };
+                    Response.Cookies.Add(cookie);
+                }
+                ViewBag.ReturnUrl = returnUrl;
+                return View("Login", new UserLoginDTO());
             }
-            ViewBag.ReturnUrl = returnUrl;
-            return View("Login", new UserLoginDTO());
+            catch (Exception)
+            {
+                return Redirect("/#/error");
+            }
         }
 
         [Route("Login")]
         [HttpPost]
         public ActionResult Login(UserLoginDTO model, string returnUrl)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return View("~/Views/Login/Login.cshtml", model);
-            }
 
-            var user =
-                UserRepository.Instance.GetByUserNameOrEmail(model.Username, model.Password);
-            if (user == null)
-            {
-                ModelState.AddModelError("", "Sai mật khẩu hoặc tài khoản không tồn tài!");
-
-            }
-            else if (user.LoginType == DDLConstants.LoginType.FACEBOOK)
-            {
-                ModelState.AddModelError("", "Sai mật khẩu hoặc tài khoản không tồn tài!");
-
-            }
-            else if (!user.IsActive || !user.IsVerify)
-            {
-                ModelState.AddModelError("", "Tài khoản bị khóa hoặc chưa xác nhận Email!");
-            }
-            else
-            {
-                FormsAuthentication.SetAuthCookie(user.Username, model.RememberMe);
-                user.LastLogin = DateTime.UtcNow;
-                UserRepository.Instance.UpdateUser(user);
-                if (string.IsNullOrEmpty(returnUrl))
+                if (!ModelState.IsValid)
                 {
-                    return Redirect("/");
+                    return View("~/Views/Login/Login.cshtml", model);
+                }
+
+                var user =
+                    UserRepository.Instance.GetByUserNameOrEmail(model.Username, model.Password);
+                if (user == null)
+                {
+                    ModelState.AddModelError("", "Sai mật khẩu hoặc tài khoản không tồn tài!");
+
+                }
+                else if (user.LoginType == DDLConstants.LoginType.FACEBOOK)
+                {
+                    ModelState.AddModelError("", "Sai mật khẩu hoặc tài khoản không tồn tài!");
+
+                }
+                else if (!user.IsActive || !user.IsVerify)
+                {
+                    ModelState.AddModelError("", "Tài khoản bị khóa hoặc chưa xác nhận Email!");
                 }
                 else
                 {
-                    return Redirect("/#/" + returnUrl);
+                    FormsAuthentication.SetAuthCookie(user.Username, model.RememberMe);
+                    user.LastLogin = DateTime.UtcNow;
+                    UserRepository.Instance.UpdateUser(user);
+                    if (string.IsNullOrEmpty(returnUrl))
+                    {
+                        return Redirect("/");
+                    }
+                    else
+                    {
+                        return Redirect("/#/" + returnUrl);
+                    }
                 }
-            }
 
-            ViewBag.ReturlUrl = returnUrl;
-            return View("~/Views/Login/Login.cshtml", model);
+                ViewBag.ReturlUrl = returnUrl;
+                return View("~/Views/Login/Login.cshtml", model);
+            }
+            catch (Exception)
+            {
+                return Redirect("/#/error");
+            }
         }
 
         [Route("Logout")]
         [Authorize]
         public ActionResult Logout()
         {
-            FormsAuthentication.SignOut();
-            //for (int index = 0; index < Session.Keys.Count; index++)
-            //{
-            //    var sessionName = Session.Keys[index];
-            //    Session[sessionName] = null;
-            //}
-            // Remove all cookies.
-            var limit = Request.Cookies.Count;
-            for (int i = 0; i < limit; i++)
+            try
             {
-                var cookieName = Request.Cookies[i].Name;
-                var cookie = new HttpCookie(cookieName) { Expires = DateTime.Now.AddDays(-1) };
-                Response.Cookies.Add(cookie);
+                FormsAuthentication.SignOut();
+                //for (int index = 0; index < Session.Keys.Count; index++)
+                //{
+                //    var sessionName = Session.Keys[index];
+                //    Session[sessionName] = null;
+                //}
+                // Remove all cookies.
+                var limit = Request.Cookies.Count;
+                for (int i = 0; i < limit; i++)
+                {
+                    var cookieName = Request.Cookies[i].Name;
+                    var cookie = new HttpCookie(cookieName) { Expires = DateTime.Now.AddDays(-1) };
+                    Response.Cookies.Add(cookie);
+                }
+                return Redirect("/");
             }
-            return Redirect("/");
+            catch (Exception)
+            {
+                return Redirect("/#/error");
+            }
         }
 
         public ActionResult AuthenFacebook()
         {
-
-            var fb = new FacebookClient();
-            var loginUrl = fb.GetLoginUrl(new
+            try
             {
-                client_id = ConfigurationManager.AppSettings["clientId"],
-                //"412367302292593",
-                client_secret = ConfigurationManager.AppSettings["clientSecret"],
-                //"95b9b97174f94bbff3bdff437e520cc7",
-                redirect_uri = RedirectUri.AbsoluteUri,
-                response_type = "code",
+                var fb = new FacebookClient();
+                var loginUrl = fb.GetLoginUrl(new
+                {
+                    client_id = ConfigurationManager.AppSettings["clientId"],
+                    //"412367302292593",
+                    client_secret = ConfigurationManager.AppSettings["clientSecret"],
+                    //"95b9b97174f94bbff3bdff437e520cc7",
+                    redirect_uri = RedirectUri.AbsoluteUri,
+                    response_type = "code",
 
-                scope = "email,user_birthday,user_about_me,user_website" // Add other permissions as needed
-            });
+                    scope = "email,user_birthday,user_about_me,user_website" // Add other permissions as needed
+                });
 
 
-            return Redirect(loginUrl.AbsoluteUri);
+                return Redirect(loginUrl.AbsoluteUri);
+            }
+            catch (Exception)
+            {
+                return Redirect("/#/error");
+            }
+            
         }
 
         public ActionResult FacebookCallback(string code)
         {
-            var fb = new FacebookClient();
-            dynamic result = fb.Post("oauth/access_token", new
+            try
             {
-                client_id = ConfigurationManager.AppSettings["clientId"],
-                client_secret = ConfigurationManager.AppSettings["clientSecret"],
-                redirect_uri = RedirectUri.AbsoluteUri,
-                code = code
-            });
+                var fb = new FacebookClient();
+                dynamic result = fb.Post("oauth/access_token", new
+                {
+                    client_id = ConfigurationManager.AppSettings["clientId"],
+                    client_secret = ConfigurationManager.AppSettings["clientSecret"],
+                    redirect_uri = RedirectUri.AbsoluteUri,
+                    code = code
+                });
 
-            var accessToken = result.access_token;
+                var accessToken = result.access_token;
 
-            // Store the access token in the session
-            Session["AccessToken"] = accessToken;
+                // Store the access token in the session
+                Session["AccessToken"] = accessToken;
 
-            // update the facebook client with the access token so 
-            // we can make requests on behalf of the user
-            fb.AccessToken = accessToken;
+                // update the facebook client with the access token so 
+                // we can make requests on behalf of the user
+                fb.AccessToken = accessToken;
 
 
-            // Get the user's information
-            dynamic me = fb.Get("/me?fields=id,name,gender,link,birthday,email,bio");
-            string facebookId = me.id;
-            string email = me.email;
+                // Get the user's information
+                dynamic me = fb.Get("/me?fields=id,name,gender,link,birthday,email,bio");
+                string facebookId = me.id;
+                string email = me.email;
 
-            if (string.IsNullOrEmpty(email))
-            {
-                email = facebookId + "@facebook.com";
-            }
-            me.email = email;
+                if (string.IsNullOrEmpty(email))
+                {
+                    email = facebookId + "@facebook.com";
+                }
+                me.email = email;
 
-            // select from DB
-            var newUser = UserRepository.Instance.GetByUserNameOrEmail(email);
+                // select from DB
+                var newUser = UserRepository.Instance.GetByUserNameOrEmail(email);
 
-            /*
-             *  Insert into DB
-             */
+                /*
+                 *  Insert into DB
+                 */
 
-            if (newUser == null)
-            {
-                newUser = UserRepository.Instance.RegisterFacebook(me);
-            }
-            else if (newUser.LoginType == DDLConstants.LoginType.NORMAL)
-            {
-                newUser.LoginType = DDLConstants.LoginType.BOTH;
-                newUser.IsVerify = true;
+                if (newUser == null)
+                {
+                    newUser = UserRepository.Instance.RegisterFacebook(me);
+                }
+                else if (newUser.LoginType == DDLConstants.LoginType.NORMAL)
+                {
+                    newUser.LoginType = DDLConstants.LoginType.BOTH;
+                    newUser.IsVerify = true;
+                    newUser.LastLogin = DateTime.UtcNow;
+                    newUser.UserInfo.FacebookUrl = me.link;
+                    newUser.UserInfo.ProfileImage = "https://graph.facebook.com/" + facebookId + "/picture?type=large";
+                    newUser = UserRepository.Instance.UpdateUser(newUser);
+                }
+                else if (newUser.IsActive == false)
+                {
+                    // user is Locked
+                    TempData["loginMessageError"] = "Tài khoản của bạn đã bị khóa!";
+                    return RedirectToAction("Login", "Login");
+                }
+
+                // Set the auth cookie
+
+                FormsAuthentication.SetAuthCookie(newUser.Username, false);
                 newUser.LastLogin = DateTime.UtcNow;
-                newUser.UserInfo.FacebookUrl = me.link;
-                newUser.UserInfo.ProfileImage = "https://graph.facebook.com/" + facebookId + "/picture?type=large";
-                newUser = UserRepository.Instance.UpdateUser(newUser);
+                UserRepository.Instance.UpdateUser(newUser);
+                //SessionHelper.RenewCurrentUser();
+
+                return Redirect("/");
             }
-            else if (newUser.IsActive == false)
+            catch (Exception)
             {
-                // user is Locked
-                TempData["loginMessageError"] = "Tài khoản của bạn đã bị khóa!";
-                return RedirectToAction("Login", "Login");
+                return Redirect("/#/error");
             }
-
-            // Set the auth cookie
-
-            FormsAuthentication.SetAuthCookie(newUser.Username, false);
-            newUser.LastLogin = DateTime.UtcNow;
-            UserRepository.Instance.UpdateUser(newUser);
-            //SessionHelper.RenewCurrentUser();
-
-            return Redirect("/");
+            
         }
 
         [Route("Active")]
         public ActionResult Active(string user_name, string code)
         {
-            if (string.IsNullOrEmpty(user_name) || string.IsNullOrEmpty(code))
+            try
             {
+                if (string.IsNullOrEmpty(user_name) || string.IsNullOrEmpty(code))
+                {
+                    ViewBag.Status = "error";
+                    ViewBag.Message = "Có lỗi xảy ra!";
+                    return View();
+                }
+
+                var result = UserRepository.Instance.VerifyAccount(user_name, code);
+                if (result)
+                {
+                    ViewBag.Status = "success";
+                    ViewBag.Message = "Tài khoản của bạn đã kích hoạt thành công!";
+                    return View();
+                }
+
                 ViewBag.Status = "error";
                 ViewBag.Message = "Có lỗi xảy ra!";
                 return View();
             }
-
-            var result = UserRepository.Instance.VerifyAccount(user_name, code);
-            if (result)
+            catch (Exception)
             {
-                ViewBag.Status = "success";
-                ViewBag.Message = "Tài khoản của bạn đã kích hoạt thành công!";
-                return View();
+                return Redirect("/#/error");
             }
-
-            ViewBag.Status = "error";
-            ViewBag.Message = "Có lỗi xảy ra!";
-            return View();
+            
         }
 
         /// <summary>
@@ -223,17 +268,25 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         [Route("Admin/Login")]
         public ActionResult AdminLogin(string returnUrl = "")
         {
-            FormsAuthentication.SignOut();
-            // Remove all cookies.
-            var limit = Request.Cookies.Count;
-            for (int i = 0; i < limit; i++)
+            try
             {
-                var cookieName = Request.Cookies[i].Name;
-                var cookie = new HttpCookie(cookieName) { Expires = DateTime.Now.AddDays(-1) };
-                Response.Cookies.Add(cookie);
+                FormsAuthentication.SignOut();
+                // Remove all cookies.
+                var limit = Request.Cookies.Count;
+                for (int i = 0; i < limit; i++)
+                {
+                    var cookieName = Request.Cookies[i].Name;
+                    var cookie = new HttpCookie(cookieName) { Expires = DateTime.Now.AddDays(-1) };
+                    Response.Cookies.Add(cookie);
+                }
+                ViewBag.ReturnUrl = returnUrl;
+                return View("AdminLogin", new UserLoginDTO());
             }
-            ViewBag.ReturnUrl = returnUrl;
-            return View("AdminLogin", new UserLoginDTO());
+            catch (Exception)
+            {
+                return Redirect("/#/error");
+            }
+            
         }
 
 
@@ -241,65 +294,80 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         [HttpPost]
         public ActionResult AdminLogin(UserLoginDTO model, string returnUrl)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return View("~/Views/Login/AdminLogin.cshtml", model);
-            }
 
-            var user =
-                UserRepository.Instance.GetByUserNameOrEmail(model.Username, model.Password);
-            if (user == null)
-            {
-                ModelState.AddModelError("", "Sai mật khẩu hoặc tài khoản không tồn tài!");
-
-            }
-            else if (user.LoginType == DDLConstants.LoginType.FACEBOOK || user.UserType == DDLConstants.UserType.USER)
-            {
-                ModelState.AddModelError("", "Bạn không có quyền truy cập!");
-
-            }
-            else if (!user.IsActive || !user.IsVerify)
-            {
-                ModelState.AddModelError("", "Tài khoản bị khóa hoặc chưa xác nhận Email!");
-            }
-            else
-            {
-                FormsAuthentication.SetAuthCookie(user.Username, model.RememberMe);
-                user.LastLogin = DateTime.UtcNow;
-                UserRepository.Instance.UpdateUser(user);
-                if (string.IsNullOrEmpty(returnUrl))
+                if (!ModelState.IsValid)
                 {
-                    return Redirect("/admin");
+                    return View("~/Views/Login/AdminLogin.cshtml", model);
+                }
+
+                var user =
+                    UserRepository.Instance.GetByUserNameOrEmail(model.Username, model.Password);
+                if (user == null)
+                {
+                    ModelState.AddModelError("", "Sai mật khẩu hoặc tài khoản không tồn tài!");
+
+                }
+                else if (user.LoginType == DDLConstants.LoginType.FACEBOOK || user.UserType == DDLConstants.UserType.USER)
+                {
+                    ModelState.AddModelError("", "Bạn không có quyền truy cập!");
+
+                }
+                else if (!user.IsActive || !user.IsVerify)
+                {
+                    ModelState.AddModelError("", "Tài khoản bị khóa hoặc chưa xác nhận Email!");
                 }
                 else
                 {
-                    return Redirect("/Admin/#/" + returnUrl);
+                    FormsAuthentication.SetAuthCookie(user.Username, model.RememberMe);
+                    user.LastLogin = DateTime.UtcNow;
+                    UserRepository.Instance.UpdateUser(user);
+                    if (string.IsNullOrEmpty(returnUrl))
+                    {
+                        return Redirect("/admin");
+                    }
+                    else
+                    {
+                        return Redirect("/Admin/#/" + returnUrl);
+                    }
                 }
-            }
 
-            ViewBag.ReturlUrl = returnUrl;
-            return View("~/Views/Login/AdminLogin.cshtml", model);
+                ViewBag.ReturlUrl = returnUrl;
+                return View("~/Views/Login/AdminLogin.cshtml", model);
+            }
+            catch (Exception)
+            {
+                return Redirect("/#/error");
+            }
         }
 
         [Route("Admin/Logout")]
         [Authorize]
         public ActionResult AdminLogout()
         {
-            FormsAuthentication.SignOut();
-            //for (int index = 0; index < Session.Keys.Count; index++)
-            //{
-            //    var sessionName = Session.Keys[index];
-            //    Session[sessionName] = null;
-            //}
-            // Remove all cookies.
-            var limit = Request.Cookies.Count;
-            for (int i = 0; i < limit; i++)
+            try
             {
-                var cookieName = Request.Cookies[i].Name;
-                var cookie = new HttpCookie(cookieName) { Expires = DateTime.Now.AddDays(-1) };
-                Response.Cookies.Add(cookie);
+                FormsAuthentication.SignOut();
+                //for (int index = 0; index < Session.Keys.Count; index++)
+                //{
+                //    var sessionName = Session.Keys[index];
+                //    Session[sessionName] = null;
+                //}
+                // Remove all cookies.
+                var limit = Request.Cookies.Count;
+                for (int i = 0; i < limit; i++)
+                {
+                    var cookieName = Request.Cookies[i].Name;
+                    var cookie = new HttpCookie(cookieName) { Expires = DateTime.Now.AddDays(-1) };
+                    Response.Cookies.Add(cookie);
+                }
+                return Redirect("/admin/login");
             }
-            return Redirect("/admin/login");
+            catch (Exception)
+            {
+                return Redirect("/#/error");
+            }       
         }
 
         private Uri RedirectUri
