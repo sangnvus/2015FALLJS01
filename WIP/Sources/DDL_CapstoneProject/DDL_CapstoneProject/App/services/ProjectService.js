@@ -411,7 +411,7 @@ app.service('ProjectService', function ($http) {
             data: commment,
             params: {
                 projectCode: code,
-                lastComment: lastCommentDatetime
+                lastDateTime: lastCommentDatetime
             }
         });
 

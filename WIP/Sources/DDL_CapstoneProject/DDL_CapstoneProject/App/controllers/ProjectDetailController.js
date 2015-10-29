@@ -84,7 +84,8 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
         //    toastr.warning("Tối thiểu 10, tối đa 200 kí tự", 'Thông báo');
         //} else {
         $scope.NewComment.UserName = $scope.CurrentUser.UserName;
-        var promisePut = ProjectService.Comment($scope.Project.ProjectCode, $scope.NewComment, $scope.Project.CommentsList[0].CreatedDate);
+        var lastdatetime = $scope.Project.CommentsList.length > 0 ? $scope.Project.CommentsList[0].CreatedDate : "";
+        var promisePut = ProjectService.Comment($scope.Project.ProjectCode, $scope.NewComment, lastdatetime);
         promisePut.then(
             function (result) {
                 if (result.data.Status === "success") {

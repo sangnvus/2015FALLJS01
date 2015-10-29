@@ -1569,15 +1569,14 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         /// Post: api/ProjectApi/Comment?projectCode=xxx
         /// </summary>
         /// <param name="projectCode">projectCode</param>
-        /// <param name="lastComment">CommentDTO</param>
         /// <param name="comment">CommentDTO</param>
+        /// <param name="lastDateTime"></param>
         /// <returns>CommentDTO</returns>
         [HttpPost]
         [ResponseType(typeof(CommentDTO))]
-        public IHttpActionResult Comment(string projectCode, DateTime lastComment, CommentDTO comment)
+        public IHttpActionResult Comment(string projectCode, CommentDTO comment,string lastDateTime = "")
         {
             List<CommentDTO> result = null;
-
             if (User.Identity == null || !User.Identity.IsAuthenticated)
             {
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
@@ -1585,7 +1584,8 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             try
             {
-                result = ProjectRepository.Instance.AddComment(projectCode, comment, lastComment);
+                var datetime = !string.IsNullOrEmpty(lastDateTime) ? DateTime.Parse(lastDateTime) : CommonUtils.DateTimeNowGMT7();
+                result = ProjectRepository.Instance.AddComment(projectCode, comment, datetime);
             }
             catch (UserNotFoundException)
             {
