@@ -14,7 +14,7 @@
 </div>
 <div id="items-projects">
     <section id="portfolio" class="container">
-        <h4 class="pt30">Backed projects:</h4>
+        <h4 class="pt30">Dự án đã ủng hộ:</h4>
         
         <ul class="list-inline fnt18 fnt-b">
             <li class=""><a class="c3" href="../#/project/backedProject">Dự án đã ủng hộ</a></li>
@@ -26,7 +26,7 @@
 
                 <div class="item-inner" ng-if="checkEmpty>0">
                     <div class=" item-image hover01 column">
-                        <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
+                        <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
                     </div>
                     <div class="item-title">
                         <h5><a a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}} </a></h5>
@@ -50,7 +50,7 @@
                         </div>
                         <ul class="list-inline">
                             <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">ủng hộ</p></li>
-                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber}}</p><p class="mt0 mb0">gây quỹ</p></li>
+                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber |  number : fractionSize}}&#8363;</p><p class="mt0 mb0">gây quỹ</p></li>
                             <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">ngày còn lại</p></li>
                         </ul>
                     </div>

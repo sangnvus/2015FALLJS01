@@ -37,12 +37,12 @@ namespace DDL_CapstoneProject.Ultilities
 
         public static class ProjectStatus
         {
-            public static readonly string DRAFT = "draft";
-            public static readonly string PENDING = "pending";
-            public static readonly string REJECTED = "rejected";
-            public static readonly string APPROVED = "approved";
-            public static readonly string SUSPENDED = "suspended";
-            public static readonly string EXPIRED = "expired";
+            public static readonly string DRAFT = "1";
+            public static readonly string PENDING = "2";
+            public static readonly string REJECTED = "3";
+            public static readonly string APPROVED = "4";
+            public static readonly string SUSPENDED = "5";
+            public static readonly string EXPIRED = "6";
         }
 
         public static class ReportStatus
