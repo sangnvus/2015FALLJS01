@@ -242,9 +242,20 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
             function (result) {
                 $scope.ListBacker = result.data.Data.listBacker;
                 $scope.labels = result.data.Data.Date;
-                $scope.series = ['Số tiền đã ủng hộ'];
-                $scope.data = [result.data.Data.Amount];
-                $scope.checkLoadlist = true;
+                $scope.series = ['Số tiền đã ủng hộ','Mục tiêu'];
+                var data2 = [];
+                for (var i = 0; i < result.data.Data.Amount.length; i++) {
+                    data2.push($scope.Project.FundingGoal);
+                }
+                $scope.data = [result.data.Data.Amount, data2];
+                $scope.colours = ['#97bbcd', '#f7464a'];
+                //$scope.checkLoadlist = true;
+                //$scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+                //$scope.series = ['Series A', 'Series B'];
+                //$scope.data = [
+                //  [65, 59, 80, 81, 56, 55, 40],
+                //  [28, 48, 40, 19, 86, 27, 90]
+                //];
             }
          );
         }

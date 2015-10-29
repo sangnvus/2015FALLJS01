@@ -8,6 +8,7 @@ using DDL_CapstoneProject.Models;
 using DDL_CapstoneProject.Models.DTOs;
 using DDL_CapstoneProject.Ultilities;
 using System.Data.Entity;
+using System.Data.Entity.SqlServer;
 using System.Diagnostics;
 
 namespace DDL_CapstoneProject.Respository
@@ -1322,18 +1323,18 @@ namespace DDL_CapstoneProject.Respository
                 var project = db.Projects.FirstOrDefault(x => x.ProjectCode == projectCode);
 
                 var list = new BackingDTO();
+                // Get linq.
                 var listBackerLinQ = from backer in db.Backings
                                      where project.ProjectID == backer.ProjectID
+                                     orderby backer.BackedDate descending
                                      select new BackerDTO
                                      {
                                          Amount = backer.BackingDetail.PledgedAmount,
-                                         Date = backer.BackedDate,
+                                         Date = SqlFunctions.DateAdd("hh", 7, backer.BackedDate),
                                          FullName = backer.User.UserInfo.FullName,
                                      };
-                foreach (var backer in listBackerLinQ)
-                {
-                    backer.Date = CommonUtils.ConvertDateTimeFromUtc(backer.Date.GetValueOrDefault());
-                }
+
+                // Create chart.
                 var query = listBackerLinQ.Where(x => x.Date.HasValue)
                   .GroupBy(x => new { x.Date.Value.Day, x.Date.Value.Month })
                   .Select(grp => new
@@ -1341,24 +1342,30 @@ namespace DDL_CapstoneProject.Respository
                       Day = grp.Key.Day,
                       Month = grp.Key.Month,
                       Total = grp.Sum(x => x.Amount)
-                  });
+                  }).ToList();
                 var listAmount = new List<SumAmount>();
 
-                foreach (var amount in query)
+                decimal total = 0;
+                for (var i = 0; i < query.Count; i++)
                 {
+                    total += query[i].Total;
                     var sum = new SumAmount
                     {
-                        Amount = amount.Total,
-                        Day = amount.Day,
-                        Month = amount.Month
+                        Amount = total,
+                        Day = query[i].Day,
+                        Month = query[i].Month
                     };
                     listAmount.Add(sum);
                 }
-               var listBacker = new List<BackerDTO>();
-                foreach (var backer in listBackerLinQ)
-                {
-                    listBacker.Add(backer);
-                }
+
+                // Create table.
+                var listBacker = listBackerLinQ.ToList();
+
+                //foreach (var backer in listBackerLinQ)
+                //{
+                //    backer.Date = CommonUtils.ConvertDateTimeFromUtc(backer.Date.GetValueOrDefault());
+                //    listBacker.Add(backer);
+                //}
                 list.sumAmount = listAmount;
                 list.listBacker = listBacker;
                 list.Amount = new List<decimal>();
