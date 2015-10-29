@@ -70,8 +70,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
 
             var projectJson = httpRequest.Form["project"];
-            var serializer = new JavaScriptSerializer { MaxJsonLength = Int32.MaxValue };
-            var project = serializer.Deserialize<ProjectEditDTO>(projectJson);
+            var project = new JavaScriptSerializer().Deserialize<ProjectEditDTO>(projectJson);
 
             if (project == null)
             {
@@ -926,7 +925,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
             }
 
-            var projectList = new ProjectDetailDTO();
+            var project = new ProjectDetailDTO();
 
             try
             {
@@ -937,7 +936,11 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                     throw new NotPermissionException();
                 }
 
-                projectList = ProjectRepository.Instance.GetProjectByCode(code, currentUser.UserName);
+                project = ProjectRepository.Instance.GetProjectByCode(code, currentUser.UserName);
+                if (project.ImageUrl != string.Empty)
+                {
+                    project.ImageUrl = DDLConstants.FileType.PROJECT + project.ImageUrl;
+                }
             }
             catch (Exception)
             {
@@ -945,7 +948,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
             }
 
-            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = projectList });
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = project });
         }
 
         // GET: api/ProjectApi/AdminGetProjectComment/:code
@@ -1022,6 +1025,73 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 Type = "",
                 Data = result
             });
+        }
+
+        // PUT: api/ProjectApi/AdminChangeProjectStatus/:id  
+        [ResponseType(typeof(ProjectEditDTO))]
+        [HttpPut]
+        public IHttpActionResult AdminChangeProjectStatus(ProjectEditDTO project)
+        {
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
+            bool result = false;
+
+            if (project == null)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            try
+            {
+                // Check role user.
+                var currentUser = UserRepository.Instance.GetBasicInfo(User.Identity.Name);
+                if (currentUser == null || currentUser.Role != DDLConstants.UserType.ADMIN)
+                {
+                    throw new NotPermissionException();
+                }
+                result = ProjectRepository.Instance.AdminChangeProjectStatus(project);
+            }
+            catch (Exception)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = result });
+        }
+
+        // PUT: api/ProjectApi/AdminGetListBacker/:code
+        [ResponseType(typeof(BackingDTO))]
+        [HttpGet]
+        public IHttpActionResult AdminGetListBacker(string code)
+        {
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
+            var listBacker = new BackingDTO();
+            try
+            {
+                // Check role user.
+                var currentUser = UserRepository.Instance.GetBasicInfo(User.Identity.Name);
+                if (currentUser == null || currentUser.Role != DDLConstants.UserType.ADMIN)
+                {
+                    throw new NotPermissionException();
+                }
+                listBacker = ProjectRepository.Instance.GetListBacker(code);
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "", Data = listBacker });
         }
         #endregion
 
@@ -1324,8 +1394,33 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = listCreated });
         }
 
-        //  21/10/2015 - MaiCTP - DeleteProjectReminded
+        //  24/10/2015 - MaiCTP - DeleteProjectDraft
         
+        [ResponseType(typeof(ProjectBasicViewDTO))]
+        [HttpDelete]
+        public IHttpActionResult DeleteProjectDraft(int id)
+        {
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+
+            try
+            {
+                var result = ProjectRepository.Instance.DeleteProjectDraft(id);
+
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
+        }
+
+        //  21/10/2015 - MaiCTP - DeleteProjectReminded
+
         [ResponseType(typeof(ProjectBasicViewDTO))]
         [HttpDelete]
         public IHttpActionResult DeleteProjectReminded(int id)
@@ -1353,7 +1448,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         //  24/10/2015 - MaiCTP - Get BackingInfo
         [HttpGet]
         [ResponseType(typeof(BackingInfoDTO))]
-        public IHttpActionResult GetBackingInfo(int projectId)
+        public IHttpActionResult GetBackingInfo(string  projectCode)
         {
             List<BackingInfoDTO> listBacking = new List<BackingInfoDTO>();
 
@@ -1370,9 +1465,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             try
             {
-                listBacking = ProjectRepository.Instance.BackingInfo(projectId);
-
-
+                listBacking = ProjectRepository.Instance.BackingInfo(projectCode);
             }
             catch (ProjectNotFoundException)
             {
@@ -1386,9 +1479,6 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = listBacking });
         }
-
-
-
 
         [HttpGet]
         public IHttpActionResult RemindProject(string code)

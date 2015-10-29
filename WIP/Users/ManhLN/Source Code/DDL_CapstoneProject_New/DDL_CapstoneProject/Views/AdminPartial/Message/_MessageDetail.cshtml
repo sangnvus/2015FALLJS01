@@ -1,0 +1,89 @@
+﻿<div class="row">
+    <div class="col-lg-12">
+        <div class="portlet portlet-default">
+            <div class="portlet-body" style="min-height: 300px">
+
+                <nav class="navbar mailbox-topnav" role="navigation">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="mailbox.html"><i class="fa fa-inbox"></i> Tin nhắn</a>
+                    </div>
+                    <div class="mailbox-nav">
+                        <ul class="nav navbar-nav button-tooltips">
+                            <li class="message-actions" style="margin-left: 15px">
+                                <div class="btn-group navbar-btn">
+                                    <button type="button" class="btn btn-white" ng-click="Delete()" data-toggle="tooltip" data-placement="bottom" data-tooltip="Xóa tin nhắn">
+                                        <i class="fa fa-trash-o"> Xóa tin nhắn</i>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+                <div id="mailbox">
+
+                    <ul class="nav nav-pills nav-stacked mailbox-sidenav">
+                        <li class="nav-divider"></li>
+                        <li>
+                            <a href="/admin/#/message/">Hộp thư đến</a>
+                        </li>
+                        <li class="nav-divider"></li>
+                        <li>
+                            <a href="/admin/#/message?list=sent">Hộp thư đi</a>
+                        </li>
+                        <li class="nav-divider"></li>
+                    </ul>
+
+                    <div id="mailbox-wrapper">
+                        <div class="mailbox-messages">
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                <div class="panel panel-default" ng-repeat="Message in Conversation.MessageList">
+                                    <div class="panel-heading" role="tab" id="headingOne">
+                                        <h4 class="panel-title">
+                                            <a role="button" data-toggle="collapse" data-target="#message{{Message.MessageID}}" aria-expanded="true" aria-controls="message{{Message.MessageID}}">
+                                                <!-- Collapsible Group Item #1 -->
+                                                <div class="row">
+                                                    <div class="col-sm-1">
+                                                        <img style="width: 45px; height: 45px" ng-if="checkHTTP(Message.SenderProfileImage)" ng-src="{{trustSrc(Message.SenderProfileImage)}}" a alt=""/>
+                                                        <img style="width: 45px; height: 45px" ng-if="!checkHTTP(Message.SenderProfileImage)" ng-src="../images/avatars/{{Message.SenderProfileImage}}" alt=""/>
+                                                    </div>
+                                                    <div class="col-sm-7">
+                                                        <p class="mb0">{{Message.SenderName}}</p>
+                                                        @*<span class="text-muted">Order Status Update: Order #231</span>*@
+                                                    </div>
+                                                    <div class="col-sm-4 text-right">
+                                                        {{Message.SentTime | date:"'lúc' HH:mm 'ngày' dd/MM/yyyy"}}
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="message{{Message.MessageID}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="message{{Message.MessageID}}" ng-class="{'in': $last}">
+                                        <div class="panel-body" ta-bind ng-model="Message.Content"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr/>
+                            <button class="btn btn-info" style="margin-bottom: 10px" ng-click="ReplyMessage()">Gửi trả lời</button>
+                            <!-- Add reply -->
+                            <div class="reply">
+                                <div class="media pt20">
+                                    <div class="pull-left">
+                                        <img style="width: 50px; height: 50px" ng-if="checkHTTP(CurrentUser.ProfileImage)" ng-src="{{trustSrc(CurrentUser.ProfileImage)}}" alt="" />
+                                        <img style="width: 50px; height: 50px" ng-if="!checkHTTP(CurrentUser.ProfileImage)" ng-src="../images/avatars/{{CurrentUser.ProfileImage}}" alt="" />
+                                    </div>
+                                    <div class="media-body border-tips">
+                                        <div text-angular name="Content" ng-model="Reply.Content"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>

@@ -14,6 +14,12 @@ namespace DDL_CapstoneProject.Models.DTOs
         public int Quantity { get; set; }
         public decimal TotalAmount { get; set; }
         public DateTime BackedDate { get; set; }
+        public string ProfileImage { get; set; }
+        public string FullName { get; set; }
+        public string Email { get; set; }
+        public string Add { get; set; }
+        public string Phone { get; set; }
         public string BackingDiscription { get; set; }
+        
     }
 }

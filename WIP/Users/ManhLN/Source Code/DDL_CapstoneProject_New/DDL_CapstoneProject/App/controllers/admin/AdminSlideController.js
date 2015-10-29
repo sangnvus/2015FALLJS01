@@ -63,7 +63,7 @@ app.controller('AdminSlideController',
                     } else if (result.data.Status === "error") {
                         CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         $scope.Error = result.data.Message;
-                        toastr.error($scope.Error, 'Lỗi!');
+                        toastr.error($scope.Error, 'Lỗi');
                     }
                 },
                 function (error) {
@@ -77,11 +77,15 @@ app.controller('AdminSlideController',
                 function (result) {
                     if (result.data.Status === "success") {
                         $scope.ListSlides[index].IsActive = result.data.Data.IsActive;
-                        toastr.success("Thành công!");
+                        if ($scope.ListSlides[index].IsActive) {
+                            toastr.success("Đã mở khóa");
+                        } else {
+                            toastr.success("Đã khóa lại");
+                        }
                     } else {
                         CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         $scope.Error = result.data.Message;
-                        toastr.error($scope.Error, 'Lỗi!');
+                        toastr.error($scope.Error, 'Lỗi');
                     }
                 },
                 function (error) {

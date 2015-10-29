@@ -31,15 +31,16 @@ namespace DDL_CapstoneProject.Respository
             {
                 var CategoryList = new List<CategoryProjectCountDTO>();
                 var CategorySet = from category in db.Categories
-                    select new CategoryProjectCountDTO
-                    {
-                        CategoryID = category.CategoryID,
-                        Name = category.Name,
-                        projectCount = (from pro in category.Projects
-                            where !pro.IsExprired
-                            select pro.ProjectID).Count()
+                                  where category.IsActive
+                                  select new CategoryProjectCountDTO
+                                  {
+                                      CategoryID = category.CategoryID,
+                                      Name = category.Name,
+                                      projectCount = (from pro in category.Projects
+                                                      where !pro.IsExprired
+                                                      select pro.ProjectID).Count()
 
-                    };
+                                  };
                 try
                 {
 
@@ -50,7 +51,7 @@ namespace DDL_CapstoneProject.Respository
                 }
                 catch (Exception ex)
                 {
-
+                    throw new Exception();
                 }
                 return CategoryList;
             }
@@ -61,17 +62,17 @@ namespace DDL_CapstoneProject.Respository
             using (var db = new DDLDataContext())
             {
                 var CategorySet = from category in db.Categories
-                    select new CategoryProjectCountDTO
-                    {
-                        CategoryID = category.CategoryID,
-                        Name = category.Name,
-                        CategoryFailFunded =
-                            category.Projects.Where(x => x.IsExprired && !x.IsFunded)
-                                .Sum(x => (decimal?) x.CurrentFunded) ?? 0,
-                        CategorySuccessFunded =
-                            category.Projects.Where(x => x.IsExprired && x.IsFunded)
-                                .Sum(x => (decimal?) x.CurrentFunded) ?? 0,
-                    };
+                                  select new CategoryProjectCountDTO
+                                  {
+                                      CategoryID = category.CategoryID,
+                                      Name = category.Name,
+                                      CategoryFailFunded =
+                                          category.Projects.Where(x => x.IsExprired && !x.IsFunded)
+                                              .Sum(x => (decimal?)x.CurrentFunded) ?? 0,
+                                      CategorySuccessFunded =
+                                          category.Projects.Where(x => x.IsExprired && x.IsFunded)
+                                              .Sum(x => (decimal?)x.CurrentFunded) ?? 0,
+                                  };
                 return CategorySet.ToList();
             }
         }
@@ -120,15 +121,15 @@ namespace DDL_CapstoneProject.Respository
                 // Get category list
 
                 var listCategoryDTO = (from category in db.Categories
-                    orderby category.CategoryID ascending
-                    select new AdminCategoryDTO
-                    {
-                        IsActive = category.IsActive,
-                        Description = category.Description,
-                        Name = category.Name,
-                        CategoryID = category.CategoryID,
-                        ProjectCount = category.Projects.Count
-                    }).ToList();
+                                       orderby category.CategoryID ascending
+                                       select new AdminCategoryDTO
+                                       {
+                                           IsActive = category.IsActive,
+                                           Description = category.Description,
+                                           Name = category.Name,
+                                           CategoryID = category.CategoryID,
+                                           ProjectCount = category.Projects.Count
+                                       }).ToList();
 
                 return listCategoryDTO;
             }

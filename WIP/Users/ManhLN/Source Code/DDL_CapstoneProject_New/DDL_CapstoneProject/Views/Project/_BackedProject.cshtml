@@ -26,7 +26,7 @@
 
                 <div class="item-inner" ng-if="checkEmpty>0">
                     <div class=" item-image hover01 column">
-                        <a href="project_detail.html"><figure><img class="img-fit" src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
+                        <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
                     </div>
                     <div class="item-title">
                         <h5><a a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}} </a></h5>
@@ -67,3 +67,7 @@
         <i class="fa fa-2x fa-arrow-circle-up"></i>
     </span>
 </div> <!-- end SCROLL TO TOP -->
+
+<script>
+    $(window).trigger('resize');
+</script>

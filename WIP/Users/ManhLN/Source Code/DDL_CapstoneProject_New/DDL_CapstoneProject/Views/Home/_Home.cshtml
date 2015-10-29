@@ -98,7 +98,7 @@
             </ul> -->
             <!--/#portfolio-filter-->
 
-            <ul class="portfolio-items col-3">
+            <ul class="portfolio-items col-4">
                 <li class="portfolio-item apps" ng-repeat="project in popularproject">
                     <div class="item-inner">
                         <div class="item-image hover01 column">
@@ -172,7 +172,7 @@
             interval: 8000
         });
     });
-
+    $(window).trigger('resize');
     $('.centered').each(function (e) {
         $(this).css('margin-top', ($('#main-slider').height() - $(this).height()) / 2);
     });

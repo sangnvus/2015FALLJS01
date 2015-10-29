@@ -136,6 +136,7 @@
     <Compile Include="Controllers\ApiControllers\MessageApiController.cs" />
     <Compile Include="Controllers\ApiControllers\CategoryApiController.cs" />
     <Compile Include="Controllers\ApiControllers\ProjectApiController.cs" />
+    <Compile Include="Controllers\ApiControllers\ReportApiController.cs" />
     <Compile Include="Controllers\ApiControllers\SlideApiController.cs" />
     <Compile Include="Controllers\ApiControllers\UserApiController.cs" />
     <Compile Include="Controllers\WebControllers\AdminPartialController.cs" />
@@ -169,6 +170,12 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\DDL_User.cs" />
+    <Compile Include="Models\DTOs\AdminUserBackedListDTO.cs" />
+    <Compile Include="Models\DTOs\AdminUserBackingDetailDTO.cs" />
+    <Compile Include="Models\DTOs\AdminUserCreatedListDTO.cs" />
+    <Compile Include="Models\DTOs\AdminUserDashboardDTO.cs" />
+    <Compile Include="Models\DTOs\AdminUserListDTO.cs" />
+    <Compile Include="Models\DTOs\AdminUserProfileDTO.cs" />
     <Compile Include="Models\DTOs\ProjectBasicListDTO.cs" />
     <Compile Include="Models\DTOs\AdminProjectGeneralInfoDTO.cs" />
     <Compile Include="Models\DTOs\BackingInfoDTO.cs" />
@@ -193,6 +200,8 @@
     <Compile Include="Models\DTOs\QuestionDTO.cs" />
     <Compile Include="Models\DTOs\ReplyDTO.cs" />
     <Compile Include="Models\DTOs\ProjectBackDTO.cs" />
+    <Compile Include="Models\DTOs\ReportProjectDTO.cs" />
+    <Compile Include="Models\DTOs\ReportUserDTO.cs" />
     <Compile Include="Models\DTOs\RewardPkgDTO.cs" />
     <Compile Include="Models\DTOs\SlideDTO.cs" />
     <Compile Include="Models\DTOs\TimeLineDTO.cs" />
@@ -216,11 +225,9 @@
     <Compile Include="Models\Timeline.cs" />
     <Compile Include="Models\UpdateLog.cs" />
     <Compile Include="Models\UserInfo.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Respository\QuestionRepository.cs" />
+    <Compile Include="Respository\ReportResponsitoy.cs" />
     <Compile Include="Respository\TimelineRepository.cs" />
     <Compile Include="Respository\UpdateLogRepository.cs" />
     <Compile Include="Respository\RewardPkgRepository.cs" />
@@ -237,10 +244,17 @@
     <Content Include="App\AdminModule.js" />
     <Content Include="App\controllers\admin\AdminCategoryController.js" />
     <Content Include="App\controllers\admin\AdminDashboardController.js" />
+    <Content Include="App\controllers\admin\AdminMessageController.js" />
+    <Content Include="App\controllers\admin\AdminMessageDetailController.js" />
     <Content Include="App\controllers\admin\AdminProjectDashboardController.js" />
     <Content Include="App\controllers\admin\AdminProjectDetailController.js" />
     <Content Include="App\controllers\admin\AdminProjectListController.js" />
+    <Content Include="App\controllers\admin\AdminReportProjectController.js" />
+    <Content Include="App\controllers\admin\AdminReportUserController.js" />
     <Content Include="App\controllers\admin\AdminSlideController.js" />
+    <Content Include="App\controllers\admin\AdminUserDashboardController.js" />
+    <Content Include="App\controllers\admin\AdminUserListController.js" />
+    <Content Include="App\controllers\admin\AdminUserProfileController.js" />
     <Content Include="App\controllers\BackedHistoryProjectController.js" />
     <Content Include="App\controllers\EditPasswordController.js" />
     <Content Include="App\controllers\BackProjectController.js" />
@@ -278,8 +292,11 @@
     <Content Include="App\directives\text-angular\textAngular-sanitize.min.js" />
     <Content Include="App\directives\timelinr.js" />
     <Content Include="App\HomeModule.js" />
+    <Content Include="App\services\Admin\AdminUserService.js" />
     <Content Include="App\services\Admin\AdminCategoryService.js" />
+    <Content Include="App\services\Admin\AdminMessageService.js" />
     <Content Include="App\services\Admin\AdminProjectService.js" />
+    <Content Include="App\services\Admin\AdminReportService.js" />
     <Content Include="App\services\Admin\AdminSlideService.js" />
     <Content Include="App\services\CategoryService.js" />
     <Content Include="App\services\CommonService.js" />
@@ -332,7 +349,6 @@
     <Content Include="Content\images\sort_both.png" />
     <Content Include="Content\images\sort_desc.png" />
     <Content Include="Content\images\sort_desc_disabled.png" />
-    <Content Include="Content\Libraries\jquery.dataTables.min.css" />
     <Content Include="Content\Libraries\jquery.timelinr.css" />
     <Content Include="Content\loading-bar.css" />
     <Content Include="Content\main.css" />
@@ -356,11 +372,13 @@
     <Content Include="fonts\lato\lato-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="images\avatars\avatar_default.png" />
+    <Content Include="images\avatars\avatar_default.jpg" />
     <Content Include="images\avatars\avatar_test0001.jpg" />
-    <Content Include="images\projects\projectimage1.jpg" />
-    <Content Include="images\projects\projectimage2.jpg" />
-    <Content Include="images\projects\projectimage4.png" />
+    <Content Include="images\others\404.png" />
+    <Content Include="images\others\background.jpg" />
+    <Content Include="images\others\error.png" />
+    <Content Include="images\projects\img_PRJ000001.jpg" />
+    <Content Include="images\projects\img_PRJ000002.jpg" />
     <Content Include="images\Schedule\1.png" />
     <Content Include="images\Schedule\10.png" />
     <Content Include="images\Schedule\2.png" />
@@ -371,12 +389,9 @@
     <Content Include="images\Schedule\7.png" />
     <Content Include="images\Schedule\8.png" />
     <Content Include="images\Schedule\9.png" />
-    <Content Include="images\slides\slider1.jpg" />
-    <Content Include="images\slides\slider2.jpg" />
-    <Content Include="images\slides\slider3.jpg" />
-    <Content Include="obj\Debug\DDL_CapstoneProject.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Debug\DDL_CapstoneProject.dll" />
-    <Content Include="obj\Debug\DDL_CapstoneProject.pdb" />
+    <Content Include="images\slides\slide_1.jpg" />
+    <Content Include="images\slides\slide_2.jpg" />
+    <Content Include="images\slides\slide_3.jpg" />
     <Content Include="Scripts\admin-flex\flex.js" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
@@ -1216,9 +1231,6 @@
     <Content Include="fonts\glyphicons\selection.json" />
     <Content Include="Content\flat-ui.css.map" />
     <None Include="Properties\PublishProfiles\dandeliondemo.pubxml" />
-    <Content Include="obj\Debug\DDL_CapstoneProject.csproj.GenerateResource.Cache" />
-    <Content Include="obj\Debug\DDL_CapstoneProject.csprojResolveAssemblyReference.cache" />
-    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <None Include="Scripts\jquery-1.11.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\jquery-1.11.1.min.js" />
@@ -1229,8 +1241,6 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\Libraries\dataTables.bootstrap.min.js" />
-    <Content Include="Scripts\Libraries\jquery.dataTables.min.js" />
     <Content Include="Scripts\Libraries\jquery.timelinr-0.9.54.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\morris-chart\chartangular.js" />
@@ -1259,8 +1269,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Login\Login.cshtml" />
@@ -1295,12 +1303,21 @@
     <Content Include="Views\AdminPartial\Project\_ProjectDetail.cshtml" />
     <Content Include="Views\AdminPartial\Project\_ProjectList.cshtml" />
     <Content Include="Views\AdminPartial\_Slide.cshtml" />
+    <Content Include="Views\AdminPartial\_ReportProject.cshtml" />
+    <Content Include="Views\AdminPartial\_ReportUser.cshtml" />
+    <Content Include="Views\AdminPartial\Message\_MessageDetail.cshtml" />
+    <Content Include="Views\AdminPartial\Message\_MessageList.cshtml" />
+    <Content Include="Views\AdminPartial\User\_UserList.cshtml" />
+    <Content Include="Views\AdminPartial\User\_UserDashboard.cshtml" />
+    <Content Include="Views\AdminPartial\User\_UserProfile.cshtml" />
+    <Content Include="Views\Shared\_Error.cshtml" />
+    <Content Include="Views\Shared\_NotFound.cshtml" />
+    <Content Include="Views\AdminPartial\Error\_Error.cshtml" />
+    <Content Include="Views\AdminPartial\Error\_NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />
     <Folder Include="App_Data\" />
-    <Folder Include="images\others\" />
-    <Folder Include="obj\Debug\TempPE\" />
     <Folder Include="Views\ClientPartial\" />
     <Folder Include="Views\Slider\" />
   </ItemGroup>
@@ -1312,7 +1329,6 @@
     <EmbeddedResource Include="Migrations\201510110856270_InitialCreate.resx">
       <DependentUpon>201510110856270_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="obj\Debug\DDL_CapstoneProject.Migrations.InitialCreate.resources" />
     <EmbeddedResource Include="Migrations\201510210055539_UpdateBackingBackingDetail.resx">
       <DependentUpon>201510210055539_UpdateBackingBackingDetail.cs</DependentUpon>
     </EmbeddedResource>

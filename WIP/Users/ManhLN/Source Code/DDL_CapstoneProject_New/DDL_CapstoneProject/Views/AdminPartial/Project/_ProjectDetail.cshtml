@@ -9,6 +9,22 @@
                     <li><a onclick="return false" href="#campaign" data-toggle="tab">Nội dung dự án</a></li>
                     <li><a onclick="return false" href="#updates" data-toggle="tab" ng-click="getUpdateLogList()">Cập nhật</a></li>
                     <li><a onclick="return false" href="#comments" data-toggle="tab" ng-click="getCommentList()">Bình luận</a></li>
+                    <button class="btn btn-danger btn-sm pull-right" data-toggle="modal" ng-click="change('suspended')"
+                            data-target="#ConfirmModal" ng-if="Project.Status == 'approved'">
+                        Ngừng dự án
+                    </button>
+                    <button class="btn btn-danger btn-sm pull-right" data-toggle="modal"
+                            data-target="#ConfirmModal" ng-if="Project.Status == 'suspended'" ng-click="change('approved')">
+                        Tiếp tục
+                    </button>
+                    <button class="btn btn-danger btn-sm pull-right" data-toggle="modal"
+                            data-target="#ConfirmModal" ng-if="Project.Status == 'pending'" ng-click="change('rejected')">
+                        Từ chối
+                    </button>
+                    <button class="btn btn-danger btn-sm pull-right" data-toggle="modal" style="margin-right: 15px;"
+                            data-target="#ConfirmModal" ng-if="Project.Status == 'pending' || Project.Status == 'rejected'" ng-click="change('approved')">
+                        Chấp nhận
+                    </button>
                 </ul>
                 <div id="userTabContent" class="tab-content">
                     <!-- tab overview -->
@@ -21,8 +37,11 @@
                                 <p>by <a href="userprofile.html">{{Project.Creator.FullName}}</a> - <span class="badge green">{{Project.CategoryName}}</span> - <span class="badge blue">{{Project.Status}}</span></p>
                             </div>
                             <div class="col-lg-7">
-                                <div class="responsive-video">
+                                <div class="responsive-video" ng-if="Project.VideoUrl != ''">
                                     <iframe ng-src="{{trustSrc(Project.VideoUrl)}}" frameborder="0"></iframe>
+                                </div>
+                                <div ng-if="Project.VideoUrl == ''">
+                                    <img ng-src="{{Project.ImageUrl}}" alt="" class="img-responsive center-block projecImg-preview">
                                 </div>
                             </div>
                             <div class="col-lg-5">
@@ -37,7 +56,7 @@
                                             </a>
                                             <div class="circle-tile-content orange">
                                                 <div class="circle-tile-description text-faded">
-                                                    Days To Go
+                                                    Ngày còn lại
                                                 </div>
                                                 <div class="circle-tile-number text-faded">
                                                     {{Project.NumberDays}}
@@ -55,7 +74,7 @@
                                             </a>
                                             <div class="circle-tile-content red">
                                                 <div class="circle-tile-description text-faded">
-                                                    Pledge Amount
+                                                    Đã được gây quỹ
                                                 </div>
                                                 <div class="circle-tile-number text-faded">
                                                     {{Project.CurrentFunded | currency:"&#8363;":0}}
@@ -74,7 +93,7 @@
                                             </a>
                                             <div class="circle-tile-content green">
                                                 <div class="circle-tile-description text-faded">
-                                                    Funding Goal
+                                                    Mục tiêu
                                                 </div>
                                                 <div class="circle-tile-number text-faded">
                                                     {{Project.FundingGoal | currency:"&#8363;":0}}
@@ -85,73 +104,40 @@
                                     </div>
                                     <div class="col-lg-6 col-md-12">
                                         <div class="circle-tile">
-                                            <a href="project-backers.html">
+                                            <a href="">
                                                 <div class="circle-tile-heading dark-blue">
                                                     <i class="fa fa-users fa-fw fa-3x"></i>
                                                 </div>
                                             </a>
                                             <div class="circle-tile-content dark-blue">
                                                 <div class="circle-tile-description text-faded">
-                                                    Backers
+                                                    Số người ủng hộ
                                                 </div>
                                                 <div class="circle-tile-number text-faded">
                                                     {{Project.NumberBacked}}
                                                     <span id="sparklineA"></span>
                                                 </div>
-                                                <a href="project-backers.html" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                                                <a href="" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- end circle title -->
-                                <div class="row">
-                                    <div class="col-lg-12 col-sm-12">
-                                        <button class="btn btn-danger btn-lg pull-right" data-toggle="modal"
-                                                data-target="#ConfirmModal" ng-if="Project.Status == 'approved'">
-                                            Ngừng dự án
-                                        </button>
-                                        <button class="btn btn-danger btn-lg pull-right" data-toggle="modal"
-                                                data-target="#ConfirmModal" ng-if="Project.Status == 'suspended'">
-                                            Tiếp tục
-                                        </button>
-                                        <button class="btn btn-danger btn-lg pull-right" data-toggle="modal"
-                                                data-target="#ConfirmModal" ng-if="Project.Status == 'pending' || Project.Status == 'rejected'">
-                                            Từ chối
-                                        </button>
-                                        <button class="btn btn-danger btn-lg pull-right" data-toggle="modal" style="margin-right: 15px;"
-                                                data-target="#ConfirmModal" ng-if="Project.Status == 'pending' || Project.Status == 'rejected'">
-                                            Chấp nhận
-                                        </button>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <!-- end project detail row -->
                         <!-- project chart -->
-                        @*<div class="row">
-                                <!-- Line Chart Example -->
-                                <div class="col-lg-12">
-                                    <div class="portlet portlet-green">
-                                        <div class="portlet-heading">
-                                            <div class="portlet-title">
-                                                <h4>Daily Statistic Chart</h4>
-                                            </div>
-                                            <div class="portlet-widgets">
-                                                <a href="javascript:;"><i class="fa fa-refresh"></i></a>
-                                                <span class="divider"></span>
-                                                <a data-toggle="collapse" data-parent="#accordion" href="#lineChart"><i class="fa fa-chevron-down"></i></a>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                        <div id="lineChart" class="panel-collapse collapse in">
-                                            <div class="portlet-body">
-                                                <div id="morris-chart-line"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.col-lg-12 -->
-                            </div>*@
+                        <div class="row" style="margin-top: 20px">
+                            <!-- Line Chart Example -->
+                            <div class="col-lg-12" ng-if="labels != ''">
+                                <div id="backerlistchart" class="pb30">
+                                    <canvas id="line" class="chart chart-line" chart-data="data" height="100px"
+                                            chart-labels="labels" chart-legend="true" chart-series="series" chart-colours="colors"
+                                            chart-click="onClick"></canvas>
+                                </div> <!-- LINE CHART BACKERS -->
+                            </div>
+                            <!-- /.col-lg-12 -->
+                        </div>
                         <!-- end project chart -->
 
                     </div>
@@ -203,11 +189,11 @@
 
                             <div class="col-md-4">
                                 <div class="padding10">
-                                    <h3>Rewards</h3>
+                                    <h3>Mức ủng hộ</h3>
                                 </div> <!-- end Rewards -->
                                 <div>
                                     <div class="well" ng-repeat="reward in Project.RewardDetail">
-                                        <label for="">Pledge {{reward.PledgeAmount | currency:"&#8363;":0}} hoặc hơn</label>
+                                        <label for="">Ủng hộ {{reward.PledgeAmount | currency:"&#8363;":0}} hoặc hơn</label>
                                         <p><span class="glyphicon glyphicon-asterisk"></span>{{reward.Backers}} người ủng hộ</p>
                                         <p>{{reward.Description}}</p>
                                         <div class="padding20">

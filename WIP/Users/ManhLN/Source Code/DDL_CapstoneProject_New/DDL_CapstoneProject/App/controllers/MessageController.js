@@ -85,7 +85,7 @@ app.controller('MessageController',
                             if ($scope.Sent) {
                                 $scope.ListConversations.unshift(result.data.Data);
                             }
-                            toastr.success("Gửi tin nhắn thành công thành công");
+                            toastr.success("Đã gửi");
                         } else {
                             CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                             $scope.Error = result.data.Message;
@@ -151,7 +151,7 @@ app.controller('MessageController',
             promise.then(
                 function (result) {
                     if (result.data.Status === "success") {
-                        toastr.success('Đã xóa thành công!');
+                        toastr.success('Đã xóa');
                         if ($scope.Sent === true) {
                             getListSentConversation();
                         } else {

@@ -8,6 +8,16 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
 {
     public class AdminPartialController : Controller
     {
+        // GET: AdminPartial/ReportProject
+        public ActionResult ReportProject()
+        {
+            return PartialView("~/Views/AdminPartial/_ReportProject.cshtml");
+        }
+        // GET: AdminPartial/ReportUser
+        public ActionResult ReportUser()
+        {
+            return PartialView("~/Views/AdminPartial/_ReportUser.cshtml");
+        }
         // GET: AdminPartial/Dashboard
         public ActionResult Dashboard()
         {
@@ -38,10 +48,48 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
             return PartialView("~/Views/AdminPartial/Project/_ProjectDetail.cshtml");
         }
         
-        // GET: AdminPartial/Category
+        // GET: AdminPartial/Slide
         public ActionResult Slide()
         {
             return PartialView("~/Views/AdminPartial/_Slide.cshtml");
+        }
+        // GET: AdminPartial/MessageList
+        public ActionResult MessageList()
+        {
+            return PartialView("~/Views/AdminPartial/Message/_MessageList.cshtml");
+        }
+
+        // GET: AdminPartial/MessageDetail
+        public ActionResult MessageDetail()
+        {
+            return PartialView("~/Views/AdminPartial/Message/_MessageDetail.cshtml");
+        }
+
+        public ActionResult UserList()
+        {
+            return PartialView("~/Views/AdminPartial/User/_UserList.cshtml");
+        }
+
+        public ActionResult UserProfile()
+        {
+            return PartialView("~/Views/AdminPartial/User/_UserProfile.cshtml");
+        }
+
+        public ActionResult UserDashboard()
+        {
+            return PartialView("~/Views/AdminPartial/User/_UserDashboard.cshtml");
+        }
+
+        // GET: AdminPartial/NotFound
+        public ActionResult NotFound()
+        {
+            return PartialView("~/Views/AdminPartial/Error/_NotFound.cshtml");
+        }
+
+        // GET: AdminPartial/NotFound
+        public ActionResult Error()
+        {
+            return PartialView("~/Views/AdminPartial/Error/_Error.cshtml");
         }
     }
 }

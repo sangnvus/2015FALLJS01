@@ -272,6 +272,19 @@ app.config(["$routeProvider", function ($routeProvider) {
              }
          });
 
+    $routeProvider.when("/project/listBacker/:code",
+        {
+            caseInsensitiveMatch: true,
+            templateUrl: "ClientPartial/ListBacker",
+            controller: 'ListBackerController',
+            resolve: {
+                projects: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
+                    var promise = ProjectService.getListBacker($route.current.params.code);
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
+            }
+        });
+
     $routeProvider.when("/project/starredProject",
        {
            caseInsensitiveMatch: true,
@@ -325,8 +338,18 @@ app.config(["$routeProvider", function ($routeProvider) {
             }
         });
 
+    $routeProvider.when("/error",
+        {
+            caseInsensitiveMatch: true,
+            templateUrl: "/ClientPartial/Error"
+        });
+    $routeProvider.when("/notfound",
+        {
+            caseInsensitiveMatch: true,
+            templateUrl: "/ClientPartial/NotFound"
+        });
     $routeProvider.otherwise({
-        redirectTo: "/"
+        redirectTo: "/notfound"
     });
 
     //$locationProvider.html5Mode(false).hashPrefix("!");
@@ -411,7 +434,8 @@ app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOpti
             maxOpened: 2,
             closeButton: true,
             newestOnTop: true,
-            autoDismiss: true
+            autoDismiss: true,
+            progressBar: true
         });
 
         // Base Url of web app.

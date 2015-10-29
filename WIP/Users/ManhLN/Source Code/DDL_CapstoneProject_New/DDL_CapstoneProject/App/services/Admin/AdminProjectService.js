@@ -56,4 +56,27 @@ service.service("AdminProjectService", function ($http) {
 
         return request;
     }
+
+    // Function to change project's status
+    this.changeProjectStatus = function (project) {
+        var request = $http({
+            method: 'put',
+            url: '/api/ProjectApi/AdminChangeProjectStatus/',
+            data: project
+        });
+
+        return request;
+    }
+
+    // Function to get list backer and backing event
+    this.getListBacker = function (code) {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/AdminGetListBacker',
+            params: {
+                code: code
+            }
+        });
+        return request;
+    }
 });

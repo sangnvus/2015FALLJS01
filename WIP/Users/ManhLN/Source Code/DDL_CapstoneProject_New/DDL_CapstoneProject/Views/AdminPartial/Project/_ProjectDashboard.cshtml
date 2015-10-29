@@ -1,20 +1,20 @@
 ﻿<div class="row">
     <div class="col-lg-2 col-sm-6">
         <div class="circle-tile">
-            <a href="new-project.html">
+            <a href="~/admin/#/project/">
                 <div class="circle-tile-heading blue">
                     <i class="fa fa-bell fa-fw fa-3x"></i>
                 </div>
             </a>
             <div class="circle-tile-content blue">
                 <div class="circle-tile-description text-faded">
-                    Pending Projects
+                    Dự án đang chờ
                 </div>
                 <div class="circle-tile-number text-faded">
-                    {{BasicInfo.PendingProject}}
+                    {{BasicInfo.PendingProject | currency:"":0}}
                     <span id="sparklineA"></span>
                 </div>
-                <a href="" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                <a href="~/admin/#/project/" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
             </div>
         </div>
     </div>
@@ -27,10 +27,10 @@
             </a>
             <div class="circle-tile-content green">
                 <div class="circle-tile-description text-faded">
-                    Approved Projects
+                    Dự án đang chạy
                 </div>
                 <div class="circle-tile-number text-faded">
-                    {{BasicInfo.ApprovedProject}}
+                    {{BasicInfo.ApprovedProject | currency:"":0}}
                 </div>
                 <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
             </div>
@@ -45,10 +45,10 @@
             </a>
             <div class="circle-tile-content red">
                 <div class="circle-tile-description text-faded">
-                    Suspended Projects
+                    Dự án bị đình chỉ
                 </div>
                 <div class="circle-tile-number text-faded">
-                    {{BasicInfo.SuspendedProject}}
+                    {{BasicInfo.SuspendedProject| currency:"":0}}
                 </div>
                 <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
             </div>
@@ -63,10 +63,10 @@
             </a>
             <div class="circle-tile-content dark-gray">
                 <div class="circle-tile-description text-faded">
-                    Expired Projects
+                    Dự án đã hết hạn
                 </div>
                 <div class="circle-tile-number text-faded">
-                    {{BasicInfo.ExpriredProject}}
+                    {{BasicInfo.ExpriredProject| currency:"":0}}
                     <span id="sparklineB"></span>
                 </div>
                 <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
@@ -82,10 +82,10 @@
             </a>
             <div class="circle-tile-content purple">
                 <div class="circle-tile-description text-faded">
-                    Funded Projects
+                    Dự án được ủng hộ
                 </div>
                 <div class="circle-tile-number text-faded">
-                    {{BasicInfo.FundedProject}}
+                    {{BasicInfo.FundedProject| currency:"":0}}
                     <span id="sparklineB"></span>
                 </div>
                 <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
@@ -94,20 +94,20 @@
     </div>
     <div class="col-lg-2 col-sm-6">
         <div class="circle-tile">
-            <a href="#">
+            <a href="~/admin/#/project/all/">
                 <div class="circle-tile-heading orange">
                     <i class="fa fa-star fa-fw fa-3x"></i>
                 </div>
             </a>
             <div class="circle-tile-content orange">
                 <div class="circle-tile-description text-faded">
-                    Total Projects
+                    Tổng số dự án
                 </div>
                 <div class="circle-tile-number text-faded">
-                    {{BasicInfo.TotalProject}}
+                    {{BasicInfo.TotalProject| currency:"":0}}
                     <span id="sparklineB"></span>
                 </div>
-                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                <a href="~/admin/#/project/all/" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
             </div>
         </div>
     </div>
@@ -121,11 +121,11 @@
         <div class="portlet portlet-default">
             <div class="portlet-heading">
                 <div class="portlet-title">
-                    <h4>New Projects List</h4>
+                    <h4>Danh sách dự án mới chờ duyệt</h4>
                 </div>
                 <div class="portlet-widgets">
-                    <a href="#" class="btn btn-blue btn-sm">Export</a>
-                    <a data-toggle="collapse" data-parent="#accordion" href="#NewProjectTable"><i class="fa fa-chevron-down"></i></a>
+                    <a onclick="return false" href="#" class="btn btn-blue btn-sm">Export</a>
+                    <a onclick="return false" data-toggle="collapse" data-parent="#accordion" href="#NewProjectTable"><i class="fa fa-chevron-down"></i></a>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -136,14 +136,14 @@
                                datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
                             <thead>
                                 <tr>
-                                    <th>Code</th>
-                                    <th>Title</th>
-                                    <th>Category</th>
-                                    <th>Creator</th>
-                                    <th>Fund Goal</th>
-                                    <th>Expired Date</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th>Mã</th>
+                                    <th>Tên</th>
+                                    <th>Lĩnh vực</th>
+                                    <th>Người tạo</th>
+                                    <th>Mục tiêu</th>
+                                    <th>Ngày kết thúc</th>
+                                    <th>Trạng thái</th>
+                                    <th>Hành động</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -152,9 +152,9 @@
                                     <td>{{project.Title}}</td>
                                     <td>{{project.Category}}</td>
                                     <td class="center">{{project.CreatorEmail}}</td>
-                                    <td class="center">{{project.FundingGoal}}</td>
+                                    <td class="center">{{project.FundingGoal| currency:"":0}}</td>
                                     <td class="center">{{project.ExpireDate | date:"dd/MM/yyyy"}}</td>
-                                    <td><span class="label label-primary center-block">{{project.Status}}</span></td>
+                                    <td><span class="label label-primary center-block" style="padding: 9px">{{project.Status}}</span></td>
                                     <td class="center">
                                         <div class="btn-group">
                                             <a href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")" class="btn btn-primary btn-sm" type="button" id="dropdownMenu1"
