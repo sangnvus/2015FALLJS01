@@ -366,7 +366,7 @@ app.config(["$routeProvider", function ($routeProvider) {
             templateUrl: "/ClientPartial/NotFound"
         });
     $routeProvider.otherwise({
-        redirectTo: "/notfound",
+        redirectTo: "/",
         title: 'Dandelion',
     });
 
