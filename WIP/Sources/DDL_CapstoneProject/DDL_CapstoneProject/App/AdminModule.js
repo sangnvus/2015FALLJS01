@@ -3,7 +3,7 @@ var service = angular.module("DDLService", []);
 var directive = angular.module("DDLDirective", []);
 var app = angular.module("AdminApp", ["ngRoute", "ngAnimate", "ngSanitize", "DDLService",
     "DDLDirective", 'angular-loading-bar', 'textAngular', 'toastr', 'ui.bootstrap', 'monospaced.elastic',
-    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert', 'blockUI', 'chart.js']);
+    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert', 'blockUI', 'chart.js', "highcharts-ng"]);
 
 // Show Routing.
 app.config(["$routeProvider", function ($routeProvider) {
@@ -72,7 +72,6 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/project",
         {
-            caseInsensitiveMatch: true,
             templateUrl: "/AdminPartial/ProjectDashboard",
             controller: 'AdminProjectDashboardController',
             activeTab: 'dashboard',
@@ -91,7 +90,6 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/project/all",
         {
-            caseInsensitiveMatch: true,
             templateUrl: "/AdminPartial/ProjectList",
             controller: 'AdminProjectListController',
             activeTab: 'projectList',
@@ -106,7 +104,6 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/project/:code",
        {
-           caseInsensitiveMatch: true,
            templateUrl: "/AdminPartial/ProjectDetail",
            controller: 'AdminProjectDetailController',
            activeTab: 'projectList',

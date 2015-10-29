@@ -646,7 +646,7 @@ namespace DDL_CapstoneProject.Respository
                 rewardPkg.CurrentQuantity += backingDetail.Quantity;
 
                 // Set project is funded
-                if (project.CurrentFunded >= project.FundingGoal)
+                if ((project.CurrentFunded >= project.FundingGoal) && project.IsFunded == false)
                 {
                     project.IsFunded = true;
                 }
@@ -679,7 +679,7 @@ namespace DDL_CapstoneProject.Respository
                 {
                     ApprovedProject = approved,
                     ExpriredProject = expired,
-                    FundedProject = funded,
+                    SucceedProject = funded,
                     PendingProject = pending,
                     SuspendedProject = suspended,
                     TotalProject = total
@@ -731,7 +731,7 @@ namespace DDL_CapstoneProject.Respository
                 // Get rewardPkg list
                 var projectList = (from Project in db.Projects
                                    where Project.Status != DDLConstants.ProjectStatus.DRAFT
-                                   orderby Project.CreatedDate ascending 
+                                   orderby Project.CreatedDate ascending
                                    select new ProjectBasicListDTO
                                    {
                                        ProjectCode = Project.ProjectCode,

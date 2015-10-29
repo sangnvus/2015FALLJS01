@@ -130,8 +130,6 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
         $scope.file = file;
         fileReader.readAsDataUrl($scope.file, $scope)
                       .then(function (result) {
-                          console.log("index: " + $scope.Timeline[index]);
-                          console.log("name: " + result);
                           if ($scope.activeTab === "#timelineTab" && $scope.isCreateTimeline === false) {
                               $scope.Timeline[index].ImageUrl = result;
                           } else if ($scope.activeTab === "#timelineTab" && $scope.isCreateTimeline === true) {
@@ -168,6 +166,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                     form.$setUntouched();
                     $scope.file = null;
                 } else {
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 }
@@ -191,6 +190,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                         $scope.originalStory = angular.copy($scope.ProjectStory);
                         $scope.FirstLoadStory = true;
                     } else {
+                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         $scope.Error = result.data.Message;
                         toastr.error($scope.Error, 'Lỗi!');
                     }
@@ -216,6 +216,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                     form.$setPristine();
                     form.$setUntouched();
                 } else {
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 }
@@ -246,6 +247,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                         $scope.FirstLoadReward = true;
 
                     } else {
+                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         $scope.Error = result.data.Message;
                         toastr.error($scope.Error, 'Lỗi!');
                     }
@@ -288,6 +290,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                     // re-set original project reward
                     $scope.originalReward = angular.copy($scope.RewardPKgs);
                 } else {
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 }
@@ -324,6 +327,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                     $scope.originalReward = angular.copy($scope.RewardPKgs);
                     $scope.NewReward.EstimatedDelivery = angular.copy($scope.toDay);
                 } else {
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 }
@@ -345,6 +349,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                     $scope.RewardPKgs.splice(index, 1);
                     $scope.originalReward = angular.copy($scope.RewardPKgs);
                 } else {
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 }
@@ -385,6 +390,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                         $scope.originalUpdateLog = angular.copy($scope.UpdateLogs);
                         $scope.FirstLoadUpdate = true;
                     } else {
+                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         $scope.Error = result.data.Message;
                         toastr.error($scope.Error, 'Lỗi!');
                     }
@@ -409,6 +415,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                     form.$setPristine();
                     form.$setUntouched();
                 } else {
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 }
@@ -433,6 +440,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                     $scope.UpdateLogs.push(result.data.Data);
                     $scope.originalUpdateLog = angular.copy($scope.UpdateLogs);
                 } else {
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 }
@@ -454,6 +462,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                     $scope.UpdateLogs.splice(index, 1);
                     $scope.originalUpdateLog = angular.copy($scope.UpdateLogs);
                 } else {
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 }
@@ -481,6 +490,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                         $scope.originalTimeline = angular.copy($scope.Timeline);
                         $scope.FirstLoadTimeLine = true;
                     } else {
+                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         $scope.Error = result.data.Message;
                         toastr.error($scope.Error, 'Lỗi!');
                     }
@@ -514,6 +524,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                     //form.$setPristine();
                     //form.$setUntouched();
                 } else {
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 }
@@ -553,6 +564,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                     resetImg.replaceWith(resetImg = resetImg.clone(true));
                     $scope.isCreateTimeline = false;
                 } else {
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 }
@@ -574,6 +586,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                     // re-set original timeline
                     $scope.originalTimeline = angular.copy($scope.Timeline);
                 } else {
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 }
@@ -596,6 +609,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                         $scope.originalQuestion = angular.copy($scope.Question);
                         $scope.FirstLoadQA = true;
                     } else {
+                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         $scope.Error = result.data.Message;
                         toastr.error($scope.Error, 'Lỗi!');
                     }
@@ -619,6 +633,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                     form.$setPristine();
                     form.$setUntouched();
                 } else {
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 }
@@ -642,6 +657,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                     $scope.Question.push(result.data.Data);
                     $scope.originalQuestion = angular.copy($scope.Question);
                 } else {
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 }
@@ -662,6 +678,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                     $scope.Question.splice(index, 1);
                     $scope.originalQuestion = angular.copy($scope.Question);
                 } else {
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 }

@@ -280,6 +280,7 @@
     <Content Include="App\directives\angular-morris-chart.min.js" />
     <Content Include="App\directives\elastic.js" />
     <Content Include="App\directives\format.js" />
+    <Content Include="App\directives\highcharts-ng.js" />
     <Content Include="App\directives\loading-bar.js" />
     <Content Include="App\directives\ngAutoComplete.js" />
     <Content Include="App\directives\ngEnter.js" />
