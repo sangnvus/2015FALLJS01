@@ -28,8 +28,8 @@
   -moz-transition: width 350ms;
   -o-transition: width 350ms;
   transition: width 350ms;
-
-  background: #29d;
+  
+  background: #1abc9c;
   position: fixed;
   z-index: 10002;
   top: 0;

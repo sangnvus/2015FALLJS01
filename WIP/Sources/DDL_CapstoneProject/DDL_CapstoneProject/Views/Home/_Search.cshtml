@@ -1,8 +1,4 @@
-﻿
-
-
-
-<div id="content" class="paddingNavbar">
+﻿<div id="content" class="paddingNavbar">
     <div id="search">
 
         <div class="searchbar">
@@ -47,7 +43,7 @@
                         <li class="portfolio-item" ng-repeat="project in projectbycategory">
                             <div class="item-inner">
                                 <div class="item-image hover01 column">
-                                    <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt="" style="width: 341px; height: 255.75px;"></figure></a>
+                                    <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
                                 </div>
                                 <div class="item-title">
                                     <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
@@ -90,3 +86,7 @@
 
     </div> <!-- end content -->
 </div>
+
+<script>
+    $(window).trigger('resize');
+</script>

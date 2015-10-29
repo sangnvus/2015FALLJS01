@@ -31,11 +31,11 @@
             <h4 class="pull-left">Nổi bật nhất:</h4>
             <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="@Url.Content("/#/search?categoryid=all&order=PopularPoint")">Xem thêm</a>
             <div class="clearfix"></div>
-            <ul class="portfolio-items col-3">
+            <ul class="portfolio-items col-4">
                 <li class="portfolio-item" ng-repeat="project in popularproject">
                     <div class="item-inner">
                         <div class="item-image hover01 column">
-                            <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt="" style="width: 341px; height: 255.75px;"></figure></a>
+                            <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
                         </div>
                         <div class="item-title">
                             <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
@@ -51,14 +51,23 @@
                                 &nbsp;&nbsp;
                             </div>
                             <div class="progress mt5 mb5">
-                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: { {project.CurrentFunded}}% ">
                                     <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
                                 </div>
                             </div>
                             <ul class="list-inline">
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">ủng hộ</p></li>
-                                <li><p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p><p class="mt0 mb0">gây quỹ</p></li>
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">ngày còn lại</p></li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p>
+                                    <p class="mt0 mb0">ủng hộ</p>
+                                </li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p>
+                                    <p class="mt0 mb0">gây quỹ</p>
+                                </li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p>
+                                    <p class="mt0 mb0">ngày còn lại</p>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -74,11 +83,11 @@
             <h4 class="pull-left">Mới nhất:</h4>
             <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="@Url.Content("/#/search?categoryid=all&order=CreatedDate")">Xem thêm</a>
             <div class="clearfix"></div>
-            <ul class="portfolio-items col-3">
+            <ul class="portfolio-items col-4">
                 <li class="portfolio-item" ng-repeat="project in newestproject">
                     <div class="item-inner">
                         <div class="item-image hover01 column">
-                            <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt="" style="width: 341px; height: 255.75px;"></figure></a>
+                            <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
                         </div>
                         <div class="item-title">
                             <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
@@ -94,14 +103,23 @@
                                 &nbsp;&nbsp;
                             </div>
                             <div class="progress mt5 mb5">
-                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: { {project.CurrentFunded}}% ">
                                     <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
                                 </div>
                             </div>
                             <ul class="list-inline">
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">ủng hộ</p></li>
-                                <li><p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p><p class="mt0 mb0">gây quỹ</p></li>
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">ngày còn lại</p></li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p>
+                                    <p class="mt0 mb0">ủng hộ</p>
+                                </li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p>
+                                    <p class="mt0 mb0">gây quỹ</p>
+                                </li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p>
+                                    <p class="mt0 mb0">ngày còn lại</p>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -118,11 +136,11 @@
             <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="@Url.Content("/#/search?categoryid=all&order=CurrentFunded")">Xem thêm</a>
             <div class="clearfix"></div>
 
-            <ul class="portfolio-items col-3">
+            <ul class="portfolio-items col-4">
                 <li class="portfolio-item" ng-repeat="project in mostfundproject">
                     <div class="item-inner">
                         <div class="item-image hover01 column">
-                            <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt="" style="width: 341px; height: 255.75px;"></figure></a>
+                            <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
                         </div>
                         <div class="item-title">
                             <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
@@ -138,14 +156,23 @@
                                 &nbsp;&nbsp;
                             </div>
                             <div class="progress mt5 mb5">
-                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: { {project.CurrentFunded}}% ">
                                     <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
                                 </div>
                             </div>
                             <ul class="list-inline">
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">ủng hộ</p></li>
-                                <li><p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p><p class="mt0 mb0">gây quỹ</p></li>
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">ngày còn lại</p></li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p>
+                                    <p class="mt0 mb0">ủng hộ</p>
+                                </li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p>
+                                    <p class="mt0 mb0">gây quỹ</p>
+                                </li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p>
+                                    <p class="mt0 mb0">ngày còn lại</p>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -161,11 +188,11 @@
             <h4 class="pull-left">Sắp hết hạn ủng hộ:</h4>
             <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="@Url.Content("/#/search?categoryid=all&order=ExpireDate")">Xem thêm</a>
             <div class="clearfix"></div>
-            <ul class="portfolio-items col-3">
+            <ul class="portfolio-items col-4">
                 <li class="portfolio-item" ng-repeat="project in enddateproject">
                     <div class="item-inner">
                         <div class="item-image hover01 column">
-                            <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt="" style="width: 341px; height: 255.75px;"></figure></a>
+                            <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
                         </div>
                         <div class="item-title">
                             <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
@@ -181,14 +208,23 @@
                                 &nbsp;&nbsp;
                             </div>
                             <div class="progress mt5 mb5">
-                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: { {project.CurrentFunded}}% ">
                                     <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
                                 </div>
                             </div>
                             <ul class="list-inline">
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">ủng hộ</p></li>
-                                <li><p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p><p class="mt0 mb0">gây quỹ</p></li>
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">ngày còn lại</p></li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p>
+                                    <p class="mt0 mb0">ủng hộ</p>
+                                </li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p>
+                                    <p class="mt0 mb0">gây quỹ</p>
+                                </li>
+                                <li>
+                                    <p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p>
+                                    <p class="mt0 mb0">ngày còn lại</p>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -201,3 +237,7 @@
     </div> <!-- end item-end-date -->
 
 </div>
+
+<script>
+    $(window).trigger('resize');
+</script>
