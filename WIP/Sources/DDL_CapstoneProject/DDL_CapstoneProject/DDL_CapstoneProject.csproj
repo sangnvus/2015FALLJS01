@@ -265,6 +265,7 @@
     <Content Include="App\controllers\EditProfileController.js" />
     <Content Include="App\controllers\EditProjectController.js" />
     <Content Include="App\controllers\HomeController.js" />
+    <Content Include="App\controllers\ListBackerController.js" />
     <Content Include="App\controllers\MessageController.js" />
     <Content Include="App\controllers\MessageDetailController.js" />
     <Content Include="App\controllers\PaymentProjectController.js" />
@@ -1315,6 +1316,7 @@
     <Content Include="Views\Shared\_NotFound.cshtml" />
     <Content Include="Views\AdminPartial\Error\_Error.cshtml" />
     <Content Include="Views\AdminPartial\Error\_NotFound.cshtml" />
+    <Content Include="Views\Project\_ListBacker.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />

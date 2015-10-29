@@ -3,18 +3,19 @@
 app.controller('CreatedProjectController', function ($scope, projects, $filter, ProjectService, toastr) {
     $scope.ListCreatedProject = projects.data.Data;
 
-    $scope.ListCreatedProjectApproved = $filter('filter')($scope.ListCreatedProject, { Status: "approved"});
-    $scope.ListCreatedProjectExpired = $filter('filter')($scope.ListCreatedProject, { Status: "expired" });
-    $scope.ListCreatedProjectDraft = $filter('filter')($scope.ListCreatedProject, { Status: "draft" });
-    $scope.ListCreatedProjectRejected = $filter('filter')($scope.ListCreatedProject, { Status: "rejected" });
-   
-    $scope.ListCreatedProjectDraft = $scope.ListCreatedProjectDraft.concat($scope.ListCreatedProjectRejected);
+    $scope.ListCreatedProjectApproved = $filter('filter')($scope.ListCreatedProject, { Status: "4"});
+    $scope.ListCreatedProjectExpired = $filter('filter')($scope.ListCreatedProject, { Status: "6" });
+    $scope.ListCreatedProjectDraft = $filter('filter')($scope.ListCreatedProject, { Status: "1" });
+    $scope.ListCreatedProjectRejected = $filter('filter')($scope.ListCreatedProject, { Status: "3" });
+    $scope.ListCreatedProjectPending = $filter('filter')($scope.ListCreatedProject, { Status: "2" });
+    $scope.ListCreatedProjectSuspended = $filter('filter')($scope.ListCreatedProject, { Status: "5" });
 
+    $scope.ListCreatedProjectDraft = $scope.ListCreatedProjectDraft.concat($scope.ListCreatedProjectRejected).concat($scope.ListCreatedProjectPending);
+    $scope.ListCreatedProjectExpired = $scope.ListCreatedProjectExpired.concat($scope.ListCreatedProjectSuspended);
+
+    $scope.checkEmpty = $scope.ListCreatedProject.length;
     $scope.checkEmptyApproved = $scope.ListCreatedProjectApproved.length;
-
     $scope.checkEmptyExpired = $scope.ListCreatedProjectExpired.length;
-        
-
     $scope.checkEmptyDraft = $scope.ListCreatedProjectDraft.length;
 
     $scope.deleteDraft = function (index) {

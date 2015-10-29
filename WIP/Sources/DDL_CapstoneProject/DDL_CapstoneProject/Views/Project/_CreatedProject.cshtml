@@ -13,21 +13,21 @@
 
 <div id="items-projects">
     <section id="portfolio" class="container">
-        <h4 class="pt30">Created projects:</h4>
-
-        <h4 class="pt30">Dự án nháp:</h4>
-        <ul ng-show="checkEmptyDraft==0">Không có dự án nào</ul>
+        <h4 class="pt30">Dự án đã tạo:</h4>
+        <ul ng-if="checkEmpty == 0">Bạn chưa tạo dự án nào</ul>     
+        <h4 class="pt0" ng-show="checkEmptyDraft>0">Dự án nháp:</h4>
         <ul class="portfolio-items col-4">
             <li class="portfolio-item apps" ng-repeat="project in ListCreatedProjectDraft">
 
                 <div class="item-inner">
                     <div class=" item-image hover01 column">
-                        <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
+                        <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
                     </div>
                     <div class="item-title">
                         <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
                         <a class="btn btn-info btn-xs" href="/#/project/edit/{{project.ProjectCode}}">Sửa</a>
                         <a class="btn btn-info btn-xs" href="" ng-click="deleteDraft($index)">Xóa</a>
+                        <label class="label label-danger" ng-if="project.Status == '2'">Đang chờ kiểm duyệt</label>
 
                     </div>
                     <div class="item-content">
@@ -49,8 +49,7 @@
                         </div>
                         <ul class="list-inline">
                             <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">ủng hộ</p></li>
-                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber}}</p><p class="mt0 mb0">gây quỹ</p></li>
-                            <li><p class="fnt-b mt0 mb0 c00">Thành công</p><p class="mt0 mb0">{{project.ExpireDate}}</p></li>
+                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber | number : fractionSize}}&#8363;</p><p class="mt0 mb0">gây quỹ</p></li>
                         </ul>
                     </div>
                 </div>
@@ -61,14 +60,13 @@
             <a class="btn btn-transparent btn-sm" href="#">Thêm</a>
         </div>*@
 
-        <h4 class="pt30">Dự án đang hoạt động:</h4>
-        <ul ng-if="checkEmptyApproved==0">Không có dự án nào</ul>
+        <h4 class="pt30" ng-if="checkEmptyApproved>0">Dự án đang hoạt động:</h4>
         <ul class="portfolio-items col-4">
 
             <li class="portfolio-item apps" ng-repeat="project in ListCreatedProjectApproved">
                 <div class="item-inner">
                     <div class="item-image hover01 column">
-                        <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
+                        <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
                     </div>
                     <div class="item-title">
                         <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
@@ -92,13 +90,13 @@
                         </div>
                         <ul class="list-inline">
                             <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">ủng hộ</p></li>
-                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber | currency:"&#8363;":0}}</p><p class="mt0 mb0">gây quỹ</p></li>
+                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber |  number : fractionSize}}&#8363;</p><p class="mt0 mb0">gây quỹ</p></li>
                             <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">ngày còn lại</p></li>
                         </ul>
                     </div>
                 </div>
             </li><!--/.portfolio-item-->
-
+           
         </ul>
 
         <div class="clearfix"></div>
@@ -106,15 +104,14 @@
                 <a class="btn btn-transparent btn-sm" href="#">Thêm</a>
             </div>*@
 
-        <h4 class="pt30">Dự án đã kết thúc:</h4>
-        <ul ng-if="checkEmptyExpired==0">Không có dự án nào</ul>
+        <h4 class="pt30" ng-if="checkEmptyExpired>0">Dự án đã kết thúc:</h4>
         <ul class="portfolio-items col-4">
 
             <li class="portfolio-item apps" ng-repeat="project in ListCreatedProjectExpired">
 
                 <div class="item-inner">
                     <div class=" item-image hover01 column">
-                        <figure><img class="img-fit" src="\images\projects\{{project.ImageUrl}}" alt=""></figure>
+                        <figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure>
                     </div>
                     <div class="item-title">
                         <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
@@ -143,7 +140,7 @@
                         </div>
                         <ul class="list-inline">
                             <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">ủng hộ</p></li>
-                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber| currency:"&#8363;":0}}</p><p class="mt0 mb0">gây quỹ</p></li>
+                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber|  number : fractionSize}}&#8363;</p><p class="mt0 mb0">gây quỹ</p></li>
                             <li><p class="fnt-b mt0 mb0 c00" ng-if="project.CurrentFunded >= 100">Thành công</p><p class="fnt-b mt0 mb0 c00" ng-if="project.CurrentFunded < 100">Thất bại</p><p class="mt0 mb0">{{project.CreatedDate | date : format : shortDate}}</p></li>
 
                         </ul>
