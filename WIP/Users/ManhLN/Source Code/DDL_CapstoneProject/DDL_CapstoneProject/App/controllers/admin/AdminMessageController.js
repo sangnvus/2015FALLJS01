@@ -96,27 +96,33 @@ app.controller('AdminMessageController',
         }
 
         $scope.Delete = function () {
-            var promise = MessageService.DeleteMessages($scope.selection);
-            promise.then(
-                function (result) {
-                    if (result.data.Status === "success") {
-                        toastr.success('Đã xóa thành công!');
-                        if ($scope.Sent === true) {
-                            getListSentConversation();
+            if ($scope.selection.length > 0) {
+                var promise = MessageService.DeleteMessages($scope.selection);
+                promise.then(
+                    function (result) {
+                        if (result.data.Status === "success") {
+                            toastr.success('Đã xóa thành công!');
+                            if ($scope.Sent === true) {
+                                getListSentConversation();
+                            } else {
+                                getListReceivedConversation();
+                            }
+                            $scope.selection = [];
                         } else {
-                            getListReceivedConversation();
+                            var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                            if (a) {
+                                $scope.Error = result.data.Message;
+                                toastr.error($scope.Error, 'Lỗi!');
+                            }
                         }
-                        $scope.selection = [];
-                    } else {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        $scope.Error = result.data.Message;
+                    },
+                    function (error) {
+                        $scope.Error = error.data.Message;
                         toastr.error($scope.Error, 'Lỗi!');
-                    }
-                },
-                function (error) {
-                    $scope.Error = error.data.Message;
-                    toastr.error($scope.Error, 'Lỗi!');
-                });
+                    });
+            } else {
+                toastr.warning("Hãy chọn tối thiểu 1 tin nhắn");
+            }
         }
 
         $scope.getUserName = function (val) {

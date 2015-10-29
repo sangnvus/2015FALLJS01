@@ -99,7 +99,7 @@
                             <p style="word-break: break-word;">
                                 {{Packet.Description}}
                             </p>
-                            <p><span class="bold">Ủng hộ: </span><span class="bold"> {{BackData.PledgeAmount}}&#8363;</span><span ng-show="Packet.Type != 'no reward'">| Số lượng: {{BackData.Quantity}}</span></p>
+                            <p><span class="bold">Ủng hộ: </span><span class="bold"> {{BackData.PledgeAmount | currency:"":0}}&#8363;</span><span ng-show="Packet.Type != 'no reward'"> | Số lượng: {{BackData.Quantity  | currency:"":0}}</span></p>
                         </div>
                     </div>
                 </div>

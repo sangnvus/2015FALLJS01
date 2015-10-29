@@ -262,6 +262,7 @@ namespace DDL_CapstoneProject.Respository
                 // Update account status.
                 user.IsActive = true;
                 user.IsVerify = true;
+                db.DDL_Users.AddOrUpdate(user);
                 db.SaveChanges();
 
                 return true;
@@ -275,6 +276,7 @@ namespace DDL_CapstoneProject.Respository
                 try
                 {
                     db.DDL_Users.AddOrUpdate(user);
+                    db.UserInfos.AddOrUpdate(user.UserInfo);
                     db.SaveChanges();
                 }
                 catch (Exception)
@@ -466,6 +468,380 @@ namespace DDL_CapstoneProject.Respository
                                    }).FirstOrDefault();
 
                 return currentUser;
+            }
+        }
+
+        public AdminUserListDTO GetUserListForAdmin()
+        {
+            using (var db = new DDLDataContext())
+            {
+                var userList = db.DDL_Users.Where(x => x.UserType != "admin").ToList();
+                AdminUserListDTO listReturn = new AdminUserListDTO();
+                List<AdminUserDTO> listUser = new List<AdminUserDTO>();
+                foreach (var user in userList)
+                {
+                    var userReturn = new AdminUserDTO
+                    {
+                        Email = user.Email,
+                        FullName = user.UserInfo.FullName,
+                        LoginType = user.LoginType,
+                        PhoneNumber = user.UserInfo.PhoneNumber,
+                        Status = user.IsVerify,
+                        UserName = user.Username,
+                        CreatedDate = user.CreatedDate
+                    };
+                    userReturn.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(userReturn.CreatedDate.GetValueOrDefault());
+                    if (userReturn.LoginType == "normal")
+                    {
+                        userReturn.LoginType = "Bình thường";
+                    }
+                    else userReturn.LoginType = "Facebook";
+                    listUser.Add(userReturn);
+                }
+                listReturn.ListUser = listUser;
+                listReturn.TotalUser = listUser.Count();
+                listReturn.ActiveUser = listUser.Where(x => x.Status == true).Count();
+                listReturn.InActiveUser = listUser.Where(x => x.Status == false).Count();
+                listReturn.NewUser = listUser.Where(x => x.CreatedDate.GetValueOrDefault().ToString("dd-MM-yyyy") == DateTime.UtcNow.ToString("dd-MM-yyyy")).Count();
+                return listReturn;
+            }
+        }
+        public void ChangeUserStatus(string UserName)
+        {
+            using (var db = new DDLDataContext())
+            {
+                var userList = db.DDL_Users.Where(x => x.Username == UserName).FirstOrDefault();
+                if (userList.IsActive == true)
+                {
+                    userList.IsActive = false;
+                }
+                else userList.IsActive = true;
+                db.SaveChanges();
+            }
+        }
+
+        public AdminUserProfileDTO GetUserProfileForAdmin(string UserName)
+        {
+            using (var db = new DDLDataContext())
+            {
+                var userProfile = from user in db.DDL_Users
+                                  where user.Username == UserName
+                                  select new AdminUserProfileDTO
+                                  {
+                                      FullName = user.UserInfo.FullName,
+                                      Biography = user.UserInfo.Biography,
+                                      CreatedDate = user.CreatedDate,
+                                      FacebookUrl = user.UserInfo.FacebookUrl,
+                                      ProfileImage = user.UserInfo.ProfileImage,
+                                      UserName = user.Username,
+                                      DateOfBirth = user.UserInfo.DateOfBirth,
+                                      Addres = user.UserInfo.Address,
+                                      Email = user.Email,
+                                      Website = user.UserInfo.Website,
+                                      Gender = user.UserInfo.Gender,
+                                      ContactNumber = user.UserInfo.PhoneNumber,
+                                      LoginType = user.LoginType,
+                                      CountBackedProject = user.Backings.Count,
+                                      CountCreatedProject =
+                                      user.CreatedProjects.Count(x => x.Status != DDLConstants.ProjectStatus.DRAFT
+                                                               && x.Status != DDLConstants.ProjectStatus.REJECTED
+                                                               && x.Status != DDLConstants.ProjectStatus.PENDING),
+                                      IsActive = user.IsActive,
+                                  };
+                AdminUserProfileDTO userReturn = new AdminUserProfileDTO();
+                userReturn = userProfile.FirstOrDefault();
+                if (userReturn.LoginType == "normal")
+                {
+                    userReturn.LoginType = "Bình thường";
+                }
+                else userReturn.LoginType = "Facebook";
+
+                return userReturn;
+            }
+        }
+
+        public List<AdminUserBackedListDTO> GetUserBackedProjectForAdmin(string UserName)
+        {
+            using (var db = new DDLDataContext())
+            {
+                var userCurrent = db.DDL_Users.Where(x => x.Username == UserName).FirstOrDefault();
+                var listProjectBacked = userCurrent.Backings.ToList();
+                List<AdminUserBackedListDTO> listReturn = new List<AdminUserBackedListDTO>();
+                foreach (var backed in listProjectBacked)
+                {
+                    AdminUserBackedListDTO projectReturn = new AdminUserBackedListDTO();
+                    projectReturn.Status = backed.Project.Status;
+                    if (backed.Project.IsFunded == true)
+                    {
+                        projectReturn.Status = "Thành công";
+                    }
+                    else if (backed.Project.IsFunded == false && backed.Project.IsExprired == true)
+                    {
+                        projectReturn.Status = "Thất bại";
+                    }
+                    else if (backed.Project.IsFunded == false && backed.Project.IsExprired == false)
+                    {
+                        projectReturn.Status = "Đang chạy";
+                    }
+                    projectReturn.PledgedAmount = backed.BackingDetail.PledgedAmount;
+                    projectReturn.FundingGoals = backed.Project.FundingGoal;
+                    projectReturn.ProjectTitle = backed.Project.Title;
+                    projectReturn.ProjectCode = backed.Project.ProjectCode;
+                    if (!listReturn.Any(x => x.ProjectCode == projectReturn.ProjectCode))
+                    {
+                        listReturn.Add(projectReturn);
+                    }
+                    else
+                    {
+                        listReturn.Where(x => x.ProjectCode == projectReturn.ProjectCode).FirstOrDefault().PledgedAmount += projectReturn.PledgedAmount;
+                    }
+
+
+                }
+                return listReturn;
+            }
+        }
+
+        public List<AdminUserCreatedListDTO> GetUserCreatedProjectForAdmin(string UserName)
+        {
+            using (var db = new DDLDataContext())
+            {
+                var userCurrent = db.DDL_Users.Where(x => x.Username == UserName).FirstOrDefault();
+                var listProjectCreated = db.Projects.Where(x => x.CreatorID == userCurrent.DDL_UserID).ToList();
+                List<AdminUserCreatedListDTO> listReturn = new List<AdminUserCreatedListDTO>();
+                foreach (var created in listProjectCreated)
+                {
+                    AdminUserCreatedListDTO projectReturn = new AdminUserCreatedListDTO();
+                    projectReturn.FundingGoals = created.FundingGoal;
+                    projectReturn.Status = created.Status;
+                    projectReturn.ProjectTitle = created.Title;
+                    projectReturn.ProjectCode = created.ProjectCode;
+                    projectReturn.ExpireDate = created.ExpireDate;
+                    projectReturn.Category = created.Category.Name;
+                    if (created.IsFunded == true)
+                    {
+                        projectReturn.Isfunded = "Thành công";
+                    }
+                    else if (created.IsFunded == false && created.IsExprired == true)
+                    {
+                        projectReturn.Isfunded = "Thất bại";
+                    }
+                    else if (created.IsFunded == false && created.IsExprired == false)
+                    {
+                        projectReturn.Isfunded = "Đang chạy";
+                    }
+                    List<Backing> AllBacked = db.Backings.Where(x => x.Project.ProjectCode == created.ProjectCode).ToList();
+                    decimal PledgedOn = new decimal();
+                    foreach (Backing backing in AllBacked)
+                    {
+                        PledgedOn = PledgedOn + backing.BackingDetail.PledgedAmount;
+                    };
+                    projectReturn.PledgedOn = PledgedOn;
+                    listReturn.Add(projectReturn);
+                }
+                return listReturn;
+            }
+        }
+
+        public AdminUserBackingDetailDTO GetUseBackingDetailForAdmin(string UserName)
+        {
+            using (var db = new DDLDataContext())
+            {
+                var userCurrent1 = db.DDL_Users.Where(x => x.Username == UserName).FirstOrDefault();
+                var backingList = userCurrent1.Backings.ToList();
+                Backing backing = new Backing();
+                backing = backingList.FirstOrDefault();
+
+                if (backingList.Count() > 1)
+                {
+                    foreach (var back in backingList)
+                    {
+                        if (backing.BackingID != back.BackingID)
+                        {
+                            backing.BackingDetail.PledgedAmount += back.BackingDetail.PledgedAmount;
+                            backing.BackingDetail.Quantity += back.BackingDetail.Quantity;
+                        }
+                    }
+                }
+
+                var userCurrent = db.UserInfos.Where(x => x.DDL_User.Username == UserName).FirstOrDefault();
+                AdminUserBackingDetailDTO backingReturn = new AdminUserBackingDetailDTO();
+                backingReturn.Address = userCurrent.Address;
+                backingReturn.BackedDate = CommonUtils.ConvertDateTimeFromUtc(backing.BackedDate);
+                backingReturn.Description = backing.BackingDetail.Description;
+                backingReturn.Email = userCurrent.DDL_User.Email;
+                backingReturn.FullName = userCurrent.FullName;
+                backingReturn.PhoneNumber = userCurrent.PhoneNumber;
+                backingReturn.PledgedAmount = backing.BackingDetail.PledgedAmount;
+                backingReturn.Quantity = backing.BackingDetail.Quantity;
+                backingReturn.Reward = backing.BackingDetail.RewardPkg.PledgeAmount;
+                backingReturn.ProjectTitle = backing.Project.Title;
+                backingReturn.Total = backingReturn.PledgedAmount;
+                return backingReturn;
+            }
+        }
+
+        public AdminUserDashboardDTO GetUserDashboardForAdmin()
+        {
+            using (var db = new DDLDataContext())
+            {
+                var userList = db.DDL_Users.Where(x => x.UserType != "admin").ToList();
+                AdminUserDashboardDTO listReturn = new AdminUserDashboardDTO();
+                RecentUserDTO RecentUser = new RecentUserDTO();
+                List<RecentUserDTO> listRecentUser = new List<RecentUserDTO>();
+                foreach (var user in userList)
+                {
+                    var userReturn = new RecentUserDTO
+                    {
+                        AvartaURL = user.UserInfo.ProfileImage,
+                        UserName = user.Username,
+                        LastLogin = user.LastLogin,
+                        Status = user.IsActive,
+                        FullName = user.UserInfo.FullName
+                    };
+                    userReturn.LastLogin = CommonUtils.ConvertDateTimeFromUtc(userReturn.LastLogin.GetValueOrDefault());
+                    listRecentUser.Add(userReturn);
+                }
+
+                TopBackerDTO TopBacker = new TopBackerDTO();
+                List<TopBackerDTO> listTopbackerUser = new List<TopBackerDTO>();
+                foreach (var user in userList)
+                {
+                    if (user.Backings.Count() > 0)
+                    {
+                        var userReturn = new TopBackerDTO
+                        {
+                            AvartaURL = user.UserInfo.ProfileImage,
+                            UserName = user.Username,
+                            Status = user.IsActive,
+                            FullName = user.UserInfo.FullName,
+                        };
+                        var backingList = user.Backings.ToList();
+                        userReturn.TotalProject = backingList.GroupBy(x => x.ProjectID).Count();
+                        foreach (var backing in backingList)
+                        {
+                            userReturn.TotalPledgedAmount = userReturn.TotalPledgedAmount + backing.BackingDetail.PledgedAmount;
+                        }
+                        listTopbackerUser.Add(userReturn);
+                        listReturn.Backer = listTopbackerUser.Count();
+                    }
+                }
+
+                TopCreatorDTO TopCreator = new TopCreatorDTO();
+                List<TopCreatorDTO> listTopCreator = new List<TopCreatorDTO>();
+                foreach (var user in userList)
+                {
+                    if (user.CreatedProjects.Count() > 0 && user.CreatedProjects.Where(x => x.IsFunded == true).Count() > 0)
+                    {
+                        var userReturn = new TopCreatorDTO
+                        {
+                            AvartaURL = user.UserInfo.ProfileImage,
+                            UserName = user.Username,
+                            Status = user.IsActive,
+                            FullName = user.UserInfo.FullName,
+                            TotalSuccessProject = user.CreatedProjects.Where(x => x.IsFunded == true).Count(),
+                        };
+                        var createdProject = user.CreatedProjects.Where(x => x.IsFunded == true).ToList();
+                        foreach (var project in createdProject)
+                        {
+                            userReturn.TotalPledgedAmount = userReturn.TotalPledgedAmount + project.CurrentFunded;
+                        }
+                        listTopCreator.Add(userReturn);
+                        if (!listTopbackerUser.Any(x => x.UserName != userReturn.UserName))
+                        {
+                            listReturn.Creator = listReturn.Creator + 1;
+                        }
+                    }
+                }
+
+                NewUserDTO NewUser = new NewUserDTO();
+                List<NewUserDTO> listNewUser = new List<NewUserDTO>();
+                var NewuserList = userList.Where(x => x.CreatedDate.ToString("dd-MM-yyyy") == DateTime.UtcNow.ToString("dd-MM-yyyy")).ToList();
+                foreach (var user in NewuserList)
+                {
+                    var userReturn = new NewUserDTO
+                    {
+                        AvartaURL = user.UserInfo.ProfileImage,
+                        UserName = user.Username,
+                        Status = user.IsActive,
+                        FullName = user.UserInfo.FullName,
+                        CreatedDate = user.CreatedDate
+                    };
+
+                    listNewUser.Add(userReturn);
+                }
+
+
+                listTopCreator = listTopCreator.OrderByDescending(x => x.TotalPledgedAmount).Take(5).ToList();
+                listRecentUser = listRecentUser.OrderByDescending(x => x.LastLogin).Take(5).ToList(); ;
+                listTopbackerUser = listTopbackerUser.OrderByDescending(x => x.TotalPledgedAmount).Take(5).ToList();
+                listNewUser = listNewUser.OrderByDescending(x => x.CreatedDate).Take(5).ToList();
+
+
+                listReturn.RecentUser = listRecentUser;
+                listReturn.TopBacker = listTopbackerUser;
+                listReturn.TopCreator = listTopCreator;
+                listReturn.ListNewUser = listNewUser;
+
+                listReturn.TotalUser = userList.Count();
+                listReturn.VerifiedUser = userList.Where(x => x.IsVerify == true).Count();
+                listReturn.NotVerifiedUser = userList.Where(x => x.IsVerify == false).Count();
+                listReturn.NewUser = userList.Where(x => x.CreatedDate.ToString("dd-MM-yyyy") == DateTime.UtcNow.ToString("dd-MM-yyyy")).Count();
+                listReturn.IdleUser = listReturn.TotalUser - listReturn.Creator - listReturn.Backer - listReturn.NotVerifiedUser;
+
+                return listReturn;
+            }
+        }
+
+        public List<AdminBackingListDTO> GetBackingListForAdmin()
+        {
+            using (var db = new DDLDataContext())
+            {
+                var listBacking = db.Backings.ToList();
+                List<AdminBackingListDTO> listReturn = new List<AdminBackingListDTO>();
+
+                foreach (var backing in listBacking)
+                {
+                    AdminBackingListDTO backingReturn = new AdminBackingListDTO();
+                    backingReturn.ProjectTitle = backing.Project.Title;
+                    backingReturn.PhoneNumber = backing.User.UserInfo.PhoneNumber;
+                    backingReturn.PledgeAmount = backing.BackingDetail.PledgedAmount;
+                    backingReturn.BackerName = backing.User.UserInfo.FullName;
+                    backingReturn.Address = backing.User.UserInfo.Address;
+                    backingReturn.BackedDate = CommonUtils.ConvertDateTimeFromUtc(backing.BackedDate);
+                    backingReturn.Content = backing.BackingDetail.Description;
+                    backingReturn.Email = backing.User.Email;
+                    backingReturn.RewardContent = backing.BackingDetail.RewardPkg.Description;
+                    backingReturn.RewardPledgeAmount = backing.BackingDetail.RewardPkg.PledgeAmount;
+                    backingReturn.UserName = backing.User.Username;
+                    backingReturn.BackingID = backing.BackingID;
+                    listReturn.Add(backingReturn);
+                }
+                return listReturn;
+            }
+        }
+
+        public AdminBackingListDTO GetBackerForAdmin(string userName, int backingID)
+        {
+            using (var db = new DDLDataContext())
+            {
+                var backing = db.Backings.Where(x => x.BackingID == backingID).FirstOrDefault();
+                AdminBackingListDTO backingReturn = new AdminBackingListDTO();
+
+                backingReturn.ProjectTitle = backing.Project.Title;
+                backingReturn.PhoneNumber = backing.User.UserInfo.PhoneNumber;
+                backingReturn.PledgeAmount = backing.BackingDetail.PledgedAmount;
+                backingReturn.BackerName = backing.User.UserInfo.FullName;
+                backingReturn.Address = backing.User.UserInfo.Address;
+                backingReturn.BackedDate = CommonUtils.ConvertDateTimeFromUtc(backing.BackedDate);
+                backingReturn.Content = backing.BackingDetail.Description;
+                backingReturn.Email = backing.User.Email;
+                backingReturn.RewardContent = backing.BackingDetail.RewardPkg.Description;
+                backingReturn.RewardPledgeAmount = backing.BackingDetail.RewardPkg.PledgeAmount;
+                backingReturn.ImageURL = backing.User.UserInfo.ProfileImage;
+                backingReturn.Biography = backing.User.UserInfo.Biography;
+
+                return backingReturn;
             }
         }
 

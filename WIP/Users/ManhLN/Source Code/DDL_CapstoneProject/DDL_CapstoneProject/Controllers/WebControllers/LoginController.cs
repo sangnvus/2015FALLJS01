@@ -78,7 +78,7 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
                     }
                     else
                     {
-                        return Redirect("/#/" + returnUrl);
+                        return Redirect("/#" + returnUrl);
                     }
                 }
 
@@ -284,7 +284,7 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
             }
             catch (Exception)
             {
-                return Redirect("/#/error");
+                return Redirect("/admin/#/error");
             }
             
         }
@@ -329,7 +329,7 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
                     }
                     else
                     {
-                        return Redirect("/Admin/#/" + returnUrl);
+                        return Redirect("/admin/#" + returnUrl);
                     }
                 }
 
@@ -338,7 +338,7 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
             }
             catch (Exception)
             {
-                return Redirect("/#/error");
+                return Redirect("/admin/#/error");
             }
         }
 
@@ -366,7 +366,7 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
             }
             catch (Exception)
             {
-                return Redirect("/#/error");
+                return Redirect("/admin/#/error");
             }       
         }
 

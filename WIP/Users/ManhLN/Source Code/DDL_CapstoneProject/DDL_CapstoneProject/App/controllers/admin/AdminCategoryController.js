@@ -32,7 +32,7 @@ app.controller('AdminCategoryController',
                         if ($scope.ListCategory[index].IsActive) {
                             toastr.success("Đã mở khóa");
                         } else {
-                            toastr.success("Đã khóa lại");
+                            toastr.success("Đã khóa");
                         }
                     } else {
                         CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
