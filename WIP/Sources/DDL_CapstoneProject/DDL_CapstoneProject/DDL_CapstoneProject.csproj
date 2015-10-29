@@ -1244,7 +1244,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Libraries\jquery.timelinr-0.9.54.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\morris-chart\chartangular.js" />
+    <Content Include="App\directives\chartangular.js" />
     <Content Include="Scripts\morris-chart\morris.js" />
     <Content Include="Scripts\morris-chart\morris.min.js" />
     <Content Include="Scripts\morris-chart\raphael-min.js" />

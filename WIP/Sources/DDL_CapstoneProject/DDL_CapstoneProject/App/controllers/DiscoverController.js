@@ -7,4 +7,5 @@ app.controller('DiscoverController', function ($scope, projectstatisticlist, cat
     $scope.mostfundproject = projectstatisticlist.data.Data[2];
     $scope.enddateproject = projectstatisticlist.data.Data[3];
     $scope.categoryprojectcount = categoryprojectcount.data.Data;
+    $scope.categoryCount = $scope.categoryprojectcount.length;
 });

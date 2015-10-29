@@ -3,7 +3,8 @@ var service = angular.module("DDLService", []);
 var directive = angular.module("DDLDirective", []);
 var app = angular.module("ClientApp", ["ngRoute", "ngAnimate", "ngSanitize", "DDLService",
     "DDLDirective", 'angular-loading-bar', 'textAngular', 'toastr', 'ui.bootstrap', 'monospaced.elastic',
-    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert', 'angular.morris-chart', 'blockUI', 'chart.js','ui.select']);
+    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert', 'angular.morris-chart',
+    'ChartAngular','blockUI', 'chart.js', 'ui.select']);
 
 // Show Routing.
 app.config(["$routeProvider", function ($routeProvider) {
@@ -101,6 +102,10 @@ app.config(["$routeProvider", function ($routeProvider) {
                 }],
                 searchkey: ['$route', function ($route) {
                     return $route.current.params.searchkey;
+                }],
+                projectResultListSize: ['ProjectService', '$route', function (ProjectService, $route) {
+                    var size = ProjectService.SearchCount("|" + $route.current.params.categoryid + "|", $route.current.params.searchkey);
+                    return size;
                 }],
 
             }
