@@ -99,18 +99,12 @@
                     <td style="width: 15%" class="txt-r">{{project.CurrentFunded |  number : fractionSize}}&#8363;</td>
                     <td style="width: 15%" class="txt-r">{{project.BackedDate | date: "dd/MM/yyyy"}}</td>
                     <td style="width: 20%" class="txt-l">
-                        @*DRAFT = "1";
-            PENDING = "2";
-            REJECTED = "3";
-            APPROVED = "4";
-            SUSPENDED = "5";
-            EXPIRED = "6";*@
-                        <label ng-if="project.Status=='2'" class="label label-primary">Đang chờ kiểm duyệt</label>
-                        <label ng-if="project.Status=='1'" class="label label-primary">Nháp</label>
-                        <label ng-if="project.Status=='3'" class="label label-danger">Không phê duyệt</label>
-                        <label ng-if="project.Status=='4'" class="label label-success">Đang chạy</label>
-                        <label ng-if="project.Status=='5'" class="label label-danger">Đình chỉ</label>
-                        <label ng-if="project.Status=='6'" class="label label-danger">Hết hạn</label>
+                        <label ng-if="project.Status=='pending'" class="label label-primary">Đang chờ kiểm duyệt</label>
+                        <label ng-if="project.Status=='draft'" class="label label-primary">Nháp</label>
+                        <label ng-if="project.Status=='rejected'" class="label label-danger">Không phê duyệt</label>
+                        <label ng-if="project.Status=='approved'" class="label label-success">Đang chạy</label>
+                        <label ng-if="project.Status=='suspended'" class="label label-danger">Đình chỉ</label>
+                        <label ng-if="project.Status=='expired'" class="label label-danger">Hết hạn</label>
                     </td>
                     <td style="width: 10%" class="txt-c">
                         <div class="btn-group">
