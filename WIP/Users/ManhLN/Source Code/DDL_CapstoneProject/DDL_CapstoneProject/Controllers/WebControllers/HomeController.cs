@@ -40,5 +40,12 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
 
             return PartialView("_Discover");
         }
+
+        [Route("Error")]
+        public ActionResult Error()
+        {
+
+            return View("~/Views/Shared/Error.cshtml");
+        }
     }
 }

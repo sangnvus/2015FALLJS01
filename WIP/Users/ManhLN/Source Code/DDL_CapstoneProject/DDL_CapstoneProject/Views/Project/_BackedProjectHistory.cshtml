@@ -63,12 +63,12 @@
                                 <div class="col-md-6">
                                     <h3 class="fnt25">Dự án: <i style="font-style: normal" id="project_title_target"></i></h3>
                                     <br>
-                                    <p class="fnt18" for="name"><span>Ủng hộ gói: </span><span class="fnt-b">{{BackingInfo.RewadDiscription}}</span> với số tiền:<span class="fnt-b"> {{BackingInfo.PledgeAmount}} VNĐ</span> và <span class="fnt-b">số lượng: {{BackingInfo.Quantity}}</span></p>
+                                    <p class="fnt18" for="name"><span>Ủng hộ gói: </span><span class="fnt-b">{{BackingInfo[0].RewadDiscription}}</span> với số tiền:<span class="fnt-b"> {{BackingInfo[0].PledgeAmount | currency:"&#8363;":0}} </span> và <span class="fnt-b">số lượng: {{BackingInfo[0].Quantity}}</span></p>
                                     <!-- <p class="fnt18" for="name"><span class="fnt-b">Số lượng:</span> 1</p> -->
-                                    <p class="fnt18" for="name"><span class="fnt-b">Tổng số tiền:</span> {{BackingInfo.TotalAmount}} VNĐ</p>
-                                    <p class="fnt18" for="name"><span class="fnt-b">Ngày gửi:</span>{{BackingInfo.BackedDate | date: "dd-MM-yyyy"}}</p>
+                                    <p class="fnt18" for="name"><span class="fnt-b">Tổng số tiền:</span> {{BackingInfo[0].TotalAmount}}</p>
+                                    <p class="fnt18" for="name"><span class="fnt-b">Ngày gửi:</span>{{BackingInfo[0].BackedDate | date: "dd-MM-yyyy"}}</p>
                                     <p class="mb0 pb0"><span class="fnt-b">Nội dung:</span></p>
-                                    <p class="mt0 pt0">{{BackingInfo.BackingDiscription}}</p>
+                                    <p class="mt0 pt0">{{BackingInfo[0].BackingDiscription}}</p>
                                 </div>
                             </div>
                         </div>

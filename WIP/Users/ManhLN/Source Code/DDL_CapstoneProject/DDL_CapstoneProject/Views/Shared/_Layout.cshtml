@@ -1,12 +1,12 @@
 ﻿<!DOCTYPE html>
 
-<html>
+<html ng-app="ClientApp">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Home</title>
+    <title ng-bind="Page.title"></title>
 
     <!-- Load css -->
     @Styles.Render("~/Content/css")
@@ -54,7 +54,7 @@
         }
     </style>
 </head>
-<body ng-app="ClientApp">
+<body>
     <input type="hidden" value="@ViewBag.BaseUrl" id="BaseUrl" />
 
     <!-- Header-->
@@ -71,8 +71,8 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navbar-collapse-5">
                 <ul class="nav navbar-nav">
-                    <li><a href="@Url.Content("/#/discover/")">Discover</a></li>
-                    <li><a href="@Url.Content("/#/project/create/")">Tạo</a></li>
+                    <li><a href="@Url.Content("/#/discover/")">Danh mục</a></li>
+                    <li><a href="@Url.Content("/#/project/create/")">Tạo mới</a></li>
                     <li role="separator" class="hidden-xs divider-vertical"></li>
                 </ul>
 
@@ -137,7 +137,7 @@
             </div><!-- /.navbar-collapse -->
         </nav>
     </div>
-    <div style="min-height: 577px; margin-bottom: 50px">
+    <div style="min-height: 577px;">
         @RenderBody()
         @RenderSection("SPAViews", required: false)
     </div>

@@ -55,7 +55,7 @@
                         &nbsp;&nbsp;
                         <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{Project.CategoryName}}</a>
                         &nbsp;&nbsp;
-                        <a class="btn btn-info btn-sm" href=""><i class="fa fa-facebook-square"></i> Share this project</a>
+                        <a class="btn btn-info btn-sm" href=""><i class="fa fa-facebook-square"></i> Chia sẻ</a>
                     </div>
                 </div>
                 <div class="col-md-4 border-top">
@@ -96,10 +96,10 @@
         <div class="tab-center">
             <ul class="nav nav-pills">
                 <li class="active"><a showtab href="#campaign" data-toggle="tab">Thông tin</a></li>
-                <li><a showtab href="#update" data-toggle="tab" ng-click="getUpdateLogList()">Cập nhật <span class="badge">{{Project.NumberUpdate}}</span></a></li>
+                <li ng-show="Project.NumberUpdate > 0"><a showtab href="#update" data-toggle="tab" ng-click="getUpdateLogList()">Cập nhật <span class="badge">{{Project.NumberUpdate}}</span></a></li>
                 <li><a showtab href="#comments" data-toggle="tab" ng-click="getCommentList()">Bình luận <span class="badge">{{Project.NumberComment}}</span></a></li>
                 <li><a showtab href="#schedule" data-toggle="tab">Tiến trình</a></li>
-                <li><a showtab href="#list-backers" data-toggle="tab" ng-click="loadlistBacker()">Ủng hộ <span class="badge">{{Project.NumberBacked}}</span></a></li>
+                <li ng-show="Project.NumberBacked > 0"><a showtab href="#list-backers" data-toggle="tab" ng-click="loadlistBacker()">Ủng hộ <span class="badge">{{Project.NumberBacked}}</span></a></li>
             </ul>
         </div>
     </div>
@@ -158,9 +158,9 @@
                                     @if (User.Identity != null && !string.IsNullOrEmpty(User.Identity.Name))
                                     {
                                         <p>
-                                            <a class="btn btn-info" data-toggle="modal" data-target="#sendQuestion">Gửi câu hỏi</a>
-                                        <p><a class="btn btn-default" data-toggle="modal" data-target="#reportModal">Báo cáo sai phạm</a></p>
+                                            <a class="btn btn-primary" data-toggle="modal" data-target="#sendQuestion">Gửi câu hỏi</a>
                                         </p>
+                                        <p><a class="btn btn-default" data-toggle="modal" data-target="#reportModal">Báo cáo sai phạm</a></p>
                                     <!-- Ask question -->
                                         <div class="modal fade" id="sendQuestion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
                                             <div class="modal-dialog" role="document">
@@ -177,7 +177,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                                                        <button type="button" class="btn btn-info" ng-click="sendQuestion()">Gửi câu hỏi</button>
+                                                        <button type="button" class="btn btn-primary" ng-click="sendQuestion()">Gửi câu hỏi</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -314,7 +314,7 @@
                                             <!--Comment header-->
                                             <div class="media-heading">
                                                 <strong>
-                                                    <a ng-class="{'by-author':Comment.UserName == Project.Creator.UserName}" href="/#/user/publicprofile/{{Comment.FullName}}">{{Comment.FullName}}</a>
+                                                    <a ng-class="{'by-author':Comment.UserName == Project.Creator.UserName}" href="/#/user/publicprofile/{{Comment.UserName}}">{{Comment.FullName}}</a>
                                                     <span ng-if="Comment.UserName == Project.Creator.UserName" class="label label-primary">chủ</span>
                                                 </strong>
                                                 <small>&nbsp;- lúc {{Comment.CreatedDate | date:"HH:mm 'ngày' dd/MM/yyyy"}}</small>

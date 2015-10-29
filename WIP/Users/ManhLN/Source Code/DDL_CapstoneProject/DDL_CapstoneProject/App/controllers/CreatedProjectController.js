@@ -16,14 +16,15 @@ app.controller('CreatedProjectController', function ($scope, projects, $filter, 
         
 
     $scope.checkEmptyDraft = $scope.ListCreatedProjectDraft.length;
-    $scope.deleteReminded = function (index) {
-        var promiseDeleteReminded = ProjectService.deleteReminded($scope.ListCreatedProject[index].ProjectID);
 
-        promiseDeleteReminded.then(
+    $scope.deleteDraft = function (index) {
+        var promiseDeleteDraft = ProjectService.deleteDraft($scope.ListCreatedProjectDraft[index].ProjectID);
+       
+        promiseDeleteDraft.then(
             function (result) {
 
                 if (result.data.Status === "success") {
-                    $scope.ListCreatedProject.splice(index, 1);
+                    $scope.ListCreatedProjectDraft.splice(index, 1);
                     toastr.success('Xóa thành công!', 'Thành công!');
                 } else {
                     $scope.Error = result.data.Message;

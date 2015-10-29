@@ -17,7 +17,7 @@
                 </div>
                 <div class="row pl10 pr10 pt20">
                     <div class="readability">
-                        <h5 class="fnt22 fnt-b">Description lists</h5>
+                        <h5 class="fnt22 fnt-b">Mô tả thêm:</h5>
                         <p style="word-break: break-word; white-space: pre-wrap;">{{UserBasicInfo.Biography}}</p>
                     </div>
                 </div>
@@ -73,8 +73,9 @@
                             <div text-angular name="Content" ng-model="NewMessage.Content"></div>
                         </div>
                     </div>
-                    <div class="modal-footer pt5 pb5"><button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                        <button type="button" class="btn btn-info btn-sm btn-wide btn18" ng-click="sendMessage()"
+                    <div class="modal-footer pt5 pb5">
+                        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Hủy</button>
+                        <button type="button" class="btn btn-btn-primary btn-sm btn-wide btn18" ng-click="sendMessage()"
                                 ng-disabled="!NewMessageForm.$dirty || (NewMessageForm.$dirty && NewMessageForm.$invalid)">
                             Gửi
                         </button>

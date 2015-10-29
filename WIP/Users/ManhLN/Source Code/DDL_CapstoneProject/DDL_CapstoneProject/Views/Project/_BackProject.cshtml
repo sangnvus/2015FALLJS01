@@ -20,15 +20,21 @@
                                     </span>
                                     <div class="row pb20">
                                         <div class="col-md-8">
-                                            <div class="fnt18"><span class="fnt-b">{{reward.PledgeAmount}}</span></div>
-                                            <p>Đã ủng hộ: {{reward.CurrentQuantity}} <span>| {{reward.Quantity}}</span></p>
+                                            <div class="fnt18"><span class="fnt-b">{{reward.PledgeAmount}} hoặc hơn</span></div>
+                                            <p>
+                                                Kiểu:
+                                                <span ng-if="reward.Type == 'no reward'">Không phần thưởng</span>
+                                                <span ng-if="reward.Type == 'limited'">Giới hạn</span>
+                                                <span ng-if="reward.Type == 'unlimited'">Không giới hạn</span>
+                                            </p>
+                                            <p>Đã ủng hộ: {{reward.CurrentQuantity}} <span ng-if="reward.Type == 'limited'">| {{reward.Quantity}}</span></p>
                                             <p style="word-break: break-word;">{{reward.Description}}</p>
-                                            <p ng-if="reward.Quantity<= reward.CurrentQuantity && reward.Type == 'limited'">
+                                            <p ng-if="reward.Quantity <= reward.CurrentQuantity && reward.Type == 'limited'">
                                                 <span class="label label-danger">Gói đã hết. Xin chọn gói khác!</span>
                                             </p>
                                         </div>
-                                        <div class="col-md-4" ng-show="reward.EstimatedDelivery != null">
-                                            <p class="fnt-b mt0 pt0">Thời gian giao hàng ước tính</p>
+                                        <div class="col-md-4" ng-if="reward.Type != 'no reward'">
+                                            <p class="fnt-b mt0 pt0">Thời gian giao hàng</p>
                                             <p class="mt0 pt0">{{reward.EstimatedDelivery | date:"MM/yyyy"}}</p>
                                         </div>
                                     </div>
@@ -39,20 +45,23 @@
                                                 <p class="fnt18 fnt-b pt0 pp0">Ủng hộ:</p>
                                                 <div class="form-group pb10">
                                                     <div class="input-group pl10">
-                                                        <input type="number" class="form-control" ng-model="BackData.PledgeAmount" placeholder="Nhập số tiền" ng-trim="true" required name="PledgeAmount{{$index}}"
-                                                               min="{{reward.PledgeAmount*BackData.Quantity}}" />
+                                                        <input type="text" format="number" class="form-control" ng-model="BackData.PledgeAmount"
+                                                               placeholder="Nhập số tiền"
+                                                               ng-trim="true"
+                                                               required
+                                                               name="PledgeAmount{{$index}}" />
                                                         <span class="input-group-addon">&#8363;</span>
-                                                        <div ng-show="rewardFrom.PledgeAmount{{$index}}.$dirty && rewardFrom.PledgeAmount{{$index}}.$invalid" class="text-danger">
-                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                            <span ng-show="rewardFrom.PledgeAmount{{$index}}.$error.required">Bạn chưa nhập số tiền</span>
-                                                            <span ng-show="rewardFrom.PledgeAmount{{$index}}.$error.min">Số tiền phải là chữ số và lớn hơn {{reward.PledgeAmount*BackData.Quantity}}</span>
-                                                        </div>
+                                                        @*<div ng-show="rewardFrom.PledgeAmount{{$index}}.$dirty && rewardFrom.PledgeAmount{{$index}}.$invalid" class="text-danger">
+                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                <span ng-show="rewardFrom.PledgeAmount{{$index}}.$error.required">Bạn chưa nhập số tiền</span>
+                                                                <span ng-show="rewardFrom.PledgeAmount{{$index}}.$error.min">Số tiền phải là chữ số và lớn hơn {{reward.PledgeAmount*BackData.Quantity}}</span>
+                                                            </div>*@
                                                     </div>
                                                 </div>
-                                                <div class="form-group pb10 pl10" ng-show="reward.Type != 'no reward'">
+                                                <div class="form-group pb10 pl10" ng-if="reward.Type != 'no reward'">
                                                     <div class="input-group" ng-if="reward.Type != 'limited'">
                                                         <input type="number" class="form-control" ng-model="BackData.Quantity" placeholder="Nhập số lượng" name="Quantity{{$index}}" value="1" min="1" required />
-                                                        <span class="input-group-addon">SP</span>
+                                                        <span class="input-group-addon">SL</span>
                                                         <div ng-show="rewardFrom.Quantity{{$index}}.$dirty && rewardFrom.Quantity{{$index}}.$invalid" class="text-danger">
                                                             <span class="glyphicon glyphicon-remove text-danger"></span>
                                                             <span ng-show="rewardFrom.Quantity{{$index}}.$error.required">Bạn chưa nhập số lượng</span>
@@ -64,6 +73,7 @@
                                                                placeholder="Nhập số lượng"
                                                                name="Quantity{{$index}}"
                                                                value="1" ng-min="1"
+                                                               ng-model-options="{ updateOn: 'change blur'}"
                                                                ng-max="{{reward.Quantity - reward.CurrentQuantity}}" required />
                                                         <span class="input-group-addon">SP</span>
                                                         <div ng-show="rewardFrom.Quantity{{$index}}.$dirty && rewardFrom.Quantity{{$index}}.$invalid" class="text-danger">
@@ -88,10 +98,10 @@
                 </div>
                 <div class="col-md-4 pull-right pt30">
                     <div class="fnt16 border-tips">
-                        <p class="bold">DoI is not a store.</p>
-                        <p>It's a way to bring creative projects to life.</p>
-                        <p>DoI does not guarantee projects or investigate a creator's ability to complete their project. It is the responsibility of the project creator to complete their project as promised, and the claims of this project are theirs alone.</p>
-                        <p><a href="">Learn more about accountability</a></p>
+                        <p class="bold">DDL không phải là một của hàng.</p>
+                        <p>DDL là nơi giúp mang những ý tưởng mới đến với thực tế.</p>
+                        <p>Tuy nhiên chúng tôi không đảm bảo các dự án sẽ thành công 100%. Trách nhiệm hoàn thành dự án đùng các thời gian cam kết thuộc về người chủ dự án.</p>
+                        <p><a href="">Tìm hiều thêm</a></p>
                     </div>
                 </div>
             </div>

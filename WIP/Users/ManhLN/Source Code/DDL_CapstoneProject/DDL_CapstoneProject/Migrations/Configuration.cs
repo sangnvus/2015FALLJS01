@@ -50,7 +50,7 @@ namespace DDL_CapstoneProject.Migrations
                         DateOfBirth = DateTime.SpecifyKind(new DateTime(1993, 12, 17,12,0,0),DateTimeKind.Utc),
                         FullName = "Lưu Ngọc Mạnh",
                         Gender = DDLConstants.Gender.MALE,
-                        ProfileImage = "avatar_manhmaluc.jpg",
+                        ProfileImage = "avatar_default.jpg",
                         Biography = "jdsbhjdsjhdvshjsvd\njkdsbdbkdsbdjkbkj\ndsbkjdsbkjbd",
                         FacebookUrl = "http://facebook.com/gatohy",
                         Website = "",
@@ -75,11 +75,12 @@ namespace DDL_CapstoneProject.Migrations
                         DateOfBirth = DateTime.SpecifyKind(new DateTime(1993, 12, 17,12,0,0),DateTimeKind.Utc),
                         FullName = "Administrator",
                         Gender = DDLConstants.Gender.MALE,
-                        ProfileImage = "avatar_admin001.jpg",
+                        ProfileImage = "avatar_default.jpg",
                         Biography = "jdsbhjdsjhdvshjsvd\njkdsbdbkdsbdjkbkj\ndsbkjdsbkjbd",
-                        FacebookUrl = "http://facebook.com/gatohy",
+                        FacebookUrl = "",
                         Website = "",
                         //DDL_UserID = context.DDL_Users.Single(x => x.Username == "manhmaluc").DDL_UserID,
+                        PhoneNumber = "0973838383"
                     }
                 },
                 new DDL_User
@@ -101,9 +102,10 @@ namespace DDL_CapstoneProject.Migrations
                         Gender = DDLConstants.Gender.MALE,
                         ProfileImage = "avatar_test0001.jpg",
                         Biography = "jdsbhjdsjhdvshjsvd\njkdsbdbkdsbdjkbkj\ndsbkjdsbkjbd",
-                        FacebookUrl = "http://facebook.com/gatohy",
+                        FacebookUrl = "",
                         Website = "",
                         //DDL_UserID = context.DDL_Users.Single(x => x.Username == "manhmaluc").DDL_UserID,
+                        PhoneNumber = "0973838383"
                     }
                 }
             };
@@ -156,11 +158,11 @@ namespace DDL_CapstoneProject.Migrations
                     Description = "is murder catalyzed the civil rights movement. Help make the film that will tell his story.",
                     IsActive = true,
                     CreatedDate = DateTime.UtcNow,
-                    ImageUrl = "slider1.jpg",
+                    ImageUrl = "slide_1.jpg",
                     ButtonText = "View Project",
                     ButtonColor = "btn-success",
                     Order = 1,
-                    SlideUrl = "#",
+                    SlideUrl = "http://dandeliondemo.azurewebsites.net/#/project/detail/PRJ000001",
                     TextColor = "dark"
                 },
                 new Slide
@@ -169,11 +171,11 @@ namespace DDL_CapstoneProject.Migrations
                     Description = "Collaborate to build civilization in a simulated ecosystem, creating laws to make group decisions.",
                     IsActive = true,
                     CreatedDate = DateTime.UtcNow,
-                    ImageUrl = "slider3.jpg",
+                    ImageUrl = "slide_2.jpg",
                     ButtonText = "View Project",
                     ButtonColor = "btn-primary",
                     Order = 2,
-                    SlideUrl = "#",
+                    SlideUrl = "http://dandeliondemo.azurewebsites.net/#/project/detail/PRJ000002",
                     TextColor = "light"
                 },
                 new Slide
@@ -182,11 +184,11 @@ namespace DDL_CapstoneProject.Migrations
                     Description = "Support a team of architects who are working to reduce carbon emissions by making art in the sky.",
                     IsActive = true,
                     CreatedDate = DateTime.UtcNow,
-                    ImageUrl = "slider2.jpg",
+                    ImageUrl = "slide_3.jpg",
                     ButtonText = "Download",
                     ButtonColor = "btn-success",
                     Order = 3,
-                    SlideUrl = "#",
+                    SlideUrl = "http://dabdeliondemo.azurewebsites.net/#/project/detail/PRJ000001",
                     TextColor = "light"
                 },
             };
@@ -201,10 +203,10 @@ namespace DDL_CapstoneProject.Migrations
                 CreatorID = 1,
                 CreatedDate = DateTime.UtcNow.Date,
                 ExpireDate = DateTime.UtcNow.Date.AddDays(30).AddHours(23).AddMinutes(59),
-                CurrentFunded = 1000000,
+                CurrentFunded = 0,
                 FundingGoal = 100000000,
                 VideoUrl = "http://www.youtube.com/embed/jLHGnvnw-gI",
-                ImageUrl = "projectimage1.jpg",
+                ImageUrl = "img_PRJ000001.jpg",
                 SubDescription = "An epic RPG with turn-based combat, cooperative/competitive multiplayer; sequel to Divinity: Original Sin, GameSpot's PC Game of 2014.",
                 IsExprired = false,
                 Location = "Viet Nam",
@@ -236,17 +238,18 @@ namespace DDL_CapstoneProject.Migrations
                 CreatorID = 1,
                 CreatedDate = DateTime.UtcNow.Date,
                 ExpireDate = DateTime.UtcNow.Date.AddDays(30).AddHours(23).AddMinutes(59),
-                CurrentFunded = 1000000,
+                CurrentFunded = 0,
                 FundingGoal = 100000000,
                 VideoUrl = "http://www.youtube.com/embed/jLHGnvnw-gI",
-                ImageUrl = "projectimage1.jpg",
+                ImageUrl = "img_PRJ000002.jpg",
                 SubDescription = "An epic RPG with turn-based combat, cooperative/competitive multiplayer; sequel to Divinity: Original Sin, GameSpot's PC Game of 2014.",
                 IsExprired = false,
+                IsFunded = false,
                 Location = "Viet Nam",
                 PopularPoint = 0,
                 ProjectCode = "PRJ000002",
                 Title = "Divinity: Original Sin 3 jvsjgfgjfsj",
-                Status = DDLConstants.ProjectStatus.APPROVED,
+                Status = DDLConstants.ProjectStatus.DRAFT,
                 Description = @"The American Genre Film Archive (AGFA) is located in Austin, Texas. AGFA exists to preserve the legacy of genre movies through collection, conservation, and distribution.",
                 Risk = "We're already funding the game ourselves and are coming to Kickstarter with the aim of expanding the game's feature-set and seeking funds to integrate community input. The biggest risks are that we'll be late (a real possibility), or that certain features that we are planning on now might be changed (or even cut) as we move ahead with development.<br/><br/>"
                         + "If that happens, it'll be because we hit a real roadblock or because some other feature ended up taking significantly more time and resources than we expected. Those kinds of things happen, but they shouldn't affect our ability to finish and release an innovative game that'll be a whole world of fun.",
@@ -303,7 +306,7 @@ namespace DDL_CapstoneProject.Migrations
                 new UpdateLog
                 {
                     Title = "Chỉnh sửa nội dung số 2!",
-                    CreatedDate = DateTime.UtcNow.AddDays(10),
+                    CreatedDate = DateTime.UtcNow,
                     Description = "Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. " +
                                   "Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, " +
                                   "in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. " +
@@ -319,7 +322,7 @@ namespace DDL_CapstoneProject.Migrations
                 new UpdateLog
                 {
                     Title = "Chỉnh sửa nội dung số 3!",
-                    CreatedDate = DateTime.UtcNow.AddDays(15),
+                    CreatedDate = DateTime.UtcNow,
                     Description = "Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. " +
                                   "Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, " +
                                   "in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. " +
