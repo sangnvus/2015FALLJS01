@@ -262,6 +262,7 @@ namespace DDL_CapstoneProject.Respository
                 // Update account status.
                 user.IsActive = true;
                 user.IsVerify = true;
+                db.DDL_Users.AddOrUpdate(user);
                 db.SaveChanges();
 
                 return true;
