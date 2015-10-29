@@ -276,6 +276,7 @@ namespace DDL_CapstoneProject.Respository
                 try
                 {
                     db.DDL_Users.AddOrUpdate(user);
+                    db.UserInfos.AddOrUpdate(user.UserInfo);
                     db.SaveChanges();
                 }
                 catch (Exception)
