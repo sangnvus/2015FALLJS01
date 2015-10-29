@@ -246,8 +246,9 @@ app.config(["$routeProvider", function ($routeProvider) {
             templateUrl: "ClientPartial/PublicProfile",
             controller: 'PublicProfileController',
             resolve: {
-                userpublicinfo: ['$route', 'UserService', function ($route, UserService) {
-                    return UserService.getPublicInformation($route.current.params.username);
+                userpublicinfo: ['$rootScope', '$route', 'UserService', '$q', 'CommmonService', function ($rootScope, $route, UserService, $q, CommmonService) {
+                    var promise = UserService.getPublicInformation($route.current.params.username);
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }]
             }
         });

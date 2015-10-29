@@ -170,6 +170,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\DDL_User.cs" />
+    <Compile Include="Models\DTOs\AdminBackingListDTO.cs" />
     <Compile Include="Models\DTOs\AdminUserBackedListDTO.cs" />
     <Compile Include="Models\DTOs\AdminUserBackingDetailDTO.cs" />
     <Compile Include="Models\DTOs\AdminUserCreatedListDTO.cs" />
@@ -255,6 +256,7 @@
     <Content Include="App\controllers\admin\AdminUserDashboardController.js" />
     <Content Include="App\controllers\admin\AdminUserListController.js" />
     <Content Include="App\controllers\admin\AdminUserProfileController.js" />
+    <Content Include="App\controllers\admin\AdminBackingListController.js" />
     <Content Include="App\controllers\BackedHistoryProjectController.js" />
     <Content Include="App\controllers\EditPasswordController.js" />
     <Content Include="App\controllers\BackProjectController.js" />
@@ -1315,6 +1317,7 @@
     <Content Include="Views\Shared\_NotFound.cshtml" />
     <Content Include="Views\AdminPartial\Error\_Error.cshtml" />
     <Content Include="Views\AdminPartial\Error\_NotFound.cshtml" />
+    <Content Include="Views\AdminPartial\_BackingList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />

@@ -488,7 +488,7 @@ namespace DDL_CapstoneProject.Respository
                         UserName = user.Username,
                         CreatedDate = user.CreatedDate
                     };
-                    userReturn.CreatedDate = CommonUtils.ConvertDateTimeToUtc(userReturn.CreatedDate.GetValueOrDefault());
+                    userReturn.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(userReturn.CreatedDate.GetValueOrDefault());
                     if (userReturn.LoginType == "normal")
                     {
                         userReturn.LoginType = "Bình thường";
@@ -665,7 +665,7 @@ namespace DDL_CapstoneProject.Respository
                 var userCurrent = db.UserInfos.Where(x => x.DDL_User.Username == UserName).FirstOrDefault();
                 AdminUserBackingDetailDTO backingReturn = new AdminUserBackingDetailDTO();
                 backingReturn.Address = userCurrent.Address;
-                backingReturn.BackedDate = CommonUtils.ConvertDateTimeToUtc(backing.BackedDate);
+                backingReturn.BackedDate = CommonUtils.ConvertDateTimeFromUtc(backing.BackedDate);
                 backingReturn.Description = backing.BackingDetail.Description;
                 backingReturn.Email = userCurrent.DDL_User.Email;
                 backingReturn.FullName = userCurrent.FullName;
@@ -788,6 +788,58 @@ namespace DDL_CapstoneProject.Respository
                 listReturn.IdleUser = listReturn.TotalUser - listReturn.Creator - listReturn.Backer - listReturn.NotVerifiedUser;
 
                 return listReturn;
+            }
+        }
+
+        public List<AdminBackingListDTO> GetBackingListForAdmin()
+        {
+            using (var db = new DDLDataContext())
+            {
+                var listBacking = db.Backings.ToList();
+                List<AdminBackingListDTO> listReturn = new List<AdminBackingListDTO>();
+
+                foreach (var backing in listBacking)
+                {
+                    AdminBackingListDTO backingReturn = new AdminBackingListDTO();
+                    backingReturn.ProjectTitle = backing.Project.Title;
+                    backingReturn.PhoneNumber = backing.User.UserInfo.PhoneNumber;
+                    backingReturn.PledgeAmount = backing.BackingDetail.PledgedAmount;
+                    backingReturn.BackerName = backing.User.UserInfo.FullName;
+                    backingReturn.Address = backing.User.UserInfo.Address;
+                    backingReturn.BackedDate = CommonUtils.ConvertDateTimeFromUtc(backing.BackedDate);
+                    backingReturn.Content = backing.BackingDetail.Description;
+                    backingReturn.Email = backing.User.Email;
+                    backingReturn.RewardContent = backing.BackingDetail.RewardPkg.Description;
+                    backingReturn.RewardPledgeAmount = backing.BackingDetail.RewardPkg.PledgeAmount;
+                    backingReturn.UserName = backing.User.Username;
+                    backingReturn.BackingID = backing.BackingID;
+                    listReturn.Add(backingReturn);
+                }
+                return listReturn;
+            }
+        }
+
+        public AdminBackingListDTO GetBackerForAdmin(string userName, int backingID)
+        {
+            using (var db = new DDLDataContext())
+            {
+                var backing = db.Backings.Where(x => x.BackingID == backingID).FirstOrDefault();
+                AdminBackingListDTO backingReturn = new AdminBackingListDTO();
+
+                backingReturn.ProjectTitle = backing.Project.Title;
+                backingReturn.PhoneNumber = backing.User.UserInfo.PhoneNumber;
+                backingReturn.PledgeAmount = backing.BackingDetail.PledgedAmount;
+                backingReturn.BackerName = backing.User.UserInfo.FullName;
+                backingReturn.Address = backing.User.UserInfo.Address;
+                backingReturn.BackedDate = CommonUtils.ConvertDateTimeFromUtc(backing.BackedDate);
+                backingReturn.Content = backing.BackingDetail.Description;
+                backingReturn.Email = backing.User.Email;
+                backingReturn.RewardContent = backing.BackingDetail.RewardPkg.Description;
+                backingReturn.RewardPledgeAmount = backing.BackingDetail.RewardPkg.PledgeAmount;
+                backingReturn.ImageURL = backing.User.UserInfo.ProfileImage;
+                backingReturn.Biography = backing.User.UserInfo.Biography;
+
+                return backingReturn;
             }
         }
 

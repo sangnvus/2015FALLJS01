@@ -212,6 +212,22 @@ app.config(["$routeProvider", function ($routeProvider) {
               }]
           }
       });
+
+    $routeProvider.when("/backinglist",
+ {
+     templateUrl: "/AdminPartial/BackingList",
+     controller: 'AdminBackingListController',
+     activeTab: 'backinglist',
+     breadcrumb: ['Bảng điều khiển', 'Danh sách ủng hộ'],
+     title: 'Danh sách ủng hộ',
+     resolve: {
+         listBacking: ['$route', '$rootScope', '$q', 'AdminUserService', 'CommmonService', function ($route, $rootScope, $q, AdminUserService, CommmonService) {
+             var promise = AdminUserService.getListBacking();
+             return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+         }]
+     }
+ });
+
     $routeProvider.when("/notfound",
         {
             caseInsensitiveMatch: true,

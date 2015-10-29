@@ -1198,7 +1198,10 @@ namespace DDL_CapstoneProject.Respository
                                          Date = backer.BackedDate,
                                          FullName = backer.User.UserInfo.FullName,
                                      };
-
+                foreach (var backer in listBackerLinQ)
+                {
+                    backer.Date = CommonUtils.ConvertDateTimeFromUtc(backer.Date.GetValueOrDefault());
+                }
                 var query = listBackerLinQ.Where(x => x.Date.HasValue)
                   .GroupBy(x => new { x.Date.Value.Day, x.Date.Value.Month })
                   .Select(grp => new
@@ -1222,7 +1225,6 @@ namespace DDL_CapstoneProject.Respository
                var listBacker = new List<BackerDTO>();
                 foreach (var backer in listBackerLinQ)
                 {
-                    backer.Date = CommonUtils.ConvertDateTimeFromUtc(backer.Date.GetValueOrDefault());
                     listBacker.Add(backer);
                 }
                 list.sumAmount = listAmount;
