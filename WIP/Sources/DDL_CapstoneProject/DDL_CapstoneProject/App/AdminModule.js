@@ -3,7 +3,7 @@ var service = angular.module("DDLService", []);
 var directive = angular.module("DDLDirective", []);
 var app = angular.module("AdminApp", ["ngRoute", "ngAnimate", "ngSanitize", "DDLService",
     "DDLDirective", 'angular-loading-bar', 'textAngular', 'toastr', 'ui.bootstrap', 'monospaced.elastic',
-    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert', 'blockUI', 'chart.js', "highcharts-ng"]);
+    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert', 'blockUI', 'chart.js', "highcharts-ng", 'ChartAngular']);
 
 // Show Routing.
 app.config(["$routeProvider", function ($routeProvider) {
@@ -21,6 +21,18 @@ app.config(["$routeProvider", function ($routeProvider) {
             breadcrumb: ['Quản lý chung', 'Thống kê'],
             title: 'Thống kê',
             resolve: {
+                basicInfo: ['$rootScope', '$q', 'AdminProjectService', 'CommmonService', function ($rootScope, $q, AdminProjectService, CommmonService) {
+                    var promise = AdminProjectService.getBasicDashboardInfo();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }],
+                listcategory: ['$rootScope', '$q', 'AdminCategoryService', 'CommmonService', function ($rootScope, $q, AdminCategoryService, CommmonService) {
+                    var promise = AdminCategoryService.getCategories();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }],
+                topBackers: ['$rootScope', '$q', 'AdminUserService', 'CommmonService', function ($rootScope, $q, AdminUserService, CommmonService) {
+                    var promise = AdminUserService.getTopBacker();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
             }
         });
 

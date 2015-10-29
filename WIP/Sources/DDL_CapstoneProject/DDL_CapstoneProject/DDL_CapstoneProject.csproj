@@ -170,6 +170,8 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\DDL_User.cs" />
+    <Compile Include="Models\DTOs\AdminProjectStatisticDTO.cs" />
+    <Compile Include="Models\DTOs\AdminDashboardInfoDTO.cs" />
     <Compile Include="Models\DTOs\AdminBackingListDTO.cs" />
     <Compile Include="Models\DTOs\AdminUserBackedListDTO.cs" />
     <Compile Include="Models\DTOs\AdminUserBackingDetailDTO.cs" />

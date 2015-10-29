@@ -533,7 +533,7 @@ namespace DDL_CapstoneProject.Respository
                 if (rewardList.Any(reward => reward.PledgeAmount < 1000
                     || string.IsNullOrEmpty(reward.Description) || reward.Description.Length < 10 || reward.Description.Length > 135
                     || (reward.EstimatedDelivery < project.ExpireDate && reward.Type != DDLConstants.RewardType.NO_REWARD)
-                    || (reward.Type == DDLConstants.RewardType.NO_REWARD && reward.Quantity < 1)
+                    || (reward.Type != DDLConstants.RewardType.NO_REWARD && reward.Quantity < 1)
                     ))
                 {
                     messageReward = "Xin hãy xem lại trang gói quà! Tất cả các trường PHẢI được điền đầy đủ và hợp lệ(Ngày giao phải sau ngày đóng gây quỹ)";
@@ -677,7 +677,7 @@ namespace DDL_CapstoneProject.Respository
                 var approved = db.Projects.Count(x => x.Status == DDLConstants.ProjectStatus.APPROVED);
                 var suspended = db.Projects.Count(x => x.Status == DDLConstants.ProjectStatus.SUSPENDED);
                 var funded = db.Projects.Count(x => x.IsFunded == true);
-                var total = db.Projects.Count();
+                var total = db.Projects.Count(x => x.Status != DDLConstants.ProjectStatus.DRAFT);
                 var expired = db.Projects.Count(x => x.Status == DDLConstants.ProjectStatus.EXPIRED);
 
                 var AdminProjectInfoDTO = new AdminProjectGeneralInfoDTO
@@ -748,7 +748,6 @@ namespace DDL_CapstoneProject.Respository
                                        ExpireDate = Project.ExpireDate,
                                        Status = Project.Status,
                                        CurrentFunded = Project.CurrentFunded,
-                                       PledgeAmount = Project.CurrentFunded,
                                        TotalBacking = Project.Backings.Count
                                    }).ToList();
 
@@ -758,6 +757,11 @@ namespace DDL_CapstoneProject.Respository
             }
         }
 
+        /// <summary>
+        /// Change project status by admin
+        /// </summary>
+        /// <param name="project"></param>
+        /// <returns>bool</returns>
         public bool AdminChangeProjectStatus(ProjectEditDTO project)
         {
             using (var db = new DDLDataContext())
@@ -776,6 +780,134 @@ namespace DDL_CapstoneProject.Respository
                 return true;
             }
         }
+
+        /// <summary>
+        /// Get general information for admin dashboard
+        /// </summary>
+        /// <returns>AdminDashboardInfoDTO</returns>
+        public AdminDashboardInfoDTO AdminDashboardInfo()
+        {
+            using (var db = new DDLDataContext())
+            {
+                // Count user
+                var totalUser = db.DDL_Users.Count();
+                // Count project
+                var totalProject = db.Projects.Count(x => x.Status != DDLConstants.ProjectStatus.DRAFT);
+
+                // Caculate total funded
+                var pledge = db.BackingDetails.GroupBy(o => o.BackingID)
+                   .Select(g => new { BackingID = g.Key, total = g.Sum(i => i.PledgedAmount) });
+                decimal totalFunded = 0;
+
+                foreach (var group in pledge)
+                {
+                    totalFunded += group.total;
+                }
+
+                // Caculate total profit
+                var succeedProject = (from Project in db.Projects
+                                      where Project.IsFunded
+                                      select Project).ToList();
+
+                decimal totalProfit = 0;
+
+                foreach (var project in succeedProject)
+                {
+                    if (project.FundingGoal <= 50000000)
+                    {
+                        totalProfit += 5 * project.CurrentFunded / 100;
+                    }
+                    else if (project.FundingGoal <= 100000000 && project.FundingGoal > 50000000)
+                    {
+                        totalProfit += 4 * project.CurrentFunded / 100;
+                    }
+                    else if (project.FundingGoal <= 500000000 && project.FundingGoal > 100000000)
+                    {
+                        totalProfit += 3 * project.CurrentFunded / 100;
+                    }
+                    else
+                    {
+                        totalProfit += 2 * project.CurrentFunded / 100;
+                    }
+                }
+
+                // Count pending project
+                var pending = db.Projects.Count(x => x.Status == DDLConstants.ProjectStatus.PENDING);
+                // Count live project
+                var approved = db.Projects.Count(x => x.Status == DDLConstants.ProjectStatus.APPROVED);
+                // Count succeed project
+                var funed = db.Projects.Count(x => x.IsFunded);
+                // Count rank A project
+                var rankA = db.Projects.Count(x => x.FundingGoal > 500000000);
+                // Count rank B project
+                var rankB = db.Projects.Count(x => x.FundingGoal <= 500000000 && x.FundingGoal > 100000000);
+                // Count rank C project
+                var rankC = db.Projects.Count(x => x.FundingGoal <= 100000000 && x.FundingGoal > 50000000);
+                // Count rank D project
+                var rankD = db.Projects.Count(x => x.FundingGoal <= 50000000);
+                // Count fail project
+                var failProject = db.Projects.Count(x => x.IsFunded == false && x.IsExprired);
+
+                var AdminDashboardInfoDTO = new AdminDashboardInfoDTO
+                {
+                    TotalProject = totalProject,
+                    LiveProject = approved,
+                    NewProject = pending,
+                    TotalFund = totalFunded,
+                    TotalProfit = totalProfit,
+                    TotalUser = totalUser,
+                    TotalSucceed = funed,
+                    RankA = rankA,
+                    RankB = rankB,
+                    RankC = rankC,
+                    RankD = rankD,
+                    TotalFail = failProject
+                };
+
+                return AdminDashboardInfoDTO;
+            }
+        }
+
+        /// <summary>
+        /// Get 5 top projects
+        /// </summary>
+        /// <returns></returns>
+        public List<ProjectBasicListDTO> AdminGetTopProjectList()
+        {
+            using (var db = new DDLDataContext())
+            {
+                // Get rewardPkg list
+                var projectList = (from Project in db.Projects
+                                   where (Project.Status == DDLConstants.ProjectStatus.APPROVED || Project.Status == DDLConstants.ProjectStatus.EXPIRED) && Project.IsFunded
+                                   select new ProjectBasicListDTO
+                                   {
+                                       ProjectCode = Project.ProjectCode,
+                                       Title = Project.Title,
+                                       Category = Project.Category.Name,
+                                       CreatorEmail = Project.Creator.Email,
+                                       FundingGoal = Project.FundingGoal,
+                                       Status = Project.Status,
+                                       CurrentFunded = Project.CurrentFunded,
+                                   }).ToList();
+
+                projectList = projectList.OrderByDescending(x => x.CurrentFunded).Take(5).ToList();
+
+                return projectList;
+            }
+        }
+
+
+        /// <summary>
+        /// Get project statistic evert month in year
+        /// </summary>
+        /// <returns></returns>
+        //public List<AdminProjectStatisticDTO> AdminProjectStatistic()
+        //{
+        //    using (var db = new DDLDataContext())
+        //    {
+
+        //    }
+        //}
         #endregion
 
 
