@@ -1108,6 +1108,11 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         #region TrungVN
         [HttpGet]
 
+        public IHttpActionResult SearchCount(string categoryidlist, string searchkey)
+        {
+            var listGetProjectTop = ProjectRepository.Instance.SearchCount(categoryidlist, searchkey);
+            return Ok(new HttpMessageDTO { Status = "success", Data = listGetProjectTop });
+        }
         public IHttpActionResult GetProjectTop(string categoryid)
         {
             var listGetProjectTop = ProjectRepository.Instance.GetProjectTop(categoryid);

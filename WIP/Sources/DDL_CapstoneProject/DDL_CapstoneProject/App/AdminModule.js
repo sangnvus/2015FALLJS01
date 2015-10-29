@@ -212,6 +212,22 @@ app.config(["$routeProvider", function ($routeProvider) {
               }]
           }
       });
+
+    $routeProvider.when("/backinglist",
+ {
+     templateUrl: "/AdminPartial/BackingList",
+     controller: 'AdminBackingListController',
+     activeTab: 'backinglist',
+     breadcrumb: ['Bảng điều khiển', 'Danh sách ủng hộ'],
+     title: 'Danh sách ủng hộ',
+     resolve: {
+         listBacking: ['$route', '$rootScope', '$q', 'AdminUserService', 'CommmonService', function ($route, $rootScope, $q, AdminUserService, CommmonService) {
+             var promise = AdminUserService.getListBacking();
+             return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+         }]
+     }
+ });
+
     $routeProvider.when("/notfound",
         {
             caseInsensitiveMatch: true,
@@ -230,7 +246,10 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
 
     $routeProvider.otherwise({
-        redirectTo: "/notfound"
+        redirectTo: "/",
+        activeTab: '',
+        breadcrumb: [],
+        title: ''
     });
 
     //$locationProvider.html5Mode(false).hashPrefix("!");
@@ -253,16 +272,18 @@ app.run(['$rootScope', '$window', '$anchorScroll', 'DTDefaultOptions', 'toastrCo
         });
 
         // Scroll top when route change.
-        $rootScope.$on("$locationChangeSuccess", function () {
-            $anchorScroll();
+        $rootScope.$on("$viewContentLoaded", function () {
+            $window.scrollTo(0, 0);
         });
 
         // Scroll top when route change.
         $rootScope.$on("$routeChangeStart", function (e, curr, prev) {
-            $rootScope.Page = {
-                title: curr.$$route.title,
-                activeTab: curr.$$route.activeTab,
-                breadcrumb: curr.$$route.breadcrumb
+            if (curr.$$route !== undefined) {
+                $rootScope.Page = {
+                    title: curr.$$route.title !== undefined ? curr.$$route.title : "",
+                    activeTab: curr.$$route.activeTab !== undefined ? curr.$$route.activeTab : "",
+                    breadcrumb: curr.$$route.breadcrumb !== undefined ? curr.$$route.breadcrumb : ""
+                }
             }
             //        ShareData.currentPage =
 

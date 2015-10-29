@@ -9,7 +9,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-5 pt15">
-                    <p class="fnt45 fnt-800 h1 c3">{{totalFunded}} VNĐ</p>
+                    <p class="fnt45 fnt-800 h1 c3">{{totalFunded| number : fractionSize}}&#8363;</p>
                     <p class="fnt-b mt0 c3">số tiền được ủng hộ tới các dự án của Dandelion</p>
                 </div>
                 <div class="col-md-6 pt15">
@@ -75,7 +75,7 @@
                                         <td>{{project.Category}}</td>
                                         <td>{{getRank(project.PopularPoint)}}</td>
                                         <td><a href="project_detail.html">{{project.Title}}</a></td>
-                                        <td>${{project.CurrentFundedNumber}}</td>
+                                        <td>{{project.CurrentFundedNumber| number : fractionSize}}&#8363;</td>
                                         <td>{{project.Backers}}</td>
                                         <td>Success</td>
                                     </tr>
@@ -116,7 +116,7 @@
                                 <tr ng-repeat="user in UserTopBackList track by $index">
                                     <td>{{$index}}</td>
                                     <td><a href="profile_public.html">{{user.Name}}</a></td>
-                                    <td>${{user.TotalFunded}}</td>
+                                    <td>{{user.TotalFunded| number : fractionSize}}&#8363;</td>
                                     <td>{{user.TotalBacked}}</td>
                                 </tr>
                             </tbody>
@@ -155,7 +155,7 @@
                                 <tr ng-repeat="user in UserTopFundList track by $index">
                                     <td>{{$index}}</td>
                                     <td><a href="profile_public.html">{{user.Name}}</a></td>
-                                    <td>${{user.TotalFunded}}</td>
+                                    <td>{{user.TotalFunded| number : fractionSize}}&#8363;</td>
                                     <td>{{user.TotalBacked}}</td>
                                 </tr>
                             </tbody>

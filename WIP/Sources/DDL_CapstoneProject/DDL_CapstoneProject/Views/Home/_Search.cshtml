@@ -1,8 +1,4 @@
-﻿
-
-
-
-<div id="content" class="paddingNavbar">
+﻿<div id="content" class="paddingNavbar">
     <div id="search">
 
         <div class="searchbar">
@@ -26,10 +22,10 @@
                         <group>
                             <lable class="control-label fnt30 fnt-b"> sắp xếp theo </lable>
                             <select class="form-control fnt20" id="" ng-change="Search(selectcategory,selectedorder,searchkey)" ng-model="selectedorder">
-                                <option value="PopularPoint">Popularity</option>
-                                <option value="CreatedDate">Newest</option>
-                                <option value="ExpireDate">End Date</option>
-                                <option value="CurrentFunded">Most Funded</option>
+                                <option value="PopularPoint">Phổ biến</option>
+                                <option value="CreatedDate">Mới nhất</option>
+                                <option value="ExpireDate">Ngày còn lại</option>
+                                <option value="CurrentFunded">Ủng hộ</option>
                             </select>
                         </group>
                     </div>
@@ -40,17 +36,17 @@
             <div id="item-search" class="pt30 pb30">
                 <section id="portfolio" class="container">
                     <div class="explore">
-                        <span class="fnt30 fnt-b">Explore</span>
-                        <span class="fnt30 fnt-b color-green">{{projectResultListSize}} projects</span>
+                        <span class="fnt30 fnt-b">Có</span>
+                        <span class="fnt30 fnt-b color-green">{{projectResultListSize}} dự án</span>
                     </div>
                     <ul class="portfolio-items col-4">
                         <li class="portfolio-item" ng-repeat="project in projectbycategory">
                             <div class="item-inner">
                                 <div class="item-image hover01 column">
-                                    <figure><a href="project_detail.html"><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></a></figure>
+                                    <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
                                 </div>
                                 <div class="item-title">
-                                    <h5><a href="project_detail.html">{{project.Title}}</a></h5>
+                                    <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
                                 </div>
                                 <div class="item-content">
                                     <p class="fnt15">{{project.SubDescription}}</p>
@@ -59,18 +55,18 @@
                                     <div class="mt10 mb5">
                                         <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
                                         &nbsp;&nbsp;
-                                        <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
+                                        <a class="grey-dark" href="@Url.Content("/#/search?categoryid={{project.CategoryID}}")"><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
                                         &nbsp;&nbsp;
                                     </div>
                                     <div class="progress mt5 mb5">
                                         <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
-                                            <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
+                                            <span class="sr-only">{{project.CurrentFunded}}% phần trăm (thành công)</span>
                                         </div>
                                     </div>
                                     <ul class="list-inline">
-                                        <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">funded</p></li>
-                                        <li><p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p><p class="mt0 mb0">pledged</p></li>
-                                        <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">days to go</p></li>
+                                        <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">ủng hộ</p></li>
+                                        <li><p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p><p class="mt0 mb0">gây quỹ</p></li>
+                                        <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">ngày còn lại</p></li>
                                     </ul>
                                 </div>
                             </div>
@@ -81,7 +77,7 @@
                         <a class="btn btn-transparent btn-sm" href="discover.html">See more</a>
                     </div> -->
                 </section><!--/#portfolio-->
-                <a class="btn btn-transparent btn-sm" ng-if="showLoadMoreButton" ng-click="Loadmore(projectResultListSize,selectcategory,selectedorder,searchkey)" href="">See more</a>
+                <a class="btn btn-transparent btn-sm" ng-if="showLoadMoreButton" ng-click="Loadmore(selectcategory,selectedorder,searchkey)" href="">Xem thêm</a>
 
             </div> <!-- end item-popular -->
 

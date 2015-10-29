@@ -16,7 +16,7 @@ namespace DDL_CapstoneProject.Models.DTOs
             PopularPoint = 0;
         }
         public int ProjectID { get; set; }
-        public string ProjectCode {get; set; }
+        public string ProjectCode { get; set; }
         public string CreatorName { get; set; }
         public string Title { get; set; }
         public string ImageUrl { get; set; }
@@ -26,6 +26,7 @@ namespace DDL_CapstoneProject.Models.DTOs
         public decimal CurrentFundedNumber { get; set; }
         public int? ExpireDate { get; set; }
         public decimal FundingGoal { get; set; }
+        public int CategoryID { get; set; }
         public string Category { get; set; }
         public int Backers { get; set; }
         public DateTime CreatedDate { get; set; }

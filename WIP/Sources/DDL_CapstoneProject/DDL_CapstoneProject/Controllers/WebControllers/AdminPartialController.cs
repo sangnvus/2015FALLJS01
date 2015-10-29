@@ -91,5 +91,10 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         {
             return PartialView("~/Views/AdminPartial/Error/_Error.cshtml");
         }
+
+        public ActionResult BackingList()
+        {
+            return PartialView("~/Views/AdminPartial/_BackingList.cshtml");
+        }
     }
 }
