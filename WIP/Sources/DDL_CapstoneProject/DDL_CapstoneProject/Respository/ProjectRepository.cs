@@ -105,8 +105,8 @@ namespace DDL_CapstoneProject.Respository
                                        categoryidList.Contains("|" + project.CategoryID + "|"))
                                       && project.IsExprired == isExprired && project.Title.Contains(pathofprojectname)
                                       && project.Status.Contains(status) && project.IsFunded.ToString().ToLower().Contains(isFunded)
-                                      && !project.Status.Equals(DDLConstants.ProjectStatus.DRAFT) && !project.Status.Equals(DDLConstants.ProjectStatus.REJECTED) 
-                                      && !project.Status.Equals(DDLConstants.ProjectStatus.SUSPENDED)
+                                      && !project.Status.Equals(DDLConstants.ProjectStatus.DRAFT) && !project.Status.Equals(DDLConstants.ProjectStatus.REJECTED)
+                                      && !project.Status.Equals(DDLConstants.ProjectStatus.SUSPENDED) && !project.Status.Equals(DDLConstants.ProjectStatus.PENDING)
                                   select new ProjectBasicViewDTO
                                   {
                                       ProjectID = project.ProjectID,
