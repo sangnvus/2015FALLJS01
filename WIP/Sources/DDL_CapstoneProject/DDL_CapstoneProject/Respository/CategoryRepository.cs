@@ -7,6 +7,7 @@ using System.Web;
 using DDL_CapstoneProject.Helpers;
 using DDL_CapstoneProject.Models;
 using DDL_CapstoneProject.Models.DTOs;
+using DDL_CapstoneProject.Ultilities;
 
 namespace DDL_CapstoneProject.Respository
 {
@@ -37,7 +38,7 @@ namespace DDL_CapstoneProject.Respository
                                       CategoryID = category.CategoryID,
                                       Name = category.Name,
                                       projectCount = (from pro in category.Projects
-                                                      where !pro.IsExprired
+                                                      where pro.Status == DDLConstants.ProjectStatus.APPROVED
                                                       select pro.ProjectID).Count()
 
                                   };

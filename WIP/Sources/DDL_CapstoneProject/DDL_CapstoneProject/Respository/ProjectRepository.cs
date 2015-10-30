@@ -105,7 +105,8 @@ namespace DDL_CapstoneProject.Respository
                                        categoryidList.Contains("|" + project.CategoryID + "|"))
                                       && project.IsExprired == isExprired && project.Title.Contains(pathofprojectname)
                                       && project.Status.Contains(status) && project.IsFunded.ToString().ToLower().Contains(isFunded)
-                                      && !project.Status.Equals(DDLConstants.ProjectStatus.DRAFT)
+                                      && !project.Status.Equals(DDLConstants.ProjectStatus.DRAFT) && !project.Status.Equals(DDLConstants.ProjectStatus.REJECTED) 
+                                      && !project.Status.Equals(DDLConstants.ProjectStatus.SUSPENDED)
                                   select new ProjectBasicViewDTO
                                   {
                                       ProjectID = project.ProjectID,
@@ -206,17 +207,17 @@ namespace DDL_CapstoneProject.Respository
         public List<List<ProjectBasicViewDTO>> GetProjectStatisticList()
         {
             var ProjectList = new List<List<ProjectBasicViewDTO>>();
-            ProjectList.Add(GetProject(3, 0, "All", "PopularPoint", "", "", false, ""));
-            ProjectList.Add(GetProject(3, 0, "All", "CreatedDate", "", "", false, ""));
-            ProjectList.Add(GetProject(3, 0, "All", "CurrentFunded", "", "", false, ""));
-            ProjectList.Add(GetProject(3, 0, "All", "ExpireDate", "", "", false, ""));
+            ProjectList.Add(GetProject(4, 0, "All", "PopularPoint", "", "", false, ""));
+            ProjectList.Add(GetProject(4, 0, "All", "CreatedDate", "", "", false, ""));
+            ProjectList.Add(GetProject(4, 0, "All", "CurrentFunded", "", "", false, ""));
+            ProjectList.Add(GetProject(4, 0, "All", "ExpireDate", "", "", false, ""));
 
             return ProjectList;
         }
         public Dictionary<string, List<ProjectBasicViewDTO>> GetStatisticListForHome()
         {
             var ProjectList = new Dictionary<string, List<ProjectBasicViewDTO>>();
-            ProjectList.Add("popularproject", GetProject(3, 0, "All", "PopularPoint", "", "", false, ""));
+            ProjectList.Add("popularproject", GetProject(4, 0, "All", "PopularPoint", "", "", false, ""));
             ProjectList.Add("projectByCategory", GetProjectByCategory());
             ProjectList.Add("highestprojectpledge", GetProject(1, 0, "All", "CurrentFunded", "", "", false, ""));
             ProjectList.Add("highestprojectfund", GetProject(1, 0, "All", "CurrentFunded", "", "", true, "true"));
