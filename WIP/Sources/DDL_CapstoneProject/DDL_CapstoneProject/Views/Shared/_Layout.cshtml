@@ -75,19 +75,21 @@
                     <li><a href="@Url.Content("/#/project/create/")">Tạo mới</a></li>
                     <li role="separator" class="hidden-xs divider-vertical"></li>
                 </ul>
-
-                <div ng-controller="SearchBarController">
-                    <form class="navbar-form navbar-left" role="Search" novalidate ng-submit="submit(searchkey)">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <input class="form-control" id="navbarInput-01" ng-model="searchkey" type="Search" placeholder="Tìm kiếm..." />
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn"><span class="fui-Search"></span></button>
-                                </span>
+                @if (Request.Url.AbsoluteUri.Equals(@ViewBag.BaseUrl, StringComparison.OrdinalIgnoreCase))
+                {
+                    <div ng-controller="SearchBarController">
+                        <form class="navbar-form navbar-left" role="Search" novalidate ng-submit="submit(searchkey)">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input class="form-control" id="navbarInput-01" ng-model="searchkey" type="Search" placeholder="Tìm kiếm..." />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn"><span class="fui-Search"></span></button>
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
+                        </form>
+                    </div>
+                }
                 <!-- Login/Logout/Profile -->
                 @{
                     if (User.Identity == null || !User.Identity.IsAuthenticated)
@@ -148,6 +150,15 @@
             <i class="fa fa-2x fa-arrow-circle-up"></i>
         </span>
     </div>
+    @if (Request.Url.AbsoluteUri.Equals(@ViewBag.BaseUrl, StringComparison.OrdinalIgnoreCase))
+    {
+        <!-- Refresh button -->
+        <div class="refresh-wrapper " ng-click="reload()">
+            <span class="refresh-wrapper-inner">
+                <i class="fa fa-2x fa-refresh"></i>
+            </span>
+        </div>
+    }
     <!-- end scroll to top -->
     <!--Footer-->
     <div id="footer">

@@ -6,7 +6,7 @@ app.controller('HomeController', function ($scope, slides, liststatisticforhome)
 
     var data = liststatisticforhome.data.Data;
     $scope.popularproject = data.popularproject;
-    $scope.projectByCategory = data.popularproject;
+    $scope.projectByCategory = data.projectByCategory;
     $scope.highestprojectpledge = data.highestprojectpledge[0];
     $scope.highestprojectfund = data.highestprojectfund[0];
     $scope.totalprojectfund = data.totalprojectfund[0];

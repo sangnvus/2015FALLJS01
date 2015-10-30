@@ -392,8 +392,8 @@ app.config(["$routeProvider", function ($routeProvider) {
     });
 }]);
 
-app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOptions', 'toastrConfig', 'blockUIConfig', 'MessageService',
-    function ($rootScope, $window, $anchorScroll, UserService, DTDefaultOptions, toastrConfig, blockUIConfig, MessageService) {
+app.run(['$rootScope', '$window','$location','$route', '$anchorScroll', 'UserService', 'DTDefaultOptions', 'toastrConfig', 'blockUIConfig', 'MessageService',
+    function ($rootScope, $window,$location,$route, $anchorScroll, UserService, DTDefaultOptions, toastrConfig, blockUIConfig, MessageService) {
         $rootScope.$on('$routeChangeError', function (e, curr, prev) {
             e.preventDefault();
         });
@@ -403,13 +403,16 @@ app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOpti
             $window.scrollTo(0, 0);
         });
 
+        $rootScope.reload = function() {
+            $route.reload();
+        }
+
         $rootScope.$on("$routeChangeStart", function (e, curr, prev) {
             if (curr.$$route !== undefined) {
                 $rootScope.Page = {
                     title: curr.$$route.title !== undefined ? curr.$$route.title : ""
                 }
             }
-            //        ShareData.currentPage =
 
         });
 
