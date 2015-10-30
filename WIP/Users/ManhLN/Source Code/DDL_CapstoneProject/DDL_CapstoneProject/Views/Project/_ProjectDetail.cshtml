@@ -1,0 +1,431 @@
+﻿
+<div id="project-common" class="paddingNavbar padding-30">
+    <div class="container">
+        <div id="gt1">
+            <div class="title text-center">
+                <h2 class="fnt30 mb0"><a href="">{{Project.Title}}</a></h2>
+                <p class="fnt18">by <a class="fnt-b" href="/#/user/publicprofile/{{Project.Creator.UserName}}">{{Project.Creator.FullName}}</a></p>
+            </div> <!-- end TITLE -->
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="responsive-video">
+                        <iframe ng-src="{{trustSrc(Project.VideoUrl)}}" frameborder="0"> </iframe>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="">
+                        <div class="pt0">
+                            <p class="fnt45 fnt-800 h1">{{Project.NumberBacked}}</p>
+                            <p class="fnt-b mt0"><span>người đã ủng hộ</span></p>
+                        </div>
+                        <div class="pt5">
+                            <p class="fnt45 fnt-800 h1">{{Project.CurrentFunded| number : fractionSize}}&#8363;</p>
+                            <p class="fnt-b mt0">đã được gây quỹ, mục tiêu <span class="money usd no-code">{{Project.FundingGoal| number : fractionSize}}&#8363;</span></p>
+                        </div>
+                        <div class="pt5">
+                            <p class="fnt45 fnt-800 h1">{{Project.NumberDays}}</p>
+                            <p class="fnt-b mt0"><span>ngày còn lại</span></p>
+                        </div>
+                    </div>
+                    <div class="pt20">
+                        <a class="btn btn-primary btn-lg" href="@Url.Content("/#/project/back/{{Project.ProjectCode}}")">Ủng hộ dự án</a>
+                        <button class="btn btn-danger btn-lg" disabled ng-if="Project.IsExprired" href="back_project.html">Dự án đã hết hạn</button>
+                        <span ng-hide="Project.Reminded">
+                            <a href="" class="grey-dark" ng-click="remind()">&nbsp;&nbsp;<i class="fa fa-star"></i> Đánh dấu</a>
+                        </span>
+                        <span ng-show="Project.Reminded">
+                            <a href="" style="color : #16a085" class="grey-dark" ng-click="remind()">&nbsp;&nbsp;<i class="fa fa-star"></i> Đánh dấu</a>
+                        </span>
+                    </div>
+                    <div class="pt10">
+                        <p class="fnt15 grey-dark" ng-if="!Project.IsExprired">
+                            Dự án này sẽ kết thúc gây quỹ vào <span class="js-adjust-time">{{Project.ExpireDate | date:"HH:mm 'ngày' dd/MM/yyyy"}}</span>.
+                        </p>
+                        <p class="fnt15 grey-dark" ng-if="Project.IsExprired">
+                            Dự án này đã kết thúc gây qũy
+                        </p>
+                    </div>
+                </div>
+            </div> <!-- end VIDEO PROJECT -->
+            <div class="row">
+                <div class="col-md-8">
+                    <p class="fnt20 pt20">{{Project.SubDescription}}</p>
+                    <div class="pt10 fnt16 fnt-b">
+                        <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{Project.Location}}</a>
+                        &nbsp;&nbsp;
+                        <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{Project.CategoryName}}</a>
+                        &nbsp;&nbsp;
+                        <a class="btn btn-info btn-sm" href=""><i class="fa fa-facebook-square"></i> Chia sẻ</a>
+                    </div>
+                </div>
+                <div class="col-md-4 border-top">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5><a class="fnt22 fnt-b" href="/#/user/publicprofile/{{Project.Creator.UserName}}" data-toggle="modal" data-target="#creator">{{Project.Creator.FullName}}</a></h5>
+                            <p class="h5">
+                                <span class="inline-block glyphicon glyphicon-copyright-mark"></span>
+                                <span class="inline-block">
+                                    <a class="grey-dark bold" href="">Đã tạo {{Project.Creator.NumberCreated}}</a>
+                                    <span class="grey-dark">&nbsp;|&nbsp;</span>
+                                </span>
+                                <span class="inline-block">
+                                    <a class="grey-dark bold" href="">Đã ủng hộ {{Project.Creator.NumberBacked}}</a>
+                                </span>
+                            </p>
+                            <p class="h5">
+                                <span class="inline-block glyphicon glyphicon-globe"></span>
+                                <a class="grey-dark bold" href="">{{Project.Creator.Website}}</a>
+                            </p>
+                            <p class="fnt15 fnt-b pt15">
+                                <a class="inline-block" href="/#/user/publicprofile/{{Project.Creator.UserName}}">Xem thông tin</a>
+                            </p>
+                        </div>
+                        <div class="col-md-4 pt30">
+                            <img id="" ng-if="checkHTTP(Project.Creator.ProfileImage)" ng-src="{{trustSrc(Project.Creator.ProfileImage)}}" alt="" class="img-responsive img-circle center-block">
+                            <img id="" ng-if="!checkHTTP(Project.Creator.ProfileImage)" ng-src="../images/avatars/{{Project.Creator.ProfileImage}}" alt="" class="img-responsive img-circle center-block">
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end CONTENT PROJECT -->
+        </div> <!-- end GT1 -->
+    </div>
+</div> <!-- end PART1 PROJECT -->
+
+<div id="project-tab">
+    <div class="container">
+        <div class="tab-center">
+            <ul class="nav nav-pills">
+                <li class="active"><a showtab href="#campaign" data-toggle="tab">Thông tin</a></li>
+                <li ng-show="Project.NumberUpdate > 0"><a showtab href="#update" data-toggle="tab" ng-click="getUpdateLogList()">Cập nhật <span class="badge">{{Project.NumberUpdate}}</span></a></li>
+                <li><a showtab href="#comments" data-toggle="tab" ng-click="getCommentList()">Bình luận <span class="badge">{{Project.NumberComment}}</span></a></li>
+                <li><a showtab href="#schedule" data-toggle="tab">Tiến trình</a></li>
+                <li ng-show="Project.NumberBacked > 0"><a showtab href="#list-backers" data-toggle="tab" ng-click="loadlistBacker()">Ủng hộ <span class="badge">{{Project.NumberBacked}}</span></a></li>
+            </ul>
+        </div>
+    </div>
+</div><!-- end PROJECT-TABS -->
+
+<div id="project-tabpanel" style="background-color: #fff">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Tabs pane -->
+                <div class="tab-content">
+                    <!-- CAMPAIGN -->
+                    <div id="campaign" role="tabpanel" class="tab-pane fade in active">
+                        <div class="container">
+                            <div class="row project-tab-border">
+                                <div class="col-md-8 project-tab-campaign">
+                                    <div>
+                                        <h1 class="fnt25">Thông tin dự án</h1>
+                                    </div>
+                                    <!-- end About this project -->
+                                    <div id="load_content" class="pt15" ta-bind ng-model="Project.Description"></div>
+                                    <!-- end load_content -->
+                                    <div id="riskandchallenges" class="padding30">
+                                        <h1 class="fnt25">Rủi ro và thách thức</h1>
+                                        <p style="word-break: break-word; white-space: pre-wrap;">{{Project.Risk}}</p>
+                                    </div> <!-- end Risks and challeges -->
+                                    @*Question*@
+                                    <p>
+                                        <h1 class="fnt25">Bạn có thắc mắc cần được giải đáp ?</h1>
+                                        <div ng-show="Project.Question.length == 0" class="fnt-b">Nếu những thông tin trên không giúp bạn có câu trả lời , hãy trực tiếp đặt câu hỏi với chủ dự án .</div>
+                                    </p>
+                                    <ul style="list-style: none">
+                                        <li ng-repeat="question in Project.Question">
+                                            <div class="questionItem">
+                                                <div class="panel-heading" role="tab" id="question1">
+                                                    <div class="tab-content">
+                                                        <a style="color: #00a0ff" class="fnt-n"
+                                                           role="button" data-toggle="collapse" data-target="#Question{{question.QuestionID}}">
+                                                            <span class="glyphicon glyphicon-chevron-right fnt-b "></span>
+                                                            @*<span ng-show="question.loadAnswer" class="glyphicon glyphicon-chevron-down fnt-b "></span>*@
+                                                            {{question.QuestionContent}}
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div id="Question{{question.QuestionID}}" class="panel-collapse collapse" role="tabpanel">
+                                                    <div class="panel-body">
+                                                        <div class="answer">
+                                                            {{question.Answer}}
+                                                        </div>
+                                                        <div class="link-gray-dark fnt16 pt10">{{question.CreatedDate |date:"'Cập nhật lần cuối lúc :' dd/MM/yyyy" }}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    @if (User.Identity != null && !string.IsNullOrEmpty(User.Identity.Name))
+                                    {
+                                        <p>
+                                            <a class="btn btn-primary" data-toggle="modal" data-target="#sendQuestion">Gửi câu hỏi</a>
+                                        </p>
+                                        <p><a class="btn btn-default" data-toggle="modal" data-target="#reportModal">Báo cáo sai phạm</a></p>
+                                    <!-- Ask question -->
+                                        <div class="modal fade" id="sendQuestion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h5 class="modal-title" id="myModalLabel">Gửi câu hỏi về dự án {{Project.Title}}</h5>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <h5 class="fnt20"><span class="fnt-n">Tới: {{Project.Creator.FullName}}</span> </h5>
+                                                        <h5 class="fnt20 fnt-n">Nội dung:</h5>
+                                                        <textarea class="form-control" style="resize: none" name="" id="" cols="30" rows="5"
+                                                                  ng-model="NewQuestion.Content"></textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                                                        <button type="button" class="btn btn-primary" ng-click="sendQuestion()">Gửi câu hỏi</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <!-- end question modal -->
+                                    <!-- Report Modal -->
+                                        <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h5 class="modal-title" id="myModalLabel">Báo cáo dự án sai phạm</h5>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <h5 class="fnt20"><span class="fnt-n">Dự Án:</span> {{Project.Title}}</h5>
+                                                        <h5 class="fnt20 fnt-n">Nội dung:</h5>
+                                                        <textarea class="form-control" style="resize:none" name="" id="" cols="30" rows="5" ng-model="ReportContent"></textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                                        <button type="button" class="btn btn-primary" ng-click="report()">Gửi báo cáo</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> <!-- end report modal -->
+                                        <!-- end report modal -->
+                                    }
+
+                                </div> <!-- end col-md-8 -->
+
+                                <div class="col-md-4">
+                                    <div class="">
+                                        <h3 class="fnt25">Rewards</h3>
+                                    </div> <!-- end Rewards -->
+                                    <!-- start our menu here-->
+                                    <div id="#reward" class="our_menu">
+                                        <ul class="menu">
+                                            <li ng-repeat="reward in Project.RewardDetail" class="item">
+                                                <div class="item-show">
+                                                    <h5 class="fnt20 c3" for="">Ủng hộ {{reward.PledgeAmount}} <span class="money usd no-code">&#8363;</span> hoặc nhiều hơn</h5>
+                                                    <p class="bold"><span class="glyphicon glyphicon-asterisk"></span> {{reward.Backers}}  backers</p>
+                                                    <div style="word-break: break-word; white-space: pre-wrap;" class="item-description">
+                                                        {{reward.Description}}
+                                                    </div>
+                                                    <div class="item-extra-info">
+                                                        <p class="">Thời gian giao hàng ước tính :</p>
+                                                        <p>{{reward.EstimatedDelivery | date:"'Tháng' MM/yyyy"}} </p>
+                                                    </div>
+                                                </div> <!-- end main Reward -->
+                                                <a href="@Url.Content("/#/project/back/{{Project.ProjectCode}}?reward={{$index+1}}")">
+                                                    <div class="hoverReward">
+                                                        <span class="titleHover">Chọn gói quà này</span>
+                                                    </div>
+                                                </a> <!-- end hover Reward -->
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- end our menu -->
+                                </div> <!-- end col-md-4 -->
+                            </div>
+                        </div>
+                    </div> <!-- endTabpanel CAMPAIGN -->
+                    <!-- UPDATE -->
+                    <div id="update" role="tabpanel" class="tab-pane fade in project-tab-border">
+                        <div class="pl15 pr15">
+                            <div>
+                                <h1 class="fnt25" id="timeline-Update">Thông tin cập nhật ({{Project.UpdateLogsList.length}})</h1>
+                            </div>
+                            <ul class="timeline">
+                                <li ng-repeat="UpdateLog in Project.UpdateLogsList" ng-class-even="'timeline-inverted'">
+                                    <div class="timeline-badge">
+                                        <i class="glyphicon glyphicon-check"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4 class="timeline-title">{{UpdateLog.Title}}</h4>
+                                            <p>
+                                                <small class="text-muted"><i class="glyphicon glyphicon-time"></i> lúc {{UpdateLog.CreatedDate | date:"HH:mm 'ngày' dd/MM/yyyy"}}</small>
+                                            </p>
+                                        </div>
+                                        <div class="timeline-body">
+                                            {{UpdateLog.Description}}
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div> <!-- endTabpanel update -->
+                    <!-- COMMENT -->
+                    <div id="comments" role="tabpanel" class="tab-pane fade in project-tab-border">
+                        <!-- Contenedor Principal -->
+                        <div class="pl15 pr15">
+                            <div id="comment-form" ng-if="CurrentUser.IsAuthen">
+                                <div class="media">
+                                    <h3 class="fnt18" style="padding-left: 60px">Bình luận về dự án này</h3>
+                                    <div class="pull-left">
+                                        <img class="avatar img-circle" ng-if="checkHTTP(CurrentUser.ProfileImage)" ng-src="{{trustSrc(CurrentUser.ProfileImage)}}" alt="" />
+                                        <img class="avatar img-circle" ng-if="!checkHTTP(CurrentUser.ProfileImage)" ng-src="../images/avatars/{{CurrentUser.ProfileImage}}" alt="" />
+                                    </div>
+                                    <div class="media-body">
+                                        <form role="form" name="CommentForm" novalidate>
+                                            <div class="well">
+                                                <textarea rows="3" class="form-control" placeholder="Nhập bình luận..." style="resize: none"
+                                                          name="Comment"
+                                                          ng-model="NewComment.CommentContent"
+                                                          ng-trim="true"
+                                                          required
+                                                          ng-minlength="10"
+                                                          ng-maxlength="500"
+                                                          maxlength="500"
+                                                          msd-elastic="\n"></textarea>
+                                                <span class="text-danger">* Bình luận chỉ từ 10 đến 500 kí tự.</span>
+                                                <button type="submit" class="btn btn-primary mt10 pull-right" ng-click="submitComment()"
+                                                        ng-disabled="!CommentForm.$dirty || (CommentForm.$dirty && CommentForm.$invalid)">
+                                                    Bình luận
+                                                </button>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div><!--/#comment-form-->
+                            <!--Comment list-->
+                            <h3 class="fnt22">Danh sách bình luận</h3>
+                            <div id="comments-list">
+                                <!--avatar-->
+                                <div class="media" ng-repeat="Comment in Project.CommentsList">
+                                    <div class="pull-left">
+                                        <img class="avatar img-circle" ng-if="checkHTTP(Comment.ProfileImage)" ng-src="{{trustSrc(Comment.ProfileImage)}}" alt="" />
+                                        <img class="avatar img-circle" ng-if="!checkHTTP(Comment.ProfileImage)" ng-src="../images/avatars/{{Comment.ProfileImage}}" alt="" />
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="well" ng-class="{'hided-comment':Comment.IsHide}">
+                                            <!--Comment header-->
+                                            <div class="media-heading">
+                                                <strong>
+                                                    <a ng-class="{'by-author':Comment.UserName == Project.Creator.UserName}" href="/#/user/publicprofile/{{Comment.UserName}}">{{Comment.FullName}}</a>
+                                                    <span ng-if="Comment.UserName == Project.Creator.UserName" class="label label-primary">chủ</span>
+                                                </strong>
+                                                <small>&nbsp;- lúc {{Comment.CreatedDate | date:"HH:mm 'ngày' dd/MM/yyyy"}}</small>
+                                                <span ng-show="Comment.IsEdited" style="margin-top: 8px">&nbsp;- đã chỉnh sửa</span>
+                                                <!--Action-->
+                                                <ul class="list-inline pull-right">
+                                                    <!--Show hide/comment-->
+                                                    <li ng-if="!Comment.IsHide && CurrentUser.UserName == Project.Creator.UserName"><a href="" ng-click="showHideComment($index)">Ẩn</a></li>
+                                                    <li ng-if="Comment.IsHide && CurrentUser.UserName == Project.Creator.UserName"><a href="" ng-click="showHideComment($index)">Hiện</a></li>
+                                                    <!--Delete comment-->
+                                                    <li ng-if="CurrentUser.UserName == Comment.UserName"><a href="" ng-click="deleteComment($index)">Xóa</a></li>
+                                                    <!--Edit comment-->
+                                                    <li ng-if="CurrentUser.UserName == Comment.UserName" ng-class="{'hide':IsEdit[$index] === true}"><a href="" ng-click="showEditForm($index)">Sửa</a></li>
+                                                    <li ng-if="CurrentUser.UserName == Comment.UserName" ng-class="{'hide':(IsEdit[$index] == null || IsEdit[$index] === false)}"><a href="" ng-click="showEditForm($index)">Hủy</a></li>
+                                                    <li ng-if="CurrentUser.UserName == Comment.UserName" ng-class="{'hide':(IsEdit[$index] == null || IsEdit[$index] === false)}"><a href="" ng-click="editComment($index)">Lưu</a></li>
+                                                </ul>
+                                            </div>
+                                            <!--Comment content-->
+                                            <div ng-class="{'hide':IsEdit[$index] === true}" style="word-break: break-word; white-space: pre-wrap;">{{Comment.CommentContent}}</div>
+                                            <div ng-if="CurrentUser.UserName == Comment.UserName" ng-class="{'hide':(IsEdit[$index] == null || IsEdit[$index] === false)}">
+                                                <textarea msd-elastic="\n" class="form-control" ng-model="Comment.EditedCommentContent" ng-enter="editComment($index)" style="resize: none"></textarea>
+                                                <span class="text-danger">* Bình luận tối thiểu từ 10 đến 500 kí tự.</span>
+                                            </div>
+                                            <!-- <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p> -->
+                                        </div>
+                                    </div>
+                                </div><!--/.media-->
+                                <button class="btn btn-info center-block" ng-show="Project.CommentsList.length < Project.NumberComment" ng-click="loadMoreComment()">Tải thêm</button>
+                            </div><!--/#comments-list-->
+                        </div>
+                    </div> <!-- endTabpanel COMMENT -->
+                    <!-- SCHEDULE -->
+                    <div id="schedule" role="tabpanel" class="tab-pane fade in project-tab-border" timeliner-directive>
+                        <div class="ml10 mr10">
+                            <div class="">
+                                <h1 class="fnt25" id="scheduleTitle">Timeline Schedule</h1>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="timeline" style="margin: 0px 15px; overflow:auto; width:auto; height:auto">
+                                        <ul id="dates" class="pull-right">
+                                            <li><a onclick="return false" href="#10102015">10/10/2015</a></li>
+                                            <li><a onclick="return false" href="#11102015">11/10/2015</a></li>
+                                            <li><a onclick="return false" href="#12102015">12/10/2015</a></li>
+                                            <li><a onclick="return false" href="#01102016">1/10/2016</a></li>
+                                        </ul>
+                                        <ul id="issues">
+                                            <li class="issues-content" id="10102015">
+                                                <img src="../images/Schedule/7.png" width="256" height="256" />
+                                                <h1>10-10-2015</h1>
+                                                <p>Donec semper quam scelerisque tortor dictum gravida. In hac habitasse platea dictumst. Nam pulvinar, odio sed rhoncus suscipit, sem diam ultrices mauris, eu consequat purus metus eu velit. Proin metus odio, aliquam eget molestie nec, gravida ut sapien. Phasellus quis est sed turpis sollicitudin venenatis sed eu odio. Praesent eget neque eu eros interdum malesuada non vel leo. Sed fringilla porta ligula.</p>
+                                            </li>
+                                            <li class="issues-content" id="11102015">
+                                                <img src="../images/Schedule/8.png" width="256" height="256" />
+                                                <h1>11/10/2015</h1>
+                                                <p>Donec semper quam scelerisque tortor dictum gravida. In hac habitasse platea dictumst. Nam pulvinar, odio sed rhoncus suscipit, sem diam ultrices mauris, eu consequat purus metus eu velit. Proin metus odio, aliquam eget molestie nec, gravida ut sapien. Phasellus quis est sed turpis sollicitudin venenatis sed eu odio. Praesent eget neque eu eros interdum malesuada non vel leo. Sed fringilla porta ligula.</p>
+                                            </li>
+                                            <li class="issues-content" id="12102015">
+                                                <img src="../images/Schedule/9.png" width="256" height="256" />
+                                                <h1>12/10/2015</h1>
+                                                <p>Donec semper quam scelerisque tortor dictum gravida. In hac habitasse platea dictumst. Nam pulvinar, odio sed rhoncus suscipit, sem diam ultrices mauris, eu consequat purus metus eu velit. Proin metus odio, aliquam eget molestie nec, gravida ut sapien. Phasellus quis est sed turpis sollicitudin venenatis sed eu odio. Praesent eget neque eu eros interdum malesuada non vel leo. Sed fringilla porta ligula.</p>
+                                            </li>
+                                            <li class="issues-content" id="01102016">
+                                                <img src="../images/Schedule/10.png" width="256" height="256" />
+                                                <h1>1/10/2016</h1>
+                                                <p>Donec semper quam scelerisque tortor dictum gravida. In hac habitasse platea dictumst. Nam pulvinar, odio sed rhoncus suscipit, sem diam ultrices mauris, eu consequat purus metus eu velit. Proin metus odio, aliquam eget molestie nec, gravida ut sapien. Phasellus quis est sed turpis sollicitudin venenatis sed eu odio. Praesent eget neque eu eros interdum malesuada non vel leo. Sed fringilla porta ligula.</p>
+                                            </li>
+                                        </ul>
+                                        <!-- <div id="grad_left"></div>
+                                        <div id="grad_right"></div> -->
+                                        <a href="#" onclick="return false" id="next">+</a>
+                                        <a href="#" onclick="return false" id="prev">-</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- end SCHEDULE -->
+                    <!-- LIST-BACKERS -->
+                    <div id="list-backers" role="tabpanel" class="tab-pane fade in project-tab-border">
+                        <div class="ml10 mr10">
+                            <div>
+                                <h3 class="fnt25">List Backers</h3>
+                            </div> <!-- TITLE -->
+                            <div id="backerlistchart" class="pb30">
+                                <canvas id="line" class="chart chart-line" chart-data="data" height="100px"
+                                        chart-labels="labels" chart-legend="true" chart-series="series" chart-colours="colors"
+                                        chart-click="onClick"></canvas>
+                            </div> <!-- LINE CHART BACKERS -->
+                            <table id="backersTable" class="table table-striped table-bordered table-hover"
+                                   datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
+                                <thead>
+                                    <tr style="background: #16a085; color: #FFF">
+                                        <th style="width: 8%">.No</th>
+                                        <th>Name</th>
+                                        <th>Pledge amout</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="x in ListBacker">
+                                        <td>{{$index + 1}}</td>
+                                        <td>{{x.FullName}}</td>
+                                        <td>{{x.Amount}}</td>
+                                        <td>{{x.Date | date:"dd/MM/yyyy"}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>  <!-- TABLE BACKERS LIST -->
+                        </div>
+                    </div><!-- end BACKERS LIST -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- end PROJECT TABPANEL -->

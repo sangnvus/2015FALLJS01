@@ -1,0 +1,88 @@
+﻿
+<div id="profile_public" class="paddingNavbar">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <img id="avatar-profile" ng-if="!checkHTTP(UserBasicInfo.ProfileImage)" ng-src="../images/avatars/{{UserBasicInfo.ProfileImage}}" alt="" class="img-responsive img-circle">
+                        <img id="avatar-profile" ng-if="checkHTTP(UserBasicInfo.ProfileImage)" ng-src="{{trustSrc(UserBasicInfo.ProfileImage)}}" alt="" class="img-responsive img-circle">
+                    </div>
+                    <div class="col-sm-8 pt10">
+                        <h3 class="fnt24 mt0 mb10">{{UserBasicInfo.FullName}}</h3>
+                        <p class="mt0 mb0">Đã tạo: {{UserBasicInfo.CountCreatedProject}} dự án</p>
+                        <p class="mt0 mb0">Đã ủng hộ: {{UserBasicInfo.CountBackedProject}} lượt</p>
+                        <p>Tham gia vào: {{UserBasicInfo.CreatedDate | date:"dd/MM/yyyy"}}</p>
+                    </div>
+                </div>
+                <div class="row pl10 pr10 pt20">
+                    <div class="readability">
+                        <h5 class="fnt22 fnt-b">Mô tả thêm:</h5>
+                        <p style="word-break: break-word; white-space: pre-wrap;">{{UserBasicInfo.Biography}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="width:350px">
+                <div ng-show="UserBasicInfo.IsActive" class="mt5 mb5 border-b"><i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Đã kích hoạt</div>
+                <div ng-hide="UserBasicInfo.IsActive" class="mt5 mb5 border-b"><i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Đang bị khóa</div>
+                <div class="mt5 mb5 border-b"><i class="glyphicon glyphicon-lock"></i>&nbsp;&nbsp;Đăng nhập lần cuối: {{UserBasicInfo.LastLogin | date:"HH:mm dd/MM/yyyy"}}</div>
+                <div class="mt5 mb5 border-b"><i class="glyphicon glyphicon-globe"></i>&nbsp;&nbsp;<a href="{{UserBasicInfo.Website}}">{{UserBasicInfo.Website}}</a></div>
+                <div class="mt5 mb5 border-b" style="word-break: break-all"><i class="fa fa-facebook-square"></i>&nbsp;&nbsp;<a href="{{UserBasicInfo.FacebookUrl}}">{{UserBasicInfo.FullName}}</a></div>
+                <div class="mt5 mb5 border-b"><i class="glyphicon glyphicon-phone"></i>&nbsp;&nbsp;{{UserBasicInfo.PhoneNumber}}</div>
+                <div class="mt5 mb5 border-b"><i class="glyphicon glyphicon-bold"></i>&nbsp;&nbsp;{{UserBasicInfo.CountCreatedProject}} đã tạo</div>
+                <div class="mt5 mb5 border-b"><i class="fa fa-university"></i>&nbsp;&nbsp;{{UserBasicInfo.CountBackedProject}} đã ủng hộ</div>
+                <div class="mt5 mb5">
+                    <button class="btn btn-primary" ng-click="showContactBox()">Gửi tin nhắn</button>
+                </div>
+            </div>
+        </div> <!-- end ROW -->
+    </div> <!--end CONTAINER -->
+</div> <!-- end PROFILE PUBLIC -->
+<!-- Contact Modal -->
+<div class="container">
+    <div class="modal fade" id="sentBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <form name="NewMessageForm" novalidate class="form-horizontal">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #404040">
+                        <button type="button" class="close cFF" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title fnt18 cFF" id="myModalLabel">Gửi tin nhắn tới {{UserBasicInfo.FullName}}</h4>
+                    </div>
+                    <!--Body-->
+                    <div class="modal-body">
+                        <div class="form-group hide" style="border-bottom: 1px solid #cfcfcf">
+                            <label for="" class="col-sm-2 control-label fnt18 fnt-b fnt-b txt-l">Tới:</label>
+                            <div class="pl0 ml0 col-sm-10">
+                                <input type="hidden" class="pl0 ml0 form-control flat fnt18 fnt-b noboder" id=""
+                                       name="ToUser" ng-model="NewMessage.ToUser" ng-init="NewMessage.ToUser = UserBasicInfo.UserName" required="">
+                            </div>
+                        </div>
+                        <div class="form-group" style="border-bottom: 1px solid #cfcfcf">
+                            <label for="" class="pr0 col-sm-2 control-label fnt18 fnt-b txt-l">Tiêu đề:</label>
+                            <div class="pl0 ml0 col-sm-10">
+                                <input type="text" class="pl0 ml0 form-control fnt18 fnt-b flat noboder"
+                                       placeholder="Nhập tiêu đề..."
+                                       name="Title"
+                                       ng-model="NewMessage.Title"
+                                       required=""
+                                       ng-minlength="8"
+                                       ng-maxlength="50">
+                            </div>
+                        </div>
+                        <div>
+                            <div text-angular name="Content" ng-model="NewMessage.Content"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer pt5 pb5">
+                        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Hủy</button>
+                        <button type="button" class="btn btn-btn-primary btn-sm btn-wide btn18" ng-click="sendMessage()"
+                                ng-disabled="!NewMessageForm.$dirty || (NewMessageForm.$dirty && NewMessageForm.$invalid)">
+                            Gửi
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

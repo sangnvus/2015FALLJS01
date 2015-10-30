@@ -1,0 +1,119 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin</title>
+    <!-- Load css -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic' rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel="stylesheet" type="text/css">
+    <link href="~/Content/admin/adminStyle.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body class="login" ng-app="LoginApp">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 center-block" style="float: none">
+                <div class="login-banner text-center">
+                    <h1><i class="fa fa-gears"></i> Dandelion Admin</h1>
+                </div>
+                <div class="portlet portlet-green">
+                    <div class="portlet-heading login-heading">
+                        <div class="portlet-title">
+                            <h4>
+                                <strong>Đăng nhập vào Dandelion Admin!</strong>
+                            </h4>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="portlet-body">
+                        @using (Html.BeginForm("AdminLogin", "Login", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @id = "LoginForm", @name = "LoginForm", role = "form" }))
+                        {
+                            <!--Normal login:-->
+                            <!--Username-->
+                            <fieldset>
+                                <div class="form-group">
+                                    <input id="login-name" class="form-control" placeholder="Tên tài khoản hoặc Email" name="UserName" type="text"
+                                           ng-trim="true"
+                                           required
+                                           ng-model="User.UserName">
+                                    <label class="login-field-icon fui-user" for="login-name"></label>
+                                    <div ng-show="LoginForm.UserName.$dirty && LoginForm.UserName.$invalid" class="text-danger">
+                                        <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+                                        <span ng-show="LoginForm.UserName.$error.required">Bạn chưa nhập tài khoản hoặc email</span>
+                                    </div>
+                                </div>
+                                <!--Password-->
+                                <div class="form-group">
+                                    <input type="hidden" name="Password" id="tbPassword">
+                                    <input class="form-control" placeholder="Mật khẩu" name="showPassword" type="password" value=""
+                                           id="tbshowPassword"
+                                           required
+                                           ng-model="User.Password">
+                                    <label class="login-field-icon fui-lock" for="tbshowPassword"></label>
+                                    <div ng-show="LoginForm.showPassword.$dirty && LoginForm.showPassword.$invalid" class="text-danger">
+                                        <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+                                        <span ng-show="LoginForm.showPassword.$error.required">Bạn chưa nhập mật khẩu</span>
+                                    </div>
+                                </div>
+                                <!--ErrorSummary-->
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <!--Remember me-->
+                                <div class="checkbox">
+                                    <label>
+                                        <input value="true" name="RememberMe" type="checkbox"> Lưu đăng nhập
+                                    </label>
+                                </div>
+                                <br>
+                                <button type="submit" class="btn btn-lg btn-green btn-block"
+                                        ng-disabled="!LoginForm.$dirty || (LoginForm.$dirty && LoginForm.$invalid)">
+                                    Đăng nhập
+                                </button>
+                            </fieldset>
+                            <br>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GLOBAL SCRIPTS -->
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/plugin/jquery.md5.js"></script>
+    @*<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>*@
+    <!-- HISRC Retina Images -->
+    @*<script src="js/plugins/hisrc/hisrc.js"></script>*@
+
+    <!-- PAGE LEVEL PLUGIN SCRIPTS -->
+    <!-- THEME SCRIPTS -->
+    @*<script src="~/Scripts/admin-flex/flex.js"></script>*@
+
+    <script>
+        $("#LoginForm").submit(function (event) {
+            var password = $('#tbshowPassword').val();
+            var md5 = $.md5(password);
+            $('#tbPassword').val(md5);
+            return true;
+        });
+
+        angular.module("LoginApp", []);
+    </script>
+</body>
+</html>

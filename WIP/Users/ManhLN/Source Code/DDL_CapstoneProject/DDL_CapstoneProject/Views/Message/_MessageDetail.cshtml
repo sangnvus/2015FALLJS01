@@ -1,0 +1,109 @@
+﻿<!-- Side Navigation -->
+<div id="message-view" class="paddingNavbar" style="background-color: #fff">
+    <div class="container">
+        <div class="row">
+            <div id="colPush" class="col-md-3">
+                <ul class="">
+                    <h5 class="fnt30 fnt-b">Tin nhắn</h5>
+                    <div class="clearfix"></div>
+
+                    <li>
+                        <a href="/#/user/message/">
+                            <i class="icon fa fa-inbox fa-2x fa-fw"></i>
+                            <span class="toggle">Hộp thư đến <span ng-show="NumberNewMessage.ReceivedMessage > 0" class="badge">{{NumberNewMessage.ReceivedMessage}}</span></span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/#/user/message?list=sent">
+                            <i class="icon fa fa-paper-plane fa-2x fa-fw"></i>
+                            <span class="toggle">Hộp thư đi <span ng-show="NumberNewMessage.SentMessage > 0" class="badge">{{NumberNewMessage.SentMessage}}</span></span>
+                        </a>
+                    </li>
+
+                    <!-- <li>
+                        <a>
+                            <i class="icon fa fa-trash-o fa-2x fa-fw"></i>
+                            <span class="toggle">Delete</span>
+                        </a>
+                    </li>
+
+                    <li class="item toggle-link1">
+                        <a>
+                            <i class="arrow_toogle icon fa fa-arrow-circle-left fa-2x fa-fw"></i>
+                            <span class="toggle">Hide</span>
+                        </a>
+                    </li> -->
+                </ul>
+            </div>
+            <div id="colMain" class="col-md-8">
+                <div>
+                    <button class="toggle-link btn btn-primary"><i class="icon fa fa-bars"></i></button>
+                    <button class="btn btn-danger btn18" ng-click="Delete()"><i class="icon fa fa-trash-o"></i> Xóa</button>
+
+                    <!-- mes chat -->
+                    <div class="pt10">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default" ng-repeat="Message in Conversation.MessageList">
+                                <div class="panel-heading" role="tab" id="headingOne">
+                                    <h4 class="panel-title">
+                                        <a role="button" data-toggle="collapse" data-target="#message{{Message.MessageID}}" aria-expanded="true" aria-controls="message{{Message.MessageID}}">
+                                            <!-- Collapsible Group Item #1 -->
+                                            <div class="row">
+                                                <div class="col-sm-1">
+                                                    <img style="width: 45px; height: 45px" ng-if="checkHTTP(Message.SenderProfileImage)" ng-src="{{trustSrc(Message.SenderProfileImage)}}" a alt="" />
+                                                    <img style="width: 45px; height: 45px" ng-if="!checkHTTP(Message.SenderProfileImage)" ng-src="../images/avatars/{{Message.SenderProfileImage}}" alt="" />
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <p class="mb0">{{Message.SenderName}}</p>
+                                                    @*<span class="text-muted">Order Status Update: Order #231</span>*@
+                                                </div>
+                                                <div class="col-sm-4 text-right">
+                                                    {{Message.SentTime | date:"'lúc' HH:mm 'ngày' dd/MM/yyyy"}}
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="message{{Message.MessageID}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="message{{Message.MessageID}}" ng-class="{'in': $last}">
+                                    <div class="panel-body" ta-bind ng-model="Message.Content"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <button class="btn btn-primary btn-sm btn-wide" ng-click="ReplyMessage()">Gửi trả lời</button>
+                        <!-- Add reply -->
+                        <div class="reply">
+                            <div class="media pt20">
+                                <div class="pull-left">
+                                    <img style="width: 50px; height: 50px" ng-if="checkHTTP(CurrentUser.ProfileImage)" ng-src="{{trustSrc(CurrentUser.ProfileImage)}}" alt="" />
+                                    <img style="width: 50px; height: 50px" ng-if="!checkHTTP(CurrentUser.ProfileImage)" ng-src="../images/avatars/{{CurrentUser.ProfileImage}}" alt="" />
+                                </div>
+                                <div class="media-body border-tips">
+                                    <div text-angular name="Content" ng-model="Reply.Content"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //$(document).ready(function () {
+    //    // Table message use Jtable
+    //    $('#messageTable').dataTable();
+    //    $('#messageTable_length').hide();
+
+    //});
+
+    //Toogle slideBar
+    $('.toggle-link').click(function () {
+        $('.toggle').toggle(300);
+        $('#colPush').toggleClass("col-md-3 col-md-2", 300);
+        $('#colMain').toggleClass("col-md-8 col-md-9", 300);
+        $('.arrow_toogle').toggleClass("fa-arrow-circle-left fa-arrow-circle-right", 300);
+    });
+</script>
+

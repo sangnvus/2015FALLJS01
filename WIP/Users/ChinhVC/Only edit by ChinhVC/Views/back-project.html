@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Back project</title>
+    
+    <!-- Loading Bootstrap -->
+    <link href="../Contents/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Loading Flat UI -->
+    <link href="../Contents/flat-ui.min.css" rel="stylesheet">
+    
+    <!-- Loading Fonts avesome-->
+    <link rel="stylesheet" type="text/css" href="../fonts/font-awesome/css/font-awesome.min.css">
+    
+    <!-- Loading Style -->
+    <link rel="stylesheet" type="text/css" href="../Contents/style.css">
+
+    <!-- Loading Animate -->
+    <link href="../Contents/animate.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+    <div id="header">
+      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-5">
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <a class="navbar-brand" href="home_logged.html">DanDeLion</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-5">
+           <ul class="nav navbar-nav">
+            <li class="hover-nav"><a class="abc" href="discover.html">Discover</a></li>
+            <li class="hover-nav"><a href="create_project1.html">Start</a></li>
+            <li role="separator" class="hidden-xs divider-vertical"></li>
+            <form class="navbar-form navbar-left" action="search-advance.html" role="search">
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" id="navbarInput-01" type="search" placeholder="Search Projects">
+                  <span class="input-group-btn">
+                    <button type="" class="btn"><span class="fui-search"></span></button>
+                  </span>
+                </div>
+              </div>
+          </form>
+          </ul>
+
+          <ul id="profile_dropdown" class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img id="avatar" src="../images/avatar/avatar1.png" alt="" class="img-responsive img-circle center-block">
+                MyName
+                <span class="caret"></span>
+              </a>
+              
+              <ul class="dropdown-menu">
+                <h5 class="c3">My stuff</h5>
+                <li><a href="message.html">Message <span class="badge">3</span></a></li>
+                <li><a href="backed_project.html">Backed projects</a></li>
+                <li><a href="created_project.html">Created projects</a></li>
+                <li><a href="starred_project.html">Starred projects</a></li>
+                <li class="divider"></li>
+                <h5 class="c3">Setting</h5>
+                <li><a href="account.html">Account</a></li>
+                <li><a href="editprofile.html">Edit profile</a></li>
+                <li class="divider"></li>
+                <p class="no-wrap">You are logged is as <b>ChinhVC</b> | <a class="fnt-b" href="home.html">Log out</a></p>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </nav>
+    </div> <!-- end header -->
+
+    <div id="content" class="paddingNavbar">
+      <div id="back_project">
+        <div class="container">
+          <div class="title text-center">
+            <h3 class="fnt30 mb0 pb0"><a href="project_detail.html">Divinity: Original Sin 2</a></h3>
+            <p class="fnt18 mt0 pt0">by <a class="fnt-b" href="">Larian Studios LLC</a></p>
+          </div>
+          <div class="row mr30 ml30">
+            <div class="col-md-8 pull-left">
+              <p class="fnt22 fnt-b">Let's choose your reward!</p>
+              <div id="choose_reward">
+                <form role="form">
+                  <div class="form-group">
+                    <div class="item-radio mt20 mb20">
+                      <label class="radio" for="radio100">
+                        <input name="optionsRadios2" type="radio" data-toggle="radio" value="" id="radio100" required checked>
+                        <div class="row pb20">
+                          <div class="col-md-8">
+                            <div class="fnt18"><span class="fnt-b">No thanks, </span><span>I just want to help the project.</span></div>
+                          </div>
+                          <div class="col-md-4">
+                            <!-- <p class="mt0 pt0">Estimated delivery</p>
+                            <p class="mt0 pt0">Dec 2016</p> -->
+                          </div>
+                        </div>
+                        <!-- expand -->
+                        <div class="item-expand pt10 bt-dash">
+                          <form action=""></form>
+                          <form class="form-inline" role="form" >
+                            <p class="fnt18 fnt-b pt0 pp0">Plegde Infor:</p>
+                            <div class="form-group pb10">
+                              <div class="input-group pl10">
+                                <input type="text" class="form-control" placeholder="Nhập số tiền" value="15" />
+                                <span class="input-group-addon">VNĐ</span>
+                              </div>
+                            </div>
+                            <div class="form-group pb10 pl10">
+                              <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Nhập số lượng" value="1" />
+                                <span class="input-group-addon">SP</span>
+                              </div>
+                            </div>
+                            <a href="payment.html" class="form-control btn btn-primary mb10">Continue</a>
+                          </form>
+                        </div>
+                      </label>
+                    </div> <!-- item-radio -->
+                    <div class="item-radio mt20 mb20">
+                      <label class="radio" for="radio101">
+                        <input name="optionsRadios2" type="radio" data-toggle="radio" value="" id="radio101" required>
+                        <div class="row pb20">
+                          <div class="col-md-8">
+                            <div class="fnt18"><span class="fnt-b">$5 or more</span></div>
+                            <p>Thank the Seven! Err-- Five!</p>
+                            <p>Thank you for your pledge! For this sign of support, we here at Larian Studios are truly grateful.</p>
+                          </div>
+                          <div class="col-md-4">
+                            <p class="fnt-b mt0 pt0">Estimated delivery</p>
+                            <p class="mt0 pt0">Dec 2016</p>
+                          </div>
+                        </div>
+                        <!-- expand -->
+                        <div class="item-expand pt10 bt-dash hidden">
+                          <form action=""></form>
+                          <form class="form-inline" role="form" >
+                            <p class="fnt18 fnt-b pt0 pp0">Plegde Infor:</p>
+                            <div class="form-group pb10">
+                              <div class="input-group pl10">
+                                <input type="text" class="form-control" placeholder="Nhập số tiền" value="15" />
+                                <span class="input-group-addon">VNĐ</span>
+                              </div>
+                            </div>
+                            <div class="form-group pb10 pl10">
+                              <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Nhập số lượng" value="1" />
+                                <span class="input-group-addon">SP</span>
+                              </div>
+                            </div>
+                            <a href="payment.html" class="form-control btn btn-primary mb10">Continue</a>
+                           
+                          </form>
+                        </div>
+                      </label>
+                    </div> <!-- item-radio -->
+                    <div class="item-radio mt20 mb20">
+                      <label class="radio" for="radio103">
+                        <input name="optionsRadios2" type="radio" data-toggle="radio" value="" id="radio103" required>
+                        <div class="row pb20">
+                          <div class="col-md-8">
+                            <div class="fnt18"><span class="fnt-b">$10 or more</span></div>
+                            <p>Thank the Seven! Err-- Five!</p>
+                            <p>Thank you for your pledge! For this sign of support, we here at Larian Studios are truly grateful.</p>
+                          </div>
+                          <div class="col-md-4">
+                            <p class="fnt-b mt0 pt0">Estimated delivery</p>
+                            <p class="mt0 pt0">Dec 2016</p>
+                          </div>
+                        </div>
+                        <!-- expand -->
+                        <div class="item-expand pt10 bt-dash hidden">
+                          <form action=""></form>
+                          <form class="form-inline" role="form" >
+                            <p class="fnt18 fnt-b pt0 pp0">Plegde Infor:</p>
+                            <div class="form-group pb10">
+                              <div class="input-group pl10">
+                                <input type="text" class="form-control" placeholder="Nhập số tiền" value="15" />
+                                <span class="input-group-addon">VNĐ</span>
+                              </div>
+                            </div>
+                            <div class="form-group pb10 pl10">
+                              <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Nhập số lượng" value="1" />
+                                <span class="input-group-addon">SP</span>
+                              </div>
+                            </div>
+                            <a href="payment.html" class="form-control btn btn-primary mb10">Continue</a>
+                          </form>
+                        </div>
+                      </label>
+                    </div> <!-- item-radio -->
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="col-md-4 pull-right pt30">
+              <div class="fnt16 border-tips">
+                <p class="bold">DoI is not a store.</p>
+                <p>It's a way to bring creative projects to life.</p>
+                <p>DoI does not guarantee projects or investigate a creator's ability to complete their project. It is the responsibility of the project creator to complete their project as promised, and the claims of this project are theirs alone.</p>
+                <p><a href="">Learn more about accountability</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> <!-- end feature3 -->
+    </div> <!-- end content -->
+
+    <div class="scroll-top-wrapper ">
+      <span class="scroll-top-inner">
+        <i class="fa fa-2x fa-arrow-circle-up"></i>
+      </span>
+    </div> <!-- end SCROLL TO TOP -->
+    
+    <div id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <p class="fnt30 fnt-b dark-cyan">DLL - Dandelion</p>
+            <a href="">Hosted by DDL</a>
+          </div>
+          <div class="col-md-6">
+            <ul class="pull-right list-inline">
+              <li><a href="home.html">Home</a></li>
+              <li><a href="about.html">About us</a></li>
+              <li><a href="#">Help</a></li>
+              <li><a href="#">Contact</a></li>
+              <a id="gototop" class="gototop" href="#"><span class="glyphicon glyphicon-chevron-up"></span></i></a>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div> <!-- end footer -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+    <script src="../Scripts/jquery.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+    <script src="../Scripts/flat-ui.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <!-- My Js -->
+    <script src="../Scripts/application.js"></script>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- <script src="../Scripts/bootstrap.min.js"></script>-->
+    <!--<script src="../dist/js/vendor/video.js"></script>-->
+  </body>
+</html>

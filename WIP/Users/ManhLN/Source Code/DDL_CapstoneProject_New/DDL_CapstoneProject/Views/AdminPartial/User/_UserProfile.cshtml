@@ -1,0 +1,272 @@
+﻿<div class="row">
+    <div class="modal fade" id="infoBanker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Thông tin ủng hộ</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3 class="fnt25">Người ủng hộ</h3>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <img ng-if="!checkHTTP(UserProfile.ProfileImage)" ng-src="../images/avatars/{{UserProfile.ProfileImage}}" alt="" class="img-responsive img-profile">
+                                        <img ng-if="checkHTTP(UserProfile.ProfileImage)" ng-src="{{trustSrc(UserProfile.ProfileImage)}}" alt="" class="img-responsive img-profile">
+                                    </div>
+                                    <div class="col-md-9">
+                                        <br>
+                                        <form>
+                                            <div>
+                                                <label class="fnt20 fnt-b mt0 mb0" for="name">{{BackingDetail.FullName}}</label>
+                                            </div>
+                                            <div>
+                                                <label class="fnt20 mt0 mb0" for="email">{{BackingDetail.Email}}</label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="">
+                                    <div class="">
+                                        <label class="fnt18 mt0 mb0" for="name"><span class="fnt-b">Địa chỉ :&nbsp </span> {{BackingDetail.Address}}</label>
+                                    </div>
+                                    <div class="">
+                                        <label class="fnt18 mt0 mb0" for="name"><span class="fnt-b">Số điện thoại :&nbsp </span> {{BackingDetail.PhoneNumber}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h3 class="fnt25">Dự án: "{{BackingDetail.ProjectTitle}}"</h3>
+                                <br>
+                                <p class="fnt18" for="name">
+                                    <label class="fnt-b">Ủng hộ gói:&nbsp </label><span class="fnt-b">
+                                        "Ủng hộ <span class="money usd no-code">{{BackingDetail.Reward | number : fractionSize}} &#8363;</span> hoặc nhiều hơn"
+                                    </span><label> với số tiền&nbsp</label><span class="fnt-b money usd no-code">{{BackingDetail.PledgedAmount | number : fractionSize}} &#8363;</span>
+                                    và <label>số lượng&nbsp</label> <span class="fnt-b"> {{BackingDetail.Quantity}}</span>
+                                </p>
+
+                                <!-- <p class="fnt18" for="name"><span class="fnt-b">Số lượng:</span> 1</p> -->
+                                <p class="fnt18" for="name"><label class="fnt-b">Tổng số tiền :&nbsp </label><span class="fnt-b money usd no-code">{{BackingDetail.Total | number : fractionSize}} &#8363;</span></p>
+                                <p class="fnt18" for="name"><label class="fnt-b">Ngày gửi :&nbsp </label>{{BackingDetail.BackedDate | date : "hh' giờ 'mm' phút' dd-MM-yyyy"}}</p>
+                                <p class="mb0 pb0"><label class="fnt-b">Nội dung :&nbsp </label><span>{{BackingDetail.Description}}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div> <!-- end Modal infoBanker -->
+    <div class="col-lg-12">
+
+        <div class="portlet portlet-default">
+            <div class="portlet-body">
+                <ul id="userTab" class="nav nav-tabs">
+                    <li class="active"><a showtab href="#overview" data-toggle="tab">Thông tin</a></li>
+                    <li><a showtab data-toggle="tab" href="#backed" ng-click="getBackedProject()">Dự án đã ủng hộ</a></li>
+                    <li><a showtab data-toggle="tab" href="#created" ng-click="getCreatedProject()">Dự án đã tạo</a></li>
+                </ul>
+                <div id="userTabContent" class="tab-content">
+                    <div class="tab-pane fade in active" id="overview">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <img ng-if="!checkHTTP(UserProfile.ProfileImage)" ng-src="../images/avatars/{{UserProfile.ProfileImage}}" alt="" class="img-responsive img-profile">
+                                <img ng-if="checkHTTP(UserProfile.ProfileImage)" ng-src="{{trustSrc(UserProfile.ProfileImage)}}" alt="" class="img-responsive img-profile">
+                                <div class="list-group">
+                                    <a class="list-group-item active">Tổng quan</a>
+                                    <a href="#" class="list-group-item">Số dự án đã ủng hộ<span class="badge green">{{UserProfile.CountBackedProject}}</span></a>
+                                    <a href="#" class="list-group-item">Số dự án đã tạo<span class="badge red">{{UserProfile.CountCreatedProject}}</span></a>
+                                    <a ng-show="UserProfile.IsActive" class="list-group-item">Trạng thái<span class="badge btn-green">Đã kích hoạt</span></a>
+                                    <a ng-hide="UserProfile.IsActive" class="list-group-item">Trạng thái<span class="badge btn-default">Chưa kich hoạt</span></a>
+                                </div>
+                            </div>
+                            <div class="col-lg-9">
+                                <div id="userSettingsContent" class="tab-content">
+                                    <div class="tab-pane fade in active" id="basicInformation">
+                                        <form role="form">
+                                            <h4 class="page-header">Thông tin cá nhân của thành viên:</h4>
+                                            <div class="form-group">
+                                                <label>Tên đầy đủ</label>
+                                                <input type="text" class="form-control" value="{{UserProfile.FullName}}" disabled>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Số điện thoại liên lạc</label>
+                                                <input type="tel" class="form-control" value="{{UserProfile.ContactNumber}}" disabled>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Địa chỉ</label>
+                                                <input type="text" class="form-control" value="{{UserProfile.Addres}}" disabled>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Giới tính</label>
+                                                <input ng-show="UserProfile.Gender == 'male'" type="text" class="form-control" value="Nam" disabled>
+                                                <input ng-hide="UserProfile.Gender ==  'male'" type="text" class="form-control" value="Nữ" disabled>
+                                            </div>
+                                            <div class="form-inline form-group">
+                                                @*<div class="form-group">
+                                                        <label>Country</label>
+                                                        <input type="text" class="form-control" value="England" disabled>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>City</label>
+                                                        <input type="text" class="form-control" value="Bayville" disabled>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>State</label>
+                                                        <input type="text" class="form-control" value="FL" disabled>
+                                                    </div>*@
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Loại thành viên</label>
+                                                <input type="text" class="form-control" value="{{UserProfile.LoginType}}" disabled>
+                                            </div>
+                                            <h4 class="page-header">Thông tin liên lạc:</h4>
+                                            <div class="form-group">
+                                                <label><i class="fa fa-envelope-o fa-fw"></i>Địa chỉ Email</label>
+                                                <input type="email" class="form-control" value="{{UserProfile.Email}}" disabled>
+                                            </div>
+                                            <div class="form-group">
+                                                <label><i class="fa fa-globe fa-fw"></i> Website</label>
+                                                <input type="url" class="form-control" value="{{UserProfile.Website}}" disabled>
+                                            </div>
+                                            <h4 class="page-header">Thông tin thêm:</h4>
+                                            <div class="form-group">
+                                                <label><i class="fa fa-info fa-fw"></i> Mô tả :</label>
+                                                <textarea class="form-control" rows="3" disabled>{{UserProfile.Biography}}</textarea>
+                                            </div>
+                                            <h4 class="page-header">Thông tin Facebook:</h4>
+                                            <div class="form-group">
+                                                <label><i class="fa fa-facebook fa-fw"></i>Đường dẫn Facebook</label>
+                                                <input type="url" class="form-control" value="{{UserProfile.FacebookUrl}}" disabled>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab backed projects -->
+                    <div class="tab-pane fade in" id="backed" role="tabpanel">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="portlet portlet-default">
+                                    <div class="portlet-heading">
+                                        <div class="portlet-title">
+                                            <h4>Dự án đã ủng hộ</h4>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <div class="table-responsive">
+                                            <table id="example-table" class="table table-striped table-bordered table-hover table-green">
+                                                <thead>
+                                                    <tr>
+                                                        <th>STT</th>
+                                                        <th>Tên dự án</th>
+                                                        <th>Số tiền đã ủng hộ</th>
+                                                        <th>Mục tiêu gây quỹ</th>
+                                                        <th>Tình trạng dự án</th>
+                                                        <td>Hành động</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="odd gradeX" ng-repeat="project in ListBacked">
+                                                        <td>{{$index + 1}}</td>
+                                                        <td>{{project.ProjectTitle}}</td>
+                                                        <td><span class="money usd no-code">{{project.PledgedAmount | number : fractionSize}} &#8363;</span></td>
+                                                        <td><span class="money usd no-code">{{project.FundingGoals | number : fractionSize}} &#8363;</span></td>
+                                                        <td>{{project.Status}}</td>
+                                                        <td>
+                                                            <button class="btn btn-blue" data-toggle="modal" data-target="#infoBanker" title="View" ng-click="getBackingDetail()">Xem</button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.portlet-body -->
+                                </div>
+                                <!-- /.portlet -->
+
+                            </div>
+                            <!-- /.col-lg-12 -->
+                        </div>
+                    </div>
+                    <!-- End tab backed projects -->
+                    <!-- Tab created projects -->
+                    <div class="tab-pane fade" id="created">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="portlet portlet-default">
+                                    <div class="portlet-heading">
+                                        <div class="portlet-title">
+                                            <h4>Dự án đã tạo</h4>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <div class="table-responsive">
+                                            <table id="example-table-2" class="table table-striped table-bordered table-hover table-green">
+                                                <thead>
+                                                    <tr>
+                                                        <th>STT</th>
+                                                        <th>Tên dự án</th>
+                                                        <th>Danh mục</th>
+                                                        <th>Tổng số tiền đã gây quỹ được</th>
+                                                        <th>Mục tiêu gây quỹ</th>
+                                                        <th>Tình trạng duyệt</th>
+                                                        <th>Tình trạng dự án</th>
+                                                        <th>Thời gian duyệt</th>
+                                                        <th>Hành động</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="project in ListCreated">
+                                                        <td>{{$index + 1}}</td>
+                                                        <td>{{project.ProjectTitle}}</td>
+                                                        <td>{{project.Category}}<span class="money usd no-code"></span></td>
+                                                        <td><span class="money usd no-code">{{project.PledgedOn | number : fractionSize}} &#8363;</span></td>
+                                                        <td><span class="money usd no-code">{{project.FundingGoals | number : fractionSize}} &#8363;</span></td>
+                                                        <td>
+                                                            <label ng-show="project.Status == 'draft'" class="btn btn-white">Nháp</label>
+                                                            <label ng-show="project.Status == 'approved'" class="btn btn-blue">Đã duyệt</label>
+                                                            <label ng-show="project.Status == 'suspended'" class="btn btn-red">Chờ kiểm duyệt</label>
+                                                        </td>
+                                                        <td>{{project.Isfunded}}</td>
+                                                        <td>{{project.ExpireDate | date:"dd/MM/yyyy"}}</td>
+                                                        <td>
+                                                            <a href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")" class="btn btn-blue">Xem</a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.portlet-body -->
+                                </div>
+                                <!-- /.portlet -->
+
+                            </div>
+                            <!-- /.col-lg-12 -->
+                        </div>
+                    </div>
+                    <!-- End tab created project -->
+
+                </div>
+            </div>
+            <!-- /.portlet-body -->
+        </div>
+        <!-- /.portlet -->
+
+
+    </div>
+    <!-- /.col-lg-12 -->
+</div>

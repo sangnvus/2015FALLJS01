@@ -1,0 +1,150 @@
+﻿<div id="publicprofile" class="paddingNavbar">
+    <div class="container">
+        <h4>Thiết lập</h4>
+        <div class="row pl15">
+            <ul class="list-inline">
+                <li><a href="@Url.Content("/#/user/editpassword/")" class="fnt18 fnt-b link-gray-dark">Tài khoản</a></li>
+                <li><a href="@Url.Content("/#/user/editprofile/")" class="fnt18 fnt-b">Sửa thông tin cá nhân</a></li>
+                <li><a href="@Url.Content("/#/user/publicprofile/" + User.Identity.Name)" class="fnt18 fnt-b link-gray-dark">Thông tin công khai</a></li>
+            </ul>
+        </div>
+    </div> <!-- end SETTING -->
+    <div class="container">
+        <div class="row" style="border-bottom: 1px solid #cfcfcf;">
+            <div class="col-md-6">
+                <form id="form-left" name="myForm" role="form">
+                    <div id="" class="form-group">
+
+                        <div for="name" class="pb20">
+                            <label for="name" class="fnt18 fnt-b">Tên đầy đủ</label>
+                            <div class="input-group mt0">
+                                <input type="text" name="fullname" class="form-control"
+                                       ng-model="UserEditInfo.FullName"
+                                       required
+                                       ng-trim="true"
+                                       ng-minlength="6"
+                                       ng-maxlength="30" />
+                                <span class="input-group-btn">
+                                    <button type="" class="btn"><span class="fui-user"></span></button>
+                                </span>
+                            </div>
+                        </div>
+                        <span ng-show="myForm.fullname.$dirty && myForm.fullname.$invalid">
+                            <span ng-show="myForm.fullname.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
+                            <span style="color:red" ng-show="myForm.fullname.$error.required">Bạn chưa nhập tên đầy đủ!</span><br ng-show="myForm.fullname.$error.required" />
+                            <span style="color:red" ng-show="myForm.fullname.$error.minlength">Tên đầy đủ tối thiểu 6 kí tự!</span><br ng-show="myForm.fullname.$error.minlength" />
+                            <span style="color:red" ng-show="myForm.fullname.$error.maxlength">Tên đầy đủ tối đa 20 kí tự!</span><br ng-show="myForm.fullname.$error.maxlength" />
+                            <span style="color:red" ng-show="myForm.fullname.$error.pattern">Tên đầy đủ phải gồm cả họ và tên!</span><br ng-show="myForm.fullname.$error.pattern" />
+                        </span>
+
+                        <div for="email" class="pb20">
+                            <label for="email" class="fnt18 fnt-b">Email</label>
+                            <div class="input-group mt0">
+                                <span type="email" name="email" id="exampleInputEmail1" class="form-control " placeholder="Email liên lạc">{{UserEditInfo.Email}}</span>
+                                <span class="input-group-btn">
+                                    <button type="" class="btn"><span class="fui-mail"></span></button>
+                                </span>
+                            </div>
+                        </div>
+                        <div for="image" class="pb30">
+                            <label for="image" class="fnt18 fnt-b">Ảnh đại diện</label>
+                            <div class="input-group form-control mt0">
+                                <div class="asset_upload">
+                                    <div class="image-clip pull-left">
+                                        <img id="image-clip" src="{{UserEditInfo.ProfileImage}}" alt="" class="img-responsive center-block">
+                                    </div>
+                                    <div class="upload">
+                                        <input class="avatar file" name="UploadImage" id="imgSelected" ng-file-dirty
+                                               ng-file-select="onFileSelect($files)" accept="image/*" type="file">
+                                        <strong class="center profile-photo">
+                                            Lựa chọn một hình ảnh từ máy tính của bạn
+                                            <span> JPEG, PNG, GIF, or BMP  •  50MB file limit</span>
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div for="name" class="pb20">
+                            <p>
+                                <label for="name" class="fnt18 fnt-b">Giới thiệu</label>
+                                <textarea class="form-control" style="resize:none" name="" id="" cols="30" rows="5"
+                                          placeholder="Giới thiệu ngắn gọn về bản thân"
+                                          ng-model="UserEditInfo.Biography"
+                                          >{{UserEditInfo.Biography}}</textarea>
+                            </p>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <form name="myForm2" action="">
+                    <div class="form-group ">
+                        <div for="name" class="pb20">
+                            <label for="name" class="fnt18 fnt-b">Giới tính</label>
+                            <div class="mt0">
+                                <select name="gender" class="form-control" ng-change="unitChanged()" ng-model="UserEditInfo.Gender">
+                                    <option value="{{item.id}}" ng-repeat="item in units">{{item.label}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div for="dateofbirth" class="pb20">
+                            <label for="dateofbirth" class="fnt18 fnt-b">Ngày sinh</label>
+                            <div class="input-group mt0">
+                                <input class="form-control" type="date" placeholder="Ngày sinh"
+                                       id="dob" name="DoB"
+                                       ng-model="UserEditInfo.DateOfBirth"
+                                       required>
+                                <span class="input-group-btn">
+                                    <button type="" class="btn"><span class="fui-calendar"></span></button>
+                                </span>
+                            </div>
+                            @*<span ng-show="myForm2.DoB.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
+                            <span style="color:red" ng-show="myForm2.DoB.$error.required">Bạn chưa nhập ngày tháng năm sinh!</span>*@
+                        </div>
+                        <div for="address" class="pb20">
+                            <label for="address" class="fnt18 fnt-b">Địa chỉ</label>
+                            <div class="input-group mt0">
+                                <input class="form-control" type="text"
+                                       placeholder="Địa chỉ liên hệ"
+                                       name="address"
+                                       ng-model="UserEditInfo.Addres"
+                                       required ng-maxlength="60" maxlength="60" ng-trim="true"
+                                       ng-autocomplete ng-disabled="AllEditable == false">
+                                <span class="input-group-btn">
+                                    <button type="" class="btn"><span class="fui-location"></span></button>
+                                </span>
+                            </div>
+                            @*<span ng-show="myForm2.address.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
+                            <span style="color:red" ng-show="myForm2.address.$error.required">Bạn chưa nhập địa chỉ!</span>*@
+                        </div>
+                        <div for="phonenumber" class="">
+                            <label for="phonenumber" class="fnt18 fnt-b">Số điện thoại</label>
+                            <div class="input-group mt0">
+                                <input class="form-control" type="text" placeholder="Số điện thoại"
+                                       ng-model="UserEditInfo.ContactNumber">
+                                <span class="input-group-btn">
+                                    <button type="" class="btn"><span class="glyphicon glyphicon-phone-alt"></span></button>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div for="website" class="pb20">
+                            <label for="website" class="fnt18 fnt-b">Website</label>
+                            <textarea class="form-control" style="resize:none" name="" id="" cols="30" rows="5" placeholder="Viết các trang website liên hệ như facebook của bạn, công ty của bạn, ..."
+                                      ng-model="UserEditInfo.Website"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="pt20 pb20">
+            <button class="btn btn-primary" ng-click="submit()"
+                    ng-disabled="(!myForm.$dirty && !myForm2.$dirty) || (myForm.$dirty && myForm.$invalid) ">
+                Lưu thiết lập
+            </button>
+        </div>
+    </div>
+
+</div>

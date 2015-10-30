@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Active";
+}
+<div class="container">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-success center-block" style="margin-top: 90px">
+            <div class="panel-heading text-center">
+                <h3>Thành công</h3>
+            </div>
+            <div class="panel-body text-center">
+                Tài khoản của bạn đã được kích hoạt thành công.
+                <br/>
+                Bạn có thể ngay lập tức đăng nhập và sử dụng website.
+                <br/>
+                <br/>
+                <a href="@Url.Content("~/Login/")" class="btn btn-primary btn-lg">
+                    <span>Đăng nhập ngay</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/angularjs")
+    <script>
+        var service = angular.module("DDLService", []);
+        var directive = angular.module("DDLDirective", []);
+        var app = angular.module("ClientApp", ["DDLDirective", "DDLService"]);
+    </script>
+    <script src="~/App/directives/ngEnter.js"></script>
+}

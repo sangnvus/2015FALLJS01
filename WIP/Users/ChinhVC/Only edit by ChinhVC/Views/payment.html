@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Payment</title>
+    
+    <!-- Loading Bootstrap -->
+    <link href="../Contents/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Loading Flat UI -->
+    <link href="../Contents/flat-ui.min.css" rel="stylesheet">
+    
+    <!-- Loading Fonts avesome-->
+    <link rel="stylesheet" type="text/css" href="../fonts/font-awesome/css/font-awesome.min.css">
+    
+    <!-- Loading Style -->
+    <link rel="stylesheet" type="text/css" href="../Contents/style.css">
+
+    <!-- Loading Animate -->
+    <link href="../Contents/animate.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div id="header">
+      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-5">
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <a class="navbar-brand" href="home_logged.html">DanDeLion</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-5">
+           <ul class="nav navbar-nav">
+            <li class="hover-nav"><a class="abc" href="discover.html">Discover</a></li>
+            <li class="hover-nav"><a href="create_project1.html">Start</a></li>
+            <li role="separator" class="hidden-xs divider-vertical"></li>
+            <form class="navbar-form navbar-left" action="search-advance.html" role="search">
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" id="navbarInput-01" type="search" placeholder="Search Projects">
+                  <span class="input-group-btn">
+                    <button type="" class="btn"><span class="fui-search"></span></button>
+                  </span>
+                </div>
+              </div>
+          </form>
+          </ul>
+
+          <ul id="profile_dropdown" class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img id="avatar" src="../images/avatar/avatar1.png" alt="" class="img-responsive img-circle center-block">
+                MyName
+                <span class="caret"></span>
+              </a>
+              
+              <ul class="dropdown-menu">
+                <h5 class="c3">My stuff</h5>
+                <li><a href="message.html">Message <span class="badge">3</span></a></li>
+                <li><a href="backed_project.html">Backed projects</a></li>
+                <li><a href="created_project.html">Created projects</a></li>
+                <li><a href="starred_project.html">Starred projects</a></li>
+                <li class="divider"></li>
+                <h5 class="c3">Setting</h5>
+                <li><a href="account.html">Account</a></li>
+                <li><a href="editprofile.html">Edit profile</a></li>
+                <li class="divider"></li>
+                <p class="no-wrap">You are logged is as <b>ChinhVC</b> | <a class="fnt-b" href="home.html">Log out</a></p>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </nav>
+    </div> <!-- end header -->
+
+
+    <div id="content" class="paddingNavbar">
+      <div id="payment">
+        <div id="infoBanker">
+         <div class="container">
+          <div class="panel panel-success">
+            <div class="panel-heading bold">Infomation</div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h3>Information Banker</h3>
+                    <div class="row">
+                      <div class="col-md-3 pt30">
+                        <img id="avatar1" src="../images/avatar/avatar1.png" alt="" class="img-responsive img-circle center-block">
+                      </div>
+                      <div class="col-md-9">
+                        <br>
+                        <form>
+                          <input type="text" class="form-control" placeholder="Name...">
+                          <br>
+                          <input type="Email" class="form-control" placeholder="Email...">
+                        </form>
+                      </div>
+                    </div>
+
+                    <div class="row pt15">
+                        <div class="col-md-8 pt10 pb10">
+                          <input type="text" class="form-control" placeholder="Address...">
+                        </div>
+                        <div class="col-md-4 pt10 pb10">
+                          <input type="text" class="form-control" placeholder="Phone number...">
+                        </div>
+                    </div>
+                    <div class="row pt15">
+                      <div class="col-md-12">
+                        <input type="text" class="form-control" placeholder="Address details (not required)">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <h3>More Information</h3>
+                    <div class="row">
+                      <br>
+                      <div class="col-md-12">
+                        <textarea class="form-control" rows="4" placeholder="Contents..."></textarea>
+                        <label class="checkbox" for="checkbox1">
+                          <input type="checkbox" data-toggle="checkbox" value="" id="checkbox1" required>
+                          Anonymous, does not appear in the list of bankers.
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+            </div>
+            </div>
+          </div>
+        </div> <!-- info Banker -->
+ 
+        <div id="paymentReward">
+          <div class="container">
+            <div class="panel panel-info">
+              <div class="panel-heading bold">Rewards</div>
+              <div class="panel-body">
+                 <p class="fnt30 fnt-b txt-c c3 pt0 pb0 mt0 mb0">Project: "Divinity: Original Sin 2"</p>
+                 <p class="fnt18 fnt-b txt-c pt0 pb0 mt0 mb0">by Larian Studios LLC</p>
+                 <p class="bold">Contents:</p>
+                 <p>Thank the Seven! Err-- Five!
+                    Thank you for your pledge! For this sign of support, we here at Larian Studios are truly grateful.</p>
+                 <p><span class="bold">Pledge amount:  </span><span class="bold"> 100$ x 2 = 200$</span></p>
+              </div>
+            </div>
+            </div>
+        </div> <!-- payment Reward -->
+
+        <div id="paymentMethod">
+          <div class="container">
+            <div class="panel panel-danger">
+              <div class="panel-heading bold">Payment Method</div>
+              <div class="panel-body">
+                <h2 class="fnt20 fnt-b">Chuyển khoản ngân hàng online bằng thẻ ATM hoặc Internet Banking</h2>
+                <p>Nếu bạn có tài khoản ngân hàng, có thẻ ATM, và đang ngồi trước máy tính nối mạng, bạn có thể thanh toán bằng phương thức này.<br>
+                Bạn có thể có 2 lựa chọn.<br>
+                [1] Nếu bạn muốn dùng thẻ ATM để thanh toán, xin vui lòng chọn ngân hàng ở trong danh sách <b>“Thanh toán bằng thẻ ATM”</b><br>
+                [2] Nếu bạn muốn chuyển khoản online bằng Internet Banking, xin vui lòng chọn ngân hàng ở trong danh sách <b>“Thanh toán bằng Internet Banking”</b><br>
+                Bạn chọn ngân hàng bằng cách click vào logo ngân hàng để chọn. Sau đó nhấn nút “Thanh toán”.<br>
+                Chức năng này được hỗ trợ bởi cổng thanh toán trực tuyến <b>Bảo Kim</b>.<br>
+                </p>
+                <div>
+                  
+                  <div class="credit-card col-md-7">
+                    <p class="fnt-b">Thanh toán bằng thẻ ATM</p>
+                    <img src="https://www.baokim.vn/application/uploads/banks/vietcombank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_15"><img src="https://www.baokim.vn/application/uploads/banks/techcombank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_60"><img src="https://www.baokim.vn/application/uploads/banks/vietinbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_91"><img src="https://www.baokim.vn/application/uploads/banks/bidvbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_131"><img src="https://www.baokim.vn/application/uploads/banks/maritimebank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_105"><img src="https://www.baokim.vn/application/uploads/banks/Oceanbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_124"><img src="https://www.baokim.vn/application/uploads/banks/vpbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_113"><img src="https://www.baokim.vn/application/uploads/banks/dongabank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_101"><img src="https://www.baokim.vn/application/uploads/banks/acbbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_64"><img src="https://www.baokim.vn/application/uploads/banks/sacombank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_98"><img src="https://www.baokim.vn/application/uploads/banks/mbbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_61"><img src="https://www.baokim.vn/application/uploads/banks/agribank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_112"><img src="https://www.baokim.vn/application/uploads/banks/eximbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_63"><img src="https://www.baokim.vn/application/uploads/banks/vibbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_62"><img src="https://www.baokim.vn/application/uploads/banks/tienphongbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_130"><img src="https://www.baokim.vn/application/uploads/banks/shbbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_148"><img src="https://www.baokim.vn/application/uploads/banks/seabank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_153"><img src="https://www.baokim.vn/application/uploads/banks/50x34-lienvietbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_152"><img src="https://www.baokim.vn/application/uploads/banks/abbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_154"><img src="https://www.baokim.vn/application/uploads/banks/baovietbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_150"><img src="https://www.baokim.vn/application/uploads/banks/50x34-ocb.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_151"><img src="https://www.baokim.vn/application/uploads/banks/hdbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_94"><img src="https://www.baokim.vn/application/uploads/banks/namabank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_96"><img src="https://www.baokim.vn/application/uploads/banks/vietabank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_114"><img src="https://www.baokim.vn/application/uploads/banks/gpbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_115"><img src="https://www.baokim.vn/application/uploads/banks/pgbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_102"><img src="https://www.baokim.vn/application/uploads/banks/bac_a.jpg" class="logo_bank" onclick="choose_bank(this.id)" id="bank_129"><img src="https://www.baokim.vn/application/uploads/banks/saigonbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_97"><img src="https://www.baokim.vn/application/uploads/banks/navibank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_106"><img src="https://www.baokim.vn/application/uploads/banks/visa-master-50x34.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_128">
+                  </div>
+
+                  <div class="credit-card col-md-7">
+                    <p><b>Thanh toán bằng Internet Banking (Ngân hàng điện tử)</b></p>
+                    <img src="https://www.baokim.vn/application/uploads/banks/vietcombank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_30"><img src="https://www.baokim.vn/application/uploads/banks/techcombank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_36"><img src="https://www.baokim.vn/application/uploads/banks/vietinbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_132"><img src="https://www.baokim.vn/application/uploads/banks/bidvbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_133"><img src="https://www.baokim.vn/application/uploads/banks/maritimebank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_84"><img src="https://www.baokim.vn/application/uploads/banks/vpbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_136"><img src="https://www.baokim.vn/application/uploads/banks/dongabank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_32"><img src="https://www.baokim.vn/application/uploads/banks/acbbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_54"><img src="https://www.baokim.vn/application/uploads/banks/agribank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_147"><img src="https://www.baokim.vn/application/uploads/banks/sacombank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_80"><img src="https://www.baokim.vn/application/uploads/banks/eximbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_140"><img src="https://www.baokim.vn/application/uploads/banks/mbbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_65"><img src="https://www.baokim.vn/application/uploads/banks/baovietbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_82"><img src="https://www.baokim.vn/application/uploads/banks/pgbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_81"><img src="https://www.baokim.vn/application/uploads/banks/seabank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_49"><img src="https://www.baokim.vn/application/uploads/banks/shbbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_45"><img src="https://www.baokim.vn/application/uploads/banks/vibbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_47"><img src="https://www.baokim.vn/application/uploads/banks/tienphongbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_56"><input type="hidden" value="" id="baokim_bank_payment_method_id" name="baokim_bank_payment_method_id"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- payment Method -->
+
+        <div id="paymentSubmit">
+          <div class="container">
+            <div class="pull-right">
+              <a href="" class="btn btn-success btn-wide">Submit</a>
+            </div>
+          </div>
+          <br>
+        </div> <!-- payment submit -->
+      </div>
+    </div> <!-- end content -->
+
+    <div class="scroll-top-wrapper ">
+      <span class="scroll-top-inner">
+        <i class="fa fa-2x fa-arrow-circle-up"></i>
+      </span>
+    </div> <!-- end SCROLL TO TOP -->
+
+    <div id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <p class="fnt30 fnt-b dark-cyan">DLL - Dandelion</p>
+            <a href="">Hosted by DDL</a>
+          </div>
+          <div class="col-md-6">
+            <ul class="pull-right list-inline">
+              <li><a href="home.html">Home</a></li>
+              <li><a href="about.html">About us</a></li>
+              <li><a href="#">Help</a></li>
+              <li><a href="#">Contact</a></li>
+              <a id="gototop" class="gototop" href="#"><span class="glyphicon glyphicon-chevron-up"></span></i></a>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div> <!-- end footer -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+    <script src="../Scripts/jquery.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+    <script src="../Scripts/flat-ui.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <!-- My Js -->
+    <script src="../Scripts/application.js"></script>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- <script src="../Scripts/bootstrap.min.js"></script>-->
+    <!--<script src="../dist/js/vendor/video.js"></script>-->
+  </body>
+</html>

@@ -1,0 +1,198 @@
+﻿<!-- Side Navigation -->
+<div id="message" class="paddingNavbar" style="background-color: #fff">
+    <div class="container">
+        <div class="row">
+            <div id="colPush" class="col-md-3">
+                <ul class="">
+                    <h5 class="fnt30 fnt-b">Tin nhắn</h5>
+                    <div class="clearfix"></div>
+                    <li data-toggle="modal" data-target="#sentBox">
+                        <a class="link">
+                            <i class=" icon fa fa-edit fa-2x fa-fw">
+                            </i>
+                            <span class="toggle">Soạn tin nhắn</span>
+                        </a>
+                    </li>
+
+                    <li ng-click="changeInboxSent('inbox')" ng-class="{'active': !Sent}">
+                        <a>
+                            <i class="icon fa fa-inbox fa-2x fa-fw"></i>
+                            <span class="toggle">Hộp thư đến <span ng-show="NumberNewMessage.ReceivedMessage > 0" class="badge">{{NumberNewMessage.ReceivedMessage}}</span></span>
+                        </a>
+                    </li>
+
+                    <li ng-click="changeInboxSent('sent')" ng-class="{'active': Sent}">
+                        <a>
+                            <i class="icon fa fa-paper-plane fa-2x fa-fw"></i>
+                            <span class="toggle">Hộp thư đi <span ng-show="NumberNewMessage.SentMessage > 0" class="badge">{{NumberNewMessage.SentMessage}}</span></span>
+                        </a>
+                    </li>
+
+                    <!-- <li>
+                        <a>
+                            <i class="icon fa fa-trash-o fa-2x fa-fw"></i>
+                            <span class="toggle">Delete</span>
+                        </a>
+                    </li>
+
+                    <li class="item toggle-link1">
+                        <a>
+                            <i class="arrow_toogle icon fa fa-arrow-circle-left fa-2x fa-fw"></i>
+                            <span class="toggle">Hide</span>
+                        </a>
+                    </li> -->
+                </ul>
+            </div>
+            <div id="colMain" class="col-md-8">
+                <!--Buttons-->
+                <div id="checkboxDelete" class="">
+                    <!-- <div class="dropdown">
+                        <button class="btn btn-transparent dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <input type="checkbox">
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="#">All</a></li>
+                            <li><a href="#">None</a></li>
+                            <li><a href="#">Read</a></li>
+                            <li><a href="#">Unread</a></li>
+                        </ul>
+                    </div> -->
+
+                    <button class="toggle-link btn btn-primary"><i class="icon fa fa-bars"></i></button>
+                    <button class="btn btn-primary btn18"><i class="icon fa fa-refresh"></i></button>
+                    <button class="btn btn-danger btn18" ng-click="Delete()"><i class="icon fa fa-trash-o"></i> Xóa tin nhắn</button>
+                </div>
+
+                <!--Conversation table-->
+                <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" id="messageTable"
+                       class="table table-bordered table-hover">
+                    <thead>
+                        <tr style="background: #16a085; color: #FFF">
+                            <th style="width: 5%">
+                                <label class="checkbox" for="checkboxAll">
+                                    <input type="checkbox" id="checkboxAll" data-toggle="checkbox" class="custom-checkbox"
+                                           ng-change="checkAllClick(checkAll)"
+                                           ng-model="checkAll"
+                                           value="true">
+                                    <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
+                                    &nbsp;
+                                </label>
+                            </th>
+                            <th style="width: 15%">Tên</th>
+                            <th style="width: 70%">Tiêu đề - nội dung</th>
+                            <th style="width: 10%">Ngày</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="conversation in ListConversations" ng-class="{'read': conversation.IsRead, 'unread-message': !conversation.IsRead}">
+                            <td class="checkbox-col">
+                                <label class="checkbox" for="checkbox{{$index}}">
+                                    <input type="checkbox" id="checkbox{{$index}}" data-toggle="checkbox" class="custom-checkbox"
+                                           ng-model="conversation.Selected"
+                                           value="{{conversation.ConversationID}}">
+                                    <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
+                                    &nbsp;
+                                </label>
+                            </td>
+                            <td class="from-col" href="message-View.html" ng-if="!Sent">
+                                <a href="/#/user/message/{{conversation.ConversationID}}"> Từ: {{conversation.SenderName}}{{bool$index}}</a>
+                            </td>
+                            <td class="from-col" href="message-View.html" ng-if="Sent">
+                                <a href="/#/user/message/{{conversation.ConversationID}}">Tới: {{conversation.ReceiverName}}</a>
+                            </td>
+                            <td class="msg-col">
+                                <a href="/#/user/message/{{conversation.ConversationID}}">
+                                    {{conversation.Title}}
+                                    <span class="text-muted">- Hi again! I wanted to let you know that the order...</span>
+                                </a>
+                            </td>
+                            <td class="date-col"> {{conversation.UpdatedDate | date:'dd/MM/yy'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Box sent message -->
+<div class="container">
+    <div class="modal fade" id="sentBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <form name="NewMessageForm" novalidate role="form">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #404040">
+                        <button type="button" class="close cFF" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title fnt18 cFF" id="myModalLabel">Tin nhắn mới</h4>
+                    </div>
+                    <!--Body-->
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">Tới (*):</span>
+                                <input type="text" class="form-control" autofocus
+                                       placeholder="Tên người nhận..."
+                                       name="ToUser" ng-model="NewMessage.ToUser"
+                                       typeahead="user.UserName as user.UserName for user in getUserName($viewValue)"
+                                       typeahead-loading="loadingLocations" typeahead-no-results="noResults"
+                                       typeahead-template-url="customTemplate.html" required="">
+                            </div>
+                            <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh text-info"></i>
+                            <div ng-show="noResults" class="text-danger">
+                                <i class="glyphicon glyphicon-remove"></i> Người nhận không tồn tại
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">Tiêu đề (*):</span>
+                                <input type="text" class="form-control"
+                                       placeholder="Nhập tiêu đề..."
+                                       name="Title"
+                                       ng-model="NewMessage.Title"
+                                       required=""
+                                       ng-minlength="1"
+                                       ng-maxlength="50">
+                            </div>
+                            <span class="text-danger">* Tối đa 50 kí tự</span>
+                        </div>
+                        <hr>
+                        <div>
+                            <div text-angular required name="Content" ng-model="NewMessage.Content"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer pt5 pb5">
+                         <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                        <button type="button" class="btn btn-info btn-sm btn-wide btn18" ng-click="sendMessage()"
+                                ng-disabled="!NewMessageForm.$dirty || (NewMessageForm.$dirty && NewMessageForm.$invalid)">
+                            Gửi
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<!--Template load user-->
+<script type="text/ng-template" id="customTemplate.html">
+    <a>
+        <span>{{match.model.FullName}}</span>
+        <span>({{match.model.UserName}})</span>
+    </a>
+</script>
+<script>
+    //$(document).ready(function () {
+    //    // Table message use Jtable
+    //    $('#messageTable').dataTable();
+    //    $('#messageTable_length').hide();
+
+    //});
+
+    //Toogle slideBar
+    $('.toggle-link').click(function () {
+        $('.toggle').toggle(300);
+        $('#colPush').toggleClass("col-md-3 col-md-2", 300);
+        $('#colMain').toggleClass("col-md-8 col-md-9", 300);
+        $('.arrow_toogle').toggleClass("fa-arrow-circle-left fa-arrow-circle-right", 300);
+    });
+</script>

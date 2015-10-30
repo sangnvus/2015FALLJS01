@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+
+<html ng-app="ClientApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title ng-bind="Page.title"></title>
+
+    <!-- Load css -->
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/clientcss")
+    @Scripts.Render("~/bundles/modernizr")
+    @*<link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.7.1/loading-bar.min.css' type='text/css' media='all' />*@
+    @RenderSection("stylesheets", required: false)
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+            background-color: #d6dbdf;
+            margin: 2px 0;
+            white-space: nowrap;
+        }
+
+        .pagination li {
+            margin-right: 0px;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+        }
+
+        #comments-list .well {
+            padding-top: 10px;
+        }
+
+        #comments-list .media-heading {
+            border-bottom: 1px solid #ccc;
+        }
+
+        #comments-list .well.hided-comment {
+            background-color: #ccc;
+        }
+
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <input type="hidden" value="@ViewBag.BaseUrl" id="BaseUrl" />
+
+    <!-- Header-->
+    <div id="header">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-5">
+                    <span class="sr-only">Toggle navigation</span>
+                </button>
+                <a class="navbar-brand" href="@Url.Content("/#/home/")">Dandelion</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar-collapse-5">
+                <ul class="nav navbar-nav">
+                    <li><a href="@Url.Content("/#/discover/")">Danh mục</a></li>
+                    <li><a href="@Url.Content("/#/project/create/")">Tạo mới</a></li>
+                    <li role="separator" class="hidden-xs divider-vertical"></li>
+                </ul>
+                @if (Request.Url.AbsoluteUri.Equals(@ViewBag.BaseUrl, StringComparison.OrdinalIgnoreCase))
+                {
+                    <div ng-controller="SearchBarController">
+                        <form class="navbar-form navbar-left" role="Search" novalidate ng-submit="submit(searchkey)">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input class="form-control" id="navbarInput-01" ng-model="searchkey" type="Search" placeholder="Tìm kiếm..." />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn"><span class="fui-Search"></span></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                }
+                <!-- Login/Logout/Profile -->
+                @{
+                    if (User.Identity == null || !User.Identity.IsAuthenticated)
+                    {
+                        <ul class="nav navbar-nav navbar-right">
+                            <!-- Login and Regiter -->
+                            <form role="Search" class="navbar-form navbar-right">
+                                <a id="btnLogin" href="@Url.Content("/login/")" class="btn btn-success btn-sm btn-wide" style="padding: 8px 0px;" role="button"><span class="glyphicon glyphicon-log-in"></span><span class="hidden-sm"> Đăng nhập</span></a>
+                                <a id="btnRegister" href="@Url.Content("/#/register/")" class="btn btn-default btn-sm btn-wide" style="padding: 8px 0px;" role="button" type=""><i class="fa fa-key"></i><span class="hidden-sm"> Đăng ký</span></a>
+                            </form>
+                        </ul>
+                    }
+                    else
+                    {
+                        <ul id="profile_dropdown" class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                                    @if (ViewBag.CurrentUser.ProfileImage.Contains("http"))
+                                    {
+                                        <img id="avatar" src="@ViewBag.CurrentUser.ProfileImage" alt="" class="img-responsive img-circle center-block">
+                                    }
+                                    else
+                                    {
+                                        <img id="avatar" src="@Url.Content("~/images/avatars/" + @ViewBag.CurrentUser.ProfileImage)" alt="" class="img-responsive img-circle center-block">
+                                    }
+                                    @ViewBag.CurrentUser.FullName
+                                    <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    <h5 class="c3">My stuff</h5>
+                                    <li><a href="@Url.Content("/#/user/message")">Tin nhắn <span ng-show="UserInfo.NumberNewMessage.Total > 0" class="badge">{{UserInfo.NumberNewMessage.Total}}</span></a></li>
+                                    <li><a href="@Url.Content("/#/project/backedProject")">Dự án đã ủng hộ</a></li>
+                                    <li><a href="@Url.Content("/#/project/createdProject")">Dự án đã tạo</a></li>
+                                    <li><a href="@Url.Content("/#/project/starredProject")">Dự án theo dõi</a></li>
+                                    <li class="divider"></li>
+                                    <h5 class="c3">Chỉnh sửa</h5>
+                                    <li><a href="@Url.Content("/#/user/editpassword/")">Tài Khoản</a></li>
+                                    <li><a href="@Url.Content("/#/user/editprofile/")">Thông tin cá nhân</a></li>
+                                    <li class="divider"></li>
+                                    <p class="no-wrap">Bạn đang đăng nhập với <b>@ViewBag.CurrentUser.FullName</b> | <a class="fnt-b" href="@Url.Content("/logout")">Thoát</a></p>
+                                </ul>
+                            </li>
+                        </ul>
+                    }
+                }
+            </div><!-- /.navbar-collapse -->
+        </nav>
+    </div>
+    <div style="min-height: 577px;">
+        @RenderBody()
+        @RenderSection("SPAViews", required: false)
+    </div>
+
+    <!-- Scroll button -->
+    <div class="scroll-top-wrapper ">
+        <span class="scroll-top-inner">
+            <i class="fa fa-2x fa-arrow-circle-up"></i>
+        </span>
+    </div>
+    @if (Request.Url.AbsoluteUri.Equals(@ViewBag.BaseUrl, StringComparison.OrdinalIgnoreCase))
+    {
+        <!-- Refresh button -->
+        <div class="refresh-wrapper " ng-click="reload()">
+            <span class="refresh-wrapper-inner">
+                <i class="fa fa-2x fa-refresh"></i>
+            </span>
+        </div>
+    }
+    <!-- end scroll to top -->
+    <!--Footer-->
+    <div id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="fnt30 fnt-b dark-cyan">DLL - Dandelion</p>
+                </div>
+                <div class="col-md-6">
+                    <ul class="pull-right list-inline">
+                        <li><a href="/">Trang chủ</a></li>
+                        <li><a href="#">Về chúng tôi</a></li>
+                        <li><a href="#">Giúp đỡ</a></li>
+                        <li><a href="#">Liên hệ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div> <!-- end footer -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/otherScripts")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    @*<script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.7.1/loading-bar.min.js'></script>*@
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+</body>
+</html>

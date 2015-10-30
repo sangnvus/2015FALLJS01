@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Edit profile</title>
+    
+    <!-- Loading Bootstrap -->
+    <link href="../Contents/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Loading Flat UI -->
+    <link href="../Contents/flat-ui.min.css" rel="stylesheet">
+    
+    <!-- Loading Fonts avesome-->
+    <link rel="stylesheet" type="text/css" href="../fonts/font-awesome/css/font-awesome.min.css">
+    
+    <!-- Loading Style -->
+    <link rel="stylesheet" type="text/css" href="../Contents/style.css">
+
+    <!-- Loading Animate -->
+    <link href="../Contents/animate.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->>
+  </head>
+  <body style="background: #ffffff">
+    <div id="header">
+      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-5">
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <a class="navbar-brand" href="home_logged.html">DanDeLion</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-5">
+           <ul class="nav navbar-nav">
+            <li class="hover-nav"><a class="abc" href="discover.html">Discover</a></li>
+            <li class="hover-nav"><a href="create_project1.html">Start</a></li>
+            <li role="separator" class="hidden-xs divider-vertical"></li>
+            <form class="navbar-form navbar-left" action="search-advance.html" role="search">
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" id="navbarInput-01" type="search" placeholder="Search Projects">
+                  <span class="input-group-btn">
+                    <button type="" class="btn"><span class="fui-search"></span></button>
+                  </span>
+                </div>
+              </div>
+          </form>
+          </ul>
+
+          <ul id="profile_dropdown" class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img id="avatar" src="../images/avatar/avatar1.png" alt="" class="img-responsive img-circle center-block">
+                MyName
+                <span class="caret"></span>
+              </a>
+              
+              <ul class="dropdown-menu">
+                <h5 class="c3">My stuff</h5>
+                <li><a href="message.html">Message <span class="badge">3</span></a></li>
+                <li><a href="backed_project.html">Backed projects</a></li>
+                <li><a href="created_project.html">Created projects</a></li>
+                <li><a href="starred_project.html">Starred projects</a></li>
+                <li class="divider"></li>
+                <h5 class="c3">Setting</h5>
+                <li><a href="account.html">Account</a></li>
+                <li><a href="editprofile.html">Edit profile</a></li>
+                <li class="divider"></li>
+                <p class="no-wrap">You are logged is as <b>ChinhVC</b> | <a class="fnt-b" href="home.html">Log out</a></p>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </nav>
+    </div> <!-- end header -->
+    
+    <div id="profile" class="paddingNavbar">
+      <div class="container">
+        <h4>Thiết lập</h4>
+        <div class="row pl15">
+          <ul class="list-inline">
+            <li><a href="account.html" class="fnt18 fnt-b link-gray-dark">Tài khoản</a></li>
+            <li><a href="editprofile.html" class="fnt18 fnt-b">Sửa thông tin cá nhân</a></li>
+            <li><a href="profile_public.html" class="fnt18 fnt-b link-gray-dark">Thông tin công khai</a></li>
+          </ul>
+        </div>
+      </div> <!-- end SETTING -->
+
+      <div class="container">  
+        <div class="row" style="border-bottom: 1px solid #cfcfcf;">
+          <div class="col-md-6">
+            <form action="">
+              <div class="form-group ">
+                <div for="name" class="pb20">
+                  <label for="name" class="fnt18 fnt-b">Tên đăng nhập</label>
+                  <div class="input-group mt0">
+                    <input class="form-control" type="name" placeholder="Tên đăng nhập">
+                    <span class="input-group-btn">
+                      <button type="" class="btn"><span class="fui-user"></span></button>
+                    </span>
+                  </div>
+                </div>
+                 <div for="email" class="pb20">
+                  <label for="email" class="fnt18 fnt-b">Email</label>
+                  <div class="input-group mt0">
+                    <input class="form-control" type="email" placeholder="Email liên lạc">
+                    <span class="input-group-btn">
+                      <button type="" class="btn"><span class="fui-mail"></span></button>
+                    </span>
+                  </div>
+                </div>
+                <div for="image" class="pb30">
+                  <label for="image" class="fnt18 fnt-b">Ảnh đại diện</label>
+                  <div class="input-group form-control mt0">
+                    <div class="asset_upload">
+                      <div class="image-clip pull-left">
+                        <img id="image-clip" src="../images/avatar/avatar1.png" alt="" class="img-responsive center-block">
+                      </div>
+                      <div class="upload">
+                        <input class="avatar file" type="file">
+                        <strong class="center profile-photo">
+                          Lựa chọn một hình ảnh từ máy tính của bạn 
+                          <span> JPEG, PNG, GIF, or BMP  •  50MB file limit</span>
+                        </strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div for="name" class="pb20">
+                  <label for="name" class="fnt18 fnt-b">Giới thiệu</label>
+                    <textarea class="form-control" style="resize:none" name="" id="" cols="30" rows="5" placeholder="Giới thiệu ngắn gọn về bản thân"></textarea>
+                </div>
+                <!-- <div for="website" class="pb20">
+                    <label for="website" class="fnt18 fnt-b">Website</label>
+                      <textarea class="form-control" style="resize:none" name="" id="" cols="30" rows="3" placeholder="Viết các trang website liên hệ như facebook của bạn, công ty của bạn, ..."></textarea>
+                  </div> -->
+              </div>
+            </form>
+          </div> <!-- left-ACCOUNT -->
+           <div class="col-md-6">
+              <form action="">
+                <div class="form-group ">
+                  <div for="name" class="pb20">
+                    <label for="name" class="fnt18 fnt-b">Giới tính</label>
+                    <div class="mt0">
+                      <select class="form-control select select-default" data-toggle="select">
+                        <option value="none">--Giới tính--</option>
+                        <option value="male">Nam</option>
+                        <option value="female">Nữ</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div for="dateofbirth" class="pb20">
+                    <label for="dateofbirth" class="fnt18 fnt-b">Ngày sinh</label>
+                    <div class="input-group mt0">
+                      <input class="form-control" type="date" placeholder="Ngày sinh">
+                      <span class="input-group-btn">
+                        <button type="" class="btn"><span class="fui-calendar"></span></button>
+                      </span>
+                    </div>
+                  </div>
+                  <div for="address" class="pb20">
+                  <label for="address" class="fnt18 fnt-b">Địa chỉ</label>
+                  <div class="input-group mt0">
+                    <input class="form-control" type="text" placeholder="Địa chỉ liên hệ">
+                    <span class="input-group-btn">
+                      <button type="" class="btn"><span class="fui-location"></span></button>
+                    </span>
+                  </div>
+                </div>
+                <div for="phonenumber" class="">
+                  <label for="phonenumber" class="fnt18 fnt-b">Số điện thoại</label>
+                  <div class="input-group mt0">
+                    <input class="form-control" type="text" placeholder="Số điện thoại">
+                    <span class="input-group-btn">
+                      <button type="" class="btn"><span class="glyphicon glyphicon-phone-alt"></span></button>
+                    </span>
+                  </div>
+                </div>
+                  <div for="website" class="pb20">
+                    <label for="website" class="fnt18 fnt-b">Website</label>
+                      <textarea class="form-control" style="resize:none" name="" id="" cols="30" rows="5" placeholder="Viết các trang website liên hệ như facebook của bạn, công ty của bạn, ..."></textarea>
+                  </div>
+                </div>
+              </form>
+           </div> <!-- right-ACCOUNT -->
+        </div> <!-- end Container -->
+        <div class="pt20 pb20">
+          <a class="btn btn-primary" href="#">Lưu thiết lập</a>
+        </div>
+      </div> <!-- end ACCOUNT -->
+
+    </div> <!-- end PROFILE -->
+
+    <div class="scroll-top-wrapper ">
+      <span class="scroll-top-inner">
+        <i class="fa fa-2x fa-arrow-circle-up"></i>
+      </span>
+    </div> <!-- end SCROLL TO TOP -->
+    
+    <div id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <p class="fnt30 fnt-b dark-cyan">DLL - Dandelion</p>
+            <a href="">Hosted by DDL</a>
+          </div>
+          <div class="col-md-6">
+            <ul class="pull-right list-inline">
+              <li><a href="home.html">Home</a></li>
+              <li><a href="about.html">About us</a></li>
+              <li><a href="#">Help</a></li>
+              <li><a href="#">Contact</a></li>
+              <a id="gototop" class="gototop" href="#"><span class="glyphicon glyphicon-chevron-up"></span></i></a>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div> <!-- end footer -->
+      
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+    <script src="../Scripts/jquery.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+    <script src="../Scripts/flat-ui.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <!-- My Js -->
+    <script src="../Scripts/application.js"></script>
+    
+    <script> 
+      // $(document).ready(function(){
+      //   $('#btnChangePass').click(function () {
+      //     $('#changePass').toggleClass("changePassHide changePassShow", 300);
+      //   });
+      // });
+    </script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- <script src="../Scripts/bootstrap.min.js"></script>-->
+    <!--<script src="../dist/js/vendor/video.js"></script>-->
+  </body>
+</html>

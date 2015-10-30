@@ -1,0 +1,75 @@
+﻿===============19/10/2015 =============================
+- backed_project_history (sửa: html, style): update table: hyperlink title, view infobanker
+- project_detail: (sửa html): create dialog report project
+- account, editprofile: (sửa: html): add hyperlink "Thông tin công khai" link to "public_profile.html"
+- avatar menu: remove button "profile"
+- listbacker, backed_project_hitory: (sửa html): update info dialog when click on view button in table
+- create project2 (sửa: html): update reward
+=======================================================
+
+
+
+===============18/10/2015 =============================
+* Update design 18/10:
+- Desgin lại page backed, created, stared project (sửa: html)
+- Design lại background table mail: unread, read (sửa html, style.css)
+- Định chỉnh lại phần reward trong project_detail.html nhưng cần thời gian.
+=======================================================
+
+
+
+===============14/10/2015 =============================
+UPDATE: DESIGN
+Mình đã update design một số cái sau: 
+Nếu page nào ảnh hưởng đến ai thì check và merger lại nhé. 
+Chú ý: các file css, js chỉ 1 người sửa thôi nhé
+- fix header => update login, register, home: (html, common.css)
+- fix footer => update animation.js
+- created, backed, starred project: add button "see more", update css style
+- change font default flat ui -> font-family: Times new roman (common.css)
+=======================================================
+
+
+
+===============14/10/2015 =============================
+@Huy
+* update create_project2.html
+- add tab: timeline tab, question-answer tab
+- update:
+- fix: BASIC TAB: date start, end
+- fix: STORY TAB: add more 2 selection: url, pc
+- tab: question and answer
+=======================================================
+
+
+===============14/10/2015 =============================
+UPDATE 1.1
+- Update scroll to top: ALL SCREEN
+- css: common.css
+- js: application.js
+- html: all page html => code
+    <div class="scroll-top-wrapper ">
+      <span class="scroll-top-inner">
+        <i class="fa fa-2x fa-arrow-circle-up"></i>
+      </span>
+    </div> <!-- end SCROLL TO TOP -->
+
+    <div id="footer">
+    ...    
+    </div> <!-- end FOOTER-->
+--------------------------------------
+- update: input select
+- change html: editprofile.html, create_project2.html
+after:
+	<select class="form-control fnt-b" >
+before:
+	<select class="form-control fnt-b select select-primary" data-toggle="select">
+=======================================================
+	
+	
+	
+	
+	
+	
+	
+	

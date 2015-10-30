@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "Đăng nhập";
+}
+
+<div id="content" class="paddingNavbar" style="min-height: 577px; background-color: #f7fafa;">
+    <div id="login">
+        <div class="container">
+            <div class="col-md-5 panel panel-default center-block">
+                <div class="panel-body pt10 pb10 pl10 pr10">
+                    <div class="login-form">
+                        <div class="login-title">
+                            <h4 class="txt-c mt0 mb0 pt0 pb0">Đăng nhập</h4>
+                        </div>
+                        <!--Login facebook-->
+                        <div id="login-facebook" class="mt20 mb0 pt0 pb0">
+                            <a href="@Url.Content("~/Login/AuthenFacebook/")" class="btn btn-info btn-lg">
+                                <i class="fa fa-facebook-official"></i>
+                                <span> Đăng nhập với Facebook</span>
+                            </a>
+                            <p class="text-center tip-info" style="">
+                                Chúng tôi sẽ không đăng bất cứ gì lên Facebook mà không được sự cho phép của bạn.
+                            </p>
+                            <div class="boderbottom"></div>
+                        </div>
+                        @using (Html.BeginForm("Login", "Login", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @id = "LoginForm", @name = "LoginForm", role = "form" }))
+                        {
+                            <!--Normal login:-->
+                            <!--Username-->
+                            <div class="form-group">
+                                <input type="text" class="form-control login-field" id="login-name"
+                                       placeholder="Tài khoản hoặc email"
+                                       name="UserName"
+                                       ng-model-options="{ updateOn: 'change blur'}"
+                                       ng-trim="true"
+                                       required
+                                       ng-model="User.UserName">
+                                <label class="login-field-icon fui-user" for="login-name"></label>
+                                <div ng-show="LoginForm.UserName.$dirty && LoginForm.UserName.$invalid" class="text-danger ng-cloak">
+                                    <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+                                    <span ng-show="LoginForm.UserName.$error.required">Bạn chưa nhập tài khoản hoặc email</span>
+                                </div>
+                            </div>
+                            <!--Password-->
+                            <div class="form-group">
+                                <input type="hidden" name="Password" id="tbPassword" />
+                                <input type="password" class="form-control login-field" id="tbshowPassword"
+                                       placeholder="Mật khẩu"
+                                       name="showPassword"
+                                       ng-model-options="{ updateOn: 'change blur'}"
+                                       required
+                                       ng-model="User.Password">
+                                <label class="login-field-icon fui-lock" for="tbshowPassword"></label>
+                                <div ng-show="LoginForm.showPassword.$dirty && LoginForm.showPassword.$invalid" class="text-danger ng-cloak">
+                                    <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+                                    <span ng-show="LoginForm.showPassword.$error.required">Bạn chưa nhập mật khẩu</span>
+                                </div>
+                            </div>
+                            <!--ErrorSummary-->
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <!--Remember me-->
+                            <label class="checkbox c-1" for="checkbox2">
+                                <input type="checkbox" value="true" name="RememberMe" id="checkbox2" data-toggle="checkbox">
+                                Lưu đăng nhập
+                            </label>
+                            <button type="submit" class="btn btn-primary btn-lg btn-block"
+                                    ng-disabled="!LoginForm.$dirty || (LoginForm.$dirty && LoginForm.$invalid)">
+                                <i class="fa fa-sign-in"></i> Đăng nhập!
+                            </button>
+                        }
+
+                        <!--Other buttons-->
+                        <a class="login-link" href="@Url.Content("~/forgotPassword")">Quên mật khẩu?</a>
+
+                        <div class="text-center">
+                            <div class="boderbottom"></div>
+                            <p>
+                                Chưa có tài khoản? <a href="@Url.Content("/#/register/")">Đăng ký ngay</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/angularjs")
+    @Scripts.Render("~/bundles/md5")
+    <script>
+        $("#LoginForm").submit(function(event) {
+            var password = $('#tbshowPassword').val();
+            var md5 = $.md5(password);
+            $('#tbPassword').val(md5);
+            return true;
+        });
+        var service = angular.module("DDLService", []);
+        var directive = angular.module("DDLDirective", []);
+        var app = angular.module("ClientApp", ["DDLDirective", "DDLService"]);
+    </script>
+    <script src="~/App/directives/ngEnter.js"></script>
+}

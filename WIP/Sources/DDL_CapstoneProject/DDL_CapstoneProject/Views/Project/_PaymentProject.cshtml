@@ -1,0 +1,161 @@
+﻿<div id="content" class="paddingNavbar">
+    <form name="paymentFrom" novalidate>
+        <div id="payment">
+            <div id="infoBanker">
+                <div class="container">
+                    <div class="panel panel-success">
+                        <div class="panel-heading bold">Thông tin</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3>Thông tin người ủng hộ</h3>
+                                    <div class="row">
+                                        <div class="col-md-3 pt30">
+                                            <img id="avatar1" ng-if="!checkHTTP(Comment.ProfileImage)" ng-src="{{UserBasicInfo.ProfileImage}}" alt="" class="img-responsive img-circle center-block">
+                                            <img ng-if="checkHTTP(Comment.ProfileImage)" ng-src="{{trustSrc(UserBasicInfo.ProfileImage)}}" alt="" class="img-responsive img-circle center-block">
+                                        </div>
+                                        <div class="col-md-9">
+                                            <br>
+                                            <input type="text" class="form-control" name="fullname" required
+                                                   ng-trim="true"
+                                                   ng-minlength="6"
+                                                   ng-model-options="{ updateOn: 'change blur'}"
+                                                   ng-maxlength="30"
+                                                   placeholder="Name..."
+                                                   ng-model="UserBasicInfo.FullName">
+                                            <span ng-show="paymentFrom.fullname.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
+                                            <span style="color:red" ng-show="paymentFrom.fullname.$error.required">Bạn chưa nhập tên đầy đủ</span>
+                                            <span style="color:red" ng-show="paymentFrom.fullname.$error.minlength">Tên đầy đủ tối thiểu 6 kí tự</span>
+                                            <span style="color: red" ng-show="paymentFrom.fullname.$error.maxlength">Tên đầy đủ tối đa 20 kí tự</span>
+                                            <br>
+                                            <input type="email" class="form-control" name="email" placeholder="Email..." ng-model="UserBasicInfo.Email" required>
+                                            <span ng-show="paymentFrom.email.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
+                                            <span style="color:red" ng-show="paymentFrom.email.$error.required">Bạn chưa nhập email</span>
+                                            <span style="color: red" ng-show="paymentFrom.email.$error.email">Email không đúng định dạng</span>
+                                            <span style="color: red" ng-show="paymentFrom.email.$error.email">Email sai định dạng</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row pt15">
+                                        <div class="col-md-8 pt10 pb10">
+                                            <input type="text" class="form-control"
+                                                   name="address"
+                                                   placeholder="Address..."
+                                                   ng-model="UserBasicInfo.Addres"
+                                                   ng-model-options="{ updateOn: 'change blur'}"
+                                                   ng-autocomplete required>
+                                            <span ng-show="paymentFrom.address.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
+                                            <span style="color:red" ng-show="paymentFrom.address.$error.required">Bạn chưa nhập địa chỉ</span>
+                                        </div>
+                                        <div class="col-md-4 pt10 pb10">
+                                            <input type="text" class="form-control"
+                                                   placeholder="Phone number..."
+                                                   ng-minlength="10"
+                                                   ng-maxlength="11"
+                                                   name="PhoneNumber"
+                                                   ng-model="UserBasicInfo.ContactNumber"
+                                                   required>
+                                            <span ng-show="paymentFrom.PhoneNumber.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
+                                            <span style="color:red" ng-show="paymentFrom.PhoneNumber.$error.required">Xin hãy điền số điện thoại</span>
+                                            <span style="color: red" ng-show="((paymentFrom.PhoneNumber.$error.minlength || paymentFrom.PhoneNumber.$error.maxlength) &&
+                                                  paymentFrom.PhoneNumber.$dirty) ">Số điện thoại gồm 10 - 11 chữ số</span>
+                                        </div>
+                                    </div>
+                                    @*<div class="row pt15">
+                                            <div class="col-md-12">
+                                                <input type="text" class="form-control" placeholder="Address details (not required)">
+                                            </div>
+                                        </div>*@
+                                </div>
+                                <div class="col-md-6">
+                                    <h3>Thông tin thêm</h3>
+                                    <div class="row">
+                                        <br>
+                                        <div class="col-md-12">
+                                            <textarea class="form-control" rows="4" placeholder="Contents..." name="Des" ng-maxlength="135" maxlength="135"
+                                                      ng-model="backingData.Description"></textarea>
+                                            <span ng-show="paymentFrom.Des.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
+                                            <span style="color:red" ng-show="paymentFrom.Des.$error.maxlength">Tối đa 135 kí tự</span>
+                                            <label class="checkbox" for="checkbox1">
+                                                <input type="checkbox" data-toggle="checkbox" value="" id="checkbox1" ng-model="backingData.IsPublic">
+                                                Ẩn danh, tên bạn sẽ được ẩn bên danh sách người ủng hộ
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- info Banker -->
+
+            <div id="paymentReward">
+                <div class="container">
+                    <div class="panel panel-info">
+                        <div class="panel-heading bold">Mức ủng hộ</div>
+                        <div class="panel-body">
+                            <p class="fnt30 fnt-b txt-c c3 pt0 pb0 mt0 mb0">Dự án: "{{Project.Title}}"</p>
+                            <p class="fnt18 fnt-b txt-c pt0 pb0 mt0 mb0">Chủ dự án {{Project.Creator}}</p>
+                            <p class="bold">Chi tiết gói quà:</p>
+                            <p style="word-break: break-word;">
+                                {{Packet.Description}}
+                            </p>
+                            <p><span class="bold">Ủng hộ: </span><span class="bold"> {{BackData.PledgeAmount | currency:"":0}}&#8363;</span><span ng-show="Packet.Type != 'no reward'"> | Số lượng: {{BackData.Quantity  | currency:"":0}}</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- payment Reward -->
+
+            <div id="paymentMethod">
+                <div class="container">
+                    <div class="panel panel-danger">
+                        <div class="panel-heading bold">Cách thức thanh toán</div>
+                        <div class="panel-body">
+                            <h2 class="fnt20 fnt-b">Chuyển khoản ngân hàng online bằng thẻ ATM hoặc Internet Banking</h2>
+                            <p>
+                                Nếu bạn có tài khoản ngân hàng, có thẻ ATM, và đang ngồi trước máy tính nối mạng, bạn có thể thanh toán bằng phương thức này.<br>
+                                Bạn có thể có 2 lựa chọn.<br>
+                                [1] Nếu bạn muốn dùng thẻ ATM để thanh toán, xin vui lòng chọn ngân hàng ở trong danh sách <b>“Thanh toán bằng thẻ ATM”</b><br>
+                                [2] Nếu bạn muốn chuyển khoản online bằng Internet Banking, xin vui lòng chọn ngân hàng ở trong danh sách <b>“Thanh toán bằng Internet Banking”</b><br>
+                                Bạn chọn ngân hàng bằng cách click vào logo ngân hàng để chọn. Sau đó nhấn nút “Thanh toán”.<br>
+                                Chức năng này được hỗ trợ bởi cổng thanh toán trực tuyến <b>Bảo Kim</b>.<br>
+                            </p>
+                            <div>
+
+                                <div class="credit-card col-md-7">
+                                    <p class="fnt-b">Thanh toán bằng thẻ ATM</p>
+                                    <img src="https://www.baokim.vn/application/uploads/banks/vietcombank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_15"><img src="https://www.baokim.vn/application/uploads/banks/techcombank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_60"><img src="https://www.baokim.vn/application/uploads/banks/vietinbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_91"><img src="https://www.baokim.vn/application/uploads/banks/bidvbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_131"><img src="https://www.baokim.vn/application/uploads/banks/maritimebank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_105"><img src="https://www.baokim.vn/application/uploads/banks/Oceanbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_124"><img src="https://www.baokim.vn/application/uploads/banks/vpbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_113"><img src="https://www.baokim.vn/application/uploads/banks/dongabank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_101"><img src="https://www.baokim.vn/application/uploads/banks/acbbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_64"><img src="https://www.baokim.vn/application/uploads/banks/sacombank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_98"><img src="https://www.baokim.vn/application/uploads/banks/mbbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_61"><img src="https://www.baokim.vn/application/uploads/banks/agribank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_112"><img src="https://www.baokim.vn/application/uploads/banks/eximbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_63"><img src="https://www.baokim.vn/application/uploads/banks/vibbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_62"><img src="https://www.baokim.vn/application/uploads/banks/tienphongbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_130"><img src="https://www.baokim.vn/application/uploads/banks/shbbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_148"><img src="https://www.baokim.vn/application/uploads/banks/seabank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_153"><img src="https://www.baokim.vn/application/uploads/banks/50x34-lienvietbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_152"><img src="https://www.baokim.vn/application/uploads/banks/abbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_154"><img src="https://www.baokim.vn/application/uploads/banks/baovietbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_150"><img src="https://www.baokim.vn/application/uploads/banks/50x34-ocb.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_151"><img src="https://www.baokim.vn/application/uploads/banks/hdbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_94"><img src="https://www.baokim.vn/application/uploads/banks/namabank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_96"><img src="https://www.baokim.vn/application/uploads/banks/vietabank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_114"><img src="https://www.baokim.vn/application/uploads/banks/gpbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_115"><img src="https://www.baokim.vn/application/uploads/banks/pgbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_102"><img src="https://www.baokim.vn/application/uploads/banks/bac_a.jpg" class="logo_bank" onclick="choose_bank(this.id)" id="bank_129"><img src="https://www.baokim.vn/application/uploads/banks/saigonbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_97"><img src="https://www.baokim.vn/application/uploads/banks/navibank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_106"><img src="https://www.baokim.vn/application/uploads/banks/visa-master-50x34.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_128">
+                                </div>
+
+                                <div class="credit-card col-md-7">
+                                    <p>
+                                        <b>Thanh toán bằng Internet Banking (Ngân hàng điện tử)</b>
+                                    </p>
+                                    <img src="https://www.baokim.vn/application/uploads/banks/vietcombank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_30"><img src="https://www.baokim.vn/application/uploads/banks/techcombank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_36"><img src="https://www.baokim.vn/application/uploads/banks/vietinbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_132"><img src="https://www.baokim.vn/application/uploads/banks/bidvbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_133"><img src="https://www.baokim.vn/application/uploads/banks/maritimebank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_84"><img src="https://www.baokim.vn/application/uploads/banks/vpbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_136"><img src="https://www.baokim.vn/application/uploads/banks/dongabank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_32"><img src="https://www.baokim.vn/application/uploads/banks/acbbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_54"><img src="https://www.baokim.vn/application/uploads/banks/agribank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_147"><img src="https://www.baokim.vn/application/uploads/banks/sacombank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_80"><img src="https://www.baokim.vn/application/uploads/banks/eximbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_140"><img src="https://www.baokim.vn/application/uploads/banks/mbbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_65"><img src="https://www.baokim.vn/application/uploads/banks/baovietbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_82"><img src="https://www.baokim.vn/application/uploads/banks/pgbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_81"><img src="https://www.baokim.vn/application/uploads/banks/seabank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_49"><img src="https://www.baokim.vn/application/uploads/banks/shbbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_45"><img src="https://www.baokim.vn/application/uploads/banks/vibbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_47"><img src="https://www.baokim.vn/application/uploads/banks/tienphongbank.png" class="logo_bank" onclick="choose_bank(this.id)" id="bank_56"><input type="hidden" value="" id="baokim_bank_payment_method_id" name="baokim_bank_payment_method_id">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- payment Method -->
+
+            <div id="paymentSubmit">
+                <div class="container">
+                    <div class="pull-right">
+                        <button class="btn btn-success btn-wide" ng-disabled="!paymentFrom.$dirty || (paymentFrom.$dirty && paymentFrom.$invalid)"
+                                ng-click="submit()">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+                <br>
+            </div> <!-- payment submit -->
+        </div>
+    </form>
+</div> <!-- end content -->
+
+<div class="scroll-top-wrapper ">
+    <span class="scroll-top-inner">
+        <i class="fa fa-2x fa-arrow-circle-up"></i>
+    </span>
+</div> <!-- end SCROLL TO TOP -->

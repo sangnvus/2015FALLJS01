@@ -1,0 +1,295 @@
+﻿<!DOCTYPE html>
+
+<html ng-app="AdminApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title ng-bind="Page.title"></title>
+
+    <!-- Load css -->
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic' rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel="stylesheet" type="text/css">
+    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.7.1/loading-bar.min.css' type='text/css' media='all' />
+    @RenderSection("stylesheets", required: false)
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        .col-number, .col-datetime {
+            text-align: right;
+        }
+
+        .col-text {
+            text-align: left;
+        }
+
+        .table-responsive {
+            overflow: inherit;
+            border: none;
+        }
+
+        .table-responsive th {
+            text-align: center;
+            vertical-align: top !important;
+        }
+
+        .table-responsive td {
+            word-break: break-all;
+        }
+
+        table.dataTable thead .sorting:after, 
+        table.dataTable thead .sorting_asc:after, 
+        table.dataTable thead .sorting_desc:after, 
+        table.dataTable thead .sorting_asc_disabled:after, 
+        table.dataTable thead .sorting_desc_disabled:after {
+            top: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="hidden" value="@ViewBag.BaseUrl" id="BaseUrl" />
+    <div id="wrapper">
+        <!-- begin TOP NAVIGATION -->
+        <nav class="navbar-top" role="navigation">
+
+            <!-- begin BRAND HEADING -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle pull-right" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <i class="fa fa-bars"></i> Menu
+                </button>
+                <div class="navbar-brand">
+                    <a href="/admin/#/dashboard">
+                        @*<img src="img/flex-admin-logo.png" class="img-responsive" alt="">*@
+                        Dandelion
+                    </a>
+                </div>
+            </div>
+            <!-- end BRAND HEADING -->
+
+            <div class="nav-top">
+
+                <!-- begin LEFT SIDE WIDGETS -->
+                <ul class="nav navbar-left">
+                    <li class="tooltip-sidebar-toggle">
+                        <a href="" id="sidebar-toggle" data-toggle="tooltip" data-placement="right" title="Sidebar Toggle">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                    </li>
+                    <!-- You may add more widgets here using <li> -->
+                </ul>
+                <!-- end LEFT SIDE WIDGETS -->
+                <!-- begin MESSAGES/ALERTS/TASKS/USER ACTIONS DROPDOWNS -->
+                <ul class="nav navbar-right">
+
+                    <!-- begin USER ACTIONS DROPDOWN -->
+                    <li class="dropdown">
+                        <a href="#" onclick="return false" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user"></i>  <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="userprofile.html">
+                                    <i class="fa fa-user"></i> Thông tin cá nhân
+                                </a>
+                            </li>
+                            <li>
+                                <a href="message.html">
+                                    <i class="fa fa-envelope"></i> Tin nhắn
+                                    <span class="badge green pull-right">4</span>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-gear"></i> Settings
+                                </a>
+                            </li>
+                            <li>
+                                <a class="logout_open" href="@Url.Content("/admin/logout/")">
+                                    <i class="fa fa-sign-out"></i> Thoát
+                                    <strong>@ViewBag.CurrentUser.FullName</strong>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-menu -->
+                    </li>
+                    <!-- /.dropdown -->
+                    <!-- end USER ACTIONS DROPDOWN -->
+
+                </ul>
+                <!-- /.nav -->
+                <!-- end MESSAGES/ALERTS/TASKS/USER ACTIONS DROPDOWNS -->
+
+            </div>
+            <!-- /.nav-top -->
+        </nav>
+        <!-- /.navbar-top -->
+        <!-- end TOP NAVIGATION -->
+        <!-- begin SIDE NAVIGATION -->
+        <nav class="navbar-side" role="navigation">
+            <div class="navbar-collapse sidebar-collapse collapse">
+                <ul id="side" class="nav navbar-nav side-nav">
+                    <!-- begin SIDE NAV USER PANEL -->
+                    <li class="side-user hidden-xs">
+                        @if (ViewBag.CurrentUser.ProfileImage.Contains("http"))
+                        {
+                            <img id="avatar" style="width: 150px; height: 150px" src="@ViewBag.CurrentUser.ProfileImage" alt="" class="img-responsive img-circle center-block">
+                        }
+                        else
+                        {
+                            <img id="avatar" style="width: 150px; height: 150px" src="@Url.Content("~/images/avatars/" + @ViewBag.CurrentUser.ProfileImage)" alt="" class="img-responsive img-circle center-block">
+                        }
+                        <p class="welcome">
+                            <i class="fa fa-key"></i> Đăng nhập với
+                        </p>
+                        <p class="name tooltip-sidebar-logout">
+                            @ViewBag.CurrentUser.FullName
+                        </p>
+                        <div class="clearfix"></div>
+                    </li>
+                    <!-- end SIDE NAV USER PANEL -->
+                    <!-- begin DASHBOARD LINK -->
+                    <li>
+                        <a href="~/admin/#/dashboard" ng-class="{'active': Page.activeTab == 'dashboard'}">
+                            <i class="fa fa-dashboard"></i> Dashboard
+                        </a>
+                    </li>
+                    <!-- end DASHBOARD LINK -->
+                    <!-- begin USERS DROPDOWN -->
+                    <li class="panel">
+                        <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#users">
+                            <i class="fa fa-files-o"></i> Users <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="collapse nav" id="users">
+                            <li>
+                                <a href="~/admin/#/userdashboard/" ng-class="{'active': Page.activeTab == 'userprofile'}">
+                                    <i class="fa fa-angle-double-right"></i> Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a href="~/admin/#/userlist/" ng-class="{'active': Page.activeTab == 'userlist'}">
+                                    <i class="fa fa-angle-double-right"></i> Users List
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- end USERS DROPDOWN -->
+                    <!-- begin PROJECTS DROPDOWN -->
+                    <li class="panel">
+                        <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#projects">
+                            <i class="fa fa-bar-chart-o"></i> Dự án
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="collapse nav" id="projects">
+                            <li>
+                                <a href="~/admin/#/project/" ng-class="{'active': Page.activeTab == 'dashboard'}">
+                                    <i class="fa fa-angle-double-right"></i> Thông tin chung
+                                </a>
+                            </li>
+                            <li>
+                                <a href="~/admin/#/project/all/" ng-class="{'active': Page.activeTab == 'projectList'}">
+                                    <i class="fa fa-angle-double-right"></i> Danh sách dự án
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- end PROJECTS DROPDOWN -->
+                    <!-- begin BACKINGS DROPDOWN -->
+                    <li class="panel">
+                        <a href="backing.html">
+                            <i class="fa fa-bar-chart-o"></i> Ủng hộ
+                            <!-- <i class="fa fa-caret-down"></i> -->
+                        </a>
+                    </li>
+                    <!-- end BACKINGS DROPDOWN -->
+                    <!-- begin CATEGORIES DROPDOWN -->
+                    <li class="panel">
+                        <a href="~/admin/#/category/" ng-class="{'active': Page.activeTab == 'category'}">
+                            <i class="fa fa-bar-chart-o"></i> Danh mục
+                            <!-- <i class="fa fa-caret-down"></i> -->
+                        </a>
+                    </li>
+                    <!-- end CATEGORIES DROPDOWN -->
+                    <!-- begin SLIDERS DROPDOWN -->
+                    <li class="panel">
+                        <a href="~/admin/#/slide/" ng-class="{'active': Page.activeTab == 'slide'}">
+                            <i class="fa fa-bar-chart-o"></i> Slide
+                            <!-- <i class="fa fa-caret-down"></i> -->
+                        </a>
+                    </li>
+                    <!-- end SLIDERS DROPDOWN -->
+                    <!-- begin MESSAGES DROPDOWN -->
+                    <li class="panel">
+                        <a href="~/admin/#/message/" ng-class="{'active': Page.activeTab == 'message'}">
+                            <i class="fa fa-bar-chart-o"></i> Tin nhắn
+                            <!-- <i class="fa fa-caret-down"></i> -->
+                        </a>
+                    </li>
+                    <!-- end MESSAGES DROPDOWN -->
+                    <!-- begin REPORT -->
+                    <li class="panel">
+                        <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#reports">
+                            <i class="fa fa-files-o"></i> Report <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="collapse nav" id="reports">
+                            <li>
+                                <a href="/admin/#/reportuser" ng-class="{'active': Page.activeTab == 'reportuser'}">
+                                    <i class="fa fa-angle-double-right"></i> User
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/#/reportproject" ng-class="{'active': Page.activeTab == 'reportproject'}">
+                                    <i class=" fa fa-angle-double-right">
+                                    </i> Project
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- end REPORT -->
+                </ul>
+                <!-- /.side-nav -->
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+        <!-- /.navbar-side -->
+        <!-- end SIDE NAVIGATION -->
+        <!--begin MAIN PAGE CONTENT-->
+        <div id="page-wrapper">
+            <!-- begin PAGE TITLE ROW -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="page-title">
+                        <h1 ng-bind="Page.title"></h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <i class="fa fa-dashboard"></i><span ng-bind="Page.breadcrumb[0]"></span>
+                            </li>
+                            <li class="active" ng-bind="Page.breadcrumb[1]"></li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <!-- end PAGE TITLE ROW -->
+            @RenderBody()
+            @RenderSection("SPAViews", required: false)
+        </div>
+        <!-- /#page-wrapper -->
+        <!-- end MAIN PAGE CONTENT -->
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.7.1/loading-bar.min.js'></script>
+</body>
+</html>

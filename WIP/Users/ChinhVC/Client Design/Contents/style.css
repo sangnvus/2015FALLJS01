@@ -1,0 +1,712 @@
+@charset "utf-8";
+
+@import "common.css";
+@import "cmn-options.css";
+
+/* CSS Information
+Description: CSS Content
+Date: 2015.10.01
+--------------------------------------------------------- */
+
+
+
+ /*Home Page (Home.html)
+--------------------------------------------------------- */
+	/* Main Slider*/
+	#main-slider {
+	  position: relative;
+	}
+	#main-slider .carousel h2 {
+	  font-size: 36px;
+	}
+	#main-slider .carousel .btn {
+	  border: 3px solid rgba(255, 255, 255, 0.5);
+	  color: #fff;
+	  border-radius: 0;
+	  margin-top: 5px;
+	}
+	#main-slider .carousel .btn:hover {
+	  background-color: rgba(255, 255, 255, 0.3);
+	}
+	#main-slider .carousel .boxed {
+	  padding: 10px 15px;
+	  background-color: rgba(0, 0, 0, 0.8);
+	  display: inline-block;
+	}
+	#main-slider .carousel .item {
+	  background-position: 50%;
+	  background-repeat: no-repeat;
+	  background-size: cover;
+	  left: 0 !important;
+	  opacity: 0;
+	  top: 0;
+	  position: absolute;
+	  width: 100%;
+	  display: block !important;
+	  height: 600px;
+	  -webkit-transition: opacity ease-in-out 500ms;
+	  -moz-transition: opacity ease-in-out 500ms;
+	  -o-transition: opacity ease-in-out 500ms;
+	  transition: opacity ease-in-out 500ms;
+	}
+	#main-slider .carousel .item:first-child {
+	  top: auto;
+	  position: relative;
+	}
+	#main-slider .carousel .item.active {
+	  opacity: 1;
+	  -webkit-transition: opacity ease-in-out 500ms;
+	  -moz-transition: opacity ease-in-out 500ms;
+	  -o-transition: opacity ease-in-out 500ms;
+	  transition: opacity ease-in-out 500ms;
+	  z-index: 1;
+	}
+	#main-slider .prev,
+	#main-slider .next {
+	  position: absolute;
+	  top: 50%;
+	  background-color: rgba(0, 0, 0, 0.3);
+	  color: #fff;
+	  display: inline-block;
+	  margin-top: -25px;
+	  font-size: 24px;
+	  height: 50px;
+	  width: 50px;
+	  line-height: 50px;
+	  text-align: center;
+	  border-radius: 4px;
+	  z-index: 5;
+	}
+	#main-slider .prev:hover,
+	#main-slider .next:hover {
+	  background-color: rgba(0, 0, 0, 0.5);
+	  border-radius: 10px;
+	}
+	#main-slider .prev {
+	  left: 10px;
+	}
+	#main-slider .next {
+	  right: 10px;
+	}
+	#main-slider .active .animation.animated-item-1 {
+	  -webkit-animation: fadeInUp 300ms linear 300ms both;
+	  -moz-animation: fadeInUp 300ms linear 300ms both;
+	  -o-animation: fadeInUp 300ms linear 300ms both;
+	  -ms-animation: fadeInUp 300ms linear 300ms both;
+	  animation: fadeInUp 300ms linear 300ms both;
+	}
+	#main-slider .active .animation.animated-item-2 {
+	  -webkit-animation: fadeInUp 300ms linear 600ms both;
+	  -moz-animation: fadeInUp 300ms linear 600ms both;
+	  -o-animation: fadeInUp 300ms linear 600ms both;
+	  -ms-animation: fadeInUp 300ms linear 600ms both;
+	  animation: fadeInUp 300ms linear 600ms both;
+	}
+	#main-slider .active .animation.animated-item-3 {
+	  -webkit-animation: fadeInUp 300ms linear 900ms both;
+	  -moz-animation: fadeInUp 300ms linear 900ms both;
+	  -o-animation: fadeInUp 300ms linear 900ms both;
+	  -ms-animation: fadeInUp 300ms linear 900ms both;
+	  animation: fadeInUp 300ms linear 900ms both;
+	}
+	#main-slider .active .animation.animated-item-4 {
+	  -webkit-animation: fadeInUp 300ms linear 1200ms both;
+	  -moz-animation: fadeInUp 300ms linear 1200ms both;
+	  -o-animation: fadeInUp 300ms linear 1200ms both;
+	  -ms-animation: fadeInUp 300ms linear 1200ms both;
+	  animation: fadeInUp 300ms linear 1200ms both;
+	}
+ 	
+
+	/* Tab-right */
+	#feature1 .nav>li>a {
+		position: relative;
+		display: block;
+		padding: 0px 15px;
+	}
+	.tabs-right > .nav-tabs > li {
+	  float: none;
+	}
+	.tabs-right > .nav-tabs > li > a {
+	  min-width: 74px;
+	  margin-right: 0;
+	  margin-bottom: 3px;
+	  color: #000000;
+	}
+	.tabs-right > .nav-tabs {
+	  float: right;
+	  margin-left: 19px;
+	  border-left: 1px solid #ddd;
+	}
+	.tabs-right > .nav-tabs > a:hover{
+		color: #FFF000;
+	}
+	.tabs-right > .nav-tabs .active > a,
+	.tabs-right > .nav-tabs .active > a:hover,
+	.tabs-right > .nav-tabs .active > a:focus {
+		background-color: transparent;
+		border: 0px;
+		color: #2bde73;
+		border-left: 3px solid #2bde73;
+	  /*border-color: #ddd #ddd #ddd transparent;*/
+	  /*background-color: none;*/
+	  /**border-left-color: red;*/
+	}
+
+	/* Tab-center */
+	.tab-center .nav-tabs {
+		text-align:center;
+		border-bottom: 0px solid #ddd;
+	}
+	.tab-center .nav-tabs > li, .nav-pills > li {
+		float:none;
+		display:inline-block;
+		*display:inline; /* ie7 fix */
+		zoom:1; /* hasLayout ie7 trigger */
+	}
+
+	/* Feature1 */
+	#feature1{
+		background: #ECF0F1;
+		padding: 30px 0px;
+	}
+	#feature1 h3>a{
+		color: #000000;
+		text-decoration: none;
+	}
+
+	/* Feature2 */
+	#feature2{
+		padding: 30px 0px;
+		background: #F9f9f9;
+	}
+
+	/*Feature3*/
+	#feature3{
+		background: #D8E2EC;
+		padding: 15px 0px 30px 0px;
+		-webkit-transition: all 1.5s;
+  		-moz-transition: all 1.5s;
+  		-o-transition: all 1.5s;
+  		transition: all 1.5s;
+	}
+	#feature3:hover{
+		background: #34495e;
+		padding: 15px 0px 30px 0px;
+		-webkit-transition: all 1.5s;
+  		-moz-transition: all 1.5s;
+  		-o-transition: all 1.5s;
+  		transition: all 1.5s;
+
+	}
+	#feature3 #topfund{
+		color: #00000;
+		-webkit-transition: all 1.5s;
+  		-moz-transition: all 1.5s;
+  		-o-transition: all 1.5s;
+  		transition: all 1.5s;
+	}
+	#feature3:hover #topfund{
+		color: #FFFFFF;
+  		transition: all 2.5s;
+	}
+	#feature3 #btnview{
+		visibility:hidden;
+	}
+	#feature3:hover #btnview{
+		visibility:visible;
+  		transition: all 2.5s;
+	}
+/* End Home Page ---------------------------------------- */
+
+
+
+ /*Create Project Page 1 (create_project1.html)
+--------------------------------------------------------- */
+	#create_project1 .container{
+		padding-top: 30px;
+	}
+	#create_project2{
+		background: #f7fafa;
+	}
+	#create_project2 .container{
+		padding-top: 30px;
+	}
+/* End Create Project Page 1 ---------------------------- */
+
+
+
+ /*Create Project Page 2 (create_project2.html)
+--------------------------------------------------------- */
+/*Create_project*/
+	#process-Create{
+		padding-top: 70px;
+	}
+	#tabs-panel{
+		font-family: "Times New Roman", Times, serif;
+	}
+	.title{
+		font-size: 20px;
+		font-weight: bold;
+	}
+	.countText{
+	    position: absolute;
+		top: 5px;
+    	right: 20px;
+	    font-weight: bold;
+	    color: #c3c3c3;
+	}
+	#create_project .container{
+		padding-top: 50px;
+	}
+	#create_project .container #main-content .row{
+		margin-bottom: 40px;
+	}
+	#create_project .container #form-input{
+		padding: 30px;
+	}
+	#create_project .container #form-input .row{
+		margin-bottom: 40px;
+	}
+	
+	#create_project .container #form-input  .row:first-of-type h1{
+		display: inline-block;
+	}
+	
+	#create_project .container #form-input #sel1{
+		width: 200px;
+		margin: 0 20px;  
+		font-size: 22px;
+		display: inline-block;
+	}
+	
+	#create_project .container #form-input  .row:nth-of-type(2) input{
+		width: 80%; 
+		font-size: 32px; 
+	}
+	
+	#create_project .container #form-input  .row:last-of-type a{
+		margin-right: 60px;
+		width:30%;
+		font-size: x-large;
+	}
+	
+	.input-transparent{
+		border:none; 
+		border-bottom: 1px solid lightgray; 
+		box-shadow: none; 
+		background: transparent;
+	}
+	.Editor-editor {
+		height: 300px;
+		padding: 1%;
+		border: 1px solid #d9d9de;
+		border-radius: 0;
+		word-wrap: break-word;
+		background-color: white;
+	}
+/* End create_project ----------------------------------- */
+
+
+
+/*Project Details Page (project_detail.html)
+--------------------------------------------------------- */
+	#project-common{
+		background-color: #F9f9f9;
+	}
+	#project-tab{
+		background-color: #FFFFFF;
+		border-top:1px solid #d9d9de;
+		border-top-style: dashed;
+	}
+	#project-tab ul>li.active>a{
+		list-style: none;
+		color: #FFFFFF;
+		background: #16a085;
+		/*border-top: 5px solid #05E4B8;*/
+		border-bottom: 5px solid #05E4B8;
+	}
+	#project-tab ul>li>a:hover{
+		list-style: none;
+		background: #05E4B8;
+		color: #FFFFFF;
+		border-bottom: 5px solid #05E4B8;
+		/*border-top-style: dashed;*/
+		/*border-bottom-style: dashed;*/
+	}
+	#project-tabpanel{
+		padding: 0px 0px 10px 10px;
+		/*background-color: #D0D1CF;*/
+		border-top:1px solid #d9d9de;
+		border-top-style: dashed;
+	}
+	#load_content{
+
+	}
+	#load_content p{
+		font-size: 16px;
+	}
+	#riskandchallenges p{
+		font-size: 16px;
+	}
+	.project-tab-border{
+		background: #FFFFFF;
+		/*border:2px solid #d9d9de;
+		border-style: dashed;*/
+	}
+	.project-tab-campaign{
+		background: #FFFFFF;
+		/*border-right:2px solid #d9d9de;
+		border-right-style: dashed;*/
+	}
+	.eqWrap {
+		display: flex;
+	}
+	#reward li{
+		list-style: none;
+	}
+	/*reponsive video======*/
+	.responsive-video {
+		position: relative;
+		padding-bottom: 56.25%;
+		padding-top: 60px; overflow: hidden;
+	}
+
+	.responsive-video iframe,
+	.responsive-video object,
+	.responsive-video embed {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+	/*end responsive video======*/
+	
+	/*table*/
+	/*change color bootstrap (#337ab7)=> flat ui (#1abc9c)*/
+	.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+	    z-index: 2;
+	    color: #fff;
+	    cursor: default;
+	    background-color: #1abc9c;
+	    border-color: #1abc9c;
+	}
+	/*comments*/
+	#comments-list p, 
+	#comments-list a{
+		font-size: 16px;
+		font-size: 1.6rem;
+	}
+/*End Project Details Page ------------------------------*/
+
+
+
+/*Login and Register Page (login.html and register.html)
+--------------------------------------------------------- */
+	#login .container>div, #register .container>div{
+		float:none; 
+		padding: 0;
+		border: 1px solid #d9d9de; 
+		border-radius: 5px; 
+		margin-top:40px;
+		margin-bottom:40px;
+		background: white;
+	}
+
+	.login-title{
+		margin-bottom: 0px
+	}
+	
+	#login .container a.btn, #register .container a.btn{
+		width: 100%;
+	}
+
+	#login .container .boderbottom, #register .container .boderbottom{
+		margin: 10px;
+	}
+
+	#login .container #login-facebook, #register .container #login-facebook{
+		margin-top: 30px;
+	}
+
+	#login .container .tip-info, #register .container .tip-info{
+		margin-top: 10px; 
+		color: darkgray; 
+		font-size: small; 
+		padding: 0 0px
+	}
+
+	#login .panel-footer, #register .panel-footer{
+		color: gray;
+	}
+/*End login and register ---------------------------------*/
+
+
+
+/*Discover Page (discover.html)
+--------------------------------------------------------- */
+	/*item-category*/
+	.thumbnail_size{
+		height: 100px;
+		text-align: center;
+		margin: 0px 0px 0px 0px ;
+		padding: 30px 0px 10px 0px;
+		overflow: hidden;
+	}
+	/*animation item-category*/
+	.feature2_animation_box, .first_link{
+		-webkit-transition: 0.4s;
+		-moz-transition: 0.4s;
+		-ms-transition: 0.4s;
+		-o-transition: 0.4s;
+		transition: 0.4s;     
+	}
+	.first_link{
+		margin-bottom: -200px;
+	}
+
+	.liveproject_art_font{
+		color: #ecf0f1;
+		font-size: 15px;
+		font-weight: bold;
+	}
+
+	.feature2_animation_box:hover{
+		background-color: #16a085;
+	}
+
+
+	.feature2_animation_box:hover .first_link{
+		margin-top: 174px;
+	}
+/*End Discover -------------------------------------------*/
+
+
+
+/*Search Page (search.html)
+--------------------------------------------------------- */
+	#search{
+	}
+	#search .searchbar {
+		background: #fff;
+	}
+/*End Search ---------------------------------------------*/
+
+
+
+/*Back Project (back_project.html)
+--------------------------------------------------------- */
+	#choose_reward .item-radio{
+		background: #f5f5f5;
+		border: 2px solid #828587;
+		border-radius: 6px;
+		padding: 15px;
+	}
+/*End Back Project -------------------------------------- */
+
+
+
+/*Payment Page (payment.html)
+--------------------------------------------------------- */
+	#payment{
+		padding-top: 20px;
+	}
+	#avatar1{
+		width: 115px;
+    	height: 115px;
+	}
+	.credit-card{
+	    padding: 10px;
+	}
+	.credit-card img{
+		padding: 8px 8px 8px 8px;
+	}
+	#paymentMethod p{
+		font-size: 9px;
+		font-size: 0.9em!important;
+	}
+/*End payment ------------------------------------------- */
+
+
+
+/*Created, Starred, Backed Project, Page (created_project.html)
+--------------------------------------------------------- */
+	#setting_container {
+		padding-top: 100px;
+		padding-right: 5%;
+	}
+	#items-projects{
+		padding-top: 0px;
+		padding-bottom: 30px;
+	}
+	td>a{
+		color: #34495E;
+	}
+/*End Created, Starred, Backed Project ------------------- */
+
+
+
+/* Message Page (message.html, message-View.html)
+--------------------------------------------------------- */
+	/*message*/
+	#message{
+		padding-top: 100px;
+		padding-bottom: 50px;
+	}
+	#message-view{
+		padding-top: 100px;
+		padding-bottom: 500px;
+	}
+	#message .container{
+		padding-top: 50px;
+		padding-bottom: 50px;
+		/*margin: 0px 0px 0px 0px;*/
+		background: #fff;
+		/*border: 2px solid #16a085;*/
+		/*border-radius: 6px;*/
+	}
+	
+	/*SlideBar-right*/
+    #colPush ul{
+        list-style-type: none;
+    }
+    #colPush li{
+        padding: 10px 0px;
+        border: 1px solid #16a085;
+        background-color: #fff;
+    }
+    #colPush a{
+    	color: #34495E;
+        padding: 0px 35px;
+        /*border: 1px solid green;*/
+    }
+    #colPush li:hover {
+    	cursor: pointer;
+        background-color: #f9f9f9;
+    }
+	#colPush li:hover a{
+    	color: #16a085;
+        padding: 0px 35px;
+    }
+    #colMain{
+    	padding-top: 15px;
+		padding-bottom: 50px;
+    }
+    #colMain #checkboxDelete{
+    	position: absolute;
+    	top:5px;
+    }
+
+    @media (max-width: @screen-xs-max) {
+    }
+	@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) { 
+	}
+	@media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+	}
+	@media (min-width: @screen-lg-min) { 
+	}
+	/*dataTable*/
+	#messageTable{
+		font-size: 16px;
+		
+	}
+    #messageTable .unread-message{
+    	font-weight: bold;
+    	background: #fff;
+    }
+    #messageTable .read{
+    	background: #F4F4F4;
+    }
+
+    #messageTable td>a{
+		color: #34495e!important;
+    }
+
+    .from-col {
+    	min-width: 170px;
+    	overflow: hidden;
+	}
+	.from-col:hover,
+	.msg-col:hover {
+		cursor: pointer;
+	}
+	.date-col {
+    /* min-width: 100px; */
+    	overflow: hidden;
+    	text-align: right;
+	}
+/* End Message Page ------------------------------------------ */
+
+
+
+/* Account Page (accunt.html, editprofiel.html)
+ ------------------------------------------------------------- */
+ 	#profile {
+ 		padding-top: 70px;
+ 	}
+
+ 	#image-clip{
+ 		width: 100px;
+ 		height: auto;
+ 	}
+	
+	.changePassHide{
+		display: none;
+	}
+
+	.changePassShow{
+		display: block;
+	}
+	
+	.asset_upload {
+	    background-color: white;
+	    border-radius: 6px;
+	    border: 1px dashed #d9d9de;
+	    height: 102px;
+	}
+	.asset_upload .upload input.file {
+	    position: absolute;
+	    font-size: 60px;
+	    opacity: 0;
+	    top: 0;
+	    right: 0;
+	    width: 100%;
+	    height: 100%;
+	    text-indent: -9999px;
+	    cursor: pointer;
+	}
+	.asset_upload .upload strong {
+	    display: block;
+	    font-size: 13px;
+	    padding: 10px;
+	    line-height: 18px;
+	    color: #00a0ff;
+	}
+	.asset_upload .upload strong span {
+	    display: block;
+	    color: #828587;
+	    font-size: 11px;
+	    font-weight: normal;
+	}
+	
+	/* profile_public.html */
+	#profile_public{
+		padding-top: 100px;
+	}
+	#avatar-profile{
+		width: 150px;
+		height: auto;
+	}
+
+/* End Account Page ------------------------------------------ */
+
+
+
+/* List Backers (list_backers.html)
+-------------------------------------------------------------- */
+	#backerchart{
+		background: #FFFFFF;
+	}
+
+/* List Backer ----------------------------------------------- */

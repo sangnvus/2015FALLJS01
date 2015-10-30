@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<title>Message</title>
+
+	<!-- Loading Bootstrap -->
+    <link href="../Contents/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Loading Flat UI -->
+    <link href="../Contents/flat-ui.min.css" rel="stylesheet">
+    
+    <!-- Loading Fonts avesome-->
+    <link rel="stylesheet" type="text/css" href="../fonts/font-awesome/css/font-awesome.min.css">
+    
+    <!-- Loading Style -->
+    <link rel="stylesheet" type="text/css" href="../Contents/style.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../Contents/message.css"> -->
+
+    <!-- Loading Animate -->
+    <link href="../Contents/animate.css" rel="stylesheet">
+	
+	 <!-- Loading dataTables -->
+    <link rel="stylesheet" type="text/css" href="../Contents/Libraries/dataTables.bootstrap.min.css">
+
+    <!-- <link rel="stylesheet" href="../Contents/message.css" type="text/css"> -->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Bootstrap -->
+</head>
+<body style="background: #fff">
+    <div id="header">
+      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-5">
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <a class="navbar-brand" href="home_logged.html">DanDeLion</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-5">
+           <ul class="nav navbar-nav">
+            <li class="hover-nav"><a class="abc" href="discover.html">Discover</a></li>
+            <li class="hover-nav"><a href="create_project1.html">Start</a></li>
+            <li role="separator" class="hidden-xs divider-vertical"></li>
+            <form class="navbar-form navbar-left" action="search-advance.html" role="search">
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" id="navbarInput-01" type="search" placeholder="Search Projects">
+                  <span class="input-group-btn">
+                    <button type="" class="btn"><span class="fui-search"></span></button>
+                  </span>
+                </div>
+              </div>
+          </form>
+          </ul>
+
+          <ul id="profile_dropdown" class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img id="avatar" src="../images/avatar/avatar1.png" alt="" class="img-responsive img-circle center-block">
+                MyName
+                <span class="caret"></span>
+              </a>
+              
+              <ul class="dropdown-menu">
+                <h5 class="c3">My stuff</h5>
+                <li><a href="message.html">Message <span class="badge">3</span></a></li>
+                <li><a href="backed_project.html">Backed projects</a></li>
+                <li><a href="created_project.html">Created projects</a></li>
+                <li><a href="starred_project.html">Starred projects</a></li>
+                <li class="divider"></li>
+                <h5 class="c3">Setting</h5>
+                <li><a href="account.html">Account</a></li>
+                <li><a href="editprofile.html">Edit profile</a></li>
+                <li class="divider"></li>
+                <p class="no-wrap">You are logged is as <b>ChinhVC</b> | <a class="fnt-b" href="home.html">Log out</a></p>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </nav>
+    </div> <!-- end header -->
+	
+    <!-- Side Navigation -->
+    <div id="message-view" class="paddingNavbar">
+    	<div class="container">
+    		<div class="row">
+    			<div id="colPush" class="col-md-3">
+    				<ul class="">
+    					<h5 class="fnt30 fnt-b">Message</h5>
+    					<div class="clearfix"></div>
+				        <li> 
+				        	<a class="link" data-toggle="modal" data-target="#sentBox">
+				        		<i class="icon fa fa-edit fa-2x fa-fw"></i> 
+				        		<span class="toggle">New Message</span>
+				        	</a>
+				        </li>
+
+				        <li> 
+				        	<a href="message.html">
+				        		<i class="icon fa fa-inbox fa-2x fa-fw"></i> 
+				        		<span class="toggle">Inbox(4)</span>
+				        	</a>
+				        </li>
+
+				         <li> 
+				        	<a>
+				        		<i class="icon fa fa-paper-plane fa-2x fa-fw"></i> 
+				        		<span class="toggle">Sent</span>
+				        	</a>
+				        </li>
+
+				       <!--  <li> 
+				        	<a>
+				        		<i class="icon fa fa-trash-o fa-2x fa-fw"></i> 
+				        		<span class="toggle">Delete</span>
+				        	</a>
+				        </li>
+
+				        <li class="item toggle-link1">
+				        	<a>
+				        		<i class="arrow_toogle icon fa fa-arrow-circle-left fa-2x fa-fw"></i> 
+				        		<span class="toggle">Hide</span>
+				        	</a>
+				        </li> -->
+			    	</ul>
+    			</div>
+			    <div id="colMain" class="col-md-8">
+			    	<div id="checkboxDelete" class="">
+    					<button class="toggle-link btn btn-primary"><i class="icon fa fa-bars"></i></button>
+						<button class="btn btn-primary btn18"><i class="icon fa fa-refresh"></i></button>
+			    		<button class="btn btn-danger btn18"><i class="icon fa fa-trash-o"></i> Delete</button>
+
+						<!-- mes chat -->
+						<div class="pt20" style="min-width:800px">
+							<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+								<div class="panel panel-default">
+									<div class="panel-heading" role="tab" id="headingOne">
+										<h4 class="panel-title">
+											<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+												<!-- Collapsible Group Item #1 -->
+												<div class="row">
+													<div class="col-sm-1">
+					                                  <img class="avatar" src="../images/avatar/avatar1.png" alt="">
+					                              	</div>
+					                              	<div class="col-sm-9">
+					                                     <p class="mb0">Jane Smith</p>
+					                                     <span class="text-muted">Order Status Update: Order #231</span>
+					                                </div>
+					                                <div class="col-sm-2">
+					                                  22/04/90
+					                              	</div>
+				                              	</div>
+											</a>
+										</h4>
+									</div>
+									<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+										<div class="panel-body">
+											 Hi again! I wanted to let you know that the order...
+											  Hi again! I wanted to let you know that the order...
+											   Hi again! I wanted to let you know that the order...
+											    Hi again! I wanted to let you know that the order...
+											     Hi again! I wanted to let you know that the order...
+										</div>
+									</div>
+								</div>
+								<div class="panel panel-default">
+									<div class="panel-heading" role="tab" id="headingTwo">
+										<h4 class="panel-title">
+											<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+												<!-- Collapsible Group Item #2 -->
+												<div class="row">
+													<div class="col-sm-1">
+					                                  <img class="avatar" src="../images/avatar/avatar2.png" alt="">
+					                              	</div>
+					                              	<div class="col-sm-9">
+					                                     <p class="mb0">Roddy Auston</p>
+					                                     <span class="text-muted">Order number for new client</span>
+					                                </div>
+					                                <div class="col-sm-2">
+					                                  23/04/90
+					                              	</div>
+				                              	</div>
+											</a>
+										</h4>
+									</div>
+									<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+										<div class="panel-body">
+											 Hey, what was the purchase order number for the...
+										</div>
+									</div>
+								</div>
+								<div class="panel panel-default">
+									<div class="panel-heading" role="tab" id="headingThree">
+										<h4 class="panel-title">
+											<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+												<!-- Collapsible Group Item #3 -->
+												<div class="row">
+													<div class="col-sm-1">
+					                                  <img class="avatar" src="../images/avatar/avatar1.png" alt="">
+					                              	</div>
+					                              	<div class="col-sm-9">
+					                                     <p class="mb0">Jane Smith</p>
+					                                     <span class="text-muted">Order Status Update: Order #219</span>
+					                                </div>
+					                                <div class="col-sm-2">
+					                                  23/04/90
+					                              	</div>
+				                              	</div>
+											</a>
+										</h4>
+									</div>
+									<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+										<div class="panel-body">
+											This order has been filled and is ready to ship...
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Add reply -->
+							<div class="reply" style="border-top: 2px solid #cfcfcf">
+								<div class="media pt20" >
+	                              <div class="pull-left">
+	                                  <img class="avatar" src="../images/avatar/avatar2.png" alt="">
+	                              </div>
+	                              <div class="media-body border-tips">
+	                                 
+	                                      <textarea class="form-control flat noboder" style="resize:none" name="" id="" cols="30" rows="5" placeholder="Viết gì đó đi"></textarea>
+	                                      <button class="btn btn-info btn-sm btn-wide mt10 pull-right">Gửi</button>
+	                              </div>
+	                          </div>
+                          </div>
+						</div>
+			    	</div>
+			    </div>
+    		</div>
+    	</div>
+    </div>
+	
+	<!-- Box sent message -->
+    <div class="container">
+    	<div class="modal fade" id="sentBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    		<div class="modal-dialog" role="document">
+    			<form action="" class="form-horizontal">
+    				<div class="modal-content">
+    					<div class="modal-header" style="background: #404040">
+    						<button type="button" class="close cFF" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    						<h4 class="modal-title fnt18 cFF" id="myModalLabel">New message</h4>
+    					</div>
+    					<div class="modal-body">
+    						<div class="form-group" style="border-bottom: 1px solid #cfcfcf">
+    							<label for="" class="col-sm-2 control-label fnt18 fnt-b fnt-b txt-l">Tới:</label>
+							    <div class="pl0 ml0 col-sm-10">
+							      <input type="text" class="pl0 ml0 form-control flat fnt18 fnt-b noboder" id="" placeholder="...">
+							    </div>
+    						</div>
+    						<div class="form-group" style="border-bottom: 1px solid #cfcfcf">
+    							<label for="" class="pr0 col-sm-2 control-label fnt18 fnt-b txt-l">Tiêu đề:</label>
+							    <div class="pl0 ml0 col-sm-10">
+							      <input type="text" class="pl0 ml0 form-control fnt18 fnt-b flat noboder" id="" placeholder="...">
+							    </div>
+    						</div>
+    						<div >
+    							<textarea class="form-control noboder" style="resize:none" name="" id="" cols="30" rows="7"></textarea>
+    						</div>
+    					</div>
+    					<div class="modal-footer pt5 pb5">
+    						<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+    						<button type="button" class="btn btn-info btn-sm btn-wide btn18">Gửi</button>
+    					</div>
+    				</div>
+    			</form>
+    			
+    		</div>
+    	</div>
+    </div>
+
+    <div class="scroll-top-wrapper ">
+      <span class="scroll-top-inner">
+        <i class="fa fa-2x fa-arrow-circle-up"></i>
+      </span>
+    </div> <!-- end SCROLL TO TOP -->
+
+	<div id="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<p class="fnt30 fnt-b dark-cyan">DLL - Dandelion</p>
+					<a href="">Hosted by DDL</a>
+				</div>
+				<div class="col-md-6">
+					<ul class="pull-right list-inline">
+						<li><a href="home.html">Home</a></li>
+						<li><a href="about.html">About us</a></li>
+						<li><a href="#">Help</a></li>
+						<li><a href="#">Contact</a></li>
+						<a id="gototop" class="gototop" href="#"><span class="glyphicon glyphicon-chevron-up"></span></i></a>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div> <!-- end footer -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+    <script src="../Scripts/jquery.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+    <script src="../Scripts/flat-ui.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <!-- My Js -->
+    <script src="../Scripts/application.js"></script>
+	
+	<!-- dataTables -->
+	<script src="../Scripts/Libraries/jquery.dataTables.min.js"></script>
+	<script src="../Scripts/Libraries/dataTables.bootstrap.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			// Table message use Jtable
+    	 	$('#messageTable').dataTable();
+    	 	$('#messageTable_length').hide();
+
+		});
+
+		  //Toogle slideBar
+		$('.toggle-link').click(function () {
+			$('.toggle').toggle(300);
+			$('#colPush').toggleClass("col-md-3 col-md-2", 300);
+			$('#colMain').toggleClass("col-md-8 col-md-9", 300);
+			$('.arrow_toogle').toggleClass("fa-arrow-circle-left fa-arrow-circle-right", 300);
+		});
+	</script>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- <script src="../Scripts/bootstrap.min.js"></script>-->
+    <!--<script src="../dist/js/vendor/video.js"></script>-->
+</body>
+</html>

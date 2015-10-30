@@ -1,0 +1,154 @@
+﻿
+<link rel="stylesheet" type="text/css" href="/Contents/Libraries/dataTables.bootstrap.min.css">
+
+<div id="setting_container" class="paddingNavbar">
+    <div class="row pull-right">
+        <div class="col-sm-12 col-sm-offset-0">
+            <ul id="" class="list-inline fnt18 fnt-b">
+                <li class=""><a class="c-10" href="../#/project/createdProject">Dự án đã tạo</a></li>
+                <li class=""><a class="c3" href="../#/project/backedProject">Dự án đã ủng hộ</a></li>
+                <li class=""><a class="c-10" href="../#/project/starredProject">Dự án theo dõi</a></li>
+                <!-- <li class=""><a class="c-10" href="account.html">Setting</a></li> -->
+                <!-- <li class=""><a class="c-10" href="../Views/profile_public.html">Profile ( public )</a></li> -->
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="items-projects">
+    <section id="portfolio" class="container">
+        <h4 class="pt30">Backed projects:</h4>
+        <ul class="list-inline fnt18 fnt-b">
+            <li class=""><a class="c-10" href="../#/project/backedProject">Dự án đã ủng hộ</a></li>
+            <li class=""><a class="c3" href="../#/project/backedProjectHistory">Lịch sử ủng hộ</a></li>
+        </ul> <!-- end Selection -->
+        <!-- Modal -->
+        <div class="modal fade" id="infoBanker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Thông tin ủng hộ</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                
+                                <div class="col-md-6">
+                                    <h3 class="fnt25">Người ủng hộ</h3>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <img id="avatar-profile" ng-src="\images\projects\{{BackedUser.ProfileImage}}" alt="" class="img-responsive center-block pt30">
+                                            @*<img id="avatar-profile" src="/images/avatars/avatar_default.jpg" alt="" class="img-responsive center-block pt30">*@
+                                        </div>
+                                        <div class="col-md-9">
+                                            <br>
+                                            <form>
+                                                <div>
+                                                    <label class="fnt20 fnt-b mt0 mb0" for="name">{{BackedUser.FullName}}</label>
+                                                </div>
+                                                <div>
+                                                    <label class="fnt20 mt0 mb0" for="email">{{BackedUser.Email}}</label>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="">
+                                        <div class="">
+                                            <label class="fnt18 mt0 mb0" for="name"><span class="fnt-b">Địa chỉ: </span>{{BackedUser.Add}}</label>
+                                        </div>
+                                        <div class="">
+                                            <label class="fnt18 mt0 mb0" for="name"><span class="fnt-b">Số điện thoại: </span>{{BackedUser.Phone }}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h3 class="fnt25">Dự án: <i style="font-style: normal" id="project_title_target"></i></h3>
+                                    <br>
+                                    <p class="fnt18" for="name"><span>Ủng hộ gói: </span><span class="fnt-b">{{BackingInfo[0].RewadDiscription}}</span> với số tiền:<span class="fnt-b"> {{BackingInfo[0].PledgeAmount |  number : fractionSize}}&#8363; </span> và <span class="fnt-b">số lượng: {{BackingInfo[0].Quantity}}</span></p>
+                                    <!-- <p class="fnt18" for="name"><span class="fnt-b">Số lượng:</span> 1</p> -->
+                                    <p class="fnt18" for="name"><span class="fnt-b">Tổng số tiền:</span> {{BackingInfo[0].TotalAmount |  number : fractionSize}}&#8363;</p>
+                                    <p class="fnt18" for="name"><span class="fnt-b">Ngày gửi:</span>{{BackingInfo[0].BackedDate | date: "dd-MM-yyyy"}}</p>
+                                    <p class="mb0 pb0"><span class="fnt-b">Nội dung:</span></p>
+                                    <p class="mt0 pt0">{{BackingInfo[0].BackingDiscription}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end Modal infoBanker -->
+        <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" id="table_historyBacked" class="table table-striped table-bordered table-hover">
+            <thead style="background: #16a085; color: #FFF">
+                <tr>
+                    <th>STT</th>
+                    <th>Tên dự án</th>
+                    <th>Số tiền</th>
+                    <th>Thời gian</th>
+                    <th>Tình trạng dự án</th>
+                    <th class="txt-c">Xem</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="project in ListBackedProjectHistory ">
+                    <td style="width: 5%" class="txt-r">{{$index+1}}</td>
+                    <td style="width: 35%" class="txt-l"><a class="fnt-b project_title_source" href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></td>
+                    <td style="width: 15%" class="txt-r">{{project.CurrentFunded |  number : fractionSize}}&#8363;</td>
+                    <td style="width: 15%" class="txt-r">{{project.BackedDate | date: "dd/MM/yyyy"}}</td>
+                    <td style="width: 20%" class="txt-l">
+                        <label ng-if="project.Status=='pending'" class="label label-primary">Đang chờ kiểm duyệt</label>
+                        <label ng-if="project.Status=='draft'" class="label label-primary">Nháp</label>
+                        <label ng-if="project.Status=='rejected'" class="label label-danger">Không phê duyệt</label>
+                        <label ng-if="project.Status=='approved'" class="label label-success">Đang chạy</label>
+                        <label ng-if="project.Status=='suspended'" class="label label-danger">Đình chỉ</label>
+                        <label ng-if="project.Status=='expired'" class="label label-danger">Hết hạn</label>
+                    </td>
+                    <td style="width: 10%" class="txt-c">
+                        <div class="btn-group">
+                            <button class="btn btn-danger btn-sm btn_view_detail" type="button" data-toggle="modal" data-target="#infoBanker" ng-click="getBackingInfo(project.ProjectID)" title="View">
+                                <i class="fa fa-eye"></i>
+                            </button>
+
+                        </div>
+                    </td>
+                </tr> <!-- item -->
+            </tbody>
+        </table>
+</section><!--/#portfolio-->
+</div>
+
+<div class="scroll-top-wrapper ">
+    <span class="scroll-top-inner">
+        <i class="fa fa-2x fa-arrow-circle-up"></i>
+    </span>
+</div> <!-- end SCROLL TO TOP -->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(document).on("click", ".btn_view_detail", function () {
+            var wrapper = $(this).parentsUntil("tr").parent();
+            $("#project_title_target").text(wrapper.find(".project_title_source").text());
+        });
+
+    });
+</script>
+
+<script>
+    //$(document).ready(function () {
+    //    // Table message use Jtable
+    //    $('#messageTable').dataTable();
+    //    $('#messageTable_length').hide();
+
+    //});
+
+    //Toogle slideBar
+    $('.toggle-link').click(function () {
+        $('.toggle').toggle(300);
+        $('#colPush').toggleClass("col-md-3 col-md-2", 300);
+        $('#colMain').toggleClass("col-md-8 col-md-9", 300);
+        $('.arrow_toogle').toggleClass("fa-arrow-circle-left fa-arrow-circle-right", 300);
+    });
+</script>

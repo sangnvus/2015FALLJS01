@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Backed Project</title>
+
+    <!-- Loading Bootstrap -->
+    <link href="../Contents/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Loading Flat UI -->
+    <link href="../Contents/flat-ui.min.css" rel="stylesheet">
+    
+    <!-- Loading Fonts avesome-->
+    <link rel="stylesheet" type="text/css" href="../fonts/font-awesome/css/font-awesome.min.css">
+    
+    <!-- Loading Style -->
+    <link rel="stylesheet" type="text/css" href="../Contents/style.css">
+
+    <!-- Loading Animate -->
+    <link href="../Contents/animate.css" rel="stylesheet">
+  
+    <!-- Loading more css -->
+    <link rel="stylesheet" type="text/css" href="../Contents/Libraries/dataTables.bootstrap.min.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+  <body>
+    <div id="header">
+      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-5">
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <a class="navbar-brand" href="home_logged.html">DanDeLion</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-5">
+           <ul class="nav navbar-nav">
+            <li class="hover-nav"><a class="abc" href="discover.html">Discover</a></li>
+            <li class="hover-nav"><a href="create_project1.html">Start</a></li>
+            <li role="separator" class="hidden-xs divider-vertical"></li>
+            <form class="navbar-form navbar-left" action="search-advance.html" role="search">
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" id="navbarInput-01" type="search" placeholder="Search Projects">
+                  <span class="input-group-btn">
+                    <button type="" class="btn"><span class="fui-search"></span></button>
+                  </span>
+                </div>
+              </div>
+          </form>
+          </ul>
+
+          <ul id="profile_dropdown" class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img id="avatar" src="../images/avatar/avatar1.png" alt="" class="img-responsive img-circle center-block">
+                MyName
+                <span class="caret"></span>
+              </a>
+              
+              <ul class="dropdown-menu">
+                <h5 class="c3">My stuff</h5>
+                <li><a href="message.html">Message <span class="badge">3</span></a></li>
+                <li><a href="backed_project.html">Backed projects</a></li>
+                <li><a href="created_project.html">Created projects</a></li>
+                <li><a href="starred_project.html">Starred projects</a></li>
+                <li class="divider"></li>
+                <h5 class="c3">Setting</h5>
+                <li><a href="account.html">Account</a></li>
+                <li><a href="editprofile.html">Edit profile</a></li>
+                <li class="divider"></li>
+                <p class="no-wrap">You are logged is as <b>ChinhVC</b> | <a class="fnt-b" href="home.html">Log out</a></p>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </nav>
+    </div> <!-- end header -->
+    
+    <div id="setting_container" class="paddingNavbar">
+      <div class="row pull-right">
+        <div class="col-sm-12 col-sm-offset-0">
+          <ul id="" class="list-inline fnt18 fnt-b">
+            <li class=""><a class="c-10" href="../Views/created_project.html">Created projects</a></li>
+            <li class=""><a class="c3"   href="../Views/backed_project.html">Backed projects</a></li>
+            <li class=""><a class="c-10" href="../Views/starred_project.html">Starred projects</a></li>
+            <!-- <li class=""><a class="c-10" href="account.html">Setting</a></li> -->
+            <!-- <li class=""><a class="c-10" href="../Views/profile_public.html">Profile ( public )</a></li> -->
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="items-projects">
+      <section id="portfolio" class="container">
+        <h4 class="pt30">Backed projects:</h4>
+        <ul class="list-inline fnt18 fnt-b">
+            <li class=""><a class="c-10" href="../Views/backed_project.html">Dự án đã ủng hộ</a></li>
+            <li class=""><a class="c-3"   href="../Views/backed_project_history.html">Lịch sử ủng hộ</a></li>
+        </ul> <!-- end Selection -->
+                            <!-- Modal -->
+        <div class="modal fade" id="infoBanker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Thông tin ủng hộ</h4>
+              </div>
+              <div class="modal-body">
+               <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h3 class="fnt25">Người ủng hộ</h3>
+                    <div class="row">
+                      <div class="col-md-3">
+                        <img id="avatar-profile" src="../images/avatar/avatar1.png" alt="" class="img-responsive center-block pt30">
+                      </div>
+                      <div class="col-md-9">
+                        <br>
+                        <form>
+                          <div>
+                            <label class="fnt20 fnt-b mt0 mb0" for="name">Nguyen Van A</label>
+                          </div>
+                          <div>
+                            <label class="fnt20 mt0 mb0" for="email">avn@gmail.com</label>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="">
+                      <div class="">
+                         <label class="fnt18 mt0 mb0" for="name"><span class="fnt-b">Địa chỉ:</span> ABC, Thanh Tri, Hanoi</label>
+                      </div>
+                      <div class="">
+                        <label class="fnt18 mt0 mb0" for="name"><span class="fnt-b">Số điện thoại:</span> 0164819088</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <h3 class="fnt25">Dự án: "Divinity: Original Sin 2"</h3>
+                    <br>
+                    <p class="fnt18" for="name"><span>Ủng hộ gói: </span><span class="fnt-b">"Ủng hộ 200000VNĐ hoặc nhiều hơn"</span> với số tiền:<span class="fnt-b">200,000 VNĐ</span> và <span class="fnt-b">số lượng: 1</span></p>
+                    <!-- <p class="fnt18" for="name"><span class="fnt-b">Số lượng:</span> 1</p> -->
+                    <p class="fnt18" for="name"><span class="fnt-b">Tổng số tiền:</span> 200,000 VNĐ</p>
+                    <p class="fnt18" for="name"><span class="fnt-b">Ngày gửi:</span> 2015-02-09 10:30:00</p>
+                    <p class="mb0 pb0"><span class="fnt-b">Nội dung:</span></p>
+                    <p class="mt0 pt0">Tôi đã ủng hộ 200,000 VNĐ cho dự án. Chúc dự án gây quỹ thành công.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+          </div>
+        </div> <!-- end Modal infoBanker -->
+        <table id="table_historyBacked" class="table table-striped table-bordered table-hover" >  
+          <thead style="background: #16a085; color: #FFF">  
+            <tr>  
+              <th>STT</th>  
+              <th>Tên dự án</th>  
+              <th>Số tiền</th>  
+              <th>Thời gian</th> 
+              <th>Tình trạng dự án</th>  
+              <th>Xem</th>  
+            </tr>  
+          </thead>  
+          <tbody>  
+            <tr>  
+              <td>001</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 1</a></td>  
+              <td>100000</td>  
+              <td>2015-02-09 10:30:00</td> 
+              <td>Thành công</td>
+              <td>
+                <div class="btn-group">
+                  <a href="#" class="btn btn-danger btn-sm" type="button" data-toggle="modal" data-target="#infoBanker" title="View">
+                    <i class="fa fa-eye"></i>
+                  </a>
+                </div>
+              </td>
+            </tr> <!-- item --> 
+            <tr>  
+              <td>001</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 1</a></td>  
+              <td>100000</td>  
+              <td>2015-02-09 10:30:00</td> 
+              <td>Thành công</td>
+              <td>
+                <div class="btn-group">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#infoBanker" type="button" title="View">
+                    <i class="fa fa-eye"></i>
+                  </a>
+                </div>
+              </td>
+            </tr> <!-- item --> 
+            <tr>  
+              <td>001</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 1</a></td>  
+              <td>100000</td>  
+              <td>2015-02-09 10:30:00</td> 
+              <td>Đang chạy</td>
+              <td>
+                <div class="btn-group">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#infoBanker" type="button" title="View">
+                    <i class="fa fa-eye"></i>
+                  </a>
+                </div>
+              </td>
+            </tr> <!-- item --> 
+            <tr>  
+              <td>001</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 1</a></td>  
+              <td>100000</td>  
+              <td>2015-02-09 10:30:00</td> 
+              <td>Thất bại</td>
+              <td>
+                <div class="btn-group">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#infoBanker" type="button" title="View">
+                    <i class="fa fa-eye"></i>
+                  </a>
+                </div>
+              </td>
+            </tr> <!-- item --> 
+            <tr>  
+              <td>001</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 1</a></td>  
+              <td>100000</td>  
+              <td>2015-02-09 10:30:00</td> 
+              <td>Thành công</td>
+              <td>
+                <div class="btn-group">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#infoBanker" type="button" title="View">
+                    <i class="fa fa-eye"></i>
+                  </a>
+                </div>
+              </td>
+            </tr> <!-- item --> 
+            <tr>  
+              <td>002</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 2</a></td>  
+              <td>200000</td>  
+              <td>2015-02-19 10:30:00</td> 
+              <td>Thành công</td>
+              <td>
+                <div class="btn-group">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#infoBanker" type="button" title="View">
+                    <i class="fa fa-eye"></i>
+                  </a>
+                </div>
+              </td>
+            </tr> <!-- item --> 
+            <tr>  
+              <td>003</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 3</a></td>  
+              <td>100000</td>  
+              <td>2015-02-19 10:30:00</td> 
+              <td>Thất bại</td>
+              <td>
+                <div class="btn-group">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#infoBanker" type="button" title="View">
+                    <i class="fa fa-eye"></i>
+                  </a>
+                </div>
+              </td>
+            </tr> <!-- item --> 
+            <tr>  
+              <td>004</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 4</a></td>  
+              <td>100000</td>  
+              <td>2015-02-09 10:30:00</td> 
+              <td>Thành công</td>
+              <td>
+                <div class="btn-group">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#infoBanker" type="button" title="View">
+                    <i class="fa fa-eye"></i>
+                  </a>
+                </div>
+              </td>
+            </tr> <!-- item --> 
+            <tr>  
+              <td>005</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 5</a></td>  
+              <td>100000</td>  
+              <td>2015-02-09 10:30:00</td> 
+              <td>Thành công</td>
+              <td>
+                <div class="btn-group">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#infoBanker" type="button" title="View">
+                    <i class="fa fa-eye"></i>
+                  </a>
+                </div>
+              </td>
+            </tr> <!-- item --> 
+            <tr>  
+              <td>006</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 6</a></td>  
+              <td>100000</td>  
+              <td>2015-02-09 10:30:00</td> 
+              <td>Thành công</td>
+              <td>
+                <div class="btn-group">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#infoBanker" type="button" title="View">
+                    <i class="fa fa-eye"></i>
+                  </a>
+                </div>
+              </td>
+            </tr> <!-- item --> 
+            <tr>  
+              <td>007</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 7</a></td>  
+              <td>100000</td>  
+              <td>2015-02-09 10:30:00</td> 
+              <td>Thành công</td>
+              <td>
+                <div class="btn-group">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#infoBanker" type="button" title="View">
+                    <i class="fa fa-eye"></i>
+                  </a>
+                </div>
+              </td>
+            </tr> <!-- item --> 
+            <tr>  
+              <td>008</td>  
+              <td><a class="fnt-b" href="project_detail.html">Dự án 8</a></td>  
+              <td>100000</td>  
+              <td>2015-02-09 10:30:00</td> 
+              <td>Thành công</td>
+              <td>
+                <div class="btn-group">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#infoBanker" type="button" title="View">
+                    <i class="fa fa-eye"></i>
+                  </a>
+                </div>
+              </td>
+            </tr> <!-- item --> 
+          </tbody>  
+        </table>  
+      </section><!--/#portfolio-->
+    </div>
+    
+    <div class="scroll-top-wrapper ">
+      <span class="scroll-top-inner">
+        <i class="fa fa-2x fa-arrow-circle-up"></i>
+      </span>
+    </div> <!-- end SCROLL TO TOP -->
+    
+    <div id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <p class="fnt30 fnt-b dark-cyan">DLL - Dandelion</p>
+            <a href="">Hosted by DDL</a>
+          </div>
+          <div class="col-md-6">
+            <ul class="pull-right list-inline">
+              <li><a href="home.html">Home</a></li>
+              <li><a href="about.html">About us</a></li>
+              <li><a href="#">Help</a></li>
+              <li><a href="#">Contact</a></li>
+              <a id="gototop" class="gototop" href="#"><span class="glyphicon glyphicon-chevron-up"></span></i></a>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div> <!-- end footer -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+    <script src="../Scripts/jquery.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+    <script src="../Scripts/flat-ui.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <!-- My Js -->
+    <script src="../Scripts/application.js"></script>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- <script src="../Scripts/bootstrap.min.js"></script>-->
+    <!--<script src="../dist/js/vendor/video.js"></script>-->
+    <script src="../Scripts/Libraries/jquery.dataTables.min.js"></script>
+    <script src="../Scripts/Libraries/dataTables.bootstrap.min.js"></script>
+
+    <script>
+      $(document).ready(function(){
+        $('#table_historyBacked').dataTable({
+          "language": {
+            "lengthMenu": "Hiển thị _MENU_ dòng trên 1 trang",
+            "zeroRecords": "Không tìm thấy!",
+            "info": "Hiển thị trang _PAGE_ của _PAGES_",
+            "infoEmpty": "Không có dữ liệu",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search": "Tìm kiếm:",
+            "paginate": {
+              "first":      "Đầu",
+              "last":       "Cuối",
+              "next":       "Sau",
+              "previous":   "Trước"
+            }
+        }
+        });
+      });
+    </script>
+  </body>
+</html>

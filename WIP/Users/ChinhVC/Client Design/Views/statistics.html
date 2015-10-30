@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Statistics</title>
+    
+    <!-- Loading Bootstrap -->
+    <link href="../Contents/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Loading Flat UI -->
+    <link href="../Contents/flat-ui.min.css" rel="stylesheet">
+    
+    <!-- Loading Fonts avesome-->
+    <link rel="stylesheet" type="text/css" href="../fonts/font-awesome/css/font-awesome.min.css">
+    
+    <!-- Loading Style -->
+    <link rel="stylesheet" type="text/css" href="../Contents/style.css">
+
+    <!-- Loading Animate -->
+    <link href="../Contents/animate.css" rel="stylesheet">
+
+    <!-- Loading more css -->
+    <link rel="stylesheet" type="text/css" href="../Contents/Libraries/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../Contents/Libraries/morris.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body style="background: #f9f9f9;">
+    <div id="header">
+      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-5">
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <a class="navbar-brand" href="home_logged.html">DanDeLion</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-5">
+           <ul class="nav navbar-nav">
+            <li class="hover-nav"><a class="abc" href="discover.html">Discover</a></li>
+            <li class="hover-nav"><a href="create_project1.html">Start</a></li>
+            <li role="separator" class="hidden-xs divider-vertical"></li>
+            <form class="navbar-form navbar-left" action="search-advance.html" role="search">
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" id="navbarInput-01" type="search" placeholder="Search Projects">
+                  <span class="input-group-btn">
+                    <button type="" class="btn"><span class="fui-search"></span></button>
+                  </span>
+                </div>
+              </div>
+          </form>
+          </ul>
+
+          <ul id="profile_dropdown" class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img id="avatar" src="../images/avatar/avatar1.png" alt="" class="img-responsive img-circle center-block">
+                MyName
+                <span class="caret"></span>
+              </a>
+              
+              <ul class="dropdown-menu">
+                <h5 class="c3">My stuff</h5>
+                <li><a href="message.html">Message <span class="badge">3</span></a></li>
+                <li><a href="profile_public.html">Profile</a></li>
+                <li><a href="backed_project.html">Backed projects</a></li>
+                <li><a href="created_project.html">Created projects</a></li>
+                <li><a href="starred_project.html">Starred projects</a></li>
+                <li class="divider"></li>
+                <h5 class="c3">Setting</h5>
+                <li><a href="account.html">Account</a></li>
+                <li><a href="editprofile.html">Edit profile</a></li>
+                <li class="divider"></li>
+                <p class="no-wrap">You are logged is as <b>ChinhVC</b> | <a class="fnt-b" href="home.html">Log out</a></p>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </nav>
+    </div> <!-- end HEADER -->
+    
+    <div id="content" class="paddingNavbar">
+      <div id="content-title">
+          <h2 class="container fnt-b">Thống kê</h2>
+      </div> <!-- end TITLE -->
+
+      <div id="content-1">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-5 pt15">
+             <p class="fnt45 fnt-800 h1 c3">1,961,779,098 VNĐ</p>
+             <p class="fnt-b mt0 c3">số tiền được ủng hộ tới các dự án của Dandelion</p>
+            </div>
+            <div class="col-md-6 pt15">
+             <p class="fnt45 fnt-800 h1 c3">92,871</p>
+             <p class="fnt-b mt0 c3">số dự án được gây quỹ thành công</p>
+            </div>
+          </div> <!-- end -->
+          <div class="row">
+            <div class="col-md-2">
+              <p class="fnt30 fnt-800 h2 c3">9,490,934</p>
+              <p class="fnt-b mt0 c3">số người ủng hộ</p>
+            </div>
+            <div class="col-md-3">
+              <p class="fnt30 fnt-800 h2 c3">2,924,514</p>
+              <p class="fnt-b mt0 c3">số người ủng hộ hơn 2 dự án</p>
+            </div>
+            <div class="col-md-2">
+              <p class="fnt30 fnt-800 h2 c3">25,432,351</p>
+              <p class="fnt-b mt0 c3">số lần ủng hộ</p>
+            </div>
+          </div>
+        </div>
+      </div> <!-- end content-1 STATISTIC -->
+      <div id="content-2">
+        <div class="container">
+          <div id="graph"></div>
+          <pre id="graph-data" class="prettyprint linenums" style="display:none">
+              /* data stolen from http://howmanyleft.co.uk/vehicle/jaguar_'e'_type */
+              var day_data = [
+              {"period": "Games", "Successfully funded projects": 19766, "total dollars": 40355},
+              {"period": "Technology", "Successfully funded projects": 17585, "total dollars": 34795},
+              {"period": "Design", "Successfully funded projects": 16680, "total dollars": 34499},
+              {"period": "Film & Video", "Successfully funded projects": 50449, "total dollars": 29963},
+              {"period": "Music", "Successfully funded projects": 41890, "total dollars": 15595},
+              {"period": "Food", "Successfully funded projects": 16464, "total dollars": 7990},
+              {"period": "Publishing", "Successfully funded projects": 27537, "total dollars": 7978},
+              {"period": "Fashion", "Successfully funded projects": 13300, "total dollars": 6844},
+              {"period": "Art", "Successfully funded projects": 19697, "total dollars": 5669},
+              {"period": "Comics", "Successfully funded projects": 6537, "total dollars": 4361 }
+              ];
+              Morris.Bar({
+                element: 'graph',
+                data: day_data,
+                xkey: 'period',
+                ykeys: ['Successfully funded projects', 'total dollars'],
+                labels: ['Successfully funded projects', 'total dollars'],
+                xLabelAngle: 60
+              });
+          </pre>
+        </div>
+      </div> <!-- end content-2 GRAPH STATISTIC-->
+      <div id="content-3">
+        <div class="container">
+          <div class="padding30">
+            <div class="panel panel-primary">
+              <div class="panel-heading bold">
+                <form action="" class="form-inline">
+                  <a style="color: white; text-decoration: none;" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Top 10 dự án
+                  </a>
+                   <select class="form-control">
+                      <option selected="">Tất cả</option>
+                      <option>comics</option>
+                      <option>Crafts</option>
+                      <option>Dance</option>
+                      <option>Design</option>
+                      <option>Fashion</option>
+                      <option>Games</option>
+                      <option>Journalism</option>
+                      <option>Music</option>
+                      <option>Photography</option>
+                      <option>Publishing</option>
+                      <option>Technology</option>
+                  </select>
+                </form>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                  <table id="top10pProjectTable" class="table table-striped table-bordered table-hover">  
+                    <thead style="background: #16a085; color: #FFF">  
+                      <tr>  
+                        <th>STT</th>  
+                        <th>Mã dự án</th>
+                        <th>Danh mục</th>  
+                        <th>Xếp hạng</th>  
+                        <th>Tên dự án</th>  
+                        <th>Số tiền ủng hộ</th>  
+                        <th>Số người ủng hộ</th> 
+                        <th>Tình trạng</th> 
+                      </tr>  
+                    </thead>  
+                    <tbody>  
+                      <tr>  
+                        <td>001</td>  
+                        <td>A1</td>  
+                        <td>Art</td>  
+                        <td>Rank A</td> 
+                        <td><a href="project_detail.html">Name Project 1</a></td> 
+                        <td>$1055,951</td> 
+                        <td>841</td> 
+                        <td>Success</td> 
+                      </tr>
+                      <tr>  
+                        <td>002</td>  
+                        <td>C1</td>  
+                        <td>Commic</td>  
+                        <td>Rank A</td> 
+                        <td><a href="project_detail.html">Name Project 2</a></td> 
+                        <td>$900,951</td> 
+                        <td>541</td> 
+                        <td>Success</td> 
+                      </tr>
+                      <tr>  
+                        <td>003</td>  
+                        <td>A5</td>  
+                        <td>Art</td>  
+                        <td>Rank A</td> 
+                        <td><a href="project_detail.html">Name Project 3</a></td> 
+                        <td>$855,951</td> 
+                        <td>3841</td> 
+                        <td>Success</td> 
+                      </tr>
+                      <tr>  
+                        <td>004</td>  
+                        <td>C6</td>  
+                        <td>Commic</td>  
+                        <td>Rank A</td> 
+                        <td><a href="project_detail.html">Name Project 4</a></td> 
+                        <td>$700,951</td> 
+                        <td>1541</td> 
+                        <td>Success</td> 
+                      </tr>
+                      <tr>  
+                        <td>005</td>  
+                        <td>D6</td>  
+                        <td>Dommic</td>  
+                        <td>Rank A</td> 
+                        <td><a href="project_detail.html">Name Project 5</a></td> 
+                        <td>$700,001</td> 
+                        <td>235</td> 
+                        <td>Success</td> 
+                      </tr>
+                      <tr>  
+                        <td>006</td>  
+                        <td>A1</td>  
+                        <td>Art</td>  
+                        <td>Rank A</td> 
+                        <td><a href="project_detail.html">Name Project 6</a></td> 
+                        <td>$755,951</td> 
+                        <td>841</td> 
+                        <td>Success</td> 
+                      </tr>
+                      <tr>  
+                        <td>007</td>  
+                        <td>C1</td>  
+                        <td>Commic</td>  
+                        <td>Rank A</td> 
+                        <td><a href="project_detail.html">Name Project 7</a></td> 
+                        <td>$850,951</td> 
+                        <td>541</td> 
+                        <td>Success</td> 
+                      </tr>
+                      <tr>  
+                        <td>008</td>  
+                        <td>A5</td>  
+                        <td>Art</td>  
+                        <td>Rank A</td> 
+                        <td><a href="project_detail.html">Name Project 8</a></td> 
+                        <td>$755,951</td> 
+                        <td>3841</td> 
+                        <td>Success</td> 
+                      </tr>
+                      <tr>  
+                        <td>009</td>  
+                        <td>C6</td>  
+                        <td>Commic</td>  
+                        <td>Rank A</td> 
+                        <td><a href="project_detail.html">Name Project 9</a></td>  
+                        <td>$660,951</td> 
+                        <td>1541</td> 
+                        <td>Success</td> 
+                      </tr>
+                      <tr>  
+                        <td>010</td>  
+                        <td>D6</td>  
+                        <td>Dommic</td>  
+                        <td>Rank A</td> 
+                        <td><a href="project_detail.html">Name Project 10</a></td> 
+                        <td>$650,001</td> 
+                        <td>235</td> 
+                        <td>Success</td> 
+                      </tr>
+                    </tbody>  
+                  </table> 
+                </div>
+              </div>
+            </div>
+          </div> <!-- end top projects -->
+        </div>
+      </div> <!-- end content-3 TOP PROJECTS-->
+      <div id="content-4">
+        <div class="container">
+          <div class="panel panel-primary">
+            <div class="panel-heading bold">
+              <form action="" class="form-inline">
+                  <a style="color: white; text-decoration: none;" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                   Top 10 người ủng hộ
+                 </a>
+                   <select class="form-control">
+                      <option selected="">Tất cả</option>
+                      <option>comics</option>
+                      <option>Crafts</option>
+                      <option>Dance</option>
+                      <option>Design</option>
+                      <option>Fashion</option>
+                      <option>Games</option>
+                      <option>Journalism</option>
+                      <option>Music</option>
+                      <option>Photography</option>
+                      <option>Publishing</option>
+                      <option>Technology</option>
+                  </select>
+              </form>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panel-body">
+                <table id="top10BackerTable" class="table table-striped table-bordered table-hover">  
+                  <thead style="background: #16a085; color: #FFF">  
+                    <tr>  
+                      <th>.STT</th>  
+                      <th>Xếp hạng</th>
+                      <th>Tên người ủng hộ</th>  
+                      <th>Tổng số tiền gây quỹ</th>  
+                      <th>Tổng số tiền ủng hộ</th> 
+                    </tr>  
+                  </thead>  
+                  <tbody>  
+                    <tr>  
+                      <td>001</td>  
+                      <td>Rank A</td> 
+                      <td><a href="profile_public.html">Name Backer1</a></td> 
+                      <td>$1055,951</td> 
+                      <td>20</td> 
+                    </tr>
+                    <tr>  
+                      <td>002</td>  
+                      <td>Rank A</td> 
+                      <td><a href="profile_public.html">Name Backer2</a></td> 
+                      <td>$955,951</td> 
+                      <td>20</td> 
+                    </tr>
+                    <tr>  
+                      <td>003</td>  
+                      <td>Rank A</td> 
+                      <td><a href="profile_public.html">Name Backer3</a></td> 
+                      <td>$855,951</td> 
+                      <td>15</td> 
+                    </tr>
+                    <tr>  
+                      <td>004</td>  
+                      <td>Rank A</td> 
+                      <td><a href="profile_public.html">Name Backer4</a></td> 
+                      <td>$755,951</td> 
+                      <td>15</td> 
+                    </tr>
+                    <tr>  
+                      <td>005</td>  
+                      <td>Rank A</td> 
+                      <td><a href="profile_public.html">Name Backer 5</a></td> 
+                      <td>$655,951</td> 
+                      <td>15</td> 
+                    </tr>
+                    <tr>  
+                      <td>006</td>  
+                      <td>Rank B</td> 
+                      <td><a href="profile_public.html">Name Backer6</a></td> 
+                      <td>$655,951</td> 
+                      <td>20</td> 
+                    </tr>
+                    <tr>  
+                      <td>007</td>  
+                      <td>Rank B</td> 
+                      <td><a href="profile_public.html">Name Backer7</a></td> 
+                      <td>$555,951</td> 
+                      <td>20</td> 
+                    </tr>
+                    <tr>  
+                      <td>008</td>  
+                      <td>Rank B</td> 
+                      <td><a href="profile_public.html">Name Backer 8</a></td> 
+                      <td>$455,951</td> 
+                      <td>10</td> 
+                    </tr>
+                    <tr>  
+                      <td>009</td>  
+                      <td>Rank B</td> 
+                      <td><a href="profile_public.html">Name Backer 9</a></td> 
+                      <td>$355,951</td> 
+                      <td>7</td> 
+                    </tr>
+                    <tr>  
+                      <td>010</td>  
+                      <td>Rank B</td> 
+                      <td><a href="profile_public.html">Name Backer 10</a></td> 
+                      <td>$255,951</td> 
+                      <td>15</td> 
+                    </tr>
+                  </tbody>  
+                </table> 
+              </div>
+            </div>
+          </div>  <!--end top backer -->
+        </div>
+      </div> <!-- end content-4 TOP BACKERS-->
+      <div id="content-5">
+        <div class="container">
+            <div class="panel panel-primary">
+              <div class="panel-heading bold">
+                <form action="" class="form-inline">
+                    <a style="color: white; text-decoration: none;" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                     Top 10 người gây quỹ
+                    </a>
+                    <select class="form-control">
+                      <option selected="">Tất cả</option>
+                      <option>comics</option>
+                      <option>Crafts</option>
+                      <option>Dance</option>
+                      <option>Design</option>
+                      <option>Fashion</option>
+                      <option>Games</option>
+                      <option>Journalism</option>
+                      <option>Music</option>
+                      <option>Photography</option>
+                      <option>Publishing</option>
+                      <option>Technology</option>
+                    </select>
+                </form>
+              </div>
+              <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                  <table id="top10CreatorTable" class="table table-striped table-bordered table-hover">  
+                    <thead style="background: #16a085; color: #FFF">  
+                      <tr>  
+                        <th>.STT</th>  
+                        <th>Xếp hạng</th>
+                        <th>Tên người gây quỹ</th>  
+                        <th>Tổng số tiền được ủng hộ</th> 
+                        <th>Tổng số dự án gây quỹ thành công</th>  
+                      </tr>  
+                    </thead>  
+                    <tbody>  
+                      <tr>  
+                        <td>001</td>  
+                        <td>Rank A</td> 
+                        <td><a href="">Name Backer1</a></td> 
+                        <td>$1055,951</td> 
+                        <td>20</td> 
+                      </tr>
+                      <tr>  
+                        <td>002</td>  
+                        <td>Rank A</td> 
+                        <td><a href="">Name Backer2</a></td> 
+                        <td>$955,951</td> 
+                        <td>20</td> 
+                      </tr>
+                      <tr>  
+                        <td>003</td>  
+                        <td>Rank A</td> 
+                        <td><a href="">Name Backer3</a></td> 
+                        <td>$855,951</td> 
+                        <td>15</td> 
+                      </tr>
+                      <tr>  
+                        <td>004</td>  
+                        <td>Rank A</td> 
+                        <td><a href="">Name Backer4</a></td> 
+                        <td>$755,951</td> 
+                        <td>15</td> 
+                      </tr>
+                      <tr>  
+                        <td>005</td>  
+                        <td>Rank A</td> 
+                        <td><a href="">Name Backer 5</a></td> 
+                        <td>$655,951</td> 
+                        <td>15</td> 
+                      </tr>
+                      <tr>  
+                        <td>006</td>  
+                        <td>Rank B</td> 
+                        <td><a href="">Name Backer6</a></td> 
+                        <td>$655,951</td> 
+                        <td>20</td> 
+                      </tr>
+                      <tr>  
+                        <td>007</td>  
+                        <td>Rank B</td> 
+                        <td><a href="">Name Backer7</a></td> 
+                        <td>$555,951</td> 
+                        <td>20</td> 
+                      </tr>
+                      <tr>  
+                        <td>008</td>  
+                        <td>Rank B</td> 
+                        <td><a href="">Name Backer 8</a></td> 
+                        <td>$455,951</td> 
+                        <td>10</td> 
+                      </tr>
+                      <tr>  
+                        <td>009</td>  
+                        <td>Rank B</td> 
+                        <td><a href="">Name Backer 9</a></td> 
+                        <td>$355,951</td> 
+                        <td>7</td> 
+                      </tr>
+                      <tr>  
+                        <td>010</td>  
+                        <td>Rank B</td> 
+                        <td><a href="">Name Backer 10</a></td> 
+                        <td>$255,951</td> 
+                        <td>15</td> 
+                      </tr>
+                    </tbody>  
+                  </table> 
+                </div>
+              </div>
+            </div><!--end top creator -->
+        </div>
+      </div> <!-- end content-5 TOP CREATOR -->
+    </div> <!-- end CONTENT -->
+
+    <div class="scroll-top-wrapper ">
+      <span class="scroll-top-inner">
+        <i class="fa fa-2x fa-arrow-circle-up"></i>
+      </span>
+    </div> <!-- end SCROLL TO TOP -->
+
+    <div id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <p class="fnt30 fnt-b dark-cyan">DLL - Dandelion</p>
+            <a href="">Hosted by DDL</a>
+          </div>
+          <div class="col-md-6">
+            <ul class="pull-right list-inline">
+              <li><a href="home.html">Home</a></li>
+              <li><a href="about.html">About us</a></li>
+              <li><a href="#">Help</a></li>
+              <li><a href="#">Contact</a></li>
+              <a id="gototop" class="gototop" href="#"><span class="glyphicon glyphicon-chevron-up"></span></i></a>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div> <!-- end FOOTER -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
+    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+    <script src="../Scripts/jquery.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+    <script src="../Scripts/flat-ui.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <!-- My Js -->
+    <script src="../Scripts/application.js"></script>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- <script src="../Scripts/bootstrap.min.js"></script>-->
+    <!--<script src="../dist/js/vendor/video.js"></script>-->
+    <script src="../Scripts/Libraries/jquery.dataTables.min.js"></script>
+    <script src="../Scripts/Libraries/dataTables.bootstrap.min.js"></script>
+    <script src="../Scripts/Libraries/morris.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+    <script>
+      $(document).ready(function(){
+        //datatable
+        $('#backersTable').dataTable({
+          "language": {
+            "lengthMenu": "Hiển thị _MENU_ dòng trên 1 trang",
+            "zeroRecords": "Không tìm thấy!",
+            "info": "Hiển thị trang _PAGE_ của _PAGES_",
+            "infoEmpty": "Không có dữ liệu",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search": "Tìm kiếm:",
+            "paginate": {
+              "first":      "Đầu",
+              "last":       "Cuối",
+              "next":       "Sau",
+              "previous":   "Trước" }
+          }
+        });
+        $('#top10pProjectTable').dataTable({
+          "bPaginate": false,
+          "bFilter": false,
+          "bInfo": false
+        });
+        $('#top10BackerTable').dataTable({
+          "bPaginate": false,
+          "bFilter": false,
+          "bInfo": false
+        });
+        $('#top10CreatorTable').dataTable({
+          "bPaginate": false,
+          "bFilter": false,
+          "bInfo": false
+        });
+
+        //graph
+        eval($('#graph-data').text());
+        prettyPrint();
+      });
+    </script>
+</body>
+</html>

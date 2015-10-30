@@ -138,6 +138,13 @@
                         <div class="clearfix"></div>
                     </li>
                     <!-- end SIDE NAV USER PANEL -->
+					<!-- begin DASHBOARD LINK -->
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fa fa-dashboard"></i> Dashboard
+                        </a>
+                    </li>
+                    <!-- end DASHBOARD LINK -->
                     <!-- begin USERS DROPDOWN -->
                     <li class="panel">
                         <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#users">
@@ -157,13 +164,6 @@
                         </ul>
                     </li>
                     <!-- end USERS DROPDOWN -->
-                    <!-- begin DASHBOARD LINK -->
-                    <li>
-                        <a href="index-2.html">
-                            <i class="fa fa-dashboard"></i> Dashboard
-                        </a>
-                    </li>
-                    <!-- end DASHBOARD LINK -->
                     <!-- begin PROJECTS DROPDOWN -->
                     <li class="panel">
                         <a data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#projects">
@@ -216,6 +216,25 @@
                         </a>
 					</li>
 					<!-- end MESSAGES DROPDOWN -->
+					<!-- begin REPORT -->
+					<li class="panel">
+						<a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#reports">
+                            <i class="fa fa-files-o"></i> Report <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="collapse nav" id="reports">
+                            <li>
+                                <a href="report-user.html">
+                                    <i class="fa fa-angle-double-right"></i> User
+                                </a>
+                            </li>
+                            <li>
+                                <a href="report-project.html">
+                                    <i class="fa fa-angle-double-right"></i> Project
+                                </a>
+                            </li>
+                        </ul>
+					</li>
+					<!-- end REPORT -->
                 </ul>
                 <!-- /.side-nav -->
             </div>
@@ -294,15 +313,7 @@
 													<td class="center">51</td>
 													<td class="center">$15.000</td>
 													<td class="center">
-														<div class="dropdown">
-														  <button class="btn btn-success dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-															Approved
-															<span class="caret"></span>
-														  </button>
-														  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-															<li><a href="#"><span class="label label-danger">Suspend</span></a></li>
-														  </ul>
-														</div>
+														<span class="label label-success center-block">Approved</span>
 													</td>
 													<td class="center">
 														<a href="project-detail.html">
@@ -322,16 +333,7 @@
 													<td class="center">0</td>
 													<td class="center">$0</td>
 													<td class="center">
-														<div class="dropdown">
-														  <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-															Pending
-															<span class="caret"></span>
-														  </button>
-														  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-															<li><a href="#"><span class="label label-success">Approve</a></a></li>
-															<li><a href="#"><span class="label label-danger">Suspend</span></a></li>
-														  </ul>
-														</div>
+														<span class="label label-primary center-block">Pending</span>
 													</td>
 													<td class="center">
 														<a href="project-detail.html">
@@ -351,15 +353,7 @@
 													<td class="center">51</td>
 													<td class="center">$15.000</td>
 													<td class="center">
-														<div class="dropdown">
-														  <button class="btn btn-success dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-															Approved
-															<span class="caret"></span>
-														  </button>
-														  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-															<li><a href="#"><span class="label label-danger">Suspend</span></a></li>
-														  </ul>
-														</div>
+														<span class="label label-success center-block">Approved</span>
 													</td>
 													<td class="center">
 														<a href="project-detail.html">
@@ -379,15 +373,7 @@
 													<td class="center">0</td>
 													<td class="center">$0</td>
 													<td class="center">
-														<div class="dropdown">
-														  <button class="btn btn-danger dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-															Suspend
-															<span class="caret"></span>
-														  </button>
-														  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-															<li><a href="#"><span class="label label-success">Approve</a></a></li>
-														  </ul>
-														</div>
+														<span class="label label-danger center-block">Suspended</span>
 													</td>
 													<td class="center">
 														<a href="project-detail.html">
@@ -407,11 +393,7 @@
 													<td class="center">51</td>
 													<td class="center">$15.000</td>
 													<td class="center">
-														<div class="dropdown">
-														  <button class="btn btn-default btn-sm" disabled type="button" id="dropdownMenu1">
-															Expired
-														  </button>
-														</div>
+														<span class="label label-default center-block">Expired</span>
 													</td>
 													<td class="center">
 														<a href="project-detail.html">
@@ -431,15 +413,7 @@
 													<td class="center">0</td>
 													<td class="center">$0</td>
 													<td class="center">
-														<div class="dropdown">
-														  <button class="btn btn-success dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-															Approved
-															<span class="caret"></span>
-														  </button>
-														  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-															<li><a href="#"><span class="label label-danger">Suspend</span></a></li>
-														  </ul>
-														</div>
+														<span class="label label-success center-block">Approved</span>
 													</td>
 													<td class="center">
 														<a href="project-detail.html">
@@ -459,15 +433,7 @@
 													<td class="center">51</td>
 													<td class="center">$15.000</td>
 													<td class="center">
-														<div class="dropdown">
-														  <button class="btn btn-success dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-															Approved
-															<span class="caret"></span>
-														  </button>
-														  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-															<li><a href="#"><span class="label label-danger">Suspend</span></a></li>
-														  </ul>
-														</div>
+														<span class="label label-success center-block">Approved</span>
 													</td>
 													<td class="center">
 														<a href="project-detail.html">
@@ -487,15 +453,7 @@
 													<td class="center">0</td>
 													<td class="center">$0</td>
 													<td class="center">
-														<div class="dropdown">
-														  <button class="btn btn-success dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-															Approved
-															<span class="caret"></span>
-														  </button>
-														  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-															<li><a href="#"><span class="label label-danger">Suspend</span></a></li>
-														  </ul>
-														</div>
+														<span class="label label-success center-block">Approved</span>
 													</td>
 													<td class="center">
 														<a href="project-detail.html">
@@ -515,15 +473,7 @@
 													<td class="center">51</td>
 													<td class="center">$15.000</td>
 													<td class="center">
-														<div class="dropdown">
-														  <button class="btn btn-success dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-															Approved
-															<span class="caret"></span>
-														  </button>
-														  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-															<li><a href="#"><span class="label label-danger">Suspend</span></a></li>
-														  </ul>
-														</div>
+														<span class="label label-success center-block">Approved</span>
 													</td>
 													<td class="center">
 														<a href="project-detail.html">
@@ -543,15 +493,7 @@
 													<td class="center">0</td>
 													<td class="center">$0</td>
 													<td class="center">
-														<div class="dropdown">
-														  <button class="btn btn-success dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-															Approved
-															<span class="caret"></span>
-														  </button>
-														  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-															<li><a href="#"><span class="label label-danger">Suspend</span></a></li>
-														  </ul>
-														</div>
+														<span class="label label-success center-block">Approved</span>
 													</td>
 													<td class="center">
 														<a href="project-detail.html">
@@ -571,15 +513,7 @@
 													<td class="center">51</td>
 													<td class="center">$15.000</td>
 													<td class="center">
-														<div class="dropdown">
-														  <button class="btn btn-success dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-															Approved
-															<span class="caret"></span>
-														  </button>
-														  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-															<li><a href="#"><span class="label label-danger">Suspend</span></a></li>
-														  </ul>
-														</div>
+														<span class="label label-success center-block">Approved</span>
 													</td>
 													<td class="center">
 														<a href="project-detail.html">
@@ -599,15 +533,7 @@
 													<td class="center">0</td>
 													<td class="center">$0</td>
 													<td class="center">
-														<div class="dropdown">
-														  <button class="btn btn-success dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-															Approved
-															<span class="caret"></span>
-														  </button>
-														  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-															<li><a href="#"><span class="label label-danger">Suspend</span></a></li>
-														  </ul>
-														</div>
+														<span class="label label-success center-block">Approved</span>
 													</td>
 													<td class="center">
 														<a href="project-detail.html">

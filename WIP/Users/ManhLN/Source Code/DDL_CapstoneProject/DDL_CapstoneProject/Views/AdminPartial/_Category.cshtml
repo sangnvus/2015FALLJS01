@@ -1,0 +1,226 @@
+﻿<!-- begin ADVANCED TABLES ROW -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="portlet portlet-default">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4>Danh sách danh mục</h4>
+                </div>
+                <div class="portlet-widgets">
+                    <button class="btn btn-green btn-sm" data-toggle="modal" data-target="#newCategoryModal" ng-click="resetNewCategoryForm(NewCategoryForm)"><i class="fa fa-plus"></i> Tạo mới</button>
+                    <a href="#" class="btn btn-blue btn-sm"><i class="fa fa-save"></i> Export</a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#CategoryTable" onclick="return false;"><i class="fa fa-chevron-down"></i></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div id="CategoryTable" class="panel-collapse collapse in">
+                <div class="portlet-body">
+                    <div class="table-responsive">
+                        <table id="example-table" class="table table-striped table-bordered table-hover table-green"
+                               datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
+                            <thead>
+                                <tr>
+                                    <th style="width: 15px">ID</th>
+                                    <th>Tên danh mục</th>
+                                    <th>Mô tả</th>
+                                    <th style="width: 65px">Số dự án</th>
+                                    <th style="width: 75px">Trạng thái</th>
+                                    <th style="width: 65px"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="category in ListCategory" ng-class-odd="'odd'" ng-class-even="'even'">
+                                    <td class="col-number">{{category.CategoryID}}</td>
+                                    <td>{{category.Name}}</td>
+                                    <td>{{category.Description}}</td>
+                                    <td class="col-number">{{category.ProjectCount}}</td>
+                                    <td>
+                                        <button ng-if="category.IsActive" class="btn btn-success btn-sm btn-block" type="button"
+                                                ng-click="changeCategoryStatus(category.CategoryID,$index)"
+                                                tooltip="Nhấp để khóa" tooltip-append-to-body="true" tooltip-placement="left">
+                                            Mở
+                                        </button>
+                                        <button ng-if="!category.IsActive" class="btn btn-default btn-sm btn-block" type="button"
+                                                ng-click="changeCategoryStatus(category.CategoryID,$index)"
+                                                tooltip="Nhấp để mở" tooltip-append-to-body="true" tooltip-placement="left">
+                                            Khóa
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary btn-sm" type="button" tooltip="Sửa" tooltip-append-to-body="true" tooltip-placement="left"
+                                                    ng-click="showEditDialog($index,EditCategoryForm)">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button ng-if="category.ProjectCount == 0" class="btn btn-danger btn-sm" type="button" tooltip-placement="right"
+                                                    tooltip="Xóa" tooltip-append-to-body="true"
+                                                    ng-click="deleteCategory(category.CategoryID, $index)">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.portlet-body -->
+            </div>
+        </div>
+        <!-- /.portlet -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.page-content -->
+<!-- start Modals -->
+<!-- Advanced Modal Trigger -->
+<!-- Flex Modal -->
+<!--Modal add new category-->
+<div class="modal modal-flex fade" id="newCategoryModal" tabindex="-1" role="dialog" aria-labelledby="flexModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form role="form" name="NewCategoryForm" novalidate>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="flexModalLabel">
+                        Tạo mới danh mục
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <!--Category Name-->
+                    <div class="form-group has-feedback">
+                        <label for="CategoryName">Tên danh mục(*):</label>
+                        <input type="text" class="form-control" id="CategoryName" name="Name" placeholder="..." ng-model="NewCategory.Name"
+                               ng-trim="true"
+                               required
+                               ng-model-options="{ updateOn: 'change blur'}"
+                               ng-maxlength="40"
+                               max-length="40"
+                               ng-minlength="5" />
+                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-if="NewCategoryForm.Name.$dirty && NewCategoryForm.Name.$valid"></span>
+                        <div ng-show="NewCategoryForm.Name.$dirty && NewCategoryForm.Name.$invalid" class="text-danger">
+                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                            <span ng-show="NewCategoryForm.Name.$error.required">Bạn chưa nhập tên danh mục</span>
+                            <span ng-show="NewCategoryForm.Name.$error.minlength">Tên danh mục chỉ từ 5 đến 40 kí tự</span>
+                            <span ng-show="NewCategoryForm.Name.$error.maxlength">Tên danh mục chỉ từ 5 đến 40 kí tự</span>
+                        </div>
+                    </div>
+                    <!--Description-->
+                    <div class="form-group has-feedback">
+                        <label for="CategoryDescription">Mô tả(*):</label>
+                        <textarea class="form-control" id="CategoryDescription" name="Description"
+                                  placeholder="..." ng-model="NewCategory.Description" style="resize: none"
+                                  ng-trim="true"
+                                  required
+                                  ng-model-options="{ updateOn: 'change blur'}"
+                                  ng-maxlength="200"
+                                  max-length="200"
+                                  ng-minlength="10"
+                                  msd-elastic="\n"></textarea>
+                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-if="NewCategoryForm.Description.$dirty && NewCategoryForm.Description.$valid"></span>
+                        <div ng-show="NewCategoryForm.Description.$dirty && NewCategoryForm.Description.$invalid" class="text-danger">
+                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                            <span ng-show="NewCategoryForm.Description.$error.required">Bạn chưa nhập mô tả</span>
+                            <span ng-show="NewCategoryForm.Description.$error.minlength">Mô tả từ 10 đến 200 kí tự</span>
+                            <span ng-show="NewCategoryForm.Description.$error.maxlength">Mô tả từ 10 đến 200 kí tự!</span>
+                        </div>
+                    </div>
+                    <!--Error Message-->
+                    <div class="alert alert-danger alert-dismissible" role="alert" ng-show="NewCategoryError != null">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Lỗi:</span>
+                        {{NewCategoryError}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-green" ng-click="addNewCategory()"
+                            ng-disabled="!NewCategoryForm.$dirty || (NewCategoryForm.$dirty && NewCategoryForm.$invalid)">
+                        Tạo mới
+                    </button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<!--Modal edit category-->
+<div class="modal modal-flex fade" id="EditCategoryModal" tabindex="-1" role="dialog" aria-labelledby="flexModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form role="form" name="EditCategoryForm" novalidate>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="flexModalLabel">
+                        Chỉnh sửa
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" ng-model="EditCategory.CategoryID" />
+                    <!--Category Name-->
+                    <div class="form-group has-feedback">
+                        <label for="CategoryName2">Tên danh mục(*):</label>
+                        <input type="text" class="form-control" id="CategoryName2" name="Name"
+                               placeholder="..." ng-model="EditCategory.Name"
+                               ng-trim="true"
+                               ng-model-options="{ updateOn: 'change blur'}"
+                               required
+                               ng-maxlength="40"
+                               maxlength="40"
+                               ng-minlength="5" />
+                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-if="EditCategoryForm.Name.$dirty && EditCategoryForm.Name.$valid"></span>
+                        <div ng-show="EditCategoryForm.Name.$dirty && EditCategoryForm.Name.$invalid" class="text-danger">
+                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                            <span ng-show="EditCategoryForm.Name.$error.required">Bạn chưa nhập tên danh mục</span>
+                            <span ng-show="EditCategoryForm.Name.$error.minlength">Tên danh mục chỉ từ 5 đến 40 kí tự</span>
+                            <span ng-show="EditCategoryForm.Name.$error.maxlength">Tên danh mục chỉ từ 5 đến 40 kí tự</span>
+                        </div>
+                    </div>
+                    <!--Description-->
+                    <div class="form-group has-feedback">
+                        <label for="CategoryDescription2">Mô tả(*):</label>
+                        <textarea class="form-control" id="CategoryDescription2" name="Description"
+                                  placeholder="..." ng-model="EditCategory.Description" style="resize: none"
+                                  ng-trim="true"
+                                  required
+                                  ng-maxlength="200"
+                                  ng-model-options="{ updateOn: 'change blur'}"
+                                  maxlength="200"
+                                  ng-minlenght="10"
+                                  msd-elastic="\n"></textarea>
+                        <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-if="EditCategoryForm.Description.$dirty && EditCategoryForm.Description.$valid"></span>
+                        <div ng-show="EditCategoryForm.Description.$dirty && EditCategoryForm.Description.$invalid" class="text-danger">
+                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                            <span ng-show="EditCategoryForm.Description.$error.required">Bạn chưa nhập mô tả</span>
+                            <span ng-show="EditCategoryForm.Description.$error.minlength">Mô tả từ 10 đến 200 kí tự</span>
+                            <span ng-show="EditCategoryForm.Description.$error.maxlength">Mô tả từ 10 đến 200 kí tự</span>
+                        </div>
+                    </div>
+                    <!--Error Message-->
+                    <div class="alert alert-danger alert-dismissible" role="alert" ng-show="EditCategoryError != null">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        {{EditCategoryError}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-green" ng-click="editCategory()"
+                            ng-disabled="!EditCategoryForm.$dirty || (EditCategoryForm.$dirty && EditCategoryForm.$invalid)">
+                        Sửa
+                    </button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- end Modals -->
+<!-- /#page-wrapper -->
+<!-- end MAIN PAGE CONTENT -->
+@*<script>
+        $(function () {
+            $('[data-toggle="tooltip"], [data-tooltip="tooltip"]').tooltip({ container: 'body' });
+        })
+    </script>*@

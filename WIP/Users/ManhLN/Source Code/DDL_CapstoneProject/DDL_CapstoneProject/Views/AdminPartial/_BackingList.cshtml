@@ -1,0 +1,138 @@
+﻿<!-- begin ADVANCED TABLES ROW -->
+<div class="row">
+
+    <div class="col-lg-12">
+
+        <div class="portlet portlet-default">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4>Danh sách ủng hộ</h4>
+                </div>
+                <div class="portlet-widgets">
+                    <a href="#" class="btn btn-blue btn-sm">Xuất dữ liệu</a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#NewProjectTable"><i class="fa fa-chevron-down"></i></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div id="NewProjectTable" class="panel-collapse collapse in">
+                <div class="portlet-body">
+                    <div class="table-responsive">
+                        <table id="example-table" class="table table-striped table-bordered table-hover table-green"
+                               datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên dự án</th>
+                                    <th>Tên người ủng hộ</th>
+                                    <th>Số tiền ủng hộ</th>
+                                    <th>Thời gian ủng hộ</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="backing in ListBacking">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{backing.ProjectTitle}}</td>
+                                    <td>{{backing.BackerName}}</td>
+                                    <td>{{backing.PledgeAmount}}</td>
+                                    <td>{{backing.BackedDate | date : "hh:mm dd-MM-yyyy"}}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary btn-sm" type="button" id=""
+                                                    data-toggle="modal" data-target="#backingDetail"
+                                                    data-tooltip="tooltip" data-placement="left" data-trigger="hover" title="View"
+                                                    ng-click="GetBacker(backing.UserName,backing.BackingID)">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.portlet-body -->
+            </div>
+        </div>
+        <!-- /.portlet -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+
+<div class="modal modal-flex fade" id="backingDetail" tabindex="-1" role="dialog" aria-labelledby="flexModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="flexModalLabel">Backing Detail</h4>
+            </div> -->
+            <div class="modal-body">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" onclick="return false">
+                                    Thông tin người ủng hộ
+                                </a>
+                            </h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <img id="avatar-profile" ng-if="!checkHTTP(Backer.ImageURL)" ng-src="../images/avatars/{{Backer.ImageURL}}" alt="" class="img-responsive img-circle">
+                                    <img id="avatar-profile" ng-if="checkHTTP(Backer.ImageURL)" ng-src="{{trustSrc(Backer.ImageURL)}}" alt="" class="img-responsive img-circle">
+                                </div>
+                                <div class="col-md-8 pull-right">
+                                    <h4>{{Backer.BackerName}}</h4>
+                                    <h5>{{Backer.Email}}</h5>
+                                    <h5>{{Backer.Address}}</h5>
+                                    <h5>{{Backer.PhoneNumber}}</h5>
+                                    <button class="btn btn-primary">Send Message</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                                   href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" onclick="return false">
+                                    Mô tả về người ủng hộ :
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                {{Backer.Biography}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                                   href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" onclick="return false">
+                                    Thông tin gói ủng hộ
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <h4><strong>{{Backer.ProjectTitle}}</strong><small> by {{Backer.CreatorName}}</small></h4>
+                                <br />
+                                <h5><strong>Mô tả gói ủng hộ:</strong></h5>
+                                <h5>Thank the Seven! Err-- Five! Thank you for your pledge! For this sign of support, we here at Larian Studios are truly grateful.</h5>
+                                <br />
+                                <h4><strong>Mức giá gói ủng hộ:</strong> {{Backer.RewardPledgeAmount}}<h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
