@@ -7,10 +7,16 @@ namespace DDL_CapstoneProject.Models.DTOs
 {
     public class AdminProjectStatisticDTO
     {
-        public int Created { get; set; }
-        public int Succeed { get; set; }
-        public int Fail { get; set; }
-        public decimal Funed { get; set; }
-        public int Profit { get; set; }
+        public List<Statistic> Created { get; set; }
+
+        public List<Statistic> Succeed { get; set; }
+        public List<Statistic> Fail { get; set; }
+        public List<Statistic> Funded { get; set; }
+        public List<Statistic> Profit { get; set; }
+    }
+    public class Statistic
+    {
+        public decimal Amount { get; set; }
+        public int Month { get; set; }
     }
 }

@@ -89,4 +89,9 @@ service.service("AdminProjectService", function ($http) {
     this.getTopProject = function () {
         return $http.get("../api/ProjectApi/AdminGetTopProjectList");
     };
+
+    // Function to get project statistic for admin
+    this.getProjectStatistic = function () {
+        return $http.get("../api/ProjectApi/AdminGetProjectStatistic");
+    };
 });

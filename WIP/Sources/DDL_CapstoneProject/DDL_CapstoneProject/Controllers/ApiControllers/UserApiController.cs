@@ -729,6 +729,40 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = recentUser });
         }
+
+        // GET: api/UserApi/AdminGetRecentBacking/
+        [HttpGet]
+        [ResponseType(typeof(AdminBackingListDTO))]
+        public IHttpActionResult AdminGetRecentBacking()
+        {
+            var recentBacking = new List<AdminBackingListDTO>();
+
+            try
+            {
+                // Check authen.
+                if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                }
+
+                // Check role user.
+                var currentUser = UserRepository.Instance.GetBasicInfo(User.Identity.Name);
+                if (currentUser == null || currentUser.Role != DDLConstants.UserType.ADMIN)
+                {
+                    throw new NotPermissionException();
+                }
+
+                recentBacking = UserRepository.Instance.GetBackingListForAdmin();
+                recentBacking = recentBacking.OrderByDescending(x => x.BackedDate).Take(5).ToList();
+            }
+            catch (Exception)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = recentBacking });
+        }
         #endregion
 
     }
