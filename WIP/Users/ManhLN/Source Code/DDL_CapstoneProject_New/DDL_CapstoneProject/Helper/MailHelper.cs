@@ -41,7 +41,7 @@ namespace DDL_CapstoneProject.Helper
                 _mail.Body = "Xin chào " + fullName + "," +
                             "<br/>Bạn đã đăng ký thành công tài khoản tại hệ thống của Dandelion. " +
                             "<br/>Để kích hoạt tài khoản, vui lòng bấm vào link dưới đây:" +
-                            "<br/><a href='http://localhost:34747/active?user_name=" + userName + "&code=" + verifyCode + "'>http://localhost:34747/active?use_name=" + userName + "&code=" + verifyCode + "</a>";
+                            "<br/><a href='http://dandeliondemo.azurewebsites.net/active?user_name=" + userName + "&code=" + verifyCode + "'>http://localhost:34747/active?user_name=" + userName + "&code=" + verifyCode + "</a>";
                 _smtp.Send(_mail);
             }
             catch (Exception ex)

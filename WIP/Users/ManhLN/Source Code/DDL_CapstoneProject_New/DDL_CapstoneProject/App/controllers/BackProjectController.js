@@ -55,7 +55,7 @@ app.controller('BackProjectController', function ($scope, $route, $rootScope, $l
         if ($rootScope.UserInfo.IsAuthen == true) {
             $location.path("/project/payment/" + $route.current.params.code).replace();
         } else {
-            console.log("chua login");
+            CommmonService.checkError("not-authen", $rootScope.BaseUrl);
         }
     }
 

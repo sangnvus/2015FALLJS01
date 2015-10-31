@@ -271,7 +271,12 @@
                                                 <p class="mt0 mb0">{{rewardPkg.CurrentQuantity | currency:"":0}} Đã ủng hộ <span ng-if="rewardPkg.Type == 'limited'">| Giới hạn: {{rewardPkg.Quantity | currency:"":0}}</span><span ng-if="rewardPkg.Type == 'unlimited'">| Không giới hạn</span></p>
                                                 <p class="mt0 mb0">{{rewardPkg.Description}}</p>
                                                 <p class="mt0 mb0 pb0 pt0" ng-show="rewardPkg.Type != 'no reward'">Thời gian giao hàng: {{rewardPkg.EstimatedDelivery | date:'MM-yyyy'}}</p>
-                                                <p class="mt0 mb0 pb0 pt0">Kiểu: {{rewardPkg.Type}}</p>
+                                                <p class="mt0 mb0 pb0 pt0">
+                                                    Kiểu:
+                                                    <span ng-if="rewardPkg.Type == 'no reward'">Không phần thưởng</span>
+                                                    <span ng-if="rewardPkg.Type == 'limited'">Giới hạn</span>
+                                                    <span ng-if="rewardPkg.Type == 'unlimited'">Không giới hạn</span>
+                                                </p>
                                                 <p class="mt0 mb0" ng-show="rewardPkg.IsHide == true"><span class="label label-warning">Hidden</span></p>
                                             </div>
                                             <ul class="list-inline pull-right mt0 mb0 pb0 pt0">

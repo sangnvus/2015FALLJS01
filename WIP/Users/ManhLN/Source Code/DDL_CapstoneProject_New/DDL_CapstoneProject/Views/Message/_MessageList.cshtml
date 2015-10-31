@@ -70,7 +70,7 @@
                         <tr style="background: #16a085; color: #FFF">
                             <th style="width: 5%">
                                 <label class="checkbox" for="checkboxAll">
-                                    <input type="checkbox" id="checkboxAll" data-toggle="checkbox" class="custom-checkbox"
+                                    <input type="checkbox" id="checkboxAll" data-toggle="checkbox" class="custom-checkbox" ng-disabled="ListConversations.length <= 0"
                                            ng-change="checkAllClick(checkAll)"
                                            ng-model="checkAll"
                                            value="true">
@@ -79,7 +79,7 @@
                                 </label>
                             </th>
                             <th style="width: 15%">Tên</th>
-                            <th style="width: 70%">Tiêu đề - nội dung</th>
+                            <th style="width: 70%">Tiêu đề</th>
                             <th style="width: 10%">Ngày</th>
                         </tr>
                     </thead>
@@ -103,7 +103,6 @@
                             <td class="msg-col">
                                 <a href="/#/user/message/{{conversation.ConversationID}}">
                                     {{conversation.Title}}
-                                    <span class="text-muted">- Hi again! I wanted to let you know that the order...</span>
                                 </a>
                             </td>
                             <td class="date-col"> {{conversation.UpdatedDate | date:'dd/MM/yy'}}</td>
@@ -117,7 +116,7 @@
 
 <!-- Box sent message -->
 <div class="container">
-    <div class="modal fade" id="sentBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="sentBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <form name="NewMessageForm" novalidate role="form">
                 <div class="modal-content">
@@ -161,8 +160,8 @@
                         </div>
                     </div>
                     <div class="modal-footer pt5 pb5">
-                         <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                        <button type="button" class="btn btn-info btn-sm btn-wide btn18" ng-click="sendMessage()"
+                        <button type="button" class="btn btn-default btn-sm " data-dismiss="modal">Hủy</button>
+                        <button type="button" class="btn btn-primary btn-sm btn-wide btn18" ng-click="sendMessage()"
                                 ng-disabled="!NewMessageForm.$dirty || (NewMessageForm.$dirty && NewMessageForm.$invalid)">
                             Gửi
                         </button>

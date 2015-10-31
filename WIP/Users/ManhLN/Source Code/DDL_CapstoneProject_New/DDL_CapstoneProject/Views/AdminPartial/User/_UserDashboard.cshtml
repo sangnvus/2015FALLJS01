@@ -82,17 +82,21 @@
         <div class="portlet portlet-orange">
             <div class="portlet-heading">
                 <div class="portlet-title">
-                    <h4>Biểu đồ :</h4>
+                    <h4>Biểu đồ thành viên</h4>
                 </div>
                 <div class="portlet-widgets">
                     <a href="javascript:;"><i class="fa fa-refresh"></i></a>
                     <span class="divider"></span>
-                    <a data-toggle="collapse" data-parent="#accordion" href="#donutChart"><i class="fa fa-chevron-down"></i></a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="" data-target="#donutChart"><i class="fa fa-chevron-down"></i></a>
                 </div>
                 <div class="clearfix"></div>
             </div>
-            <canvas id="pie" class="chart chart-pie"
-                    chart-data="data" chart-labels="labels"></canvas>
+            <div id="donutChart" class="panel-collapse collapse in">
+                <div class="portlet-body">
+                    <canvas id="pie" class="chart chart-doughnut" chart-legend="true" chart-colours="colors"
+                            chart-data="data" chart-labels="labels"></canvas>
+                </div>
+            </div>
         </div>
     </div>
     <!-- /.col-lg-6 -->

@@ -3,7 +3,7 @@ var service = angular.module("DDLService", []);
 var directive = angular.module("DDLDirective", []);
 var app = angular.module("AdminApp", ["ngRoute", "ngAnimate", "ngSanitize", "DDLService",
     "DDLDirective", 'angular-loading-bar', 'textAngular', 'toastr', 'ui.bootstrap', 'monospaced.elastic',
-    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert', 'blockUI', 'chart.js']);
+    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert', 'blockUI', 'chart.js', "highcharts-ng", 'ChartAngular']);
 
 // Show Routing.
 app.config(["$routeProvider", function ($routeProvider) {
@@ -21,6 +21,18 @@ app.config(["$routeProvider", function ($routeProvider) {
             breadcrumb: ['Quản lý chung', 'Thống kê'],
             title: 'Thống kê',
             resolve: {
+                basicInfo: ['$rootScope', '$q', 'AdminProjectService', 'CommmonService', function ($rootScope, $q, AdminProjectService, CommmonService) {
+                    var promise = AdminProjectService.getBasicDashboardInfo();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }],
+                listcategory: ['$rootScope', '$q', 'AdminCategoryService', 'CommmonService', function ($rootScope, $q, AdminCategoryService, CommmonService) {
+                    var promise = AdminCategoryService.getCategories();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }],
+                topBackers: ['$rootScope', '$q', 'AdminUserService', 'CommmonService', function ($rootScope, $q, AdminUserService, CommmonService) {
+                    var promise = AdminUserService.getTopBacker();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
             }
         });
 
@@ -72,7 +84,6 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/project",
         {
-            caseInsensitiveMatch: true,
             templateUrl: "/AdminPartial/ProjectDashboard",
             controller: 'AdminProjectDashboardController',
             activeTab: 'dashboard',
@@ -91,7 +102,6 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/project/all",
         {
-            caseInsensitiveMatch: true,
             templateUrl: "/AdminPartial/ProjectList",
             controller: 'AdminProjectListController',
             activeTab: 'projectList',
@@ -106,7 +116,6 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/project/:code",
        {
-           caseInsensitiveMatch: true,
            templateUrl: "/AdminPartial/ProjectDetail",
            controller: 'AdminProjectDetailController',
            activeTab: 'projectList',
@@ -215,6 +224,22 @@ app.config(["$routeProvider", function ($routeProvider) {
               }]
           }
       });
+
+    $routeProvider.when("/backinglist",
+ {
+     templateUrl: "/AdminPartial/BackingList",
+     controller: 'AdminBackingListController',
+     activeTab: 'backinglist',
+     breadcrumb: ['Bảng điều khiển', 'Danh sách ủng hộ'],
+     title: 'Danh sách ủng hộ',
+     resolve: {
+         listBacking: ['$route', '$rootScope', '$q', 'AdminUserService', 'CommmonService', function ($route, $rootScope, $q, AdminUserService, CommmonService) {
+             var promise = AdminUserService.getListBacking();
+             return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+         }]
+     }
+ });
+
     $routeProvider.when("/notfound",
         {
             caseInsensitiveMatch: true,
@@ -233,7 +258,10 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
 
     $routeProvider.otherwise({
-        redirectTo: "/notfound"
+        redirectTo: "/",
+        activeTab: '',
+        breadcrumb: [],
+        title: ''
     });
 
     //$locationProvider.html5Mode(false).hashPrefix("!");
@@ -256,16 +284,18 @@ app.run(['$rootScope', '$window', '$anchorScroll', 'DTDefaultOptions', 'toastrCo
         });
 
         // Scroll top when route change.
-        $rootScope.$on("$locationChangeSuccess", function () {
-            $anchorScroll();
+        $rootScope.$on("$viewContentLoaded", function () {
+            $window.scrollTo(0, 0);
         });
 
         // Scroll top when route change.
         $rootScope.$on("$routeChangeStart", function (e, curr, prev) {
-            $rootScope.Page = {
-                title: curr.$$route.title,
-                activeTab: curr.$$route.activeTab,
-                breadcrumb: curr.$$route.breadcrumb
+            if (curr.$$route !== undefined) {
+                $rootScope.Page = {
+                    title: curr.$$route.title !== undefined ? curr.$$route.title : "",
+                    activeTab: curr.$$route.activeTab !== undefined ? curr.$$route.activeTab : "",
+                    breadcrumb: curr.$$route.breadcrumb !== undefined ? curr.$$route.breadcrumb : ""
+                }
             }
             //        ShareData.currentPage =
 

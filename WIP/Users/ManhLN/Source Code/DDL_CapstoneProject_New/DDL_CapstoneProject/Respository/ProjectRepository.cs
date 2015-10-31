@@ -8,6 +8,7 @@ using DDL_CapstoneProject.Models;
 using DDL_CapstoneProject.Models.DTOs;
 using DDL_CapstoneProject.Ultilities;
 using System.Data.Entity;
+using System.Data.Entity.SqlServer;
 using System.Diagnostics;
 
 namespace DDL_CapstoneProject.Respository
@@ -22,6 +23,8 @@ namespace DDL_CapstoneProject.Respository
         #endregion
 
         #region "Methods"
+
+
         #region TrungVN
 
         public Dictionary<string, int> getStatisticsInfor()
@@ -67,7 +70,13 @@ namespace DDL_CapstoneProject.Respository
         public List<ProjectBasicViewDTO> GetProjectTop(String categoryid)
         {
             categoryid = "|" + categoryid + "|";
-            return GetProject(10, 0, categoryid, "CurrentFunded", "", "", true, "");
+            return GetProject(12, 0, categoryid, "CurrentFunded", "", "", true, "");
+        }
+
+        public int SearchCount(string categoryidlist, string searchkey)
+        {
+            int searchcount = GetProject(0, 0, categoryidlist, "", searchkey, "", false, "").Count;
+            return searchcount;
         }
 
 
@@ -96,6 +105,8 @@ namespace DDL_CapstoneProject.Respository
                                        categoryidList.Contains("|" + project.CategoryID + "|"))
                                       && project.IsExprired == isExprired && project.Title.Contains(pathofprojectname)
                                       && project.Status.Contains(status) && project.IsFunded.ToString().ToLower().Contains(isFunded)
+                                      && !project.Status.Equals(DDLConstants.ProjectStatus.DRAFT) && !project.Status.Equals(DDLConstants.ProjectStatus.REJECTED)
+                                      && !project.Status.Equals(DDLConstants.ProjectStatus.SUSPENDED) && !project.Status.Equals(DDLConstants.ProjectStatus.PENDING)
                                   select new ProjectBasicViewDTO
                                   {
                                       ProjectID = project.ProjectID,
@@ -110,6 +121,7 @@ namespace DDL_CapstoneProject.Respository
                                       ExpireDate = DbFunctions.DiffDays(DateTime.UtcNow, project.ExpireDate),
                                       FundingGoal = project.FundingGoal,
                                       Category = project.Category.Name,
+                                      CategoryID = project.CategoryID,
                                       Backers = project.Backings.Count,
                                       CreatedDate = project.CreatedDate,
                                       PopularPoint = project.PopularPoint
@@ -119,6 +131,7 @@ namespace DDL_CapstoneProject.Respository
                 {
                     return new List<ProjectBasicViewDTO>();
                 }
+                if (take == 0) take = ProjectList.Count();
                 var listProject = orderBy(order, ProjectList).Take(take + from).ToList();
                 listProject.RemoveRange(0, from);
                 // Convert datetime to GMT+7
@@ -128,28 +141,6 @@ namespace DDL_CapstoneProject.Respository
         }
 
 
-        public List<ProjectBasicViewDTO> GetProjectHightestAndTotalFund()
-        {
-            using (var db = new DDLDataContext())
-            {
-                var list = new List<ProjectBasicViewDTO>();
-                var HeightestFund = from project in db.Projects
-                    where project.IsExprired && project.IsFunded
-                    orderby project.CurrentFunded
-                    select new ProjectBasicViewDTO
-                    {
-                        CurrentFundedNumber = project.CurrentFunded
-                    };
-                var TotalFund = from project in db.Projects
-                    select project.CurrentFunded;
-                var totalFund = new ProjectBasicViewDTO();
-                totalFund.CurrentFundedNumber = (Convert.ToDecimal(TotalFund.Sum()));
-
-                list.Add(HeightestFund.FirstOrDefault());
-                list.Add(totalFund);
-                return list;
-            }
-        }
 
         private IQueryable<ProjectBasicViewDTO> orderBy(string order, IQueryable<ProjectBasicViewDTO> ProjectList)
         {
@@ -158,32 +149,32 @@ namespace DDL_CapstoneProject.Respository
                 if (order == "CurrentFunded")
                 {
                     return from project in ProjectList
-                        orderby project.CurrentFundedNumber descending
-                        select project;
+                           orderby project.CurrentFundedNumber descending
+                           select project;
                 }
                 if (order == "CreatedDate")
                 {
                     return from project in ProjectList
-                        orderby project.CreatedDate descending
-                        select project;
+                           orderby project.CreatedDate descending
+                           select project;
                 }
                 if (order == "PopularPoint")
                 {
                     return from project in ProjectList
-                        orderby project.PopularPoint descending
-                        select project;
+                           orderby project.PopularPoint descending
+                           select project;
                 }
                 if (order == "ExpireDate")
                 {
                     return from project in ProjectList
-                        orderby project.ExpireDate
-                        select project;
+                           orderby project.ExpireDate
+                           select project;
                 }
                 if (order == "FundingGoal")
                 {
                     return from project in ProjectList
-                        orderby project.FundingGoal
-                        select project;
+                           orderby project.FundingGoal
+                           select project;
                 }
                 return ProjectList;
             }
@@ -216,21 +207,37 @@ namespace DDL_CapstoneProject.Respository
         public List<List<ProjectBasicViewDTO>> GetProjectStatisticList()
         {
             var ProjectList = new List<List<ProjectBasicViewDTO>>();
-            ProjectList.Add(GetProject(3, 0, "All", "PopularPoint", "", "", false, ""));
-            ProjectList.Add(GetProject(3, 0, "All", "CreatedDate", "", "", false, ""));
-            ProjectList.Add(GetProject(3, 0, "All", "CurrentFunded", "", "", false, ""));
-            ProjectList.Add(GetProject(3, 0, "All", "ExpireDate", "", "", false, ""));
+            ProjectList.Add(GetProject(4, 0, "All", "PopularPoint", "", "", false, ""));
+            ProjectList.Add(GetProject(4, 0, "All", "CreatedDate", "", "", false, ""));
+            ProjectList.Add(GetProject(4, 0, "All", "CurrentFunded", "", "", false, ""));
+            ProjectList.Add(GetProject(4, 0, "All", "ExpireDate", "", "", false, ""));
 
             return ProjectList;
         }
-        public List<List<ProjectBasicViewDTO>> GetStatisticListForHome()
+        public Dictionary<string, List<ProjectBasicViewDTO>> GetStatisticListForHome()
         {
-            var ProjectList = new List<List<ProjectBasicViewDTO>>();
-            ProjectList.Add(GetProject(3, 0, "All", "PopularPoint", "", "", false, ""));
-            ProjectList.Add(GetProjectByCategory());
-            ProjectList.Add(GetProject(1, 0, "All", "CurrentFunded", "", "", false, ""));
-            ProjectList.Add(GetProjectHightestAndTotalFund());
+            var ProjectList = new Dictionary<string, List<ProjectBasicViewDTO>>();
+            ProjectList.Add("popularproject", GetProject(4, 0, "All", "PopularPoint", "", "", false, ""));
+            ProjectList.Add("projectByCategory", GetProjectByCategory());
+            ProjectList.Add("highestprojectpledge", GetProject(1, 0, "All", "CurrentFunded", "", "", false, ""));
+            ProjectList.Add("highestprojectfund", GetProject(1, 0, "All", "CurrentFunded", "", "", true, "true"));
+            ProjectList.Add("totalprojectfund", GetTotalFund());
             return ProjectList;
+        }
+
+        public List<ProjectBasicViewDTO> GetTotalFund()
+        {
+            using (var db = new DDLDataContext())
+            {
+                var list = new List<ProjectBasicViewDTO>();
+                var TotalFund = from project in db.Projects
+                                select project.CurrentFunded;
+                var totalFund = new ProjectBasicViewDTO();
+                totalFund.CurrentFundedNumber = (Convert.ToDecimal(TotalFund.Sum()));
+
+                list.Add(totalFund);
+                return list;
+            }
         }
         #endregion
 
@@ -528,7 +535,7 @@ namespace DDL_CapstoneProject.Respository
                 if (rewardList.Any(reward => reward.PledgeAmount < 1000
                     || string.IsNullOrEmpty(reward.Description) || reward.Description.Length < 10 || reward.Description.Length > 135
                     || (reward.EstimatedDelivery < project.ExpireDate && reward.Type != DDLConstants.RewardType.NO_REWARD)
-                    || (reward.Type == DDLConstants.RewardType.NO_REWARD && reward.Quantity < 1)
+                    || (reward.Type != DDLConstants.RewardType.NO_REWARD && reward.Quantity < 1)
                     ))
                 {
                     messageReward = "Xin hãy xem lại trang gói quà! Tất cả các trường PHẢI được điền đầy đủ và hợp lệ(Ngày giao phải sau ngày đóng gây quỹ)";
@@ -646,7 +653,7 @@ namespace DDL_CapstoneProject.Respository
                 rewardPkg.CurrentQuantity += backingDetail.Quantity;
 
                 // Set project is funded
-                if (project.CurrentFunded >= project.FundingGoal)
+                if ((project.CurrentFunded >= project.FundingGoal) && project.IsFunded == false)
                 {
                     project.IsFunded = true;
                 }
@@ -672,14 +679,14 @@ namespace DDL_CapstoneProject.Respository
                 var approved = db.Projects.Count(x => x.Status == DDLConstants.ProjectStatus.APPROVED);
                 var suspended = db.Projects.Count(x => x.Status == DDLConstants.ProjectStatus.SUSPENDED);
                 var funded = db.Projects.Count(x => x.IsFunded == true);
-                var total = db.Projects.Count();
+                var total = db.Projects.Count(x => x.Status != DDLConstants.ProjectStatus.DRAFT);
                 var expired = db.Projects.Count(x => x.Status == DDLConstants.ProjectStatus.EXPIRED);
 
                 var AdminProjectInfoDTO = new AdminProjectGeneralInfoDTO
                 {
                     ApprovedProject = approved,
                     ExpriredProject = expired,
-                    FundedProject = funded,
+                    SucceedProject = funded,
                     PendingProject = pending,
                     SuspendedProject = suspended,
                     TotalProject = total
@@ -731,7 +738,7 @@ namespace DDL_CapstoneProject.Respository
                 // Get rewardPkg list
                 var projectList = (from Project in db.Projects
                                    where Project.Status != DDLConstants.ProjectStatus.DRAFT
-                                   orderby Project.CreatedDate ascending 
+                                   orderby Project.CreatedDate ascending
                                    select new ProjectBasicListDTO
                                    {
                                        ProjectCode = Project.ProjectCode,
@@ -743,7 +750,6 @@ namespace DDL_CapstoneProject.Respository
                                        ExpireDate = Project.ExpireDate,
                                        Status = Project.Status,
                                        CurrentFunded = Project.CurrentFunded,
-                                       PledgeAmount = Project.CurrentFunded,
                                        TotalBacking = Project.Backings.Count
                                    }).ToList();
 
@@ -753,6 +759,11 @@ namespace DDL_CapstoneProject.Respository
             }
         }
 
+        /// <summary>
+        /// Change project status by admin
+        /// </summary>
+        /// <param name="project"></param>
+        /// <returns>bool</returns>
         public bool AdminChangeProjectStatus(ProjectEditDTO project)
         {
             using (var db = new DDLDataContext())
@@ -771,6 +782,134 @@ namespace DDL_CapstoneProject.Respository
                 return true;
             }
         }
+
+        /// <summary>
+        /// Get general information for admin dashboard
+        /// </summary>
+        /// <returns>AdminDashboardInfoDTO</returns>
+        public AdminDashboardInfoDTO AdminDashboardInfo()
+        {
+            using (var db = new DDLDataContext())
+            {
+                // Count user
+                var totalUser = db.DDL_Users.Count();
+                // Count project
+                var totalProject = db.Projects.Count(x => x.Status != DDLConstants.ProjectStatus.DRAFT);
+
+                // Caculate total funded
+                var pledge = db.BackingDetails.GroupBy(o => o.BackingID)
+                   .Select(g => new { BackingID = g.Key, total = g.Sum(i => i.PledgedAmount) });
+                decimal totalFunded = 0;
+
+                foreach (var group in pledge)
+                {
+                    totalFunded += group.total;
+                }
+
+                // Caculate total profit
+                var succeedProject = (from Project in db.Projects
+                                      where Project.IsFunded
+                                      select Project).ToList();
+
+                decimal totalProfit = 0;
+
+                foreach (var project in succeedProject)
+                {
+                    if (project.FundingGoal <= 50000000)
+                    {
+                        totalProfit += 5 * project.CurrentFunded / 100;
+                    }
+                    else if (project.FundingGoal <= 100000000 && project.FundingGoal > 50000000)
+                    {
+                        totalProfit += 4 * project.CurrentFunded / 100;
+                    }
+                    else if (project.FundingGoal <= 500000000 && project.FundingGoal > 100000000)
+                    {
+                        totalProfit += 3 * project.CurrentFunded / 100;
+                    }
+                    else
+                    {
+                        totalProfit += 2 * project.CurrentFunded / 100;
+                    }
+                }
+
+                // Count pending project
+                var pending = db.Projects.Count(x => x.Status == DDLConstants.ProjectStatus.PENDING);
+                // Count live project
+                var approved = db.Projects.Count(x => x.Status == DDLConstants.ProjectStatus.APPROVED);
+                // Count succeed project
+                var funed = db.Projects.Count(x => x.IsFunded);
+                // Count rank A project
+                var rankA = db.Projects.Count(x => x.FundingGoal > 500000000);
+                // Count rank B project
+                var rankB = db.Projects.Count(x => x.FundingGoal <= 500000000 && x.FundingGoal > 100000000);
+                // Count rank C project
+                var rankC = db.Projects.Count(x => x.FundingGoal <= 100000000 && x.FundingGoal > 50000000);
+                // Count rank D project
+                var rankD = db.Projects.Count(x => x.FundingGoal <= 50000000);
+                // Count fail project
+                var failProject = db.Projects.Count(x => x.IsFunded == false && x.IsExprired);
+
+                var AdminDashboardInfoDTO = new AdminDashboardInfoDTO
+                {
+                    TotalProject = totalProject,
+                    LiveProject = approved,
+                    NewProject = pending,
+                    TotalFund = totalFunded,
+                    TotalProfit = totalProfit,
+                    TotalUser = totalUser,
+                    TotalSucceed = funed,
+                    RankA = rankA,
+                    RankB = rankB,
+                    RankC = rankC,
+                    RankD = rankD,
+                    TotalFail = failProject
+                };
+
+                return AdminDashboardInfoDTO;
+            }
+        }
+
+        /// <summary>
+        /// Get 5 top projects
+        /// </summary>
+        /// <returns></returns>
+        public List<ProjectBasicListDTO> AdminGetTopProjectList()
+        {
+            using (var db = new DDLDataContext())
+            {
+                // Get rewardPkg list
+                var projectList = (from Project in db.Projects
+                                   where (Project.Status == DDLConstants.ProjectStatus.APPROVED || Project.Status == DDLConstants.ProjectStatus.EXPIRED) && Project.IsFunded
+                                   select new ProjectBasicListDTO
+                                   {
+                                       ProjectCode = Project.ProjectCode,
+                                       Title = Project.Title,
+                                       Category = Project.Category.Name,
+                                       CreatorEmail = Project.Creator.Email,
+                                       FundingGoal = Project.FundingGoal,
+                                       Status = Project.Status,
+                                       CurrentFunded = Project.CurrentFunded,
+                                   }).ToList();
+
+                projectList = projectList.OrderByDescending(x => x.CurrentFunded).Take(5).ToList();
+
+                return projectList;
+            }
+        }
+
+
+        /// <summary>
+        /// Get project statistic evert month in year
+        /// </summary>
+        /// <returns></returns>
+        //public List<AdminProjectStatisticDTO> AdminProjectStatistic()
+        //{
+        //    using (var db = new DDLDataContext())
+        //    {
+
+        //    }
+        //}
         #endregion
 
 
@@ -1185,15 +1324,18 @@ namespace DDL_CapstoneProject.Respository
                 var project = db.Projects.FirstOrDefault(x => x.ProjectCode == projectCode);
 
                 var list = new BackingDTO();
+                // Get linq.
                 var listBackerLinQ = from backer in db.Backings
                                      where project.ProjectID == backer.ProjectID
+                                     orderby backer.BackedDate descending
                                      select new BackerDTO
                                      {
                                          Amount = backer.BackingDetail.PledgedAmount,
-                                         Date = backer.BackedDate,
+                                         Date = SqlFunctions.DateAdd("hh", 7, backer.BackedDate),
                                          FullName = backer.User.UserInfo.FullName,
                                      };
 
+                // Create chart.
                 var query = listBackerLinQ.Where(x => x.Date.HasValue)
                   .GroupBy(x => new { x.Date.Value.Day, x.Date.Value.Month })
                   .Select(grp => new
@@ -1201,25 +1343,30 @@ namespace DDL_CapstoneProject.Respository
                       Day = grp.Key.Day,
                       Month = grp.Key.Month,
                       Total = grp.Sum(x => x.Amount)
-                  });
+                  }).ToList();
                 var listAmount = new List<SumAmount>();
 
-                foreach (var amount in query)
+                decimal total = 0;
+                for (var i = 0; i < query.Count; i++)
                 {
+                    total += query[i].Total;
                     var sum = new SumAmount
                     {
-                        Amount = amount.Total,
-                        Day = amount.Day,
-                        Month = amount.Month
+                        Amount = total,
+                        Day = query[i].Day,
+                        Month = query[i].Month
                     };
                     listAmount.Add(sum);
                 }
-               var listBacker = new List<BackerDTO>();
-                foreach (var backer in listBackerLinQ)
-                {
-                    backer.Date = CommonUtils.ConvertDateTimeFromUtc(backer.Date.GetValueOrDefault());
-                    listBacker.Add(backer);
-                }
+
+                // Create table.
+                var listBacker = listBackerLinQ.ToList();
+
+                //foreach (var backer in listBackerLinQ)
+                //{
+                //    backer.Date = CommonUtils.ConvertDateTimeFromUtc(backer.Date.GetValueOrDefault());
+                //    listBacker.Add(backer);
+                //}
                 list.sumAmount = listAmount;
                 list.listBacker = listBacker;
                 list.Amount = new List<decimal>();

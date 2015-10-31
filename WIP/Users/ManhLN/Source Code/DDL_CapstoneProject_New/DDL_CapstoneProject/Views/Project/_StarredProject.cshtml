@@ -21,7 +21,7 @@
                 
                 <div class="item-inner">
                     <div class="item-image hover01 column">
-                        <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
+                        <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
                     </div>
                     <div class="item-title">
                         <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
@@ -43,7 +43,7 @@
                         </div>
                         <ul class="list-inline">
                             <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">ủng hộ</p></li>
-                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber}}</p><p class="mt0 mb0">gây quỹ</p></li>
+                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber |  number : fractionSize}}&#8363;</p><p class="mt0 mb0">gây quỹ</p></li>
                             <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">ngày còn lại</p></li>
                         </ul>
                     </div>

@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-app.controller('PaymentProjectController', function ($scope, $rootScope, $route, $location, toastr, CommmonService, ProjectService, rewardPkgs, usereditinfo, project) {
+app.controller('PaymentProjectController', function ($scope, $rootScope, $sce, $route, $location, toastr, CommmonService, ProjectService, rewardPkgs, usereditinfo, project) {
     // Get rewardPkgs
     $scope.RewardPkgs = rewardPkgs.data.Data;
     // Get Project basic information
@@ -27,6 +27,16 @@ app.controller('PaymentProjectController', function ($scope, $rootScope, $route,
 
     if ($scope.BackData.PledgeAmount == null) {
         $location.path("/project/back/" + $route.current.params.code).replace();
+    }
+
+    $scope.trustSrc = function (src) {
+        return $sce.trustAsResourceUrl(src);
+    }
+
+    // Function check string startwith 'http'
+    $scope.checkHTTP = function (input) {
+        var lowerStr = (input + "").toLowerCase();
+        return lowerStr.indexOf('http') === 0;
     }
 
     //$scope.enableSubmit = false;

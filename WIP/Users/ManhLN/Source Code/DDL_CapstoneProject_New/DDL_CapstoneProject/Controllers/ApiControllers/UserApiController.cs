@@ -540,6 +540,85 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = userList });
         }
 
+        [HttpGet]
+        public IHttpActionResult GetListBackingForAdmin()
+        {
+            List<AdminBackingListDTO> backingList = new List<AdminBackingListDTO>();
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+            try
+            {
+                // Check role user.
+                var currentUser = UserRepository.Instance.GetBasicInfo(User.Identity.Name);
+                if (currentUser == null || currentUser.Role != DDLConstants.UserType.ADMIN)
+                {
+                    throw new NotPermissionException();
+                }
+                backingList = UserRepository.Instance.GetBackingListForAdmin();
+            }
+            catch (KeyNotFoundException)
+            {
+                return
+                    Ok(new HttpMessageDTO
+                    {
+                        Status = DDLConstants.HttpMessageType.ERROR,
+                        Message = "Không tìm thấy!",
+                        Type = DDLConstants.HttpMessageType.NOT_FOUND
+                    });
+            }
+            catch (NotPermissionException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không có quyền truy cập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = backingList });
+        }
+
+        public IHttpActionResult GetBackerForAdmin(string userName, int backingID)
+        {
+            AdminBackingListDTO backingList = new AdminBackingListDTO();
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+            try
+            {
+                // Check role user.
+                var currentUser = UserRepository.Instance.GetBasicInfo(User.Identity.Name);
+                if (currentUser == null || currentUser.Role != DDLConstants.UserType.ADMIN)
+                {
+                    throw new NotPermissionException();
+                }
+                backingList = UserRepository.Instance.GetBackerForAdmin(userName, backingID);
+            }
+            catch (KeyNotFoundException)
+            {
+                return
+                    Ok(new HttpMessageDTO
+                    {
+                        Status = DDLConstants.HttpMessageType.ERROR,
+                        Message = "Không tìm thấy!",
+                        Type = DDLConstants.HttpMessageType.NOT_FOUND
+                    });
+            }
+            catch (NotPermissionException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không có quyền truy cập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = backingList });
+        }
+
         #region TrungVn
 
         /// <summary>
@@ -583,6 +662,74 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = userCurrent });
         }
+
+        #region HuyNM
+        // GET: api/UserApi/AdminGetTopBacker/
+        [HttpGet]
+        [ResponseType(typeof(TopBackerDTO))]
+        public IHttpActionResult AdminGetTopBacker()
+        {
+            var topBacker = new List<TopBackerDTO>();
+
+            try
+            {
+                // Check authen.
+                if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                }
+
+                // Check role user.
+                var currentUser = UserRepository.Instance.GetBasicInfo(User.Identity.Name);
+                if (currentUser == null || currentUser.Role != DDLConstants.UserType.ADMIN)
+                {
+                    throw new NotPermissionException();
+                }
+
+                topBacker = UserRepository.Instance.AdminGetTopBacker();
+            }
+            catch (Exception)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = topBacker });
+        }
+
+        // GET: api/UserApi/AdminGetRecentUser/
+        [HttpGet]
+        [ResponseType(typeof(RecentUserDTO))]
+        public IHttpActionResult AdminGetRecentUser()
+        {
+            var recentUser = new List<RecentUserDTO>();
+
+            try
+            {
+                // Check authen.
+                if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                }
+
+                // Check role user.
+                var currentUser = UserRepository.Instance.GetBasicInfo(User.Identity.Name);
+                if (currentUser == null || currentUser.Role != DDLConstants.UserType.ADMIN)
+                {
+                    throw new NotPermissionException();
+                }
+
+                recentUser = UserRepository.Instance.AdminGetRecentUser();
+            }
+            catch (Exception)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = recentUser });
+        }
+        #endregion
 
     }
 }

@@ -79,4 +79,14 @@ service.service("AdminProjectService", function ($http) {
         });
         return request;
     }
+
+    //Get basic dashboard infomation for admin
+    this.getBasicDashboardInfo = function () {
+        return $http.get("../api/ProjectApi/AdminGetDashboardInfo");
+    };
+
+    // Function to get 5 top projects for admin
+    this.getTopProject = function () {
+        return $http.get("../api/ProjectApi/AdminGetTopProjectList");
+    };
 });

@@ -40,8 +40,23 @@ app.service('ProjectService', function ($http) {
         return $http.get('/api/ProjectApi/getStatisticsInfor');
     };
     this.SearchProject = function (from, categoryidlist, orderby, searchkey) {
-        return this.GetProject(10, from, categoryidlist, orderby, searchkey, "", false, "");
+        return this.GetProject(12, from, categoryidlist, orderby, searchkey, "", false, "");
     }
+
+
+    this.SearchCount = function (categoryidlist, searchkey) {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/SearchCount',
+            params: {
+                categoryidlist: categoryidlist,
+                searchkey: searchkey
+            }
+        });
+
+        return request;
+    }
+
     //EndTrungVn
 
 
@@ -396,7 +411,7 @@ app.service('ProjectService', function ($http) {
             data: commment,
             params: {
                 projectCode: code,
-                lastComment: lastCommentDatetime
+                lastDateTime: lastCommentDatetime
             }
         });
 
