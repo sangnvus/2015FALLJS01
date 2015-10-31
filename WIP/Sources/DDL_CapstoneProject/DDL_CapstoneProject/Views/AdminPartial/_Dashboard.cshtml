@@ -261,12 +261,15 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="project in TopProject">
-                                    <td>{{project.Title}}</td>
-                                    <td>{{project.Category}}</td>
-                                    <td>{{project.CreatorEmail}}</td>
-                                    <td>{{project.FundingGoal | currency:"":0}}</td>
-                                    <td>{{project.CurrentFunded | currency:"":0}}</td>
-                                    <td><a class="btn btn-xs btn-green">Approved</a></td>
+                                    <td class="col-text">{{project.Title}}</td>
+                                    <td class="col-text">{{project.Category}}</td>
+                                    <td class="col-text">{{project.CreatorEmail}}</td>
+                                    <td class="col-number">{{project.FundingGoal | currency:"":0}}</td>
+                                    <td class="col-number">{{project.CurrentFunded | currency:"":0}}</td>
+                                    <td class="col-text">
+                                        <a class="btn btn-xs btn-green" ng-if="project.Status == 'approved'">Đang chạy</a>
+                                        <a class="btn btn-xs btn-red" ng-if="project.Status == 'expired'">Hết hạn</a>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -338,36 +341,18 @@
                         <table class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th>Backer</th>
-                                    <th>Project Title</th>
-                                    <th>Pledge Amount</th>
-                                    <th>Backed On</th>
+                                    <th>Người ủng hộ</th>
+                                    <th>Dự án</th>
+                                    <th>Tiền ủng hộ(VNĐ)</th>
+                                    <th>Thời gian</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Lưu Ngọc Mạnh</td>
-                                    <td>test</td>
-                                    <td>$1000</td>
-                                    <td>2015-09-24 09:46:07</td>
-                                </tr>
-                                <tr>
-                                    <td>Lưu Ngọc Mạnh</td>
-                                    <td>test</td>
-                                    <td>$1000</td>
-                                    <td>2015-09-24 09:46:07</td>
-                                </tr>
-                                <tr>
-                                    <td>Lưu Ngọc Mạnh</td>
-                                    <td>test</td>
-                                    <td>$1000</td>
-                                    <td>2015-09-24 09:46:07</td>
-                                </tr>
-                                <tr>
-                                    <td>Lưu Ngọc Mạnh</td>
-                                    <td>test</td>
-                                    <td>$1000</td>
-                                    <td>2015-09-24 09:46:07</td>
+                                <tr ng-repeat="backing in RecentBacking">
+                                    <td class="col-text">{{backing.Email}}</td>
+                                    <td class="col-text">{{backing.ProjectTitle}}</td>
+                                    <td class="col-number">{{backing.PledgeAmount  | currency:"":0}}</td>
+                                    <td class="col-number">{{backing.BackedDate  | date: "hh:mm 'ngày' dd-MM-yyyy"}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -397,7 +382,9 @@
                 </div>
                 <div class="clearfix"></div>
             </div>
-            <div id="lineChart" class="panel-collapse collapse in" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+            <div id="lineChart" class="panel-collapse collapse in">
+                <highchart id="chart1" config="highchartsNG"></highchart>
+            </div>
         </div>
     </div>
     <!-- /.col-lg-12 -->

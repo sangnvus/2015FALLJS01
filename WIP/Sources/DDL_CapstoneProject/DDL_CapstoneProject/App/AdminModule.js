@@ -32,6 +32,10 @@ app.config(["$routeProvider", function ($routeProvider) {
                 topBackers: ['$rootScope', '$q', 'AdminUserService', 'CommmonService', function ($rootScope, $q, AdminUserService, CommmonService) {
                     var promise = AdminUserService.getTopBacker();
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }],
+                statistic: ['$rootScope', '$q', 'AdminProjectService', 'CommmonService', function ($rootScope, $q, AdminProjectService, CommmonService) {
+                    var promise = AdminProjectService.getProjectStatistic();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }]
             }
         });

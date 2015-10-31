@@ -808,7 +808,7 @@ namespace DDL_CapstoneProject.Respository
 
                 // Caculate total profit
                 var succeedProject = (from Project in db.Projects
-                                      where Project.IsFunded
+                                      where Project.IsFunded && Project.IsExprired
                                       select Project).ToList();
 
                 decimal totalProfit = 0;
@@ -903,13 +903,111 @@ namespace DDL_CapstoneProject.Respository
         /// Get project statistic evert month in year
         /// </summary>
         /// <returns></returns>
-        //public List<AdminProjectStatisticDTO> AdminProjectStatistic()
-        //{
-        //    using (var db = new DDLDataContext())
-        //    {
+        public AdminProjectStatisticDTO AdminProjectStatistic()
+        {
+            using (var db = new DDLDataContext())
+            {
+                var projects = db.Projects.ToList();
 
-        //    }
-        //}
+                foreach (var project in projects)
+                {
+                    project.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(project.CreatedDate);
+                    project.ExpireDate = CommonUtils.ConvertDateTimeFromUtc(project.CreatedDate);
+                }
+
+                // Caculate created project
+                var createdProject = projects.Where(x => x.CreatedDate.Year == 2015)
+                  .GroupBy(x => new { x.CreatedDate.Month })
+                  .Select(grp => new
+                  {
+                      Month = grp.Key.Month,
+                      Total = grp.Count()
+                  });
+
+                var listCreated = new List<Statistic>();
+
+                foreach (var project in createdProject)
+                {
+                    var sum = new Statistic
+                    {
+                        Amount = project.Total,
+                        Month = project.Month
+                    };
+                    listCreated.Add(sum);
+                }
+
+                // Caculate Success project
+                var successProject = projects.Where(x => x.ExpireDate.Value.Year == 2015 && x.IsFunded && x.IsExprired)
+                  .GroupBy(x => new { x.ExpireDate.Value.Month })
+                  .Select(grp => new
+                  {
+                      Month = grp.Key.Month,
+                      Total = grp.Count(),
+                  });
+
+                var listSuccess = new List<Statistic>();
+
+                foreach (var project in successProject)
+                {
+                    var sum = new Statistic
+                    {
+                        Amount = project.Total,
+                        Month = project.Month
+                    };
+                    listSuccess.Add(sum);
+                }
+
+                // Caculate fail project
+                var failProject = projects.Where(x => x.ExpireDate.Value.Year == 2015 && x.IsFunded == false && x.IsExprired)
+                  .GroupBy(x => new { x.ExpireDate.Value.Month })
+                  .Select(grp => new
+                  {
+                      Month = grp.Key.Month,
+                      Total = grp.Count()
+                  });
+
+                var listFail = new List<Statistic>();
+
+                foreach (var project in failProject)
+                {
+                    var sum = new Statistic
+                    {
+                        Amount = project.Total,
+                        Month = project.Month
+                    };
+                    listFail.Add(sum);
+                }
+
+                // Caculate total funded
+                var pledge = db.Backings.Where(x => x.BackedDate.Year == 2015)
+                    .GroupBy(x => new { x.BackedDate.Month })
+                   .Select(g => new
+                   {
+                       Month = g.Key.Month,
+                       Total = g.Sum(i => i.BackingDetail.PledgedAmount)
+                   });
+                var listFunded = new List<Statistic>();
+                foreach (var amount in pledge)
+                {
+                    var sum = new Statistic
+                    {
+                        Amount = amount.Total,
+                        Month = amount.Month
+                    };
+                    listFunded.Add(sum);
+                }
+
+                var list = new AdminProjectStatisticDTO
+                {
+                    Created = listCreated,
+                    Succeed = listSuccess,
+                    Fail = listFail,
+                    Funded = listFunded
+                };
+
+                return list;
+            }
+        }
         #endregion
 
 
