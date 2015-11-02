@@ -380,10 +380,20 @@ app.config(["$routeProvider", function ($routeProvider) {
     }]);
 }]).config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeSpinner = false;
+}]).config(['ChartJsProvider', function (ChartJsProvider) {
+    //// Configure all charts
+    //ChartJsProvider.setOptions({
+    //    colours: ['#FF5252', '#FF8A80'],
+    //    responsive: false
+    //});
+    // Configure all line charts
+    ChartJsProvider.setOptions('Line', {
+        datasetFill: false
+    });
 }]);
 
-app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOptions', 'toastrConfig', 'blockUIConfig', 'MessageService',
-    function ($rootScope, $window, $anchorScroll, UserService, DTDefaultOptions, toastrConfig, blockUIConfig, MessageService) {
+app.run(['$rootScope', '$window','$location','$route', '$anchorScroll', 'UserService', 'DTDefaultOptions', 'toastrConfig', 'blockUIConfig', 'MessageService',
+    function ($rootScope, $window,$location,$route, $anchorScroll, UserService, DTDefaultOptions, toastrConfig, blockUIConfig, MessageService) {
         $rootScope.$on('$routeChangeError', function (e, curr, prev) {
             e.preventDefault();
         });
@@ -393,13 +403,16 @@ app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOpti
             $window.scrollTo(0, 0);
         });
 
+        $rootScope.reload = function() {
+            $route.reload();
+        }
+
         $rootScope.$on("$routeChangeStart", function (e, curr, prev) {
             if (curr.$$route !== undefined) {
                 $rootScope.Page = {
                     title: curr.$$route.title !== undefined ? curr.$$route.title : ""
                 }
             }
-            //        ShareData.currentPage =
 
         });
 

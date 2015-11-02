@@ -92,4 +92,22 @@ service.service("AdminUserService", function ($http) {
         return request;
     }
 
+    // Function to get top backers
+    this.getTopBacker = function () {
+        var request = $http({
+            method: 'get',
+            url: '../api/UserApi/AdminGetTopBacker',
+        });
+        return request;
+    }
+
+    // Function to get recent user
+    this.getRecentUser = function () {
+        var request = $http({
+            method: 'get',
+            url: '../api/UserApi/AdminGetRecentUser',
+        });
+        return request;
+    }
+
 });

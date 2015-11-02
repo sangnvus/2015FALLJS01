@@ -845,6 +845,76 @@ namespace DDL_CapstoneProject.Respository
             }
         }
 
+        #region HuyNM
+        /// <summary>
+        /// Get top 5 backers for admin
+        /// </summary>
+        /// <returns>listTopbackerUser</returns>
+        public List<TopBackerDTO> AdminGetTopBacker()
+        {
+            using (var db = new DDLDataContext())
+            {
+                var userList = db.DDL_Users.Where(x => x.UserType != "admin").ToList();
+
+                List<TopBackerDTO> listTopbackerUser = new List<TopBackerDTO>();
+                foreach (var user in userList)
+                {
+                    if (user.Backings.Count() > 0)
+                    {
+                        var userReturn = new TopBackerDTO
+                        {
+                            AvartaURL = user.UserInfo.ProfileImage,
+                            UserName = user.Username,
+                            Status = user.IsActive,
+                            FullName = user.UserInfo.FullName,
+                        };
+                        var backingList = user.Backings.ToList();
+                        userReturn.TotalProject = backingList.GroupBy(x => x.ProjectID).Count();
+                        foreach (var backing in backingList)
+                        {
+                            userReturn.TotalPledgedAmount = userReturn.TotalPledgedAmount + backing.BackingDetail.PledgedAmount;
+                        }
+                        listTopbackerUser.Add(userReturn);
+                    }
+                }
+
+                listTopbackerUser = listTopbackerUser.OrderByDescending(x => x.TotalPledgedAmount).Take(5).ToList();
+
+                return listTopbackerUser;
+            }
+        }
+
+        /// <summary>
+        /// Get 5 recent users for admin
+        /// </summary>
+        /// <returns>listRecentUser</returns>
+        public List<RecentUserDTO> AdminGetRecentUser()
+        {
+            using (var db = new DDLDataContext())
+            {
+                var userList = db.DDL_Users.Where(x => x.UserType != "admin").ToList();
+
+                List<RecentUserDTO> listRecentUser = new List<RecentUserDTO>();
+                foreach (var user in userList)
+                {
+                    var userReturn = new RecentUserDTO
+                    {
+                        AvartaURL = user.UserInfo.ProfileImage,
+                        UserName = user.Username,
+                        LastLogin = user.LastLogin,
+                        Status = user.IsActive,
+                        FullName = user.UserInfo.FullName
+                    };
+                    userReturn.LastLogin = CommonUtils.ConvertDateTimeFromUtc(userReturn.LastLogin.GetValueOrDefault());
+                    listRecentUser.Add(userReturn);
+                }
+
+                listRecentUser = listRecentUser.OrderByDescending(x => x.LastLogin).Take(5).ToList();
+
+                return listRecentUser;
+            }
+        }
+        #endregion
         #endregion
     }
 }

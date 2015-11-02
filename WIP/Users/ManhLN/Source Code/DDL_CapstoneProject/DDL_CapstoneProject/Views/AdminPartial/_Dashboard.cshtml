@@ -1,80 +1,482 @@
-﻿<!-- begin ADVANCED TABLES ROW -->
+﻿<!-- begin DASHBOARD CIRCLE TILES -->
 <div class="row">
-
-    <div class="col-lg-12">
-
-        <div class="portlet portlet-default">
+    <div class="col-lg-2 col-sm-6">
+        <div class="circle-tile">
+            <a href="#">
+                <div class="circle-tile-heading dark-blue">
+                    <i class="fa fa-users fa-fw fa-3x"></i>
+                </div>
+            </a>
+            <div class="circle-tile-content dark-blue">
+                <div class="circle-tile-description text-faded">
+                    Số người dùng
+                </div>
+                <div class="circle-tile-number text-faded">
+                    {{BasicInfo.TotalUser | currency:"":0}}
+                    <span id="sparklineA"></span>
+                </div>
+                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2 col-sm-6">
+        <div class="circle-tile">
+            <a href="#">
+                <div class="circle-tile-heading blue">
+                    <i class="fa fa-tasks fa-fw fa-3x"></i>
+                </div>
+            </a>
+            <div class="circle-tile-content blue">
+                <div class="circle-tile-description text-faded">
+                    Số dự án
+                </div>
+                <div class="circle-tile-number text-faded">
+                    {{BasicInfo.TotalProject | currency:"":0}}
+                    <span id="sparklineB"></span>
+                </div>
+                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2 col-sm-6">
+        <div class="circle-tile">
+            <a href="#">
+                <div class="circle-tile-heading red">
+                    <i class="fa fa-shopping-cart fa-fw fa-3x"></i>
+                </div>
+            </a>
+            <div class="circle-tile-content red">
+                <div class="circle-tile-description text-faded">
+                    Số tiền được ủng hộ
+                </div>
+                <div class="circle-tile-number text-faded">
+                    {{BasicInfo.TotalFund | currency:"&#8363;":0}}
+                    <span id="sparklineC"></span>
+                </div>
+                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2 col-sm-6">
+        <div class="circle-tile">
+            <a href="#">
+                <div class="circle-tile-heading green">
+                    <i class="fa fa-money fa-fw fa-3x"></i>
+                </div>
+            </a>
+            <div class="circle-tile-content green">
+                <div class="circle-tile-description text-faded">
+                    Lợi nhuận
+                </div>
+                <div class="circle-tile-number text-faded">
+                    {{BasicInfo.TotalProfit | currency:"&#8363;":0}}
+                </div>
+                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2 col-sm-6">
+        <div class="circle-tile">
+            <a href="#">
+                <div class="circle-tile-heading purple">
+                    <i class="fa fa-plus-circle fa-fw fa-3x"></i>
+                </div>
+            </a>
+            <div class="circle-tile-content purple">
+                <div class="circle-tile-description text-faded">
+                    Số dự án chờ duyệt
+                </div>
+                <div class="circle-tile-number text-faded">
+                    {{BasicInfo.NewProject | currency:"":0}}
+                </div>
+                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2 col-sm-6">
+        <div class="circle-tile">
+            <a href="#">
+                <div class="circle-tile-heading orange">
+                    <i class="fa fa-rocket fa-fw fa-3x"></i>
+                </div>
+            </a>
+            <div class="circle-tile-content orange">
+                <div class="circle-tile-description text-faded">
+                    Số dự án đang chạy
+                </div>
+                <div class="circle-tile-number text-faded">
+                    {{BasicInfo.LiveProject | currency:"":0}}
+                </div>
+                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end DASHBOARD CIRCLE TILES -->
+<!-- Donut Chart Example -->
+<div class="row">
+    <!-- Categories -->
+    <div class="col-lg-4 col-md-12">
+        <div class="portlet portlet-green">
             <div class="portlet-heading">
                 <div class="portlet-title">
-                    <h4>Backings List</h4>
+                    <h4>Lĩnh vực</h4>
                 </div>
                 <div class="portlet-widgets">
-                    <a href="#" class="btn btn-blue btn-sm">Export</a>
-                    <a onclick="return false" data-toggle="collapse" data-parent="#accordion" href="#NewProjectTable"><i class="fa fa-chevron-down"></i></a>
+                    <a onclick="return false" href="javascript:;"><i class="fa fa-refresh"></i></a>
+                    <span class="divider"></span>
+                    <a onclick="return false" data-toggle="collapse" data-parent="#accordion" href="#cate"><i class="fa fa-chevron-down"></i></a>
                 </div>
                 <div class="clearfix"></div>
             </div>
-            <div id="NewProjectTable" class="panel-collapse collapse in">
+            <div id="cate" class="panel-collapse collapse in">
                 <div class="portlet-body">
-                    <div class="table-responsive">
-                        <table id="example-table" class="table table-striped table-bordered table-hover table-green">
+                    <div class="portlet-body">
+                        <canvas id="doughnut" class="chart chart-doughnut"
+                                chart-data="Categories.Data" chart-labels="Categories.Labels" chart-legend="true"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Rank -->
+    <div class="col-lg-4 col-md-12">
+        <div class="portlet portlet-green">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4>Hạng dự án</h4>
+                </div>
+                <div class="portlet-widgets">
+                    <a onclick="return false" href="javascript:;"><i class="fa fa-refresh"></i></a>
+                    <span class="divider"></span>
+                    <a onclick="return false" data-toggle="collapse" data-parent="#accordion" href="#rank"><i class="fa fa-chevron-down"></i></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div id="rank" class="panel-collapse collapse in">
+                <div class="portlet-body">
+                    <div class="portlet-body">
+                        <canvas id="donut_Rank" class="chart chart-doughnut"
+                                chart-data="donut_Rank.Data" chart-labels="donut_Rank.Labels" chart-legend="true"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Rate -->
+    <div class="col-lg-4 col-md-12">
+        <div class="portlet portlet-green">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4>Tỉ lệ thành công</h4>
+                </div>
+                <div class="portlet-widgets">
+                    <a onclick="return false" href="javascript:;"><i class="fa fa-refresh"></i></a>
+                    <span class="divider"></span>
+                    <a onclick="return false" data-toggle="collapse" data-parent="#accordion" href="#rate"><i class="fa fa-chevron-down"></i></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div id="rate" class="panel-collapse collapse in">
+                <div class="portlet-body">
+                    <div class="portlet-body">
+                        <canvas id="donut_Rate" class="chart chart-doughnut"
+                                chart-data="donut_Rate.Data" chart-labels="donut_Rate.Labels" chart-legend="true"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end donut chart -->
+<!-- begin top table -->
+<div class="row">
+    <!-- Top Backer -->
+    <div class="col-lg-6">
+        <div class="portlet portlet-green">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4>Những người ủng hộ nhiều nhất</h4>
+                </div>
+                <div class="portlet-widgets">
+                    <a onclick="return false" data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet"><i class="fa fa-chevron-down"></i></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div id="transactionsPortlet" class="panel-collapse collapse in">
+                <div class="portlet-body">
+                    <div class="table-responsive dashboard-demo-table">
+                        <table class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th>No</th>
-                                    <th>Project Title</th>
-                                    <th>Backer Name</th>
-                                    <th>Pledge Amount</th>
-                                    <th>Backed Date</th>
-                                    <th>Action</th>
+                                    <th>Tên</th>
+                                    <th>Số dự án</th>
+                                    <th>Số tiền(VNĐ)</th>
+                                    <th>Trạng thái</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>#1</td>
-                                    <td>Around theeet View Sketches</td>
-                                    <td>ngocmanh1712@gmail.com</td>
-                                    <td>$300</td>
-                                    <td>10 Feb,2015</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn btn-primary btn-sm" type="button" id=""
-                                                    data-toggle="tooltip" data-placement="left" data-trigger="hover" title="View">
-                                                <i class="fa fa-eye"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="even">
-                                    <td>#2</td>
-                                    <td>MapCloth:ing for All</td>
-                                    <td>chinhvc@fpt.edu.vn</td>
-                                    <td>$50</td>
-                                    <td>9 Nov,2015</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1"
-                                                    data-toggle="tooltip" data-placement="left" data-trigger="hover" title="View">
-                                                <i class="fa fa-eye"></i>
-                                            </button>
-                                        </div>
+                                <tr ng-repeat="backer in TopBacker">
+                                    <td class="col-text">{{backer.FullName}}</td>
+                                    <td class="col-number">{{backer.TotalProject  | currency:"":0}}</td>
+                                    <td class="col-number">{{backer.TotalPledgedAmount  | currency:"":0}}</td>
+                                    <td class="col-text">
+                                        <a class="btn btn-xs btn-green" ng-if="backer.Status == true">Bình thường</a>
+                                        <a class="btn btn-xs btn-red" ng-if="backer.Status == false">Khóa</a>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <!-- /.table-responsive -->
                 </div>
-                <!-- /.portlet-body -->
             </div>
+        </div>
+    </div>
+    <!-- end top backers -->
+    <!-- Top Projects -->
+    <div class="col-lg-6">
+        <div class="portlet portlet-green">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4>Những dự án thành công nhất</h4>
+                </div>
+                <div class="portlet-widgets">
+                    <a onclick="return false" data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet2"><i class="fa fa-chevron-down"></i></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div id="transactionsPortlet2" class="panel-collapse collapse in">
+                <div class="portlet-body">
+                    <div class="table-responsive dashboard-demo-table">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Dự án</th>
+                                    <th>Lĩnh vực</th>
+                                    <th>Chủ dự án</th>
+                                    <th>Mục tiêu(VNĐ)</th>
+                                    <th>Quỹ(VNĐ)</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="project in TopProject">
+                                    <td class="col-text">{{project.Title}}</td>
+                                    <td class="col-text">{{project.Category}}</td>
+                                    <td class="col-text">{{project.CreatorEmail}}</td>
+                                    <td class="col-number">{{project.FundingGoal | currency:"":0}}</td>
+                                    <td class="col-number">{{project.CurrentFunded | currency:"":0}}</td>
+                                    <td class="col-text">
+                                        <a class="btn btn-xs btn-green" ng-if="project.Status == 'approved'">Đang chạy</a>
+                                        <a class="btn btn-xs btn-red" ng-if="project.Status == 'expired'">Hết hạn</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end top Projects -->
+</div>
+<!-- end top table -->
+<!-- begin recent user and recent backing table -->
+<div class="row">
+    <!-- begin recent user table -->
+    <div class="col-lg-6">
+        <div class="portlet portlet-green">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4>Recent Users</h4>
+                </div>
+                <div class="portlet-widgets">
+                    <a onclick="return false" data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet3"><i class="fa fa-chevron-down"></i></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div id="transactionsPortlet3" class="panel-collapse collapse in">
+                <div class="portlet-body">
+                    <div class="table-responsive dashboard-demo-table">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Đăng nhập cuối</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="user in RecentUser">
+                                    <td class="col-text">{{user.FullName}}</td>
+                                    <td class="col-number">{{user.LastLogin | date: "hh:mm 'ngày' dd-MM-yyyy"}}</td>
+                                    <td class="col-text">
+                                        <a class="btn btn-xs btn-green" ng-if="user.Status == true">Bình thường</a>
+                                        <a class="btn btn-xs btn-red" ng-if="user.Status == false">Khóa</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end recent user table -->
+    <!-- begin recent backing table -->
+    <div class="col-lg-6">
+        <div class="portlet portlet-green">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4>Recent Backings</h4>
+                </div>
+                <div class="portlet-widgets">
+                    <a onclick="return false" data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet4"><i class="fa fa-chevron-down"></i></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div id="transactionsPortlet4" class="panel-collapse collapse in">
+                <div class="portlet-body">
+                    <div class="table-responsive dashboard-demo-table">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Người ủng hộ</th>
+                                    <th>Dự án</th>
+                                    <th>Tiền ủng hộ(VNĐ)</th>
+                                    <th>Thời gian</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="backing in RecentBacking">
+                                    <td class="col-text">{{backing.Email}}</td>
+                                    <td class="col-text">{{backing.ProjectTitle}}</td>
+                                    <td class="col-number">{{backing.PledgeAmount  | currency:"":0}}</td>
+                                    <td class="col-number">{{backing.BackedDate  | date: "hh:mm 'ngày' dd-MM-yyyy"}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end recent backing table -->
+    </div>
+</div>
+<!-- end recent user table -->
+<!-- begin statistic chart -->
+<div class="row">
+    <!-- Line Chart Example -->
+    <div class="col-lg-12">
+        <div class="portlet portlet-default">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4>Projects statistic Chart</h4>
+                </div>
+                <div class="portlet-widgets">
+                    <select class="form-control project-chart">
+                        <option>2015</option>
+                        <option>2014</option>
+                    </select>
+                    <a onclick="return false" data-toggle="collapse" data-parent="#accordion" href="#lineChart"><i class="fa fa-chevron-down"></i></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div id="lineChart" class="panel-collapse collapse in">
+                <highchart id="chart1" config="highchartsNG"></highchart>
+            </div>
+        </div>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- end statistic chart -->
+<!-- begin STATISTICS table -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="portlet portlet-default">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4>Project statistic Table</h4>
+                </div>
+                <div class="portlet-widgets">
+                    <select class="form-control project-chart">
+                        <option>Years</option>
+                        <option>Months</option>
+                    </select>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-responsive">
+                    <table id="example-table" class="table table-striped table-bordered table-hover table-green">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Total projects</th>
+                                <th>Succeed projects</th>
+                                <th>Fail projects</th>
+                                <th>Running projects</th>
+                                <th>Total Fund</th>
+                                <th>Succeed Fund</th>
+                                <th>Total profit</th>
+                                <th>Success rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2015</td>
+                                <td>10</td>
+                                <td>11</td>
+                                <td>15</td>
+                                <td>10</td>
+                                <td>$10000</td>
+                                <td>$7000</td>
+                                <td>$2000</td>
+                                <td>100%</td>
+                            </tr>
+                            <tr>
+                                <td>2014</td>
+                                <td>10</td>
+                                <td>11</td>
+                                <td>15</td>
+                                <td>10</td>
+                                <td>$10000</td>
+                                <td>$7000</td>
+                                <td>$2000</td>
+                                <td>100%</td>
+                            </tr>
+                            <tr>
+                                <td>2013</td>
+                                <td>10</td>
+                                <td>11</td>
+                                <td>15</td>
+                                <td>10</td>
+                                <td>$10000</td>
+                                <td>$7000</td>
+                                <td>$2000</td>
+                                <td>100%</td>
+                            </tr>
+                            <tr>
+                                <td>2012</td>
+                                <td>10</td>
+                                <td>11</td>
+                                <td>15</td>
+                                <td>10</td>
+                                <td>$10000</td>
+                                <td>$7000</td>
+                                <td>$2000</td>
+                                <td>100%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+            </div>
+            <!-- /.portlet-body -->
         </div>
         <!-- /.portlet -->
 
     </div>
     <!-- /.col-lg-12 -->
-
 </div>
-<script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip({ container: 'body' });
-    })
-</script>
+<!-- end STATISTICS table -->

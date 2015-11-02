@@ -120,7 +120,7 @@
                                         <h1 class="fnt25">Thông tin dự án</h1>
                                     </div>
                                     <!-- end About this project -->
-                                    <div id="load_content" class="pt15" ta-bind ng-model="Project.Description"></div>
+                                    <div id="load_content" class="pt15" ta-bind ng-model="Project.Description" style="word-break: break-word"></div>
                                     <!-- end load_content -->
                                     <div id="riskandchallenges" class="padding30">
                                         <h1 class="fnt25">Rủi ro và thách thức</h1>
@@ -396,29 +396,29 @@
                     <div id="list-backers" role="tabpanel" class="tab-pane fade in project-tab-border">
                         <div class="ml10 mr10">
                             <div>
-                                <h3 class="fnt25">List Backers</h3>
+                                <h3 class="fnt25">Danh sách người ủng hộ</h3>
                             </div> <!-- TITLE -->
                             <div id="backerlistchart" class="pb30">
                                 <canvas id="line" class="chart chart-line" chart-data="data" height="100px"
-                                        chart-labels="labels" chart-legend="true" chart-series="series" chart-colours="colors"
-                                        chart-click="onClick"></canvas>
+                                        chart-labels="labels" chart-legend="true" chart-series="series" chart-colours="colours"
+                                        chart-options="options"></canvas>
                             </div> <!-- LINE CHART BACKERS -->
                             <table id="backersTable" class="table table-striped table-bordered table-hover"
                                    datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
                                 <thead>
                                     <tr style="background: #16a085; color: #FFF">
-                                        <th style="width: 8%">.No</th>
-                                        <th>Name</th>
-                                        <th>Pledge amout</th>
-                                        <th>Date</th>
+                                        <th style="width: 20px">#</th>
+                                        <th>Tên người ủng hộ</th>
+                                        <th>Số tiền ủng hộ</th>
+                                        <th style="width: 100px">Ngày ủng hộ</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="x in ListBacker">
-                                        <td>{{$index + 1}}</td>
+                                        <td class="col-number">{{$index + 1}}</td>
                                         <td>{{x.FullName}}</td>
-                                        <td>{{x.Amount}}</td>
-                                        <td>{{x.Date | date:"dd/MM/yyyy"}}</td>
+                                        <td class="col-number">{{x.Amount| number : fractionSize}}&#8363;</td>
+                                        <td class="col-datetime">{{x.Date | date:"dd/MM/yyyy"}}</td>
                                     </tr>
                                 </tbody>
                             </table>  <!-- TABLE BACKERS LIST -->

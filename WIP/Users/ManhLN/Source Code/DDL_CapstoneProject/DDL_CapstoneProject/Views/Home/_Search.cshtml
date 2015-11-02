@@ -53,20 +53,31 @@
                                 </div>
                                 <div class="item-footer">
                                     <div class="mt10 mb5">
-                                        <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
-                                        &nbsp;&nbsp;
+                                        @*<a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
+                                            &nbsp;&nbsp;*@
                                         <a class="grey-dark" href="@Url.Content("/#/search?categoryid={{project.CategoryID}}")"><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
                                         &nbsp;&nbsp;
                                     </div>
                                     <div class="progress mt5 mb5">
                                         <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
-                                            <span class="sr-only">{{project.CurrentFunded}}% phần trăm (thành công)</span>
+                                            <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
                                         </div>
                                     </div>
-                                    <ul class="list-inline">
-                                        <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">ủng hộ</p></li>
-                                        <li><p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p><p class="mt0 mb0">gây quỹ</p></li>
-                                        <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">ngày còn lại</p></li>
+                                    <ul class="list-inline fnt15">
+                                        <li>
+                                            <span class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</span>
+                                            <span class="mt0 mb0">đã ủng hộ</span>
+                                        </li>
+                                        <li>
+                                            <span class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</span>
+                                            <span class="mt0 mb0">ngày còn lại</span>
+                                        </li>
+                                    </ul>
+                                    <ul class="list-inline fnt15">
+                                        <li>
+                                            <span class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber| number : fractionSize}}&#8363;</span>
+                                            <span class="mt0 mb0">đã gây quỹ</span>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

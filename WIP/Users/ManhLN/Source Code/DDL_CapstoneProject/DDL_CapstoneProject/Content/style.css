@@ -624,6 +624,9 @@ Date: 2015.10.01
         border: 1px solid #16a085;
         background-color: #fff;
     }
+    #colPush li.active{
+        background-color: #eee;
+    }
     #colPush a{
     	color: #34495E;
         padding: 0px 35px;

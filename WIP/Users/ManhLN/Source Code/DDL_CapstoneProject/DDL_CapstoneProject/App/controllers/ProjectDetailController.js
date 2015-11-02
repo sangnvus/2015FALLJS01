@@ -84,7 +84,8 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
         //    toastr.warning("Tối thiểu 10, tối đa 200 kí tự", 'Thông báo');
         //} else {
         $scope.NewComment.UserName = $scope.CurrentUser.UserName;
-        var promisePut = ProjectService.Comment($scope.Project.ProjectCode, $scope.NewComment, $scope.Project.CommentsList[0].CreatedDate);
+        var lastdatetime = $scope.Project.CommentsList.length > 0 ? $scope.Project.CommentsList[0].CreatedDate : "";
+        var promisePut = ProjectService.Comment($scope.Project.ProjectCode, $scope.NewComment, lastdatetime);
         promisePut.then(
             function (result) {
                 if (result.data.Status === "success") {
@@ -241,9 +242,22 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
             function (result) {
                 $scope.ListBacker = result.data.Data.listBacker;
                 $scope.labels = result.data.Data.Date;
-                $scope.series = ['Số tiền đã ủng hộ'];
-                $scope.data = [result.data.Data.Amount];
+                $scope.series = ['Số tiền đã được ủng hộ','Mục tiêu'];
+                var data2 = [];
+                for (var i = 0; i < result.data.Data.Amount.length; i++) {
+                    data2.push($scope.Project.FundingGoal);
+                }
+                $scope.data = [result.data.Data.Amount, data2];
+                $scope.colours = ['#97bbcd', '#f7464a'];
                 $scope.checkLoadlist = true;
+                $scope.options = {
+                    multiTooltipTemplate: function (label) {
+                        return (label.datasetLabel + ': ' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) + "₫";
+                    },
+                    scaleLabel: function (label) {
+                        return (label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) + "₫";
+                    }
+                };
             }
          );
         }

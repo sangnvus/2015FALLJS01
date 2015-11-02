@@ -7,17 +7,15 @@ app.controller('BackedHistoryProjectController', function ($scope, projects, Use
     // Define table
     $scope.dtOptions = DTOptionsBuilder.newOptions()
     .withDisplayLength(10)
-    //.withOption('order', [3, 'desc'])
     .withBootstrap();
-
-    $scope.dtColumnDefs = [
-        DTColumnDefBuilder.newColumnDef(0).notSortable()
-    ];
+    // Define column 
+    //$scope.dtColumnDefs = [
+    //    DTColumnDefBuilder.newColumnDef(0).notSortable()
+    //];
 
 
     function getBackedUserInfo(){
-        var promiseGet = UserService.getBackedUserInfo();
-       
+        var promiseGet = UserService.getBackedUserInfo();     
             promiseGet.then(
                 function (result) {
                     if (result.data.Status === "success") {
@@ -38,7 +36,7 @@ app.controller('BackedHistoryProjectController', function ($scope, projects, Use
             function (result) {
                 if (result.data.Status === "success") {
                     $scope.BackingInfo = result.data.Data;
-                    //console.log($scope.BackingInfo[0].BackingDiscription)
+
                 } else {
                     CommmonService.checkError(result.data.Type);
                     $scope.Error = result.data.Message;
@@ -48,6 +46,7 @@ app.controller('BackedHistoryProjectController', function ($scope, projects, Use
                 $scope.Error = error.data.Message;
             });
     }
+
 });
 
 

@@ -1100,6 +1100,105 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "", Data = listBacker });
         }
+
+        // GET: api/ProjectApi/AdminGetDashboardInfo/
+        [HttpGet]
+        [ResponseType(typeof(AdminDashboardInfoDTO))]
+        public IHttpActionResult AdminGetDashboardInfo()
+        {
+            var generalInfo = new AdminDashboardInfoDTO();
+
+            try
+            {
+                // Check authen.
+                if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                }
+
+                // Check role user.
+                var currentUser = UserRepository.Instance.GetBasicInfo(User.Identity.Name);
+                if (currentUser == null || currentUser.Role != DDLConstants.UserType.ADMIN)
+                {
+                    throw new NotPermissionException();
+                }
+
+                generalInfo = ProjectRepository.Instance.AdminDashboardInfo();
+            }
+            catch (Exception)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = generalInfo });
+        }
+
+        // GET: api/ProjectApi/AdminGetTopProjectList/
+        [HttpGet]
+        [ResponseType(typeof(ProjectBasicListDTO))]
+        public IHttpActionResult AdminGetTopProjectList()
+        {
+            var projectList = new List<ProjectBasicListDTO>();
+
+            try
+            {
+                // Check authen.
+                if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                }
+
+                // Check role user.
+                var currentUser = UserRepository.Instance.GetBasicInfo(User.Identity.Name);
+                if (currentUser == null || currentUser.Role != DDLConstants.UserType.ADMIN)
+                {
+                    throw new NotPermissionException();
+                }
+
+                projectList = ProjectRepository.Instance.AdminGetTopProjectList();
+            }
+            catch (Exception)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = projectList });
+        }
+
+        // GET: api/ProjectApi/AdminGetProjectStatistic/
+        [HttpGet]
+        [ResponseType(typeof(AdminProjectStatisticDTO))]
+        public IHttpActionResult AdminGetProjectStatistic()
+        {
+            var statistic = new AdminProjectStatisticDTO();
+
+            try
+            {
+                // Check authen.
+                if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                }
+
+                // Check role user.
+                var currentUser = UserRepository.Instance.GetBasicInfo(User.Identity.Name);
+                if (currentUser == null || currentUser.Role != DDLConstants.UserType.ADMIN)
+                {
+                    throw new NotPermissionException();
+                }
+
+                statistic = ProjectRepository.Instance.AdminProjectStatistic();
+            }
+            catch (Exception)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = statistic });
+        }
         #endregion
 
         #endregion
@@ -1110,44 +1209,151 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
         public IHttpActionResult SearchCount(string categoryidlist, string searchkey)
         {
-            var listGetProjectTop = ProjectRepository.Instance.SearchCount(categoryidlist, searchkey);
-            return Ok(new HttpMessageDTO { Status = "success", Data = listGetProjectTop });
+
+
+            int result;
+            try
+            {
+                // Get current user name.
+                result = ProjectRepository.Instance.SearchCount(categoryidlist, searchkey);
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO
+            {
+                Status = DDLConstants.HttpMessageType.SUCCESS,
+                Message = "",
+                Type = "",
+                Data = result
+            });
         }
         public IHttpActionResult GetProjectTop(string categoryid)
         {
-            var listGetProjectTop = ProjectRepository.Instance.GetProjectTop(categoryid);
-            return Ok(new HttpMessageDTO { Status = "success", Data = listGetProjectTop });
+            List<ProjectBasicViewDTO> result = null;
+            try
+            {
+                result = ProjectRepository.Instance.GetProjectTop(categoryid);
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO
+            {
+                Status = DDLConstants.HttpMessageType.SUCCESS,
+                Message = "",
+                Type = "",
+                Data = result
+            });
         }
         public IHttpActionResult GetProject(int take, int from, string categoryid, string orderby, string searchkey, string status, bool isExprired, string isFunded)
         {
-            var listGetProject = ProjectRepository.Instance.GetProject(take, from, categoryid, orderby, searchkey, status, isExprired, isFunded);
-            return Ok(new HttpMessageDTO { Status = "success", Data = listGetProject });
+
+            List<ProjectBasicViewDTO> result = null;
+            try
+            {
+                result = ProjectRepository.Instance.GetProject(take, from, categoryid, orderby, searchkey, status, isExprired, isFunded);
+            }
+            catch (KeyNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Dự án không tồn tại!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO
+            {
+                Status = DDLConstants.HttpMessageType.SUCCESS,
+                Message = "",
+                Type = "",
+                Data = result
+            });
         }
         public IHttpActionResult GetProjectByCategory()
         {
-            var listGetProjectByCategory = ProjectRepository.Instance.GetProjectByCategory();
-            return Ok(new HttpMessageDTO { Status = "success", Data = listGetProjectByCategory });
+
+            List<ProjectBasicViewDTO> result = null;
+            try
+            {
+                result = ProjectRepository.Instance.GetProjectByCategory();
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO
+            {
+                Status = DDLConstants.HttpMessageType.SUCCESS,
+                Message = "",
+                Type = "",
+                Data = result
+            });
         }
 
         public IHttpActionResult GetProjectStatisticList()
         {
-            var listGetProjectStatistic = ProjectRepository.Instance.GetProjectStatisticList();
-            return Ok(new HttpMessageDTO { Status = "success", Data = listGetProjectStatistic });
+
+            List<List<ProjectBasicViewDTO>> result = null;
+            try
+            {
+                result = ProjectRepository.Instance.GetProjectStatisticList();
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO
+            {
+                Status = DDLConstants.HttpMessageType.SUCCESS,
+                Message = "",
+                Type = "",
+                Data = result
+            });
         }
         public IHttpActionResult GetStatisticListForHome()
         {
-            var listStatisticForHome = ProjectRepository.Instance.GetStatisticListForHome();
-            return Ok(new HttpMessageDTO { Status = "success", Data = listStatisticForHome });
+            Dictionary<string, List<ProjectBasicViewDTO>> result = null;
+            try
+            {
+                result = ProjectRepository.Instance.GetStatisticListForHome();
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO
+            {
+                Status = DDLConstants.HttpMessageType.SUCCESS,
+                Message = "",
+                Type = "",
+                Data = result
+            });
         }
         public IHttpActionResult getStatisticsInfor()
         {
-            var projectsuccesed = ProjectRepository.Instance.getStatisticsInfor();
-            return Ok(new HttpMessageDTO { Status = "success", Data = projectsuccesed });
+            Dictionary<string, int> result = null;
+            try
+            {
+                result = ProjectRepository.Instance.getStatisticsInfor();
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO
+            {
+                Status = DDLConstants.HttpMessageType.SUCCESS,
+                Message = "",
+                Type = "",
+                Data = result
+            });
         }
 
 
         #endregion
-
 
         // GET: api/ProjectApi/GetProjectDetail?code=code
         [HttpGet]
@@ -1569,15 +1775,14 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         /// Post: api/ProjectApi/Comment?projectCode=xxx
         /// </summary>
         /// <param name="projectCode">projectCode</param>
-        /// <param name="lastComment">CommentDTO</param>
         /// <param name="comment">CommentDTO</param>
+        /// <param name="lastDateTime"></param>
         /// <returns>CommentDTO</returns>
         [HttpPost]
         [ResponseType(typeof(CommentDTO))]
-        public IHttpActionResult Comment(string projectCode, DateTime lastComment, CommentDTO comment)
+        public IHttpActionResult Comment(string projectCode, CommentDTO comment,string lastDateTime = "")
         {
             List<CommentDTO> result = null;
-
             if (User.Identity == null || !User.Identity.IsAuthenticated)
             {
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
@@ -1585,7 +1790,8 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
             try
             {
-                result = ProjectRepository.Instance.AddComment(projectCode, comment, lastComment);
+                var datetime = !string.IsNullOrEmpty(lastDateTime) ? DateTime.Parse(lastDateTime) : CommonUtils.DateTimeNowGMT7();
+                result = ProjectRepository.Instance.AddComment(projectCode, comment, datetime);
             }
             catch (UserNotFoundException)
             {
