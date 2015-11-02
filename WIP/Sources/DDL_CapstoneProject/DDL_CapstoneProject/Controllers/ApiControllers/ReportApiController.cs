@@ -16,15 +16,82 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
         public IHttpActionResult GetReportProjects()
         {
-            var listReportProject = ReportResponsitoy.Instance.GetReportProjects();
-            return Ok(new HttpMessageDTO { Status = "success", Data = listReportProject });
+            List<ReportProjectDTO> listReport = null;
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+            try
+            {
+                // Check role user.
+                var currentUser = UserRepository.Instance.GetBasicInfo(User.Identity.Name);
+                if (currentUser == null || currentUser.Role != DDLConstants.UserType.ADMIN)
+                {
+                    throw new NotPermissionException();
+                }
+                listReport = ReportResponsitoy.Instance.GetReportProjects();
+            }
+            catch (KeyNotFoundException)
+            {
+                return
+                    Ok(new HttpMessageDTO
+                    {
+                        Status = DDLConstants.HttpMessageType.ERROR,
+                        Message = "Không tìm thấy!",
+                        Type = DDLConstants.HttpMessageType.NOT_FOUND
+                    });
+            }
+            catch (NotPermissionException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không có quyền truy cập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = listReport });
         }
 
 
         public IHttpActionResult GetReportUsers()
         {
-            var listReport = ReportResponsitoy.Instance.GetReportUsers();
-            return Ok(new HttpMessageDTO { Status = "success", Data = listReport });
+            List<ReportUserDTO> listReport = null;
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+            try
+            {
+                // Check role user.
+                var currentUser = UserRepository.Instance.GetBasicInfo(User.Identity.Name);
+                if (currentUser == null || currentUser.Role != DDLConstants.UserType.ADMIN)
+                {
+                    throw new NotPermissionException();
+                }
+                listReport = ReportResponsitoy.Instance.GetReportUsers();
+            }
+            catch (KeyNotFoundException)
+            {
+                return
+                    Ok(new HttpMessageDTO
+                    {
+                        Status = DDLConstants.HttpMessageType.ERROR,
+                        Message = "Không tìm thấy!",
+                        Type = DDLConstants.HttpMessageType.NOT_FOUND
+                    });
+            }
+            catch (NotPermissionException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không có quyền truy cập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = listReport });
+
         }
 
 

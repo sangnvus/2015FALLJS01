@@ -14,27 +14,53 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 {
     public class CategoryApiController : BaseApiController
     {
-        
+
+
 
         // GET: api/CategoryApi/GetCategories
         [HttpGet]
         [ResponseType(typeof(CategoryDTO))]
         public IHttpActionResult listDataForStatistic()
         {
-            var listCategoryDTO = CategoryRepository.Instance.listDataForStatistic();
-
-            return Ok(new HttpMessageDTO { Status = "success", Data = listCategoryDTO });
+            Dictionary<string, List<CategoryProjectCountDTO>> listCategoryDTO;
+            try
+            {
+                listCategoryDTO = CategoryRepository.Instance.listDataForStatistic();
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = listCategoryDTO });
         }
         public IHttpActionResult getAllCategories()
         {
-            var list = CategoryRepository.Instance.GetAllCategories();
-            return Ok(new HttpMessageDTO { Status = "success", Data = list });
+            List<CategoryProjectCountDTO> list;
+            try
+            {
+                list = CategoryRepository.Instance.GetAllCategories();
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = list });
+
         }
         public IHttpActionResult GetCategoryProjectCount()
         {
-            var listGetCategoryProjectCount = CategoryRepository.Instance.GetCategoryProjectCount();
-            return Ok(new HttpMessageDTO { Status = "success", Data = listGetCategoryProjectCount });
+            List<CategoryProjectCountDTO> listGetCategoryProjectCount;
+            try
+            {
+                listGetCategoryProjectCount = CategoryRepository.Instance.GetCategoryProjectCount();
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = listGetCategoryProjectCount });
         }
+
 
         /// <summary>
         /// GetCategoryProjectCount

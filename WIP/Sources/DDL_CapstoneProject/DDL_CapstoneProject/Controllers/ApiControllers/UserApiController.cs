@@ -619,6 +619,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = backingList });
         }
 
+
         #region TrungVn
 
         /// <summary>
@@ -629,8 +630,18 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpGet]
         public IHttpActionResult GetUserTop(string categoryid)
         {
-            var listGetUserTop = UserRepository.Instance.GetUserTop(categoryid);
-            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = listGetUserTop });
+            Dictionary<string, List<UserBackInforDTO>> listGetUserTop;
+            // Check authen.
+            try
+            {
+                listGetUserTop = UserRepository.Instance.GetUserTop(categoryid);
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = listGetUserTop });
+
         }
         #endregion
 
