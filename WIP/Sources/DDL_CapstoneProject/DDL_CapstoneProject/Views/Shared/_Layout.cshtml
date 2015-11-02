@@ -52,6 +52,34 @@
         [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
             display: none !important;
         }
+      
+        .col-number, .col-datetime {
+            text-align: right;
+        }
+
+        .col-text {
+            text-align: left;
+        }
+        table.dataTable {
+            overflow: inherit;
+        }
+
+        table.dataTable th {
+            text-align: center;
+            vertical-align: top !important;
+        }
+
+        table.dataTable td {
+            word-break: break-all;
+        }
+
+        table.dataTable thead .sorting:after, 
+        table.dataTable thead .sorting_asc:after, 
+        table.dataTable thead .sorting_desc:after, 
+        table.dataTable thead .sorting_asc_disabled:after, 
+        table.dataTable thead .sorting_desc_disabled:after {
+            top: 8px;
+        }
     </style>
 </head>
 <body>
