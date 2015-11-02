@@ -238,7 +238,7 @@ namespace DDL_CapstoneProject.Respository
                     newDLLUser.Email = newUser.Email;
                     newDLLUser.VerifyCode = verifyCode;
                     newDLLUser.UserInfo.FullName = newUser.FullName;
-                    newDLLUser.UserInfo.ProfileImage = "avatar_default.png";
+                    newDLLUser.UserInfo.ProfileImage = "avatar_default.jpg";
                     db.DDL_Users.Add(newDLLUser);
                     db.SaveChanges();
 

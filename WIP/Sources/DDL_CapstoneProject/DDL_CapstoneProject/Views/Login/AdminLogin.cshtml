@@ -52,7 +52,7 @@
                                            required
                                            ng-model="User.UserName">
                                     <label class="login-field-icon fui-user" for="login-name"></label>
-                                    <div ng-show="LoginForm.UserName.$dirty && LoginForm.UserName.$invalid" class="text-danger">
+                                    <div ng-show="LoginForm.UserName.$dirty && LoginForm.UserName.$invalid" class="text-danger ng-cloak">
                                         <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
                                         <span ng-show="LoginForm.UserName.$error.required">Bạn chưa nhập tài khoản hoặc email</span>
                                     </div>
@@ -65,7 +65,7 @@
                                            required
                                            ng-model="User.Password">
                                     <label class="login-field-icon fui-lock" for="tbshowPassword"></label>
-                                    <div ng-show="LoginForm.showPassword.$dirty && LoginForm.showPassword.$invalid" class="text-danger">
+                                    <div ng-show="LoginForm.showPassword.$dirty && LoginForm.showPassword.$invalid" class="text-danger ng-cloak">
                                         <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
                                         <span ng-show="LoginForm.showPassword.$error.required">Bạn chưa nhập mật khẩu</span>
                                     </div>
