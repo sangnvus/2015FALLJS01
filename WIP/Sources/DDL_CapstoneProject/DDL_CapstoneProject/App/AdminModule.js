@@ -34,7 +34,10 @@ app.config(["$routeProvider", function ($routeProvider) {
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
                 statistic: ['$rootScope', '$q', 'AdminProjectService', 'CommmonService', function ($rootScope, $q, AdminProjectService, CommmonService) {
-                    var promise = AdminProjectService.getProjectStatistic();
+                    var d = new Date();
+                    var n = d.getFullYear();
+                    var currentYear = parseInt(n);
+                    var promise = AdminProjectService.getProjectStatistic(currentYear);
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }]
             }
