@@ -104,7 +104,6 @@
                                     <th>Số điện thoại</th>
                                     <th>Loại tài khoản</th>
                                     <th>Trạng thái kích hoạt</th>
-                                    <th>Tình trạng hoạt động</th>
                                     <th>Hành động</th>
                                 </tr>
                             </thead>
@@ -119,23 +118,16 @@
                                     <td style="width:124px;">
                                         <!-- <button class="btn btn-default">Inactive</button> -->
                                         <div ng-show="user.Status">
-                                            <a class="btn btn-green">Đã kích hoạt</a>
+                                            <span class="label label-primary center-block green" style="padding: 9px">Đã kích hoạt</span>
                                         </div>
                                         <div ng-hide="user.Status">
-                                            <a class="btn btn-default">Chưa kích hoạt</a>
+                                            <span class="label label-primary center-block btn-default" style="padding: 9px">Chưa kích hoạt</span>
                                         </div>
                                     </td>
-                                    <td style="width:110px;">
-                                        <!-- <button class="btn btn-default">Inactive</button> -->
-                                        <div ng-show="user.StatusActive == true && user.Status == true">
-                                            <a tooltip="Nhấp để khóa tài khoản" ng-click="activeUser(user.UserName,$index)" class="btn btn-green">Bình thường </a>
-                                        </div>
-                                        <div ng-show="user.StatusActive == false && user.Status == true">
-                                            <a tooltip="Nhấp để mở khóa tài khoản" ng-click="activeUser(user.UserName,$index)" class="btn btn-red">Đã bị khóa</a>
-                                        </div>
-                                    </td>
-                                    <td style="width:60px;">
-                                        <a tooltip="Nhấp để xem chi tiết" href="/admin/#/userprofile/{{user.UserName}}"><button class="btn btn-blue">Xem</button></a>
+                                    <td style="width:100px;">
+                                        <a tooltip="Nhấp để xem chi tiết" href="/admin/#/userprofile/{{user.UserName}}"><button class="btn btn-blue"><i class="fa fa-eye"></i></button></a>
+                                        <a style="width:40px;" ng-show="user.StatusActive == false && user.Status == true" tooltip="Nhấp để mở khóa tài khoản" ng-click="activeUser(user.UserName,$index)" class="btn btn-red"><i class="fa fa-unlock"></i></a>
+                                        <a style="width:40px;" ng-show="user.StatusActive == true && user.Status == true" tooltip="Nhấp để khóa tài khoản" ng-click="activeUser(user.UserName,$index)" class="btn btn-green"><i class="fa fa-lock"></i></a>
                                     </td>
                                 </tr>
                             </tbody>

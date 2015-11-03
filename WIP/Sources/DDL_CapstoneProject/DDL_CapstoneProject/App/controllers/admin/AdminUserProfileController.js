@@ -59,7 +59,8 @@ app.controller('AdminUserProfileController',
         .withBootstrap();
 
         $scope.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(0).notSortable()
+            DTColumnDefBuilder.newColumnDef(0).notSortable(),
+            DTColumnDefBuilder.newColumnDef(-1).notSortable()
         ];
 
     });

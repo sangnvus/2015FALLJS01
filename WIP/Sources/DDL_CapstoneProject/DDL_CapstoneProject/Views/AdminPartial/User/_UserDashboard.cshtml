@@ -137,8 +137,8 @@
                                     </td>
                                     <td style="width:165px;">{{user.LastLogin | date: "HH:mm 'ngày' dd-MM-yyyy"}}</td>
                                     <td style="width:100px;">
-                                        <a ng-show="user.Status" class="btn btn-xs btn-green">Bình thường</a>
-                                        <a ng-hide="user.Status" class="btn btn-xs btn-red">Đã bị khóa</a>
+                                        <span ng-show="user.Status" class="label label-primary center-block green" style="padding: 9px">Bình thường</span>
+                                        <span ng-hide="user.Status" class="label label-primary center-block red" style="padding: 9px">Đã bị khóa</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -184,8 +184,8 @@
                                     <td class="col-number">{{user.TotalProject}}</td>
                                     <td class="col-number"><span class="money usd no-code">{{user.TotalPledgedAmount | number : fractionSize}} &#8363;</span></td>
                                     <td style="width:100px;">
-                                        <a ng-show="user.Status" class="btn btn-xs btn-green">Bình thường</a>
-                                        <a ng-hide="user.Status" class="btn btn-xs btn-red">Đã bị khóa</a>
+                                        <span ng-show="user.Status" class="label label-primary center-block green" style="padding: 9px">Bình thường</span>
+                                        <span ng-hide="user.Status" class="label label-primary center-block red" style="padding: 9px">Đã bị khóa</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -235,8 +235,8 @@
                                     </td>
                                     <td style="width:165px;">{{user.CreatedDate | date : "HH:mm 'ngày' dd-MM-yyyy"}}</td>
                                     <td style="width:100px;">
-                                        <a ng-show="user.Status" class="btn btn-xs btn-green">Bình thường</a>
-                                        <a ng-hide="user.Status" class="btn btn-xs btn-red">Đã bị khóa</a>
+                                        <span ng-show="user.Status" class="label label-primary center-block green" style="padding: 9px">Bình thường</span>
+                                        <span ng-hide="user.Status" class="label label-primary center-block red" style="padding: 9px">Đã bị khóa</span>
                                     </td>
                                 </tr>
                             </tbody>        
@@ -284,8 +284,8 @@
                                     <td class="col-number"><span class="money usd no-code">{{user.TotalPledgedAmount | number : fractionSize}} &#8363;</span>
                                     </td>
                                     <td style="width:100px;">
-                                        <a ng-show="user.Status" class="btn btn-xs btn-green">Bình thường</a>
-                                        <a ng-hide="user.Status" class="btn btn-xs btn-red">Đã bị khóa</a>
+                                        <span ng-show="user.Status" class="label label-primary center-block green" style="padding: 9px">Bình thường</span>
+                                        <span ng-hide="user.Status" class="label label-primary center-block red" style="padding: 9px">Đã bị khóa</span>
                                     </td>
                                 </tr>
                             </tbody>

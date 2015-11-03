@@ -14,7 +14,8 @@ app.controller('AdminUserListController',
         .withBootstrap();
 
         $scope.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(5).notSortable()
+            DTColumnDefBuilder.newColumnDef(0).notSortable(),
+            DTColumnDefBuilder.newColumnDef(-1).notSortable()
         ];
 
         $scope.activeUser = function (username,index) {
