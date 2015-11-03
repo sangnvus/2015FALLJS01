@@ -164,7 +164,8 @@
                                     </div>
                                     <div class="portlet-body">
                                         <div class="table-responsive">
-                                            <table id="example-table" class="table table-striped table-bordered table-hover table-green">
+                                            <table id="example-table" class="table table-striped table-bordered table-hover table-green"
+                                                   datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
                                                 <thead>
                                                     <tr>
                                                         <th>STT</th>
@@ -177,13 +178,17 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr class="odd gradeX" ng-repeat="project in ListBacked">
-                                                        <td>{{$index + 1}}</td>
+                                                        <td style="width:40px" class="col-number">{{$index + 1}}</td>
                                                         <td>{{project.ProjectTitle}}</td>
-                                                        <td><span class="money usd no-code">{{project.PledgedAmount | number : fractionSize}} &#8363;</span></td>
-                                                        <td><span class="money usd no-code">{{project.FundingGoals | number : fractionSize}} &#8363;</span></td>
-                                                        <td>{{project.Status}}</td>
-                                                        <td>
-                                                            <button class="btn btn-blue" data-toggle="modal" data-target="#infoBanker" title="View" ng-click="getBackingDetail()">Xem</button>
+                                                        <td style="width:150px" class="col-number"><span class="money usd no-code">{{project.PledgedAmount | number : fractionSize}} &#8363;</span></td>
+                                                        <td style="width:150px" class="col-number"><span class="money usd no-code">{{project.FundingGoals | number : fractionSize}} &#8363;</span></td>
+                                                        <td style="width:90px">
+                                                            <label ng-show="project.Status == 'Thành công'" style="width:150px;color:green;font-weight:bold;">{{project.Status}}</label>
+                                                            <label ng-show="project.Status == 'Thất Bại'" style="width:150px;color:red;font-weight:bold;">{{project.Status}}</label>
+                                                            <label ng-show="project.Status == 'Đang chạy'" style="width:150px;font-weight:bold;">{{project.Status}}</label>
+                                                        </td>
+                                                        <td style="width:60px">
+                                                            <button tooltip="Nhấp để xem chi tiết" class="btn btn-blue" data-toggle="modal" data-target="#infoBanker" title="View" ng-click="getBackingDetail()">Xem</button>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -213,7 +218,8 @@
                                     </div>
                                     <div class="portlet-body">
                                         <div class="table-responsive">
-                                            <table id="example-table-2" class="table table-striped table-bordered table-hover table-green">
+                                            <table id="example-table-2" class="table table-striped table-bordered table-hover table-green"
+                                                   datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
                                                 <thead>
                                                     <tr>
                                                         <th>STT</th>
@@ -229,20 +235,24 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr ng-repeat="project in ListCreated">
-                                                        <td>{{$index + 1}}</td>
+                                                        <td style="width:40px" class="col-number">{{$index + 1}}</td>
                                                         <td>{{project.ProjectTitle}}</td>
                                                         <td>{{project.Category}}<span class="money usd no-code"></span></td>
-                                                        <td><span class="money usd no-code">{{project.PledgedOn | number : fractionSize}} &#8363;</span></td>
-                                                        <td><span class="money usd no-code">{{project.FundingGoals | number : fractionSize}} &#8363;</span></td>
-                                                        <td>
-                                                            <label ng-show="project.Status == 'draft'" class="btn btn-white">Nháp</label>
-                                                            <label ng-show="project.Status == 'approved'" class="btn btn-blue">Đã duyệt</label>
-                                                            <label ng-show="project.Status == 'suspended'" class="btn btn-red">Chờ kiểm duyệt</label>
+                                                        <td style="width:100px" class="col-number"><span class="money usd no-code">{{project.PledgedOn | number : fractionSize}} &#8363;</span></td>
+                                                        <td style="width:100px" class="col-number"><span class="money usd no-code">{{project.FundingGoals | number : fractionSize}} &#8363;</span></td>
+                                                        <td style="width:100px">
+                                                            <label ng-show="project.Status == 'draft'" style="font-weight:bold;">Nháp</label>
+                                                            <label ng-show="project.Status == 'approved'" style="color:blue;font-weight:bold;">Đã duyệt</label>
+                                                            <label ng-show="project.Status == 'suspended'" style="color:red;font-weight:bold;">Chờ kiểm duyệt</label>
                                                         </td>
-                                                        <td>{{project.Isfunded}}</td>
+                                                        <td style="width:100px">
+                                                            <label ng-show="project.Isfunded == 'Thành công'" style="color:green;font-weight:bold;">{{project.Isfunded}}</label>
+                                                            <label ng-show="project.Isfunded == 'Thất bại'" style="color:red;font-weight:bold;">{{project.Isfunded}}</label>
+                                                            <label ng-show="project.Isfunded == 'Nháp'" style="font-weight:bold;">{{project.Isfunded}}</label>
+                                                        </td>
                                                         <td>{{project.ExpireDate | date:"dd/MM/yyyy"}}</td>
-                                                        <td>
-                                                            <a href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")" class="btn btn-blue">Xem</a>
+                                                        <td style="width:40px">
+                                                            <a tooltip="Nhấp để xem chi tiết" href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")" class="btn btn-blue">Xem</a>
                                                         </td>
                                                     </tr>
                                                 </tbody>

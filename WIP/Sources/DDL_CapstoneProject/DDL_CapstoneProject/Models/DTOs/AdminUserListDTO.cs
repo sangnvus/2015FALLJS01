@@ -22,6 +22,7 @@ namespace DDL_CapstoneProject.Models.DTOs
         public string Email { get; set; }
         public string LoginType { get; set; }
         public bool Status { get; set; }
+        public bool StatusActive { get; set; }
         public DateTime? CreatedDate { get; set; }
     }
 

@@ -123,20 +123,20 @@
                                 <tr>
                                     <th>Tên</th>
                                     <th>Lần đănh nhập cuối</th>
-                                    <th>Trạng thái</th>
+                                    <th>Tình trạng hoạt động</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="user in Dashboard.RecentUser">
-                                    <td style="width:35%">
+                                    <td>
                                         <a class="pull-left" href="@Url.Content("/admin/#/userprofile/{{user.UserName}}")">
                                             <img style="width : 40px; height:40px" ng-if="!checkHTTP(user.AvartaURL)" ng-src="../images/avatars/{{user.AvartaURL}}" alt="" class="media-object img-circle">
                                             <img style="width : 40px; height:40px" ng-if="checkHTTP(user.AvartaURL)" ng-src="{{trustSrc(user.AvartaURL)}}" alt="" class="media-object img-circle">
                                         </a>
                                         <h5>{{user.FullName}}</h5>
                                     </td>
-                                    <td>{{user.LastLogin | date: "hh:mm 'ngày' dd-MM-yyyy"}}</td>
-                                    <td>
+                                    <td style="width:165px;">{{user.LastLogin | date: "HH:mm 'ngày' dd-MM-yyyy"}}</td>
+                                    <td style="width:100px;">
                                         <a ng-show="user.Status" class="btn btn-xs btn-green">Bình thường</a>
                                         <a ng-hide="user.Status" class="btn btn-xs btn-red">Đã bị khóa</a>
                                     </td>
@@ -169,21 +169,21 @@
                                     <th>Tên</th>
                                     <th>Tổng dự án đã ủng hộ</th>
                                     <th>Tổng số tiền đã ủng hộ</th>
-                                    <th>Trạng thái</th>
+                                    <th>Tình trạng hoạt động</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="user in Dashboard.TopBacker">
-                                    <td style="width:35%">
+                                    <td class="col-number" style="width:35%">
                                         <a class="pull-left" href="@Url.Content("/admin/#/userprofile/{{user.UserName}}")">
                                             <img style="width : 40px; height:40px" ng-if="!checkHTTP(user.AvartaURL)" ng-src="../images/avatars/{{user.AvartaURL}}" alt="" class="media-object img-circle">
                                             <img style="width : 40px; height:40px" ng-if="checkHTTP(user.AvartaURL)" ng-src="{{trustSrc(user.AvartaURL)}}" alt="" class="media-object img-circle">
                                         </a>
                                         <h5>{{user.FullName}}</h5>
                                     </td>
-                                    <td>{{user.TotalProject}}</td>
-                                    <td>{{user.TotalPledgedAmount}}</td>
-                                    <td>
+                                    <td class="col-number">{{user.TotalProject}}</td>
+                                    <td class="col-number"><span class="money usd no-code">{{user.TotalPledgedAmount | number : fractionSize}} &#8363;</span></td>
+                                    <td style="width:100px;">
                                         <a ng-show="user.Status" class="btn btn-xs btn-green">Bình thường</a>
                                         <a ng-hide="user.Status" class="btn btn-xs btn-red">Đã bị khóa</a>
                                     </td>
@@ -221,7 +221,7 @@
                                 <tr>
                                     <th>Tên</th>
                                     <th>Ngày khởi tạo</th>
-                                    <th>Trạng thái</th>
+                                    <th>Tình trạng hoạt động</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -233,14 +233,14 @@
                                         </a>
                                         <h5>{{user.FullName}}</h5>
                                     </td>
-                                    <td>{{user.CreatedDate | date : "hh:mm 'ngày' dd-MM-yyyy"}}</td>
-                                    <td>
+                                    <td style="width:165px;">{{user.CreatedDate | date : "HH:mm 'ngày' dd-MM-yyyy"}}</td>
+                                    <td style="width:100px;">
                                         <a ng-show="user.Status" class="btn btn-xs btn-green">Bình thường</a>
                                         <a ng-hide="user.Status" class="btn btn-xs btn-red">Đã bị khóa</a>
                                     </td>
                                 </tr>
-                            </tbody>
-                        </table>
+                            </tbody>        
+                        </table>                    
                     </div>
                 </div>
             </div>
@@ -268,8 +268,8 @@
                                     <th>Tên</th>
                                     <th>Số dự án đã thành công</th>
                                     <th>Tổng số tiền gây quỹ thành công</th>
-                                    <th>Trạng thái</th>
-                                </tr>
+                                    <th>Tình trạng hoạt động</th>
+                                </tr>                   
                             </thead>
                             <tbody>
                                 <tr ng-repeat="user in Dashboard.TopCreator">
@@ -280,9 +280,10 @@
                                         </a>
                                         <h5>{{user.FullName}}</h5>
                                     </td>
-                                    <td>{{user.TotalSuccessProject}}</td>
-                                    <td>{{user.TotalPledgedAmount}}</td>
-                                    <td>
+                                    <td class="col-number">{{user.TotalSuccessProject}}</td>
+                                    <td class="col-number"><span class="money usd no-code">{{user.TotalPledgedAmount | number : fractionSize}} &#8363;</span>
+                                    </td>
+                                    <td style="width:100px;">
                                         <a ng-show="user.Status" class="btn btn-xs btn-green">Bình thường</a>
                                         <a ng-hide="user.Status" class="btn btn-xs btn-red">Đã bị khóa</a>
                                     </td>

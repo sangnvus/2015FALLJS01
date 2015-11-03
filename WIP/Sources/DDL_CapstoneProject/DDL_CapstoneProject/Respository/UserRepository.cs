@@ -488,10 +488,11 @@ namespace DDL_CapstoneProject.Respository
                         PhoneNumber = user.UserInfo.PhoneNumber,
                         Status = user.IsVerify,
                         UserName = user.Username,
-                        CreatedDate = user.CreatedDate
+                        CreatedDate = user.CreatedDate,
+                        StatusActive = user.IsActive
                     };
                     userReturn.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(userReturn.CreatedDate.GetValueOrDefault());
-                    if (userReturn.LoginType == "normal")
+                    if (userReturn.LoginType == DDLConstants.LoginType.NORMAL)
                     {
                         userReturn.LoginType = "Bình thường";
                     }
@@ -550,7 +551,7 @@ namespace DDL_CapstoneProject.Respository
                                   };
                 AdminUserProfileDTO userReturn = new AdminUserProfileDTO();
                 userReturn = userProfile.FirstOrDefault();
-                if (userReturn.LoginType == "normal")
+                if (userReturn.LoginType == DDLConstants.LoginType.NORMAL)
                 {
                     userReturn.LoginType = "Bình thường";
                 }
@@ -626,6 +627,10 @@ namespace DDL_CapstoneProject.Respository
                     {
                         projectReturn.Isfunded = "Thất bại";
                     }
+                    else if (created.Status == "draft")
+                    {
+                        projectReturn.Isfunded = "Nháp";
+                    }
                     else if (created.IsFunded == false && created.IsExprired == false)
                     {
                         projectReturn.Isfunded = "Đang chạy";
@@ -685,7 +690,7 @@ namespace DDL_CapstoneProject.Respository
         {
             using (var db = new DDLDataContext())
             {
-                var userList = db.DDL_Users.Where(x => x.UserType != "admin").ToList();
+                var userList = db.DDL_Users.Where(x => x.UserType != "admin" && x.IsVerify == true).ToList();
                 AdminUserDashboardDTO listReturn = new AdminUserDashboardDTO();
                 RecentUserDTO RecentUser = new RecentUserDTO();
                 List<RecentUserDTO> listRecentUser = new List<RecentUserDTO>();
