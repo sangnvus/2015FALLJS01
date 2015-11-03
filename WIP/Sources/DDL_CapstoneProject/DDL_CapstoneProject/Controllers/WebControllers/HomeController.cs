@@ -35,12 +35,6 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
             return View();
         }
 
-        public ActionResult Discover()
-        {
-
-            return PartialView("_Discover");
-        }
-
         [Route("Error")]
         public ActionResult Error()
         {

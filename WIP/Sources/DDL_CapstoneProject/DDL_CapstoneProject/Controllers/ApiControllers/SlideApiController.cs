@@ -21,7 +21,7 @@ using DDL_CapstoneProject.Ultilities;
 
 namespace DDL_CapstoneProject.Controllers.ApiControllers
 {
-    public class SlideApiController : ApiController
+    public class SlideApiController : BaseApiController
     {
         // GET: api/SlideApi/Slides
         public IHttpActionResult GetSlides()

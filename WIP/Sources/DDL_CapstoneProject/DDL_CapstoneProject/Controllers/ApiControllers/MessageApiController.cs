@@ -12,7 +12,7 @@ using DDL_CapstoneProject.Ultilities;
 
 namespace DDL_CapstoneProject.Controllers.ApiControllers
 {
-    public class MessageApiController : ApiController
+    public class MessageApiController : BaseApiController
     {
         /// <summary>
         /// api/MessageApi/NewMessage

@@ -9,14 +9,28 @@ Date: 2015.10.01
 /* Html Page
 ---------------------------------------------------------- */
 html, body {
-    background-color: #F0F0F0;
+    /*background-color: #F0F0F0;*/
+    background-color: #f9f9f9;
     /*background:#f9f9f9 url(../images/backgound/white_texture.jpg) repeat top left;*/
-    font-family: "Times New Roman", Times, serif;
+    font-family: "Inconsolata","Times New Roman", Times, serif;
 }
 
     body > .container {
         padding: 96px 15px 0;
     }
+/* End html page ------------------------------------------ */
+
+/* Fixed position scroll
+---------------------------------------------------------- */
+.fixed-Scroll {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+    /*opacity: 0.9;*/
+}
 /* End html page ------------------------------------------ */
 
 /* Error Page (error-page.html)
@@ -115,6 +129,11 @@ html, body {
     padding-top: 50px;
 }
 
+/*Padding with Navbar */
+.paddingNavbar100 {
+    padding-top: 100px;
+}
+
 /* enable absolute positioning */
 .inner-addon {
     position: relative;
@@ -175,51 +194,74 @@ html, body {
 
 /* Scroll to top
  ----------------------------------------------------------- */
-.scroll-top-wrapper, .refresh-wrapper {
+.scroll-wrapper {
     position: fixed;
-    opacity: 0;
-    visibility: hidden;
-    overflow: hidden;
+    /*overflow: hidden;*/
     text-align: center;
     z-index: 99999999;
-    background-color: #777777;
     color: #eeeeee;
-    width: 50px;
-    height: 48px;
-    line-height: 48px;
-    right: 30px;
-    bottom: 90px;
-    padding-top: 2px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    -webkit-transition: all 0.5s ease-in-out;
-    -moz-transition: all 0.5s ease-in-out;
-    -ms-transition: all 0.5s ease-in-out;
-    -o-transition: all 0.5s ease-in-out;
-    transition: all 0.5s ease-in-out;
+    width: 40px;
+    height: 150px;
+    right: 0px;
+    bottom: 70px;
 }
 
-.refresh-wrapper {
-    right: 30px;
-    bottom: 30px;
+.scroll-top-wrapper {
+    opacity: 0;
+    visibility: hidden;
+    background-color: #7f8c8d;
+    /*line-height: 30px;*/
+    padding-top: 5px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
 }
 
-    .scroll-top-wrapper:hover, .refresh-wrapper:hover {
-        background-color: #888888;
+.scroll-refresh-wrapper {
+    /*opacity: 0;*/
+    /*visibility: hidden;*/
+    background-color: #7f8c8d;
+    /*line-height: 30px;*/
+    padding-top: 5px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.scroll-bottom-wrapper {
+    opacity: 0;
+    visibility: hidden;
+    background-color: #7f8c8d;
+    /*line-height: 30px;*/
+    padding-top: 5px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+    .scroll-top-wrapper:hover,
+    .scroll-refresh-wrapper:hover,
+    .scroll-bottom-wrapper:hover {
+        background-color: #16a085;
+        -webkit-transform: scale(1.2);
+        transform: scale(1.2);
+        -webkit-transition: .1s ease-in-out;
+        transition: .1s ease-in-out;
     }
 
-.scroll-top-wrapper.show, .refresh-wrapper {
-    visibility: visible;
-    cursor: pointer;
-    opacity: 1.0;
-}
-
-    .scroll-top-wrapper i.fa, .refresh-wrapper i.fa {
-        line-height: inherit;
+    .scroll-top-wrapper.show,
+    .scroll-refresh-wrapper.show,
+    .scroll-bottom-wrapper.show {
+        visibility: visible;
+        cursor: pointer;
+        opacity: 1.0;
     }
-
+/*.scroll-top-wrapper i.fa {
+		line-height: inherit;
+	}*/
 /* End Scroll to top---------------------------------------- */
 
 
@@ -254,12 +296,33 @@ html, body {
 
 /* Porfolio 
 ---------------------------------------------------------- */
+.list-footer {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.list_item-footer {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
 .portfolio-items,
 .portfolio-filter {
     list-style: none;
     position: relative;
     padding: 0;
     margin: 0 -20px 20px 0;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
 }
 
     .portfolio-filter > li {
