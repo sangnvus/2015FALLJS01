@@ -690,22 +690,26 @@ namespace DDL_CapstoneProject.Respository
         {
             using (var db = new DDLDataContext())
             {
-                var userList = db.DDL_Users.Where(x => x.UserType != "admin" && x.IsVerify == true).ToList();
+                var userList = db.DDL_Users.Where(x => x.UserType != "admin").ToList();
                 AdminUserDashboardDTO listReturn = new AdminUserDashboardDTO();
                 RecentUserDTO RecentUser = new RecentUserDTO();
                 List<RecentUserDTO> listRecentUser = new List<RecentUserDTO>();
                 foreach (var user in userList)
                 {
-                    var userReturn = new RecentUserDTO
+                    if (user.IsVerify == true) 
                     {
-                        AvartaURL = user.UserInfo.ProfileImage,
-                        UserName = user.Username,
-                        LastLogin = user.LastLogin,
-                        Status = user.IsActive,
-                        FullName = user.UserInfo.FullName
-                    };
-                    userReturn.LastLogin = CommonUtils.ConvertDateTimeFromUtc(userReturn.LastLogin.GetValueOrDefault());
-                    listRecentUser.Add(userReturn);
+                        var userReturn = new RecentUserDTO
+                        {
+                            AvartaURL = user.UserInfo.ProfileImage,
+                            UserName = user.Username,
+                            LastLogin = user.LastLogin,
+                            Status = user.IsActive,
+                            FullName = user.UserInfo.FullName
+                        };
+                        userReturn.LastLogin = CommonUtils.ConvertDateTimeFromUtc(userReturn.LastLogin.GetValueOrDefault());
+                        listRecentUser.Add(userReturn);
+                    }
+                    
                 }
 
                 TopBackerDTO TopBacker = new TopBackerDTO();
