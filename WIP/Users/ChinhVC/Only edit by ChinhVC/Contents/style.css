@@ -124,6 +124,12 @@ Date: 2015.10.01
 		display: block;
 		padding: 0px 15px;
 	}
+	.tabs-right > .nav-tabs {
+	  float: right;
+	  margin-left: 19px;
+	  border-left: 1px solid #ddd;
+	  border-bottom: none;
+	}
 	.tabs-right > .nav-tabs > li {
 	  float: none;
 	}
@@ -133,13 +139,11 @@ Date: 2015.10.01
 	  margin-bottom: 3px;
 	  color: #000000;
 	}
-	.tabs-right > .nav-tabs {
-	  float: right;
-	  margin-left: 19px;
-	  border-left: 1px solid #ddd;
-	}
-	.tabs-right > .nav-tabs > a:hover{
-		color: #FFF000;
+
+	.tabs-right > .nav-tabs > li > a:hover{
+		color: #2bde73;
+		border-left: 3px solid #2bde73;
+		/*background: #999999;*/
 	}
 	.tabs-right > .nav-tabs .active > a,
 	.tabs-right > .nav-tabs .active > a:hover,
@@ -180,6 +184,46 @@ Date: 2015.10.01
 		padding: 30px 0px;
 		background: #F9f9f9;
 	}
+	.pro-image img{
+		width: 100%;
+	}
+	.pro-title p {
+	  /*background: #fff;*/
+	  height: 40px;
+	  padding: 0;
+	  white-space: nowrap;
+	  text-overflow: ellipsis;
+	  overflow: hidden;
+	  color: #828587;
+	}
+	.pro-content p {
+	  /*background: #fff;*/
+	  margin: 0;
+	  height: 80px;
+	  font-size: 16px;
+	  color: #828587;
+	  overflow: hidden;
+	}
+	.pro-footer p {
+	  /*background: #fff;*/
+	  margin-bottom: 10px;
+	  font-size: 18px;
+	  color: #828587;
+	}
+	/*.portfolio-item .item-content {
+	  background: #fff;
+	  margin: 0;
+	  height: 90px;
+	  font-size: 16px;
+	  color: #828587;
+	  overflow: hidden;
+	}
+	.portfolio-item .item-footer {
+	  background: #fff;
+	  margin-bottom: 10px;
+	  font-size: 10px;
+	  color: #828587;
+	}*/
 
 	/*Feature3*/
 	#feature3{
@@ -232,6 +276,24 @@ Date: 2015.10.01
 	#create_project2 .container{
 		padding-top: 30px;
 	}
+	#create-content{
+		color: #34495E
+	}
+	#create-content input{
+		background: transparent;
+		border: transparent; 
+		border-bottom: 2px solid #bdc3c7; 
+		color:#6a6a6a;
+		border-radius: 0; 
+	}
+	#create-content input:focus{
+		background: transparent;
+		border: transparent; 
+		border-bottom: 2px solid #16a085; 
+		color:#6a6a6a;
+		border-radius: 0; 
+	}
+
 /* End Create Project Page 1 ---------------------------- */
 
 
@@ -256,6 +318,20 @@ Date: 2015.10.01
 	    font-weight: bold;
 	    color: #c3c3c3;
 	}
+	
+	#create-tabs{
+		background: #fff;
+	}
+			
+	#create-tabs .nav-tabs li>a{
+		color: #34495e;
+	}
+
+	#create-tabs .nav-tabs li.active>a{
+		color: #16a085;
+		font-weight: bold
+	}
+
 	#create_project .container{
 		padding-top: 50px;
 	}
@@ -314,19 +390,19 @@ Date: 2015.10.01
 	#project-common{
 		background-color: #F9f9f9;
 	}
-	#project-tab{
+	#project_detail-tab{
 		background-color: #FFFFFF;
 		border-top:1px solid #d9d9de;
 		border-top-style: dashed;
 	}
-	#project-tab ul>li.active>a{
+	#project_detail-tab ul>li.active>a{
 		list-style: none;
 		color: #FFFFFF;
 		background: #16a085;
 		/*border-top: 5px solid #05E4B8;*/
 		border-bottom: 5px solid #05E4B8;
 	}
-	#project-tab ul>li>a:hover{
+	#project_detail-tab ul>li>a:hover{
 		list-style: none;
 		background: #05E4B8;
 		color: #FFFFFF;
@@ -754,9 +830,22 @@ Date: 2015.10.01
 
 
 /* List Backers (list_backers.html)
--------------------------------------------------------------- */
+------------------------------------------------------------------- */
 	#backerchart{
 		background: #FFFFFF;
 	}
+/* List Backer Page ----------------------------------------------- */
 
-/* List Backer ----------------------------------------------- */
+/* List Backers (list_backers.html)
+------------------------------------------------------------------- */
+#content-3 .panel-primary,
+#content-4 .panel-primary,
+#content-5 .panel-primary{
+	border-color: #16a085;
+}
+#content-3 .panel-heading,
+#content-4 .panel-heading,
+#content-5 .panel-heading {
+	background: #16a085;
+}
+/* End Statistic Page --------------------------------------------- */

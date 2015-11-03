@@ -39,7 +39,7 @@
   </head>
   <body style="background:#FFFFFF;">
     <div id="header">
-      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <nav class="navbar navbar-default" role="navigation">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-5">
@@ -105,6 +105,7 @@
       </div>
     </div> <!-- end PROCESS-CREATE -->
 
+    <div id="create-tabs-fixedPosition"></div>
     <div id="create-tabs">
       <div class="container">
         <div class="tab-center">
@@ -125,8 +126,8 @@
     <div id="tabs-panel">
       <div class="container">
         <div class="tab-content">
-          <div id="basic" role="tabpanel" class="tab-pane fade in   border-main">
-            <div for="title">
+          <div id="basic" role="tabpanel" class="tab-pane fade in active  border-main">
+            <div for="title" class="pt30">
               <h4 class="text-center">Start building your project!</h4>
               <h5 class="text-center">Add an image, a goal, and other important details.</h5>
             </div> <!-- end-TITLE -->
@@ -137,7 +138,7 @@
                     <div class="col-md-4"><p class="title">Project image</p></div>
                     <div class="col-md-8">
                       <div class="">
-                          <img id="image-project" src="../images/project/thumb/project-item2.jpg" alt="" class="img-responsive center-block">
+                          <figure><img id="image-project" style="width:100%" src="../images/project/thumb/project-item1.jpg" alt="" class="img-responsive center-block"></figure>
                       </div>
                       <div for="image">
                           <div class="asset_upload">
@@ -269,14 +270,14 @@
               </div>
             </div> <!-- end-CONTENT -->
           </div> <!-- end-BASIC -->
-          <div id="reward" role="tabpanel" class="tab-pane fade active in border-main">
-            <div for="title">
+          <div id="reward" role="tabpanel" class="tab-pane fade in border-main">
+            <div for="title" class="pt30">
               <h4 class="text-center">How will you thank the people who support you?</h4>
               <h5 class="text-center">Offer an experience, a copy of what you are making, or a thank you in the credits. Get creative!</h5>
             </div> <!-- end-TITLE -->
             <!-- edit Reward Modal -->
             <div class="modal fade" id="editRewardModal" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
-              <div class="modal-dialog" role="document">
+              <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -293,7 +294,7 @@
                         <div class="row pb5">
                           <div class="col-md-4">Description</div>
                           <div class="col-md-8">
-                            <textarea class="form-control" rows="3" style="resize:none"></textarea>
+                            <textarea class="form-control" rows="5" style="resize:none"></textarea>
                           </div>
                         </div> <!-- end Description -->
                         <div class="row pt5 pb5">
@@ -420,7 +421,7 @@
             </div>  <!-- end CONTENT -->
           </div> <!-- end-REWARD -->
           <div id="story" role="tabpanel" class="tab-pane fade in border-main" >
-            <div>
+            <div for="title" class="pt30">
               <h4 class="text-center">What are you creating?</h4>
               <h5 class="text-center">Every project must create something to share with others. </h5>
               <h5 class="text-center">Use this space to tell the story behind your project.</h5>
@@ -530,7 +531,7 @@
             </div><!-- end-tabpanel-Basic -->
           </div> <!-- end-STORY -->
           <div id="update" role="tabpanel" class="tab-pane fade in border-main" >
-            <div>
+            <div for="title" class="pt30">
               <h4 class="text-center">How will you thank the people who support you?</h4>
               <h5 class="text-center">These are update process of projects</h5>
             </div> <!-- end-title -->
@@ -668,7 +669,7 @@
             </div>  <!-- end-content -->
           </div> <!-- end UPDATE --> 
           <div id="quesion-answer" role="tabpanel" class="tab-pane fade in border-main" >
-            <div>
+            <div for="title" class="pt30">
               <h4 class="text-center">Đặt những câu hỏi và trả lời</h4>
               <h5 class="text-center">Giải đáp những thắc mắc và biết thêm nhiều thông tin</h5>
             </div> <!-- end-title -->
@@ -744,7 +745,7 @@
             </div>  <!-- end-content -->
           </div> <!-- end QUESTION AND ANSWER --> 
           <div id="timelineTab" role="tabpanel" class="tab-pane fade in border-main" >
-            <div>
+            <div for="title" class="pt30">
               <h4 class="text-center">Tiến độ dự án</h4>
               <h5 class="text-center">Đây là thời gian cam kết hoàn thành tiến độ dự án</h5>
             </div> <!-- end-title -->
@@ -1453,12 +1454,24 @@
         </div>
       </div>
     </div> <!-- end BASIC-TABPANEL -->
-    
-    <div class="scroll-top-wrapper ">
-      <span class="scroll-top-inner">
-        <i class="fa fa-2x fa-arrow-circle-up"></i>
-      </span>
-    </div> <!-- end SCROLL TO TOP -->
+
+    <div class="scroll-wrapper" >
+        <div class="scroll-top-wrapper">
+          <span class="scroll-top-inner">
+            <i class="fnt30 fa fa-2x fa-arrow-circle-up"></i>
+          </span>
+        </div>
+        <div class="scroll-refresh-wrapper">
+          <span class="scroll-refresh-inner">
+            <i class="fnt30 fa fa-2x fa fa-refresh"></i>
+          </span>
+        </div>
+        <div class="scroll-bottom-wrapper">
+          <span class="scroll-bottom-inner">
+            <i class="fnt30 fa fa-2x fa-arrow-circle-down"></i>
+          </span>
+        </div>
+    </div> <!-- end SCROLL WRAPPER -->
 
     <div class="pt30"></div>
     <div id="footer">
@@ -1578,11 +1591,27 @@
       });
     </script>
     <script>
+      // $(window).scroll(function(){
+      //   if ($(this).scrollTop() > 100) {
+      //       $('.navbar').removeClass('navbar-fixed-top');
+      //       $('#create-tabs').addClass('fixed-Scroll');
+      //   } else {
+      //       $('.navbar').addClass('navbar-fixed-top');
+      //       $('#create-tabs').removeClass('fixed-Scroll');
+      //   }
+      // });
       // $(function(){
-      //   $().timelinr({
-      //     arrowKeys: 'true'
-      //   })
+      //   var hash = window.location.hash;
+      //   hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+
+      //   $('.nav-tabs a').click(function (e) {
+      //     $(this).tab('show');
+      //     var scrollmem = $('body').scrollTop();
+      //     window.location.hash = this.hash;
+      //     $('html,body').scrollTop(scrollmem);
+      //   });
       // });
     </script>
+
   </body>
 </html>
