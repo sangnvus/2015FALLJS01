@@ -12,7 +12,7 @@ app.controller('AdminProjectDashboardController',
         // Define table
         $scope.dtOptions = DTOptionsBuilder.newOptions()
         .withDisplayLength(10)
-        .withOption('order', [0, 'asc'])
+        .withOption('order', [0, 'desc'])
         .withOption('stateSave', true)
         .withBootstrap();
 

@@ -110,4 +110,12 @@ service.service("AdminUserService", function ($http) {
         return request;
     }
 
+    // Function to get recent backing event
+    this.getRecentBacking = function () {
+        var request = $http({
+            method: 'get',
+            url: '../api/UserApi/AdminGetRecentBacking',
+        });
+        return request;
+    }
 });

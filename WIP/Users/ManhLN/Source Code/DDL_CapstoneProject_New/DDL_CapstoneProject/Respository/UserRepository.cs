@@ -238,7 +238,7 @@ namespace DDL_CapstoneProject.Respository
                     newDLLUser.Email = newUser.Email;
                     newDLLUser.VerifyCode = verifyCode;
                     newDLLUser.UserInfo.FullName = newUser.FullName;
-                    newDLLUser.UserInfo.ProfileImage = "avatar_default.png";
+                    newDLLUser.UserInfo.ProfileImage = "avatar_default.jpg";
                     db.DDL_Users.Add(newDLLUser);
                     db.SaveChanges();
 
@@ -488,10 +488,11 @@ namespace DDL_CapstoneProject.Respository
                         PhoneNumber = user.UserInfo.PhoneNumber,
                         Status = user.IsVerify,
                         UserName = user.Username,
-                        CreatedDate = user.CreatedDate
+                        CreatedDate = user.CreatedDate,
+                        StatusActive = user.IsActive
                     };
                     userReturn.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(userReturn.CreatedDate.GetValueOrDefault());
-                    if (userReturn.LoginType == "normal")
+                    if (userReturn.LoginType == DDLConstants.LoginType.NORMAL)
                     {
                         userReturn.LoginType = "Bình thường";
                     }
@@ -550,7 +551,7 @@ namespace DDL_CapstoneProject.Respository
                                   };
                 AdminUserProfileDTO userReturn = new AdminUserProfileDTO();
                 userReturn = userProfile.FirstOrDefault();
-                if (userReturn.LoginType == "normal")
+                if (userReturn.LoginType == DDLConstants.LoginType.NORMAL)
                 {
                     userReturn.LoginType = "Bình thường";
                 }
@@ -626,6 +627,10 @@ namespace DDL_CapstoneProject.Respository
                     {
                         projectReturn.Isfunded = "Thất bại";
                     }
+                    else if (created.Status == "draft")
+                    {
+                        projectReturn.Isfunded = "Nháp";
+                    }
                     else if (created.IsFunded == false && created.IsExprired == false)
                     {
                         projectReturn.Isfunded = "Đang chạy";
@@ -691,39 +696,46 @@ namespace DDL_CapstoneProject.Respository
                 List<RecentUserDTO> listRecentUser = new List<RecentUserDTO>();
                 foreach (var user in userList)
                 {
-                    var userReturn = new RecentUserDTO
+                    if (user.IsVerify == true) 
                     {
-                        AvartaURL = user.UserInfo.ProfileImage,
-                        UserName = user.Username,
-                        LastLogin = user.LastLogin,
-                        Status = user.IsActive,
-                        FullName = user.UserInfo.FullName
-                    };
-                    userReturn.LastLogin = CommonUtils.ConvertDateTimeFromUtc(userReturn.LastLogin.GetValueOrDefault());
-                    listRecentUser.Add(userReturn);
+                        var userReturn = new RecentUserDTO
+                        {
+                            AvartaURL = user.UserInfo.ProfileImage,
+                            UserName = user.Username,
+                            LastLogin = user.LastLogin,
+                            Status = user.IsActive,
+                            FullName = user.UserInfo.FullName
+                        };
+                        userReturn.LastLogin = CommonUtils.ConvertDateTimeFromUtc(userReturn.LastLogin.GetValueOrDefault());
+                        listRecentUser.Add(userReturn);
+                    }
+                    
                 }
 
                 TopBackerDTO TopBacker = new TopBackerDTO();
                 List<TopBackerDTO> listTopbackerUser = new List<TopBackerDTO>();
                 foreach (var user in userList)
                 {
-                    if (user.Backings.Count() > 0)
+                    if (user.IsVerify == true)
                     {
-                        var userReturn = new TopBackerDTO
+                        if (user.Backings.Count() > 0)
                         {
-                            AvartaURL = user.UserInfo.ProfileImage,
-                            UserName = user.Username,
-                            Status = user.IsActive,
-                            FullName = user.UserInfo.FullName,
-                        };
-                        var backingList = user.Backings.ToList();
-                        userReturn.TotalProject = backingList.GroupBy(x => x.ProjectID).Count();
-                        foreach (var backing in backingList)
-                        {
-                            userReturn.TotalPledgedAmount = userReturn.TotalPledgedAmount + backing.BackingDetail.PledgedAmount;
+                            var userReturn = new TopBackerDTO
+                            {
+                                AvartaURL = user.UserInfo.ProfileImage,
+                                UserName = user.Username,
+                                Status = user.IsActive,
+                                FullName = user.UserInfo.FullName,
+                            };
+                            var backingList = user.Backings.ToList();
+                            userReturn.TotalProject = backingList.GroupBy(x => x.ProjectID).Count();
+                            foreach (var backing in backingList)
+                            {
+                                userReturn.TotalPledgedAmount = userReturn.TotalPledgedAmount + backing.BackingDetail.PledgedAmount;
+                            }
+                            listTopbackerUser.Add(userReturn);
+                            listReturn.Backer = listTopbackerUser.Count();
                         }
-                        listTopbackerUser.Add(userReturn);
-                        listReturn.Backer = listTopbackerUser.Count();
                     }
                 }
 
@@ -731,25 +743,28 @@ namespace DDL_CapstoneProject.Respository
                 List<TopCreatorDTO> listTopCreator = new List<TopCreatorDTO>();
                 foreach (var user in userList)
                 {
-                    if (user.CreatedProjects.Count() > 0 && user.CreatedProjects.Where(x => x.IsFunded == true).Count() > 0)
+                    if (user.IsVerify == true)
                     {
-                        var userReturn = new TopCreatorDTO
+                        if (user.CreatedProjects.Count() > 0 && user.CreatedProjects.Where(x => x.IsFunded == true).Count() > 0)
                         {
-                            AvartaURL = user.UserInfo.ProfileImage,
-                            UserName = user.Username,
-                            Status = user.IsActive,
-                            FullName = user.UserInfo.FullName,
-                            TotalSuccessProject = user.CreatedProjects.Where(x => x.IsFunded == true).Count(),
-                        };
-                        var createdProject = user.CreatedProjects.Where(x => x.IsFunded == true).ToList();
-                        foreach (var project in createdProject)
-                        {
-                            userReturn.TotalPledgedAmount = userReturn.TotalPledgedAmount + project.CurrentFunded;
-                        }
-                        listTopCreator.Add(userReturn);
-                        if (!listTopbackerUser.Any(x => x.UserName != userReturn.UserName))
-                        {
-                            listReturn.Creator = listReturn.Creator + 1;
+                            var userReturn = new TopCreatorDTO
+                            {
+                                AvartaURL = user.UserInfo.ProfileImage,
+                                UserName = user.Username,
+                                Status = user.IsActive,
+                                FullName = user.UserInfo.FullName,
+                                TotalSuccessProject = user.CreatedProjects.Where(x => x.IsFunded == true).Count(),
+                            };
+                            var createdProject = user.CreatedProjects.Where(x => x.IsFunded == true).ToList();
+                            foreach (var project in createdProject)
+                            {
+                                userReturn.TotalPledgedAmount = userReturn.TotalPledgedAmount + project.CurrentFunded;
+                            }
+                            listTopCreator.Add(userReturn);
+                            if (!listTopbackerUser.Any(x => x.UserName != userReturn.UserName))
+                            {
+                                listReturn.Creator = listReturn.Creator + 1;
+                            }
                         }
                     }
                 }
@@ -759,16 +774,19 @@ namespace DDL_CapstoneProject.Respository
                 var NewuserList = userList.Where(x => x.CreatedDate.ToString("dd-MM-yyyy") == DateTime.UtcNow.ToString("dd-MM-yyyy")).ToList();
                 foreach (var user in NewuserList)
                 {
-                    var userReturn = new NewUserDTO
+                    if (user.IsVerify == true)
                     {
-                        AvartaURL = user.UserInfo.ProfileImage,
-                        UserName = user.Username,
-                        Status = user.IsActive,
-                        FullName = user.UserInfo.FullName,
-                        CreatedDate = user.CreatedDate
-                    };
+                        var userReturn = new NewUserDTO
+                        {
+                            AvartaURL = user.UserInfo.ProfileImage,
+                            UserName = user.Username,
+                            Status = user.IsActive,
+                            FullName = user.UserInfo.FullName,
+                            CreatedDate = user.CreatedDate
+                        };
 
-                    listNewUser.Add(userReturn);
+                        listNewUser.Add(userReturn);
+                    }
                 }
 
 

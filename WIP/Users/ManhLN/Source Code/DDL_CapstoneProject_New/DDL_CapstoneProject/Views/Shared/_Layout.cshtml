@@ -22,16 +22,6 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style>
-        div.dataTables_wrapper div.dataTables_paginate ul.pagination {
-            background-color: #d6dbdf;
-            margin: 2px 0;
-            white-space: nowrap;
-        }
-
-        .pagination li {
-            margin-right: 0px;
-        }
-
         .avatar {
             width: 50px;
             height: 50px;
@@ -51,6 +41,173 @@
 
         [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
             display: none !important;
+        }
+
+        .col-number, .col-datetime {
+            text-align: right;
+        }
+
+        .col-text {
+            text-align: left;
+        }
+
+        /*Fix css for datatables*/
+        table.dataTable {
+            overflow: inherit;
+        }
+
+            table.dataTable th {
+                text-align: center;
+                vertical-align: top !important;
+            }
+
+            table.dataTable td {
+                word-break: break-all;
+            }
+
+            table.dataTable thead .sorting:after,
+            table.dataTable thead .sorting_asc:after,
+            table.dataTable thead .sorting_desc:after,
+            table.dataTable thead .sorting_asc_disabled:after,
+            table.dataTable thead .sorting_desc_disabled:after {
+                top: 8px;
+            }
+
+        div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+            background-color: #d6dbdf;
+            margin: 2px 0;
+            white-space: nowrap;
+        }
+
+        .pagination li {
+            margin-right: 0px;
+        }
+
+        /*Fix css for text-angular*/
+        .ta-toolbar .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: normal;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+            .ta-toolbar .btn.active {
+                -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+                box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+            }
+
+            .ta-toolbar .btn.disabled, .ta-toolbar .btn[disabled], .ta-toolbar fieldset[disabled] .btn {
+                cursor: not-allowed;
+                pointer-events: none;
+                opacity: .65;
+                box-shadow: none;
+                -webkit-box-shadow: none;
+            }
+
+        .ta-toolbar .btn-default.disabled,
+        .ta-toolbar .btn-default[disabled],
+        .ta-toolbar fieldset[disabled] .btn-default,
+        .ta-toolbar .btn-default.disabled:hover,
+        .ta-toolbar .btn-default[disabled]:hover,
+        .ta-toolbar fieldset[disabled] .btn-default:hover,
+        .ta-toolbar .btn-default.disabled.hover,
+        .ta-toolbar .btn-default[disabled].hover,
+        .ta-toolbar fieldset[disabled] .btn-default.hover,
+        .ta-toolbar .btn-default.disabled:focus,
+        .ta-toolbar .btn-default[disabled]:focus,
+        .ta-toolbar fieldset[disabled] .btn-default:focus,
+        .ta-toolbar .btn-default.disabled:active,
+        .ta-toolbar .btn-default[disabled]:active,
+        .ta-toolbar fieldset[disabled] .btn-default:active,
+        .ta-toolbar .btn-default.disabled.active,
+        .ta-toolbar .btn-default[disabled].active,
+        .ta-toolbar fieldset[disabled] .btn-default.active {
+            background-color: #fff;
+            border-color: #ccc;
+        }
+
+        .ta-toolbar .btn-toolbar .btn.active,
+        .ta-toolbar .btn-default:hover, .ta-toolbar .btn-default.hover,
+        .ta-toolbar .btn-default:focus, .ta-toolbar .btn-default:active,
+        .ta-toolbar .btn-default.active, .ta-toolbar .open > .dropdown-toggle.btn-default {
+            color: #333;
+            background-color: #ebebeb;
+            border-color: #adadad;
+        }
+
+        .ta-toolbar .btn-default {
+            background-color: #fff;
+            border-color: #ccc;
+            color: #333;
+        }
+
+        .ta-toolbar .btn-group {
+            margin-bottom: 5px;
+        }
+
+            .ta-toolbar .btn-group > .btn + .btn {
+                margin-left: -1px;
+            }
+
+        /*Fix css for multi-select*/
+        .ui-select-match .btn-default {
+            background-color: #48c9b0;
+            border-color: #48c9b0;
+        }
+
+        .ui-select-container .ui-select-dropdown {
+            min-width: 200px;
+        }
+
+        .ui-select-container .ui-select-toggle {
+            min-width: 200px;
+            color: #fff;
+            /*background-color: #fff;
+            border-color: #bdc3c7;*/
+        }
+
+        /*.ui-select-container .btn-default:hover {
+            color: #333;
+        }*/
+
+        .select2-choices {
+            position: relative;
+        }
+
+        .ui-select-multiple input.ui-select-search {
+            width: 100% !important;
+            position: absolute;
+        }
+
+        .ui-select-match .btn-xs, .ui-select-match .btn-group-xs > .btn {
+            line-height: 1.4;
+        }
+
+        .ui-select-match .ui-select-match-item {
+            font-size: 13px;
+        }
+
+        .ui-select-match .ui-select-toggle {
+            padding-right: 25px;
+        }
+
+        .ui-select-bootstrap .ui-select-choices-row.active > a {
+            background-color: #48c9b0;
         }
     </style>
 </head>
@@ -139,27 +296,31 @@
             </div><!-- /.navbar-collapse -->
         </nav>
     </div>
-    <div style="min-height: 577px;">
+    <div style="min-height: 577px; padding-bottom: 50px">
         @RenderBody()
         @RenderSection("SPAViews", required: false)
     </div>
 
-    <!-- Scroll button -->
-    <div class="scroll-top-wrapper ">
-        <span class="scroll-top-inner">
-            <i class="fa fa-2x fa-arrow-circle-up"></i>
-        </span>
-    </div>
-    @if (Request.Url.AbsoluteUri.Equals(@ViewBag.BaseUrl, StringComparison.OrdinalIgnoreCase))
-    {
-        <!-- Refresh button -->
-        <div class="refresh-wrapper " ng-click="reload()">
-            <span class="refresh-wrapper-inner">
-                <i class="fa fa-2x fa-refresh"></i>
+    <div class="scroll-wrapper">
+        <div class="scroll-top-wrapper">
+            <span class="scroll-top-inner">
+                <i class="fnt30 fa fa-2x fa-arrow-circle-up"></i>
             </span>
         </div>
-    }
-    <!-- end scroll to top -->
+        @if (Request.Url.AbsoluteUri.Equals(@ViewBag.BaseUrl, StringComparison.OrdinalIgnoreCase))
+        {
+            <div class="scroll-refresh-wrapper show" ng-click="reload()">
+                <span class="scroll-refresh-inner">
+                    <i class="fnt30 fa fa-2x fa fa-refresh"></i>
+                </span>
+            </div>
+        }
+        <div class="scroll-bottom-wrapper">
+            <span class="scroll-bottom-inner">
+                <i class="fnt30 fa fa-2x fa-arrow-circle-down"></i>
+            </span>
+        </div>
+    </div> <!-- end SCROLL WRAPPER -->
     <!--Footer-->
     <div id="footer">
         <div class="container">

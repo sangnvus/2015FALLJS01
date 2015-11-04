@@ -31,27 +31,110 @@
             text-align: left;
         }
 
+        /*Fix css for datatables*/
         .table-responsive {
             overflow: inherit;
             border: none;
         }
 
-        .table-responsive th {
-            text-align: center;
-            vertical-align: top !important;
-        }
+            .table-responsive th {
+                text-align: center;
+                vertical-align: top !important;
+            }
 
-        .table-responsive td {
-            word-break: break-all;
-        }
+            .table-responsive td {
+                word-break: break-all;
+            }
 
-        table.dataTable thead .sorting:after, 
-        table.dataTable thead .sorting_asc:after, 
-        table.dataTable thead .sorting_desc:after, 
-        table.dataTable thead .sorting_asc_disabled:after, 
+        table.dataTable thead .sorting:after,
+        table.dataTable thead .sorting_asc:after,
+        table.dataTable thead .sorting_desc:after,
+        table.dataTable thead .sorting_asc_disabled:after,
         table.dataTable thead .sorting_desc_disabled:after {
             top: 8px;
         }
+
+
+        /*Fix css for text-angular*/
+        .ta-toolbar .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: normal;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+            .ta-toolbar .btn.active {
+                -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+                box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+            }
+
+            .ta-toolbar .btn.disabled, .ta-toolbar .btn[disabled], .ta-toolbar fieldset[disabled] .btn {
+                cursor: not-allowed;
+                pointer-events: none;
+                opacity: .65;
+                box-shadow: none;
+                -webkit-box-shadow: none;
+            }
+
+        .ta-toolbar .btn-default.disabled,
+        .ta-toolbar .btn-default[disabled],
+        .ta-toolbar fieldset[disabled] .btn-default,
+        .ta-toolbar .btn-default.disabled:hover,
+        .ta-toolbar .btn-default[disabled]:hover,
+        .ta-toolbar fieldset[disabled] .btn-default:hover,
+        .ta-toolbar .btn-default.disabled.hover,
+        .ta-toolbar .btn-default[disabled].hover,
+        .ta-toolbar fieldset[disabled] .btn-default.hover,
+        .ta-toolbar .btn-default.disabled:focus,
+        .ta-toolbar .btn-default[disabled]:focus,
+        .ta-toolbar fieldset[disabled] .btn-default:focus,
+        .ta-toolbar .btn-default.disabled:active,
+        .ta-toolbar .btn-default[disabled]:active,
+        .ta-toolbar fieldset[disabled] .btn-default:active,
+        .ta-toolbar .btn-default.disabled.active,
+        .ta-toolbar .btn-default[disabled].active,
+        .ta-toolbar fieldset[disabled] .btn-default.active {
+            background-color: #fff;
+            border-color: #ccc;
+        }
+
+        .ta-toolbar .btn-toolbar .btn.active,
+        .ta-toolbar .btn-default:hover, .ta-toolbar .btn-default.hover,
+        .ta-toolbar .btn-default:focus, .ta-toolbar .btn-default:active,
+        .ta-toolbar .btn-default.active, .ta-toolbar .open > .dropdown-toggle.btn-default {
+            color: #333;
+            background-color: #ebebeb;
+            border-color: #adadad;
+        }
+
+        .ta-toolbar .btn-default {
+            background-color: #fff;
+            border-color: #ccc;
+            color: #333;
+        }
+
+        .ta-toolbar .btn-group {
+            margin-bottom: 5px;
+        }
+
+            .ta-toolbar .btn-group > .btn + .btn {
+                margin-left: -1px;
+            }
     </style>
 </head>
 

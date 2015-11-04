@@ -5,28 +5,36 @@
             <div class="container">
                 <form ng-submit="Search(selectcategory,selectedorder,searchkey)">
                     <div class="control-group form-inline pt20 pb20">
-                        <group ng-if="isAdvance">
+                        <group ng-if="isAdvance" style="display: inline-block">
                             <lable class="control-label fnt30 fnt-b">Tìm kiếm </lable>
                             <input ng-model="$parent.searchkey" type="text" class="form-control" placeholder="dandelion..." value="Dandelion" ng-enter="Search(selectcategory,selectedorder,searchkey)" />
 
                         </group>
-                        <group>
-                            <lable class="control-label fnt30 fnt-b">Hiển thị các dự án </lable>
-                            <ui-select multiple ng-model="$parent.selectcategory" theme="bootstrap" ng-disabled="disabled" close-on-select="false" style="width: 200px;" title="Choose a category" ng-change="Search(selectcategory,selectedorder,searchkey)">
+                        <group style="display: inline-block">
+                            <lable class="control-label fnt30 fnt-b"><span ng-if="!isAdvance">Hiển thị </span><span ng-if="isAdvance">trong </span>các dự án </lable>
+                            <ui-select class="fnt20" multiple ng-model="$parent.selectcategory" theme="bootstrap" ng-disabled="disabled" close-on-select="false"
+                                       title="Choose a category" ng-change="Search(selectcategory,selectedorder,searchkey)" style="min-width:200px">
                                 <ui-select-match placeholder="Choose a category...">{{$item.Name}}</ui-select-match>
                                 <ui-select-choices repeat="cat in categoryList | highlight: $select.search">
                                     {{cat.Name}}
                                 </ui-select-choices>
                             </ui-select>
                         </group>
-                        <group>
+                        <group style="display: inline-block">
                             <lable class="control-label fnt30 fnt-b"> sắp xếp theo </lable>
-                            <select class="form-control fnt20" id="" ng-change="Search(selectcategory,selectedorder,searchkey)" ng-model="selectedorder">
-                                <option value="PopularPoint">Phổ biến</option>
-                                <option value="CreatedDate">Mới nhất</option>
-                                <option value="ExpireDate">Ngày còn lại</option>
-                                <option value="CurrentFunded">Ủng hộ</option>
-                            </select>
+                            @*<select class="form-control fnt20" id="" ng-change="Search(selectcategory,selectedorder,searchkey)" ng-model="selectedorder">
+                                    <option value="PopularPoint">Phổ biến</option>
+                                    <option value="CreatedDate">Mới nhất</option>
+                                    <option value="ExpireDate">Ngày còn lại</option>
+                                    <option value="CurrentFunded">Ủng hộ</option>
+                                </select>*@
+                            <ui-select ng-model="selectedorder" ng-change="Search(selectcategory,selectedorder,searchkey)" class="fnt20" theme="bootstrap"
+                                       style="display: inline-block; min-width:200px" ng-disabled="disabled">
+                                <ui-select-match placeholder="Sắp xếp theo...">{{$select.selected.Label}}</ui-select-match>
+                                <ui-select-choices repeat="sort.Value as sort in SortList | filter: $select.search">
+                                    {{sort.Label}}
+                                </ui-select-choices>
+                            </ui-select>
                         </group>
                     </div>
                 </form>
@@ -53,20 +61,31 @@
                                 </div>
                                 <div class="item-footer">
                                     <div class="mt10 mb5">
-                                        <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
-                                        &nbsp;&nbsp;
+                                        @*<a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
+                                            &nbsp;&nbsp;*@
                                         <a class="grey-dark" href="@Url.Content("/#/search?categoryid={{project.CategoryID}}")"><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
                                         &nbsp;&nbsp;
                                     </div>
                                     <div class="progress mt5 mb5">
                                         <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
-                                            <span class="sr-only">{{project.CurrentFunded}}% phần trăm (thành công)</span>
+                                            <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
                                         </div>
                                     </div>
-                                    <ul class="list-inline">
-                                        <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">ủng hộ</p></li>
-                                        <li><p class="fnt-b mt0 mb0 c00">${{project.CurrentFundedNumber}}</p><p class="mt0 mb0">gây quỹ</p></li>
-                                        <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">ngày còn lại</p></li>
+                                    <ul class="list-inline fnt15">
+                                        <li>
+                                            <span class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</span>
+                                            <span class="mt0 mb0">đã ủng hộ</span>
+                                        </li>
+                                        <li>
+                                            <span class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</span>
+                                            <span class="mt0 mb0">ngày còn lại</span>
+                                        </li>
+                                    </ul>
+                                    <ul class="list-inline fnt15">
+                                        <li>
+                                            <span class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber| number : fractionSize}}&#8363;</span>
+                                            <span class="mt0 mb0">đã gây quỹ</span>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
