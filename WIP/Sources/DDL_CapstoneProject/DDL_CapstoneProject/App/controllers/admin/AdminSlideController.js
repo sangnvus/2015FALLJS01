@@ -49,9 +49,19 @@ app.controller('AdminSlideController',
                               }
                           });
         };
-
+        // Embed video story url
+        function getYoutubeUrl(url) {
+            var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]{11,11}).*/;
+            var match = url.match(regExp);
+            if (match)
+                if (match.length >= 2) {
+                    url = "https://www.youtube.com/embed/" + match[2];
+                }
+            return url;
+        };
         // Submit User model to edit user information
         $scope.addNewSlide = function () {
+            $scope.NewSlide.VideoUrl = getYoutubeUrl($scope.NewSlide.VideoUrl);
             var promisePost = AdminSlideService.addSlide($scope.NewSlide, $scope.file);
 
             promisePost.then(
@@ -155,6 +165,7 @@ app.controller('AdminSlideController',
 
         // Edit slide
         $scope.editSlide = function () {
+            $scope.EditSlide.VideoUrl = getYoutubeUrl($scope.EditSlide.VideoUrl);
             var promisePost = AdminSlideService.editSlide($scope.EditSlide, $scope.file);
             promisePost.then(
                 function (result) {

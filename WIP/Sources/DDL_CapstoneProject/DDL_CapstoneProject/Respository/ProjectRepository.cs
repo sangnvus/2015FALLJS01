@@ -1665,7 +1665,7 @@ namespace DDL_CapstoneProject.Respository
                                          FullName = backer.User.UserInfo.FullName,
                                      };
                 // Generate all date from created date 1 days to now
-                var dateMonths = Enumerable.Range(0, 1 + CommonUtils.DateTimeNowGMT7().Subtract(project.CreatedDate.AddDays(-1)).Days)
+                var dateMonths = Enumerable.Range(0, 1 + CommonUtils.DateTimeNowGMT7().Date.Subtract(project.CreatedDate.AddDays(-1).Date).Days)
                     .Select(offset =>
                     {
                         var date = project.CreatedDate.AddDays(-1).AddDays(offset); return new { Year = date.Year, Month = date.Month, Day = date.Day };
