@@ -3,7 +3,6 @@
 app.controller("EditProjectController", function ($scope, $filter, $sce, $location, toastr, CommmonService, $routeParams, ProjectService, categories, project, fileReader, SweetAlert) {
     // initial newReward
     $scope.NewReward = {};
-
     // initial newUpdateLog
     $scope.NewUpdateLog = {};
     // initial newTimeline
@@ -111,6 +110,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
 
     // convert datetime to date
     if ($scope.Project.ExpireDate != null) {
+        $scope.originalExpireDate = angular.copy($scope.Project.ExpireDate);
         $scope.Project.ExpireDate = new Date($filter('date')($scope.Project.ExpireDate, "yyyy-MM-dd"));
     }
 
@@ -165,6 +165,9 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                     form.$setPristine();
                     form.$setUntouched();
                     $scope.file = null;
+                    if ($scope.Project.ExpireDate != null) {
+                        $scope.originalExpireDate = angular.copy($scope.Project.ExpireDate);
+                    }
                 } else {
                     CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
@@ -316,7 +319,6 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                     $scope.NewReward = {};
                     $scope.NewReward.Type = "no reward"
                     result.data.Data.EstimatedDelivery = new Date($filter('date')(result.data.Data.EstimatedDelivery, "yyyy-MM-dd"));
-                    console.log("new date: " + result.data.Data.EstimatedDelivery);
                     if (result.data.Data.Quantity > 0) {
                         result.data.Data.LimitQuantity = true;
                     }

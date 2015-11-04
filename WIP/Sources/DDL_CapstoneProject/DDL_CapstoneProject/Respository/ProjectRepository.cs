@@ -390,9 +390,9 @@ namespace DDL_CapstoneProject.Respository
                     throw new KeyNotFoundException();
                 }
 
-                updateProject.Risk = project.Risk;
+                updateProject.Risk = project.Risk.Trim();
                 updateProject.VideoUrl = project.VideoUrl;
-                updateProject.Description = project.Description;
+                updateProject.Description = project.Description.Trim();
                 updateProject.UpdatedDate = DateTime.UtcNow;
 
                 db.SaveChanges();
@@ -513,7 +513,7 @@ namespace DDL_CapstoneProject.Respository
                 if (string.IsNullOrEmpty(project.Title) || project.Title.Length < 10 || project.Title.Length > 60
                     || string.IsNullOrEmpty(project.ImageUrl)
                     || string.IsNullOrEmpty(project.SubDescription) || project.SubDescription.Length < 30 || project.SubDescription.Length > 135
-                    || string.IsNullOrEmpty(project.Location)
+                    || string.IsNullOrEmpty(project.Location) || project.Location.Length < 10 || project.Location.Length > 60
                     || project.ExpireDate == null || project.ExpireDate < expireDateLaw
                     || project.FundingGoal < 1000000)
                 {
@@ -528,17 +528,17 @@ namespace DDL_CapstoneProject.Respository
 
                 if (rewardList.Count == 0)
                 {
-                    messageReward = "Xin hãy xem lại trang gói quà! Cần ít nhất 1 gói quà!";
+                    messageReward = "Xin hãy xem lại trang Mức ủng hộ! Cần ít nhất 1 mức!";
                     mylist.Add(messageReward);
                 }
 
-                if (rewardList.Any(reward => reward.PledgeAmount < 1000
+                if (rewardList.Any(reward => reward.PledgeAmount < 10000
                     || string.IsNullOrEmpty(reward.Description) || reward.Description.Length < 10 || reward.Description.Length > 135
                     || (reward.EstimatedDelivery < project.ExpireDate && reward.Type != DDLConstants.RewardType.NO_REWARD)
-                    || (reward.Type != DDLConstants.RewardType.NO_REWARD && reward.Quantity < 1)
+                    || (reward.Type == DDLConstants.RewardType.LIMITED && reward.Quantity < 1)
                     ))
                 {
-                    messageReward = "Xin hãy xem lại trang gói quà! Tất cả các trường PHẢI được điền đầy đủ và hợp lệ(Ngày giao phải sau ngày đóng gây quỹ)";
+                    messageReward = "Xin hãy xem lại trang Mức ủng hộ! Tất cả các trường PHẢI được điền đầy đủ và hợp lệ(Ngày giao phải sau ngày đóng gây quỹ)";
                     mylist.Add(messageReward);
                 }
 
@@ -547,7 +547,7 @@ namespace DDL_CapstoneProject.Respository
                     || string.IsNullOrEmpty(project.Risk) || project.Risk.Length < 135
                     )
                 {
-                    messageStory = "Xin hãy xem lại trang câu chuyện! Các trường PHẢI được nhập đầy đủ (trừ video)";
+                    messageStory = "Xin hãy xem lại trang Mô tả chỉ tiết! Các trường PHẢI được nhập đầy đủ (trừ video)";
                     mylist.Add(messageStory);
                 }
 

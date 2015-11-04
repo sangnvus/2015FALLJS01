@@ -21,7 +21,7 @@
                                datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
                             <thead>
                                 <tr>
-                                    <th>Mã</th>
+                                    <th style="width: 50px;">Mã</th>
                                     <th>Tên</th>
                                     <th>Lĩnh vực</th>
                                     <th>Người tạo</th>
@@ -30,19 +30,19 @@
                                     <th>Lượt ủng hộ</th>
                                     <th>Tiền được ủng hộ</th>
                                     <th>Trạng thái</th>
-                                    <th>Hành động</th>
+                                    <th style="width: 34px;"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr class="odd" ng-repeat="project in ProjectList">
-                                    <td class="col-text">{{project.ProjectCode}}</td>
+                                    <td class="col-text" style="width: 50px;">{{project.ProjectCode}}</td>
                                     <td class="col-text">{{project.Title}}</td>
                                     <td class="col-text">{{project.Category}}</td>
                                     <td class="center col-text">{{project.CreatorEmail}}</td>
                                     <td class="center col-number col-datetime">{{project.FundingGoal | currency:"":0}}</td>
                                     <td class="center col-number col-datetime">{{project.ExpireDate | date:"dd/MM/yyyy"}}</td>
                                     <td class="center col-number col-datetime">{{project.TotalBacking | currency:"":0}}</td>
-                                    <td class="center col-number col-datetime">{{project.PledgeAmount | currency:"":0}}</td>
+                                    <td class="center col-number col-datetime">{{project.CurrentFunded | currency:"":0}}</td>
                                     <td class="center">
                                         <span class="label label-primary center-block blue" ng-if="project.Status == 'approved'" style="padding: 9px">Đang chạy</span>
                                         <span class="label label-primary center-block gray" ng-if="project.Status == 'rejected'" style="padding: 9px">Từ chối</span>
@@ -50,7 +50,7 @@
                                         <span class="label label-primary center-block purple" ng-if="project.Status == 'pending'" style="padding: 9px">Chờ duyệt</span>
                                         <span class="label label-primary center-block red" ng-if="project.Status == 'suspended'" style="padding: 9px">Đình chỉ</span>
                                     </td>
-                                    <td class="center">
+                                    <td class="center" style="width: 34px;">
                                         <a href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")">
                                             <button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1" tooltip="Xem chi tiết" tooltip-append-to-body="true" tooltip-placement="left">
                                                 <i class="fa fa-eye"></i>
