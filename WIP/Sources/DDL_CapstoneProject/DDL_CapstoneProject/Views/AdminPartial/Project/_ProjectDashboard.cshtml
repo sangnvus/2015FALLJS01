@@ -152,8 +152,8 @@
                                     <td class="col-text">{{project.Title}}</td>
                                     <td class="col-text">{{project.Category}}</td>
                                     <td class="center col-text">{{project.CreatorEmail}}</td>
-                                    <td class="center col-number col-datetime">{{project.FundingGoal| currency:"":0}}</td>
-                                    <td class="center col-number col-datetime">{{project.ExpireDate | date:"dd/MM/yyyy"}}</td>
+                                    <td class="center col-number">{{project.FundingGoal| currency:"":0}}</td>
+                                    <td class="center col-datetime">{{project.ExpireDate | date:"dd/MM/yyyy"}}</td>
                                     <td>
                                         <span class="label label-primary center-block blue" ng-if="project.Status == 'approved'" style="padding: 9px; width: 100px">Đang chạy</span>
                                         <span class="label label-primary center-block red" ng-if="project.Status == 'suspended'" style="padding: 9px; width: 100px">Đình chỉ</span>

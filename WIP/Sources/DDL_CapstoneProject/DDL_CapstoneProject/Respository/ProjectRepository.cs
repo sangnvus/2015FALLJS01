@@ -342,6 +342,9 @@ namespace DDL_CapstoneProject.Respository
 
                 if (updateProject.ExpireDate != null)
                 {
+                    TimeSpan ts = new TimeSpan(23, 55, 0);
+                    updateProject.ExpireDate = updateProject.ExpireDate.GetValueOrDefault().Date + ts;
+
                     updateProject.ExpireDate =
                         CommonUtils.ConvertDateTimeToUtc(updateProject.ExpireDate.GetValueOrDefault());
                 }
@@ -791,10 +794,13 @@ namespace DDL_CapstoneProject.Respository
         {
             using (var db = new DDLDataContext())
             {
+                // Get all projects
+                var projects = db.Projects.Where(x => x.Status != DDLConstants.ProjectStatus.DRAFT).ToList();
+
                 // Count user
                 var totalUser = db.DDL_Users.Count();
                 // Count project
-                var totalProject = db.Projects.Count(x => x.Status != DDLConstants.ProjectStatus.DRAFT);
+                var totalProject = projects.Count();
 
                 // Caculate total funded
                 var pledge = db.BackingDetails.GroupBy(o => o.BackingID)
@@ -807,7 +813,7 @@ namespace DDL_CapstoneProject.Respository
                 }
 
                 // Caculate total profit
-                var succeedProject = (from Project in db.Projects
+                var succeedProject = (from Project in projects
                                       where Project.IsFunded && Project.IsExprired
                                       select Project).ToList();
 
@@ -834,21 +840,21 @@ namespace DDL_CapstoneProject.Respository
                 }
 
                 // Count pending project
-                var pending = db.Projects.Count(x => x.Status == DDLConstants.ProjectStatus.PENDING);
+                var pending = projects.Count(x => x.Status == DDLConstants.ProjectStatus.PENDING);
                 // Count live project
-                var approved = db.Projects.Count(x => x.Status == DDLConstants.ProjectStatus.APPROVED);
+                var approved = projects.Count(x => x.Status == DDLConstants.ProjectStatus.APPROVED);
                 // Count succeed project
-                var funed = db.Projects.Count(x => x.IsFunded);
+                var funed = projects.Count(x => x.IsFunded);
                 // Count rank A project
-                var rankA = db.Projects.Count(x => x.FundingGoal > 500000000);
+                var rankA = projects.Count(x => x.FundingGoal > 500000000);
                 // Count rank B project
-                var rankB = db.Projects.Count(x => x.FundingGoal <= 500000000 && x.FundingGoal > 100000000);
+                var rankB = projects.Count(x => x.FundingGoal <= 500000000 && x.FundingGoal > 100000000);
                 // Count rank C project
-                var rankC = db.Projects.Count(x => x.FundingGoal <= 100000000 && x.FundingGoal > 50000000);
+                var rankC = projects.Count(x => x.FundingGoal <= 100000000 && x.FundingGoal > 50000000);
                 // Count rank D project
-                var rankD = db.Projects.Count(x => x.FundingGoal <= 50000000);
+                var rankD = projects.Count(x => x.FundingGoal <= 50000000);
                 // Count fail project
-                var failProject = db.Projects.Count(x => x.IsFunded == false && x.IsExprired);
+                var failProject = projects.Count(x => x.IsFunded == false && x.IsExprired);
 
                 var AdminDashboardInfoDTO = new AdminDashboardInfoDTO
                 {

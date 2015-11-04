@@ -9,6 +9,7 @@ using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 using DDL_CapstoneProject.Respository;
+using DDL_CapstoneProject.Ultilities;
 
 namespace DDL_CapstoneProject
 {
@@ -47,13 +48,40 @@ namespace DDL_CapstoneProject
 
         protected void timScheduledTask_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            // Execute task
-            if (DateTime.UtcNow.Hour == 23 && DateTime.UtcNow.Minute == 50)
+            var dateTimeNow = CommonUtils.DateTimeNowGMT7();
+            // Execute task: Check expire project
+            if (dateTimeNow.Hour == 23 && dateTimeNow.Minute == 50)
             {
                 // Check expire project
                 DetechExpiredProject();
+            }
+
+            // Execute task: Caculate popular point
+            if (dateTimeNow.Hour == 23 && dateTimeNow.Minute == 55)
+            {
                 // Caculate popular point
                 CaculatePopularProject();
+            }
+
+            // Test timer
+            Test();
+        }
+
+        // Test timer PRJ1
+        protected void Test()
+        {
+            using (var db = new DDLDataContext())
+            {
+                var project = db.Projects.SingleOrDefault(x => x.ProjectID == 1);
+
+                if (project == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                project.PopularPoint += 10;
+
+                db.SaveChanges();
             }
         }
 
@@ -90,8 +118,6 @@ namespace DDL_CapstoneProject
                     {
                         project.PopularPoint = project.PopularPoint - 5;
                     }
-
-                    db.SaveChanges();
                 }
 
                 // Get all backing of the day
@@ -102,15 +128,13 @@ namespace DDL_CapstoneProject
                             x.BackedDate.Month == DateTime.UtcNow.Month).ToList();
                 foreach (var back in backing)
                 {
-                    var project = db.Projects.SingleOrDefault(x => x.ProjectID == back.ProjectID);
+                    var project = projects.SingleOrDefault(x => x.ProjectID == back.ProjectID);
 
                     if (project == null)
                     {
                         throw new KeyNotFoundException();
                     }
                     project.PopularPoint += 10;
-
-                    db.SaveChanges();
                 }
 
                 // Get all comment of the day
@@ -121,16 +145,16 @@ namespace DDL_CapstoneProject
                            x.CreatedDate.Month == DateTime.UtcNow.Month).ToList();
                 foreach (var cmt in comment)
                 {
-                    var project = db.Projects.SingleOrDefault(x => x.ProjectID == cmt.ProjectID);
+                    var project = projects.SingleOrDefault(x => x.ProjectID == cmt.ProjectID);
 
                     if (project == null)
                     {
                         throw new KeyNotFoundException();
                     }
                     project.PopularPoint += 5;
-
-                    db.SaveChanges();
                 }
+
+                db.SaveChanges();
             }
         }
     }

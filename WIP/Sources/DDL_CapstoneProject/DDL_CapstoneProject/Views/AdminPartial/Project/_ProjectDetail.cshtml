@@ -13,7 +13,7 @@
                             data-target="#ConfirmModal" ng-if="Project.Status == 'approved'">
                         Ngừng dự án
                     </button>
-                    <button class="btn btn-danger btn-sm pull-right" data-toggle="modal"
+                    <button class="btn btn-success btn-sm pull-right" data-toggle="modal"
                             data-target="#ConfirmModal" ng-if="Project.Status == 'suspended'" ng-click="change('approved')">
                         Tiếp tục
                     </button>
@@ -21,7 +21,7 @@
                             data-target="#ConfirmModal" ng-if="Project.Status == 'pending'" ng-click="change('rejected')">
                         Từ chối
                     </button>
-                    <button class="btn btn-danger btn-sm pull-right" data-toggle="modal" style="margin-right: 15px;"
+                    <button class="btn btn-success btn-sm pull-right" data-toggle="modal" style="margin-right: 15px;"
                             data-target="#ConfirmModal" ng-if="Project.Status == 'pending' || Project.Status == 'rejected'" ng-click="change('approved')">
                         Chấp nhận
                     </button>
@@ -166,16 +166,16 @@
                                                         <tr style="background: #16a085; color: #FFF">
                                                             <th style="width: 8%">STT</th>
                                                             <th>Tên</th>
-                                                            <th>Ủng hộ</th>
+                                                            <th>Ủng hộ(VNĐ)</th>
                                                             <th>Ngày</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr ng-repeat="x in ListBacker">
-                                                            <td>{{$index + 1}}</td>
-                                                            <td>{{x.FullName}}</td>
-                                                            <td>{{x.Amount}}</td>
-                                                            <td>{{x.Date | date:"dd/MM/yyyy"}}</td>
+                                                            <td class="col-number">{{$index + 1}}</td>
+                                                            <td class="col-text">{{x.FullName}}</td>
+                                                            <td class="col-number">{{x.Amount | currency:"":0}}</td>
+                                                            <td class="col-datetime">{{x.Date | date:"dd/MM/yyyy"}}</td>
                                                         </tr>
                                                     </tbody>
                                                 </table> <!-- TABLE BACKERS LIST -->

@@ -207,8 +207,8 @@
                                     </div>
                                 </div> <!-- end funding goals -->
                                 <div ng-if="BasicForm.$dirty">
-                                    <button type="button" class="btn btn-success" ng-click="resetProjectBasic(BasicForm)">Discard</button>
-                                    <button type="button" ng-disabled="BasicForm.$invalid || fileIsBig == true" class="btn btn-success" ng-click="editProjectBasic(BasicForm)">Save changes</button>
+                                    <button type="button" class="btn btn-danger" ng-click="resetProjectBasic(BasicForm)">Bỏ</button>
+                                    <button type="button" ng-disabled="BasicForm.$invalid || fileIsBig == true" class="btn btn-success" ng-click="editProjectBasic(BasicForm)">Lưu</button>
                                 </div>
                             </div>
                             <!-- end BASIC CONTENT -->
@@ -317,7 +317,7 @@
                                     </div> <!-- end items -->
                                 </div>
                                 <div ng-if="rewardForm.$dirty">
-                                    <button type="button" class="btn btn-success" ng-click="resetReward(rewardForm)">Xóa</button>
+                                    <button type="button" class="btn btn-danger" ng-click="resetReward(rewardForm)">Bỏ</button>
                                     <button type="button" ng-disabled="rewardForm.$invalid" class="btn btn-success" ng-click="updateReward(rewardForm)">Lưu</button>
                                 </div>
                             </form>
@@ -396,7 +396,7 @@
                                                 </div> <!-- end items -->
                                             </div> <!-- end items -->
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="resetReward(EditRewardModal)">Bỏ</button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="resetReward(EditRewardModal)">Bỏ</button>
                                                 <button type="button" ng-disabled="EditRewardModal.$invalid" class="btn btn-success" ng-click="updateReward()">
                                                     Lưu
                                                 </button>
@@ -482,7 +482,7 @@
                                                         </div> <!-- end items -->
                                                     </div> <!-- end items -->
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-success" data-dismiss="modal">Bỏ</button>
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Bỏ</button>
 
                                                         <button type="button" ng-disabled="!CreateRewardForm.$dirty || (CreateRewardForm.$dirty && CreateRewardForm.$invalid)" class="btn btn-success"
                                                                 ng-click="createReward()">
@@ -636,7 +636,7 @@
                                     </div>
                                 </div>
                                 <div ng-if="storyForm.$dirty">
-                                    <button type="button" class="btn btn-success" ng-click="resetStory(storyForm)">Xóa</button>
+                                    <button type="button" class="btn btn-danger" ng-click="resetStory(storyForm)">Xóa</button>
                                     <button type="button" ng-disabled="storyForm.$invalid" class="btn btn-success" ng-click="editProjectStory(storyForm)">Lưu</button>
                                 </div>
                             </div> <!-- end col-md-9 -->
@@ -727,7 +727,7 @@
                                     </div>
                                 </div>
                                 <div ng-if="updateLogForm.$dirty">
-                                    <button type="button" class="btn btn-success" ng-click="resetUpdateLog(updateLogForm)">Bỏ</button>
+                                    <button type="button" class="btn btn-danger" ng-click="resetUpdateLog(updateLogForm)">Bỏ</button>
                                     <button type="button" ng-disabled="updateLogForm.$invalid" class="btn btn-success" ng-click="editUpdateLog(updateLogForm)">Lưu</button>
                                 </div>
                             </form>
@@ -773,7 +773,7 @@
                                                         </form>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Bỏ</button>
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Bỏ</button>
                                                         <button type="button" ng-disabled="CreateUpdateLogForm.$invalid" class="btn btn-primary" ng-click="createUpdateLog()">Lưu</button>
                                                     </div>
                                                 </div>
@@ -877,7 +877,7 @@
                                     </div>
                                 </div>
                                 <div ng-if="questionForm.$dirty">
-                                    <button type="button" class="btn btn-success" ng-click="resetQuestion(questionForm)">Bỏ</button>
+                                    <button type="button" class="btn btn-danger" ng-click="resetQuestion(questionForm)">Bỏ</button>
                                     <button type="button" ng-disabled="questionForm.$invalid" class="btn btn-success" ng-click="updateQuestion(questionForm)">Lưu</button>
                                 </div>
                             </form>
@@ -930,9 +930,9 @@
                                                             </div> <!-- end Answer -->
                                                         </div> <!-- end items -->
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Bỏ</button>
                                                             <button type="button" ng-disabled="CreateQuestionForm.$invalid" class="btn btn-success" ng-click="createQuestion()">
-                                                                Save changes
+                                                                Lưu
                                                             </button>
                                                         </div>
                                                     </div>
@@ -1057,7 +1057,7 @@
                                                 <div class="col-md-3"></div>
                                                 <div class="col-md-9">
                                                     <a class="btn btn-info btn-sm btn-wide pl5 pr5" ng-click="turnEditTimeline($index)" ng-if="AllEditable == true">Sửa</a>
-                                                    <a class="btn btn-info btn-sm btn-wide pl5 pr5" ng-disabled="timelineForm.$invalid" ng-click="timelineForm.$valid && updateTimeline($index)" ng-if="editTimeline[$index] == true">Lưu</a>
+                                                    <a class="btn btn-success btn-sm btn-wide pl5 pr5" ng-disabled="timelineForm.$invalid" ng-click="timelineForm.$valid && updateTimeline($index)" ng-if="editTimeline[$index] == true">Lưu</a>
                                                     <a class="btn btn-danger btn-sm btn-wide pl5 pr5" ng-click="deleteTimeline($index)" ng-if="AllEditable == true">Xóa</a>
                                                 </div>
                                             </div> <!-- end Action -->
@@ -1140,7 +1140,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="offNewPoint()">Bỏ</button>
+                                                            <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="offNewPoint()">Bỏ</button>
                                                             <button type="button" ng-disabled="CreateTimelineForm.$invalid" class="btn btn-success" ng-click="createTimeline()">
                                                                 Tạo
                                                             </button>
@@ -1189,8 +1189,3 @@
         </div>
     </div>
 </div> <!-- end BASIC-TABPANEL -->
-<div class="scroll-top-wrapper ">
-    <span class="scroll-top-inner">
-        <i class="fa fa-2x fa-arrow-circle-up"></i>
-    </span>
-</div> <!-- end SCROLL TO TOP -->
