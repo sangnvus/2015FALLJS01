@@ -28,6 +28,7 @@
                         <a class="btn btn-info btn-xs" href="/#/project/edit/{{project.ProjectCode}}">Sửa</a>
                         <a class="btn btn-info btn-xs" href="" ng-click="deleteDraft($index)">Xóa</a>
                         <label class="label label-danger" ng-if="project.Status == 'pending'">Đang chờ kiểm duyệt</label>
+                        <label class="label label-primary" ng-if="project.Status == 'draft'">Dự án nháp</label>
 
                     </div>
                     <div class="item-content">

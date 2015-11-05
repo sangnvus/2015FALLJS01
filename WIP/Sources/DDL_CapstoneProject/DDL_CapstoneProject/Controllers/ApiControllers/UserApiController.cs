@@ -700,7 +700,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                     return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
                 }
                 userCurrent = UserRepository.Instance.GetBackedUserInfo(User.Identity.Name);
-                userCurrent.ProfileImage = DDLConstants.FileType.AVATAR + userCurrent.ProfileImage;
+               // userCurrent.ProfileImage = DDLConstants.FileType.AVATAR + userCurrent.ProfileImage;
             }
             catch (UserNotFoundException)
             {
