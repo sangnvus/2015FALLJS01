@@ -11,6 +11,7 @@ namespace DDL_CapstoneProject.Models.DTOs
         public int TotalProject { get; set; }
         public decimal TotalFund { get; set; }
         public decimal TotalProfit { get; set; }
+        public decimal SucceedFund { get; set; }
         public int NewProject { get; set; }
         public int LiveProject { get; set; }
         public int RankA { get; set; }
@@ -19,5 +20,6 @@ namespace DDL_CapstoneProject.Models.DTOs
         public int RankD { get; set; }
         public int TotalSucceed { get; set; }
         public int TotalFail { get; set; }
+        public string Time { get; set; }
     }
 }

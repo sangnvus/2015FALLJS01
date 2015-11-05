@@ -14,30 +14,31 @@ app.controller('AdminUserListController',
         .withBootstrap();
 
         $scope.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(5).notSortable()
+            DTColumnDefBuilder.newColumnDef(0).notSortable(),
+            DTColumnDefBuilder.newColumnDef(-1).notSortable()
         ];
 
-        //$scope.activeUser = function (username,index) {
-        //    var promise = AdminUserService.changeUserStatus(username);
-        //    promise.then(
-        //        function (result) {
-        //            if (result.data.Status === "success") {
-        //                toastr.success("Thành công!");
-        //                var promiseTable = AdminUserService.getUserlist();
-        //                promiseTable.then(
-        //                    function (result) {
-        //                        $scope.userList = result.data.Data;
-        //                    }
-        //                )
-        //            } else {
-        //                CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-        //                toastr.error($scope.Error, 'Lỗi!');
-        //            }
-        //        },
-        //        function (error) {
-        //            $scope.Error = error.data.Message;
-        //        });
-        //}
+        $scope.activeUser = function (username,index) {
+            var promise = AdminUserService.changeUserStatus(username);
+            promise.then(
+                function (result) {
+                    if (result.data.Status === "success") {
+                        toastr.success("Thành công!");
+                        var promiseTable = AdminUserService.getUserlist();
+                        promiseTable.then(
+                            function (result) {
+                                $scope.userList = result.data.Data;
+                            }
+                        )
+                    } else {
+                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        toastr.error($scope.Error, 'Lỗi!');
+                    }
+                },
+                function (error) {
+                    $scope.Error = error.data.Message;
+                });
+        }
 
 
     });

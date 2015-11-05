@@ -5,8 +5,9 @@
         <div id="backerlistchart" class="pb30">
             <canvas id="line" class="chart chart-line" chart-data="data" height="100px"
                     chart-labels="labels" chart-legend="true" chart-series="series" chart-colours="colors"
-                    chart-click="onClick"></canvas>
+                    chart-options="options"></canvas>
         </div> <!-- LINE CHART BACKERS -->
+
         <br>
         <div class="panel panel-primary">
             <div class="panel-heading bold">
@@ -26,13 +27,13 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="backer in ListBacker">
-                            <td class="txt-r">{{$index+1}}</td>
-                            <td class="txt-l">{{backer.FullName}}</td>
-                            <td class="txt-l">{{backer.Amount}}</td>
-                            <td class="txt-l">{{backer.Date  | date:"dd/MM/yyyy"}}</td>
+                            <td style="width: 10%" class="txt-r">{{$index+1}}</td>
+                            <td style="width: 30%" class="txt-l">{{backer.FullName}}</td>
+                            <td style="width: 25%" class="txt-r">{{backer.Amount  |  number : fractionSize}}&#8363;</td>
+                            <td style="width: 25%" class="txt-r">{{backer.Date  | date:"dd/MM/yyyy"}}</td>
                             <td>
                                 <div class="btn-group">
-                                    <button class="btn btn-danger btn-sm" type="button" id="" data-toggle="modal" data-target="#viewBanker" data-placement="left" data-trigger="hover" ng-click="getBackingInfo()" title="View">
+                                    <button class="btn btn-primary btn-sm" type="button" id="" tooltip="Xem chi tiết" tooltip-append-to-body="true" tooltip-placement="left" data-toggle="modal" data-target="#viewBanker" data-placement="left" data-trigger="hover" ng-click="getBackingInfo()" title="View">
                                         <i class="fa fa-eye"></i>
                                     </button>
                                 </div>
@@ -49,8 +50,9 @@
                                                             <div class="col-md-6">
                                                                 <h3 class="fnt25">Người ủng hộ</h3>
                                                                 <div class="row">
-                                                                    <div class="col-md-3">
-                                                                        <img id="avatar-profile" src="\images\projects\{{BackingInfo.ProfileImage}}" alt="" class="img-responsive center-block pt30">
+                                                                    <div class="col-sm-4">
+                                                                        <img id="avatar-profile" ng-if="!checkHTTP(backer.ProfileImage)" ng-src="../images/avatars/{{BackingInfo.ProfileImage}}" alt="" class="img-responsive img-circle">
+                                                                        <img id="avatar-profile" ng-if="checkHTTP(backer.ProfileImage)" ng-src="{{trustSrc(BackingInfo.ProfileImage)}}" alt="" class="img-responsive img-circle">
                                                                     </div>
                                                                     <div class="col-md-9">
                                                                         <br>
@@ -76,7 +78,7 @@
                                                             </div>
                                                             <h3 class="fnt25">Dự án: <i style="font-style: normal" id="project_title_target"></i></h3>
                                                             <div class="col-md-6">
-                                                               
+
                                                                 <br>
                                                                 <p class="fnt18" for="name"><span>Ủng hộ gói: </span><span class="fnt-b">{{BackingInfo.RewadDiscription}}</span> với số tiền:<span class="fnt-b"> {{BackingInfo.PledgeAmount}} VNĐ</span> và <span class="fnt-b">số lượng: {{BackingInfo.Quantity}}</span></p>
                                                                 <!-- <p class="fnt18" for="name"><span class="fnt-b">Số lượng:</span> 1</p> -->
@@ -89,7 +91,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                                                 </div>
                                             </div>
                                         </div>

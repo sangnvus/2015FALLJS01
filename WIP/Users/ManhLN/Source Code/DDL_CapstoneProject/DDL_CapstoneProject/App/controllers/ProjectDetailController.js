@@ -32,9 +32,11 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                         $scope.Project.CommentsList = result.data.Data;
                         $scope.FirstLoadComment = true;
                     } else {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        $scope.Error = result.data.Message;
-                        toastr.error($scope.Error, 'Lỗi');
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
                     }
                 },
                 function (error) {
@@ -55,9 +57,11 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                         $scope.Project.NumberUpdate = $scope.Project.UpdateLogsList.length;
                         $scope.FirstUpdateLogs = true;
                     } else {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        $scope.Error = result.data.Message;
-                        toastr.error($scope.Error, 'Lỗi');
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
                     }
                 },
                 function (error) {
@@ -94,9 +98,11 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                     $scope.NewComment = {};
                     toastr.success('Bình luận thành công');
                 } else {
-                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                    $scope.Error = result.data.Message;
-                    toastr.error($scope.Error, 'Lỗi');
+                    var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                    if (a) {
+                        $scope.Error = result.data.Message;
+                        toastr.error($scope.Error, 'Lỗi');
+                    }
                 }
             },
             function (error) {
@@ -115,9 +121,11 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                     $scope.Project.CommentsList[index] = result.data.Data;
                     toastr.success('Thành công');
                 } else {
-                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                    $scope.Error = result.data.Message;
-                    toastr.error($scope.Error, 'Lỗi');
+                    var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                    if (a) {
+                        $scope.Error = result.data.Message;
+                        toastr.error($scope.Error, 'Lỗi');
+                    }
                 }
             },
             function (error) {
@@ -135,9 +143,11 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                 if (result.data.Status === "success") {
                     $scope.Project.CommentsList = $scope.Project.CommentsList.concat(result.data.Data);
                 } else {
-                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                    $scope.Error = result.data.Message;
-                    toastr.error($scope.Error, 'Lỗi!');
+                    var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                    if (a) {
+                        $scope.Error = result.data.Message;
+                        toastr.error($scope.Error, 'Lỗi');
+                    }
                 }
             },
             function (error) {
@@ -159,9 +169,11 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                         $scope.showEditForm(index);
                         toastr.success('Sửa bình luận thành công');
                     } else {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        $scope.Error = result.data.Message;
-                        toastr.error($scope.Error, 'Lỗi');
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
                     }
                 },
                 function (error) {
@@ -186,9 +198,11 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                     $scope.Project.NumberComment--;
                     toastr.success('Xóa bình luận thành công');
                 } else {
-                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                    $scope.Error = result.data.Message;
-                    toastr.error($scope.Error, 'Lỗi');
+                    var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                    if (a) {
+                        $scope.Error = result.data.Message;
+                        toastr.error($scope.Error, 'Lỗi');
+                    }
                 }
             },
             function (error) {
@@ -211,9 +225,16 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                   toastr.success('Hủy theo dõi dự án thành công');
               }
               else if (result.data.Status == "error") {
-                  $scope.Error = result.data.Message;
-                  toastr.error($scope.Error, 'Lỗi');
+                  var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                  if (a) {
+                      $scope.Error = result.data.Message;
+                      toastr.error($scope.Error, 'Lỗi');
+                  }
               }
+          },
+          function (error) {
+              $scope.Error = error.data.Message;
+              toastr.error($scope.Error, 'Lỗi');
           }
        );
     };
@@ -225,41 +246,48 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
             function (result) {
                 if (result.data.Status === "success") {
                     toastr.success('Báo cáo sai phạm thành công');
-
-                } else if (result.data.Status === "error") {
-                    $scope.Error = result.data.Message;
-                    toastr.error($scope.Error, 'Bạn chưa đăng nhập');
+                    $('#reportModal').modal('hide');
+                } else {
+                    var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                    if (a) {
+                        $scope.Error = result.data.Message;
+                        toastr.error($scope.Error, 'Lỗi');
+                    }
                 }
+            },
+            function (error) {
+                $scope.Error = error.data.Message;
+                toastr.error($scope.Error, 'Lỗi');
             }
          );
     };
 
     $scope.checkLoadlist = false;
     $scope.loadlistBacker = function () {
-        if($scope.checkLoadlist == false){
-        var promise = ProjectService.getListBacker($scope.Project.ProjectCode);
-        promise.then(
-            function (result) {
-                $scope.ListBacker = result.data.Data.listBacker;
-                $scope.labels = result.data.Data.Date;
-                $scope.series = ['Số tiền đã được ủng hộ','Mục tiêu'];
-                var data2 = [];
-                for (var i = 0; i < result.data.Data.Amount.length; i++) {
-                    data2.push($scope.Project.FundingGoal);
-                }
-                $scope.data = [result.data.Data.Amount, data2];
-                $scope.colours = ['#97bbcd', '#f7464a'];
-                $scope.checkLoadlist = true;
-                $scope.options = {
-                    multiTooltipTemplate: function (label) {
-                        return (label.datasetLabel + ': ' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) + "₫";
-                    },
-                    scaleLabel: function (label) {
-                        return (label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) + "₫";
+        if ($scope.checkLoadlist == false) {
+            var promise = ProjectService.getListBacker($scope.Project.ProjectCode);
+            promise.then(
+                function (result) {
+                    $scope.ListBacker = result.data.Data.listBacker;
+                    $scope.labels = result.data.Data.Date;
+                    $scope.series = ['Số tiền đã được ủng hộ', 'Mục tiêu'];
+                    var data2 = [];
+                    for (var i = 0; i < result.data.Data.Amount.length; i++) {
+                        data2.push($scope.Project.FundingGoal);
                     }
-                };
-            }
-         );
+                    $scope.data = [result.data.Data.Amount, data2];
+                    $scope.colours = ['#97bbcd', '#f7464a'];
+                    $scope.checkLoadlist = true;
+                    $scope.options = {
+                        multiTooltipTemplate: function (label) {
+                            return (label.datasetLabel + ': ' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) + "₫";
+                        },
+                        scaleLabel: function (label) {
+                            return (label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) + "₫";
+                        }
+                    };
+                }
+             );
         }
     };
 
@@ -294,16 +322,20 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                         }
                         toastr.success("Gửi câu hỏi thành công");
                     } else {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        $scope.Error = result.data.Message;
-                        toastr.error($scope.Error, 'Lỗi!');
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
                     }
                 },
                 function (error) {
+
                     $scope.Error = error.data.Message;
+                    toastr.error($scope.Error, 'Lỗi');
                 });
         } else {
-            toastr.warning("Bạn chưa nhập nội dung câu hỏi", 'Thông báo!');
+            toastr.warning("Bạn chưa nhập nội dung câu hỏi", 'Thông báo');
         }
     }
 

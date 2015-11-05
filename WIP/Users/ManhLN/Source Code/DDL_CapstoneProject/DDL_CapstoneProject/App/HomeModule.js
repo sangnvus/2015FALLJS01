@@ -476,7 +476,7 @@ app.run(['$rootScope', '$window','$location','$route', '$anchorScroll', 'UserSer
             closeButton: true,
             newestOnTop: true,
             autoDismiss: true,
-            progressBar: true
+            //progressBar: true
         });
 
         // Base Url of web app.

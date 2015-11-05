@@ -42,6 +42,10 @@ app.controller('BackProjectController', function ($scope, $route, $rootScope, $l
     }
 
     $scope.back = function (index) {
+        //if ($scope.RewardPkgs[index].Type === 'limited') {
+
+        //}
+
         $scope.BackData.RewardPKgID = $scope.RewardPkgs[index].RewardPkgID;
 
         $scope.BackData.ProjectCode = $route.current.params.code;

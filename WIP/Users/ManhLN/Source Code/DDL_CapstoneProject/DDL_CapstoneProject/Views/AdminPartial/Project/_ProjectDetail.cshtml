@@ -13,7 +13,7 @@
                             data-target="#ConfirmModal" ng-if="Project.Status == 'approved'">
                         Ngừng dự án
                     </button>
-                    <button class="btn btn-danger btn-sm pull-right" data-toggle="modal"
+                    <button class="btn btn-success btn-sm pull-right" data-toggle="modal"
                             data-target="#ConfirmModal" ng-if="Project.Status == 'suspended'" ng-click="change('approved')">
                         Tiếp tục
                     </button>
@@ -21,7 +21,7 @@
                             data-target="#ConfirmModal" ng-if="Project.Status == 'pending'" ng-click="change('rejected')">
                         Từ chối
                     </button>
-                    <button class="btn btn-danger btn-sm pull-right" data-toggle="modal" style="margin-right: 15px;"
+                    <button class="btn btn-success btn-sm pull-right" data-toggle="modal" style="margin-right: 15px;"
                             data-target="#ConfirmModal" ng-if="Project.Status == 'pending' || Project.Status == 'rejected'" ng-click="change('approved')">
                         Chấp nhận
                     </button>
@@ -136,14 +136,16 @@
                         <!-- project chart -->
                         <div class="row" style="margin-top: 20px">
                             <!-- Line Chart Example -->
-                            <div class="col-lg-12" ng-if="labels != ''">
-                                <highchart id="chart1" config="highchartsNG"></highchart>
-
-                                @*<div id="backerlistchart" class="pb30">
-                                        <canvas id="line" class="chart chart-line" chart-data="data" height="100px"
-                                                chart-labels="labels" chart-legend="true" chart-series="series" chart-colours="colors"
-                                                chart-click="onClick"></canvas>
-                                    </div>*@ <!-- LINE CHART BACKERS -->
+                            <div class="col-lg-12">
+                                @*<highchart id="chart1" config="highchartsNG"></highchart>*@
+                                <div>
+                                    <h3 class="fnt25">Biểu đồ thống kê số tiền được ủng hộ</h3>
+                                </div> <!-- TITLE -->
+                                <div id="backerlistchart" class="pb30">
+                                    <canvas id="line" class="chart chart-line" chart-data="data" height="100px"
+                                            chart-labels="labels" chart-legend="true" chart-series="series" chart-colours="colours"
+                                            chart-options="options"></canvas>
+                                </div> <!-- LINE CHART BACKERS -->
                                 <div class="portlet portlet-default">
                                     <div class="portlet-heading">
                                         <div class="portlet-title">
@@ -164,16 +166,16 @@
                                                         <tr style="background: #16a085; color: #FFF">
                                                             <th style="width: 8%">STT</th>
                                                             <th>Tên</th>
-                                                            <th>Ủng hộ</th>
+                                                            <th>Ủng hộ(VNĐ)</th>
                                                             <th>Ngày</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr ng-repeat="x in ListBacker">
-                                                            <td>{{$index + 1}}</td>
-                                                            <td>{{x.FullName}}</td>
-                                                            <td>{{x.Amount}}</td>
-                                                            <td>{{x.Date | date:"dd/MM/yyyy"}}</td>
+                                                            <td class="col-number">{{$index + 1}}</td>
+                                                            <td class="col-text">{{x.FullName}}</td>
+                                                            <td class="col-number">{{x.Amount | currency:"":0}}</td>
+                                                            <td class="col-datetime">{{x.Date | date:"dd/MM/yyyy"}}</td>
                                                         </tr>
                                                     </tbody>
                                                 </table> <!-- TABLE BACKERS LIST -->

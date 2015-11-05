@@ -103,50 +103,67 @@ app.controller('AdminProjectDetailController',
                 function (result) {
                     $scope.ListBacker = result.data.Data.listBacker;
                     $scope.labels = result.data.Data.Date;
-                    $scope.series = ['Số tiền đã ủng hộ'];
-                    $scope.cate = [];
-                    for (var i = 0; i < 1000; i++) {
-                        $scope.cate.push(i);
+                    $scope.series = ['Số tiền đã được ủng hộ', 'Mục tiêu'];
+                    var data2 = [];
+                    for (var i = 0; i < result.data.Data.Amount.length; i++) {
+                        data2.push($scope.Project.FundingGoal);
                     }
+                    $scope.data = [result.data.Data.Amount, data2];
+                    $scope.colours = ['#97bbcd', '#f7464a'];
+                    $scope.checkLoadlist = true;
+                    $scope.options = {
+                        multiTooltipTemplate: function (label) {
+                            return (label.datasetLabel + ': ' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) + "₫";
+                        },
+                        scaleLabel: function (label) {
+                            return (label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) + "₫";
+                        }
+                    };
+                    //$scope.labels = result.data.Data.Date;
+                    //$scope.series = ['Số tiền đã ủng hộ'];
+                    //$scope.cate = [];
+                    //for (var i = 0; i < 1000; i++) {
+                    //    $scope.cate.push(i);
+                    //}
 
 
-                    $scope.highchartsNG = {
-                        options: {
-                            chart: {
-                                type: 'line'
-                            }
-                        },
-                        xAxis: {
-                            categories: $scope.cate
-                        },
-                        yAxis: [{ // Primary yAxis
-                            labels: {
-                                format: '{value} VNĐ',
-                                style: {
-                                    color: Highcharts.getOptions().colors[1]
-                                }
-                            },
-                            title: {
-                                text: 'Số tiền được ủng hộ',
-                                style: {
-                                    color: Highcharts.getOptions().colors[1]
-                                }
-                            }
-                        }],
-                        series: [{
-                            name: 'Số tiền ủng hộ',
-                            data: result.data.Data.Amount
-                        }],
-                        title: {
-                            text: 'Biểu đồ thống kê số tiền được ủng hộ'
-                        },
-                        loading: false,
-                        credits: {
-                            enabled: false
-                        },
-                    }
+                    //$scope.highchartsNG = {
+                    //    options: {
+                    //        chart: {
+                    //            type: 'line'
+                    //        }
+                    //    },
+                    //    xAxis: {
+                    //        categories: $scope.cate
+                    //    },
+                    //    yAxis: [{ // Primary yAxis
+                    //        labels: {
+                    //            format: '{value} VNĐ',
+                    //            style: {
+                    //                color: Highcharts.getOptions().colors[1]
+                    //            }
+                    //        },
+                    //        title: {
+                    //            text: 'Số tiền được ủng hộ',
+                    //            style: {
+                    //                color: Highcharts.getOptions().colors[1]
+                    //            }
+                    //        }
+                    //    }],
+                    //    series: [{
+                    //        name: 'Số tiền ủng hộ',
+                    //        data: result.data.Data.Amount
+                    //    }],
+                    //    title: {
+                    //        text: 'Biểu đồ thống kê số tiền được ủng hộ'
+                    //    },
+                    //    loading: false,
+                    //    credits: {
+                    //        enabled: false
+                    //    },
+                    //}
 
-                    $scope.highchartsNG.xAxis.categories = result.data.Data.Date;
+                    //$scope.highchartsNG.xAxis.categories = result.data.Data.Date;
                 }
             );
         };

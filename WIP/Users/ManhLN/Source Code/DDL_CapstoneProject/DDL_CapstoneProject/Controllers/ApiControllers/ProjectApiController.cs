@@ -1167,10 +1167,10 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = projectList });
         }
 
-        // GET: api/ProjectApi/AdminGetProjectStatistic/
+        // GET: api/ProjectApi/AdminGetProjectStatistic/:year
         [HttpGet]
         [ResponseType(typeof(AdminProjectStatisticDTO))]
-        public IHttpActionResult AdminGetProjectStatistic()
+        public IHttpActionResult AdminGetProjectStatistic(int year)
         {
             var statistic = new AdminProjectStatisticDTO();
 
@@ -1189,7 +1189,40 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                     throw new NotPermissionException();
                 }
 
-                statistic = ProjectRepository.Instance.AdminProjectStatistic();
+                statistic = ProjectRepository.Instance.AdminProjectStatistic(year);
+            }
+            catch (Exception)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = statistic });
+        }
+
+        // GET: api/ProjectApi/AdminGetStatisticTable/
+        [HttpGet]
+        [ResponseType(typeof(AdminDashboardInfoDTO))]
+        public IHttpActionResult AdminGetStatisticTable(string option)
+        {
+            var statistic = new List<AdminDashboardInfoDTO>();
+
+            try
+            {
+                // Check authen.
+                if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                }
+
+                // Check role user.
+                var currentUser = UserRepository.Instance.GetBasicInfo(User.Identity.Name);
+                if (currentUser == null || currentUser.Role != DDLConstants.UserType.ADMIN)
+                {
+                    throw new NotPermissionException();
+                }
+
+                statistic = ProjectRepository.Instance.AdminStatisticTable(option);
             }
             catch (Exception)
             {

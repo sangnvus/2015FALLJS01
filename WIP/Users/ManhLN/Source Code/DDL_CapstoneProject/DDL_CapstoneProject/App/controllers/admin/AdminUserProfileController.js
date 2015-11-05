@@ -50,4 +50,17 @@ app.controller('AdminUserProfileController',
              );
         };
 
+
+        // Define table
+        $scope.dtOptions = DTOptionsBuilder.newOptions()
+        .withDisplayLength(10)
+        .withOption('order', [0, 'asc'])
+        .withOption('stateSave', true)
+        .withBootstrap();
+
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0).notSortable(),
+            DTColumnDefBuilder.newColumnDef(-1).notSortable()
+        ];
+
     });

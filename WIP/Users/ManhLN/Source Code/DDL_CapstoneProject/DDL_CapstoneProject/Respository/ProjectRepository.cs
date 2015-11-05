@@ -342,6 +342,9 @@ namespace DDL_CapstoneProject.Respository
 
                 if (updateProject.ExpireDate != null)
                 {
+                    TimeSpan ts = new TimeSpan(23, 55, 0);
+                    updateProject.ExpireDate = updateProject.ExpireDate.GetValueOrDefault().Date + ts;
+
                     updateProject.ExpireDate =
                         CommonUtils.ConvertDateTimeToUtc(updateProject.ExpireDate.GetValueOrDefault());
                 }
@@ -390,9 +393,9 @@ namespace DDL_CapstoneProject.Respository
                     throw new KeyNotFoundException();
                 }
 
-                updateProject.Risk = project.Risk;
+                updateProject.Risk = project.Risk.Trim();
                 updateProject.VideoUrl = project.VideoUrl;
-                updateProject.Description = project.Description;
+                updateProject.Description = project.Description.Trim();
                 updateProject.UpdatedDate = DateTime.UtcNow;
 
                 db.SaveChanges();
@@ -513,7 +516,7 @@ namespace DDL_CapstoneProject.Respository
                 if (string.IsNullOrEmpty(project.Title) || project.Title.Length < 10 || project.Title.Length > 60
                     || string.IsNullOrEmpty(project.ImageUrl)
                     || string.IsNullOrEmpty(project.SubDescription) || project.SubDescription.Length < 30 || project.SubDescription.Length > 135
-                    || string.IsNullOrEmpty(project.Location)
+                    || string.IsNullOrEmpty(project.Location) || project.Location.Length < 10 || project.Location.Length > 60
                     || project.ExpireDate == null || project.ExpireDate < expireDateLaw
                     || project.FundingGoal < 1000000)
                 {
@@ -528,17 +531,17 @@ namespace DDL_CapstoneProject.Respository
 
                 if (rewardList.Count == 0)
                 {
-                    messageReward = "Xin hãy xem lại trang gói quà! Cần ít nhất 1 gói quà!";
+                    messageReward = "Xin hãy xem lại trang Mức ủng hộ! Cần ít nhất 1 mức!";
                     mylist.Add(messageReward);
                 }
 
-                if (rewardList.Any(reward => reward.PledgeAmount < 1000
+                if (rewardList.Any(reward => reward.PledgeAmount < 10000
                     || string.IsNullOrEmpty(reward.Description) || reward.Description.Length < 10 || reward.Description.Length > 135
                     || (reward.EstimatedDelivery < project.ExpireDate && reward.Type != DDLConstants.RewardType.NO_REWARD)
-                    || (reward.Type != DDLConstants.RewardType.NO_REWARD && reward.Quantity < 1)
+                    || (reward.Type == DDLConstants.RewardType.LIMITED && reward.Quantity < 1)
                     ))
                 {
-                    messageReward = "Xin hãy xem lại trang gói quà! Tất cả các trường PHẢI được điền đầy đủ và hợp lệ(Ngày giao phải sau ngày đóng gây quỹ)";
+                    messageReward = "Xin hãy xem lại trang Mức ủng hộ! Tất cả các trường PHẢI được điền đầy đủ và hợp lệ(Ngày giao phải sau ngày đóng gây quỹ)";
                     mylist.Add(messageReward);
                 }
 
@@ -547,7 +550,7 @@ namespace DDL_CapstoneProject.Respository
                     || string.IsNullOrEmpty(project.Risk) || project.Risk.Length < 135
                     )
                 {
-                    messageStory = "Xin hãy xem lại trang câu chuyện! Các trường PHẢI được nhập đầy đủ (trừ video)";
+                    messageStory = "Xin hãy xem lại trang Mô tả chỉ tiết! Các trường PHẢI được nhập đầy đủ (trừ video)";
                     mylist.Add(messageStory);
                 }
 
@@ -791,10 +794,13 @@ namespace DDL_CapstoneProject.Respository
         {
             using (var db = new DDLDataContext())
             {
+                // Get all projects
+                var projects = db.Projects.Where(x => x.Status != DDLConstants.ProjectStatus.DRAFT).ToList();
+
                 // Count user
                 var totalUser = db.DDL_Users.Count();
                 // Count project
-                var totalProject = db.Projects.Count(x => x.Status != DDLConstants.ProjectStatus.DRAFT);
+                var totalProject = projects.Count();
 
                 // Caculate total funded
                 var pledge = db.BackingDetails.GroupBy(o => o.BackingID)
@@ -807,7 +813,7 @@ namespace DDL_CapstoneProject.Respository
                 }
 
                 // Caculate total profit
-                var succeedProject = (from Project in db.Projects
+                var succeedProject = (from Project in projects
                                       where Project.IsFunded && Project.IsExprired
                                       select Project).ToList();
 
@@ -834,21 +840,21 @@ namespace DDL_CapstoneProject.Respository
                 }
 
                 // Count pending project
-                var pending = db.Projects.Count(x => x.Status == DDLConstants.ProjectStatus.PENDING);
+                var pending = projects.Count(x => x.Status == DDLConstants.ProjectStatus.PENDING);
                 // Count live project
-                var approved = db.Projects.Count(x => x.Status == DDLConstants.ProjectStatus.APPROVED);
+                var approved = projects.Count(x => x.Status == DDLConstants.ProjectStatus.APPROVED);
                 // Count succeed project
-                var funed = db.Projects.Count(x => x.IsFunded);
+                var funed = projects.Count(x => x.IsFunded);
                 // Count rank A project
-                var rankA = db.Projects.Count(x => x.FundingGoal > 500000000);
+                var rankA = projects.Count(x => x.FundingGoal > 500000000);
                 // Count rank B project
-                var rankB = db.Projects.Count(x => x.FundingGoal <= 500000000 && x.FundingGoal > 100000000);
+                var rankB = projects.Count(x => x.FundingGoal <= 500000000 && x.FundingGoal > 100000000);
                 // Count rank C project
-                var rankC = db.Projects.Count(x => x.FundingGoal <= 100000000 && x.FundingGoal > 50000000);
+                var rankC = projects.Count(x => x.FundingGoal <= 100000000 && x.FundingGoal > 50000000);
                 // Count rank D project
-                var rankD = db.Projects.Count(x => x.FundingGoal <= 50000000);
+                var rankD = projects.Count(x => x.FundingGoal <= 50000000);
                 // Count fail project
-                var failProject = db.Projects.Count(x => x.IsFunded == false && x.IsExprired);
+                var failProject = projects.Count(x => x.IsFunded == false && x.IsExprired);
 
                 var AdminDashboardInfoDTO = new AdminDashboardInfoDTO
                 {
@@ -880,7 +886,7 @@ namespace DDL_CapstoneProject.Respository
             {
                 // Get rewardPkg list
                 var projectList = (from Project in db.Projects
-                                   where (Project.Status == DDLConstants.ProjectStatus.APPROVED || Project.Status == DDLConstants.ProjectStatus.EXPIRED) && Project.IsFunded
+                                   where Project.Status == DDLConstants.ProjectStatus.EXPIRED && Project.IsFunded
                                    select new ProjectBasicListDTO
                                    {
                                        ProjectCode = Project.ProjectCode,
@@ -900,10 +906,10 @@ namespace DDL_CapstoneProject.Respository
 
 
         /// <summary>
-        /// Get project statistic evert month in year
+        /// Get project statistic every month in year
         /// </summary>
         /// <returns></returns>
-        public AdminProjectStatisticDTO AdminProjectStatistic()
+        public AdminProjectStatisticDTO AdminProjectStatistic(int year)
         {
             using (var db = new DDLDataContext())
             {
@@ -916,16 +922,14 @@ namespace DDL_CapstoneProject.Respository
                 }
 
                 // Caculate created project
-                var createdProject = projects.Where(x => x.CreatedDate.Year == 2015)
+                var createdProject = projects.Where(x => x.CreatedDate.Year == year)
                   .GroupBy(x => new { x.CreatedDate.Month })
                   .Select(grp => new
                   {
                       Month = grp.Key.Month,
                       Total = grp.Count()
                   });
-
                 var listCreated = new List<Statistic>();
-
                 foreach (var project in createdProject)
                 {
                     var sum = new Statistic
@@ -937,16 +941,14 @@ namespace DDL_CapstoneProject.Respository
                 }
 
                 // Caculate Success project
-                var successProject = projects.Where(x => x.ExpireDate.Value.Year == 2015 && x.IsFunded && x.IsExprired)
+                var successProject = projects.Where(x => x.ExpireDate.Value.Year == year && x.IsFunded && x.IsExprired)
                   .GroupBy(x => new { x.ExpireDate.Value.Month })
                   .Select(grp => new
                   {
                       Month = grp.Key.Month,
                       Total = grp.Count(),
                   });
-
                 var listSuccess = new List<Statistic>();
-
                 foreach (var project in successProject)
                 {
                     var sum = new Statistic
@@ -957,17 +959,57 @@ namespace DDL_CapstoneProject.Respository
                     listSuccess.Add(sum);
                 }
 
+                // Caculate profit
+                var succeedProject = (from Project in projects
+                                      where Project.IsFunded && Project.IsExprired && Project.ExpireDate.Value.Year == year
+                                      select Project).ToList();
+                decimal profit = 0;
+                List<KeyValuePair<int, decimal>> singleProject = new List<KeyValuePair<int, decimal>>();
+                foreach (var project in succeedProject)
+                {
+                    if (project.FundingGoal <= 50000000)
+                    {
+                        profit += 5 * project.CurrentFunded / 100;
+                    }
+                    else if (project.FundingGoal <= 100000000 && project.FundingGoal > 50000000)
+                    {
+                        profit += 4 * project.CurrentFunded / 100;
+                    }
+                    else if (project.FundingGoal <= 500000000 && project.FundingGoal > 100000000)
+                    {
+                        profit += 3 * project.CurrentFunded / 100;
+                    }
+                    else
+                    {
+                        profit += 2 * project.CurrentFunded / 100;
+                    }
+
+                    singleProject.Add(new KeyValuePair<int, decimal>(project.ExpireDate.Value.Month, profit));
+
+                    profit = 0;
+                }
+                var result = singleProject.GroupBy(r => r.Key).Select(r => new KeyValuePair<int, decimal>(r.Key, r.Sum(p => p.Value))).ToList();
+                var listProfit = new List<Statistic>();
+                foreach (var r in result)
+                {
+                    var sum = new Statistic
+                    {
+                        Amount = r.Value,
+                        Month = r.Key,
+                    };
+                    listProfit.Add(sum);
+                }
+
+
                 // Caculate fail project
-                var failProject = projects.Where(x => x.ExpireDate.Value.Year == 2015 && x.IsFunded == false && x.IsExprired)
+                var failProject = projects.Where(x => x.ExpireDate.Value.Year == year && x.IsFunded == false && x.IsExprired)
                   .GroupBy(x => new { x.ExpireDate.Value.Month })
                   .Select(grp => new
                   {
                       Month = grp.Key.Month,
                       Total = grp.Count()
                   });
-
                 var listFail = new List<Statistic>();
-
                 foreach (var project in failProject)
                 {
                     var sum = new Statistic
@@ -979,7 +1021,7 @@ namespace DDL_CapstoneProject.Respository
                 }
 
                 // Caculate total funded
-                var pledge = db.Backings.Where(x => x.BackedDate.Year == 2015)
+                var pledge = db.Backings.Where(x => x.BackedDate.Year == year)
                     .GroupBy(x => new { x.BackedDate.Month })
                    .Select(g => new
                    {
@@ -1002,10 +1044,195 @@ namespace DDL_CapstoneProject.Respository
                     Created = listCreated,
                     Succeed = listSuccess,
                     Fail = listFail,
-                    Funded = listFunded
+                    Funded = listFunded,
+                    Profit = listProfit
                 };
 
                 return list;
+            }
+        }
+
+        /// <summary>
+        /// Get project statistic table
+        /// </summary>
+        /// <returns>List<AdminDashboardInfoDTO></returns>
+        public List<AdminDashboardInfoDTO> AdminStatisticTable(string option)
+        {
+            using (var db = new DDLDataContext())
+            {
+                var projects = db.Projects.ToList();
+
+                foreach (var project in projects)
+                {
+                    project.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(project.CreatedDate);
+                    project.ExpireDate = CommonUtils.ConvertDateTimeFromUtc(project.CreatedDate);
+                }
+
+                var thisTime = DateTime.UtcNow;
+                thisTime = CommonUtils.ConvertDateTimeFromUtc(thisTime);
+
+                var listStatisticDTO = new List<AdminDashboardInfoDTO>();
+
+                if (option == "year")
+                {
+                    for (int i = 2015; i <= thisTime.Year; i++)
+                    {
+                        // Count project
+                        var totalProject =
+                            projects.Count(x => x.Status != DDLConstants.ProjectStatus.DRAFT && x.CreatedDate.Year == i);
+
+                        // Caculate total funded
+                        var pledge = db.BackingDetails.Where(x => x.Backing.BackedDate.Year == i)
+                            .GroupBy(o => o.BackingID)
+                            .Select(g => new { BackingID = g.Key, total = g.Sum(j => j.PledgedAmount) });
+                        decimal totalFunded = 0;
+
+                        foreach (var group in pledge)
+                        {
+                            totalFunded += group.total;
+                        }
+
+                        // Caculate total profit
+                        var succeedProject = (from Project in projects
+                                              where Project.IsFunded && Project.IsExprired && Project.ExpireDate.Value.Year == i
+                                              select Project).ToList();
+
+                        decimal totalProfit = 0;
+                        decimal succeedFunded = 0;
+
+                        foreach (var project in succeedProject)
+                        {
+                            if (project.FundingGoal <= 50000000)
+                            {
+                                totalProfit += 5 * project.CurrentFunded / 100;
+                            }
+                            else if (project.FundingGoal <= 100000000 && project.FundingGoal > 50000000)
+                            {
+                                totalProfit += 4 * project.CurrentFunded / 100;
+                            }
+                            else if (project.FundingGoal <= 500000000 && project.FundingGoal > 100000000)
+                            {
+                                totalProfit += 3 * project.CurrentFunded / 100;
+                            }
+                            else
+                            {
+                                totalProfit += 2 * project.CurrentFunded / 100;
+                            }
+
+                            succeedFunded += project.CurrentFunded;
+                        }
+
+                        // Count live project
+                        var approved = 0;
+                        if (i == thisTime.Year)
+                        {
+                            approved = projects.Count(
+                                    x => x.Status == DDLConstants.ProjectStatus.APPROVED && x.IsExprired == false);
+                        }
+                        // Count succeed project
+                        var funed = db.Projects.Count(x => x.IsFunded && x.IsExprired && x.ExpireDate.Value.Year == i);
+                        // Count fail project
+                        var failProject = db.Projects.Count(x => x.IsFunded == false && x.IsExprired && x.ExpireDate.Value.Year == i);
+
+                        var adminDashboardInfoDTO = new AdminDashboardInfoDTO
+                        {
+                            TotalProject = totalProject,
+                            TotalFund = totalFunded,
+                            SucceedFund = succeedFunded,
+                            TotalProfit = totalProfit,
+                            TotalSucceed = funed,
+                            TotalFail = failProject,
+                            Time = i.ToString(),
+                            LiveProject = approved
+                        };
+
+                        listStatisticDTO.Add(adminDashboardInfoDTO);
+                    }
+                }
+                else
+                {
+                    for (int i = 2015; i <= thisTime.Year; i++)
+                    {
+                        for (int j = 1; j < 13; j++)
+                        {
+                            // Count project
+                            var totalProject =
+                                projects.Count(x => x.Status != DDLConstants.ProjectStatus.DRAFT && x.CreatedDate.Year == i && x.CreatedDate.Month == j);
+
+                            // Caculate total funded
+                            var pledge = db.BackingDetails.Where(x => x.Backing.BackedDate.Year == i && x.Backing.BackedDate.Month == j)
+                                .GroupBy(o => o.BackingID)
+                                .Select(g => new { BackingID = g.Key, total = g.Sum(c => c.PledgedAmount) });
+                            decimal totalFunded = 0;
+
+                            foreach (var group in pledge)
+                            {
+                                totalFunded += group.total;
+                            }
+
+                            // Caculate total profit
+                            var succeedProject = (from Project in projects
+                                                  where Project.IsFunded && Project.IsExprired && Project.ExpireDate.Value.Year == i && Project.ExpireDate.Value.Month == j
+                                                  select Project).ToList();
+
+                            decimal totalProfit = 0;
+                            decimal succeedFunded = 0;
+
+                            foreach (var project in succeedProject)
+                            {
+                                if (project.FundingGoal <= 50000000)
+                                {
+                                    totalProfit += 5 * project.CurrentFunded / 100;
+                                }
+                                else if (project.FundingGoal <= 100000000 && project.FundingGoal > 50000000)
+                                {
+                                    totalProfit += 4 * project.CurrentFunded / 100;
+                                }
+                                else if (project.FundingGoal <= 500000000 && project.FundingGoal > 100000000)
+                                {
+                                    totalProfit += 3 * project.CurrentFunded / 100;
+                                }
+                                else
+                                {
+                                    totalProfit += 2 * project.CurrentFunded / 100;
+                                }
+
+                                succeedFunded += project.CurrentFunded;
+                            }
+
+                            // Count live project
+                            var approved = 0;
+                            if (i == thisTime.Year && j == thisTime.Month)
+                            {
+                                approved = projects.Count(
+                                        x => x.Status == DDLConstants.ProjectStatus.APPROVED && x.IsExprired == false);
+                            }
+
+                            // Count succeed project
+                            var funed = db.Projects.Count(x => x.IsFunded && x.IsExprired && x.ExpireDate.Value.Year == i && x.ExpireDate.Value.Month == j);
+                            // Count fail project
+                            var failProject = db.Projects.Count(x => x.IsFunded == false && x.IsExprired && x.ExpireDate.Value.Month == j && x.ExpireDate.Value.Year == i);
+
+                            var adminDashboardInfoDTO = new AdminDashboardInfoDTO
+                            {
+                                TotalProject = totalProject,
+                                TotalFund = totalFunded,
+                                SucceedFund = succeedFunded,
+                                TotalProfit = totalProfit,
+                                TotalSucceed = funed,
+                                TotalFail = failProject,
+                                Time = j.ToString() + "/" + i.ToString(),
+                                LiveProject = approved
+                            };
+
+                            listStatisticDTO.Add(adminDashboardInfoDTO);
+
+                            if (i == thisTime.Year && j == thisTime.Month) break;
+                        }
+                    }
+                }
+
+                return listStatisticDTO;
             }
         }
         #endregion
@@ -1438,7 +1665,7 @@ namespace DDL_CapstoneProject.Respository
                                          FullName = backer.User.UserInfo.FullName,
                                      };
                 // Generate all date from created date 1 days to now
-                var dateMonths = Enumerable.Range(0, 1 + CommonUtils.DateTimeNowGMT7().Subtract(project.CreatedDate.AddDays(-1)).Days)
+                var dateMonths = Enumerable.Range(0, 1 + CommonUtils.DateTimeNowGMT7().Date.Subtract(project.CreatedDate.AddDays(-1).Date).Days)
                     .Select(offset =>
                     {
                         var date = project.CreatedDate.AddDays(-1).AddDays(offset); return new { Year = date.Year, Month = date.Month, Day = date.Day };

@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-lg-2 col-sm-6">
         <div class="circle-tile">
-            <a href="#">
+            <a onclick="return false" href="#">
                 <div class="circle-tile-heading dark-blue">
                     <i class="fa fa-users fa-fw fa-3x"></i>
                 </div>
@@ -15,13 +15,13 @@
                     {{BasicInfo.TotalUser | currency:"":0}}
                     <span id="sparklineA"></span>
                 </div>
-                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                @*<a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>*@
             </div>
         </div>
     </div>
     <div class="col-lg-2 col-sm-6">
         <div class="circle-tile">
-            <a href="#">
+            <a onclick="return false" href="#">
                 <div class="circle-tile-heading blue">
                     <i class="fa fa-tasks fa-fw fa-3x"></i>
                 </div>
@@ -34,13 +34,13 @@
                     {{BasicInfo.TotalProject | currency:"":0}}
                     <span id="sparklineB"></span>
                 </div>
-                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                @*<a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>*@
             </div>
         </div>
     </div>
     <div class="col-lg-2 col-sm-6">
         <div class="circle-tile">
-            <a href="#">
+            <a onclick="return false" href="#">
                 <div class="circle-tile-heading red">
                     <i class="fa fa-shopping-cart fa-fw fa-3x"></i>
                 </div>
@@ -53,13 +53,13 @@
                     {{BasicInfo.TotalFund | currency:"&#8363;":0}}
                     <span id="sparklineC"></span>
                 </div>
-                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                @*<a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>*@
             </div>
         </div>
     </div>
     <div class="col-lg-2 col-sm-6">
         <div class="circle-tile">
-            <a href="#">
+            <a onclick="return false" href="#">
                 <div class="circle-tile-heading green">
                     <i class="fa fa-money fa-fw fa-3x"></i>
                 </div>
@@ -71,13 +71,13 @@
                 <div class="circle-tile-number text-faded">
                     {{BasicInfo.TotalProfit | currency:"&#8363;":0}}
                 </div>
-                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                @*<a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>*@
             </div>
         </div>
     </div>
     <div class="col-lg-2 col-sm-6">
         <div class="circle-tile">
-            <a href="#">
+            <a onclick="return false" href="#">
                 <div class="circle-tile-heading purple">
                     <i class="fa fa-plus-circle fa-fw fa-3x"></i>
                 </div>
@@ -89,13 +89,13 @@
                 <div class="circle-tile-number text-faded">
                     {{BasicInfo.NewProject | currency:"":0}}
                 </div>
-                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                @*<a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>*@
             </div>
         </div>
     </div>
     <div class="col-lg-2 col-sm-6">
         <div class="circle-tile">
-            <a href="#">
+            <a onclick="return false" href="#">
                 <div class="circle-tile-heading orange">
                     <i class="fa fa-rocket fa-fw fa-3x"></i>
                 </div>
@@ -107,7 +107,7 @@
                 <div class="circle-tile-number text-faded">
                     {{BasicInfo.LiveProject | currency:"":0}}
                 </div>
-                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                @*<a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>*@
             </div>
         </div>
     </div>
@@ -212,7 +212,7 @@
                                     <th>Tên</th>
                                     <th>Số dự án</th>
                                     <th>Số tiền(VNĐ)</th>
-                                    <th>Trạng thái</th>
+                                    <th style="width: 100px">Trạng thái</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -256,7 +256,7 @@
                                     <th>Chủ dự án</th>
                                     <th>Mục tiêu(VNĐ)</th>
                                     <th>Quỹ(VNĐ)</th>
-                                    <th>Trạng thái</th>
+                                    <th style="width: 100px">Trạng thái</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -303,7 +303,7 @@
                                 <tr>
                                     <th>Tên</th>
                                     <th>Đăng nhập cuối</th>
-                                    <th>Trạng thái</th>
+                                    <th style="width: 100px">Trạng thái</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -371,13 +371,11 @@
         <div class="portlet portlet-default">
             <div class="portlet-heading">
                 <div class="portlet-title">
-                    <h4>Projects statistic Chart</h4>
+                    <h4>Biểu đồ thống kê dự án theo năm</h4>
                 </div>
                 <div class="portlet-widgets">
-                    <select class="form-control project-chart">
-                        <option>2015</option>
-                        <option>2014</option>
-                    </select>
+                    <select class="form-control project-chart" ng-model="selectedChartYear"
+                            ng-options="year.name for year in chartYear track by year.value" ng-change="updateChart()"></select>
                     <a onclick="return false" data-toggle="collapse" data-parent="#accordion" href="#lineChart"><i class="fa fa-chevron-down"></i></a>
                 </div>
                 <div class="clearfix"></div>
@@ -396,76 +394,43 @@
         <div class="portlet portlet-default">
             <div class="portlet-heading">
                 <div class="portlet-title">
-                    <h4>Project statistic Table</h4>
+                    <h4>Thống kê dự án</h4>
                 </div>
                 <div class="portlet-widgets">
-                    <select class="form-control project-chart">
-                        <option>Years</option>
-                        <option>Months</option>
-                    </select>
+                    <select class="form-control project-chart" ng-model="selectedTableOption"
+                            ng-options="option.name for option in tableOption track by option.value" ng-change="changeTable()"></select>
                 </div>
                 <div class="clearfix"></div>
             </div>
             <div class="portlet-body">
                 <div class="table-responsive">
-                    <table id="example-table" class="table table-striped table-bordered table-hover table-green">
+                    <table id="example-table" class="table table-striped table-bordered table-hover table-green"
+                           datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
                         <thead>
                             <tr>
-                                <th>Date</th>
-                                <th>Total projects</th>
-                                <th>Succeed projects</th>
-                                <th>Fail projects</th>
-                                <th>Running projects</th>
-                                <th>Total Fund</th>
-                                <th>Succeed Fund</th>
-                                <th>Total profit</th>
-                                <th>Success rate</th>
+                                <th>Thời gian</th>
+                                <th>Số dự án tạo</th>
+                                <th>Dự án thành công</th>
+                                <th>Dự án thất bại</th>
+                                <th>Dự án đang chạy</th>
+                                <th>Tổng số đóng góp(VNĐ)</th>
+                                <th>Đóng góp thành công(VNĐ)</th>
+                                <th>Lợi nhuận(VNĐ)</th>
+                                <th>Tỉ lệ thành công</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>2015</td>
-                                <td>10</td>
-                                <td>11</td>
-                                <td>15</td>
-                                <td>10</td>
-                                <td>$10000</td>
-                                <td>$7000</td>
-                                <td>$2000</td>
-                                <td>100%</td>
-                            </tr>
-                            <tr>
-                                <td>2014</td>
-                                <td>10</td>
-                                <td>11</td>
-                                <td>15</td>
-                                <td>10</td>
-                                <td>$10000</td>
-                                <td>$7000</td>
-                                <td>$2000</td>
-                                <td>100%</td>
-                            </tr>
-                            <tr>
-                                <td>2013</td>
-                                <td>10</td>
-                                <td>11</td>
-                                <td>15</td>
-                                <td>10</td>
-                                <td>$10000</td>
-                                <td>$7000</td>
-                                <td>$2000</td>
-                                <td>100%</td>
-                            </tr>
-                            <tr>
-                                <td>2012</td>
-                                <td>10</td>
-                                <td>11</td>
-                                <td>15</td>
-                                <td>10</td>
-                                <td>$10000</td>
-                                <td>$7000</td>
-                                <td>$2000</td>
-                                <td>100%</td>
+                            <tr ng-repeat="statistic in StatisticTable">
+                                <td class="col-number" ng-if="selectedTableOption.value == 'year'">{{statistic.Time | date: "yyyy" }}</td>
+                                <td class="col-number" ng-if="selectedTableOption.value == 'month'">{{statistic.Time | date: "MM-yyyy" }}</td>
+                                <td class="col-number">{{statistic.TotalProject | currency:"":0}}</td>
+                                <td class="col-number">{{statistic.TotalSucceed | currency:"":0}}</td>
+                                <td class="col-number">{{statistic.TotalFail | currency:"":0}}</td>
+                                <td class="col-number">{{statistic.LiveProject | currency:"":0}}</td>
+                                <td class="col-number">{{statistic.TotalFund | currency:"":0}}</td>
+                                <td class="col-number">{{statistic.SucceedFund | currency:"":0}}</td>
+                                <td class="col-number">{{statistic.TotalProfit | currency:"":0}}</td>
+                                <td class="col-number">{{statistic.TotalSucceed*100/statistic.TotalProject | number:0}}%</td>
                             </tr>
                         </tbody>
                     </table>

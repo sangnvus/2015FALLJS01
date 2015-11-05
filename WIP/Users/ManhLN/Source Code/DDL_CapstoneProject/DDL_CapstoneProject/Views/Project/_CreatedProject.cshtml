@@ -26,8 +26,9 @@
                     <div class="item-title">
                         <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
                         <a class="btn btn-info btn-xs" href="/#/project/edit/{{project.ProjectCode}}">Sửa</a>
-                        <a class="btn btn-info btn-xs" href="" ng-click="deleteDraft($index)">Xóa</a>
+                        <a class="btn btn-danger btn-xs" href="" ng-click="deleteDraft($index)">Xóa</a>
                         <label class="label label-danger" ng-if="project.Status == 'pending'">Đang chờ kiểm duyệt</label>
+                        <label class="label label-primary" ng-if="project.Status == 'draft'">Dự án nháp</label>
 
                     </div>
                     <div class="item-content">
@@ -159,12 +160,6 @@
  
     </section><!--/#portfolio-->
 </div>
-
-<div class="scroll-top-wrapper ">
-    <span class="scroll-top-inner">
-        <i class="fa fa-2x fa-arrow-circle-up"></i>
-    </span>
-</div> <!-- end SCROLL TO TOP -->
 <script>
     $(window).trigger('resize');
 </script>

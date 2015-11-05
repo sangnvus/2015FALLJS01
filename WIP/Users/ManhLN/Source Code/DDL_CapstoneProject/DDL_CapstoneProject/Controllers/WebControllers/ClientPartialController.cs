@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DDL_CapstoneProject.Helper;
 
 namespace DDL_CapstoneProject.Controllers.WebControllers
 {
-    public class ClientPartialController : Controller
+    public class ClientPartialController : BaseController
     {
         // GET: ClientPartial
         public ActionResult Home()
