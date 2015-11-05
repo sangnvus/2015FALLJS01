@@ -26,19 +26,19 @@ Date: 2015.10.01
 	  margin-top: 5px;
 	}
     #main-slider .carousel .btn-success {
-	  background-color: rgba(92, 184, 92, 0.5);
+	  background-color: rgba(92, 184, 92, 0.8);
 	}
     #main-slider .carousel .btn-info{
-	  background-color: rgba(93, 173, 226, 0.5);
+	  background-color: rgba(93, 173, 226, 0.8);
 	}
 	#main-slider .carousel .btn:hover {
 	  background-color: rgba(255, 255, 255, 0.3);
 	}
     #main-slider .carousel .btn-success:hover {
-	  background-color: rgba(92, 184, 92, 0.8);
+	  background-color: rgba(92, 184, 92, 1);
 	}
     #main-slider .carousel .btn-info:hover {
-	  background-color: rgba(93, 173, 226, 0.8);
+	  background-color: rgba(93, 173, 226, 1);
 	}
 	#main-slider .carousel .dark {
 	  padding: 10px 15px;

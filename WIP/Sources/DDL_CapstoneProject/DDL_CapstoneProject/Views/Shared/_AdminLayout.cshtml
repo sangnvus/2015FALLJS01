@@ -33,7 +33,7 @@
 
         /*Fix css for datatables*/
         .table-responsive {
-            overflow: inherit;
+            /*overflow: inherit;*/
             border: none;
         }
 
@@ -140,9 +140,9 @@
 
 <body>
     <input type="hidden" value="@ViewBag.BaseUrl" id="BaseUrl" />
-    <div id="wrapper">
+    <div id="wrapper" style="min-width: 1024px">
         <!-- begin TOP NAVIGATION -->
-        <nav class="navbar-top" role="navigation">
+        <nav class="navbar-top" role="navigation" style="min-width: 1024px">
 
             <!-- begin BRAND HEADING -->
             <div class="navbar-header">

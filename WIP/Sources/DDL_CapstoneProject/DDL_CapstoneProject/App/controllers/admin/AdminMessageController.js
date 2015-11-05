@@ -2,7 +2,7 @@
 
 app.controller('AdminMessageController',
     function ($scope, $location, $rootScope, $route, toastr, conversations,
-        UserService,MessageService, CommmonService, DTOptionsBuilder, DTColumnDefBuilder) {
+        UserService, MessageService, CommmonService, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
 
         $scope.ListConversations = conversations.data.Data;
         $scope.Sent = $route.current.params.list === "sent" ? true : false;
@@ -58,12 +58,15 @@ app.controller('AdminMessageController',
                         $scope.ListConversations = result.data.Data;
                         $scope.Sent = false;
                     } else {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        $scope.Error = result.data.Message;
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
                     }
                 },
                 function (error) {
-                    $scope.Error = error.data.Message;
+                    toastr.error('Lỗi');
                 });
         }
 
@@ -76,12 +79,15 @@ app.controller('AdminMessageController',
                         $scope.ListConversations = result.data.Data;
                         $scope.Sent = true;
                     } else {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        $scope.Error = result.data.Message;
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
                     }
                 },
                 function (error) {
-                    $scope.Error = error.data.Message;
+                    toastr.error('Lỗi');
                 });
         }
 
@@ -97,28 +103,41 @@ app.controller('AdminMessageController',
 
         $scope.Delete = function () {
             if ($scope.selection.length > 0) {
-                var promise = MessageService.DeleteMessages($scope.selection);
-                promise.then(
-                    function (result) {
-                        if (result.data.Status === "success") {
-                            toastr.success('Đã xóa thành công!');
-                            if ($scope.Sent === true) {
-                                getListSentConversation();
-                            } else {
-                                getListReceivedConversation();
-                            }
-                            $scope.selection = [];
-                        } else {
-                            var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                            if (a) {
-                                $scope.Error = result.data.Message;
-                                toastr.error($scope.Error, 'Lỗi!');
-                            }
+                SweetAlert.swal({
+                    title: "Xóa tin nhắn",
+                    text: "Bạn có chắc chắn muốn xóa tin nhắn này không?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Có, tôi chắc chắn",
+                    cancelButtonText: "Không",
+                    closeOnConfirm: true
+                },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            var promise = MessageService.DeleteMessages($scope.selection);
+                            promise.then(
+                                function (result) {
+                                    if (result.data.Status === "success") {
+                                        toastr.success('Đã xóa thành công!');
+                                        if ($scope.Sent === true) {
+                                            getListSentConversation();
+                                        } else {
+                                            getListReceivedConversation();
+                                        }
+                                        $scope.selection = [];
+                                    } else {
+                                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                                        if (a) {
+                                            $scope.Error = result.data.Message;
+                                            toastr.error($scope.Error, 'Lỗi');
+                                        }
+                                    }
+                                },
+                                function (error) {
+                                    toastr.error('Lỗi');
+                                });
                         }
-                    },
-                    function (error) {
-                        $scope.Error = error.data.Message;
-                        toastr.error($scope.Error, 'Lỗi!');
                     });
             } else {
                 toastr.warning("Hãy chọn tối thiểu 1 tin nhắn");
@@ -131,12 +150,16 @@ app.controller('AdminMessageController',
                 function (result) {
                     if (result.data.Status === "success") {
                         return result.data.Data;
+                    } else {
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
                     }
                 },
                 function (error) {
-                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                    $scope.Error = error.data.Message;
-                    toastr.error($scope.Error, 'Lỗi!');
+                    toastr.error( 'Lỗi');
                 });
         };
 
@@ -165,13 +188,15 @@ app.controller('AdminMessageController',
                             }
                             toastr.success("Đã gửi");
                         } else {
-                            CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                            $scope.Error = result.data.Message;
-                            toastr.error($scope.Error, 'Lỗi');
+                            var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                            if (a) {
+                                $scope.Error = result.data.Message;
+                                toastr.error($scope.Error, 'Lỗi');
+                            }
                         }
                     },
                     function (error) {
-                        $scope.Error = error.data.Message;
+                        toastr.error('Lỗi');
                     });
             } else {
                 toastr.warning("Bạn chưa nhập nội dung tin nhắn", 'Thông báo');

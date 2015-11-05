@@ -1249,9 +1249,12 @@ namespace DDL_CapstoneProject.Respository
                     throw new KeyNotFoundException();
                 }
                 var userCurrent = db.DDL_Users.FirstOrDefault(x => x.Username == userName);
+                var temp = userCurrent != null ? userCurrent.Username : "";
                 // Create Project query from dB.
                 var projectDetail = (from project in db.Projects
                                      where project.ProjectCode.Equals(projectCode.ToUpper())
+                                     && ((project.Status != DDLConstants.ProjectStatus.DRAFT && project.Status != DDLConstants.ProjectStatus.PENDING)
+                                        || project.Creator.Username.Equals(temp, StringComparison.OrdinalIgnoreCase))
                                      select new ProjectDetailDTO
                                      {
                                          CategoryID = project.CategoryID,

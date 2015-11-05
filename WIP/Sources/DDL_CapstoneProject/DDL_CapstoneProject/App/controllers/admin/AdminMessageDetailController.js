@@ -1,6 +1,7 @@
 ﻿"use strict";
 
-app.controller('AdminMessageDetailController', function ($scope, $location, $sce, $rootScope, conversation, toastr, MessageService, CommmonService) {
+app.controller('AdminMessageDetailController', function ($scope, $location, $sce, $rootScope,
+    conversation, toastr, MessageService, CommmonService, SweetAlert) {
     //Todo here.
     $scope.Conversation = conversation.data.Data;
     $scope.CurrentUser = $rootScope.UserInfo;
@@ -30,14 +31,15 @@ app.controller('AdminMessageDetailController', function ($scope, $location, $sce
                         $scope.Reply.Content = "";
                         toastr.success('Trả lời thành công');
                     } else {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        $scope.Error = result.data.Message;
-                        toastr.error($scope.Error, 'Lỗi!');
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
                     }
                 },
                 function (error) {
-                    $scope.Error = error.data.Message;
-                    toastr.error($scope.Error, 'Lỗi!');
+                    toastr.error('Lỗi!');
                 });
         } else {
             toastr.warning("Bạn chưa nhập nội dung tin nhắn", 'Thông báo');
@@ -46,20 +48,35 @@ app.controller('AdminMessageDetailController', function ($scope, $location, $sce
 
     // function to delete message.
     $scope.Delete = function () {
-        var promise = MessageService.Delete($scope.Conversation.ConversationID);
-        promise.then(
-            function (result) {
-                if (result.data.Status === "success") {
-                    $location.path("/message").replace();
-                } else {
-                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                    $scope.Error = result.data.Message;
-                    toastr.error($scope.Error, 'Lỗi');
-                }
-            },
-            function (error) {
-                $scope.Error = error.data.Message;
-                toastr.error($scope.Error, 'Lỗi');
-            });
+        SweetAlert.swal({
+            title: "Xóa tin nhắn",
+            text: "Bạn có chắc chắn muốn xóa tin nhắn này không?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Có, tôi chắc chắn",
+            cancelButtonText: "Không",
+            closeOnConfirm: true
+        },
+                   function (isConfirm) {
+                       if (isConfirm) {
+                           var promise = MessageService.Delete($scope.Conversation.ConversationID);
+                           promise.then(
+                               function (result) {
+                                   if (result.data.Status === "success") {
+                                       $location.path("/message").replace();
+                                   } else {
+                                       var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                                       if (a) {
+                                           $scope.Error = result.data.Message;
+                                           toastr.error($scope.Error, 'Lỗi');
+                                       }
+                                   }
+                               },
+                               function (error) {
+                                   toastr.error('Lỗi');
+                               });
+                       }
+                   });
     }
 });

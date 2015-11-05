@@ -1327,7 +1327,6 @@
   <ItemGroup>
     <Folder Include="App\filters\" />
     <Folder Include="App_Data\" />
-    <Folder Include="Views\ClientPartial\" />
     <Folder Include="Views\Slider\" />
   </ItemGroup>
   <ItemGroup>

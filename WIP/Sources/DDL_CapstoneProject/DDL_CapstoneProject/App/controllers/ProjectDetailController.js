@@ -1,6 +1,7 @@
 ﻿"use strict";
 
-app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, toastr, project, ProjectService, CommmonService, DTOptionsBuilder, DTColumnDefBuilder, $filter, MessageService) {
+app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, $filter, toastr, project,
+    ProjectService, CommmonService, DTOptionsBuilder, DTColumnDefBuilder, MessageService, SweetAlert) {
     //Todo here.
     $scope.Project = project.data.Data;
     $scope.FirstUpdateLogs = false;
@@ -40,8 +41,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                     }
                 },
                 function (error) {
-                    $scope.Error = error.data.Message;
-                    toastr.error($scope.Error, 'Lỗi');
+                    toastr.error('Lỗi');
                 });
         }
     }
@@ -65,8 +65,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                     }
                 },
                 function (error) {
-                    $scope.Error = error.data.Message;
-                    toastr.error($scope.Error, 'Lỗi');
+                    toastr.error('Lỗi');
                 });
         }
     }
@@ -106,8 +105,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                 }
             },
             function (error) {
-                $scope.Error = error.data.Message;
-                toastr.error($scope.Error, 'Lỗi');
+                toastr.error('Lỗi');
             });
         //}
     }
@@ -129,8 +127,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                 }
             },
             function (error) {
-                $scope.Error = error.data.Message;
-                toastr.error($scope.Error, 'Lỗi');
+                toastr.error('Lỗi');
             });
     }
 
@@ -151,8 +148,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                 }
             },
             function (error) {
-                $scope.Error = error.data.Message;
-                toastr.error($scope.Error, 'Lỗi!');
+                toastr.error('Lỗi');
             });
     }
 
@@ -177,8 +173,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                     }
                 },
                 function (error) {
-                    $scope.Error = error.data.Message;
-                    toastr.error($scope.Error, 'Lỗi');
+                    toastr.error('Lỗi');
                 });
         } else if ($scope.Project.CommentsList[index].EditedCommentContent.length < 10
                     || $scope.Project.CommentsList[index].EditedCommentContent.length > 500) {
@@ -190,25 +185,37 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
 
     // Function edit comment.
     $scope.deleteComment = function (index) {
-        var promise = ProjectService.deleteComment($scope.Project.CommentsList[index].CommentID);
-        promise.then(
-            function (result) {
-                if (result.data.Status === "success") {
-                    $scope.Project.CommentsList.splice(index, 1);
-                    $scope.Project.NumberComment--;
-                    toastr.success('Xóa bình luận thành công');
-                } else {
-                    var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                    if (a) {
-                        $scope.Error = result.data.Message;
-                        toastr.error($scope.Error, 'Lỗi');
-                    }
-                }
-            },
-            function (error) {
-                $scope.Error = error.data.Message;
-                toastr.error($scope.Error, 'Lỗi');
-            });
+        SweetAlert.swal({
+            title: "Xóa bình luận",
+            text: "Bạn có chắc chắn muốn xóa bình luận này không?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Có, tôi chắc chắn",
+            cancelButtonText: "Không",
+            closeOnConfirm: true
+        }, function (isConfirm) {
+            if (isConfirm) {
+                var promise = ProjectService.deleteComment($scope.Project.CommentsList[index].CommentID);
+                promise.then(
+                    function (result) {
+                        if (result.data.Status === "success") {
+                            $scope.Project.CommentsList.splice(index, 1);
+                            $scope.Project.NumberComment--;
+                            toastr.success('Xóa bình luận thành công');
+                        } else {
+                            var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                            if (a) {
+                                $scope.Error = result.data.Message;
+                                toastr.error($scope.Error, 'Lỗi');
+                            }
+                        }
+                    },
+                    function (error) {
+                        toastr.error('Lỗi');
+                    });
+            }
+        });
     }
 
     $scope.remind = function () {
@@ -217,12 +224,12 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
           function (result) {
               if (result.data.Status == "success" && result.data.Message == "reminded") {
                   $scope.Project.Reminded = true;
-                  toastr.success('Theo dõi dự án thành công');
+                  toastr.success('Đã theo dõi dự án');
 
               }
               else if (result.data.Status == "success" && result.data.Message == "notremind") {
                   $scope.Project.Reminded = false;
-                  toastr.success('Hủy theo dõi dự án thành công');
+                  toastr.success('Đã bỏ theo dõi dự án');
               }
               else if (result.data.Status == "error") {
                   var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
@@ -233,8 +240,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
               }
           },
           function (error) {
-              $scope.Error = error.data.Message;
-              toastr.error($scope.Error, 'Lỗi');
+              toastr.error('Lỗi');
           }
        );
     };
@@ -256,8 +262,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                 }
             },
             function (error) {
-                $scope.Error = error.data.Message;
-                toastr.error($scope.Error, 'Lỗi');
+                toastr.error('Lỗi');
             }
          );
     };
@@ -268,26 +273,36 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
             var promise = ProjectService.getListBacker($scope.Project.ProjectCode);
             promise.then(
                 function (result) {
-                    $scope.ListBacker = result.data.Data.listBacker;
-                    $scope.labels = result.data.Data.Date;
-                    $scope.series = ['Số tiền đã được ủng hộ', 'Mục tiêu'];
-                    var data2 = [];
-                    for (var i = 0; i < result.data.Data.Amount.length; i++) {
-                        data2.push($scope.Project.FundingGoal);
-                    }
-                    $scope.data = [result.data.Data.Amount, data2];
-                    $scope.colours = ['#97bbcd', '#f7464a'];
-                    $scope.checkLoadlist = true;
-                    $scope.options = {
-                        multiTooltipTemplate: function (label) {
-                            return (label.datasetLabel + ': ' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) + "₫";
-                        },
-                        scaleLabel: function (label) {
-                            return (label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) + "₫";
+                    if (result.data.Status === "success") {
+                        $scope.ListBacker = result.data.Data.listBacker;
+                        $scope.labels = result.data.Data.Date;
+                        $scope.series = ['Số tiền đã được ủng hộ', 'Mục tiêu'];
+                        var data2 = [];
+                        for (var i = 0; i < result.data.Data.Amount.length; i++) {
+                            data2.push($scope.Project.FundingGoal);
                         }
-                    };
-                }
-             );
+                        $scope.data = [result.data.Data.Amount, data2];
+                        $scope.colours = ['#97bbcd', '#f7464a'];
+                        $scope.checkLoadlist = true;
+                        $scope.options = {
+                            multiTooltipTemplate: function(label) {
+                                return (label.datasetLabel + ': ' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) + "₫";
+                            },
+                            scaleLabel: function(label) {
+                                return (label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) + "₫";
+                            }
+                        };
+                    } else {
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
+                    }
+                },
+                function (error) {
+                    toastr.error('Lỗi');
+                });
         }
     };
 
@@ -330,9 +345,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, to
                     }
                 },
                 function (error) {
-
-                    $scope.Error = error.data.Message;
-                    toastr.error($scope.Error, 'Lỗi');
+                    toastr.error('Lỗi');
                 });
         } else {
             toastr.warning("Bạn chưa nhập nội dung câu hỏi", 'Thông báo');

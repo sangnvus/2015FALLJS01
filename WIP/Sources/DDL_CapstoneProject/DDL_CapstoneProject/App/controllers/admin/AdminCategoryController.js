@@ -24,40 +24,27 @@ app.controller('AdminCategoryController',
         ];
 
         $scope.changeCategoryStatus = function (id, index) {
-            SweetAlert.swal({
-                title: "Xóa danh mục",
-                text: "Bạn có chắc chắn muốn xóa danh mục này không?",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#2ecc71",
-                confirmButtonText: "Có, tôi chắc chắn",
-                cancelButtonText: "Không",
-                closeOnConfirm: true
-            },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            var promise = AdminCategoryService.changeCategoryStatus(id);
-                            promise.then(
-                                function (result) {
-                                    if (result.data.Status === "success") {
-                                        $scope.ListCategory[index].IsActive = result.data.Data.IsActive;
-                                        if ($scope.ListCategory[index].IsActive) {
-                                            toastr.success("Đã mở khóa");
-                                        } else {
-                                            toastr.success("Đã khóa");
-                                        }
-                                    } else {
-                                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                                        if (a) {
-                                            toastr.error($scope.Error, 'Lỗi');
-                                        }
-                                    }
-                                },
-                                function (error) {
-                                    toastr.error($scope.Error, 'Lỗi');
-                                });
+            var promise = AdminCategoryService.changeCategoryStatus(id);
+            promise.then(
+                function (result) {
+                    if (result.data.Status === "success") {
+                        $scope.ListCategory[index].IsActive = result.data.Data.IsActive;
+                        if ($scope.ListCategory[index].IsActive) {
+                            toastr.success("Đã mở khóa");
+                        } else {
+                            toastr.success("Đã khóa");
                         }
-                    });
+                    } else {
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
+                    }
+                },
+                function (error) {
+                    toastr.error('Lỗi');
+                });
         }
 
         // Functions reset new message form
@@ -81,12 +68,13 @@ app.controller('AdminCategoryController',
                     } else {
                         var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         if (a) {
+                            $scope.Error = result.data.Message;
                             toastr.error($scope.Error, 'Lỗi');
                         }
                     }
                 },
                 function (error) {
-                    toastr.error($scope.Error, 'Lỗi');
+                    toastr.error('Lỗi');
                 });
         }
 
@@ -97,10 +85,10 @@ app.controller('AdminCategoryController',
                 text: "Bạn có chắc chắn muốn xóa danh mục này không?",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#2ecc71",
+                confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Có, tôi chắc chắn",
                 cancelButtonText: "Không",
-                closeOnConfirm: false
+                closeOnConfirm: true
             },
                     function (isConfirm) {
                         if (isConfirm) {
@@ -108,17 +96,18 @@ app.controller('AdminCategoryController',
                             promise.then(
                                 function (result) {
                                     if (result.data.Status === "success") {
-                                        $scope.ListCategory.splice(index);
+                                        $scope.ListCategory.splice(index, 1);
                                         toastr.success("Xóa thành công");
                                     } else {
                                         var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                                         if (a) {
+                                            $scope.Error = result.data.Message;
                                             toastr.error($scope.Error, 'Lỗi');
                                         }
                                     }
                                 },
                                 function (error) {
-                                    toastr.error($scope.Error, 'Lỗi');
+                                    toastr.error('Lỗi');
                                 });
                         }
                     });
@@ -152,12 +141,13 @@ app.controller('AdminCategoryController',
                     } else {
                         var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         if (a) {
+                            $scope.Error = result.data.Message;
                             toastr.error($scope.Error, 'Lỗi');
                         }
                     }
                 },
                 function (error) {
-                    toastr.error($scope.Error, 'Lỗi');
+                    toastr.error('Lỗi');
                 });
         }
 
