@@ -24,7 +24,7 @@
     <div class="container">
         <div class="tab-center" id="tablist">
             <ul class="nav nav-tabs">
-                <li class="active"><a onclick="return false" href="#basic" data-toggle="tab">Thông tin</a></li>
+                <li class="active"><a onclick="return false" href="#basic" data-toggle="tab">Thông tin cơ bản</a></li>
                 <li><a onclick="return false" href="#reward" data-toggle="tab" ng-click="getReward()">Mức ủng hộ</a></li>
                 <li><a onclick="return false" href="#story" data-toggle="tab" ng-click="getStory()">Mô tả chỉ tiết</a></li>
                 <li ng-show="Project.Status == 'approved'"><a onclick="return false" href="#update" data-toggle="tab" ng-click="getUpdateLog()">Cập nhật</a></li>
@@ -80,6 +80,10 @@
                                                 <span>Dung lượng ảnh phải nhỏ hơn 50MB</span>
                                             </div>
                                         </div>
+                                        <div class="text-danger" ng-show="Project.ImageUrl == '' && errorListFlag == true">
+                                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                                            <span>Dự án bắt buộc phải có ảnh</span>
+                                        </div>
                                     </div>
                                 </div> <!-- end project image -->
                                 <div class="row border-grey">
@@ -92,14 +96,10 @@
                                                    name="ProjectTitle" ng-trim="true" maxlength="60"
                                                    ng-disabled="AllEditable == false || PrjApprove == true" ng-model="Project.Title">
                                             <label for="" class="countText">{{Project.Title.length + "/60"}}</label>
-                                            @*<div ng-show="BasicForm.ProjectTitle.$dirty && BasicForm.ProjectTitle.$invalid" class="text-danger">
-                                                <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                <span ng-show="BasicForm.ProjectTitle.$error.minlength">Tên dự án tối thiểu 10 kí tự!</span>
-                                                <span ng-show="BasicForm.ProjectTitle.$error.maxlength">Tên dự án tối đa 60 kí tự!</span>
-                                            </div>*@
                                         </div>
-                                        <div class="field-help-2">
-                                            <p>Tên dự án ít nhất 10 kí tự và dài nhất 60 kí tự!</p>
+                                        <div class="field-help-2" ng-class="{'text-danger' : (Project.Title.length > 60 || Project.Title.length < 10) && errorListFlag == true}">
+                                            <span class="glyphicon glyphicon-remove text-danger" ng-show="(Project.Title.length > 60 || Project.Title.length < 10) && errorListFlag == true"></span>
+                                            <span>Tên dự án ít nhất 10 kí tự và dài nhất 60 kí tự!</span>
                                             <p>Tên dự án nên ngắn gọn và dễ nhớ!</p>
                                         </div>
                                     </div>
@@ -114,13 +114,16 @@
                                                       maxlength="135" ng-model="Project.SubDescription" ng-disabled="AllEditable == false"></textarea>
                                             <label for="" class="countText" style="top: 70px">{{Project.SubDescription.length + "/135"}}</label>
                                             @*<div ng-show="BasicForm.SubDes.$dirty && BasicForm.SubDes.$invalid" class="text-danger">
-                                                <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                <span ng-show="BasicForm.SubDes.$error.minlength">Tên dự án tối thiểu 30 kí tự!</span>
-                                                <span ng-show="BasicForm.SubDes.$error.maxlength">Tên dự án tối đa 135 kí tự!</span>
-                                            </div>*@
+                                                    <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                    <span ng-show="BasicForm.SubDes.$error.minlength">Tên dự án tối thiểu 30 kí tự!</span>
+                                                    <span ng-show="BasicForm.SubDes.$error.maxlength">Tên dự án tối đa 135 kí tự!</span>
+                                                </div>*@
                                         </div>
-                                        <div class="field-help-2">
-                                            <p>Mô tả ngắn ít nhất là 30 kí tự và dài nhất là 135 kí tự!</p>
+                                        <div class="field-help-2" ng-class="{'text-danger' : (Project.SubDescription.length > 135 || Project.SubDescription.length < 30) && errorListFlag == true}">
+                                            <span class="glyphicon glyphicon-remove text-danger" ng-show="(Project.SubDescription.length > 135 || Project.SubDescription.length < 30) && errorListFlag == true"></span>
+                                            <span>
+                                                Mô tả ngắn ít nhất là 30 kí tự và dài nhất là 135 kí tự!
+                                            </span>
                                         </div>
                                     </div>
                                 </div> <!-- end short blurb -->
@@ -145,9 +148,15 @@
                                                    ng-model="Project.Location" ng-autocomplete ng-disabled="AllEditable == false || PrjApprove == true">
                                             <label for="" class="countText">{{Project.Location.length + "/60"}}</label>
                                             @*<div ng-show="BasicForm.ProjectLocation.$dirty && BasicForm.ProjectLocation.$invalid" class="text-danger">
-                                                <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                <span ng-show="BasicForm.ProjectLocation.$error.maxlength">Tên dự án tối đa 60 kí tự!</span>
-                                            </div>*@
+                                                    <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                    <span ng-show="BasicForm.ProjectLocation.$error.maxlength">Tên dự án tối đa 60 kí tự!</span>
+                                                </div>*@
+                                        </div>
+                                        <div class="field-help-2" ng-class="{'text-danger' : (Project.Location.length > 60 || Project.Location.length < 10) && errorListFlag == true}">
+                                            <span class="glyphicon glyphicon-remove text-danger" ng-show="(Project.Location.length > 60 || Project.Location.length < 10) && errorListFlag == true"></span>
+                                            <span>
+                                                Địa điểm ít nhất 10 kí tự và dài nhất 60 kí tự!
+                                            </span>
                                         </div>
                                     </div>
                                 </div> <!-- end location -->
@@ -157,9 +166,9 @@
                                     </div>
                                     <div class="col-md-8">
                                         @*<div class="form-inline">
-                                            <label for="startdate" class="fnt20">Start:</label>
-                                            <input type='date' class="form-control" style="line-height: 15px" />
-                                        </div>*@
+                                                <label for="startdate" class="fnt20">Start:</label>
+                                                <input type='date' class="form-control" style="line-height: 15px" />
+                                            </div>*@
                                         <div class="form-inline">
                                             <label for="enddate" class="fnt20">End:</label>
                                             <input type='date' ng-model="Project.ExpireDate" name="ProjectDeadLine" id="ProjectDeadLine"
@@ -168,7 +177,12 @@
                                                 <span class="glyphicon glyphicon-remove text-danger"></span>
                                                 <span ng-show="BasicForm.ProjectDeadLine.$invalid">Xin hãy nhập đúng chuẩn ngày tháng!</span>
                                             </div>
-                                            <p>Ngày hết hạn dự án phải xét ít nhất sau 10 ngày từ ngày gửi duyệt dự án</p>
+                                            <div class="field-help-2" ng-class="{'text-danger' : originalExpireDate < endDate && errorListFlag == true}">
+                                                <span class="glyphicon glyphicon-remove text-danger" ng-show="originalExpireDate < endDate && errorListFlag == true"></span>
+                                                <span>
+                                                    Ngày hết hạn dự án phải xét ít nhất sau 10 ngày từ ngày gửi duyệt dự án
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div> <!-- end funding duration -->
@@ -180,11 +194,12 @@
                                         <input type="text" format="number" class="form-control fnt-b" ng-trim="true"
                                                name="FundingGoal" ng-model="Project.FundingGoal" ng-disabled="AllEditable == false || PrjApprove == true">
                                         @*<div ng-show="BasicForm.FundingGoal.$dirty && Project.FundingGoal < 1000000" class="text-danger">
-                                            <span class="glyphicon glyphicon-remove text-danger"></span>
-                                            <span>Mục tiêu gây quỹ phải là chữ số và lớn hơn 1,000,000!</span>
-                                        </div>*@
-                                        <div for="tips">
-                                            <p>Mục tiêu gây quỹ ít nhất là 1,000,000&#8363;</p>
+                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                <span>Mục tiêu gây quỹ phải là chữ số và lớn hơn 1,000,000!</span>
+                                            </div>*@
+                                        <div for="tips" ng-class="{'text-danger' : Project.FundingGoal < 1000000 && errorListFlag == true}">
+                                            <span class="glyphicon glyphicon-remove text-danger" ng-show="Project.FundingGoal < 1000000 && errorListFlag == true"></span>
+                                            <span>Mục tiêu gây quỹ ít nhất là 1,000,000&#8363;</span>
                                             <p>
                                                 Tùy theo rank dự án mà chúng tôi sẽ lấy từ 5-2% số tiền gấy quỹ được.
                                             </p>
@@ -192,8 +207,8 @@
                                     </div>
                                 </div> <!-- end funding goals -->
                                 <div ng-if="BasicForm.$dirty">
-                                    <button type="button" class="btn btn-success" ng-click="resetProjectBasic(BasicForm)">Discard</button>
-                                    <button type="button" ng-disabled="BasicForm.$invalid || fileIsBig == true" class="btn btn-success" ng-click="editProjectBasic(BasicForm)">Save changes</button>
+                                    <button type="button" class="btn btn-danger" ng-click="resetProjectBasic(BasicForm)">Bỏ</button>
+                                    <button type="button" ng-disabled="BasicForm.$invalid || fileIsBig == true" class="btn btn-success" ng-click="editProjectBasic(BasicForm)">Lưu</button>
                                 </div>
                             </div>
                             <!-- end BASIC CONTENT -->
@@ -250,7 +265,7 @@
                 </div> <!-- end-CONTENT -->
             </div>
             <!-- end-BASIC -->
-            <!-- Begin tab reward  -->
+            @* Begin tab reward *@
             <div id="reward" role="tabpanel" class="tab-pane fade in border-main">
                 <div for="title" class="pt30">
                     <h4 class="text-center">Bạn nên cảm ơn những người đã ủng hộ bạn như thế nào?</h4>
@@ -265,13 +280,16 @@
                                         <div class="col-md-2">
                                             <p class="title">Gói #{{$index + 1}}</p>
                                         </div>
-
                                         <div class="col-md-10">
                                             <div style="background: #FFF; border: 1px solid eee; padding: 10px; border-radius: 6px">
                                                 <p class="fnt-b mt0 mb0">Ủng hộ {{rewardPkg.PledgeAmount | currency:"":0}}&#8363; hoặc hơn</p>
+                                                <span class="text-danger" ng-show="rewardPkg.PledgeAmount < 10000 && errorListFlag == true">Mức ủng hộ ít nhất là 10,000&#8363;</span>
                                                 <p class="mt0 mb0">{{rewardPkg.CurrentQuantity | currency:"":0}} Đã ủng hộ <span ng-if="rewardPkg.Type == 'limited'">| Giới hạn: {{rewardPkg.Quantity | currency:"":0}}</span><span ng-if="rewardPkg.Type == 'unlimited'">| Không giới hạn</span></p>
+                                                <span class="text-danger" ng-show="rewardPkg.Type == 'limited' && errorListFlag == true && rewardPkg.Quantity < 1">Số lượng phải lớn hơn 0</span>
                                                 <p class="mt0 mb0">{{rewardPkg.Description}}</p>
+                                                <span class="text-danger" ng-show="(rewardPkg.Description.length < 10 || rewardPkg.Description.length > 135) && errorListFlag == true">Mô tả mức ủng hộ cần ít nhất 10 kí tự và dài nhất 135 kí tự</span>
                                                 <p class="mt0 mb0 pb0 pt0" ng-show="rewardPkg.Type != 'no reward'">Thời gian giao hàng: {{rewardPkg.EstimatedDelivery | date:'MM-yyyy'}}</p>
+                                                <span class="text-danger" ng-show="rewardPkg.Type != 'no reward' && rewardPkg.EstimatedDelivery < Project.ExpireDate && errorListFlag == true">Ngày giao hàng cần đặt sau ngày dự án kết thúc</span>
                                                 <p class="mt0 mb0 pb0 pt0">
                                                     Kiểu:
                                                     <span ng-if="rewardPkg.Type == 'no reward'">Không phần thưởng</span>
@@ -281,16 +299,16 @@
                                                 <p class="mt0 mb0" ng-show="rewardPkg.IsHide == true"><span class="label label-warning">Hidden</span></p>
                                             </div>
                                             <ul class="list-inline pull-right mt0 mb0 pb0 pt0">
-                                                <li><button class="btn btn-default btn-sm" ng-show="AllEditable == true" ng-click="updateReward($index)">Ẩn</button></li>
+                                                <li><button class="btn btn-default btn-sm" ng-disabled="AllEditable == false" ng-click="updateReward($index)">Ẩn</button></li>
                                                 <li>
                                                     <button class="btn btn-danger btn-sm" ng-click="deleteReward($index)"
-                                                            ng-disabled="AllEditable == true && rewardPkg.CurrentQuantity != 0">
+                                                            ng-disabled="AllEditable == false || rewardPkg.CurrentQuantity != 0">
                                                         Xóa
                                                     </button>
                                                 </li>
                                                 <li>
                                                     <button class="btn btn-info btn-sm" data-toggle="modal" ng-click="editRewardModal($index)"
-                                                            ng-disabled="AllEditable == true && rewardPkg.CurrentQuantity != 0">
+                                                            ng-disabled="AllEditable == false || rewardPkg.CurrentQuantity != 0">
                                                         Sửa
                                                     </button>
                                                 </li>
@@ -299,7 +317,7 @@
                                     </div> <!-- end items -->
                                 </div>
                                 <div ng-if="rewardForm.$dirty">
-                                    <button type="button" class="btn btn-success" ng-click="resetReward(rewardForm)">Xóa</button>
+                                    <button type="button" class="btn btn-danger" ng-click="resetReward(rewardForm)">Bỏ</button>
                                     <button type="button" ng-disabled="rewardForm.$invalid" class="btn btn-success" ng-click="updateReward(rewardForm)">Lưu</button>
                                 </div>
                             </form>
@@ -318,10 +336,10 @@
                                                         <div class="col-md-8">
                                                             <input type="text" format="number" id="pledge_amount" name="PledgeAmount" ng-model="editPkg.PledgeAmount" class="form-control">
                                                             @*<div ng-show="EditRewardModal.PledgeAmount.$dirty && editPkg.PledgeAmount < 1000" class="text-danger">
-                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                                <span>Phải là chữ số và lớn hơn 1,000!</span>
-                                                            </div>*@
-                                                            <p>Mức ủng hộ ít nhất là 1,000&#8363;.</p>
+                                                                    <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                    <span>Phải là chữ số và lớn hơn 1,000!</span>
+                                                                </div>*@
+                                                            <p>Mức ủng hộ ít nhất là 10,000&#8363;.</p>
                                                         </div>
                                                     </div> <!-- end Pledge amount -->
                                                     <div class="row pb5">
@@ -330,10 +348,10 @@
                                                             <textarea class="form-control" rows="5" style="resize: none" name="NewRewardDes"
                                                                       maxlength="135" ng-trim="true" ng-model="editPkg.Description"></textarea>
                                                             @*<div ng-show="EditRewardModal.NewRewardDes.$dirty && EditRewardModal.NewRewardDes.$invalid" class="text-danger">
-                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                                <span ng-show="EditRewardModal.NewRewardDes.$error.minlength">Mô tả tối thiểu 10 kí tự!</span>
-                                                                <span ng-show="EditRewardModal.NewRewardDes.$error.maxlength">Mô tả tối đa 135 kí tự!</span>
-                                                            </div>*@
+                                                                    <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                    <span ng-show="EditRewardModal.NewRewardDes.$error.minlength">Mô tả tối thiểu 10 kí tự!</span>
+                                                                    <span ng-show="EditRewardModal.NewRewardDes.$error.maxlength">Mô tả tối đa 135 kí tự!</span>
+                                                                </div>*@
                                                             <p>Mô tả cần ít nhất 10 kí tự và nhiều nhất là 135 kí tự.</p>
                                                         </div>
                                                     </div> <!-- end Description -->
@@ -341,7 +359,7 @@
                                                         <div class="col-md-4">Thời gian giao hàng</div>
                                                         <div class="col-md-8">
                                                             @*<input type="month" class="form-control" min="{{toDay |  date:'yyyy-MM'}}" style="line-height: 15px;" name="deadline"
-                                                            ng-model="editPkg.EstimatedDelivery">*@
+                                                                ng-model="editPkg.EstimatedDelivery">*@
                                                             <input type="month" class="form-control" min="{{editPkg.EstimatedDelivery | date:'yyyy-MM'}}" style="line-height: 15px;" name="deadline"
                                                                    ng-model="editPkg.EstimatedDelivery">
                                                             <div ng-show="EditRewardModal.deadline.$dirty && EditRewardModal.deadline.$invalid" class="text-danger">
@@ -362,23 +380,23 @@
                                                         <div class="col-md-4" ng-show="selectedType.value == 'limited'">
                                                             <input type="number" class="form-control" name="newQuantity" ng-model="editPkg.Quantity">
                                                             @*<div ng-show="EditRewardModal.newQuantity.$dirty && EditRewardModal.newQuantity.$invalid" class="text-danger">
-                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                                <span ng-show="EditRewardModal.newQuantity.$invalid">Số lượng phải là chữ số và lớn hơn 0!</span>
-                                                            </div>*@
+                                                                    <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                    <span ng-show="EditRewardModal.newQuantity.$invalid">Số lượng phải là chữ số và lớn hơn 0!</span>
+                                                                </div>*@
                                                             <p>Số lượng phải lớn hơn 0.</p>
                                                         </div>
                                                     </div> <!-- end Backer -->
                                                     @*<div class="row pt5 pb5">
-                                                        <div class="col-md-12">
-                                                            <ul class="list-inline pull-right">
-                                                                <li><button class="btn btn-danger btn-sm" ng-click="deleteReward(editPkg.Index)" ng-show="rewardPkg.CurrentQuantity != 0">Delete</button></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>*@
+                                                            <div class="col-md-12">
+                                                                <ul class="list-inline pull-right">
+                                                                    <li><button class="btn btn-danger btn-sm" ng-click="deleteReward(editPkg.Index)" ng-show="rewardPkg.CurrentQuantity != 0">Delete</button></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>*@
                                                 </div> <!-- end items -->
                                             </div> <!-- end items -->
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="resetReward(EditRewardModal)">Bỏ</button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="resetReward(EditRewardModal)">Bỏ</button>
                                                 <button type="button" ng-disabled="EditRewardModal.$invalid" class="btn btn-success" ng-click="updateReward()">
                                                     Lưu
                                                 </button>
@@ -405,10 +423,10 @@
                                                                 <div class="col-md-8">
                                                                     <input type="text" format="number" name="NewRewardPledge" ng-model="NewReward.PledgeAmount" class="form-control">
                                                                     @*<div ng-show="CreateRewardForm.NewRewardPledge.$dirty && NewReward.PledgeAmount < 1000" class="text-danger">
-                                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                                        <span>Phải là chữ số và lớn hơn 1,000!</span>
-                                                                    </div>*@
-                                                                    <p>Mức ủng hộ ít nhất là 1000&#8363;.</p>
+                                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                            <span>Phải là chữ số và lớn hơn 1,000!</span>
+                                                                        </div>*@
+                                                                    <p>Mức ủng hộ ít nhất là 10,000&#8363;.</p>
                                                                 </div>
                                                             </div> <!-- end Pledge amount -->
                                                             <div class="row pb5">
@@ -416,12 +434,13 @@
                                                                 <div class="col-md-8">
                                                                     <textarea class="form-control" rows="5" style="resize: none" name="NewRewardDes"
                                                                               maxlength="135" ng-trim="true"
-                                                                              ng-model="NewReward.Description"></textarea>
+                                                                              ng-model="NewReward.Description"
+                                                                              rows="2"></textarea>
                                                                     @*<div ng-show="CreateRewardForm.NewRewardDes.$dirty && CreateRewardForm.NewRewardDes.$invalid" class="text-danger">
-                                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                                        <span ng-show="CreateRewardForm.NewRewardDes.$error.minlength">Mô tả tối thiểu 10 kí tự!</span>
-                                                                        <span ng-show="CreateRewardForm.NewRewardDes.$error.maxlength">Mô tả tối đa 135 kí tự!</span>
-                                                                    </div>*@
+                                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                            <span ng-show="CreateRewardForm.NewRewardDes.$error.minlength">Mô tả tối thiểu 10 kí tự!</span>
+                                                                            <span ng-show="CreateRewardForm.NewRewardDes.$error.maxlength">Mô tả tối đa 135 kí tự!</span>
+                                                                        </div>*@
                                                                     <p>Mô tả cần ít nhất 10 kí tự và nhiều nhất là 135 kí tự.</p>
                                                                 </div>
                                                             </div> <!-- end Description -->
@@ -429,7 +448,7 @@
                                                                 <div class="col-md-4">Thời gian giao hàng</div>
                                                                 <div class="col-md-8">
                                                                     @*<input type="month" min="{{toDay |  date:'yyyy-MM'}}" class="form-control delivery-date" style="line-height: 15px;"
-                                                                    name="NewRewardDelivery" ng-model="NewReward.EstimatedDelivery">*@
+                                                                        name="NewRewardDelivery" ng-model="NewReward.EstimatedDelivery">*@
                                                                     <input type="month" min="{{toDay |  date:'yyyy-MM'}}" value="{{toDay | date:'yyyy-MM'}}" class="form-control delivery-date" style="line-height: 15px;"
                                                                            name="NewRewardDelivery" ng-model="NewReward.EstimatedDelivery">
                                                                     <div ng-show="CreateRewardForm.NewRewardDelivery.$dirty && CreateRewardForm.NewRewardDelivery.$invalid" class="text-danger">
@@ -450,20 +469,20 @@
                                                                         </select>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-4">
-                                                                    <input type="number" class="form-control" min="1" value="1" name="newQuantity" ng-model="NewReward.Quantity" ng-if="NewReward.Type == 'limited'">
-                                                                    <span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="CreateRewardForm.newQuantity.$dirty && CreateRewardForm.newQuantity.$valid"></span>
-                                                                    @*<div ng-show="CreateRewardForm.newQuantity.$dirty && CreateRewardForm.newQuantity.$invalid" class="text-danger">
-                                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                                        <span ng-show="CreateRewardForm.newQuantity.$invalid">Số lượng phải là chữ số và lớn hơn 0!</span>
-                                                                    </div>*@
+                                                                <div class="col-md-4" ng-if="NewReward.Type == 'limited'">
+                                                                    <input type="number" class="form-control" min="1" value="1" name="newQuantity" ng-model="NewReward.Quantity">
+                                                                    @*<span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="CreateRewardForm.newQuantity.$dirty && CreateRewardForm.newQuantity.$valid"></span>
+                                                                        <div ng-show="CreateRewardForm.newQuantity.$dirty && CreateRewardForm.newQuantity.$invalid" class="text-danger">
+                                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                                <span ng-show="CreateRewardForm.newQuantity.$invalid">Số lượng phải là chữ số và lớn hơn 0!</span>
+                                                                            </div>*@
                                                                     <p>Số lượng phải lớn hơn 0.</p>
                                                                 </div>
                                                             </div> <!-- end Backer -->
                                                         </div> <!-- end items -->
                                                     </div> <!-- end items -->
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-success" data-dismiss="modal">Bỏ</button>
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Bỏ</button>
 
                                                         <button type="button" ng-disabled="!CreateRewardForm.$dirty || (CreateRewardForm.$dirty && CreateRewardForm.$invalid)" class="btn btn-success"
                                                                 ng-click="createReward()">
@@ -478,37 +497,37 @@
                             </div> <!-- end ADD REWARD -->
                         </div> <!-- end CONTENT -->
                         <!-- <div class="col-md-3">
-                        <div class="border-tips">
-                            <p>How to:</p>
-                            <a href=""><b>Create greate rewards</b></a>
-                        </div>
-                        <div class="help">
-                            <h5><b>What to offer</b></h5>
-                            <p>Copies of what you're making, unique experiences, and limited editions work great.</p>
-                            <h5><b>How to price</b></h5>
-                            <ul>
-                                <li>Price fairly, and offer a good value. What would <i>you</i> consider a fair exchange?</li>
-                                <li>Something fun for <span class="money gbp no-code">£10</span> or less is always a good idea.</li>
-                                <li>Funds that backers pledge to account for shipping costs will count towards your project's funding goal. Keep this in mind when setting your goal.</li>
-                                <li>Use the shipping tool to add delivery costs for any country you like (including your own). The price will be added to backer's pledges as they check out.</li>
-                            </ul>
-                            <h5><b>What's prohibited</b></h5>
-                            <ul>
-                                <li>Rewards not directly produced by the creator or the project itself</li>
-                                <li>Financial incentives</li>
-                                <li>Raffles, lotteries, and sweepstakes</li>
-                                <li>Coupons, discounts, and cash-value gift cards</li>
-                                <li>For more, please review our list of prohibited items and subject matter</li>
-                            </ul>
-                            <h5><b>Need ideas for rewards?</b></h5>
-                            <p>Campus has a discussion on that — and plenty more.</p>
-                        </div>
-                    </div>end TIPS -->
+                            <div class="border-tips">
+                                <p>How to:</p>
+                                <a href=""><b>Create greate rewards</b></a>
+                            </div>
+                            <div class="help">
+                                <h5><b>What to offer</b></h5>
+                                <p>Copies of what you're making, unique experiences, and limited editions work great.</p>
+                                <h5><b>How to price</b></h5>
+                                <ul>
+                                    <li>Price fairly, and offer a good value. What would <i>you</i> consider a fair exchange?</li>
+                                    <li>Something fun for <span class="money gbp no-code">£10</span> or less is always a good idea.</li>
+                                    <li>Funds that backers pledge to account for shipping costs will count towards your project's funding goal. Keep this in mind when setting your goal.</li>
+                                    <li>Use the shipping tool to add delivery costs for any country you like (including your own). The price will be added to backer's pledges as they check out.</li>
+                                </ul>
+                                <h5><b>What's prohibited</b></h5>
+                                <ul>
+                                    <li>Rewards not directly produced by the creator or the project itself</li>
+                                    <li>Financial incentives</li>
+                                    <li>Raffles, lotteries, and sweepstakes</li>
+                                    <li>Coupons, discounts, and cash-value gift cards</li>
+                                    <li>For more, please review our list of prohibited items and subject matter</li>
+                                </ul>
+                                <h5><b>Need ideas for rewards?</b></h5>
+                                <p>Campus has a discussion on that — and plenty more.</p>
+                            </div>
+                        </div>end TIPS -->
                     </div>
                 </div> <!-- end CONTENT -->
             </div>
             <!-- end-REWARD -->
-            <!-- begin tag story -->
+            @* begin tag story *@
             <div id="story" role="tabpanel" class="tab-pane fade in border-main">
                 <div class="pt30">
                     <h4 class="text-center">Chính xác thì dự án của bạn là gì?</h4>
@@ -530,8 +549,8 @@
                                                     <!-- <input class="avatar file" type="file"> -->
                                                     <!-- <a class="btn"></a> -->
                                                     <!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-                                                Launch demo modal
-                                                </button> -->
+                                                    Launch demo modal
+                                                    </button> -->
                                                     <strong class="center profile-photo" data-toggle="modal" data-target="#videoModal">
                                                         Upload video của bạn lên Youtube và nhập link embed vào đây
                                                         <span> MOV, MPEG, AVI, MP4, 3GP, WMV, or FLV • 5GB file limit</span> <span>640x480 pixels • tỷ lệ màn hình 4:3</span>
@@ -575,13 +594,12 @@
                                     <div class="col-md-9">
                                         <div class="help">
                                             <p>Hãy mô tả chi tiết dự án của bạn ở đây. Bạn cần gây quỹ cho dự án như thế nào và làm như thế nào bạn hoàn thành nó.</p>
-                                            <p>Mô tả chi tiết cần ít nhất 135 kí tự</p>
+                                            <p ng-class="{'text-danger' : ProjectStory.Description.length < 135 && errorListFlag == true}">
+                                                <span class="glyphicon glyphicon-remove text-danger" ng-show="ProjectStory.Description.length < 135 && errorListFlag == true"></span>
+                                                Mô tả chi tiết cần ít nhất 135 kí tự
+                                            </p>
                                         </div>
                                         <div text-angular ng-model="ProjectStory.Description" name="desc" ta-disabled="AllEditable == false"></div>
-                                        @*<div ng-show="storyForm.desc.$dirty && storyForm.desc.$invalid" class="text-danger">
-                                            <span class="glyphicon glyphicon-remove text-danger"></span>
-                                            <span ng-show="storyForm.desc.$invalid">Mô tả ít nhất 135 kí tự!</span>
-                                        </div>*@
                                     </div>
                                 </div> <!-- end Project Description -->
                                 <div class="row border-grey">
@@ -593,15 +611,18 @@
                                             <p>
                                                 <b>Khó khăn bạn đang gặp phải là gì và làm thế nào bạn vượt qua nó?</b>
                                             </p>
-                                            <p>Mô tả khó khăn cần ít nhất 135 kí tự!</p>
+                                            <p ng-class="{'text-danger' : ProjectStory.Risk.length < 135 && errorListFlag == true}">
+                                                <span class="glyphicon glyphicon-remove text-danger" ng-show="ProjectStory.Risk.length < 135 && errorListFlag == true"></span>
+                                                Mô tả khó khăn cần ít nhất 135 kí tự!
+                                            </p>
                                         </div>
                                         <div class="">
                                             <textarea class="form-control fnt18" rows="7" style="resize: none" ng-trim="true"
                                                       name="ProjectRisk" ng-model="ProjectStory.Risk" ng-disabled="AllEditable == false"></textarea>
                                             @*<div ng-show="storyForm.ProjectRisk.$dirty && storyForm.ProjectRisk.$invalid" class="text-danger">
-                                                <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                <span ng-show="storyForm.ProjectRisk.$error.minlength">Mô tả ít nhất 135 kí tự!</span>
-                                            </div>*@
+                                                    <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                    <span ng-show="storyForm.ProjectRisk.$error.minlength">Mô tả ít nhất 135 kí tự!</span>
+                                                </div>*@
                                             <!-- <label for="" class="countText" style="top:610px">0/300</label> -->
                                         </div>
                                     </div>
@@ -615,34 +636,34 @@
                                     </div>
                                 </div>
                                 <div ng-if="storyForm.$dirty">
-                                    <button type="button" class="btn btn-success" ng-click="resetStory(storyForm)">Xóa</button>
+                                    <button type="button" class="btn btn-danger" ng-click="resetStory(storyForm)">Xóa</button>
                                     <button type="button" ng-disabled="storyForm.$invalid" class="btn btn-success" ng-click="editProjectStory(storyForm)">Lưu</button>
                                 </div>
                             </div> <!-- end col-md-9 -->
                             @*<div class="col-md-3">
-                                <div class="video-tout border-tips">
-                                    <a class="link_to_school-video-dialog video_thumb_container">
-                                        <!-- <img alt="Media - Video" class="play_button" src="https://d297h9he240fqh.cloudfront.net/assets/projects/button-playvideo-sm-c4ba88222413634953e9fda7e69a2bf49f9e3caf97dfd2ef63e38921db846595.png"> -->
-                                        <img alt="Video thumb school 757b761a8e7251582e9e3f9abcf0ff2a4f39bdd13f022020d3e544e47ae138e5" height="115" ng-src="https://d297h9he240fqh.cloudfront.net/assets/projects/edit/video-thumb-school-757b761a8e7251582e9e3f9abcf0ff2a4f39bdd13f022020d3e544e47ae138e5.jpg" width="199">
-                                    </a>
-                                    <a class="school-tout" href="/help/handbook/your_story" target="_blank"><span><span>How to:</span> Make an awesome video</span></a>
-                                </div>
-                                <div class="help">
-                                    <h5><b>Looking for advice?</b></h5>
-                                    <p>Visit Campus to read about making great videos and more.</p>
-                                    <br>
-                                    <h5><b>Important reminder</b></h5>
-                                    <p>Kickstarter is a global community, and including translations of your description and rewards, or using our Captions & Subtitles to make your videos more accessible, will help your project have a wider appeal. If you're including text or audio in a language outside of those that we currently support (English, French, German, and Spanish), we also ask that you include English translations or subtitles.</p>
-                                    <p>Don't use music, images, video, or other content that you don't have the rights to. Reusing copyrighted material is almost always against the law and can lead to expensive lawsuits down the road. The easiest way to avoid copyright troubles is to create all the content yourself or use content that is free for public use.</p>
-                                    <p>For legal, mostly free alternatives, check out some of these great resources: SoundCloud, Vimeo Music Store, Free Music Archive, and ccMixter.</p>
-                                </div>
-                            </div> <!-- end col-md-3 -->*@
+                                    <div class="video-tout border-tips">
+                                        <a class="link_to_school-video-dialog video_thumb_container">
+                                            <!-- <img alt="Media - Video" class="play_button" src="https://d297h9he240fqh.cloudfront.net/assets/projects/button-playvideo-sm-c4ba88222413634953e9fda7e69a2bf49f9e3caf97dfd2ef63e38921db846595.png"> -->
+                                            <img alt="Video thumb school 757b761a8e7251582e9e3f9abcf0ff2a4f39bdd13f022020d3e544e47ae138e5" height="115" ng-src="https://d297h9he240fqh.cloudfront.net/assets/projects/edit/video-thumb-school-757b761a8e7251582e9e3f9abcf0ff2a4f39bdd13f022020d3e544e47ae138e5.jpg" width="199">
+                                        </a>
+                                        <a class="school-tout" href="/help/handbook/your_story" target="_blank"><span><span>How to:</span> Make an awesome video</span></a>
+                                    </div>
+                                    <div class="help">
+                                        <h5><b>Looking for advice?</b></h5>
+                                        <p>Visit Campus to read about making great videos and more.</p>
+                                        <br>
+                                        <h5><b>Important reminder</b></h5>
+                                        <p>Kickstarter is a global community, and including translations of your description and rewards, or using our Captions & Subtitles to make your videos more accessible, will help your project have a wider appeal. If you're including text or audio in a language outside of those that we currently support (English, French, German, and Spanish), we also ask that you include English translations or subtitles.</p>
+                                        <p>Don't use music, images, video, or other content that you don't have the rights to. Reusing copyrighted material is almost always against the law and can lead to expensive lawsuits down the road. The easiest way to avoid copyright troubles is to create all the content yourself or use content that is free for public use.</p>
+                                        <p>For legal, mostly free alternatives, check out some of these great resources: SoundCloud, Vimeo Music Store, Free Music Archive, and ccMixter.</p>
+                                    </div>
+                                </div> <!-- end col-md-3 -->*@
                         </div> <!-- end-content -->
                     </div><!-- end-tabpanel-Basic -->
                 </form>
             </div>
             <!-- end-STORY -->
-            <!--begin tab update -->
+            @* begin tab update *@
             <div id="update" role="tabpanel" class="tab-pane fade in border-main">
                 <div class="pt30">
                     <h4 class="text-center">Làm sao để bạn cám ơn những người đã ủng hộ bạn?</h4>
@@ -667,26 +688,26 @@
                                                            maxlength="60"
                                                            name="title{{$index}}" ng-model="UpdateLogs.Title" ng-disabled="AllEditable == false">
                                                     @*<div ng-show="updateLogForm.title{{$index}}.$dirty && updateLogForm.title{{$index}}.$invalid" class="text-danger">
-                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                        <span ng-show="updateLogForm.title{{$index}}.$error.minlength">Tiêu đề ít nhất 10 kí tự!</span>
-                                                        <span ng-show="updateLogForm.title{{$index}}.$error.maxlength">Tiêu đề dài nhất 60 kí tự!</span>
-                                                    </div>*@
+                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                            <span ng-show="updateLogForm.title{{$index}}.$error.minlength">Tiêu đề ít nhất 10 kí tự!</span>
+                                                            <span ng-show="updateLogForm.title{{$index}}.$error.maxlength">Tiêu đề dài nhất 60 kí tự!</span>
+                                                        </div>*@
                                                 </div>
                                                 <div class="col-md-2">
                                                     <a class="btn btn-danger form-control" ng-click="deleteUpdateLog($index)" ng-if="AllEditable == true">Delete</a>
                                                 </div>
                                             </div> <!-- end Title -->
                                             @*<div class="row">
-                                                <div class="col-md-3">
-                                                    <p class="title">Date</p>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    <input type="date" class="form-control" style="line-height: 15px" ng-model="UpdateLogs.CreatedDate" ng-disabled="AllEditable == false">
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <a class="btn btn-info form-control">Edit</a>
-                                                </div>
-                                            </div>*@
+                                                    <div class="col-md-3">
+                                                        <p class="title">Date</p>
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <input type="date" class="form-control" style="line-height: 15px" ng-model="UpdateLogs.CreatedDate" ng-disabled="AllEditable == false">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <a class="btn btn-info form-control">Edit</a>
+                                                    </div>
+                                                </div>*@
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <p class="title">Nội dung</p>
@@ -696,9 +717,9 @@
                                                         <textarea class="form-control" rows="5" style="resize: none" name="desc{{$index}}" ng-trim="true"
                                                                   ng-model="UpdateLogs.Description" ng-disabled="AllEditable == false"></textarea>
                                                         @*<div ng-show="updateLogForm.desc{{$index}}.$dirty && updateLogForm.desc{{$index}}.$invalid" class="text-danger">
-                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                            <span ng-show="updateLogForm.desc{{$index}}.$error.minlength"> ít nhất 10 kí tự!</span>
-                                                        </div>*@
+                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                <span ng-show="updateLogForm.desc{{$index}}.$error.minlength"> ít nhất 10 kí tự!</span>
+                                                            </div>*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -706,7 +727,7 @@
                                     </div>
                                 </div>
                                 <div ng-if="updateLogForm.$dirty">
-                                    <button type="button" class="btn btn-success" ng-click="resetUpdateLog(updateLogForm)">Bỏ</button>
+                                    <button type="button" class="btn btn-danger" ng-click="resetUpdateLog(updateLogForm)">Bỏ</button>
                                     <button type="button" ng-disabled="updateLogForm.$invalid" class="btn btn-success" ng-click="editUpdateLog(updateLogForm)">Lưu</button>
                                 </div>
                             </form>
@@ -731,28 +752,28 @@
                                                                 <input type="text" class="form-control" name="title" ng-trim="true"
                                                                        maxlength="60" ng-model="NewUpdateLog.Title">
                                                                 @*<div ng-show="CreateUpdateLogForm.title.$dirty && CreateUpdateLogForm.title.$invalid" class="text-danger">
-                                                                    <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                                    <span ng-show="CreateUpdateLogForm.title.$error.minlength">Tiêu đề ít nhất 10 kí tự!</span>
-                                                                    <span ng-show="CreateUpdateLogForm.title.$error.maxlength">Tiêu đề dài nhất 60 kí tự!</span>
-                                                                </div>*@
+                                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                        <span ng-show="CreateUpdateLogForm.title.$error.minlength">Tiêu đề ít nhất 10 kí tự!</span>
+                                                                        <span ng-show="CreateUpdateLogForm.title.$error.maxlength">Tiêu đề dài nhất 60 kí tự!</span>
+                                                                    </div>*@
                                                             </div>
                                                             @*<div class="form-group">
-                                                                <p class="title">Date:</p>
-                                                                <input type="date" name="" class="form-control" style="line-height: 15px" ng-model="NewUpdateLog.CreatedDate">
-                                                            </div>*@
+                                                                    <p class="title">Date:</p>
+                                                                    <input type="date" name="" class="form-control" style="line-height: 15px" ng-model="NewUpdateLog.CreatedDate">
+                                                                </div>*@
                                                             <div class="form-group">
                                                                 <p class="title">Mô tả:</p>
                                                                 <textarea class="form-control" name="desc" ng-trim="true"
                                                                           ng-model="NewUpdateLog.Description"></textarea>
                                                                 @*<div ng-show="CreateUpdateLogForm.desc.$dirty && CreateUpdateLogForm.desc.$invalid" class="text-danger">
-                                                                    <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                                    <span ng-show="CreateUpdateLogForm.title.$error.minlength">Tiêu đề ít nhất 10 kí tự!</span>
-                                                                </div>*@
+                                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                        <span ng-show="CreateUpdateLogForm.title.$error.minlength">Tiêu đề ít nhất 10 kí tự!</span>
+                                                                    </div>*@
                                                             </div>
                                                         </form>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Bỏ</button>
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Bỏ</button>
                                                         <button type="button" ng-disabled="CreateUpdateLogForm.$invalid" class="btn btn-primary" ng-click="createUpdateLog()">Lưu</button>
                                                     </div>
                                                 </div>
@@ -764,37 +785,37 @@
                             </div>
                         </div> <!-- end col-md-9 -->
                         <!--<div class="col-md-3">
-                        <div class="border-tips">
-                            <p>How to:</p>
-                            <a href=""><b>Create greate rewards</b></a>
-                        </div>
-                        <div class="help">
-                            <h5><b>What to offer</b></h5>
-                            <p>Copies of what you're making, unique experiences, and limited editions work great.</p>
-                            <h5><b>How to price</b></h5>
-                            <ul>
-                                <li>Price fairly, and offer a good value. What would <i>you</i> consider a fair exchange?</li>
-                                <li>Something fun for <span class="money gbp no-code">£10</span> or less is always a good idea.</li>
-                                <li>Funds that backers pledge to account for shipping costs will count towards your project's funding goal. Keep this in mind when setting your goal.</li>
-                                <li>Use the shipping tool to add delivery costs for any country you like (including your own). The price will be added to backer's pledges as they check out.</li>
-                            </ul>
-                            <h5><b>What's prohibited</b></h5>
-                            <ul>
-                                <li>Rewards not directly produced by the creator or the project itself</li>
-                                <li>Financial incentives</li>
-                                <li>Raffles, lotteries, and sweepstakes</li>
-                                <li>Coupons, discounts, and cash-value gift cards</li>
-                                <li>For more, please review our list of prohibited items and subject matter</li>
-                            </ul>
-                            <h5><b>Need ideas for rewards?</b></h5>
-                            <p>Campus has a discussion on that — and plenty more.</p>
-                        </div>
-                    </div> end col-md-3 -->
+                            <div class="border-tips">
+                                <p>How to:</p>
+                                <a href=""><b>Create greate rewards</b></a>
+                            </div>
+                            <div class="help">
+                                <h5><b>What to offer</b></h5>
+                                <p>Copies of what you're making, unique experiences, and limited editions work great.</p>
+                                <h5><b>How to price</b></h5>
+                                <ul>
+                                    <li>Price fairly, and offer a good value. What would <i>you</i> consider a fair exchange?</li>
+                                    <li>Something fun for <span class="money gbp no-code">£10</span> or less is always a good idea.</li>
+                                    <li>Funds that backers pledge to account for shipping costs will count towards your project's funding goal. Keep this in mind when setting your goal.</li>
+                                    <li>Use the shipping tool to add delivery costs for any country you like (including your own). The price will be added to backer's pledges as they check out.</li>
+                                </ul>
+                                <h5><b>What's prohibited</b></h5>
+                                <ul>
+                                    <li>Rewards not directly produced by the creator or the project itself</li>
+                                    <li>Financial incentives</li>
+                                    <li>Raffles, lotteries, and sweepstakes</li>
+                                    <li>Coupons, discounts, and cash-value gift cards</li>
+                                    <li>For more, please review our list of prohibited items and subject matter</li>
+                                </ul>
+                                <h5><b>Need ideas for rewards?</b></h5>
+                                <p>Campus has a discussion on that — and plenty more.</p>
+                            </div>
+                        </div> end col-md-3 -->
                     </div>
                 </div> <!-- end-content -->
             </div>
             <!-- end UPDATE -->
-            <!-- begin tab QA -->
+            @* begin tab QA *@
             <div id="quesion-answer" role="tabpanel" class="tab-pane fade in border-main">
                 <div class="pt30">
                     <h4 class="text-center">Đặt những câu hỏi và trả lời</h4>
@@ -820,10 +841,10 @@
                                                                   maxlength="300"
                                                                   ng-model="question.QuestionContent" ng-disabled="AllEditable == false"></textarea>
                                                         @*<div ng-show="questionForm.question{{$index}}.$dirty && questionForm.question{{$index}}.$invalid" class="text-danger">
-                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                            <span ng-show="questionForm.question{{$index}}.$error.minlength">Câu hỏi ít nhất 10 kí tự!</span>
-                                                            <span ng-show="questionForm.question{{$index}}.$error.maxlength">Câu hỏi dài nhất 300 kí tự!</span>
-                                                        </div>*@
+                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                <span ng-show="questionForm.question{{$index}}.$error.minlength">Câu hỏi ít nhất 10 kí tự!</span>
+                                                                <span ng-show="questionForm.question{{$index}}.$error.maxlength">Câu hỏi dài nhất 300 kí tự!</span>
+                                                            </div>*@
                                                     </div>
                                                 </div>
                                             </div> <!-- end Question -->
@@ -836,10 +857,10 @@
                                                         <textarea class="form-control" rows="5" style="resize: none" name="answer{{$index}}" ng-trim="true"
                                                                   maxlength="300" ng-model="question.Answer" ng-disabled="AllEditable == false"></textarea>
                                                         @*<div ng-show="questionForm.answer{{$index}}.$dirty && questionForm.answer{{$index}}.$invalid" class="text-danger">
-                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                            <span ng-show="questionForm.answer{{$index}}.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
-                                                            <span ng-show="questionForm.answer{{$index}}.$error.maxlength">Trả lời dài nhất 300 kí tự!</span>
-                                                        </div>*@
+                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                <span ng-show="questionForm.answer{{$index}}.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
+                                                                <span ng-show="questionForm.answer{{$index}}.$error.maxlength">Trả lời dài nhất 300 kí tự!</span>
+                                                            </div>*@
                                                     </div>
                                                 </div>
                                             </div> <!-- end Answer -->
@@ -856,7 +877,7 @@
                                     </div>
                                 </div>
                                 <div ng-if="questionForm.$dirty">
-                                    <button type="button" class="btn btn-success" ng-click="resetQuestion(questionForm)">Bỏ</button>
+                                    <button type="button" class="btn btn-danger" ng-click="resetQuestion(questionForm)">Bỏ</button>
                                     <button type="button" ng-disabled="questionForm.$invalid" class="btn btn-success" ng-click="updateQuestion(questionForm)">Lưu</button>
                                 </div>
                             </form>
@@ -883,10 +904,10 @@
                                                                             <textarea class="form-control" rows="5" style="resize: none" name="question" ng-trim="true"
                                                                                       ng-model="newQuestion.QuestionContent"></textarea>
                                                                             @*<div ng-show="CreateQuestionForm.question.$dirty && CreateQuestionForm.question.$invalid" class="text-danger">
-                                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                                                <span ng-show="CreateQuestionForm.question.$error.minlength">Câu hỏi ít nhất 10 kí tự!</span>
-                                                                                <span ng-show="CreateQuestionForm.question.$error.maxlength">Câu hỏi dài nhất 300 kí tự!</span>
-                                                                            </div>*@
+                                                                                    <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                                    <span ng-show="CreateQuestionForm.question.$error.minlength">Câu hỏi ít nhất 10 kí tự!</span>
+                                                                                    <span ng-show="CreateQuestionForm.question.$error.maxlength">Câu hỏi dài nhất 300 kí tự!</span>
+                                                                                </div>*@
                                                                         </div>
                                                                     </div>
                                                                 </div> <!-- end Question -->
@@ -899,19 +920,19 @@
                                                                             <textarea class="form-control" rows="5" style="resize: none" name="answer" ng-trim="true"
                                                                                       ng-model="newQuestion.Answer"></textarea>
                                                                             @*<div ng-show="CreateQuestionForm.answer.$dirty && CreateQuestionForm.answer.$invalid" class="text-danger">
-                                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                                                <span ng-show="CreateQuestionForm.answer.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
-                                                                                <span ng-show="CreateQuestionForm.answer.$error.maxlength">Trả lời dài nhất 300 kí tự!</span>
-                                                                            </div>*@
+                                                                                    <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                                    <span ng-show="CreateQuestionForm.answer.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
+                                                                                    <span ng-show="CreateQuestionForm.answer.$error.maxlength">Trả lời dài nhất 300 kí tự!</span>
+                                                                                </div>*@
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div> <!-- end Answer -->
                                                         </div> <!-- end items -->
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Bỏ</button>
                                                             <button type="button" ng-disabled="CreateQuestionForm.$invalid" class="btn btn-success" ng-click="createQuestion()">
-                                                                Save changes
+                                                                Lưu
                                                             </button>
                                                         </div>
                                                     </div>
@@ -924,36 +945,36 @@
                             </div>
                         </div> <!-- end col-md-9 -->
                         <!--<div class="col-md-3">
-                         <div class="border-tips">
-                          <p>How to:</p>
-                          <a href=""><b>Create greate rewards</b></a>
-                        </div>
-                        <div class="help">
-                          <h5><b>What to offer</b></h5>
-                          <p>Copies of what you're making, unique experiences, and limited editions work great.</p>
-                          <h5><b>How to price</b></h5>
-                          <ul>
-                            <li>Price fairly, and offer a good value. What would <i>you</i> consider a fair exchange?</li>
-                            <li>Something fun for <span class="money gbp no-code">£10</span> or less is always a good idea.</li>
-                            <li>Funds that backers pledge to account for shipping costs will count towards your project's funding goal. Keep this in mind when setting your goal.</li>
-                            <li>Use the shipping tool to add delivery costs for any country you like (including your own). The price will be added to backer's pledges as they check out.</li>
-                          </ul>
-                          <h5><b>What's prohibited</b></h5>
-                          <ul>
-                            <li>Rewards not directly produced by the creator or the project itself</li>
-                            <li>Financial incentives</li>
-                            <li>Raffles, lotteries, and sweepstakes</li>
-                            <li>Coupons, discounts, and cash-value gift cards</li>
-                            <li>For more, please review our list of prohibited items and subject matter</li>
-                          </ul>
-                          <h5><b>Need ideas for rewards?</b></h5>
-                          <p>Campus has a discussion on that — and plenty more.</p>
-                        </div>
-                    </div> end col-md-3 -->
+                             <div class="border-tips">
+                              <p>How to:</p>
+                              <a href=""><b>Create greate rewards</b></a>
+                            </div>
+                            <div class="help">
+                              <h5><b>What to offer</b></h5>
+                              <p>Copies of what you're making, unique experiences, and limited editions work great.</p>
+                              <h5><b>How to price</b></h5>
+                              <ul>
+                                <li>Price fairly, and offer a good value. What would <i>you</i> consider a fair exchange?</li>
+                                <li>Something fun for <span class="money gbp no-code">£10</span> or less is always a good idea.</li>
+                                <li>Funds that backers pledge to account for shipping costs will count towards your project's funding goal. Keep this in mind when setting your goal.</li>
+                                <li>Use the shipping tool to add delivery costs for any country you like (including your own). The price will be added to backer's pledges as they check out.</li>
+                              </ul>
+                              <h5><b>What's prohibited</b></h5>
+                              <ul>
+                                <li>Rewards not directly produced by the creator or the project itself</li>
+                                <li>Financial incentives</li>
+                                <li>Raffles, lotteries, and sweepstakes</li>
+                                <li>Coupons, discounts, and cash-value gift cards</li>
+                                <li>For more, please review our list of prohibited items and subject matter</li>
+                              </ul>
+                              <h5><b>Need ideas for rewards?</b></h5>
+                              <p>Campus has a discussion on that — and plenty more.</p>
+                            </div>
+                        </div> end col-md-3 -->
                     </div>
                 </div>  <!-- end-content -->
             </div> <!-- end QUESTION AND ANSWER -->
-            <!--begin tab timeline -->
+            @* begin tab timeline *@
             <div id="timelineTab" role="tabpanel" class="tab-pane fade in border-main">
                 <div class="pt30">
                     <h4 class="text-center">Lịch trình dự án</h4>
@@ -977,10 +998,10 @@
                                                     <input type="text" class="form-control" name="title{{$index}}" ng-model="timeline.Title" ng-trim="true"
                                                            maxlength="60" id="title{{$index}}" disabled>
                                                     @*<div ng-show="timelineForm.title{{$index}}.$dirty && timelineForm.title{{$index}}.$invalid" class="text-danger">
-                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                        <span ng-show="timelineForm.title{{$index}}.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
-                                                        <span ng-show="timelineForm.title{{$index}}.$error.maxlength">Trả lời dài nhất 60 kí tự!</span>
-                                                    </div>*@
+                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                            <span ng-show="timelineForm.title{{$index}}.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
+                                                            <span ng-show="timelineForm.title{{$index}}.$error.maxlength">Trả lời dài nhất 60 kí tự!</span>
+                                                        </div>*@
                                                 </div>
                                             </div> <!-- end Title and Delete-->
                                             <div class="row">
@@ -1025,10 +1046,10 @@
                                                         <textarea class="form-control" rows="5" style="resize: none" name="desc{{$index}}" ng-model="timeline.Description" ng-trim="true"
                                                                   maxlength="135" id="desc{{$index}}" disabled></textarea>
                                                         @*<div ng-show="timelineForm.desc{{$index}}.$dirty && timelineForm.desc{{$index}}.$invalid" class="text-danger">
-                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                            <span ng-show="timelineForm.desc{{$index}}.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
-                                                            <span ng-show="timelineForm.desc{{$index}}.$error.maxlength">Trả lời dài nhất 135 kí tự!</span>
-                                                        </div>*@
+                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                <span ng-show="timelineForm.desc{{$index}}.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
+                                                                <span ng-show="timelineForm.desc{{$index}}.$error.maxlength">Trả lời dài nhất 135 kí tự!</span>
+                                                            </div>*@
                                                     </div>
                                                 </div>
                                             </div> <!-- end Description -->
@@ -1036,7 +1057,7 @@
                                                 <div class="col-md-3"></div>
                                                 <div class="col-md-9">
                                                     <a class="btn btn-info btn-sm btn-wide pl5 pr5" ng-click="turnEditTimeline($index)" ng-if="AllEditable == true">Sửa</a>
-                                                    <a class="btn btn-info btn-sm btn-wide pl5 pr5" ng-disabled="timelineForm.$invalid" ng-click="timelineForm.$valid && updateTimeline($index)" ng-if="editTimeline[$index] == true">Lưu</a>
+                                                    <a class="btn btn-success btn-sm btn-wide pl5 pr5" ng-disabled="timelineForm.$invalid" ng-click="timelineForm.$valid && updateTimeline($index)" ng-if="editTimeline[$index] == true">Lưu</a>
                                                     <a class="btn btn-danger btn-sm btn-wide pl5 pr5" ng-click="deleteTimeline($index)" ng-if="AllEditable == true">Xóa</a>
                                                 </div>
                                             </div> <!-- end Action -->
@@ -1066,10 +1087,10 @@
                                                                         <input type="text" class="form-control" name="title" ng-trim="true"
                                                                                maxlength="60" ng-model="newTimeline.Title">
                                                                         @*<div ng-show="CreateTimelineForm.title.$dirty && CreateTimelineForm.title.$invalid" class="text-danger">
-                                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                                            <span ng-show="CreateTimelineForm.title.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
-                                                                            <span ng-show="CreateTimelineForm.title.$error.maxlength">Trả lời dài nhất 60 kí tự!</span>
-                                                                        </div>*@
+                                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                                <span ng-show="CreateTimelineForm.title.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
+                                                                                <span ng-show="CreateTimelineForm.title.$error.maxlength">Trả lời dài nhất 60 kí tự!</span>
+                                                                            </div>*@
                                                                     </div>
                                                                 </div> <!-- end Title and Delete-->
                                                                 <div class="row">
@@ -1119,7 +1140,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="offNewPoint()">Bỏ</button>
+                                                            <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="offNewPoint()">Bỏ</button>
                                                             <button type="button" ng-disabled="CreateTimelineForm.$invalid" class="btn btn-success" ng-click="createTimeline()">
                                                                 Tạo
                                                             </button>
@@ -1136,30 +1157,30 @@
 
                         <div class="col-md-3">
                             <!-- <div class="border-tips">
-                          <p>How to:</p>
-                          <a href=""><b>Create greate rewards</b></a>
-                        </div>
-                        <div class="help">
-                          <h5><b>What to offer</b></h5>
-                          <p>Copies of what you're making, unique experiences, and limited editions work great.</p>
-                          <h5><b>How to price</b></h5>
-                          <ul>
-                            <li>Price fairly, and offer a good value. What would <i>you</i> consider a fair exchange?</li>
-                            <li>Something fun for <span class="money gbp no-code">£10</span> or less is always a good idea.</li>
-                            <li>Funds that backers pledge to account for shipping costs will count towards your project's funding goal. Keep this in mind when setting your goal.</li>
-                            <li>Use the shipping tool to add delivery costs for any country you like (including your own). The price will be added to backer's pledges as they check out.</li>
-                          </ul>
-                          <h5><b>What's prohibited</b></h5>
-                          <ul>
-                            <li>Rewards not directly produced by the creator or the project itself</li>
-                            <li>Financial incentives</li>
-                            <li>Raffles, lotteries, and sweepstakes</li>
-                            <li>Coupons, discounts, and cash-value gift cards</li>
-                            <li>For more, please review our list of prohibited items and subject matter</li>
-                          </ul>
-                          <h5><b>Need ideas for rewards?</b></h5>
-                          <p>Campus has a discussion on that — and plenty more.</p>
-                        </div> -->
+                              <p>How to:</p>
+                              <a href=""><b>Create greate rewards</b></a>
+                            </div>
+                            <div class="help">
+                              <h5><b>What to offer</b></h5>
+                              <p>Copies of what you're making, unique experiences, and limited editions work great.</p>
+                              <h5><b>How to price</b></h5>
+                              <ul>
+                                <li>Price fairly, and offer a good value. What would <i>you</i> consider a fair exchange?</li>
+                                <li>Something fun for <span class="money gbp no-code">£10</span> or less is always a good idea.</li>
+                                <li>Funds that backers pledge to account for shipping costs will count towards your project's funding goal. Keep this in mind when setting your goal.</li>
+                                <li>Use the shipping tool to add delivery costs for any country you like (including your own). The price will be added to backer's pledges as they check out.</li>
+                              </ul>
+                              <h5><b>What's prohibited</b></h5>
+                              <ul>
+                                <li>Rewards not directly produced by the creator or the project itself</li>
+                                <li>Financial incentives</li>
+                                <li>Raffles, lotteries, and sweepstakes</li>
+                                <li>Coupons, discounts, and cash-value gift cards</li>
+                                <li>For more, please review our list of prohibited items and subject matter</li>
+                              </ul>
+                              <h5><b>Need ideas for rewards?</b></h5>
+                              <p>Campus has a discussion on that — and plenty more.</p>
+                            </div> -->
                         </div><!-- end col-md-3 -->
                     </div>
                 </div>  <!-- end-content -->
@@ -1168,8 +1189,3 @@
         </div>
     </div>
 </div> <!-- end BASIC-TABPANEL -->
-<div class="scroll-top-wrapper ">
-    <span class="scroll-top-inner">
-        <i class="fa fa-2x fa-arrow-circle-up"></i>
-    </span>
-</div> <!-- end SCROLL TO TOP -->
