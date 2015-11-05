@@ -12,6 +12,7 @@ namespace DDL_CapstoneProject.Models.DTOs
         public decimal FundingGoals { get; set; }
         public DateTime? ExpireDate { get; set; }
         public string Isfunded { get; set; }
+        public double Isexpired { get; set; }
         public string Category { get; set; }
         public decimal PledgedOn { get; set; }
         public string Status { get; set; }

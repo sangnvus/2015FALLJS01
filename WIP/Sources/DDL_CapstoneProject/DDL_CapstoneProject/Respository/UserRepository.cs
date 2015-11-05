@@ -573,17 +573,33 @@ namespace DDL_CapstoneProject.Respository
                 {
                     AdminUserBackedListDTO projectReturn = new AdminUserBackedListDTO();
                     projectReturn.Status = backed.Project.Status;
-                    if (backed.Project.IsFunded == true)
+
+                    if (backed.Project.Status == DDLConstants.ProjectStatus.APPROVED)
                     {
-                        projectReturn.Status = "Thành công";
+                        if (backed.Project.IsFunded == true)
+                        {
+                            projectReturn.Isfunded = "suscced";
+                        }
+                        else if (backed.Project.IsFunded == false && backed.Project.IsExprired == true)
+                        {
+                            projectReturn.Isfunded = "fail";
+                        }
+                        else if (backed.Project.IsFunded == false && backed.Project.IsExprired == false)
+                        {
+                            projectReturn.Isfunded = "going";
+                        }
                     }
-                    else if (backed.Project.IsFunded == false && backed.Project.IsExprired == true)
+                    else if (backed.Project.Status == DDLConstants.ProjectStatus.REJECTED)
                     {
-                        projectReturn.Status = "Thất bại";
+                        projectReturn.Status = DDLConstants.ProjectStatus.REJECTED;
                     }
-                    else if (backed.Project.IsFunded == false && backed.Project.IsExprired == false)
+                    else if (backed.Project.Status == DDLConstants.ProjectStatus.PENDING)
                     {
-                        projectReturn.Status = "Đang chạy";
+                        projectReturn.Status = DDLConstants.ProjectStatus.PENDING;
+                    }
+                    else if (backed.Project.Status == DDLConstants.ProjectStatus.SUSPENDED)
+                    {
+                        projectReturn.Status = DDLConstants.ProjectStatus.SUSPENDED;
                     }
                     projectReturn.PledgedAmount = backed.BackingDetail.PledgedAmount;
                     projectReturn.FundingGoals = backed.Project.FundingGoal;
@@ -609,7 +625,7 @@ namespace DDL_CapstoneProject.Respository
             using (var db = new DDLDataContext())
             {
                 var userCurrent = db.DDL_Users.Where(x => x.Username == UserName).FirstOrDefault();
-                var listProjectCreated = db.Projects.Where(x => x.CreatorID == userCurrent.DDL_UserID).ToList();
+                var listProjectCreated = db.Projects.Where(x => x.CreatorID == userCurrent.DDL_UserID && x.Status != DDLConstants.ProjectStatus.DRAFT).ToList();
                 List<AdminUserCreatedListDTO> listReturn = new List<AdminUserCreatedListDTO>();
                 foreach (var created in listProjectCreated)
                 {
@@ -618,24 +634,52 @@ namespace DDL_CapstoneProject.Respository
                     projectReturn.Status = created.Status;
                     projectReturn.ProjectTitle = created.Title;
                     projectReturn.ProjectCode = created.ProjectCode;
-                    projectReturn.ExpireDate = created.ExpireDate;
+                    projectReturn.ExpireDate = CommonUtils.ConvertDateTimeFromUtc(created.ExpireDate.GetValueOrDefault());
                     projectReturn.Category = created.Category.Name;
-                    if (created.IsFunded == true)
+
+                    if (created.IsExprired == true)
                     {
-                        projectReturn.Isfunded = "Thành công";
+                        projectReturn.Isexpired = 0;
                     }
-                    else if (created.IsFunded == false && created.IsExprired == true)
+                    else
                     {
-                        projectReturn.Isfunded = "Thất bại";
+                        TimeSpan t = DateTime.UtcNow - projectReturn.ExpireDate.GetValueOrDefault();
+                        projectReturn.Isexpired = t.TotalDays;
                     }
-                    else if (created.Status == "draft")
+
+                    if (created.Status == DDLConstants.ProjectStatus.APPROVED)
                     {
-                        projectReturn.Isfunded = "Nháp";
+                        projectReturn.Status = DDLConstants.ProjectStatus.APPROVED;
+                        if (created.IsFunded == true)
+                        {
+                            projectReturn.Isfunded = "suscced";
+                        }
+                        else if (created.IsFunded == false && created.IsExprired == true)
+                        {
+                            projectReturn.Isfunded = "fail";
+                        }
+                        //else if (created.Status == "draft")
+                        //{
+                        //    projectReturn.Isfunded = "Nháp";
+                        //}
+                        else if (created.IsFunded == false && created.IsExprired == false)
+                        {
+                            projectReturn.Isfunded = "going";
+                        }
                     }
-                    else if (created.IsFunded == false && created.IsExprired == false)
+                    else if (created.Status == DDLConstants.ProjectStatus.REJECTED)
                     {
-                        projectReturn.Isfunded = "Đang chạy";
+                        projectReturn.Status = DDLConstants.ProjectStatus.REJECTED;
                     }
+                    else if (created.Status == DDLConstants.ProjectStatus.PENDING)
+                    {
+                        projectReturn.Status = DDLConstants.ProjectStatus.PENDING;
+                    }
+                    else if (created.Status == DDLConstants.ProjectStatus.SUSPENDED)
+                    {
+                        projectReturn.Status = DDLConstants.ProjectStatus.SUSPENDED;
+                    }
+
                     List<Backing> AllBacked = db.Backings.Where(x => x.Project.ProjectCode == created.ProjectCode).ToList();
                     decimal PledgedOn = new decimal();
                     foreach (Backing backing in AllBacked)
@@ -772,7 +816,7 @@ namespace DDL_CapstoneProject.Respository
 
                 NewUserDTO NewUser = new NewUserDTO();
                 List<NewUserDTO> listNewUser = new List<NewUserDTO>();
-                var NewuserList = userList.Where(x => x.CreatedDate.ToString("dd-MM-yyyy") == DateTime.UtcNow.ToString("dd-MM-yyyy")).ToList();
+                var NewuserList = userList.Where(x => x.CreatedDate.ToString("MM-yyyy") == DateTime.UtcNow.ToString("MM-yyyy")).ToList();
                 foreach (var user in NewuserList)
                 {
                     if (user.IsVerify == true)
@@ -794,7 +838,7 @@ namespace DDL_CapstoneProject.Respository
                 listTopCreator = listTopCreator.OrderByDescending(x => x.TotalPledgedAmount).Take(5).ToList();
                 listRecentUser = listRecentUser.OrderByDescending(x => x.LastLogin).Take(5).ToList(); ;
                 listTopbackerUser = listTopbackerUser.OrderByDescending(x => x.TotalPledgedAmount).Take(5).ToList();
-                listNewUser = listNewUser.OrderByDescending(x => x.CreatedDate).Take(5).ToList();
+                listNewUser = listNewUser.OrderByDescending(x => x.CreatedDate).ToList();
 
 
                 listReturn.RecentUser = listRecentUser;
