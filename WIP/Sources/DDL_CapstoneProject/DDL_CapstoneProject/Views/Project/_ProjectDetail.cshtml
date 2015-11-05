@@ -99,7 +99,7 @@
                 <li ng-show="Project.NumberUpdate > 0"><a showtab href="#update" data-toggle="tab" ng-click="getUpdateLogList()">Cập nhật <span class="badge">{{Project.NumberUpdate}}</span></a></li>
                 <li><a showtab href="#comments" data-toggle="tab" ng-click="getCommentList()">Bình luận <span class="badge">{{Project.NumberComment}}</span></a></li>
                 <li><a showtab href="#schedule" data-toggle="tab">Tiến trình</a></li>
-                <li ng-show="Project.NumberBacked > 0"><a showtab href="#list-backers" data-toggle="tab" ng-click="loadlistBacker()">Ủng hộ <span class="badge">{{Project.NumberBacked}}</span></a></li>
+                @*<li ng-show="Project.NumberBacked > 0"><a showtab href="#list-backers" data-toggle="tab" ng-click="loadlistBacker()">Ủng hộ <span class="badge">{{Project.NumberBacked}}</span></a></li>*@
             </ul>
         </div>
     </div>
@@ -128,27 +128,22 @@
                                     </div> <!-- end Risks and challeges -->
                                     @*Question*@
                                     <p>
-                                        <h1 class="fnt25">Bạn có thắc mắc cần được giải đáp ?</h1>
-                                        <div ng-show="Project.Question.length == 0" class="fnt-b">Nếu những thông tin trên không giúp bạn có câu trả lời , hãy trực tiếp đặt câu hỏi với chủ dự án .</div>
+                                        <h1 ng-if="Project.Question.length > 0" class="fnt25">Bạn có thắc mắc cần được giải đáp ?</h1>
                                     </p>
-                                    <ul style="list-style: none">
+                                    <ul style="list-style: none" ng-if="Project.Question.length > 0">
                                         <li ng-repeat="question in Project.Question">
                                             <div class="questionItem">
-                                                <div class="panel-heading" role="tab" id="question1">
+                                                <div class="panel-heading pb0" role="tab" id="question1">
                                                     <div class="tab-content">
                                                         <a style="color: #00a0ff" class="fnt-n"
                                                            role="button" data-toggle="collapse" data-target="#Question{{question.QuestionID}}">
                                                             <span class="glyphicon glyphicon-chevron-right fnt-b "></span>
-                                                            @*<span ng-show="question.loadAnswer" class="glyphicon glyphicon-chevron-down fnt-b "></span>*@
-                                                            {{question.QuestionContent}}
-                                                        </a>
+                                                            {{question.QuestionContent}}?</a>
                                                     </div>
                                                 </div>
-                                                <div id="Question{{question.QuestionID}}" class="panel-collapse collapse" role="tabpanel">
-                                                    <div class="panel-body">
-                                                        <div class="answer">
-                                                            {{question.Answer}}
-                                                        </div>
+                                                <div id="Question{{question.QuestionID}}" class="panel-collapse collapse ml25" role="tabpanel">
+                                                    <div class="panel-body pt0">
+                                                        <div class="answer" style="word-break: break-word; white-space: pre-wrap">{{question.Answer}}</div>
                                                         <div class="link-gray-dark fnt16 pt10">{{question.CreatedDate |date:"'Cập nhật lần cuối lúc :' dd/MM/yyyy" }}</div>
                                                     </div>
                                                 </div>
@@ -157,6 +152,11 @@
                                     </ul>
                                     @if (User.Identity != null && !string.IsNullOrEmpty(User.Identity.Name))
                                     {
+
+                                        <p>
+                                            <h1 ng-if="Project.Question.length == 0" class="fnt25">Bạn có thắc mắc cần được giải đáp ?</h1>
+                                            <div class="fnt-b">Hãy trực tiếp đặt câu hỏi với chủ dự án .</div>
+                                        </p>
                                         <p>
                                             <a class="btn btn-primary" data-toggle="modal" data-target="#sendQuestion">Gửi câu hỏi</a>
                                         </p>
@@ -218,10 +218,8 @@
                                             <li ng-repeat="reward in Project.RewardDetail" class="item">
                                                 <div class="item-show">
                                                     <h5 class="fnt20 c3" for="">Ủng hộ {{reward.PledgeAmount}} <span class="money usd no-code">&#8363;</span> hoặc nhiều hơn</h5>
-                                                    <p class="bold"><span class="glyphicon glyphicon-asterisk"></span> {{reward.Backers}}  backers</p>
-                                                    <div style="word-break: break-word; white-space: pre-wrap;" class="item-description">
-                                                        {{reward.Description}}
-                                                    </div>
+                                                    <p class="bold"><span class="glyphicon glyphicon-asterisk"></span> {{reward.Backers}}  người đã ủng hộ</p>
+                                                    <div style="word-break: break-word; white-space: pre-wrap;" class="item-description">{{reward.Description}}</div>
                                                     <div class="item-extra-info">
                                                         <p class="">Thời gian giao hàng ước tính :</p>
                                                         <p>{{reward.EstimatedDelivery | date:"'Tháng' MM/yyyy"}} </p>
@@ -229,7 +227,7 @@
                                                 </div> <!-- end main Reward -->
                                                 <a href="@Url.Content("/#/project/back/{{Project.ProjectCode}}?reward={{$index+1}}")">
                                                     <div class="hoverReward">
-                                                        <span class="titleHover">Chọn gói quà này</span>
+                                                        <span class="titleHover">Chọn gói này</span>
                                                     </div>
                                                 </a> <!-- end hover Reward -->
                                             </li>
@@ -393,7 +391,7 @@
                         </div>
                     </div><!-- end SCHEDULE -->
                     <!-- LIST-BACKERS -->
-                    <div id="list-backers" role="tabpanel" class="tab-pane fade in project-tab-border">
+                    @*<div id="list-backers" role="tabpanel" class="tab-pane fade in project-tab-border">
                         <div class="ml10 mr10">
                             <div>
                                 <h3 class="fnt25">Danh sách người ủng hộ</h3>
@@ -423,7 +421,7 @@
                                 </tbody>
                             </table>  <!-- TABLE BACKERS LIST -->
                         </div>
-                    </div><!-- end BACKERS LIST -->
+                    </div><!-- end BACKERS LIST -->*@
                 </div>
             </div>
         </div>

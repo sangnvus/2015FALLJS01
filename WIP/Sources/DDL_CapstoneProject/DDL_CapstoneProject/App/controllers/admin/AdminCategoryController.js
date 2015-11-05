@@ -2,7 +2,7 @@
 
 app.controller('AdminCategoryController',
     function ($scope, $rootScope, toastr, listcategory, AdminCategoryService, CommmonService,
-        DTOptionsBuilder, DTColumnDefBuilder) {
+        DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
         //Todo here.
         $scope.ListCategory = listcategory.data.Data;
         $scope.NewCategory = {
@@ -24,25 +24,40 @@ app.controller('AdminCategoryController',
         ];
 
         $scope.changeCategoryStatus = function (id, index) {
-            var promise = AdminCategoryService.changeCategoryStatus(id);
-            promise.then(
-                function (result) {
-                    if (result.data.Status === "success") {
-                        $scope.ListCategory[index].IsActive = result.data.Data.IsActive;
-                        if ($scope.ListCategory[index].IsActive) {
-                            toastr.success("Đã mở khóa");
-                        } else {
-                            toastr.success("Đã khóa");
+            SweetAlert.swal({
+                title: "Xóa danh mục",
+                text: "Bạn có chắc chắn muốn xóa danh mục này không?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#2ecc71",
+                confirmButtonText: "Có, tôi chắc chắn",
+                cancelButtonText: "Không",
+                closeOnConfirm: true
+            },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            var promise = AdminCategoryService.changeCategoryStatus(id);
+                            promise.then(
+                                function (result) {
+                                    if (result.data.Status === "success") {
+                                        $scope.ListCategory[index].IsActive = result.data.Data.IsActive;
+                                        if ($scope.ListCategory[index].IsActive) {
+                                            toastr.success("Đã mở khóa");
+                                        } else {
+                                            toastr.success("Đã khóa");
+                                        }
+                                    } else {
+                                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                                        if (a) {
+                                            toastr.error($scope.Error, 'Lỗi');
+                                        }
+                                    }
+                                },
+                                function (error) {
+                                    toastr.error($scope.Error, 'Lỗi');
+                                });
                         }
-                    } else {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        $scope.Error = result.data.Message;
-                        toastr.error($scope.Error, 'Lỗi');
-                    }
-                },
-                function (error) {
-                    $scope.Error = error.data.Message;
-                });
+                    });
         }
 
         // Functions reset new message form
@@ -64,32 +79,49 @@ app.controller('AdminCategoryController',
                         toastr.success("Tạo danh mục thành công");
                         $('#newCategoryModal').modal('hide');
                     } else {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        $scope.NewCategoryError = result.data.Message;
-                        toastr.error($scope.NewCategoryError, 'Lỗi');
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
                     }
                 },
                 function (error) {
-                    $scope.Error = error.data.Message;
+                    toastr.error($scope.Error, 'Lỗi');
                 });
         }
 
         // Delete category
         $scope.deleteCategory = function (id, index) {
-            var promise = AdminCategoryService.deleteCategory(id);
-            promise.then(
-                function (result) {
-                    if (result.data.Status === "success") {
-                        $scope.ListCategory.splice(index);
-                        toastr.success("Xóa thành công");
-                    } else {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        toastr.error($scope.NewCategoryError, 'Lỗi');
-                    }
-                },
-                function (error) {
-                    $scope.Error = error.data.Message;
-                });
+            SweetAlert.swal({
+                title: "Xóa danh mục",
+                text: "Bạn có chắc chắn muốn xóa danh mục này không?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#2ecc71",
+                confirmButtonText: "Có, tôi chắc chắn",
+                cancelButtonText: "Không",
+                closeOnConfirm: false
+            },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            var promise = AdminCategoryService.deleteCategory(id);
+                            promise.then(
+                                function (result) {
+                                    if (result.data.Status === "success") {
+                                        $scope.ListCategory.splice(index);
+                                        toastr.success("Xóa thành công");
+                                    } else {
+                                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                                        if (a) {
+                                            toastr.error($scope.Error, 'Lỗi');
+                                        }
+                                    }
+                                },
+                                function (error) {
+                                    toastr.error($scope.Error, 'Lỗi');
+                                });
+                        }
+                    });
         }
 
         $scope.showEditDialog = function (index, EditCategoryForm) {
@@ -118,12 +150,14 @@ app.controller('AdminCategoryController',
                         toastr.success("Sửa thành công");
                         $('#EditCategoryModal').modal('hide');
                     } else {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        toastr.error($scope.NewCategoryError, 'Lỗi');
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
                     }
                 },
                 function (error) {
-                    $scope.Error = error.data.Message;
+                    toastr.error($scope.Error, 'Lỗi');
                 });
         }
 

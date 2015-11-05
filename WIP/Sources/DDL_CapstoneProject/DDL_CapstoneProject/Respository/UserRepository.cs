@@ -193,15 +193,16 @@ namespace DDL_CapstoneProject.Respository
                 VerifyCode = string.Empty,
                 UserInfo = new UserInfo
                 {
-                    Address = string.Empty,
+                    Address = me.location,
                     FullName = me.name,
                     Biography = me.bio,
                     Gender = me.gender,
-                    DateOfBirth = me.birthday,
+                    DateOfBirth = !string.IsNullOrEmpty(me.birthday) ? DateTime.ParseExact(me.birthday.ToString(), "MM/DD/YYYY", System.Globalization.CultureInfo.InvariantCulture): null,
                     FacebookUrl = me.link,
                     ProfileImage = "https://graph.facebook.com/" + me.id + "/picture?type=large",
                     Country = string.Empty,
-                    Website = string.Empty,
+                    Website = me.website,
+                    PhoneNumber = string.Empty
                 }
             };
             // Facebook account
