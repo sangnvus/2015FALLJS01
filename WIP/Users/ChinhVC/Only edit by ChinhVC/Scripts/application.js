@@ -80,6 +80,41 @@ String.prototype.repeat = function (num) {
   //end Main Slider ---------------------------------------------
 
 
+  //#fit col .portfolio-items
+  // -------------------------------------------------------------
+    function fitCol_porfolio(){
+      var win_width = $(window).width();
+       if(win_width > 1200){
+         $('.portfolio-items').removeClass('col-4');
+         $('.portfolio-items').removeClass('col-3');
+         $('.portfolio-items').removeClass('col-2');
+         $('.portfolio-items').removeClass('col-1');
+         $('.portfolio-items').addClass('col-4');
+       } else if(win_width >950 && win_width <=1200){
+         $('.portfolio-items').removeClass('col-4');
+         $('.portfolio-items').removeClass('col-3');
+         $('.portfolio-items').removeClass('col-3');
+         $('.portfolio-items').removeClass('col-2');
+         $('.portfolio-items').removeClass('col-1');
+         $('.portfolio-items').addClass('col-3');
+       } else if(win_width <=950){
+         $('.portfolio-items').removeClass('col-4');
+         $('.portfolio-items').removeClass('col-3');
+         $('.portfolio-items').removeClass('col-3');
+         $('.portfolio-items').removeClass('col-2');
+         $('.portfolio-items').removeClass('col-1');
+         $('.portfolio-items').addClass('col-2');
+       }
+    }
+    $(window).bind("load", function () {
+         fitCol_porfolio();
+      });
+    $(window).resize(function() {
+       fitCol_porfolio();
+    });
+  //end col .portfolio-items ---------------------------------------
+
+
 
   //#item-image
   //------------------------------------------------------------
@@ -102,27 +137,7 @@ String.prototype.repeat = function (num) {
         $('.img-fit').css({'width': img_width,'height': img_height});
       });
     });
-    // function img_Fit_Project(){
-    //   $( '.img-fit-pro' ).each(function(e) {
-    //     var img_width = 0;
-    //     img_width =$('.image-pro').width();
-    //     var img_height = img_width*3/4;
-    //     // var div_height = img_width*3/4; + 20;
-    //     // var div_width = img_width + 20;
-    //     // console.log(img_width + "x" + img_height);
-    //     $('.img-fit-pro').css({'width': img_width,'height': img_height});
-    //   });
-    // }
-    // $(window).bind("load", function () {
-    //      img_Fit_Project();
-    // });
-    // $(window).resize(function() {
-    //      img_Fit_Project();
-    //      console.log(123);
-    // });
-    
   //end item-image ---------------------------------------------
-
 
 
   //Scroll to top
