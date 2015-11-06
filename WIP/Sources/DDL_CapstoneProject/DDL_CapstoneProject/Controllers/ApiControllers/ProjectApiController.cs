@@ -1059,7 +1059,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 {
                     throw new NotPermissionException();
                 }
-                result = ProjectRepository.Instance.AdminChangeProjectStatus(project);
+                result = ProjectRepository.Instance.AdminChangeProjectStatus(project, User.Identity.Name);
             }
             catch (Exception)
             {

@@ -69,5 +69,24 @@ namespace DDL_CapstoneProject.Helper
 
             }
         }
+
+        public void SendMailChangeProjectStatus(string email, string fullname, string type, string projectTitle)
+        {
+            try
+            {
+                _mail.To.Add(email);
+                _mail.Subject = "Dandelion - " + type + " dự án " + projectTitle + "!";
+                _mail.Body = "Xin chào " + fullname + "," +
+                            "<br/>Chúng tôi vừa " + type + " dự án " + projectTitle + " của bạn." +
+                            "<br/>Để biết thêm chi tiết xin liện hệ với admin qua email" +
+                            "<br/>ngocmanh1712@gmail.com";
+                _smtp.Send(_mail);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
+        }
     }
 }

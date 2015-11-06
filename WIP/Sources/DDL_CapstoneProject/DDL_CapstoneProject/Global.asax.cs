@@ -64,7 +64,7 @@ namespace DDL_CapstoneProject
             }
 
             // Test timer
-            //Test();
+            Test();
         }
 
         // Test timer PRJ1
@@ -90,7 +90,7 @@ namespace DDL_CapstoneProject
         {
             using (var db = new DDLDataContext())
             {
-                var projects = db.Projects.Where(x => x.IsExprired == false).ToList();
+                var projects = db.Projects.Where(x => x.IsExprired == false && x.Status != DDLConstants.ProjectStatus.DRAFT).ToList();
 
                 foreach (var project in projects)
                 {
@@ -98,6 +98,7 @@ namespace DDL_CapstoneProject
                         && project.ExpireDate.Value.Month == DateTime.UtcNow.Month)
                     {
                         project.IsExprired = true;
+                        project.Status = DDLConstants.ProjectStatus.EXPIRED;
                     }
 
                     db.SaveChanges();

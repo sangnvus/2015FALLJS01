@@ -59,7 +59,7 @@ app.controller('PaymentProjectController', function ($scope, $rootScope, $sce, $
                     toastr.success('Bạn đã ủng hộ dự án thành công!');
                     $location.path("/project/detail/" + result.data.Data).replace();
                 } else {
-                    //CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 }
