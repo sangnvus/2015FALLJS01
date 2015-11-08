@@ -42,7 +42,7 @@
                             &nbsp;&nbsp;
                         </div>
                         <div class="progress mt5 mb5">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" ng-style="width: {{project.CurrentFunded}}%">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
                                 <span class=" sr-only">
                                     {{project.CurrentFunded}}% Complete (success)
                                 </span>
@@ -85,7 +85,7 @@
                             &nbsp;&nbsp;
                         </div>
                         <div class="progress mt5 mb5">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" ng-style="width: {{project.CurrentFunded}}%">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
                                 <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
                             </div>
                         </div>
@@ -130,11 +130,11 @@
                         </div>
                         <div class="progress mt5 mb5">
 
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" ng-style="width: {{project.CurrentFunded}}%" ng-if="project.CurrentFunded >= 100">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%" ng-if="project.CurrentFunded >= 100">
                                 <span class="sr-only">{{project.CurrentFunded}}% Complete (Thành công)</span>
                             </div>
 
-                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" ng-style="width: {{project.CurrentFunded}}%" ng-if="project.CurrentFunded < 100">
+                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%" ng-if="project.CurrentFunded < 100">
                                 <span class="sr-only">{{project.CurrentFunded}}% Complete (thất bại)</span>
                             </div>
 
