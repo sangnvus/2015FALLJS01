@@ -763,7 +763,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         }
 
         // POST: api/ProjectApi/BackProject
-        [ResponseType(typeof(QuestionDTO))]
+        [ResponseType(typeof(ProjectBackDTO))]
         [HttpPost]
         public IHttpActionResult BackProject(ProjectBackDTO backingData)
         {

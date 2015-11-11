@@ -24,6 +24,11 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
 
     // check error list
     $scope.errorListFlag = false;
+    // check create reward
+    $scope.newRewardError = false;
+    // check edit updatelog
+    $scope.IsEditUpdateLog = [];
+
 
     // Check first load
     $scope.FirstLoadReward = false;
@@ -304,60 +309,94 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     };
     // Create a new reward
     $scope.createReward = function () {
+        if ($scope.NewReward.PledgeAmount < 10000 || $scope.NewReward.PledgeAmount == '' || $scope.NewReward.PledgeAmount == null
+            || $scope.NewReward.Description == null
+            || $scope.NewReward.Description.length < 10 || $scope.NewReward.Description.length > 135
+            || $scope.NewReward.Description == ''
+            || ($scope.NewReward.EstimatedDelivery < $scope.Project.ExpireDate && $scope.Project.ExpireDate != null && $scope.NewReward.Type != "no reward")
+            || (($scope.NewReward.Quantity < 1 || $scope.NewReward.Quantity == null || $scope.NewReward.Quantity == '') && $scope.NewReward.Type == "limited")) {
+            $scope.newRewardError = true;
+        } else {
+            $scope.newRewardError = false;
+        }
+
+
         if ($scope.NewReward.Type != "limited") {
             $scope.NewReward.Quantity = 0;
         }
-        var promiseCreateReward = ProjectService.createReward($scope.Project.ProjectID, $scope.NewReward);
 
-        promiseCreateReward.then(
-            function (result) {
-                if (result.data.Status === "success") {
-                    toastr.success('Tạo gói quà thành công!');
-                    $('#addReward').modal('hide');
-                    // reinitial newReward
-                    $scope.NewReward = {};
-                    $scope.NewReward.Type = "no reward"
-                    result.data.Data.EstimatedDelivery = new Date($filter('date')(result.data.Data.EstimatedDelivery, "yyyy-MM-dd"));
-                    if (result.data.Data.Quantity > 0) {
-                        result.data.Data.LimitQuantity = true;
+        if (!$scope.newRewardError) {
+            if ($scope.PrjApprove) {
+                $scope.NewReward.IsHide = true;
+            }
+            var promiseCreateReward = ProjectService.createReward($scope.Project.ProjectID, $scope.NewReward);
+
+            promiseCreateReward.then(
+                function (result) {
+                    if (result.data.Status === "success") {
+                        toastr.success('Tạo gói quà thành công!');
+                        $('#addReward').modal('hide');
+                        // reinitial newReward
+                        $scope.NewReward = {};
+                        $scope.NewReward.Type = "no reward"
+                        result.data.Data.EstimatedDelivery = new Date($filter('date')(result.data.Data.EstimatedDelivery, "yyyy-MM-dd"));
+                        if (result.data.Data.Quantity > 0) {
+                            result.data.Data.LimitQuantity = true;
+                        }
+                        $scope.RewardPKgs.push(result.data.Data);
+                        $scope.RewardPKgs.sort(function (a, b) {
+                            return parseFloat(a.PledgeAmount) - parseFloat(b.PledgeAmount);
+                        });
+                        $scope.originalReward = angular.copy($scope.RewardPKgs);
+                        $scope.NewReward.EstimatedDelivery = angular.copy($scope.toDay);
+                    } else {
+                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        $scope.Error = result.data.Message;
+                        toastr.error($scope.Error, 'Lỗi!');
                     }
-                    $scope.RewardPKgs.push(result.data.Data);
-                    $scope.RewardPKgs.sort(function (a, b) {
-                        return parseFloat(a.PledgeAmount) - parseFloat(b.PledgeAmount);
-                    });
-                    $scope.originalReward = angular.copy($scope.RewardPKgs);
-                    $scope.NewReward.EstimatedDelivery = angular.copy($scope.toDay);
-                } else {
-                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                    $scope.Error = result.data.Message;
+                },
+                function (error) {
+                    $scope.Error = error.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
-                }
-            },
-            function (error) {
-                $scope.Error = error.data.Message;
-                toastr.error($scope.Error, 'Lỗi!');
-            });
+                });
+        }
     };
     // Delete a rewardPkg
     $scope.deleteReward = function (index) {
-        var promiseDeleteReward = ProjectService.deleteRewardPkg($scope.RewardPKgs[index].RewardPkgID);
+        SweetAlert.swal({
+            title: "Xóa mức ủng hộ!",
+            text: "Bạn có chắc chắn muốn xóa không!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Có!",
+            cancelButtonText: "Không!",
+            closeOnConfirm: true,
+            closeOnCancel: true
+        },
+            function (isConfirm) {
+                if (isConfirm) {
+                    var promiseDeleteReward = ProjectService.deleteRewardPkg($scope.RewardPKgs[index].RewardPkgID);
 
-        promiseDeleteReward.then(
-            function (result) {
-                if (result.data.Status === "success") {
-                    toastr.success('Xóa thành công!');
-                    $('#editRewardModal').modal('hide');
-                    $scope.RewardPKgs.splice(index, 1);
-                    $scope.originalReward = angular.copy($scope.RewardPKgs);
+                    promiseDeleteReward.then(
+                        function (result) {
+                            if (result.data.Status === "success") {
+                                toastr.success('Xóa thành công!');
+                                $('#editRewardModal').modal('hide');
+                                $scope.RewardPKgs.splice(index, 1);
+                                $scope.originalReward = angular.copy($scope.RewardPKgs);
+                            } else {
+                                CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                                $scope.Error = result.data.Message;
+                                toastr.error($scope.Error, 'Lỗi!');
+                            }
+                        },
+                        function (error) {
+                            $scope.Error = error.data.Message;
+                            toastr.error($scope.Error, 'Lỗi!');
+                        });
                 } else {
-                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                    $scope.Error = result.data.Message;
-                    toastr.error($scope.Error, 'Lỗi!');
                 }
-            },
-            function (error) {
-                $scope.Error = error.data.Message;
-                toastr.error($scope.Error, 'Lỗi!');
             });
     };
     // Show edit rewardPkg modal
@@ -454,24 +493,40 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
 
     // Delete a updateLog
     $scope.deleteUpdateLog = function (index) {
-        var promiseDeleteUpdateLog = ProjectService.deleteUpdateLog($scope.UpdateLogs[index].UpdateLogID);
+        SweetAlert.swal({
+            title: "Xóa cập nhật!",
+            text: "Bạn có chắc muốn xóa cập nhật này?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Có!",
+            cancelButtonText: "Không!",
+            closeOnConfirm: true,
+            closeOnCancel: true
+        },
+           function (isConfirm) {
+               if (isConfirm) {
+                   var promiseDeleteUpdateLog = ProjectService.deleteUpdateLog($scope.UpdateLogs[index].UpdateLogID);
 
-        promiseDeleteUpdateLog.then(
-            function (result) {
-                if (result.data.Status === "success") {
-                    toastr.success('Xóa thành công!');
-                    $scope.UpdateLogs.splice(index, 1);
-                    $scope.originalUpdateLog = angular.copy($scope.UpdateLogs);
-                } else {
-                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                    $scope.Error = result.data.Message;
-                    toastr.error($scope.Error, 'Lỗi!');
-                }
-            },
-            function (error) {
-                $scope.Error = error.data.Message;
-                toastr.error($scope.Error, 'Lỗi!');
-            });
+                   promiseDeleteUpdateLog.then(
+                       function (result) {
+                           if (result.data.Status === "success") {
+                               toastr.success('Xóa thành công!');
+                               $scope.UpdateLogs.splice(index, 1);
+                               $scope.originalUpdateLog = angular.copy($scope.UpdateLogs);
+                           } else {
+                               CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                               $scope.Error = result.data.Message;
+                               toastr.error($scope.Error, 'Lỗi!');
+                           }
+                       },
+                       function (error) {
+                           $scope.Error = error.data.Message;
+                           toastr.error($scope.Error, 'Lỗi!');
+                       });
+               } else {
+               }
+           });
     };
 
     // Get timeline records
@@ -670,24 +725,40 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     };
     // Delete a question
     $scope.deleteQuestion = function (index) {
-        var promiseDeleteQuestion = ProjectService.deleteQuestion($scope.Question[index].QuestionID);
+        SweetAlert.swal({
+            title: "Xóa hỏi đáp!",
+            text: "Bạn có chắc muốn xóa hỏi đáp này?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Có!",
+            cancelButtonText: "Không!",
+            closeOnConfirm: true,
+            closeOnCancel: true
+        },
+           function (isConfirm) {
+               if (isConfirm) {
+                   var promiseDeleteQuestion = ProjectService.deleteQuestion($scope.Question[index].QuestionID);
 
-        promiseDeleteQuestion.then(
-            function (result) {
-                if (result.data.Status === "success") {
-                    toastr.success('Xóa thành công!');
-                    $scope.Question.splice(index, 1);
-                    $scope.originalQuestion = angular.copy($scope.Question);
-                } else {
-                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                    $scope.Error = result.data.Message;
-                    toastr.error($scope.Error, 'Lỗi!');
-                }
-            },
-            function (error) {
-                $scope.Error = error.data.Message;
-                toastr.error($scope.Error, 'Lỗi!');
-            });
+                   promiseDeleteQuestion.then(
+                       function (result) {
+                           if (result.data.Status === "success") {
+                               toastr.success('Xóa thành công!');
+                               $scope.Question.splice(index, 1);
+                               $scope.originalQuestion = angular.copy($scope.Question);
+                           } else {
+                               CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                               $scope.Error = result.data.Message;
+                               toastr.error($scope.Error, 'Lỗi!');
+                           }
+                       },
+                       function (error) {
+                           $scope.Error = error.data.Message;
+                           toastr.error($scope.Error, 'Lỗi!');
+                       });
+               } else {
+               }
+           });
     };
 
     // check dirty form
@@ -698,7 +769,7 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
         var form;
         if (!angular.equals($scope.originalProjectBasic, $scope.Project) || !angular.equals($scope.originalSelectedCate, $scope.selectedOption)) {
             form = $scope.BasicForm;
-            if ($scope.BasicForm.$invalid) {
+            if ($scope.BasicForm.$invalid || (($scope.Project.SubDescription.length > 135 || $scope.Project.SubDescription.length < 30) && $scope.PrjApprove === true)) {
                 $scope.checkForm(form);
             } else {
                 $scope.checkEditProjectBasic($scope.BasicForm);
@@ -764,7 +835,7 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
         var form;
         if (!angular.equals($scope.originalProjectBasic, $scope.Project) || !angular.equals($scope.originalSelectedCate, $scope.selectedOption)) {
             form = $scope.BasicForm;
-            if ($scope.BasicForm.$invalid) {
+            if ($scope.BasicForm.$invalid || (($scope.Project.SubDescription.length > 135 || $scope.Project.SubDescription.length < 30) && $scope.PrjApprove === true)) {
                 $scope.checkForm(form);
             } else {
                 $scope.checkEditProjectBasic($scope.BasicForm);
