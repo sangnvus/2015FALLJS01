@@ -366,8 +366,11 @@ namespace DDL_CapstoneProject.Respository
                     CurrentFunded = project.CurrentFunded,
                 };
 
-                updateProjectDTO.ExpireDate =
+                if (updateProjectDTO.ExpireDate != null)
+                {
+                    updateProjectDTO.ExpireDate =
                     CommonUtils.ConvertDateTimeFromUtc(updateProjectDTO.ExpireDate.GetValueOrDefault());
+                }
 
                 // Set number exprire day.
                 var timespan = updateProjectDTO.ExpireDate - CommonUtils.DateTodayGMT7();
@@ -557,6 +560,7 @@ namespace DDL_CapstoneProject.Respository
                 if (string.IsNullOrEmpty(messageBasic) && string.IsNullOrEmpty(messageReward) && string.IsNullOrEmpty(messageStory))
                 {
                     project.Status = DDLConstants.ProjectStatus.PENDING;
+                    project.CreatedDate = DateTime.UtcNow;
 
                     db.SaveChanges();
                 }
@@ -1270,6 +1274,104 @@ namespace DDL_CapstoneProject.Respository
                 }
 
                 return listStatisticDTO;
+            }
+        }
+
+        /// <summary>
+        /// Get project detail for admin
+        /// </summary>
+        /// <param name="projectCode"></param>
+        /// <returns></returns>
+        public ProjectDetailDTO AdminGetProjectDetail(string projectCode)
+        {
+            using (var db = new DDLDataContext())
+            {
+                if (string.IsNullOrEmpty(projectCode))
+                {
+                    throw new KeyNotFoundException();
+                }
+                // Create Project query from dB.
+                var projectDetail = (from project in db.Projects
+                                     where project.ProjectCode.Equals(projectCode.ToUpper())
+                                     && (project.Status != DDLConstants.ProjectStatus.DRAFT)
+                                     select new ProjectDetailDTO
+                                     {
+                                         CategoryID = project.CategoryID,
+                                         CreatedDate = project.CreatedDate,
+                                         Description = project.Description,
+                                         Title = project.Title,
+                                         ImageUrl = project.ImageUrl,
+                                         Status = project.Status,
+                                         SubDescription = project.SubDescription,
+                                         ProjectCode = project.ProjectCode,
+                                         CurrentFunded = project.CurrentFunded,
+                                         ExpireDate = project.ExpireDate,
+                                         Risk = project.Risk,
+                                         FundingGoal = project.FundingGoal,
+                                         Location = project.Location,
+                                         IsExprired = project.IsExprired,
+                                         VideoUrl = project.VideoUrl,
+                                         CategoryName = project.Category.Name,
+                                         ProjectID = project.ProjectID,
+                                         NumberBacked = project.Backings.Count,
+                                         //NumberComment =
+                                         //    project.Creator.Username == userName
+                                         //        ? project.Comments.Count
+                                         //        : project.Comments.Count(x => !x.IsHide),
+                                         NumberUpdate = project.UpdateLogs.Count,
+                                         Creator = new CreatorDTO
+                                         {
+                                             FullName = project.Creator.UserInfo.FullName,
+                                             UserName = project.Creator.Username,
+                                             NumberBacked = project.Creator.Backings.Count,
+                                             NumberCreated =
+                                                 project.Creator.CreatedProjects.Count(x => x.Status != DDLConstants.ProjectStatus.DRAFT
+                                                                                            &&
+                                                                                            x.Status !=
+                                                                                            DDLConstants.ProjectStatus.REJECTED
+                                                                                            &&
+                                                                                            x.Status !=
+                                                                                            DDLConstants.ProjectStatus.PENDING),
+                                             ProfileImage = project.Creator.UserInfo.ProfileImage
+                                         },
+                                     }).FirstOrDefault();
+
+
+                // Check project exist?
+                if (projectDetail == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                // Get rewards.
+                var rewardDetail =
+                    db.RewardPkgs.Where(x => x.ProjectID == projectDetail.ProjectID && !x.IsHide).ToList();
+                var rewardDto = new List<RewardPkgDTO>();
+                foreach (var reward in rewardDetail)
+                {
+                    var Reward = new RewardPkgDTO
+                    {
+                        Backers = reward.BackingDetails.Count(),
+                        Description = reward.Description,
+                        EstimatedDelivery =
+                            CommonUtils.ConvertDateTimeFromUtc(reward.EstimatedDelivery.GetValueOrDefault()),
+                        PledgeAmount = reward.PledgeAmount,
+                        Quantity = reward.Quantity
+                    };
+                    rewardDto.Add(Reward);
+                }
+                projectDetail.RewardDetail = rewardDto;
+
+                // Convert datetime to gmt+7
+                projectDetail.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(projectDetail.CreatedDate);
+                projectDetail.ExpireDate =
+                    CommonUtils.ConvertDateTimeFromUtc(projectDetail.ExpireDate.GetValueOrDefault());
+
+                // Set number exprire day.
+                var timespan = projectDetail.ExpireDate - CommonUtils.DateTodayGMT7();
+                projectDetail.NumberDays = timespan.GetValueOrDefault().Days;
+
+                return projectDetail;
             }
         }
         #endregion

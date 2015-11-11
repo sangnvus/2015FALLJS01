@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-app.controller("EditProjectController", function ($scope, $filter, $sce, $location, toastr, CommmonService, $routeParams, ProjectService, categories, project, fileReader, SweetAlert) {
+app.controller("EditProjectController", function ($scope, $filter, $rootScope, $sce, $location, toastr, CommmonService, $routeParams, ProjectService, categories, project, fileReader, SweetAlert) {
     // initial newReward
     $scope.NewReward = {};
     // initial newUpdateLog
@@ -37,7 +37,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
     $scope.NewReward.EstimatedDelivery = angular.copy($scope.toDay);
 
     // Set min deadline : current time + 10 days
-    var minDate = new Date(new Date().getTime() + (10 * 24 * 60 * 60 * 1000));
+    var minDate = new Date(new Date().getTime() + (11 * 24 * 60 * 60 * 1000));
     var minDateDD = minDate.getDate();
     var minDateMM = minDate.getMonth() + 1;
     var minDateYY = minDate.getFullYear();
@@ -263,10 +263,6 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
     };
     // Edit rewardPkg
     $scope.updateReward = function (index) {
-        if ($scope.editPkg.Type != "limited") {
-            $scope.editPkg.Quantity = 0;
-        }
-
         var promiseUpdateReward;
         if (index != null) {
             if ($scope.RewardPKgs[index].IsHide == true) {
@@ -278,6 +274,9 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
             promiseUpdateReward = ProjectService.editRewardPkgs($scope.RewardPKgs[index]);
         } else {
             $scope.editPkg.Type = $scope.selectedType.value;
+            if ($scope.editPkg.Type != "limited") {
+                $scope.editPkg.Quantity = 0;
+            }
             $scope.RewardPKgs[$scope.editPkg.Index - 1] = angular.copy($scope.editPkg);
             promiseUpdateReward = ProjectService.editRewardPkgs($scope.editPkg);
         }
@@ -704,7 +703,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
             } else {
                 $scope.checkEditProjectBasic($scope.BasicForm);
             }
-            e.stopImmediatePropagation();
+            //e.stopImmediatePropagation();
         }
 
         if (!angular.equals($scope.originalReward, $scope.RewardPKgs)) {
@@ -714,7 +713,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
             } else {
                 $scope.checkEditReward($scope.rewardForm);
             }
-            e.stopImmediatePropagation();
+            //e.stopImmediatePropagation();
         }
 
         if (!angular.equals($scope.originalUpdateLog, $scope.UpdateLogs)) {
@@ -724,7 +723,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
             } else {
                 $scope.checkEditUpdateLog($scope.updateLogForm);
             }
-            e.stopImmediatePropagation();
+            //e.stopImmediatePropagation();
         }
 
         if (!angular.equals($scope.originalStory, $scope.ProjectStory)) {
@@ -734,7 +733,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
             } else {
                 $scope.checkEditStory($scope.storyForm);
             }
-            e.stopImmediatePropagation();
+            //e.stopImmediatePropagation();
         }
 
         if (!angular.equals($scope.originalQuestion, $scope.Question)) {
@@ -744,7 +743,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
             } else {
                 $scope.checkEditQuestion($scope.questionForm);
             }
-            e.stopImmediatePropagation();
+            //e.stopImmediatePropagation();
         }
 
         if (!angular.equals($scope.originalTimeline, $scope.Timeline)) {
@@ -754,7 +753,7 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
             } else {
                 $scope.checkEditTimeline($scope.timelineForm);
             }
-            e.stopImmediatePropagation();
+            //e.stopImmediatePropagation();
         }
     };
     // Prevent switch tab if tab's invalid
@@ -940,8 +939,8 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, Edit it!",
-            cancelButtonText: "No, cancel plx!",
+            confirmButtonText: "Có!",
+            cancelButtonText: "Không!",
             closeOnConfirm: true,
             closeOnCancel: true
         },
@@ -1157,11 +1156,11 @@ app.controller("EditProjectController", function ($scope, $filter, $sce, $locati
                 } else {
                     $scope.errorListFlag = true;
                     $scope.errorList = result.data.Data;
-                    toastr.error($scope.Error, 'Lỗi!');
+                    //toastr.error($scope.Error, 'Lỗi!');
                 }
             },
             function (error) {
-                toastr.error($scope.Error, 'Lỗi!');
+                //toastr.error($scope.Error, 'Lỗi!');
             });
     }
 });
