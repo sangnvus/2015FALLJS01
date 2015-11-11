@@ -939,7 +939,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                     throw new NotPermissionException();
                 }
 
-                project = ProjectRepository.Instance.GetProjectByCode(code, currentUser.UserName);
+                project = ProjectRepository.Instance.AdminGetProjectDetail(code);
                 if (project.ImageUrl != string.Empty)
                 {
                     project.ImageUrl = DDLConstants.FileType.PROJECT + project.ImageUrl;

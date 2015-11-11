@@ -15,9 +15,9 @@
 </div> <!-- end PROCESS-CREATE -->
 <div id="create-tabs-fixedPosition"></div>
 <!--Wanrning -->
-<div class="alert alert-warning" role="alert" style="text-align: center" ng-if="Project.Status == 'rejected'">Dự án của bạn bị từ chối, xin hãy xem và chỉnh sửa lại trước khi submit lần tiếp theo. Nếu bạn cần giúp đỡ hãy liên hệ với chúng tôi qua email... hay SĐT...</div>
+<div class="alert alert-danger" role="alert" style="text-align: center" ng-if="Project.Status == 'rejected'">Dự án của bạn bị từ chối, xin hãy xem và chỉnh sửa lại trước khi submit lần tiếp theo. Nếu bạn cần giúp đỡ hãy liên hệ với chúng tôi qua email... hay SĐT...</div>
 <div class="alert alert-warning" role="alert" style="text-align: center" ng-if="Project.Status == 'pending'">Dự án của bạn đang trong thời gian kiểm duyệt(2-3 ngày từ ngày submit) vui lòng chờ kết quả từ chúng tôi!</div>
-<div class="alert alert-warning" role="alert" style="text-align: center" ng-show="errorListFlag == true">
+<div class="alert alert-danger" role="alert" style="text-align: center" ng-show="errorListFlag == true">
     <p ng-repeat="error in errorList">{{error}}</p>
 </div>
 <div id="create-tabs">
@@ -110,17 +110,25 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="field-wrapper">
-                                            <textarea class="form-control fnt18" rows="3" style="resize: none" name="SubDes" ng-trim="true"
-                                                      maxlength="135" ng-model="Project.SubDescription" ng-disabled="AllEditable == false"></textarea>
-                                            <label for="" class="countText" style="top: 70px">{{Project.SubDescription.length + "/135"}}</label>
+                                            <textarea class="form-control fnt18"
+                                                      rows="3" style="resize: none" name="SubDes" ng-trim="true"
+                                                      maxlength="135"
+                                                      ng-model="Project.SubDescription"
+                                                      ng-disabled="AllEditable == false"
+                                                      msd-elastic="\n"></textarea>
+                                            @*ng-model-options="{ updateOn: 'change blur'}"*@
+                                            <div style="position: relative">
+                                                <label for="" class="countText" style="top: -30px; right: 5px">{{Project.SubDescription.length + "/135"}}</label>
+                                            </div>
                                             @*<div ng-show="BasicForm.SubDes.$dirty && BasicForm.SubDes.$invalid" class="text-danger">
                                                     <span class="glyphicon glyphicon-remove text-danger"></span>
                                                     <span ng-show="BasicForm.SubDes.$error.minlength">Tên dự án tối thiểu 30 kí tự!</span>
                                                     <span ng-show="BasicForm.SubDes.$error.maxlength">Tên dự án tối đa 135 kí tự!</span>
                                                 </div>*@
                                         </div>
-                                        <div class="field-help-2" ng-class="{'text-danger' : (Project.SubDescription.length > 135 || Project.SubDescription.length < 30) && errorListFlag == true}">
-                                            <span class="glyphicon glyphicon-remove text-danger" ng-show="(Project.SubDescription.length > 135 || Project.SubDescription.length < 30) && errorListFlag == true"></span>
+                                        <div class="field-help-2" ng-class="{'text-danger' : (Project.SubDescription.length > 135 || Project.SubDescription.length < 30) && (errorListFlag == true || PrjApprove == true)}">
+                                            <span class="glyphicon glyphicon-remove text-danger"
+                                                  ng-show="(Project.SubDescription.length > 135 || Project.SubDescription.length < 30) && (errorListFlag == true || PrjApprove == true)"></span>
                                             <span>
                                                 Mô tả ngắn ít nhất là 30 kí tự và dài nhất là 135 kí tự!
                                             </span>
@@ -144,7 +152,10 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="">
-                                            <input type="text" class="form-control fnt18 fnt-b" name="ProjectLocation" maxlength="60" ng-trim="true"
+                                            <input type="text"
+                                                   class="form-control fnt18 fnt-b"
+                                                   name="ProjectLocation"
+                                                   maxlength="60" ng-trim="true"
                                                    ng-model="Project.Location" ng-autocomplete ng-disabled="AllEditable == false || PrjApprove == true">
                                             <label for="" class="countText">{{Project.Location.length + "/60"}}</label>
                                             @*<div ng-show="BasicForm.ProjectLocation.$dirty && BasicForm.ProjectLocation.$invalid" class="text-danger">
@@ -207,8 +218,8 @@
                                     </div>
                                 </div> <!-- end funding goals -->
                                 <div ng-if="BasicForm.$dirty">
-                                    <button type="button" class="btn btn-danger" ng-click="resetProjectBasic(BasicForm)">Bỏ</button>
-                                    <button type="button" ng-disabled="BasicForm.$invalid || fileIsBig == true" class="btn btn-success" ng-click="editProjectBasic(BasicForm)">Lưu</button>
+                                    <button type="button" class="btn btn-danger" ng-click="resetProjectBasic(BasicForm)">Khôi phục</button>
+                                    <button type="button" ng-disabled="BasicForm.$invalid || fileIsBig == true || (PrjApprove == true && (Project.SubDescription.length > 135 || Project.SubDescription.length < 30))" class="btn btn-success" ng-click="editProjectBasic(BasicForm)">Lưu</button>
                                 </div>
                             </div>
                             <!-- end BASIC CONTENT -->
@@ -286,7 +297,9 @@
                                                 <span class="text-danger" ng-show="rewardPkg.PledgeAmount < 10000 && errorListFlag == true">Mức ủng hộ ít nhất là 10,000&#8363;</span>
                                                 <p class="mt0 mb0">{{rewardPkg.CurrentQuantity | currency:"":0}} Đã ủng hộ <span ng-if="rewardPkg.Type == 'limited'">| Giới hạn: {{rewardPkg.Quantity | currency:"":0}}</span><span ng-if="rewardPkg.Type == 'unlimited'">| Không giới hạn</span></p>
                                                 <span class="text-danger" ng-show="rewardPkg.Type == 'limited' && errorListFlag == true && rewardPkg.Quantity < 1">Số lượng phải lớn hơn 0</span>
-                                                <p class="mt0 mb0">{{rewardPkg.Description}}</p>
+                                                <hr />
+                                                <p class="mt0 mb0 div-textarea">{{rewardPkg.Description}}</p>
+                                                <hr />
                                                 <span class="text-danger" ng-show="(rewardPkg.Description.length < 10 || rewardPkg.Description.length > 135) && errorListFlag == true">Mô tả mức ủng hộ cần ít nhất 10 kí tự và dài nhất 135 kí tự</span>
                                                 <p class="mt0 mb0 pb0 pt0" ng-show="rewardPkg.Type != 'no reward'">Thời gian giao hàng: {{rewardPkg.EstimatedDelivery | date:'MM-yyyy'}}</p>
                                                 <span class="text-danger" ng-show="rewardPkg.Type != 'no reward' && rewardPkg.EstimatedDelivery < Project.ExpireDate && errorListFlag == true">Ngày giao hàng cần đặt sau ngày dự án kết thúc</span>
@@ -296,7 +309,7 @@
                                                     <span ng-if="rewardPkg.Type == 'limited'">Giới hạn</span>
                                                     <span ng-if="rewardPkg.Type == 'unlimited'">Không giới hạn</span>
                                                 </p>
-                                                <p class="mt0 mb0" ng-show="rewardPkg.IsHide == true"><span class="label label-warning">Hidden</span></p>
+                                                <p class="mt0 mb0" ng-show="rewardPkg.IsHide == true"><span class="label label-warning">Đã ẩn</span></p>
                                             </div>
                                             <ul class="list-inline pull-right mt0 mb0 pb0 pt0">
                                                 <li><button class="btn btn-default btn-sm" ng-disabled="AllEditable == false" ng-click="updateReward($index)">Ẩn</button></li>
@@ -317,7 +330,7 @@
                                     </div> <!-- end items -->
                                 </div>
                                 <div ng-if="rewardForm.$dirty">
-                                    <button type="button" class="btn btn-danger" ng-click="resetReward(rewardForm)">Bỏ</button>
+                                    <button type="button" class="btn btn-danger" ng-click="resetReward(rewardForm)">Khôi phục</button>
                                     <button type="button" ng-disabled="rewardForm.$invalid" class="btn btn-success" ng-click="updateReward(rewardForm)">Lưu</button>
                                 </div>
                             </form>
@@ -339,7 +352,13 @@
                                                                     <span class="glyphicon glyphicon-remove text-danger"></span>
                                                                     <span>Phải là chữ số và lớn hơn 1,000!</span>
                                                                 </div>*@
-                                                            <p>Mức ủng hộ ít nhất là 10,000&#8363;.</p>
+                                                            <div class="field-help-2" ng-class="{'text-danger' : editPkg.PledgeAmount < 10000 && (errorListFlag == true || PrjApprove == true)}">
+                                                                <span class="glyphicon glyphicon-remove text-danger"
+                                                                      ng-show="editPkg.PledgeAmount < 10000 && (errorListFlag == true || PrjApprove == true)"></span>
+                                                                <span>
+                                                                    Mức ủng hộ ít nhất là 10,000&#8363;.
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div> <!-- end Pledge amount -->
                                                     <div class="row pb5">
@@ -352,7 +371,13 @@
                                                                     <span ng-show="EditRewardModal.NewRewardDes.$error.minlength">Mô tả tối thiểu 10 kí tự!</span>
                                                                     <span ng-show="EditRewardModal.NewRewardDes.$error.maxlength">Mô tả tối đa 135 kí tự!</span>
                                                                 </div>*@
-                                                            <p>Mô tả cần ít nhất 10 kí tự và nhiều nhất là 135 kí tự.</p>
+                                                            <div class="field-help-2" ng-class="{'text-danger' : (editPkg.Description.length < 10 || editPkg.Description.length > 135) && (errorListFlag == true || PrjApprove == true)}">
+                                                                <span class="glyphicon glyphicon-remove text-danger"
+                                                                      ng-show="(editPkg.Description.length < 10 || editPkg.Description.length > 135) && (errorListFlag == true || PrjApprove == true)"></span>
+                                                                <span>
+                                                                    Mô tả cần ít nhất 10 kí tự và nhiều nhất là 135 kí tự.
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div> <!-- end Description -->
                                                     <div class="row pt5 pb5" ng-show="selectedType.value != 'no reward'">
@@ -366,7 +391,13 @@
                                                                 <span class="glyphicon glyphicon-remove text-danger"></span>
                                                                 <span ng-show="EditRewardModal.deadline.$invalid">Xin hãy nhập đúng chuẩn ngày tháng</span>
                                                             </div>
-                                                            <p>Ngày giao hàng cần đặt sau ngày hết hạn dự án.</p>
+                                                            <div class="field-help-2" ng-class="{'text-danger' : editPkg.EstimatedDelivery < Project.ExpireDate && (errorListFlag == true || PrjApprove == true)}">
+                                                                <span class="glyphicon glyphicon-remove text-danger"
+                                                                      ng-show="editPkg.EstimatedDelivery < Project.ExpireDate && (errorListFlag == true || PrjApprove == true)"></span>
+                                                                <span>
+                                                                    Ngày giao hàng cần đặt sau ngày hết hạn dự án.
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div> <!-- end Estimated delivery -->
                                                     <div class="row pt5 pb5">
@@ -383,7 +414,13 @@
                                                                     <span class="glyphicon glyphicon-remove text-danger"></span>
                                                                     <span ng-show="EditRewardModal.newQuantity.$invalid">Số lượng phải là chữ số và lớn hơn 0!</span>
                                                                 </div>*@
-                                                            <p>Số lượng phải lớn hơn 0.</p>
+                                                            <div class="field-help-2" ng-class="{'text-danger' : editPkg.Quantity < 1 && (errorListFlag == true || PrjApprove == true) && selectedType.value == 'limited'}">
+                                                                <span class="glyphicon glyphicon-remove text-danger"
+                                                                      ng-show="editPkg.Quantity < 1 && (errorListFlag == true || PrjApprove == true) && selectedType.value == 'limited'"></span>
+                                                                <span>
+                                                                    Số lượng phải lớn hơn 0.
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div> <!-- end Backer -->
                                                     @*<div class="row pt5 pb5">
@@ -397,7 +434,9 @@
                                             </div> <!-- end items -->
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="resetReward(EditRewardModal)">Bỏ</button>
-                                                <button type="button" ng-disabled="EditRewardModal.$invalid" class="btn btn-success" ng-click="updateReward()">
+                                                <button type="button" ng-disabled="EditRewardModal.$invalid || ((errorListFlag == true || PrjApprove == true) && ((editPkg.Quantity < 1 && selectedType.value == 'limited') ||
+                                                        (editPkg.EstimatedDelivery < Project.ExpireDate && selectedType.value != 'no reward') || editPkg.Description.length < 10 || editPkg.Description.length > 135 || editPkg.PledgeAmount < 10000))"
+                                                        class="btn btn-success" ng-click="updateReward()">
                                                     Lưu
                                                 </button>
                                             </div>
@@ -540,7 +579,7 @@
                                 <div class="row border-grey">
                                     <div class="col-md-3"><p class="title">Video dự án</p></div>
                                     <div class="col-md-9">
-                                        <div class="responsive-video" style="z-index:2">
+                                        <div class="responsive-video" style="z-index:2" ng-if="ProjectStory.VideoUrl != '' ">
                                             <iframe ng-src="{{trustSrc(ProjectStory.VideoUrl)}}" frameborder="0" allowfullscreen></iframe>
                                         </div>
                                         <div for="upload">
@@ -594,8 +633,8 @@
                                     <div class="col-md-9">
                                         <div class="help">
                                             <p>Hãy mô tả chi tiết dự án của bạn ở đây. Bạn cần gây quỹ cho dự án như thế nào và làm như thế nào bạn hoàn thành nó.</p>
-                                            <p ng-class="{'text-danger' : ProjectStory.Description.length < 135 && errorListFlag == true}">
-                                                <span class="glyphicon glyphicon-remove text-danger" ng-show="ProjectStory.Description.length < 135 && errorListFlag == true"></span>
+                                            <p ng-class="{'text-danger' : ProjectStory.Description.length < 135 && (errorListFlag == true || PrjApprove == true)}">
+                                                <span class="glyphicon glyphicon-remove text-danger" ng-show="ProjectStory.Description.length < 135 && (errorListFlag == true || PrjApprove == true)"></span>
                                                 Mô tả chi tiết cần ít nhất 135 kí tự
                                             </p>
                                         </div>
@@ -611,8 +650,8 @@
                                             <p>
                                                 <b>Khó khăn bạn đang gặp phải là gì và làm thế nào bạn vượt qua nó?</b>
                                             </p>
-                                            <p ng-class="{'text-danger' : ProjectStory.Risk.length < 135 && errorListFlag == true}">
-                                                <span class="glyphicon glyphicon-remove text-danger" ng-show="ProjectStory.Risk.length < 135 && errorListFlag == true"></span>
+                                            <p ng-class="{'text-danger' : ProjectStory.Risk.length < 135 && (errorListFlag == true || PrjApprove == true)}">
+                                                <span class="glyphicon glyphicon-remove text-danger" ng-show="ProjectStory.Risk.length < 135 && (errorListFlag == true || PrjApprove == true)"></span>
                                                 Mô tả khó khăn cần ít nhất 135 kí tự!
                                             </p>
                                         </div>
@@ -636,8 +675,8 @@
                                     </div>
                                 </div>
                                 <div ng-if="storyForm.$dirty">
-                                    <button type="button" class="btn btn-danger" ng-click="resetStory(storyForm)">Xóa</button>
-                                    <button type="button" ng-disabled="storyForm.$invalid" class="btn btn-success" ng-click="editProjectStory(storyForm)">Lưu</button>
+                                    <button type="button" class="btn btn-danger" ng-click="resetStory(storyForm)">Khôi phục</button>
+                                    <button type="button" ng-disabled="storyForm.$invalid || (PrjApprove == true && (ProjectStory.Risk.length < 135 || ProjectStory.Description.length < 135))" class="btn btn-success" ng-click="editProjectStory(storyForm)">Lưu</button>
                                 </div>
                             </div> <!-- end col-md-9 -->
                             @*<div class="col-md-3">
@@ -727,7 +766,7 @@
                                     </div>
                                 </div>
                                 <div ng-if="updateLogForm.$dirty">
-                                    <button type="button" class="btn btn-danger" ng-click="resetUpdateLog(updateLogForm)">Bỏ</button>
+                                    <button type="button" class="btn btn-danger" ng-click="resetUpdateLog(updateLogForm)">Khôi phục</button>
                                     <button type="button" ng-disabled="updateLogForm.$invalid" class="btn btn-success" ng-click="editUpdateLog(updateLogForm)">Lưu</button>
                                 </div>
                             </form>
@@ -877,7 +916,7 @@
                                     </div>
                                 </div>
                                 <div ng-if="questionForm.$dirty">
-                                    <button type="button" class="btn btn-danger" ng-click="resetQuestion(questionForm)">Bỏ</button>
+                                    <button type="button" class="btn btn-danger" ng-click="resetQuestion(questionForm)">Khôi phục</button>
                                     <button type="button" ng-disabled="questionForm.$invalid" class="btn btn-success" ng-click="updateQuestion(questionForm)">Lưu</button>
                                 </div>
                             </form>

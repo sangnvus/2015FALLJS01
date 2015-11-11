@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using DDL_CapstoneProject.Helper;
 using DDL_CapstoneProject.Helpers;
@@ -467,7 +468,7 @@ namespace DDL_CapstoneProject.Respository
         {
             using (var db = new DDLDataContext())
             {
-                var userList = db.DDL_Users.Where(x => x.UserType != "admin").ToList();
+                var userList = db.DDL_Users.Where(x => x.UserType != DDLConstants.UserType.ADMIN).ToList();
                 AdminUserListDTO listReturn = new AdminUserListDTO();
                 List<AdminUserDTO> listUser = new List<AdminUserDTO>();
                 foreach (var user in userList)
@@ -500,6 +501,10 @@ namespace DDL_CapstoneProject.Respository
             using (var db = new DDLDataContext())
             {
                 var userList = db.DDL_Users.FirstOrDefault(x => x.Username == UserName);
+                if (userList == null)
+                {
+                    throw new KeyNotFoundException();
+                }
                 if (userList.IsActive == true)
                 {
                     userList.IsActive = false;
@@ -538,6 +543,10 @@ namespace DDL_CapstoneProject.Respository
                                       IsActive = user.IsActive,
                                   };
                 AdminUserProfileDTO userReturn = userProfile.FirstOrDefault();
+                if (userReturn == null)
+                {
+                    throw new KeyNotFoundException();
+                }
                 if (userReturn.LoginType == DDLConstants.LoginType.NORMAL)
                 {
                     userReturn.LoginType = "Bình thường";
@@ -553,7 +562,13 @@ namespace DDL_CapstoneProject.Respository
             using (var db = new DDLDataContext())
             {
                 var userCurrent = db.DDL_Users.FirstOrDefault(x => x.Username == UserName);
+                if (userCurrent == null)
+                {
+                    throw new KeyNotFoundException();
+                }
                 var listProjectBacked = userCurrent.Backings.ToList();
+ 
+
                 List<AdminUserBackedListDTO> listReturn = new List<AdminUserBackedListDTO>();
                 foreach (var backed in listProjectBacked)
                 {
@@ -624,7 +639,7 @@ namespace DDL_CapstoneProject.Respository
                         Category = created.Category.Name
                     };
 
-                    if (created.IsExprired == true)
+                     if (created.IsExprired == true)
                     {
                         projectReturn.Isexpired = -1;
                     }
@@ -685,10 +700,17 @@ namespace DDL_CapstoneProject.Respository
             using (var db = new DDLDataContext())
             {
                 var userCurrent1 = db.DDL_Users.FirstOrDefault(x => x.Username == UserName);
+                if (userCurrent1 == null)
+                {
+                    throw new KeyNotFoundException();
+                }
                 var backingList = userCurrent1.Backings.ToList();
                 Backing backing = new Backing();
                 backing = backingList.FirstOrDefault();
-
+                if (backing == null)
+                {
+                    throw new KeyNotFoundException();
+                } 
                 if (backingList.Count() > 1)
                 {
                     foreach (var back in backingList)
@@ -722,9 +744,9 @@ namespace DDL_CapstoneProject.Respository
         {
             using (var db = new DDLDataContext())
             {
-                var userList = db.DDL_Users.Where(x => x.UserType != "admin").ToList();
+                var userList = db.DDL_Users.Where(x => x.UserType != DDLConstants.UserType.ADMIN).ToList();
                 AdminUserDashboardDTO listReturn = new AdminUserDashboardDTO();
-                RecentUserDTO RecentUser = new RecentUserDTO();
+                //RecentUserDTO RecentUser = new RecentUserDTO();
                 List<RecentUserDTO> listRecentUser = new List<RecentUserDTO>();
                 foreach (var user in userList)
                 {
@@ -770,7 +792,7 @@ namespace DDL_CapstoneProject.Respository
                     }
                 }
 
-                TopCreatorDTO TopCreator = new TopCreatorDTO();
+               // TopCreatorDTO TopCreator = new TopCreatorDTO();
                 List<TopCreatorDTO> listTopCreator = new List<TopCreatorDTO>();
                 foreach (var user in userList)
                 {
@@ -870,6 +892,11 @@ namespace DDL_CapstoneProject.Respository
             using (var db = new DDLDataContext())
             {
                 var backing = db.Backings.FirstOrDefault(x => x.BackingID == backingID);
+                if (backing == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
                 AdminBackingListDTO backingReturn = new AdminBackingListDTO
                 {
                     ProjectTitle = backing.Project.Title,
@@ -885,7 +912,6 @@ namespace DDL_CapstoneProject.Respository
                     ImageURL = backing.User.UserInfo.ProfileImage,
                     Biography = backing.User.UserInfo.Biography
                 };
-
 
                 return backingReturn;
             }

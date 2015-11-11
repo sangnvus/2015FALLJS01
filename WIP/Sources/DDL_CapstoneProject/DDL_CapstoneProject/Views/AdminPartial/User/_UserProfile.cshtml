@@ -1,5 +1,5 @@
 ﻿<div class="row">
-    <div class="modal fade" id="infoBanker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+   @* <div class="modal fade" id="infoBanker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -61,7 +61,7 @@
                 </div>
             </div>
         </div>
-    </div> <!-- end Modal infoBanker -->
+    </div>*@ <!-- end Modal infoBanker -->
     <div class="col-lg-12">
 
         <div class="portlet portlet-default">
@@ -164,8 +164,8 @@
                                                     <tr>
                                                         <th>STT</th>
                                                         <th>Tên dự án</th>
-                                                        <th>Số tiền đã ủng hộ</th>
-                                                        <th>Mục tiêu gây quỹ</th>
+                                                        <th>Tổng số tiền đã ủng hộ</th>
+                                                        @*<th>Mục tiêu gây quỹ</th>*@
                                                         <th>Tình trạng duyệt</th>
                                                         <th>Tình trạng gây quỹ</th>
                                                         <th>Hành động</th>
@@ -176,7 +176,7 @@
                                                         <td style="width:40px" class="col-number">{{$index + 1}}</td>
                                                         <td>{{project.ProjectTitle}}</td>
                                                         <td style="width:150px" class="col-number"><span class="money usd no-code">{{project.PledgedAmount | number : fractionSize}} &#8363;</span></td>
-                                                        <td style="width:150px" class="col-number"><span class="money usd no-code">{{project.FundingGoals | number : fractionSize}} &#8363;</span></td>
+                                                        @*<td style="width:150px" class="col-number"><span class="money usd no-code">{{project.FundingGoals | number : fractionSize}} &#8363;</span></td>*@
                                                         <td style="width:100px">
                                                             <span class="label label-primary center-block gray" ng-if="project.Status == 'rejected'" style="padding: 9px;">Từ chối</span>
                                                             <span class="label label-primary center-block label-success" ng-if="project.Status == 'approved'" style="padding: 9px;">Đã duyệt</span>
@@ -189,7 +189,10 @@
                                                             <span class="label label-primary center-block default" ng-if="project.Isfunded == 'going'" style="padding: 9px;">Đang chạy</span>
                                                         </td>
                                                         <td style="width:40px">
-                                                            <a tooltip="Nhấp để xem chi tiết" class="btn btn-blue" data-toggle="modal" data-target="#infoBanker" title="View" ng-click="getBackingDetail()">
+                                                            @*<a tooltip="Nhấp để xem chi tiết" class="btn btn-blue" data-toggle="modal" data-target="#infoBanker" title="View" ng-click="getBackingDetail()">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>*@
+                                                            <a tooltip="Nhấp để xem chi tiết dự án" href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")" class="btn btn-blue">
                                                                 <i class="fa fa-eye"></i>
                                                             </a>
                                                         </td>
@@ -262,7 +265,7 @@
                                                             <span ng-if="project.Isexpired < 0" class="label label-primary center-block red" style="padding: 9px;">Hết hạn</span>
                                                         </td>
                                                         <td style="width:40px">
-                                                            <a tooltip="Nhấp để xem chi tiết" href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")" class="btn btn-blue">
+                                                            <a tooltip="Nhấp để xem chi tiết dự án" href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")" class="btn btn-blue">
                                                                 <i class="fa fa-eye"></i>
                                                             </a>
                                                         </td>
