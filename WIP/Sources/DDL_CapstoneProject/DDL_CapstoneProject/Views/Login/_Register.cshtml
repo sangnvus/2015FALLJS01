@@ -33,7 +33,7 @@
                                        ng-trim="true"
                                        required
                                        ng-minlength="8"
-                                       ngmaxlength="20"
+                                       ng-maxlength="20"
                                        ng-pattern="/^[a-zA-Z0-9]+$/">
                                 <label class="login-field-icon fui-user" for="UserName"></label>
                                 @*<span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-if="RegisterForm.UserName.$dirty && RegisterForm.UserName.$valid"></span>*@
@@ -59,8 +59,8 @@
                                 @*<span class="glyphicon glyphicon-ok text-success form-control-feedback" ng-show="RegisterForm.Password.$dirty && RegisterForm.Password.$valid"></span>*@
                                 <div ng-show="RegisterForm.Password.$dirty && RegisterForm.Password.$invalid" class="text-danger">
                                     <span class="glyphicon glyphicon-remove text-danger"></span>
-                                    <span ng-show="RegisterForm.UserName.$error.minlength">Mật khẩu từ 8 đến 20 kí tự</span>
-                                    <span ng-show="RegisterForm.UserName.$error.maxlength">Mật khẩu từ 8 đến 20 kí tự</span>
+                                    <span ng-show="RegisterForm.Password.$error.minlength">Mật khẩu từ 8 đến 20 kí tự</span>
+                                    <span ng-show="RegisterForm.Password.$error.maxlength">Mật khẩu từ 8 đến 20 kí tự</span>
                                     <span ng-show="RegisterForm.Password.$error.required">Bạn chưa nhập mật khẩu</span>
                                 </div>
                             </div>

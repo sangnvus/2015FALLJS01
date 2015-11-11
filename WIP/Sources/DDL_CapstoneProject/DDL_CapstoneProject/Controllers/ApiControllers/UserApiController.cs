@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -49,12 +50,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         }
 
         /// <summary>
-        /// 
+        /// Api reset password
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
         [HttpPost]
-        public IHttpActionResult ResetPassword(string email)
+        public IHttpActionResult ResetPassword(string email, string code)
         {
             try
             {
@@ -62,7 +63,39 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 {
                     return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
                 }
-                var result = UserRepository.Instance.ResetPassword(email);
+                var result = UserRepository.Instance.ResetPassword(email, code);
+            }
+            catch (UserNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Tài khoản không tồn tại!", Type = "UserNotFound" });
+            }
+            catch (InvalidDataException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Mã code không đúng", Type = "wrong-code" });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
+        }
+
+        /// <summary>
+        /// SendCodeResetPassword
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public IHttpActionResult SendCodeResetPassword(string email)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+                }
+                var result = UserRepository.Instance.SendCodeResetPassword(email);
             }
             catch (UserNotFoundException)
             {

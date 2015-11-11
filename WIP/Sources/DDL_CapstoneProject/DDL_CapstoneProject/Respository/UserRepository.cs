@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Web;
@@ -101,14 +102,23 @@ namespace DDL_CapstoneProject.Respository
 
         public string GenerateNewPassword()
         {
+            return GenerateRandomString(8);
+        }
+        public string GenerateResetCode()
+        {
+            return GenerateRandomString(6);
+        }
+
+        public string GenerateRandomString(int numberCharacter)
+        {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             var random = new Random();
-            var newPassword = new string(
-                Enumerable.Repeat(chars, 8)
+            var randomString = new string(
+                Enumerable.Repeat(chars, numberCharacter)
                           .Select(s => s[random.Next(s.Length)])
                           .ToArray());
 
-            return newPassword;
+            return randomString;
         }
 
         public DDL_User GetByUserNameOrEmail(string userNameOrEmail, string password)
@@ -259,6 +269,7 @@ namespace DDL_CapstoneProject.Respository
                 // Update account status.
                 user.IsActive = true;
                 user.IsVerify = true;
+                user.VerifyCode = string.Empty;
                 db.DDL_Users.AddOrUpdate(user);
                 db.SaveChanges();
 
@@ -278,7 +289,7 @@ namespace DDL_CapstoneProject.Respository
             }
         }
 
-        public bool ResetPassword(string email)
+        public bool SendCodeResetPassword(string email)
         {
             using (var db = new DDLDataContext())
             {
@@ -288,8 +299,36 @@ namespace DDL_CapstoneProject.Respository
                     throw new UserNotFoundException();
                 }
 
+                string resetCode = GenerateResetCode();
+                user.VerifyCode = resetCode;
+                db.DDL_Users.AddOrUpdate(user);
+                db.SaveChanges();
+
+                MailHelper.Instance.SendMailResetPasswordCode(email, resetCode, user.UserInfo.FullName);
+
+                return true;
+            }
+        }
+
+        public bool ResetPassword(string email, string code)
+        {
+            using (var db = new DDLDataContext())
+            {
+                var user = GetByUserNameOrEmail(email);
+                if (user == null || user.LoginType == DDLConstants.LoginType.FACEBOOK)
+                {
+                    throw new UserNotFoundException();
+                }
+
+                if (string.IsNullOrEmpty(code) || !code.Equals(user.VerifyCode))
+                {
+                    throw new InvalidDataException();
+                }
+
                 string newPassword = GenerateNewPassword();
                 user.Password = CommonUtils.Md5(newPassword);
+                user.VerifyCode = string.Empty;
+                db.DDL_Users.AddOrUpdate(user);
                 db.SaveChanges();
 
                 MailHelper.Instance.SendMailResetPassword(email, newPassword, user.UserInfo.FullName);
