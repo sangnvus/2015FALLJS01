@@ -28,6 +28,45 @@ namespace DDL_CapstoneProject.Respository
         #region "Methods"
         #region TrungVN
 
+
+
+        public List<AdminBakingFullInforDTO> GetBackingFullInforListForExport()
+        {
+            using (var db = new DDLDataContext())
+            {
+                var listBacking = db.Backings.ToList();
+                List<AdminBakingFullInforDTO> listReturn = new List<AdminBakingFullInforDTO>();
+                foreach (var backing in listBacking)
+                {
+                    AdminBakingFullInforDTO backingReturn = new AdminBakingFullInforDTO
+                    {
+                        ProjectCode = backing.Project.ProjectCode,
+                        ProjectTitle = backing.Project.Title,
+
+                        RewardID = backing.BackingDetail.RewardPkgID,
+                        RewardDes = backing.BackingDetail.RewardPkg.Description,
+                        RewardEstimatedDelivery = backing.BackingDetail.RewardPkg.EstimatedDelivery.Value + ".",
+
+                        BackingID = backing.BackingID,
+                        BackingPledgeAmount = backing.BackingDetail.PledgedAmount,
+                        BackingQuantity = backing.BackingDetail.Quantity,
+                        BackingDes = backing.BackingDetail.Description,
+                        BackedDate = backing.BackedDate + ".",
+
+                        BackerName = backing.User.UserInfo.FullName,
+                        BackerUserName = backing.User.Username,
+                        BackerEmail = backing.BackingDetail.Email,
+                        BackerAddress = backing.BackingDetail.Address,
+                        BackerPhoneNumber = "'" + backing.BackingDetail.PhoneNumber,
+
+                    };
+                    listReturn.Add(backingReturn);
+                }
+                return listReturn;
+            }
+        }
+
+
         public Dictionary<string, List<UserBackInforDTO>> GetUserTop(string categoryid)
         {
             using (var db = new DDLDataContext())
@@ -281,9 +320,9 @@ namespace DDL_CapstoneProject.Respository
         {
             using (var db = new DDLDataContext())
             {
-                    db.DDL_Users.AddOrUpdate(user);
-                    db.UserInfos.AddOrUpdate(user.UserInfo);
-                    db.SaveChanges();
+                db.DDL_Users.AddOrUpdate(user);
+                db.UserInfos.AddOrUpdate(user.UserInfo);
+                db.SaveChanges();
 
                 return GetByUserNameOrEmail(user.Email);
             }
@@ -606,7 +645,7 @@ namespace DDL_CapstoneProject.Respository
                     throw new KeyNotFoundException();
                 }
                 var listProjectBacked = userCurrent.Backings.ToList();
- 
+
 
                 List<AdminUserBackedListDTO> listReturn = new List<AdminUserBackedListDTO>();
                 foreach (var backed in listProjectBacked)
@@ -678,7 +717,7 @@ namespace DDL_CapstoneProject.Respository
                         Category = created.Category.Name
                     };
 
-                     if (created.IsExprired == true)
+                    if (created.IsExprired == true)
                     {
                         projectReturn.Isexpired = -1;
                     }
@@ -749,7 +788,7 @@ namespace DDL_CapstoneProject.Respository
                 if (backing == null)
                 {
                     throw new KeyNotFoundException();
-                } 
+                }
                 if (backingList.Count() > 1)
                 {
                     foreach (var back in backingList)
@@ -831,7 +870,7 @@ namespace DDL_CapstoneProject.Respository
                     }
                 }
 
-               // TopCreatorDTO TopCreator = new TopCreatorDTO();
+                // TopCreatorDTO TopCreator = new TopCreatorDTO();
                 List<TopCreatorDTO> listTopCreator = new List<TopCreatorDTO>();
                 foreach (var user in userList)
                 {

@@ -170,6 +170,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\DDL_User.cs" />
+    <Compile Include="Models\DTOs\AdminBakingFullInforDTO.cs" />
     <Compile Include="Models\DTOs\AdminProjectStatisticDTO.cs" />
     <Compile Include="Models\DTOs\AdminDashboardInfoDTO.cs" />
     <Compile Include="Models\DTOs\AdminBackingListDTO.cs" />
@@ -462,6 +463,7 @@
     <Content Include="Scripts\angular-block-ui.min.js.map" />
     <Content Include="Scripts\angular-block-ui.js.map" />
     <Content Include="Content\angular-block-ui.css.map" />
+    <Content Include="Scripts\FileSaver.js" />
     <Content Include="Scripts\flat-ui\application.js" />
     <Content Include="Scripts\flat-ui\flat-ui.js" />
     <Content Include="Scripts\flat-ui\flat-ui.min.js" />
