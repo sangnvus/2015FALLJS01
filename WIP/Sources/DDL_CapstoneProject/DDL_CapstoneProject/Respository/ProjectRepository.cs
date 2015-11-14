@@ -10,6 +10,7 @@ using DDL_CapstoneProject.Ultilities;
 using System.Data.Entity;
 using System.Data.Entity.SqlServer;
 using System.Diagnostics;
+using WebGrease.Css.Extensions;
 
 namespace DDL_CapstoneProject.Respository
 {
@@ -1673,10 +1674,8 @@ namespace DDL_CapstoneProject.Respository
                                        Backers = project.Backings.Count,
                                        CreatedDate = project.CreatedDate,
                                        PopularPoint = project.PopularPoint,
-                                       Status = project.Status
+                                       Status = project.IsExprired ? DDLConstants.ProjectStatus.EXPIRED : project.Status
                                    }).Distinct();
-
-
 
 
                 return projectList.ToList();
