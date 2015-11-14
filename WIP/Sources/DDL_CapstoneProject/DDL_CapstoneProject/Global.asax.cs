@@ -64,7 +64,7 @@ namespace DDL_CapstoneProject
             }
 
             // Test timer
-            Test();
+            //Test();
         }
 
         // Test timer PRJ1
