@@ -35,12 +35,12 @@
                             <div class="title text-center">
                                 <h2>{{Project.Title}}</h2>
                                 <p>
-                                    by <a href="@Url.Content("/admin/#/userprofile/{{Project.Creator.UserName}}")">{{Project.Creator.FullName}}</a> - <span class="badge green">{{Project.CategoryName}}</span> -
-                                    <span class="badge blue" ng-if="Project.Status == 'approved'">Đang chạy</span>
+                                    by <a href="@Url.Content("/admin/#/userprofile/{{Project.Creator.UserName}}")">{{Project.Creator.FullName}}</a> - <span class="badge purple">{{Project.CategoryName}}</span> -
+                                    <span class="badge green" ng-if="Project.Status == 'approved'">Đang chạy</span>
                                     <span class="badge red" ng-if="Project.Status == 'suspended'">Đình chỉ</span>
-                                    <span class="badge gray" ng-if="Project.Status == 'rejected'">Từ chối</span>
-                                    <span class="badge default" ng-if="Project.Status == 'expired'">Hết hạn</span>
-                                    <span class="badge purple" ng-if="Project.Status == 'pending'">Chờ duyệt</span>
+                                    <span class="badge red" ng-if="Project.Status == 'rejected'">Từ chối</span>
+                                    <span class="badge red" ng-if="Project.Status == 'expired'">Hết hạn</span>
+                                    <span class="badge blue" ng-if="Project.Status == 'pending'">Chờ duyệt</span>
                                 </p>
                             </div>
                             <div class="col-lg-7">

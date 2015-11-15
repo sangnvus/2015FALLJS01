@@ -146,13 +146,13 @@ namespace DDL_CapstoneProject
                            x.CreatedDate.Month == DateTime.UtcNow.Month).ToList();
                 foreach (var cmt in comment)
                 {
-                    var project = projects.SingleOrDefault(x => x.ProjectID == cmt.ProjectID);
+                    var project = projects.SingleOrDefault(x => x.ProjectID == cmt.ProjectID && cmt.UserID != x.CreatorID);
 
                     if (project == null)
                     {
                         throw new KeyNotFoundException();
                     }
-                    project.PopularPoint += 5;
+                    project.PopularPoint += 2;
                 }
 
                 db.SaveChanges();

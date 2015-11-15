@@ -635,6 +635,7 @@ namespace DDL_CapstoneProject.Respository
 
                 // Create new backingDetail recored
                 var backingDetail = db.BackingDetails.Create();
+                backingDetail.BackerName = backingData.BackerName;
                 backingDetail.RewardPkgID = backingData.RewardPkgID;
                 backingDetail.PledgedAmount = backingData.PledgeAmount;
                 backingDetail.Quantity = backingData.Quantity;
