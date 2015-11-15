@@ -30,7 +30,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             {
                 if (!ModelState.IsValid)
                 {
-                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Sai định dạng dữ liệu", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
                 }
                 var user = UserRepository.Instance.Register(newUser);
             }
