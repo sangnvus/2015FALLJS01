@@ -111,10 +111,11 @@ namespace DDL_CapstoneProject.Respository
         //endTrungVN
 
 
+        // HuyNM
         /// <summary>
-        /// 
+        /// Get categories for admin
         /// </summary>
-        /// <returns></returns>
+        /// <returns>listCategoryDTO</returns>
         public List<AdminCategoryDTO> GetCategoriesForAdmin()
         {
             using (var db = new DDLDataContext())
@@ -129,7 +130,7 @@ namespace DDL_CapstoneProject.Respository
                                            Description = category.Description,
                                            Name = category.Name,
                                            CategoryID = category.CategoryID,
-                                           ProjectCount = category.Projects.Count
+                                           ProjectCount = category.Projects.Count(x => x.Status != DDLConstants.ProjectStatus.DRAFT)
                                        }).ToList();
 
                 return listCategoryDTO;

@@ -7,6 +7,8 @@ app.controller('BackProjectController', function ($scope, $route, $rootScope, $l
     $scope.Project = project.data.Data;
     // Initial Back data
     $scope.BackData = {};
+    // check error
+    $scope.isError = false;
 
     // Get reward selected
     var rewardSelected = $route.current.params.reward;
@@ -42,21 +44,35 @@ app.controller('BackProjectController', function ($scope, $route, $rootScope, $l
     }
 
     $scope.back = function (index) {
-        $scope.BackData.RewardPKgID = $scope.RewardPkgs[index].RewardPkgID;
-
-        $scope.BackData.ProjectCode = $route.current.params.code;
-
-        //if (checkSelect === false && $scope.BackData.PledgeAmount == undefined) {
-        //    $scope.BackData.PledgeAmount = $scope.RewardPkgs[0].PledgeAmount;
-        //}
-
-        var promisePost = ProjectService.addBack($scope.BackData);
-
-        if ($rootScope.UserInfo.IsAuthen == true) {
-            $location.path("/project/payment/" + $route.current.params.code).replace();
+        if ($scope.RewardPkgs[index].Type === 'limited'
+            && ($scope.BackData.Quantity > ($scope.RewardPkgs[index].Quantity - $scope.RewardPkgs[index].CurrentQuantity))) {
+            $scope.isError = true;
+        } else if ($scope.RewardPkgs[index].Type !== 'no reward' && ($scope.BackData.Quantity < 1 || $scope.BackData.Quantity == null || $scope.BackData.Quantity === '')) {
+            $scope.isError = true;
+        } else if ($scope.BackData.PledgeAmount < $scope.RewardPkgs[index].PledgeAmount * $scope.BackData.Quantity || $scope.BackData.PledgeAmount == null || $scope.BackData.PledgeAmount === '') {
+            $scope.isError = true;
         } else {
-            CommmonService.checkError("not-authen", $rootScope.BaseUrl);
+            $scope.isError = false;
         }
+
+        if (!$scope.isError) {
+            $scope.BackData.RewardPKgID = $scope.RewardPkgs[index].RewardPkgID;
+
+            $scope.BackData.ProjectCode = $route.current.params.code;
+
+            //if (checkSelect === false && $scope.BackData.PledgeAmount == undefined) {
+            //    $scope.BackData.PledgeAmount = $scope.RewardPkgs[0].PledgeAmount;
+            //}
+
+            var promisePost = ProjectService.addBack($scope.BackData);
+
+            if ($rootScope.UserInfo.IsAuthen == true) {
+                $location.path("/project/payment/" + $route.current.params.code).replace();
+            } else {
+                CommmonService.checkError("not-authen", $rootScope.BaseUrl);
+            }
+        }
+
     }
 
 });
