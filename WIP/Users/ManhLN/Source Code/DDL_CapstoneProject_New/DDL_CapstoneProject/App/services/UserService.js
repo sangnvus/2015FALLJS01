@@ -22,10 +22,20 @@ service.service('UserService', function ($http) {
     }
 
     // Function to reset password
-    this.resetPassword = function (email) {
+    this.resetPassword = function (email,code) {
         var request = $http({
             method: 'post',
-            url: '/api/UserApi/ResetPassword?email=' + email,
+            url: '/api/UserApi/ResetPassword?email=' + email + '&code=' + code,
+        });
+
+        return request;
+    }
+
+    // Function to reset password
+    this.resetPasswordCode = function (email) {
+        var request = $http({
+            method: 'post',
+            url: '/api/UserApi/SendCodeResetPassword?email=' + email,
         });
 
         return request;

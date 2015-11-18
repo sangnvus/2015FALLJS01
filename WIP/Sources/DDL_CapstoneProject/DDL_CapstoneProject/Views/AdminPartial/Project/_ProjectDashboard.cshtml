@@ -155,11 +155,11 @@
                                     <td class="center col-number">{{project.FundingGoal| currency:"":0}}</td>
                                     <td class="center col-datetime">{{project.ExpireDate | date:"dd/MM/yyyy"}}</td>
                                     <td>
-                                        <span class="label label-primary center-block blue" ng-if="project.Status == 'approved'" style="padding: 9px; width: 100px">Đang chạy</span>
-                                        <span class="label label-primary center-block red" ng-if="project.Status == 'suspended'" style="padding: 9px; width: 100px">Đình chỉ</span>
-                                        <span class="label label-primary center-block gray" ng-if="project.Status == 'rejected'" style="padding: 9px;width: 100px">Từ chối</span>
-                                        <span class="label label-primary center-block default" ng-if="project.Status == 'expired'" style="padding: 9px; width: 100px">Hết hạn</span>
-                                        <span class="label label-primary center-block purple" ng-if="project.Status == 'pending'" style="padding: 9px; width: 100px">Chờ duyệt</span>
+                                        <span class="label label-success center-block" ng-if="project.Status == 'approved'" style="padding: 9px; width: 100px">Đang chạy</span>
+                                        <span class="label label-danger center-block" ng-if="project.Status == 'suspended'" style="padding: 9px; width: 100px">Đình chỉ</span>
+                                        <span class="label label-danger center-block" ng-if="project.Status == 'rejected'" style="padding: 9px;width: 100px">Từ chối</span>
+                                        <span class="label label-primary center-block" ng-if="project.Status == 'expired'" style="padding: 9px; width: 100px">Hết hạn</span>
+                                        <span class="label label-danger center-block" ng-if="project.Status == 'pending'" style="padding: 9px; width: 100px">Chờ duyệt</span>
                                     </td>
                                     <td class="center" style="width: 34px;">
                                         <div class="btn-group">

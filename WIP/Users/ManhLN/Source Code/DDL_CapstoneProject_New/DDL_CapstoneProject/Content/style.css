@@ -25,13 +25,30 @@ Date: 2015.10.01
 	  border-radius: 0;
 	  margin-top: 5px;
 	}
+    #main-slider .carousel .btn-success {
+	  background-color: rgba(92, 184, 92, 0.8);
+	}
+    #main-slider .carousel .btn-info{
+	  background-color: rgba(93, 173, 226, 0.8);
+	}
 	#main-slider .carousel .btn:hover {
 	  background-color: rgba(255, 255, 255, 0.3);
 	}
-	#main-slider .carousel .boxed {
+    #main-slider .carousel .btn-success:hover {
+	  background-color: rgba(92, 184, 92, 1);
+	}
+    #main-slider .carousel .btn-info:hover {
+	  background-color: rgba(93, 173, 226, 1);
+	}
+	#main-slider .carousel .dark {
 	  padding: 10px 15px;
 	  background-color: rgba(0, 0, 0, 0.8);
 	  display: inline-block;
+	}
+    #main-slider .carousel .light {
+	  padding: 10px 15px;
+	  /*background-color: rgba(0, 0, 0, 0.8);
+	  display: inline-block;*/
 	}
 	#main-slider .carousel .item {
 	  background-position: 50%;
@@ -171,7 +188,7 @@ Date: 2015.10.01
 	/* Feature1 */
 	#feature1{
 		background: #ECF0F1;
-		padding: 30px 0px;
+		padding: 30px 0 0;
 	}
 	#feature1 h3>a{
 		color: #000000;

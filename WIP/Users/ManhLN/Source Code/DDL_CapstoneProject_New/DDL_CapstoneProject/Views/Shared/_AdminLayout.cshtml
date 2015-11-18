@@ -33,7 +33,7 @@
 
         /*Fix css for datatables*/
         .table-responsive {
-            overflow: inherit;
+            /*overflow: inherit;*/
             border: none;
         }
 
@@ -140,9 +140,9 @@
 
 <body>
     <input type="hidden" value="@ViewBag.BaseUrl" id="BaseUrl" />
-    <div id="wrapper">
+    <div id="wrapper" style="min-width: 1024px">
         <!-- begin TOP NAVIGATION -->
-        <nav class="navbar-top" role="navigation">
+        <nav class="navbar-top" role="navigation" style="min-width: 1024px">
 
             <!-- begin BRAND HEADING -->
             <div class="navbar-header">
@@ -243,24 +243,24 @@
                     <!-- begin DASHBOARD LINK -->
                     <li>
                         <a href="~/admin/#/dashboard" ng-class="{'active': Page.activeTab == 'dashboard'}">
-                            <i class="fa fa-dashboard"></i> Dashboard
+                            <i class="fa fa-dashboard"></i> Thống kê chung
                         </a>
                     </li>
                     <!-- end DASHBOARD LINK -->
                     <!-- begin USERS DROPDOWN -->
                     <li class="panel">
                         <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#users">
-                            <i class="fa fa-files-o"></i> Users <i class="fa fa-caret-down"></i>
+                            <i class="fa fa-files-o"></i> Người dùng <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="collapse nav" id="users">
                             <li>
                                 <a href="~/admin/#/userdashboard/" ng-class="{'active': Page.activeTab == 'userprofile'}">
-                                    <i class="fa fa-angle-double-right"></i> Bảng điều khiển thành viên
+                                    <i class="fa fa-angle-double-right"></i> Bảng điều khiển người dùng
                                 </a>
                             </li>
                             <li>
                                 <a href="~/admin/#/userlist/" ng-class="{'active': Page.activeTab == 'userlist'}">
-                                    <i class="fa fa-angle-double-right"></i> Danh sách thành viên
+                                    <i class="fa fa-angle-double-right"></i> Danh sách người dùng
                                 </a>
                             </li>
                         </ul>
@@ -321,18 +321,18 @@
                     <!-- begin REPORT -->
                     <li class="panel">
                         <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#reports">
-                            <i class="fa fa-files-o"></i> Report <i class="fa fa-caret-down"></i>
+                            <i class="fa fa-files-o"></i> Báo cáo <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="collapse nav" id="reports">
                             <li>
                                 <a href="/admin/#/reportuser" ng-class="{'active': Page.activeTab == 'reportuser'}">
-                                    <i class="fa fa-angle-double-right"></i> User
+                                    <i class="fa fa-angle-double-right"></i> Người dùng
                                 </a>
                             </li>
                             <li>
                                 <a href="/admin/#/reportproject" ng-class="{'active': Page.activeTab == 'reportproject'}">
                                     <i class=" fa fa-angle-double-right">
-                                    </i> Project
+                                    </i> Dự án
                                 </a>
                             </li>
                         </ul>

@@ -20,14 +20,14 @@
                                     </span>
                                     <div class="row pb20">
                                         <div class="col-md-8">
-                                            <div class="fnt18"><span class="fnt-b">{{reward.PledgeAmount}} hoặc hơn</span></div>
+                                            <div class="fnt18"><span class="fnt-b">{{reward.PledgeAmount | currency:"":0}}&#8363; hoặc hơn</span></div>
                                             <p>
                                                 Kiểu:
                                                 <span ng-if="reward.Type == 'no reward'">Không phần thưởng</span>
                                                 <span ng-if="reward.Type == 'limited'">Giới hạn</span>
                                                 <span ng-if="reward.Type == 'unlimited'">Không giới hạn</span>
                                             </p>
-                                            <p>Đã ủng hộ: {{reward.CurrentQuantity}} <span ng-if="reward.Type == 'limited'">| {{reward.Quantity}}</span></p>
+                                            <p>Đã ủng hộ: {{reward.CurrentQuantity | currency:"":0}} <span ng-if="reward.Type == 'limited'">| {{reward.Quantity | currency:"":0}}</span></p>
                                             <p style="word-break: break-word;">{{reward.Description}}</p>
                                             <p ng-if="reward.Quantity <= reward.CurrentQuantity && reward.Type == 'limited'">
                                                 <span class="label label-danger">Gói đã hết. Xin chọn gói khác!</span>
@@ -45,7 +45,9 @@
                                                 <p class="fnt18 fnt-b pt0 pp0">Ủng hộ:</p>
                                                 <div class="form-group pb10">
                                                     <div class="input-group pl10">
-                                                        <input type="text" format="number" class="form-control" ng-model="BackData.PledgeAmount"
+                                                        <input type="text" format="number"
+                                                               class="form-control"
+                                                               ng-model="BackData.PledgeAmount"
                                                                placeholder="Nhập số tiền"
                                                                ng-trim="true"
                                                                required
@@ -59,35 +61,59 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group pb10 pl10" ng-if="reward.Type != 'no reward'">
-                                                    <div class="input-group" ng-if="reward.Type != 'limited'">
-                                                        <input type="number" class="form-control" ng-model="BackData.Quantity" placeholder="Nhập số lượng" name="Quantity{{$index}}" value="1" min="1" required />
-                                                        <span class="input-group-addon">SL</span>
-                                                        <div ng-show="rewardFrom.Quantity{{$index}}.$dirty && rewardFrom.Quantity{{$index}}.$invalid" class="text-danger">
-                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                            <span ng-show="rewardFrom.Quantity{{$index}}.$error.required">Bạn chưa nhập số lượng</span>
-                                                            <span ng-show="rewardFrom.Quantity{{$index}}.$error.min">Số lượng phải là chữ số và lớn hơn 1</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="input-group" ng-if="reward.Type == 'limited'">
-                                                        <input type="number" class="form-control" ng-model="BackData.Quantity"
+                                                    <div class="input-group">
+                                                        <input type="text" format="number"
+                                                               class="form-control"
+                                                               ng-model="BackData.Quantity"
                                                                placeholder="Nhập số lượng"
                                                                name="Quantity{{$index}}"
-                                                               value="1" ng-min="1"
-                                                               ng-model-options="{ updateOn: 'change blur'}"
-                                                               ng-max="{{reward.Quantity - reward.CurrentQuantity}}" required />
-                                                        <span class="input-group-addon">SP</span>
-                                                        <div ng-show="rewardFrom.Quantity{{$index}}.$dirty && rewardFrom.Quantity{{$index}}.$invalid" class="text-danger">
-                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                            <span ng-show="rewardFrom.Quantity{{$index}}.$error.required">Bạn chưa nhập số lượng</span>
-                                                            <span ng-show="rewardFrom.Quantity{{$index}}.$error.min">Số lượng phải là chữ số và lớn hơn  hoặc bằng 1</span>
-                                                            <span ng-show="rewardFrom.Quantity{{$index}}.$error.max">Số lượng phải là chữ số và nhờ hơn hoặc bằng {{reward.Quantity - reward.CurrentQuantity}}</span>
-                                                        </div>
+                                                               value="1"
+                                                               min="1"
+                                                               ng-trim="true"
+                                                               required />
+                                                        <span class="input-group-addon">SL</span>
+                                                        @*<div ng-show="rewardFrom.Quantity{{$index}}.$dirty && rewardFrom.Quantity{{$index}}.$invalid" class="text-danger">
+                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                <span ng-show="rewardFrom.Quantity{{$index}}.$error.required">Bạn chưa nhập số lượng</span>
+                                                                <span ng-show="rewardFrom.Quantity{{$index}}.$error.min">Số lượng phải là chữ số và lớn hơn 1</span>
+                                                            </div>*@
                                                     </div>
+                                                    @*<div class="input-group" ng-if="reward.Type == 'limited'">
+                                                            <input type="number" class="form-control" ng-model="BackData.Quantity"
+                                                                   placeholder="Nhập số lượng"
+                                                                   name="Quantity{{$index}}"
+                                                                   value="1" ng-min="1"
+                                                                   ng-model-options="{ updateOn: 'change blur'}"
+                                                                   ng-max="{{reward.Quantity - reward.CurrentQuantity}}" required />
+                                                            <span class="input-group-addon">SP</span>
+                                                            <div ng-show="rewardFrom.Quantity{{$index}}.$dirty && rewardFrom.Quantity{{$index}}.$invalid" class="text-danger">
+                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                <span ng-show="rewardFrom.Quantity{{$index}}.$error.required">Bạn chưa nhập số lượng</span>
+                                                                <span ng-show="rewardFrom.Quantity{{$index}}.$error.min">Số lượng phải là chữ số và lớn hơn  hoặc bằng 1</span>
+                                                                <span ng-show="rewardFrom.Quantity{{$index}}.$error.max">Số lượng phải là chữ số và nhờ hơn hoặc bằng {{reward.Quantity - reward.CurrentQuantity}}</span>
+                                                            </div>
+                                                        </div>*@
                                                 </div>
                                                 <button class="form-control btn btn-primary mb10" ng-disabled="rewardFrom.$invalid && rewardFrom.$dirty"
                                                         ng-click="back($index)">
                                                     Tiếp tục
                                                 </button>
+                                                <div class="row pb20 text-danger" ng-if="isError && (BackData.PledgeAmount == null || BackData.PledgeAmount === '')">
+                                                    <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                    <span>Bạn chưa nhập số tiền ủng hộ</span>
+                                                </div>
+                                                <div class="row pb20 text-danger" ng-if="isError && (BackData.PledgeAmount < reward.PledgeAmount * BackData.Quantity)">
+                                                    <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                    <span>Số tiền ủng hộ phải lớn hơn hoặc bằng {{reward.PledgeAmount | currency:"":0}}*SL tức {{reward.PledgeAmount*BackData.Quantity | currency:"":0}}&#8363;</span>
+                                                </div>
+                                                <div class="row pb20 text-danger" ng-if="isError && (reward.Type != 'no reward' && BackData.Quantity < 1)">
+                                                    <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                    <span>Số lượng ít nhất phải lớn hơn hoặc bằng 1</span>
+                                                </div>
+                                                <div class="row pb20 text-danger" ng-if="isError && (reward.Type == 'limited' && BackData.Quantity > (reward.Quantity - reward.CurrentQuantity))">
+                                                    <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                    <span>Số lượng phải nhỏ hơn hoặc bằng {{reward.Quantity - reward.CurrentQuantity}}</span>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
@@ -108,9 +134,3 @@
         </div>
     </div> <!-- end feature3 -->
 </div> <!-- end content -->
-
-<div class="scroll-top-wrapper ">
-    <span class="scroll-top-inner">
-        <i class="fa fa-2x fa-arrow-circle-up"></i>
-    </span>
-</div> <!-- end SCROLL TO TOP -->

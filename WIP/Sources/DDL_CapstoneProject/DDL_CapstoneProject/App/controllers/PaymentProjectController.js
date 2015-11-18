@@ -46,10 +46,8 @@ app.controller('PaymentProjectController', function ($scope, $rootScope, $sce, $
         return lowerStr.indexOf('http') === 0;
     }
 
-
-
     $scope.submit = function () {
-        $scope.backingData.BackerName = $scope.BackData.FullName;
+        $scope.backingData.BackerName = $scope.UserBasicInfo.FullName;
         $scope.backingData.ProjectCode = $scope.BackData.ProjectCode;
         $scope.backingData.Address = $scope.UserBasicInfo.Addres;
         $scope.backingData.Email = $scope.UserBasicInfo.Email;

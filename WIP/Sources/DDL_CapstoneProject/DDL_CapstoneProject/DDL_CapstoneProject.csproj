@@ -156,6 +156,10 @@
     <Compile Include="Migrations\201510220931488_CurrentQuantity.Designer.cs">
       <DependentUpon>201510220931488_CurrentQuantity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511171033052_UpdateBackingBackerName.cs" />
+    <Compile Include="Migrations\201511171033052_UpdateBackingBackerName.Designer.cs">
+      <DependentUpon>201511171033052_UpdateBackingBackerName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Backing.cs" />
     <Compile Include="Controllers\WebControllers\HomeController.cs" />
@@ -1343,6 +1347,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510220931488_CurrentQuantity.resx">
       <DependentUpon>201510220931488_CurrentQuantity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511171033052_UpdateBackingBackerName.resx">
+      <DependentUpon>201511171033052_UpdateBackingBackerName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

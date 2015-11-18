@@ -156,6 +156,10 @@
     <Compile Include="Migrations\201510220931488_CurrentQuantity.Designer.cs">
       <DependentUpon>201510220931488_CurrentQuantity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511171033052_UpdateBackingBackerName.cs" />
+    <Compile Include="Migrations\201511171033052_UpdateBackingBackerName.Designer.cs">
+      <DependentUpon>201511171033052_UpdateBackingBackerName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Backing.cs" />
     <Compile Include="Controllers\WebControllers\HomeController.cs" />
@@ -170,6 +174,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\DDL_User.cs" />
+    <Compile Include="Models\DTOs\AdminBakingFullInforDTO.cs" />
     <Compile Include="Models\DTOs\AdminProjectStatisticDTO.cs" />
     <Compile Include="Models\DTOs\AdminDashboardInfoDTO.cs" />
     <Compile Include="Models\DTOs\AdminBackingListDTO.cs" />
@@ -1327,7 +1332,6 @@
   <ItemGroup>
     <Folder Include="App\filters\" />
     <Folder Include="App_Data\" />
-    <Folder Include="Views\ClientPartial\" />
     <Folder Include="Views\Slider\" />
   </ItemGroup>
   <ItemGroup>
@@ -1343,6 +1347,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510220931488_CurrentQuantity.resx">
       <DependentUpon>201510220931488_CurrentQuantity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511171033052_UpdateBackingBackerName.resx">
+      <DependentUpon>201511171033052_UpdateBackingBackerName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

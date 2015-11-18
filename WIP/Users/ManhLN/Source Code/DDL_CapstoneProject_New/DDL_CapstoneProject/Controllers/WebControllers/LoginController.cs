@@ -138,7 +138,8 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
                     redirect_uri = RedirectUri.AbsoluteUri,
                     response_type = "code",
 
-                    scope = "email,user_birthday,user_about_me,user_website" // Add other permissions as needed
+                    scope = "email,user_birthday,user_about_me" // Add other permissions as needed
+                    //scope = "email,user_birthday,user_about_me,user_website,user_location" // Add other permissions as needed
                 });
 
 
@@ -176,6 +177,7 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
 
                 // Get the user's information
                 dynamic me = fb.Get("/me?fields=id,name,gender,link,birthday,email,bio");
+                //dynamic me = fb.Get("/me?fields=id,name,gender,link,birthday,email,bio,website,location");
                 string facebookId = me.id;
                 string email = me.email;
 

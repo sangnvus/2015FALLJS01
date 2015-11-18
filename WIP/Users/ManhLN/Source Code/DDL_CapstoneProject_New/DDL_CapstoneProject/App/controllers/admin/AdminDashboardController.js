@@ -116,7 +116,8 @@ app.controller('AdminDashBoardController', function ($scope, $rootScope, $sce, t
                 {
                     // Primary yAxis
                     labels: {
-                        format: '{value} VNĐ',
+                        pointFormat: "Value: {point.y:,.0f} VNĐ",
+                        //format: '{value} VNĐ',
                         style: {
                             color: Highcharts.getOptions().colors[1]
                         }
@@ -173,7 +174,6 @@ app.controller('AdminDashBoardController', function ($scope, $rootScope, $sce, t
                     valueSuffix: ' VNĐ'
                 }
             }],
-
             title: {
                 text: 'Thống kê thông số dự án'
             },
