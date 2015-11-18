@@ -9,6 +9,8 @@ app.controller('BackProjectController', function ($scope, $route, $rootScope, $l
     $scope.BackData = {};
     // check error
     $scope.isError = false;
+    // check selecting reward
+    $scope.selectingReward = 0;
 
     // Get reward selected
     var rewardSelected = $route.current.params.reward;
@@ -38,10 +40,15 @@ app.controller('BackProjectController', function ($scope, $route, $rootScope, $l
     // Detech selected rewards
     $scope.selectReward = function (index) {
         checkSelect = true;
+        if ($scope.selectingReward != index) {
+            $scope.BackData.Quantity = 1;
+            $scope.BackData.PledgeAmount = $scope.RewardPkgs[index - 1].PledgeAmount;
+        }
+
         $scope.indexFlag = index;
-        $scope.BackData.Quantity = 1;
-        $scope.BackData.PledgeAmount = $scope.RewardPkgs[index - 1].PledgeAmount;
+        $scope.selectingReward = index;
     }
+    $scope.selectReward($scope.indexFlag);
 
     $scope.back = function (index) {
         if ($scope.RewardPkgs[index].Type === 'limited'

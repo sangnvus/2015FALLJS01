@@ -808,6 +808,8 @@ namespace DDL_CapstoneProject.Respository
                     type = "từ chối";
                 }
 
+                db.SaveChanges();
+
                 // Send email to project owner
                 MailHelper.Instance.SendMailChangeProjectStatus(projectOwner.Email, projectOwner.UserInfo.FullName, type, updateProject.Title);
 
@@ -822,8 +824,6 @@ namespace DDL_CapstoneProject.Respository
                             "<br/>ngocmanh1712@gmail.com"
                 };
                 MessageRepository.Instance.CreateNewConversation(message, senderName);
-
-                db.SaveChanges();
 
                 return true;
             }
@@ -1710,7 +1710,8 @@ namespace DDL_CapstoneProject.Respository
 
             using (var db = new DDLDataContext())
             {
-                var deleteProjectDraft = db.Projects.FirstOrDefault(x => x.ProjectID == projectID);
+                var deleteProjectDraft = db.Projects.FirstOrDefault(x => x.ProjectID == projectID && (x.Status == DDLConstants.ProjectStatus.DRAFT 
+                                                                                                        || x.Status == DDLConstants.ProjectStatus.REJECTED));
 
                 if (deleteProjectDraft == null)
                 {

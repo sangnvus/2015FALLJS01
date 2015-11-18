@@ -940,6 +940,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 }
 
                 project = ProjectRepository.Instance.AdminGetProjectDetail(code);
+                project.Question = QuestionRepository.Instance.GetQuestion(project.ProjectID);
                 if (project.ImageUrl != string.Empty)
                 {
                     project.ImageUrl = DDLConstants.FileType.PROJECT + project.ImageUrl;
