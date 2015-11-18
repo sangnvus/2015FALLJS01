@@ -1788,6 +1788,10 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
             try
             {
+                if (content.Equals(""))
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "" });
+                }
                 ProjectRepository.Instance.ReportProject(User.Identity.Name, code, content);
             }
             catch (UserNotFoundException)
