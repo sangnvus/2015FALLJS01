@@ -10,6 +10,14 @@
                     <li>
                         <a href="/#/user/message/">
                             <i class="icon fa fa-inbox fa-2x fa-fw"></i>
+                            <span class="toggle">Tất cả thư <span ng-show="NumberNewMessage.AllMessage > 0" class="badge">{{NumberNewMessage.AllMessage}}</span></span>
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="/#/user/message/?list=inbox">
+                            <i class="icon fa fa-inbox fa-2x fa-fw"></i>
                             <span class="toggle">Hộp thư đến <span ng-show="NumberNewMessage.ReceivedMessage > 0" class="badge">{{NumberNewMessage.ReceivedMessage}}</span></span>
                         </a>
                     </li>

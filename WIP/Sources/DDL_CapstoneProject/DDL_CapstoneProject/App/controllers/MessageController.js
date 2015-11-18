@@ -7,7 +7,7 @@ app.controller('MessageController',
 
         //Atrributes
         $scope.ListConversations = conversations.data.Data;
-        $scope.Sent = $route.current.params.list === "sent" ? true : false;
+        $scope.Inbox = ($route.current.params.list === "") || ($route.current.params.list === undefined) ? "all" : $route.current.params.list;
         $scope.NumberNewMessage = $rootScope.UserInfo.NumberNewMessage;
         $scope.Unread = $scope.ListConversations.length;
         $scope.checkAll = false;
@@ -83,7 +83,7 @@ app.controller('MessageController',
                         if (result.data.Status === "success") {
                             $('#sentBox').modal('hide');
                             resetNewMessageModel();
-                            if ($scope.Sent) {
+                            if ($scope.Inbox === "all" || $scope.Inbox === "sent") {
                                 $scope.ListConversations.unshift(result.data.Data);
                             }
                             toastr.success("Đã gửi");
@@ -103,6 +103,27 @@ app.controller('MessageController',
             }
         }
 
+        function getListConversation() {
+            var promiseGet = MessageService.getListConversations();
+
+            promiseGet.then(
+                function (result) {
+                    if (result.data.Status === "success") {
+                        $scope.ListConversations = result.data.Data;
+                        $scope.Inbox = "all";
+                    } else {
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
+                    }
+                },
+                function (error) {
+                    toastr.error('Lỗi');
+                });
+        }
+
         function getListReceivedConversation() {
             var promiseGet = MessageService.getListReceivedConversations();
 
@@ -110,7 +131,7 @@ app.controller('MessageController',
                 function (result) {
                     if (result.data.Status === "success") {
                         $scope.ListConversations = result.data.Data;
-                        $scope.Sent = false;
+                        $scope.Inbox = "inbox";
                     } else {
                         var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         if (a) {
@@ -131,7 +152,7 @@ app.controller('MessageController',
                 function (result) {
                     if (result.data.Status === "success") {
                         $scope.ListConversations = result.data.Data;
-                        $scope.Sent = true;
+                        $scope.Inbox = "sent";
                     } else {
                         var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         if (a) {
@@ -148,7 +169,9 @@ app.controller('MessageController',
         $scope.changeInboxSent = function (value) {
             $scope.selection = [];
             addSelected(false);
-            if (value === "inbox") {
+            if (value === "all") {
+                getListConversation();
+            } else if (value === "inbox") {
                 getListReceivedConversation();
             } else {
                 getListSentConversation();
@@ -175,10 +198,12 @@ app.controller('MessageController',
                                function (result) {
                                    if (result.data.Status === "success") {
                                        toastr.success('Đã xóa');
-                                       if ($scope.Sent === true) {
-                                           getListSentConversation();
-                                       } else {
+                                       if ($scope.Inbox === "all") {
+                                           getListConversation();
+                                       } else if ($scope.Inbox === "inbox") {
                                            getListReceivedConversation();
+                                       } else {
+                                           getListSentConversation();
                                        }
                                        $scope.selection = [];
                                    } else {

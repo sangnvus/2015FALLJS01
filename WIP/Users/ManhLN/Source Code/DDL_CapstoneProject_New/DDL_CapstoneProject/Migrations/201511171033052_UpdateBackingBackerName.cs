@@ -7,10 +7,12 @@ namespace DDL_CapstoneProject.Migrations
     {
         public override void Up()
         {
+            AddColumn("dbo.BackingDetail", "BackerName", c => c.String());
         }
         
         public override void Down()
         {
+            DropColumn("dbo.BackingDetail", "BackerName");
         }
     }
 }
