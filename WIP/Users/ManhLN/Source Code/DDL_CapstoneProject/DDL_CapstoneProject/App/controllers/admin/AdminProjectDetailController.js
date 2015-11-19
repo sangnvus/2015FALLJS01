@@ -2,7 +2,7 @@
 
 app.controller('AdminProjectDetailController',
     function ($scope, $rootScope, $sce, toastr, project, AdminProjectService,
-    CommmonService, DTOptionsBuilder, DTColumnDefBuilder) {
+    CommmonService, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
 
         // Get project list
         $scope.Project = project.data.Data;
@@ -119,51 +119,6 @@ app.controller('AdminProjectDetailController',
                             return (label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) + "₫";
                         }
                     };
-                    //$scope.labels = result.data.Data.Date;
-                    //$scope.series = ['Số tiền đã ủng hộ'];
-                    //$scope.cate = [];
-                    //for (var i = 0; i < 1000; i++) {
-                    //    $scope.cate.push(i);
-                    //}
-
-
-                    //$scope.highchartsNG = {
-                    //    options: {
-                    //        chart: {
-                    //            type: 'line'
-                    //        }
-                    //    },
-                    //    xAxis: {
-                    //        categories: $scope.cate
-                    //    },
-                    //    yAxis: [{ // Primary yAxis
-                    //        labels: {
-                    //            format: '{value} VNĐ',
-                    //            style: {
-                    //                color: Highcharts.getOptions().colors[1]
-                    //            }
-                    //        },
-                    //        title: {
-                    //            text: 'Số tiền được ủng hộ',
-                    //            style: {
-                    //                color: Highcharts.getOptions().colors[1]
-                    //            }
-                    //        }
-                    //    }],
-                    //    series: [{
-                    //        name: 'Số tiền ủng hộ',
-                    //        data: result.data.Data.Amount
-                    //    }],
-                    //    title: {
-                    //        text: 'Biểu đồ thống kê số tiền được ủng hộ'
-                    //    },
-                    //    loading: false,
-                    //    credits: {
-                    //        enabled: false
-                    //    },
-                    //}
-
-                    //$scope.highchartsNG.xAxis.categories = result.data.Data.Date;
                 }
             );
         };
@@ -188,6 +143,29 @@ app.controller('AdminProjectDetailController',
                     $scope.Error = error.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 });
-        }
+        };
+
+        // Alert admin before change status
+        $scope.warning = function (status) {
+            SweetAlert.swal({
+                title: "Bạn vừa thay đổi trạng thái dự án!",
+                text: "Trạng thái dự án sẽ bị chỉnh sửa!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Có!",
+                cancelButtonText: "Không!",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        //SweetAlert.swal("Edited!", "Project's basic has been edited.", "success");
+                        $scope.change(status);
+                    } else {
+                        //SweetAlert.swal("Cancelled", "Project's basic is safe :)", "error");
+                    }
+                });
+        };
 
     });

@@ -41,14 +41,14 @@ app.controller('AdminUserProfileController',
             }
         };
 
-        $scope.getBackingDetail = function () {
-            var promise = AdminUserService.getBackingDetail($scope.UserProfile.UserName);
-            promise.then(
-                function (result) {
-                    $scope.BackingDetail = result.data.Data;
-                }
-             );
-        };
+        //$scope.getBackingDetail = function () {
+        //    var promise = AdminUserService.getBackingDetail($scope.UserProfile.UserName);
+        //    promise.then(
+        //        function (result) {
+        //            $scope.BackingDetail = result.data.Data;
+        //        }
+        //     );
+        //};
 
 
         // Define table

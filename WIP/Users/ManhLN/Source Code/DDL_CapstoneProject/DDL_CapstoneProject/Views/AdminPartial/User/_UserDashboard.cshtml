@@ -1,6 +1,6 @@
 ﻿<div class="row">
     <div class="col-lg-6 col-sm-6">
-        <div class="col-lg-6 col-sm-9">
+        <div class="col-lg-6 col-sm-6">
             <div class="circle-tile">
                 <a>
                     <div class="circle-tile-heading orange">
@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-sm-9">
+        <div class="col-lg-6 col-sm-6">
             <div class="circle-tile">
                 <a>
                     <div class="circle-tile-heading blue">
@@ -37,7 +37,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-sm-9">
+        <div class="col-lg-6 col-sm-6">
             <div class="circle-tile">
                 <a>
                     <div class="circle-tile-heading purple">
@@ -56,7 +56,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-sm-9">
+        <div class="col-lg-6 col-sm-6">
             <div class="circle-tile">
                 <a>
                     <div class="circle-tile-heading dark-blue">
@@ -78,7 +78,7 @@
     </div>
 
     <!-- Donut Chart Example -->
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-6">
         <div class="portlet portlet-orange">
             <div class="portlet-heading">
                 <div class="portlet-title">
@@ -111,7 +111,7 @@
                     <h4><i class="fa fa-exchange fa-fw"></i>Người dùng vừa đăng nhập</h4>
                 </div>
                 <div class="portlet-widgets">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet"><i class="fa fa-chevron-down"></i></a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet" onclick="return false;"><i class="fa fa-chevron-down"></i></a>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -137,8 +137,8 @@
                                     </td>
                                     <td style="width:165px;">{{user.LastLogin | date: "HH:mm 'ngày' dd-MM-yyyy"}}</td>
                                     <td style="width:100px;">
-                                        <span ng-show="user.Status" class="label label-primary center-block green" style="padding: 9px">Bình thường</span>
-                                        <span ng-hide="user.Status" class="label label-primary center-block red" style="padding: 9px">Đã bị khóa</span>
+                                        <span ng-show="user.Status" class="label label-primary center-block label-success" style="padding: 9px">Bình thường</span>
+                                        <span ng-hide="user.Status" class="label label-primary center-block label-danger" style="padding: 9px">Đã bị khóa</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -156,7 +156,7 @@
                     <h4><i class="fa fa-exchange fa-fw"></i>Người dùng ủng hộ nhièu nhất</h4>
                 </div>
                 <div class="portlet-widgets">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet2"><i class="fa fa-chevron-down"></i></a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet2" onclick="return false;"><i class="fa fa-chevron-down"></i></a>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -184,8 +184,8 @@
                                     <td class="col-number">{{user.TotalProject}}</td>
                                     <td class="col-number"><span class="money usd no-code">{{user.TotalPledgedAmount | number : fractionSize}} &#8363;</span></td>
                                     <td style="width:100px;">
-                                        <span ng-show="user.Status" class="label label-primary center-block green" style="padding: 9px">Bình thường</span>
-                                        <span ng-hide="user.Status" class="label label-primary center-block red" style="padding: 9px">Đã bị khóa</span>
+                                        <span ng-show="user.Status" class="label label-primary center-block label-success" style="padding: 9px">Bình thường</span>
+                                        <span ng-hide="user.Status" class="label label-primary center-block label-danger" style="padding: 9px">Đã bị khóa</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -209,7 +209,7 @@
                     <h4><i class="fa fa-exchange fa-fw"></i> Người dùng mới</h4>
                 </div>
                 <div class="portlet-widgets">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet3"><i class="fa fa-chevron-down"></i></a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet3" onclick="return false;"><i class="fa fa-chevron-down"></i></a>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -235,8 +235,8 @@
                                     </td>
                                     <td style="width:165px;">{{user.CreatedDate | date : "HH:mm 'ngày' dd-MM-yyyy"}}</td>
                                     <td style="width:100px;">
-                                        <span ng-show="user.Status" class="label label-primary center-block green" style="padding: 9px">Bình thường</span>
-                                        <span ng-hide="user.Status" class="label label-primary center-block red" style="padding: 9px">Đã bị khóa</span>
+                                        <span ng-show="user.Status" class="label label-primary center-block label-success" style="padding: 9px">Bình thường</span>
+                                        <span ng-hide="user.Status" class="label label-primary center-block label-danger" style="padding: 9px">Đã bị khóa</span>
                                     </td>
                                 </tr>
                             </tbody>        
@@ -255,7 +255,7 @@
                     <h4><i class="fa fa-exchange fa-fw"></i> Người dùng thành công nhất</h4>
                 </div>
                 <div class="portlet-widgets">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet4"><i class="fa fa-chevron-down"></i></a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet4" onclick="return false;"><i class="fa fa-chevron-down"></i></a>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -284,8 +284,8 @@
                                     <td class="col-number"><span class="money usd no-code">{{user.TotalPledgedAmount | number : fractionSize}} &#8363;</span>
                                     </td>
                                     <td style="width:100px;">
-                                        <span ng-show="user.Status" class="label label-primary center-block green" style="padding: 9px">Bình thường</span>
-                                        <span ng-hide="user.Status" class="label label-primary center-block red" style="padding: 9px">Đã bị khóa</span>
+                                        <span ng-show="user.Status" class="label label-primary center-block label-success" style="padding: 9px">Bình thường</span>
+                                        <span ng-hide="user.Status" class="label label-primary center-block label-danger" style="padding: 9px">Đã bị khóa</span>
                                     </td>
                                 </tr>
                             </tbody>

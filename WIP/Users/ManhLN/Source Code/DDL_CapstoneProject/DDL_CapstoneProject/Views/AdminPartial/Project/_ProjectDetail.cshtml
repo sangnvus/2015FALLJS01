@@ -9,20 +9,20 @@
                     <li><a onclick="return false" href="#campaign" data-toggle="tab">Nội dung dự án</a></li>
                     <li><a onclick="return false" href="#updates" data-toggle="tab" ng-click="getUpdateLogList()">Cập nhật</a></li>
                     <li><a onclick="return false" href="#comments" data-toggle="tab" ng-click="getCommentList()">Bình luận</a></li>
-                    <button class="btn btn-danger btn-sm pull-right" data-toggle="modal" ng-click="change('suspended')"
+                    <button class="btn btn-danger btn-sm pull-right" data-toggle="modal" ng-click="warning('suspended')"
                             data-target="#ConfirmModal" ng-if="Project.Status == 'approved'">
                         Ngừng dự án
                     </button>
                     <button class="btn btn-success btn-sm pull-right" data-toggle="modal"
-                            data-target="#ConfirmModal" ng-if="Project.Status == 'suspended'" ng-click="change('approved')">
+                            data-target="#ConfirmModal" ng-if="Project.Status == 'suspended'" ng-click="warning('approved')">
                         Tiếp tục
                     </button>
                     <button class="btn btn-danger btn-sm pull-right" data-toggle="modal"
-                            data-target="#ConfirmModal" ng-if="Project.Status == 'pending'" ng-click="change('rejected')">
+                            data-target="#ConfirmModal" ng-if="Project.Status == 'pending'" ng-click="warning('rejected')">
                         Từ chối
                     </button>
                     <button class="btn btn-success btn-sm pull-right" data-toggle="modal" style="margin-right: 15px;"
-                            data-target="#ConfirmModal" ng-if="Project.Status == 'pending' || Project.Status == 'rejected'" ng-click="change('approved')">
+                            data-target="#ConfirmModal" ng-if="Project.Status == 'pending' || Project.Status == 'rejected'" ng-click="warning('approved')">
                         Chấp nhận
                     </button>
                 </ul>
@@ -35,12 +35,12 @@
                             <div class="title text-center">
                                 <h2>{{Project.Title}}</h2>
                                 <p>
-                                    by <a href="@Url.Content("/admin/#/userprofile/{{Project.Creator.UserName}}")">{{Project.Creator.FullName}}</a> - <span class="badge green">{{Project.CategoryName}}</span> -
-                                    <span class="badge blue" ng-if="Project.Status == 'approved'">Đang chạy</span>
+                                    by <a href="@Url.Content("/admin/#/userprofile/{{Project.Creator.UserName}}")">{{Project.Creator.FullName}}</a> - <span class="badge purple">{{Project.CategoryName}}</span> -
+                                    <span class="badge green" ng-if="Project.Status == 'approved'">Đang chạy</span>
                                     <span class="badge red" ng-if="Project.Status == 'suspended'">Đình chỉ</span>
-                                    <span class="badge gray" ng-if="Project.Status == 'rejected'">Từ chối</span>
-                                    <span class="badge default" ng-if="Project.Status == 'expired'">Hết hạn</span>
-                                    <span class="badge purple" ng-if="Project.Status == 'pending'">Chờ duyệt</span>
+                                    <span class="badge red" ng-if="Project.Status == 'rejected'">Từ chối</span>
+                                    <span class="badge red" ng-if="Project.Status == 'expired'">Hết hạn</span>
+                                    <span class="badge blue" ng-if="Project.Status == 'pending'">Chờ duyệt</span>
                                 </p>
                             </div>
                             <div class="col-lg-7">
@@ -56,7 +56,7 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-12">
                                         <div class="circle-tile">
-                                            <a href="#">
+                                            <a onclick="return false" href="#">
                                                 <div class="circle-tile-heading orange">
                                                     <i class="fa fa-bell fa-fw fa-3x"></i>
                                                 </div>
@@ -68,13 +68,13 @@
                                                 <div class="circle-tile-number text-faded">
                                                     {{Project.NumberDays}}
                                                 </div>
-                                                <a href="#" class="circle-tile-footer">Ngày <i class="fa fa-chevron-circle-right"></i></a>
+                                                @*<a href="#" class="circle-tile-footer">Ngày <i class="fa fa-chevron-circle-right"></i></a>*@
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12">
                                         <div class="circle-tile">
-                                            <a href="#">
+                                            <a onclick="return false" href="#">
                                                 <div class="circle-tile-heading red">
                                                     <i class="fa fa-shopping-cart fa-fw fa-3x"></i>
                                                 </div>
@@ -84,16 +84,16 @@
                                                     Đã được gây quỹ
                                                 </div>
                                                 <div class="circle-tile-number text-faded">
-                                                    {{Project.CurrentFunded | currency:"&#8363;":0}}
+                                                    {{Project.CurrentFunded | currency:"":0}}&#8363;
                                                     <span id="sparklineC"></span>
                                                 </div>
-                                                <a href="#" class="circle-tile-footer">VNĐ <i class="fa fa-chevron-circle-right"></i></a>
+                                                @*<a href="#" class="circle-tile-footer">VNĐ <i class="fa fa-chevron-circle-right"></i></a>*@
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12">
                                         <div class="circle-tile">
-                                            <a href="#">
+                                            <a onclick="return false" href="#">
                                                 <div class="circle-tile-heading green">
                                                     <i class="fa fa-money fa-fw fa-3x"></i>
                                                 </div>
@@ -103,15 +103,15 @@
                                                     Mục tiêu
                                                 </div>
                                                 <div class="circle-tile-number text-faded">
-                                                    {{Project.FundingGoal | currency:"&#8363;":0}}
+                                                    {{Project.FundingGoal | currency:"":0}}&#8363;
                                                 </div>
-                                                <a href="#" class="circle-tile-footer">VNĐ <i class="fa fa-chevron-circle-right"></i></a>
+                                                @*<a href="#" class="circle-tile-footer">VNĐ <i class="fa fa-chevron-circle-right"></i></a>*@
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12">
                                         <div class="circle-tile">
-                                            <a href="">
+                                            <a onclick="return false" href="">
                                                 <div class="circle-tile-heading dark-blue">
                                                     <i class="fa fa-users fa-fw fa-3x"></i>
                                                 </div>
@@ -124,7 +124,7 @@
                                                     {{Project.NumberBacked}}
                                                     <span id="sparklineA"></span>
                                                 </div>
-                                                <a href="#" class="circle-tile-footer">Người <i class="fa fa-chevron-circle-right"></i></a>
+                                                @*<a href="#" class="circle-tile-footer">Người <i class="fa fa-chevron-circle-right"></i></a>*@
                                             </div>
                                         </div>
                                     </div>
@@ -200,7 +200,7 @@
                                     <h3>Thông tin dự án</h3>
                                 </div> <!-- end About this project -->
                                 <!-- end About this project -->
-                                <div id="load_content" class="pt15" ta-bind ng-model="Project.Description" style="word-break: break-word"></div>
+                                <div id="load_content" class="pt15 img-adm-responsive" ta-bind ng-model="Project.Description" style="word-break: break-word"></div>
                                 <!-- end load_content -->
                                 <div id="riskandchallenges" class="padding30">
                                     <h3 class="fnt25">Rủi ro và thách thức</h3>
@@ -209,7 +209,7 @@
                                 @*Question*@
                                 <p>
                                     <h3 class="fnt25">Thắc mắc và Giải đáp</h3>
-                                    <div ng-show="Project.Question.length == 0" class="fnt-b">Nếu những thông tin trên không giúp bạn có câu trả lời , hãy trực tiếp đặt câu hỏi với chủ dự án .</div>
+                                    @*<div ng-show="Project.Question.length == 0" class="fnt-b">Nếu những thông tin trên không giúp bạn có câu trả lời , hãy trực tiếp đặt câu hỏi với chủ dự án .</div>*@
                                 </p>
                                 <ul style="list-style: none">
                                     <li ng-repeat="question in Project.Question">
