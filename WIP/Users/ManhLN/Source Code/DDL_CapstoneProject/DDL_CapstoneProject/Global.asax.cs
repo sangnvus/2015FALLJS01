@@ -90,7 +90,7 @@ namespace DDL_CapstoneProject
         {
             using (var db = new DDLDataContext())
             {
-                var projects = db.Projects.Where(x => x.IsExprired == false).ToList();
+                var projects = db.Projects.Where(x => x.IsExprired == false && x.Status != DDLConstants.ProjectStatus.DRAFT).ToList();
 
                 foreach (var project in projects)
                 {
@@ -98,6 +98,7 @@ namespace DDL_CapstoneProject
                         && project.ExpireDate.Value.Month == DateTime.UtcNow.Month)
                     {
                         project.IsExprired = true;
+                        project.Status = DDLConstants.ProjectStatus.EXPIRED;
                     }
 
                     db.SaveChanges();
@@ -145,13 +146,13 @@ namespace DDL_CapstoneProject
                            x.CreatedDate.Month == DateTime.UtcNow.Month).ToList();
                 foreach (var cmt in comment)
                 {
-                    var project = projects.SingleOrDefault(x => x.ProjectID == cmt.ProjectID);
+                    var project = projects.SingleOrDefault(x => x.ProjectID == cmt.ProjectID && cmt.UserID != x.CreatorID);
 
                     if (project == null)
                     {
                         throw new KeyNotFoundException();
                     }
-                    project.PopularPoint += 5;
+                    project.PopularPoint += 2;
                 }
 
                 db.SaveChanges();
