@@ -13,8 +13,9 @@
                             <div ng-class="checkHTTP(slide.VideoUrl) == true ? 'col-sm-6': 'col-sm-12'">
                                 <div class=" carousel-content txt-c white centered">
                                     <h2 ng-class="slide.TextColor" class="animation animated-item-1">{{slide.Title}}</h2>
+                                    <br ng-if="slide.TextColor == 'dark'" />
                                     <p ng-class="slide.TextColor" class="animation animated-item-2">{{slide.Description}}</p>
-                                    <br />
+                                    <br ng-if="slide.TextColor == 'dark'" />
                                     <!--Button color-->
                                     <a ng-if="slide.ButtonColor == 'btn-default'" class="btn btn-md animation animated-item-3"
                                        href="{{slide.SlideUrl}}" style="min-width: 100px">{{slide.ButtonText}}</a>
