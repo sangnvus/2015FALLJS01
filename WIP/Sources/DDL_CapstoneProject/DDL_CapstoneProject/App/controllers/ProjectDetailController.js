@@ -3,6 +3,7 @@
 app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, $filter, toastr, project,
     ProjectService, CommmonService, DTOptionsBuilder, DTColumnDefBuilder, MessageService, SweetAlert) {
     //Todo here.
+    $scope.ReportContent = "";
     $scope.Project = project.data.Data;
     $scope.FirstUpdateLogs = false;
     $scope.Project.UpdateLogsList = {};
@@ -253,6 +254,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, $f
                 if (result.data.Status === "success") {
                     toastr.success('Báo cáo sai phạm thành công');
                     $('#reportModal').modal('hide');
+                    $scope.ReportContent = "";
                 } else {
                     var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     if (a) {

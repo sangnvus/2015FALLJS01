@@ -49,6 +49,45 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         }
 
         /// <summary>
+        /// get list conversation of a users
+        /// </summary>
+        /// <returns>List ConversationBasicDTO</returns>
+        [ResponseType(typeof(ConversationBasicDTO))]
+        [HttpGet]
+        public IHttpActionResult GetListConversations()
+        {
+            List<ConversationBasicDTO> listConversation = null;
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+                }
+
+                if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                }
+                listConversation = MessageRepository.Instance.GetListConversation(User.Identity.Name);
+            }
+            catch (UserNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không tìm thấy địa chỉ người nhận!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO
+            {
+                Status = DDLConstants.HttpMessageType.SUCCESS,
+                Message = "",
+                Type = "",
+                Data = listConversation
+            });
+        }
+
+        /// <summary>
         /// get list sent conversation of a users
         /// </summary>
         /// <returns>List ConversationBasicDTO</returns>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -223,18 +224,19 @@ namespace DDL_CapstoneProject.Respository
 
         public DDL_User RegisterFacebook(dynamic me)
         {
+            string email = me.email;
             // Create new User
             var newUser = new DDL_User
             {
                 LoginType = DDLConstants.LoginType.FACEBOOK,
-                Email = me.email,
+                Email = email,
                 CreatedDate = DateTime.UtcNow,
                 IsActive = true,
                 Password = string.Empty,
                 IsVerify = true,
                 LastLogin = DateTime.UtcNow,
                 UserType = DDLConstants.UserType.USER,
-                Username = me.id,
+                Username = "fb" + email.Split(new string[]{"@"},StringSplitOptions.None)[0],
                 VerifyCode = string.Empty,
                 UserInfo = new UserInfo
                 {
@@ -417,15 +419,15 @@ namespace DDL_CapstoneProject.Respository
                                      UserName = user.Username,
                                      Website = user.UserInfo.Website
                                  };
-                if (!userPublic.Any())
+
+                var userPublicDto = userPublic.FirstOrDefault();
+                if (userPublicDto == null)
                 {
                     throw new UserNotFoundException();
                 }
+                userPublicDto.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(userPublicDto.CreatedDate);
 
-                var userPublicDTO = userPublic.FirstOrDefault();
-                userPublicDTO.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(userPublicDTO.CreatedDate);
-
-                return userPublicDTO;
+                return userPublicDto;
             }
         }
 
