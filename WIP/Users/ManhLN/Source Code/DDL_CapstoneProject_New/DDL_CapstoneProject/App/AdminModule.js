@@ -93,7 +93,7 @@ app.config(["$routeProvider", function ($routeProvider) {
         {
             templateUrl: "/AdminPartial/ProjectDashboard",
             controller: 'AdminProjectDashboardController',
-            activeTab: 'dashboard',
+            activeTab: 'projectdashboard',
             breadcrumb: ['Quản lí dự án', 'Thông tin chung'],
             title: 'Thông tin chung',
             resolve: {
@@ -162,10 +162,12 @@ app.config(["$routeProvider", function ($routeProvider) {
             resolve: {
                 conversations: ['$route', '$rootScope', '$q', 'MessageService', 'CommmonService', function ($route, $rootScope, $q, MessageService, CommmonService) {
                     var promise;
-                    if ($route.current.params.list == null || $route.current.params.list !== "sent") {
+                    if ($route.current.params.list === "inbox") {
                         promise = MessageService.getListReceivedConversations();
-                    } else {
+                    } else if ($route.current.params.list === "sent") {
                         promise = MessageService.getListSentConversations();
+                    } else {
+                        promise = MessageService.getListConversations();
                     }
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }]
@@ -192,8 +194,8 @@ app.config(["$routeProvider", function ($routeProvider) {
           templateUrl: "/AdminPartial/UserList",
           controller: 'AdminUserListController',
           activeTab: 'userlist',
-          breadcrumb: ['Quản lý người dùng', 'Danh sách người dùng'],
-          title: 'Danh sách người dùng',
+          breadcrumb: ['Quản lý thành viên', 'Danh sách thành viên'],
+          title: 'Danh sách thành viên',
           resolve: {
               listuser: ['$rootScope', '$q', 'AdminUserService', 'CommmonService', function ($rootScope, $q, AdminUserService, CommmonService) {
                   var promise = AdminUserService.getUserlist();
@@ -206,9 +208,9 @@ app.config(["$routeProvider", function ($routeProvider) {
       {
           templateUrl: "/AdminPartial/UserProfile",
           controller: 'AdminUserProfileController',
-          activeTab: 'userlist ',
-          breadcrumb: ['Quản lý người dùng', 'Thông tin người dùng'],
-          title: 'Thông tin người dùng',
+          activeTab: 'userlist',
+          breadcrumb: ['Quản lý thành viên', 'Thông tin thành viên'],
+          title: 'Thông tin thành viên',
           resolve: {
               userprofile: ['$route', '$rootScope', '$q', 'AdminUserService', 'CommmonService', function ($route, $rootScope, $q, AdminUserService, CommmonService) {
                   var promise = AdminUserService.getUserprofile($route.current.params.username);
@@ -222,8 +224,8 @@ app.config(["$routeProvider", function ($routeProvider) {
           templateUrl: "/AdminPartial/UserDashboard",
           controller: 'AdminUserDashboardController',
           activeTab: 'userdashboard',
-          breadcrumb: ['Bảng điều khiển', 'Bảng điều khiển người dùng'],
-          title: 'Bảng điều khiển người dùng',
+          breadcrumb: ['Quản lý thành viên', 'Thông tin chung'],
+          title: 'Thông tin chung',
           resolve: {
               userdashboard: ['$route', '$rootScope', '$q', 'AdminUserService', 'CommmonService', function ($route, $rootScope, $q, AdminUserService, CommmonService) {
                   var promise = AdminUserService.getUserDasboard();
