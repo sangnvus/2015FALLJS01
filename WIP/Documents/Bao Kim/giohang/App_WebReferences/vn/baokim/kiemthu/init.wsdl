@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="urn:baokim:payment:PaymentPro2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:baokim:payment:PaymentPro2" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="urn:baokim:payment:PaymentPro2">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <xsd:complexType name="PaymentMethod">
+        <xsd:all>
+          <xsd:element name="id" type="xsd:string" />
+          <xsd:element name="name" type="xsd:string" />
+          <xsd:element name="logo_url" type="xsd:string" />
+          <xsd:element name="fix_fee" type="xsd:string" />
+          <xsd:element name="percent_fee" type="xsd:string" />
+          <xsd:element name="fee_currency_code" type="xsd:string" />
+          <xsd:element name="complete_time" type="xsd:string" />
+          <xsd:element name="payment_method_type" type="xsd:string" />
+          <xsd:element name="extra_fields" nillable="true" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfPaymentMethod">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns:PaymentMethod[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="AccountInfo">
+        <xsd:all>
+          <xsd:element name="name" type="xsd:string" />
+          <xsd:element name="email" type="xsd:string" />
+          <xsd:element name="status" type="xsd:string" />
+          <xsd:element name="address" type="xsd:string" />
+          <xsd:element name="phone_no" type="xsd:string" />
+          <xsd:element name="allowed_payment_modes" type="xsd:string" />
+          <xsd:element name="payment_methods" type="tns:ArrayOfPaymentMethod" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="AccountInfoRequest">
+        <xsd:all>
+          <xsd:element name="merchant_id" type="xsd:string" />
+          <xsd:element name="api_username" type="xsd:string" />
+          <xsd:element name="api_password" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="AccountInfoResponse">
+        <xsd:all>
+          <xsd:element name="error_code" type="xsd:string" />
+          <xsd:element name="error_message" type="xsd:string" />
+          <xsd:element name="account_info" type="tns:AccountInfo" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="PaymentInfoRequest">
+        <xsd:all>
+          <xsd:element name="api_username" type="xsd:string" />
+          <xsd:element name="api_password" type="xsd:string" />
+          <xsd:element name="merchant_id" type="xsd:string" />
+          <xsd:element name="bk_seller_email" type="xsd:string" />
+          <xsd:element name="order_id" type="xsd:string" />
+          <xsd:element name="total_amount" type="xsd:string" />
+          <xsd:element name="tax_fee" type="xsd:string" />
+          <xsd:element name="shipping_fee" type="xsd:string" />
+          <xsd:element name="order_description" type="xsd:string" />
+          <xsd:element default="VND" name="currency_code" type="xsd:string" />
+          <xsd:element name="bank_payment_method_id" type="xsd:string" />
+          <xsd:element default="1" name="payment_mode" type="xsd:string" />
+          <xsd:element default="0" name="escrow_timeout" type="xsd:string" />
+          <xsd:element name="payer_name" type="xsd:string" />
+          <xsd:element name="payer_email" type="xsd:string" />
+          <xsd:element name="payer_phone_no" type="xsd:string" />
+          <xsd:element name="shipping_address" type="xsd:string" />
+          <xsd:element name="payer_message" type="xsd:string" />
+          <xsd:element name="extra_fields_value" nillable="true" type="xsd:string" />
+          <xsd:element name="url_return" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="PaymentInfoResponse">
+        <xsd:all>
+          <xsd:element name="error_code" type="xsd:string" />
+          <xsd:element name="error_message" type="xsd:string" />
+          <xsd:element name="url_redirect" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="PayerInfo">
+        <xsd:all>
+          <xsd:element name="payer_name" type="xsd:string" />
+          <xsd:element name="payer_email" type="xsd:string" />
+          <xsd:element name="payer_phone_no" type="xsd:string" />
+          <xsd:element name="shipping_address" type="xsd:string" />
+          <xsd:element name="payer_message" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ProductInfo">
+        <xsd:all>
+          <xsd:element name="product_name" type="xsd:string" />
+          <xsd:element name="product_description" type="xsd:string" />
+          <xsd:element name="product_quantity" type="xsd:int" />
+          <xsd:element name="product_price" type="xsd:string" />
+          <xsd:element name="product_url_detail" nillable="true" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="OrderInfo">
+        <xsd:all>
+          <xsd:element name="order_id" type="xsd:string" />
+          <xsd:element name="order_description" type="xsd:string" />
+          <xsd:element name="order_amount" type="xsd:string" />
+          <xsd:element name="order_url_detail" nillable="true" type="xsd:string" />
+          <xsd:element default="0" name="merchant_promote_amount" nillable="true" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="PayWithBaokimAccountRequest">
+        <xsd:all>
+          <xsd:element name="api_username" type="xsd:string" />
+          <xsd:element name="api_password" type="xsd:string" />
+          <xsd:element name="merchant_id" type="xsd:string" />
+          <xsd:element name="baokim_seller_account_email" type="xsd:string" />
+          <xsd:element name="baokim_buyer_account_email" type="xsd:string" />
+          <xsd:element name="total_amount" type="xsd:string" />
+          <xsd:element default="0" name="point" nillable="true" type="xsd:string" />
+          <xsd:element default="VND" name="currency_code" type="xsd:string" />
+          <xsd:element default="1" name="payment_mode" type="xsd:string" />
+          <xsd:element default="0" name="escrow_timeout" nillable="true" type="xsd:string" />
+          <xsd:element default="0" name="tax_fee" nillable="true" type="xsd:string" />
+          <xsd:element default="0" name="shipping_fee" nillable="true" type="xsd:string" />
+          <xsd:element name="affiliate_id" nillable="true" type="xsd:string" />
+          <xsd:element name="affiliate_site_id" nillable="true" type="xsd:string" />
+          <xsd:element name="business_line_id" nillable="true" type="xsd:string" />
+          <xsd:element name="payer_info" nillable="true" type="tns:PayerInfo" />
+          <xsd:element name="order_info" nillable="true" type="tns:OrderInfo" />
+          <xsd:element name="product_info" nillable="true" type="tns:ProductInfo" />
+          <xsd:element default="0" name="mrc_account_promotion_id" nillable="true" type="xsd:string" />
+          <xsd:element default="0" name="use_promotion_amount" nillable="true" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="PayWithBaokimAccountResponse">
+        <xsd:all>
+          <xsd:element name="response_code" type="xsd:string" />
+          <xsd:element name="response_message" type="xsd:string" />
+          <xsd:element name="transaction_id" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="VerifyTransactionOTPRequest">
+        <xsd:all>
+          <xsd:element name="api_username" type="xsd:string" />
+          <xsd:element name="api_password" type="xsd:string" />
+          <xsd:element name="merchant_id" type="xsd:string" />
+          <xsd:element name="transaction_id" type="xsd:string" />
+          <xsd:element name="sms_otp" type="xsd:string" />
+          <xsd:element name="baokim_buyer_account_email" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="VerifyTransactionOTPResponse">
+        <xsd:all>
+          <xsd:element name="response_code" type="xsd:string" />
+          <xsd:element name="response_message" type="xsd:string" />
+          <xsd:element name="transaction_id" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="GetAccountInfoRequest">
+    <wsdl:part name="account_info_request" type="tns:AccountInfoRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetAccountInfoResponse">
+    <wsdl:part name="return" type="tns:AccountInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="DoPaymentProRequest">
+    <wsdl:part name="payment_info_request" type="tns:PaymentInfoRequest" />
+  </wsdl:message>
+  <wsdl:message name="DoPaymentProResponse">
+    <wsdl:part name="return" type="tns:PaymentInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="DoPayWithBaokimAccountRequest">
+    <wsdl:part name="pay_with_baokim_account_request" type="tns:PayWithBaokimAccountRequest" />
+  </wsdl:message>
+  <wsdl:message name="DoPayWithBaokimAccountResponse">
+    <wsdl:part name="return" type="tns:PayWithBaokimAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="DoVerifyTransactionOTPRequest">
+    <wsdl:part name="verify_transaction_otp_request" type="tns:VerifyTransactionOTPRequest" />
+  </wsdl:message>
+  <wsdl:message name="DoVerifyTransactionOTPResponse">
+    <wsdl:part name="return" type="tns:VerifyTransactionOTPResponse" />
+  </wsdl:message>
+  <wsdl:portType name="BKPaymentProService2PortType">
+    <wsdl:operation name="GetAccountInfo">
+      <documentation>Get Info Account</documentation>
+      <wsdl:input message="tns:GetAccountInfoRequest" />
+      <wsdl:output message="tns:GetAccountInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="DoPaymentPro">
+      <documentation>Validate Info Request To Bao Kim</documentation>
+      <wsdl:input message="tns:DoPaymentProRequest" />
+      <wsdl:output message="tns:DoPaymentProResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="DoPayWithBaokimAccount">
+      <documentation>Create a payment transaction with baokim account</documentation>
+      <wsdl:input message="tns:DoPayWithBaokimAccountRequest" />
+      <wsdl:output message="tns:DoPayWithBaokimAccountResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="DoVerifyTransactionOTP">
+      <documentation>Verify transaction otp</documentation>
+      <wsdl:input message="tns:DoVerifyTransactionOTPRequest" />
+      <wsdl:output message="tns:DoVerifyTransactionOTPResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BKPaymentProService2Binding" type="tns:BKPaymentProService2PortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="GetAccountInfo">
+      <soap:operation soapAction="urn:BKPaymentProService2/GetAccountInfo" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:BKPaymentProService2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:BKPaymentProService2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DoPaymentPro">
+      <soap:operation soapAction="urn:BKPaymentProService2/DoPaymentPro" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:BKPaymentProService2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:BKPaymentProService2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DoPayWithBaokimAccount">
+      <soap:operation soapAction="urn:BKPaymentProService2/DoPayWithBaokimAccount" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:BKPaymentProService2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:BKPaymentProService2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DoVerifyTransactionOTP">
+      <soap:operation soapAction="urn:BKPaymentProService2/DoVerifyTransactionOTP" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:BKPaymentProService2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:BKPaymentProService2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BKPaymentProService2">
+    <wsdl:port name="BKPaymentProService2Port" binding="tns:BKPaymentProService2Binding">
+      <soap:address location="http://kiemthu.baokim.vn/services/payment_pro_2/init" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
