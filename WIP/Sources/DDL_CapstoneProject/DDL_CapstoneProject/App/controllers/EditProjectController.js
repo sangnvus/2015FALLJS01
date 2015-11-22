@@ -562,6 +562,18 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                     // reinitial newUpdateLog
                     $scope.NewUpdateLog = {};
                     result.data.Data.CreatedDate = new Date($filter('date')(result.data.Data.CreatedDate, "yyyy-MM-dd"));
+                    var dd = result.data.Data.CreatedDate.getDate();
+                    var mm = result.data.Data.CreatedDate.getMonth() + 1; //January is 0!
+                    var yyyy = result.data.Data.CreatedDate.getFullYear();
+
+                    if (dd < 10) {
+                        dd = '0' + dd;
+                    }
+
+                    if (mm < 10) {
+                        mm = '0' + mm;
+                    }
+                    result.data.Data.CreatedDate = mm + '/' + dd + '/' + yyyy;
                     $scope.UpdateLogs.unshift(result.data.Data);
                     $scope.originalUpdateLog = angular.copy($scope.UpdateLogs);
                 } else {
