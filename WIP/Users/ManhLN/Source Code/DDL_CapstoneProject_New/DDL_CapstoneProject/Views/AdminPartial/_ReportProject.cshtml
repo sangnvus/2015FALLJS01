@@ -28,42 +28,45 @@
 
                         <thead>
                             <tr>
+                                <th style="width: 15px">#</th>
                                 <th>Người báo xấu</th>
                                 <th>Dự án bị báo xấu</th>
                                 <th>Người tạo dự án</th>
-                                <th>Lý do</th>
+                                @*<th>Lý do</th>*@
                                 <th>Ngày báo</th>
                                 <th style="width: 72px">Trạng thái</th>
-                                <th style="width: 85px"></th>
+                                <th style="width: 107px"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="report in listReport">
+                            <tr ng-repeat="report in listReport track by $index" ng-class-odd="'odd'" ng-class-even="'even'">
+                                <td class="col-number">{{$index + 1}}</td>
                                 <td><a href="/admin/#/userprofile/{{report.ReporterUsername}}">{{report.reporterName}}</a></td>
                                 <td><a href="project-detail.html">{{report.ProjectTitle}}</a></td>
                                 <td><a href="/admin/#/userprofile/{{report.ReporterUsername}}">{{report.CreatorName}}</a></td>
-                                <td>{{report.Subject}}</td>
+                                @*<td>{{report.Subject}}</td>*@
                                 <td>{{report.ReportedDate}}</td>
-                                <td align="center">
-                                    <a style="width: 72px;height: 25px" class="btn btn-xs btn-default" ng-if="report.Status != 'rejected' && report.Status != 'done' && report.Status != 'viewed'">Chưa xem</a>
-                                    <a style="width: 72px;height: 25px" class="btn btn-xs btn-blue" ng-if="report.Status == 'viewed'">Đã xem</a>
-                                    <a style="width: 72px;height: 25px" class="btn btn-xs btn-purple" ng-if="report.Status == 'done'">Đã đồng ý</a>
-                                    <a style="width: 72px;height: 25px" class="btn btn-xs btn-red" ng-if="report.Status == 'rejected'">Đã Hủy</a>
+                                <td>
+                                    <span style="padding: 9px 10px" class="label label-blue center-block" ng-if="report.Status != 'rejected' && report.Status != 'done' && report.Status != 'viewed'">Chưa xem</span>
+                                    <span style="padding: 9px 10px" class="label label-default center-block" ng-if="report.Status == 'viewed'">Đã xem</span>
+                                    <span style="padding: 9px 10px" class="label label-success center-block" ng-if="report.Status == 'done'">Đã đồng ý</span>
+                                    <span style="padding: 9px 10px" class="label label-danger center-block" ng-if="report.Status == 'rejected'">Đã Hủy</span>
                                 </td>
                                 <td>
-
-                                    <button class="btn btn-primary btn-sm" type="button" tooltip="Chi tiết" tooltip-append-to-body="true" tooltip-placement="left"
-                                            ng-click="loadReportContent(report.ReportID)" data-toggle="modal" data-target="#viewMessageModal">
-                                        <i class="fa fa-eye"></i>
-                                    </button>
-                                    <button class="btn btn-primary btn-sm btn-purple" type="button" tooltip="Đồng ý" tooltip-append-to-body="true" tooltip-placement="left"
-                                            ng-click="changeReportStatus(report.ReportID,'done')" ng-if="report.Status != 'rejected' && report.Status != 'done' ">
-                                        <i class="fa fa-check"></i>
-                                    </button>
-                                    <button class="btn btn-primary btn-sm btn-red" type="button" tooltip="Hủy" tooltip-append-to-body="true" tooltip-placement="left"
-                                            ng-click="changeReportStatus(report.ReportID,'rejected')" ng-if="report.Status != 'rejected' && report.Status != 'done' ">
-                                        <i class="fa fa-times"></i>
-                                    </button>
+                                    <div class="btn-group">
+                                        <button class="btn btn-primary btn-sm" type="button" tooltip="Chi tiết" tooltip-append-to-body="true" tooltip-placement="left"
+                                                ng-click="loadReportContent(report.ReportID)" data-toggle="modal" data-target="#viewMessageModal">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <button class="btn btn-primary btn-sm btn-success" type="button" tooltip="Đồng ý" tooltip-append-to-body="true" tooltip-placement="left"
+                                                ng-click="changeReportStatus(report.ReportID,'done')" ng-if="report.Status != 'rejected' && report.Status != 'done' ">
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                        <button class="btn btn-primary btn-sm btn-red" type="button" tooltip="Hủy" tooltip-append-to-body="true" tooltip-placement="left"
+                                                ng-click="changeReportStatus(report.ReportID,'rejected')" ng-if="report.Status != 'rejected' && report.Status != 'done' ">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -81,7 +84,7 @@
 
 
 <!-- Ask question -->
-<div class="modal fade" id="reply" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+<div class="modal modal-flex  fade" id="reply" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -110,26 +113,26 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title" id="flexModalLabel">
-                        View report content
+                        Nội dung báo xấu
                     </h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">From:</label> <span>{{reportContent.reporterName}}</span>
+                        <label for="exampleInputEmail1">Từ:</label> <span>{{reportContent.reporterName}}</span>
                     </div>
+                    @*<div class="form-group">
+                    <label for="exampleInputEmail1">Subject:</label> <span>{{reportContent.Subject}}</span>
+                </div>*@
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Subject:</label> <span>{{reportContent.Subject}}</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Content:</label>
-                        <textarea readonly class="form-control" id="exampleInputPassword1" placeholder="Description..."
+                        <label for="exampleInputPassword1">Nội dung:</label>
+                        <textarea readonly class="form-control div-textarea" id="exampleInputPassword1" placeholder="Description..."
                                   rows="6" cols="50" maxlength="300" style="resize: none">
                             {{reportContent.ReportContent}}
                         </textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> <button type="button" class="btn btn-green" data-dismiss="modal" data-toggle="modal" data-target="#reply">Reply</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button> <button type="button" class="btn btn-green" data-dismiss="modal" data-toggle="modal" data-target="#reply">Trả lời</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->

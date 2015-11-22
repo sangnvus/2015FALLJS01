@@ -89,9 +89,12 @@
                 <div class="portlet-title">
                     <h4>Danh sách Người dùng</h4>
                 </div>
+                <div class="portlet-widgets">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#UserTable" onclick="return false;"><i class="fa fa-chevron-down"></i></a>
+                </div>
                 <div class="clearfix"></div>
             </div>
-            <div class="portlet-body">
+            <div id="UserTable" class="portlet-body">
                 <div id="EditCategoryModal" class="table-responsive">
                     <form name="EditCategoryForm">
                         <table id="example-table" class="table table-striped table-bordered table-hover table-green"

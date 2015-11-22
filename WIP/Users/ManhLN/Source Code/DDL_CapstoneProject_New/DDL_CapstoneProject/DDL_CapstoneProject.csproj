@@ -142,6 +142,7 @@
     <Compile Include="Controllers\WebControllers\AdminPartialController.cs" />
     <Compile Include="Controllers\WebControllers\ClientPartialController.cs" />
     <Compile Include="Controllers\WebControllers\LoginController.cs" />
+    <Compile Include="Helper\BaoKimPayment.cs" />
     <Compile Include="Helper\CustomException.cs" />
     <Compile Include="Helper\MailHelper.cs" />
     <Compile Include="Migrations\201510110856270_InitialCreate.cs" />
@@ -315,6 +316,7 @@
     <Content Include="App\services\MessageService.js" />
     <Content Include="App\services\SlideSevice.js" />
     <Content Include="App\services\UserService.js" />
+    <Content Include="baokim_58b6e72ff8700e41.html" />
     <Content Include="Content\admin\adminStyle.css" />
     <Content Include="Content\admin\plugin.css" />
     <Content Include="Content\angular-block-ui.css" />

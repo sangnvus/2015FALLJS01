@@ -209,6 +209,11 @@
         .ui-select-bootstrap .ui-select-choices-row.active > a {
             background-color: #48c9b0;
         }
+
+        .div-textarea {
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
     </style>
 </head>
 <body>
@@ -240,7 +245,7 @@
                                 <div class="input-group">
                                     <input class="form-control" id="navbarInput-01" ng-model="searchkey" type="Search" placeholder="Tìm kiếm..." />
                                     <span class="input-group-btn">
-                                        <button type="button" class="btn"><span class="fui-Search"></span></button>
+                                        <button type="button" class="btn" ng-click="submit(searchkey)"><span class="fa fa-search"></span></button>
                                     </span>
                                 </div>
                             </div>
@@ -326,7 +331,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <p class="fnt30 fnt-b dark-cyan">DLL - Dandelion</p>
+                    <p class="fnt30 fnt-b dark-cyan"><a href="/">DLL - Dandelion</a></p>
                 </div>
                 <div class="col-md-6">
                     <ul class="pull-right list-inline">

@@ -28,10 +28,10 @@
                                 <td>{{report.Subject}}</td>
                                 <td class="col-datetime">{{report.ReportedDate}}</td>
                                 <td align="center">
-                                    <a style="width: 72px;height: 25px" class="btn btn-xs btn-red" ng-if="report.Status != 'rejected' && report.Status != 'done' && report.Status != 'viewed'">Chưa xem</a>
+                                    <a style="width: 72px;height: 25px" class="btn btn-xs btn-default" ng-if="report.Status != 'rejected' && report.Status != 'done' && report.Status != 'viewed'">Chưa xem</a>
                                     <a style="width: 72px;height: 25px" class="btn btn-xs btn-blue" ng-if="report.Status == 'viewed'">Đã xem</a>
                                     <a style="width: 72px;height: 25px" class="btn btn-xs btn-purple" ng-if="report.Status == 'done'">Đã đồng ý</a>
-                                    <a style="width: 72px;height: 25px" class="btn btn-xs btn-default" ng-if="report.Status == 'rejected'">Đã Hủy</a>
+                                    <a style="width: 72px;height: 25px" class="btn btn-xs btn-red" ng-if="report.Status == 'rejected'">Đã Hủy</a>
                                 </td>
                                 <td>
 
@@ -39,11 +39,11 @@
                                             ng-click="loadReportContent(report.ReportID)" data-toggle="modal" data-target="#viewMessageModal">
                                         <i class="fa fa-eye"></i>
                                     </button>
-                                    <button class="btn btn-primary btn-sm" type="button" tooltip="Đồng ý" tooltip-append-to-body="true" tooltip-placement="left"
+                                    <button class="btn btn-primary btn-sm btn-purple" type="button" tooltip="Đồng ý" tooltip-append-to-body="true" tooltip-placement="left"
                                             ng-click="changeReportStatus(report.ReportID,'done')" ng-if="report.Status != 'rejected' && report.Status != 'done' ">
                                         <i class="fa fa-check"></i>
                                     </button>
-                                    <button class="btn btn-primary btn-sm" type="button" tooltip="Hủy" tooltip-append-to-body="true" tooltip-placement="left"
+                                    <button class="btn btn-primary btn-sm btn-red" type="button" tooltip="Hủy" tooltip-append-to-body="true" tooltip-placement="left"
                                             ng-click="changeReportStatus(report.ReportID,'rejected')" ng-if="report.Status != 'rejected' && report.Status != 'done' ">
                                         <i class="fa fa-times"></i>
                                     </button>

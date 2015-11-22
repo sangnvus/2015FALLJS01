@@ -135,6 +135,11 @@
             .ta-toolbar .btn-group > .btn + .btn {
                 margin-left: -1px;
             }
+            
+        .div-textarea {
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
     </style>
 </head>
 
@@ -179,7 +184,7 @@
                             <i class="fa fa-user"></i>  <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
-                            <li>
+                            @*<li>
                                 <a href="userprofile.html">
                                     <i class="fa fa-user"></i> Thông tin cá nhân
                                 </a>
@@ -195,7 +200,7 @@
                                 <a href="#">
                                     <i class="fa fa-gear"></i> Settings
                                 </a>
-                            </li>
+                            </li>*@
                             <li>
                                 <a class="logout_open" href="@Url.Content("/admin/logout/")">
                                     <i class="fa fa-sign-out"></i> Thoát
@@ -250,17 +255,17 @@
                     <!-- begin USERS DROPDOWN -->
                     <li class="panel">
                         <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#users">
-                            <i class="fa fa-files-o"></i> Người dùng <i class="fa fa-caret-down"></i>
+                            <i class="fa fa-files-o"></i> Thành viên <i class="fa fa-caret-down"></i>
                         </a>
-                        <ul class="collapse nav" id="users">
+                        <ul class="collapse nav" ng-class="{'in': Page.activeTab == 'userdashboard' || Page.activeTab == 'userdashboard'}" id="users">
                             <li>
-                                <a href="~/admin/#/userdashboard/" ng-class="{'active': Page.activeTab == 'userprofile'}">
-                                    <i class="fa fa-angle-double-right"></i> Bảng điều khiển người dùng
+                                <a href="~/admin/#/userdashboard/" ng-class="{'active': Page.activeTab == 'userdashboard'}">
+                                    <i class="fa fa-angle-double-right"></i> Thông tin chung
                                 </a>
                             </li>
                             <li>
                                 <a href="~/admin/#/userlist/" ng-class="{'active': Page.activeTab == 'userlist'}">
-                                    <i class="fa fa-angle-double-right"></i> Danh sách người dùng
+                                    <i class="fa fa-angle-double-right"></i> Danh sách thành viên
                                 </a>
                             </li>
                         </ul>
@@ -272,7 +277,7 @@
                             <i class="fa fa-bar-chart-o"></i> Dự án
                             <i class="fa fa-caret-down"></i>
                         </a>
-                        <ul class="collapse nav" id="projects">
+                        <ul class="collapse nav" ng-class="{'in': Page.activeTab == 'projectdashboard' || Page.activeTab == 'projectList'}" id="projects">
                             <li>
                                 <a href="~/admin/#/project/" ng-class="{'active': Page.activeTab == 'dashboard'}">
                                     <i class="fa fa-angle-double-right"></i> Thông tin chung
@@ -323,7 +328,7 @@
                         <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#reports">
                             <i class="fa fa-files-o"></i> Báo cáo <i class="fa fa-caret-down"></i>
                         </a>
-                        <ul class="collapse nav" id="reports">
+                        <ul class="collapse nav" ng-class="{'in': Page.activeTab == 'reportuser' || Page.activeTab == 'reportproject'}" id="reports">
                             <li>
                                 <a href="/admin/#/reportuser" ng-class="{'active': Page.activeTab == 'reportuser'}">
                                     <i class="fa fa-angle-double-right"></i> Người dùng
@@ -354,7 +359,7 @@
                         <h1 ng-bind="Page.title"></h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i><span ng-bind="Page.breadcrumb[0]"></span>
+                                <i class="fa fa-dashboard"></i>&nbsp;<span ng-bind="Page.breadcrumb[0]"></span>
                             </li>
                             <li class="active" ng-bind="Page.breadcrumb[1]"></li>
                         </ol>

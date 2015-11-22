@@ -44,11 +44,11 @@
                                     <td class="center col-number col-datetime">{{project.TotalBacking | currency:"":0}}</td>
                                     <td class="center col-number col-datetime">{{project.CurrentFunded | currency:"":0}}</td>
                                     <td class="center">
-                                        <span class="label label-primary center-block blue" ng-if="project.Status == 'approved'" style="padding: 9px">Đang chạy</span>
-                                        <span class="label label-primary center-block gray" ng-if="project.Status == 'rejected'" style="padding: 9px">Từ chối</span>
-                                        <span class="label label-primary center-block default" ng-if="project.Status == 'expired'" style="padding: 9px">Hết hạn</span>
-                                        <span class="label label-primary center-block purple" ng-if="project.Status == 'pending'" style="padding: 9px">Chờ duyệt</span>
-                                        <span class="label label-primary center-block red" ng-if="project.Status == 'suspended'" style="padding: 9px">Đình chỉ</span>
+                                        <span class="label label-success center-block" ng-if="project.Status == 'approved'" style="padding: 9px">Đang chạy</span>
+                                        <span class="label label-danger center-block" ng-if="project.Status == 'rejected'" style="padding: 9px">Từ chối</span>
+                                        <span class="label label-danger center-block" ng-if="project.Status == 'expired'" style="padding: 9px">Hết hạn</span>
+                                        <span class="label label-primary center-block" ng-if="project.Status == 'pending'" style="padding: 9px">Chờ duyệt</span>
+                                        <span class="label label-danger center-block" ng-if="project.Status == 'suspended'" style="padding: 9px">Đình chỉ</span>
                                     </td>
                                     <td class="center" style="width: 34px;">
                                         <a href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")">

@@ -10,7 +10,9 @@ app.controller('HomeController', function ($scope, $sce, $window, slides, listst
     $scope.highestprojectpledge = data.highestprojectpledge[0];
     $scope.highestprojectfund = data.highestprojectfund[0];
     $scope.totalprojectfund = data.totalprojectfund[0];
-
+    if (typeof ($scope.highestprojectfund) == "undefined") {
+        $scope.highestprojectfund = { 'CurrentFundedNumber': 0 };
+    }
     // Function check string startwith 'http'
     $scope.checkHTTP = function (input) {
         var lowerStr = (input + "").toLowerCase();

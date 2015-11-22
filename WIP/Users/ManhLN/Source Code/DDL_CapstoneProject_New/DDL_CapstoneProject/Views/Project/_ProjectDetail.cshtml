@@ -1,5 +1,5 @@
 ﻿@using DDL_CapstoneProject.Ultilities
-
+<a href="~/Views/Project/_ProjectDetail.cshtml">~/Views/Project/_ProjectDetail.cshtml</a>
 <div id="project-common" class="paddingNavbar padding-30">
     <div class="container">
         <div id="gt1">
@@ -60,9 +60,9 @@
                 <div class="col-md-8">
                     <p class="fnt20 pt20">{{Project.SubDescription}}</p>
                     <div class="pt10 fnt16 fnt-b">
-                        <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{Project.Location}}</a>
+                        <a class="grey-dark" ng-href="@Url.Content("/#/search?categoryid={{Project.CategoryID}}")"><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{Project.CategoryName}}</a>
                         &nbsp;&nbsp;
-                        <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{Project.CategoryName}}</a>
+                        <span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{Project.Location}}
                         &nbsp;&nbsp;
                         <a class="btn btn-info btn-sm" href=""><i class="fa fa-facebook-square"></i> Chia sẻ</a>
                     </div>
@@ -184,7 +184,8 @@
                                                             <h5 class="fnt20"><span class="fnt-n">Tới: {{Project.Creator.FullName}}</span> </h5>
                                                             <h5 class="fnt20 fnt-n">Nội dung:</h5>
                                                             <textarea class="form-control" style="resize: none" name="" id="" cols="30" rows="5"
-                                                                      ng-model="NewQuestion.Content"></textarea>
+                                                                      ng-model="NewQuestion.Content"
+                                                                      ></textarea>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
@@ -195,25 +196,36 @@
                                             </div>
                                             <!-- end question modal -->
                                             <!-- Report Modal -->
-                                            <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                            <h5 class="modal-title" id="myModalLabel">Báo cáo dự án sai phạm</h5>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <h5 class="fnt20"><span class="fnt-n">Dự Án:</span> {{Project.Title}}</h5>
-                                                            <h5 class="fnt20 fnt-n">Nội dung:</h5>
-                                                            <textarea class="form-control" style="resize:none" name="" id="" cols="30" rows="5" ng-model="ReportContent"></textarea>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                                                            <button type="button" class="btn btn-primary" ng-click="report()">Gửi báo cáo</button>
+                                            <form role="form" name="ReportForm">
+                                                <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h5 class="modal-title" id="myModalLabel">Báo cáo dự án sai phạm</h5>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <h5 class="fnt20"><span class="fnt-n">Dự Án:</span> {{Project.Title}}</h5>
+                                                                <h5 class="fnt20 fnt-n">Nội dung:</h5>
+                                                                <textarea class="form-control" name="Report" cols="30" rows="5" ng-model="$parent.ReportContent"
+                                                                          ng-minlength="20"
+                                                                          @*ng-maxlength="500"*@></textarea>
+                                                                <span class="text-danger" ng-show="ReportForm.Report.$dirty && ReportForm.Report.$invalid">
+                                                                    <span ng-show="ReportForm.Report.$error.minlength">Nội dung ít nhất 20 kí tự</span>
+                                                                    @*<span ng-show="ReportForm.Report.$error.maxlength">Nội dung từ 8 đến 500 kí tự</span>*@
+                                                                </span>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                                                <button ng-disabled="(!ReportForm.$dirty || ReportForm.$invalid) "
+                                                                        type="button" class="btn btn-primary" ng-click="report()">
+                                                                    Gửi báo cáo
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div> <!-- end report modal -->
+                                            </form> <!-- end report modal -->
                                             <!-- end report modal -->
                                         </div>
                                     }

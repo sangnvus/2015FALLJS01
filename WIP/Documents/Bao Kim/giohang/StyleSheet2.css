@@ -1,0 +1,158 @@
+﻿/* Mask for background, by default is not display */ 
+#mask { 
+    display: none; 
+    background: #000; 
+    position: fixed; left: 0; top: 0; 
+    z-index: 10; 
+    width: 100%; height: 100%; 
+    opacity: 0.8; 
+    z-index: 999; 
+} 
+  
+/* You can customize to your needs  */ 
+.login-popup{ 
+    display:none; 
+    background: #fff; 
+    padding: 10px;  
+    border: 2px solid #ddd; 
+    float: left; 
+    font-size: 1.2em; 
+    position: fixed; 
+    top: 50%; left: 50%; 
+    z-index: 99999; 
+    box-shadow: 0px 0px 20px #999; /* CSS3 */ 
+        -moz-box-shadow: 0px 0px 20px #999; /* Firefox */ 
+        -webkit-box-shadow: 0px 0px 20px #999; /* Safari, Chrome */ 
+    border-radius:3px 3px 3px 3px; 
+        -moz-border-radius: 3px; /* Firefox */ 
+        -webkit-border-radius: 3px; /* Safari, Chrome */ 
+} 
+  
+img.btn_close { Position the close button 
+    float: right; 
+    margin: -28px -28px 0 0; 
+} 
+  
+fieldset { 
+    border:none; 
+} 
+  
+form.signin .textbox label { 
+    display:block; 
+    padding-bottom:7px; 
+} 
+  
+form.signin .textbox span { 
+    display:block; 
+} 
+  
+form.signin p, form.signin span { 
+    color:#999; 
+    font-size:11px; 
+    line-height:18px; 
+} 
+  
+form.signin .textbox input { 
+    background:#666666; 
+    border-bottom:1px solid #333; 
+    border-left:1px solid #000; 
+    border-right:1px solid #333; 
+    border-top:1px solid #000; 
+    color:#fff; 
+        border-radius: 3px 3px 3px 3px; 
+    -moz-border-radius: 3px; 
+        -webkit-border-radius: 3px; 
+    font:13px Arial, Helvetica, sans-serif; 
+    padding:6px 6px 4px; 
+    width:200px; 
+} 
+  
+form.signin input:-moz-placeholder { color:#bbb; text-shadow:0 0 2px #000; } 
+form.signin input::-webkit-input-placeholder { color:#bbb; text-shadow:0 0 2px #000;  } 
+  
+.button { 
+    background: -moz-linear-gradient(center top, #f3f3f3, #dddddd); 
+    background: -webkit-gradient(linear, left top, left bottom, from(#f3f3f3), to(#dddddd)); 
+    background:  -o-linear-gradient(top, #f3f3f3, #dddddd); 
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#f3f3f3', EndColorStr='#dddddd'); 
+    border-color:#000; 
+    border-width:1px; 
+        border-radius:4px 4px 4px 4px; 
+    -moz-border-radius: 4px; 
+        -webkit-border-radius: 4px; 
+    color:#333; 
+    cursor:pointer; 
+    display:inline-block; 
+    padding:6px 6px 4px; 
+    margin-top:10px; 
+    font:12px; 
+    width:214px; 
+} 
+.button:hover { background:#ddd; }  
+.a
+{
+    text-decoration:none;
+}
+.img-b
+{
+    opacity:0.6;
+    filter:alpha(opacity=60);
+    }
+.img-b:hover
+{
+    opacity:1.0;
+    filter:alpha(opacity=100); 
+    }
+    .img-c
+{
+    opacity:0;
+    filter:alpha(opacity=0);
+    }
+    .head
+    {
+        background-image:url('images/head.png');
+        width:655px;
+        height:57px;
+        }
+        .a-v
+        {
+            
+            }
+        .a-v:hover{
+-moz-border-radius : 5px;
+-webkit-border-radius : 5px;
+border : 1px solid blue;
+}
+.img-v{
+
+background: #aef8f4;
+box-shadow: 1px 1px 1px #889ff7;
+-moz-box-shadow: 1px 1px 1px #889ff7;
+-webkit-box-shadow: 1px 1px 1px #889ff7;
+margin-right: 1px;
+padding: 2px;
+
+}
+.img-v:hover{
+
+background: #f371d9;
+box-shadow: 1px 1px 1px #f371d9;
+-moz-box-shadow: 1px 1px 1px #f371d9;
+-webkit-box-shadow: 1px 1px 1px #f371d9;
+margin-right: 1px;
+padding: 2px;
+
+}
+div.sidebar-poster {
+margin-bottom: 10px;
+background-position: center top;
+background-repeat: no-repeat;
+width: 160px;
+height:130px;
+}
+#twitterbird {
+background-image: url('images/muathe1.png');
+}
+#twitterbird:hover {
+background-image: url('images/muathe2.png');
+}

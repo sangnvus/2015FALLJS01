@@ -10,6 +10,7 @@ using DDL_CapstoneProject.Ultilities;
 using System.Data.Entity;
 using System.Data.Entity.SqlServer;
 using System.Diagnostics;
+using WebGrease.Css.Extensions;
 
 namespace DDL_CapstoneProject.Respository
 {
@@ -366,8 +367,11 @@ namespace DDL_CapstoneProject.Respository
                     CurrentFunded = project.CurrentFunded,
                 };
 
-                updateProjectDTO.ExpireDate =
+                if (updateProjectDTO.ExpireDate != null)
+                {
+                    updateProjectDTO.ExpireDate =
                     CommonUtils.ConvertDateTimeFromUtc(updateProjectDTO.ExpireDate.GetValueOrDefault());
+                }
 
                 // Set number exprire day.
                 var timespan = updateProjectDTO.ExpireDate - CommonUtils.DateTodayGMT7();
@@ -557,6 +561,7 @@ namespace DDL_CapstoneProject.Respository
                 if (string.IsNullOrEmpty(messageBasic) && string.IsNullOrEmpty(messageReward) && string.IsNullOrEmpty(messageStory))
                 {
                     project.Status = DDLConstants.ProjectStatus.PENDING;
+                    project.CreatedDate = DateTime.UtcNow;
 
                     db.SaveChanges();
                 }
@@ -630,6 +635,7 @@ namespace DDL_CapstoneProject.Respository
 
                 // Create new backingDetail recored
                 var backingDetail = db.BackingDetails.Create();
+                backingDetail.BackerName = backingData.BackerName;
                 backingDetail.RewardPkgID = backingData.RewardPkgID;
                 backingDetail.PledgedAmount = backingData.PledgeAmount;
                 backingDetail.Quantity = backingData.Quantity;
@@ -767,7 +773,7 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="project"></param>
         /// <returns>bool</returns>
-        public bool AdminChangeProjectStatus(ProjectEditDTO project)
+        public bool AdminChangeProjectStatus(ProjectEditDTO project, string senderName)
         {
             using (var db = new DDLDataContext())
             {
@@ -780,7 +786,44 @@ namespace DDL_CapstoneProject.Respository
 
                 updateProject.Status = project.Status;
 
+
+                var projectOwner = db.DDL_Users.SingleOrDefault(x => x.DDL_UserID == updateProject.CreatorID);
+
+                if (projectOwner == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                string type = string.Empty;
+                if (updateProject.Status == DDLConstants.ProjectStatus.SUSPENDED)
+                {
+                    type = "ngừng";
+                }
+                if (updateProject.Status == DDLConstants.ProjectStatus.APPROVED)
+                {
+                    type = "duyệt thành công";
+                }
+                if (updateProject.Status == DDLConstants.ProjectStatus.REJECTED)
+                {
+                    type = "từ chối";
+                }
+
                 db.SaveChanges();
+
+                // Send email to project owner
+                MailHelper.Instance.SendMailChangeProjectStatus(projectOwner.Email, projectOwner.UserInfo.FullName, type, updateProject.Title);
+
+                // Send message to project owner
+                var message = new NewMessageDTO
+                {
+                    Title = "Dandelion - " + type + " dự án " + updateProject.Title + "!",
+                    ToUser = projectOwner.Username,
+                    Content = "Xin chào " + projectOwner.UserInfo.FullName + "," +
+                            "<br/>Chúng tôi vừa " + type + " dự án " + updateProject.Title + " của bạn." +
+                            "<br/>Để biết thêm chi tiết xin liện hệ với admin qua email" +
+                            "<br/>ngocmanh1712@gmail.com"
+                };
+                MessageRepository.Instance.CreateNewConversation(message, senderName);
 
                 return true;
             }
@@ -1235,6 +1278,104 @@ namespace DDL_CapstoneProject.Respository
                 return listStatisticDTO;
             }
         }
+
+        /// <summary>
+        /// Get project detail for admin
+        /// </summary>
+        /// <param name="projectCode"></param>
+        /// <returns></returns>
+        public ProjectDetailDTO AdminGetProjectDetail(string projectCode)
+        {
+            using (var db = new DDLDataContext())
+            {
+                if (string.IsNullOrEmpty(projectCode))
+                {
+                    throw new KeyNotFoundException();
+                }
+                // Create Project query from dB.
+                var projectDetail = (from project in db.Projects
+                                     where project.ProjectCode.Equals(projectCode.ToUpper())
+                                     && (project.Status != DDLConstants.ProjectStatus.DRAFT)
+                                     select new ProjectDetailDTO
+                                     {
+                                         CategoryID = project.CategoryID,
+                                         CreatedDate = project.CreatedDate,
+                                         Description = project.Description,
+                                         Title = project.Title,
+                                         ImageUrl = project.ImageUrl,
+                                         Status = project.Status,
+                                         SubDescription = project.SubDescription,
+                                         ProjectCode = project.ProjectCode,
+                                         CurrentFunded = project.CurrentFunded,
+                                         ExpireDate = project.ExpireDate,
+                                         Risk = project.Risk,
+                                         FundingGoal = project.FundingGoal,
+                                         Location = project.Location,
+                                         IsExprired = project.IsExprired,
+                                         VideoUrl = project.VideoUrl,
+                                         CategoryName = project.Category.Name,
+                                         ProjectID = project.ProjectID,
+                                         NumberBacked = project.Backings.Count,
+                                         //NumberComment =
+                                         //    project.Creator.Username == userName
+                                         //        ? project.Comments.Count
+                                         //        : project.Comments.Count(x => !x.IsHide),
+                                         NumberUpdate = project.UpdateLogs.Count,
+                                         Creator = new CreatorDTO
+                                         {
+                                             FullName = project.Creator.UserInfo.FullName,
+                                             UserName = project.Creator.Username,
+                                             NumberBacked = project.Creator.Backings.Count,
+                                             NumberCreated =
+                                                 project.Creator.CreatedProjects.Count(x => x.Status != DDLConstants.ProjectStatus.DRAFT
+                                                                                            &&
+                                                                                            x.Status !=
+                                                                                            DDLConstants.ProjectStatus.REJECTED
+                                                                                            &&
+                                                                                            x.Status !=
+                                                                                            DDLConstants.ProjectStatus.PENDING),
+                                             ProfileImage = project.Creator.UserInfo.ProfileImage
+                                         },
+                                     }).FirstOrDefault();
+
+
+                // Check project exist?
+                if (projectDetail == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                // Get rewards.
+                var rewardDetail =
+                    db.RewardPkgs.Where(x => x.ProjectID == projectDetail.ProjectID && !x.IsHide).ToList();
+                var rewardDto = new List<RewardPkgDTO>();
+                foreach (var reward in rewardDetail)
+                {
+                    var Reward = new RewardPkgDTO
+                    {
+                        Backers = reward.BackingDetails.Count(),
+                        Description = reward.Description,
+                        EstimatedDelivery =
+                            CommonUtils.ConvertDateTimeFromUtc(reward.EstimatedDelivery.GetValueOrDefault()),
+                        PledgeAmount = reward.PledgeAmount,
+                        Quantity = reward.Quantity
+                    };
+                    rewardDto.Add(Reward);
+                }
+                projectDetail.RewardDetail = rewardDto;
+
+                // Convert datetime to gmt+7
+                projectDetail.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(projectDetail.CreatedDate);
+                projectDetail.ExpireDate =
+                    CommonUtils.ConvertDateTimeFromUtc(projectDetail.ExpireDate.GetValueOrDefault());
+
+                // Set number exprire day.
+                var timespan = projectDetail.ExpireDate - CommonUtils.DateTodayGMT7();
+                projectDetail.NumberDays = timespan.GetValueOrDefault().Days;
+
+                return projectDetail;
+            }
+        }
         #endregion
 
 
@@ -1249,9 +1390,12 @@ namespace DDL_CapstoneProject.Respository
                     throw new KeyNotFoundException();
                 }
                 var userCurrent = db.DDL_Users.FirstOrDefault(x => x.Username == userName);
+                var temp = userCurrent != null ? userCurrent.Username : "";
                 // Create Project query from dB.
                 var projectDetail = (from project in db.Projects
                                      where project.ProjectCode.Equals(projectCode.ToUpper())
+                                     && ((project.Status != DDLConstants.ProjectStatus.DRAFT && project.Status != DDLConstants.ProjectStatus.PENDING)
+                                        || project.Creator.Username.Equals(temp, StringComparison.OrdinalIgnoreCase))
                                      select new ProjectDetailDTO
                                      {
                                          CategoryID = project.CategoryID,
@@ -1531,10 +1675,8 @@ namespace DDL_CapstoneProject.Respository
                                        Backers = project.Backings.Count,
                                        CreatedDate = project.CreatedDate,
                                        PopularPoint = project.PopularPoint,
-                                       Status = project.Status
+                                       Status = project.IsExprired ? DDLConstants.ProjectStatus.EXPIRED : project.Status
                                    }).Distinct();
-
-
 
 
                 return projectList.ToList();
@@ -1568,7 +1710,8 @@ namespace DDL_CapstoneProject.Respository
 
             using (var db = new DDLDataContext())
             {
-                var deleteProjectDraft = db.Projects.FirstOrDefault(x => x.ProjectID == projectID);
+                var deleteProjectDraft = db.Projects.FirstOrDefault(x => x.ProjectID == projectID && (x.Status == DDLConstants.ProjectStatus.DRAFT 
+                                                                                                        || x.Status == DDLConstants.ProjectStatus.REJECTED));
 
                 if (deleteProjectDraft == null)
                 {

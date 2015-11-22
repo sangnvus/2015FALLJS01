@@ -2100,9 +2100,16 @@ a.list-group-item.active:focus,
         }
     /*end responsive video======*/
 
-    /* dashboard page*/
+     /* dashboard page*/
     .project-chart {
         display: inline-block !important;
         width: auto !important;
+    }
+
+    /* Admin responsive img*/
+    .img-adm-responsive {
+        display: block;
+        height: auto;
+        max-width: 100%;
     }
 }
