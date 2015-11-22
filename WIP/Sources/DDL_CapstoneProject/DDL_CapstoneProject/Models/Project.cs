@@ -28,6 +28,7 @@ namespace DDL_CapstoneProject.Models
         public decimal FundingGoal { get; set; }
         public string Description { get; set; }
         public string VideoUrl { get; set; }
+        public int PointOfTheDay { get; set; }
 
         /// <summary>
         /// Popular point is calculated eachday from number comments, pledged ammount.

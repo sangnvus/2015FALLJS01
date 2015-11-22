@@ -19,6 +19,7 @@ namespace DDL_CapstoneProject.Models.DTOs
         public string FullName { get; set; }
         public decimal Amount { get; set; }
         public DateTime? Date { get; set; }
+        public int BackingId { get; set; }
     }
 
     public class SumAmount

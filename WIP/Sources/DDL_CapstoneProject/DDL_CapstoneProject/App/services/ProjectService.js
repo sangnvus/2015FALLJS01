@@ -250,6 +250,17 @@ app.service('ProjectService', function ($http) {
         return request;
     }
 
+    // Function to edit single updateLog
+    this.editSingleUpdateLogs = function (editUpdateLog) {
+        var request = $http({
+            method: 'put',
+            url: '/api/ProjectApi/EditSingleUpdateLog/',
+            data: editUpdateLog
+        });
+
+        return request;
+    }
+
     // Funtion to delete a updateLog
     this.deleteUpdateLog = function (updateLogID) {
         return $http.delete("/api/ProjectApi/DeleteUpdateLog/" + updateLogID);
@@ -457,12 +468,12 @@ app.service('ProjectService', function ($http) {
 
         return request;
     }
-// 17/10/2015 - MaiCTP - get BackedProject
+    // 17/10/2015 - MaiCTP - get BackedProject
     this.getBackedProject = function () {
         var request = $http({
             method: 'get',
             url: '/api/ProjectApi/GetBackedProject/'
-          
+
         });
 
         return request;

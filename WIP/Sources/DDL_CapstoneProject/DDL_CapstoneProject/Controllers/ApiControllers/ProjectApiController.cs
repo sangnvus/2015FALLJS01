@@ -410,6 +410,36 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
         }
 
+        // PUT: api/ProjectApi/EditSingleUpdateLog  
+        [ResponseType(typeof(UpdateLogDTO))]
+        [HttpPut]
+        public IHttpActionResult EditSingleUpdateLog(UpdateLogDTO updateLog)
+        {
+            var result = new UpdateLogDTO();
+            try
+            {
+                // Check authen.
+                if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                }
+
+                if (updateLog == null)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+                }
+
+                result = UpdateLogRepository.Instance.EditSingleUpdateLog(updateLog);
+            }
+            catch (Exception)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = result });
+        }
+
         /// <summary>
         /// Delete a updateLog
         /// </summary>
@@ -783,6 +813,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 }
 
                 projectCode = ProjectRepository.Instance.BackProject(backingData);
+                ProjectRepository.Instance.CaculateProjectPoint(backingData.ProjectCode, DDLConstants.PopularPointType.BackingPoint);
             }
             catch (Exception)
             {
@@ -815,6 +846,37 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
 
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = projectInfo });
+        }
+
+        // GET: api/ProjectApi/GetBackProjectInfo/:id
+        [HttpGet]
+        [ResponseType(typeof(ProjectBackDTO))]
+        public IHttpActionResult AdminGetBackingDetail(int backingId)
+        {
+            var backingDetail = new ProjectBackDTO();
+
+            try
+            {
+                // Check authen.
+                if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                }
+
+                backingDetail = ProjectRepository.Instance.AdminGetBackingDetail(backingId);
+            }
+            catch (KeyNotFoundException)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+            }
+            catch (Exception)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = backingDetail });
         }
 
         #region Admin
@@ -1410,6 +1472,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 if (User.Identity == null || !User.Identity.IsAuthenticated)
                 {
                     projectDetail.Creator.IsOwner = false;
+                    ProjectRepository.Instance.CaculateProjectPoint(code, DDLConstants.PopularPointType.ViewPoint);
                 }
                 else if (projectDetail.Creator.UserName.Equals(User.Identity.Name))
                 {
@@ -1744,7 +1807,8 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 if (User.Identity == null || !User.Identity.IsAuthenticated)
                 {
                     return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
-                } Reminded = ProjectRepository.Instance.RemindProject(User.Identity.Name, code);
+                } 
+                Reminded = ProjectRepository.Instance.RemindProject(User.Identity.Name, code);
             }
             catch (UserNotFoundException)
             {
