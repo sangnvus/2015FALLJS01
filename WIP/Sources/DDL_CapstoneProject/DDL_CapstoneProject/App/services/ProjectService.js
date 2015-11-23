@@ -5,6 +5,18 @@ app.service('ProjectService', function ($http) {
 
     //Trungvn
 
+    this.projectTitleList = function (searchkey) {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/projectTitleList',
+            params: {
+                searchkey: searchkey
+            }
+        });
+
+        return request;
+    }
+
     this.getProjectTop = function (categoryID) {
         return $http.get("/api/ProjectApi/getProjectTop/?categoryID=" + categoryID);
     }
@@ -56,6 +68,7 @@ app.service('ProjectService', function ($http) {
 
         return request;
     }
+
 
     //EndTrungVn
 
@@ -560,15 +573,4 @@ app.service('ProjectService', function ($http) {
         return request;
     }
 
-    this.reportProject = function (code, reportcontent) {
-        var request = $http({
-            method: 'get',
-            url: '/api/ProjectApi/ReportProject',
-            params: {
-                code: code,
-                content: reportcontent
-            }
-        });
-        return request;
-    }
 });

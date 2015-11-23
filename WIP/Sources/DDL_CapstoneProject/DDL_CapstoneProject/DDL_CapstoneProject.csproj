@@ -210,6 +210,7 @@
     <Compile Include="Models\DTOs\ProjectInfoBackDTO.cs" />
     <Compile Include="Models\DTOs\ProjectStoryDTO.cs" />
     <Compile Include="Models\DTOs\ProjectEditDTO.cs" />
+    <Compile Include="Models\DTOs\ProjectTitleDTO.cs" />
     <Compile Include="Models\DTOs\QuestionDTO.cs" />
     <Compile Include="Models\DTOs\ReplyDTO.cs" />
     <Compile Include="Models\DTOs\ProjectBackDTO.cs" />
@@ -319,6 +320,7 @@
     <Content Include="App\services\CommonService.js" />
     <Content Include="App\services\ProjectService.js" />
     <Content Include="App\services\MessageService.js" />
+    <Content Include="App\services\ReportService.js" />
     <Content Include="App\services\SlideSevice.js" />
     <Content Include="App\services\UserService.js" />
     <Content Include="baokim_58b6e72ff8700e41.html" />
@@ -447,6 +449,7 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\canvas-toBlob.js" />
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\data-tables\angular-datatables.bootstrap.js" />
     <Content Include="Scripts\data-tables\angular-datatables.bootstrap.min.js" />
@@ -477,6 +480,7 @@
     <Content Include="Scripts\flat-ui\application.js" />
     <Content Include="Scripts\flat-ui\flat-ui.js" />
     <Content Include="Scripts\flat-ui\flat-ui.min.js" />
+    <Content Include="Scripts\html2canvas.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-et.js" />

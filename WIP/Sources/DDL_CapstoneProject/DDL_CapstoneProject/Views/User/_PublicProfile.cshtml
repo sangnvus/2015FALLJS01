@@ -33,11 +33,33 @@
                     <div class="mt5 mb5 border-b"><i class="fa fa-university"></i>&nbsp;&nbsp;{{UserBasicInfo.CountBackedProject}} đã ủng hộ</div>
                     <div class="mt5 mb5">
                         <button class="btn btn-primary" ng-click="showContactBox()">Gửi tin nhắn</button>
+                        <button class="btn btn-red" ng-click="showReportBox()">Báo xấu người dùng</button>
                     </div>
                 </div>
             </div> <!-- end ROW -->
         </div> <!--end CONTAINER -->
     </div> <!-- end PROFILE PUBLIC -->
+    <!-- Report Modal -->
+    <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h5 class="modal-title" id="myModalLabel">Báo cáo người dùng sai phạm</h5>
+                </div>
+                <div class="modal-body">
+                    <h5 class="fnt20"><span class="fnt-n">Người dùng:</span> {{UserBasicInfo.FullName}}</h5>
+                    <h5 class="fnt20 fnt-n">Nội dung:</h5>
+                    <textarea class="form-control" style="resize:none" name="" id="" cols="30" rows="5" ng-model="ReportContent"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" ng-click="reportUser()">Gửi báo cáo</button>
+                </div>
+            </div>
+        </div>
+    </div> <!-- end report modal -->
+    <!-- end report modal -->
     <!-- Contact Modal -->
     <div class="container">
         <div class="modal fade" id="sentBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">

@@ -28,6 +28,25 @@ namespace DDL_CapstoneProject.Respository
 
         #region TrungVN
 
+
+        public List<ProjectTitleDTO> projectTitleList(string searchkey)
+        {
+            if (searchkey == null) searchkey = "";
+            List<ProjectTitleDTO> list = new List<ProjectTitleDTO>();
+            using (var db = new DDLDataContext())
+            {
+                var listTitle = from project in db.Projects
+                                where project.Title.Contains(searchkey)
+                                select new ProjectTitleDTO
+                                {
+                                    projectTitle = project.Title
+                                };
+                list = listTitle.ToList();
+            }
+            return list;
+        }
+
+
         public Dictionary<string, int> getStatisticsInfor()
         {
             using (var db = new DDLDataContext())
@@ -1826,28 +1845,6 @@ namespace DDL_CapstoneProject.Respository
         }
 
 
-        public void ReportProject(string userName, string projectCode, string content)
-        {
-            using (var db = new DDLDataContext())
-            {
-                var userCurrent = db.DDL_Users.FirstOrDefault(x => x.Username.Equals(userName));
-                var project = db.Projects.FirstOrDefault(x => x.ProjectCode == projectCode);
-                var report = new ReportProject
-                {
-                    Project = project,
-                    Reporter = userCurrent,
-                    ProjectID = project.ProjectID,
-                    ReportContent = content,
-                    ReportedDate = DateTime.Now,
-                    ReporterID = userCurrent.DDL_UserID,
-                    Status = "unread",
-                    Subject = "Report " + project.Title
-                };
-                db.ReportProjects.Add(report);
-                db.SaveChanges();
-            }
-
-        }
 
 
         public BackingDTO GetListBacker(string projectCode)
