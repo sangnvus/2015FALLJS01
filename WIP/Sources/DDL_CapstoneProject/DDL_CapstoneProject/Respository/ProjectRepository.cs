@@ -1606,6 +1606,7 @@ namespace DDL_CapstoneProject.Respository
                                    ExpireDate = DbFunctions.DiffDays(DateTime.Now, project.ExpireDate),
                                    FundingGoal = project.FundingGoal,
                                    Category = project.Category.Name,
+                                   CategoryID = project.Category.CategoryID,
                                    Backers = project.Backings.Count,
                                    CreatedDate = project.CreatedDate,
                                    PopularPoint = project.PopularPoint
@@ -1640,6 +1641,7 @@ namespace DDL_CapstoneProject.Respository
                                    ExpireDate = DbFunctions.DiffDays(DateTime.Now, project.ExpireDate),
                                    FundingGoal = project.FundingGoal,
                                    Category = project.Category.Name,
+                                   CategoryID = project.Category.CategoryID,
                                    Backers = project.Backings.Count,
                                    CreatedDate = project.CreatedDate,
                                    PopularPoint = project.PopularPoint
@@ -1672,6 +1674,7 @@ namespace DDL_CapstoneProject.Respository
                                        ExpireDate = DbFunctions.DiffDays(DateTime.Now, project.ExpireDate),
                                        FundingGoal = project.FundingGoal,
                                        Category = project.Category.Name,
+                                       CategoryID = project.Category.CategoryID,
                                        Backers = project.Backings.Count,
                                        CreatedDate = project.CreatedDate,
                                        PopularPoint = project.PopularPoint,
