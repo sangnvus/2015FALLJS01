@@ -26,17 +26,30 @@ app.controller('AdminUserListController',
                         toastr.success("Thành công!");
                         var promiseTable = AdminUserService.getUserlist();
                         promiseTable.then(
-                            function (result) {
-                                $scope.userList = result.data.Data;
-                            }
-                        )
+                            function(result) {
+                                if (result.data.Status === "success") {
+                                    $scope.userList = result.data.Data;
+                                } else {
+                                    var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                                    if (a) {
+                                        $scope.Error = result.data.Message;
+                                        toastr.error($scope.Error, 'Lỗi');
+                                    }
+                                }
+                            },
+                            function(error) {
+                                toastr.error('Lỗi');
+                            });
                     } else {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        toastr.error($scope.Error, 'Lỗi!');
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
                     }
                 },
                 function (error) {
-                    $scope.Error = error.data.Message;
+                    toastr.error('Lỗi');
                 });
         }
 
