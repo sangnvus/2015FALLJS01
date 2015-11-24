@@ -30,7 +30,7 @@ app.controller('AdminReportProjectController',
                     $scope.newReply.ToUser = $scope.reportContent.ReporterUsername;
                     $scope.newReply.Title = "Trả lời về việc báo xấu dự án \"" + $scope.reportContent.ProjectTitle + "\"";
                     if ($scope.listReport[i].Status != "rejected" && $scope.listReport[i].Status != "done")
-                        $scope.changeReportStatus($scope.reportContent.ReportID, "viewed");
+                        $scope.changeReportProjectStatus($scope.reportContent.ReportID, "viewed");
                 }
             }
         }
@@ -65,9 +65,8 @@ app.controller('AdminReportProjectController',
 
 
 
-
-        $scope.changeReportStatus = function (id, status) {
-            var promise = AdminReportService.changeReportStatus(id, status, "Project");
+        $scope.changeReportProjectStatus = function (id, status) {
+            var promise = AdminReportService.changeReportProjectStatus(id, status);
             promise.then(
                 function (result) {
                     if (result.data.Status === "success") {
@@ -80,11 +79,8 @@ app.controller('AdminReportProjectController',
                         }
 
                     } else {
-                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        if (a) {
-                            $scope.Error = result.data.Message;
-                            toastr.error($scope.Error, 'Lỗi');
-                        }
+                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        $scope.Error = result.data.Message;
                     }
                 },
                 function (error) {

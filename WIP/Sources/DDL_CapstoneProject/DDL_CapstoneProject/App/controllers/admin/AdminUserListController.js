@@ -2,7 +2,7 @@
 
 app.controller('AdminUserListController',
     function ($scope, $rootScope, toastr, listuser, AdminUserService, CommmonService,
-        DTOptionsBuilder, DTColumnDefBuilder) {
+        DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
         //Todo here.
         $scope.userList = listuser.data.Data;
 
@@ -40,5 +40,26 @@ app.controller('AdminUserListController',
                 });
         }
 
-
+        // Alert admin before change status
+        $scope.warning = function (username,index) {
+            SweetAlert.swal({
+                title: "Bạn vừa thay đổi tình trạng hoạt động của người dùng!",
+                text: "Tình trạng hoạt động của người dùng sẽ bị thay đổi!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Có!",
+                cancelButtonText: "Không!",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        //SweetAlert.swal("Edited!", "Project's basic has been edited.", "success");
+                        $scope.activeUser(username, index);
+                    } else {
+                        //SweetAlert.swal("Cancelled", "Project's basic is safe :)", "error");
+                    }
+                });
+        };
     });

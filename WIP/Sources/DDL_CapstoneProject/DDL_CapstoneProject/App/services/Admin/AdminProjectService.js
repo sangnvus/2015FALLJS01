@@ -113,4 +113,17 @@ service.service("AdminProjectService", function ($http) {
         });
         return request;
     };
+
+    // Function to get backing detail for admin
+    this.getBackingDetail = function (backingId) {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/AdminGetBackingDetail',
+            params: {
+                backingId: backingId
+            }
+        });
+        return request;
+        //return $http.get("/api/ProjectApi/AdminGetBackingDetail/" + backingId);
+    }
 });

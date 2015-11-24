@@ -47,8 +47,8 @@
                                 @*<td>{{report.Subject}}</td>*@
                                 <td>{{report.ReportedDate}}</td>
                                 <td>
-                                    <span style="padding: 9px 10px" class="label label-blue center-block" ng-if="report.Status != 'rejected' && report.Status != 'done' && report.Status != 'viewed'">Chưa xem</span>
-                                    <span style="padding: 9px 10px" class="label label-default center-block" ng-if="report.Status == 'viewed'">Đã xem</span>
+                                    <span style="padding: 9px 10px" class="label label-default center-block" ng-if="report.Status != 'rejected' && report.Status != 'done' && report.Status != 'viewed'">Chưa xem</span>
+                                    <span style="padding: 9px 10px" class="label label-primary  center-block" ng-if="report.Status == 'viewed'">Đã xem</span>
                                     <span style="padding: 9px 10px" class="label label-success center-block" ng-if="report.Status == 'done'">Đã đồng ý</span>
                                     <span style="padding: 9px 10px" class="label label-danger center-block" ng-if="report.Status == 'rejected'">Đã Hủy</span>
                                 </td>
@@ -59,11 +59,11 @@
                                             <i class="fa fa-eye"></i>
                                         </button>
                                         <button class="btn btn-primary btn-sm btn-success" type="button" tooltip="Đồng ý" tooltip-append-to-body="true" tooltip-placement="left"
-                                                ng-click="changeReportStatus(report.ReportID,'done')" ng-if="report.Status != 'rejected' && report.Status != 'done' ">
+                                                ng-click="changeReportProjectStatus(report.ReportID,'done')" ng-if="report.Status != 'rejected' && report.Status != 'done' ">
                                             <i class="fa fa-check"></i>
                                         </button>
                                         <button class="btn btn-primary btn-sm btn-red" type="button" tooltip="Hủy" tooltip-append-to-body="true" tooltip-placement="left"
-                                                ng-click="changeReportStatus(report.ReportID,'rejected')" ng-if="report.Status != 'rejected' && report.Status != 'done' ">
+                                                ng-click="changeReportProjectStatus(report.ReportID,'rejected')" ng-if="report.Status != 'rejected' && report.Status != 'done' ">
                                             <i class="fa fa-times"></i>
                                         </button>
                                     </div>

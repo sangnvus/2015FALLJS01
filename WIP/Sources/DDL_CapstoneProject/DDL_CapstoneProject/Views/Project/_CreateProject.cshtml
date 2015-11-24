@@ -52,6 +52,7 @@
                                    style="min-width: 400px"
                                    name="ProjectTitle"
                                    ng-model="Project.Title"
+                                   maxlength="60"
                                    ng-trim="true" required>
                             @*<span class="glyphicon glyphicon-ok text-success form-control-feedback"
                                       ng-show="CreateProjectForm.Title.$dirty && CreateProjectForm.Title.$valid"></span>
@@ -62,6 +63,10 @@
                             <div class="row pb20 text-danger" ng-if="isError && Project.Title.length < 10">
                                 <span class="glyphicon glyphicon-remove text-danger"></span>
                                 <span>Tên dự án nên đặt ít nhất là 10 kí tự</span>
+                            </div>
+                            <div class="row pb20 text-danger" ng-if="isError && Project.Title.length > 60">
+                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                <span>Tên dự án nên dài nhất là 60 kí tự</span>
                             </div>
                         </div>
                         <div class="form-inline mt15">
