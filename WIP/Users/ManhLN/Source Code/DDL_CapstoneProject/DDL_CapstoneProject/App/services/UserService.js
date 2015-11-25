@@ -7,6 +7,7 @@ service.service('UserService', function ($http) {
     this.getUserTop = function (categoryID) {
         return $http.get("/api/UserApi/GetUserTop?categoryID=" + categoryID);
     }
+
     //End TrungVN
 
 

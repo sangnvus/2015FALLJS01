@@ -29,7 +29,6 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     // check edit updatelog
     $scope.IsEditUpdateLog = [];
 
-
     // Check first load
     $scope.FirstLoadReward = false;
     $scope.FirstLoadUpdate = false;
@@ -40,6 +39,21 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     // Get current time
     $scope.toDay = new Date($.now());
     $scope.NewReward.EstimatedDelivery = angular.copy($scope.toDay);
+
+    // Check current time of update log
+    var dd = $scope.toDay.getDate();
+    var mm = $scope.toDay.getMonth() + 1; //January is 0!
+    var yyyy = $scope.toDay.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+
+    $scope.checkUpdateLogDate = mm + '/' + dd + '/' + yyyy;
 
     // Set min deadline : current time + 10 days
     var minDate = new Date(new Date().getTime() + (11 * 24 * 60 * 60 * 1000));
@@ -425,6 +439,18 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                         // convert datetime to date
                         for (var i = 0; i < $scope.UpdateLogs.length; i++) {
                             $scope.UpdateLogs[i].CreatedDate = new Date($filter('date')($scope.UpdateLogs[i].CreatedDate, "yyyy-MM-dd"));
+                            var dd = $scope.UpdateLogs[i].CreatedDate.getDate();
+                            var mm = $scope.UpdateLogs[i].CreatedDate.getMonth() + 1; //January is 0!
+                            var yyyy = $scope.UpdateLogs[i].CreatedDate.getFullYear();
+
+                            if (dd < 10) {
+                                dd = '0' + dd;
+                            }
+
+                            if (mm < 10) {
+                                mm = '0' + mm;
+                            }
+                            $scope.UpdateLogs[i].CreatedDate = mm + '/' + dd + '/' + yyyy;
                         };
                         // Copy original update log
                         $scope.originalUpdateLog = angular.copy($scope.UpdateLogs);
@@ -441,6 +467,23 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                 });
         }
     };
+    // Function show edit update log form.
+    $scope.showEditUpdateLog = function (index) {
+        if ($scope.IsEditUpdateLog[index] == null || $scope.IsEditUpdateLog[index] === false) {
+            $scope.IsEditUpdateLog[index] = true;
+            $scope.UpdateLogs[index].EditedTitle = $scope.UpdateLogs[index].Title;
+            $scope.UpdateLogs[index].EditedDescription = $scope.UpdateLogs[index].Description;
+        } else {
+            $scope.IsEditUpdateLog[index] = false;
+        }
+    }
+
+    $scope.resetEditUpdateLog = function (index) {
+        $scope.IsEditUpdateLog[index] = false;
+        $scope.UpdateLogs = angular.copy($scope.originalUpdateLog);
+        $scope.updateLogForm.$setPristine();
+        $scope.updateLogForm.$setUntouched();
+    }
     // Edit updateLog
     $scope.editUpdateLog = function (form) {
         // Put update project
@@ -449,11 +492,53 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
         promiseEditUpdateLog.then(
             function (result) {
                 if (result.data.Status === "success") {
-                    toastr.success('Sửa updateLog thành công!');
+                    toastr.success('Sửa thành công!');
                     // re-set original update log
                     $scope.originalUpdateLog = angular.copy($scope.UpdateLogs);
+                    // reset show update log
+                    for (var i = 0; i < $scope.UpdateLogs.length; i++) {
+                        if ($scope.IsEditUpdateLog[i] === true) {
+                            $scope.showEditUpdateLog(i);
+                        }
+                    };
                     form.$setPristine();
                     form.$setUntouched();
+                } else {
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                    $scope.Error = result.data.Message;
+                    toastr.error($scope.Error, 'Lỗi!');
+                }
+            },
+            function (error) {
+                $scope.Error = error.data.Message;
+                toastr.error($scope.Error, 'Lỗi!');
+            });
+    };
+
+    // Edit single updateLog
+    $scope.editSingleUpdateLog = function (index) {
+        // Put update project
+        var promiseEditUpdateLog = ProjectService.editSingleUpdateLogs($scope.UpdateLogs[index]);
+
+        promiseEditUpdateLog.then(
+            function (result) {
+                if (result.data.Status === "success") {
+                    toastr.success('Sửa thành công!');
+                    //$scope.UpdateLogs[index] = result.data.Data;
+                    // re-set original update log
+                    $scope.originalUpdateLog = angular.copy($scope.UpdateLogs);
+                    // reset show update log
+                    $scope.showEditUpdateLog(index);
+                    var flagUpdateLog = 0;
+                    for (var i = 0; i < $scope.IsEditUpdateLog.length; i++) {
+                        if ($scope.IsEditUpdateLog[i] === true) {
+                            flagUpdateLog = 1;
+                        }
+                    }
+                    if (flagUpdateLog === 0) {
+                        $scope.updateLogForm.$setPristine();
+                        $scope.updateLogForm.$setUntouched();
+                    }
                 } else {
                     CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
@@ -472,12 +557,24 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
         promiseCreateUpdateLog.then(
             function (result) {
                 if (result.data.Status === "success") {
-                    toastr.success('Tạo updateLog thành công!');
+                    toastr.success('Tạo cập nhật thành công!');
                     $('#updateModal').modal('hide');
                     // reinitial newUpdateLog
                     $scope.NewUpdateLog = {};
                     result.data.Data.CreatedDate = new Date($filter('date')(result.data.Data.CreatedDate, "yyyy-MM-dd"));
-                    $scope.UpdateLogs.push(result.data.Data);
+                    var dd = result.data.Data.CreatedDate.getDate();
+                    var mm = result.data.Data.CreatedDate.getMonth() + 1; //January is 0!
+                    var yyyy = result.data.Data.CreatedDate.getFullYear();
+
+                    if (dd < 10) {
+                        dd = '0' + dd;
+                    }
+
+                    if (mm < 10) {
+                        mm = '0' + mm;
+                    }
+                    result.data.Data.CreatedDate = mm + '/' + dd + '/' + yyyy;
+                    $scope.UpdateLogs.unshift(result.data.Data);
                     $scope.originalUpdateLog = angular.copy($scope.UpdateLogs);
                 } else {
                     CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
@@ -929,7 +1026,12 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                    $scope.Question = angular.copy($scope.originalQuestion);
                    $scope.Timeline = angular.copy($scope.originalTimeline);
 
-
+                   // reset show update log
+                   for (var i = 0; i < $scope.UpdateLogs.length; i++) {
+                       if ($scope.IsEditUpdateLog[i] === true) {
+                           $scope.showEditUpdateLog(i);
+                       }
+                   };
                    form.$setPristine();
                    form.$setUntouched();
                    $scope.fileIsBig = false;

@@ -695,6 +695,8 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
         #region TrungVn
 
+
+
         [HttpGet]
         public IHttpActionResult GetBackingFullInforListForExport()
         {

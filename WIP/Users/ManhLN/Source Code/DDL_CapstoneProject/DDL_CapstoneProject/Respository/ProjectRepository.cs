@@ -28,6 +28,25 @@ namespace DDL_CapstoneProject.Respository
 
         #region TrungVN
 
+
+        public List<ProjectTitleDTO> projectTitleList(string searchkey)
+        {
+            if (searchkey == null) searchkey = "";
+            List<ProjectTitleDTO> list = new List<ProjectTitleDTO>();
+            using (var db = new DDLDataContext())
+            {
+                var listTitle = from project in db.Projects
+                                where project.Title.Contains(searchkey)
+                                select new ProjectTitleDTO
+                                {
+                                    projectTitle = project.Title
+                                };
+                list = listTitle.ToList();
+            }
+            return list;
+        }
+
+
         public Dictionary<string, int> getStatisticsInfor()
         {
             using (var db = new DDLDataContext())
@@ -270,6 +289,7 @@ namespace DDL_CapstoneProject.Respository
                 project.VideoUrl = string.Empty;
                 project.PopularPoint = 0;
                 project.Status = DDLConstants.ProjectStatus.DRAFT;
+                project.PointOfTheDay = 0;
 
                 return project;
             }
@@ -560,6 +580,7 @@ namespace DDL_CapstoneProject.Respository
 
                 if (string.IsNullOrEmpty(messageBasic) && string.IsNullOrEmpty(messageReward) && string.IsNullOrEmpty(messageStory))
                 {
+                    project.UpdatedDate = DateTime.UtcNow;
                     project.Status = DDLConstants.ProjectStatus.PENDING;
                     project.CreatedDate = DateTime.UtcNow;
 
@@ -673,8 +694,69 @@ namespace DDL_CapstoneProject.Respository
             }
         }
 
+        /// <summary>
+        /// Caculate point of the day of a project
+        /// </summary>
+        /// <param name="projectCode"></param>
+        /// <param name="point"></param>
+        public void CaculateProjectPoint(string projectCode, int point)
+        {
+            using (var db = new DDLDataContext())
+            {
+                var project = db.Projects.SingleOrDefault(x => x.ProjectCode == projectCode);
 
+                if (project == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                project.PointOfTheDay += point;
+
+                db.SaveChanges();
+            }
+        }
         #region Admin
+
+        /// <summary>
+        /// Get backing detail for admin
+        /// </summary>
+        /// <param name="backingId"></param>
+        /// <returns>projectBackDTO</returns>
+        public ProjectBackDTO AdminGetBackingDetail(int backingId)
+        {
+            using (var db = new DDLDataContext())
+            {
+                var backing = db.Backings.SingleOrDefault(x => x.BackingID == backingId);
+
+                if (backing == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                var projectBackDto = new ProjectBackDTO
+                {
+                    BackedDate = backing.BackedDate,
+                    ProjectCode = backing.Project.ProjectCode,
+                    RewardPkgID = backing.BackingDetail.RewardPkgID,
+                    Description = backing.BackingDetail.Description,
+                    PledgeAmount = backing.BackingDetail.PledgedAmount,
+                    Email = backing.BackingDetail.Email,
+                    Quantity = backing.BackingDetail.Quantity,
+                    Address = backing.BackingDetail.Address,
+                    BackerName = backing.BackingDetail.BackerName,
+                    PhoneNumber = backing.BackingDetail.PhoneNumber,
+                    ProjectName = backing.Project.Title,
+                    ProjectOwner = backing.Project.Creator.UserInfo.FullName,
+                    RewardPkgDesc = backing.BackingDetail.RewardPkg.Description,
+                    RewardPkgType = backing.BackingDetail.RewardPkg.Type,
+                    BackerImg = backing.User.UserInfo.ProfileImage,
+                    BackerUsername = backing.User.Username,
+                    ProjectOwnerUsername = backing.Project.Creator.Username
+                };
+
+                return projectBackDto;
+            }
+        }
 
         /// <summary>
         /// Get basic statistic of project for admin
@@ -1606,6 +1688,7 @@ namespace DDL_CapstoneProject.Respository
                                    ExpireDate = DbFunctions.DiffDays(DateTime.Now, project.ExpireDate),
                                    FundingGoal = project.FundingGoal,
                                    Category = project.Category.Name,
+                                   CategoryID = project.Category.CategoryID,
                                    Backers = project.Backings.Count,
                                    CreatedDate = project.CreatedDate,
                                    PopularPoint = project.PopularPoint
@@ -1640,6 +1723,7 @@ namespace DDL_CapstoneProject.Respository
                                    ExpireDate = DbFunctions.DiffDays(DateTime.Now, project.ExpireDate),
                                    FundingGoal = project.FundingGoal,
                                    Category = project.Category.Name,
+                                   CategoryID = project.Category.CategoryID,
                                    Backers = project.Backings.Count,
                                    CreatedDate = project.CreatedDate,
                                    PopularPoint = project.PopularPoint
@@ -1672,6 +1756,7 @@ namespace DDL_CapstoneProject.Respository
                                        ExpireDate = DbFunctions.DiffDays(DateTime.Now, project.ExpireDate),
                                        FundingGoal = project.FundingGoal,
                                        Category = project.Category.Name,
+                                       CategoryID = project.Category.CategoryID,
                                        Backers = project.Backings.Count,
                                        CreatedDate = project.CreatedDate,
                                        PopularPoint = project.PopularPoint,
@@ -1755,34 +1840,14 @@ namespace DDL_CapstoneProject.Respository
                     reminded.User.DDL_UserID = userCurrent.DDL_UserID;
                     db.Reminds.Add(reminded);
                     db.SaveChanges();
+
+                    ProjectRepository.Instance.CaculateProjectPoint(projectCode, DDLConstants.PopularPointType.RemindPoint);
                 }
                 return true;
             }
         }
 
 
-        public void ReportProject(string userName, string projectCode, string content)
-        {
-            using (var db = new DDLDataContext())
-            {
-                var userCurrent = db.DDL_Users.FirstOrDefault(x => x.Username.Equals(userName));
-                var project = db.Projects.FirstOrDefault(x => x.ProjectCode == projectCode);
-                var report = new ReportProject
-                {
-                    Project = project,
-                    Reporter = userCurrent,
-                    ProjectID = project.ProjectID,
-                    ReportContent = content,
-                    ReportedDate = DateTime.Now,
-                    ReporterID = userCurrent.DDL_UserID,
-                    Status = "unread",
-                    Subject = "Report " + project.Title
-                };
-                db.ReportProjects.Add(report);
-                db.SaveChanges();
-            }
-
-        }
 
 
         public BackingDTO GetListBacker(string projectCode)
@@ -1806,6 +1871,7 @@ namespace DDL_CapstoneProject.Respository
                                          Amount = backer.BackingDetail.PledgedAmount,
                                          Date = SqlFunctions.DateAdd("hh", 7, backer.BackedDate),
                                          FullName = backer.User.UserInfo.FullName,
+                                         BackingId = backer.BackingID,
                                      };
                 // Generate all date from created date 1 days to now
                 var dateMonths = Enumerable.Range(0, 1 + CommonUtils.DateTimeNowGMT7().Date.Subtract(project.CreatedDate.AddDays(-1).Date).Days)
@@ -1942,6 +2008,8 @@ namespace DDL_CapstoneProject.Respository
                     throw new KeyNotFoundException();
                 }
 
+                var projectCreator = project.Creator.Username;
+
                 // Create comment.
                 var newComment = db.Comments.Create();
                 newComment.CommentContent = comment.CommentContent;
@@ -1974,11 +2042,16 @@ namespace DDL_CapstoneProject.Respository
                                         CommentID = commentItem.CommentID,
                                     };
 
-                var commentsList = (comment.UserName == project.Creator.Username)
+                var commentsList = (comment.UserName == projectCreator)
                     ? commentsQuery.ToList()
                     : commentsQuery.Where(c => !c.IsHide).ToList();
 
                 commentsList.ForEach(x => x.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(x.CreatedDate));
+
+                if (projectCreator != comment.UserName)
+                {
+                    CaculateProjectPoint(projectCode, DDLConstants.PopularPointType.CommentPoint);
+                }
 
                 return commentsList;
             }
