@@ -249,6 +249,8 @@
                                                         <span class="glyphicon glyphicon-asterisk"></span>{{reward.CurrentQuantity}} sản phầm | {{reward.Backers}} lượt ủng hộ
                                                     </p>
                                                     <hr />
+                                                    <div style="word-break: break-word; white-space: pre-wrap;" class="item-description">{{reward.Description}}</div>
+                                                    <hr />
                                                     <div class="item-extra-info" ng-if="reward.Type == '@DDLConstants.RewardType.LIMITED' && (reward.Quantityreward - reward.CurrentQuantity > 0)">
                                                         <span class="bold h5">Số lượng còn lại: </span>
                                                         <span class="h5" style="font-weight: normal">{{reward.Quantity - reward.CurrentQuantity}}</span>
