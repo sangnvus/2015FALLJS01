@@ -249,7 +249,7 @@ namespace DDL_CapstoneProject.Respository
                 IsVerify = true,
                 LastLogin = DateTime.UtcNow,
                 UserType = DDLConstants.UserType.USER,
-                Username = "fb" + email.Split(new string[] { "@" }, StringSplitOptions.None)[0],
+                Username = "fb." + email.Split(new string[] { "@" }, StringSplitOptions.None)[0],
                 VerifyCode = string.Empty,
                 UserInfo = new UserInfo
                 {

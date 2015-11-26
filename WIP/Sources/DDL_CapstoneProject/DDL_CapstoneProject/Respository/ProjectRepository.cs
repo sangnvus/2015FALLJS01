@@ -2098,22 +2098,36 @@ namespace DDL_CapstoneProject.Respository
                                                  x.ProjectID == projectDetail.ProjectID);
 
                 // Get rewards.
-                var rewardDetail =
-                    db.RewardPkgs.Where(x => x.ProjectID == projectDetail.ProjectID && !x.IsHide).ToList();
-                var rewardDto = new List<RewardPkgDTO>();
-                foreach (var reward in rewardDetail)
-                {
-                    var Reward = new RewardPkgDTO
-                    {
-                        Backers = reward.BackingDetails.Count(),
-                        Description = reward.Description,
-                        EstimatedDelivery =
-                            CommonUtils.ConvertDateTimeFromUtc(reward.EstimatedDelivery.GetValueOrDefault()),
-                        PledgeAmount = reward.PledgeAmount,
-                        Quantity = reward.Quantity
-                    };
-                    rewardDto.Add(Reward);
-                }
+                //var rewardDetail =
+                //    db.RewardPkgs.Where(x => x.ProjectID == projectDetail.ProjectID && !x.IsHide).ToList();
+                var rewardDto = (from reward in db.RewardPkgs
+                                 where reward.ProjectID == projectDetail.ProjectID && !reward.IsHide
+                                 select new RewardPkgDTO
+                                 {
+                                     Backers = reward.BackingDetails.Count,
+                                     Description = reward.Description,
+                                     EstimatedDelivery = reward.EstimatedDelivery,
+                                     PledgeAmount = reward.PledgeAmount,
+                                     Quantity = reward.Quantity,
+                                     CurrentQuantity = reward.CurrentQuantity,
+                                     Type = reward.Type
+                                 }).ToList();
+
+                rewardDto.ForEach(x => x.EstimatedDelivery = CommonUtils.ConvertDateTimeFromUtc(x.EstimatedDelivery.GetValueOrDefault()));
+
+                //foreach (var reward in rewardDetail)
+                //{
+                //    var Reward = new RewardPkgDTO
+                //    {
+                //        Backers = reward.BackingDetails.Count(),
+                //        Description = reward.Description,
+                //        EstimatedDelivery =
+                //            CommonUtils.ConvertDateTimeFromUtc(reward.EstimatedDelivery.GetValueOrDefault()),
+                //        PledgeAmount = reward.PledgeAmount,
+                //        Quantity = reward.Quantity
+                //    };
+                //    rewardDto.Add(Reward);
+                //}
                 projectDetail.RewardDetail = rewardDto;
 
                 // Convert datetime to gmt+7
@@ -2133,7 +2147,7 @@ namespace DDL_CapstoneProject.Respository
         {
             using (var db = new DDLDataContext())
             {
-                var project = db.Projects.FirstOrDefault(x => x.ProjectCode == projectCode);
+                var project = db.Projects.FirstOrDefault(x => x.ProjectCode.Equals(projectCode, StringComparison.OrdinalIgnoreCase));
                 if (project == null)
                 {
                     throw new KeyNotFoundException();
