@@ -618,7 +618,8 @@ namespace DDL_CapstoneProject.Respository
                 {
                     ProjectCode = project.ProjectCode,
                     Title = project.Title,
-                    Creator = user.UserInfo.FullName
+                    Creator = user.UserInfo.FullName,
+                    CreatorUsername = user.Username
                 };
 
                 return projectInforDTO;
@@ -1552,6 +1553,42 @@ namespace DDL_CapstoneProject.Respository
         }
 
         /// <summary>
+        /// Edit single question
+        /// </summary>
+        /// <param name="question"></param>
+        /// <returns>updateLogDTO</returns>
+        public QuestionDTO EditSingleQuestion(QuestionDTO question)
+        {
+            using (var db = new DDLDataContext())
+            {
+                var updateQuestion = db.Questions.SingleOrDefault(x => x.QuestionID == question.QuestionID);
+
+                if (updateQuestion == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                updateQuestion.Answer = question.Answer;
+                updateQuestion.CreatedDate = DateTime.UtcNow;
+                updateQuestion.QuestionContent = question.QuestionContent;
+
+                db.SaveChanges();
+
+                var questionDTO = new QuestionDTO
+                {
+                    Answer = updateQuestion.Answer,
+                    CreatedDate = updateQuestion.CreatedDate,
+                    QuestionContent = updateQuestion.QuestionContent,
+                    QuestionID = updateQuestion.QuestionID,
+                };
+
+                questionDTO.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(questionDTO.CreatedDate);
+
+                return questionDTO;
+            }
+        }
+
+        /// <summary>
         /// Delete a QA
         /// </summary>
         /// <param name="questionID"></param>
@@ -2098,22 +2135,36 @@ namespace DDL_CapstoneProject.Respository
                                                  x.ProjectID == projectDetail.ProjectID);
 
                 // Get rewards.
-                var rewardDetail =
-                    db.RewardPkgs.Where(x => x.ProjectID == projectDetail.ProjectID && !x.IsHide).ToList();
-                var rewardDto = new List<RewardPkgDTO>();
-                foreach (var reward in rewardDetail)
-                {
-                    var Reward = new RewardPkgDTO
-                    {
-                        Backers = reward.BackingDetails.Count(),
-                        Description = reward.Description,
-                        EstimatedDelivery =
-                            CommonUtils.ConvertDateTimeFromUtc(reward.EstimatedDelivery.GetValueOrDefault()),
-                        PledgeAmount = reward.PledgeAmount,
-                        Quantity = reward.Quantity
-                    };
-                    rewardDto.Add(Reward);
-                }
+                //var rewardDetail =
+                //    db.RewardPkgs.Where(x => x.ProjectID == projectDetail.ProjectID && !x.IsHide).ToList();
+                var rewardDto = (from reward in db.RewardPkgs
+                                 where reward.ProjectID == projectDetail.ProjectID && !reward.IsHide
+                                 select new RewardPkgDTO
+                                 {
+                                     Backers = reward.BackingDetails.Count,
+                                     Description = reward.Description,
+                                     EstimatedDelivery = reward.EstimatedDelivery,
+                                     PledgeAmount = reward.PledgeAmount,
+                                     Quantity = reward.Quantity,
+                                     CurrentQuantity = reward.CurrentQuantity,
+                                     Type = reward.Type
+                                 }).ToList();
+
+                rewardDto.ForEach(x => x.EstimatedDelivery = CommonUtils.ConvertDateTimeFromUtc(x.EstimatedDelivery.GetValueOrDefault()));
+
+                //foreach (var reward in rewardDetail)
+                //{
+                //    var Reward = new RewardPkgDTO
+                //    {
+                //        Backers = reward.BackingDetails.Count(),
+                //        Description = reward.Description,
+                //        EstimatedDelivery =
+                //            CommonUtils.ConvertDateTimeFromUtc(reward.EstimatedDelivery.GetValueOrDefault()),
+                //        PledgeAmount = reward.PledgeAmount,
+                //        Quantity = reward.Quantity
+                //    };
+                //    rewardDto.Add(Reward);
+                //}
                 projectDetail.RewardDetail = rewardDto;
 
                 // Convert datetime to gmt+7
@@ -2133,7 +2184,7 @@ namespace DDL_CapstoneProject.Respository
         {
             using (var db = new DDLDataContext())
             {
-                var project = db.Projects.FirstOrDefault(x => x.ProjectCode == projectCode);
+                var project = db.Projects.FirstOrDefault(x => x.ProjectCode.Equals(projectCode, StringComparison.OrdinalIgnoreCase));
                 if (project == null)
                 {
                     throw new KeyNotFoundException();

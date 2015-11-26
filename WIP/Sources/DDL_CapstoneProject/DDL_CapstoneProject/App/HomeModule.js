@@ -293,7 +293,7 @@ app.config(["$routeProvider", function ($routeProvider) {
                 }]
             }
         });
-    $routeProvider.when("/project/backedProject",
+    $routeProvider.when("/project/backed",
          {
              caseInsensitiveMatch: true,
              templateUrl: "ClientPartial/BackedProject",
@@ -321,7 +321,7 @@ app.config(["$routeProvider", function ($routeProvider) {
             }
         });
 
-    $routeProvider.when("/project/starredProject",
+    $routeProvider.when("/project/reminded",
        {
            caseInsensitiveMatch: true,
            templateUrl: "ClientPartial/StarredProject",
@@ -335,7 +335,7 @@ app.config(["$routeProvider", function ($routeProvider) {
            }
        });
 
-    $routeProvider.when("/project/createdProject",
+    $routeProvider.when("/project/created",
       {
           caseInsensitiveMatch: true,
           templateUrl: "ClientPartial/CreatedProject",
@@ -349,7 +349,7 @@ app.config(["$routeProvider", function ($routeProvider) {
           }
       });
 
-    $routeProvider.when("/project/backedProjectHistory",
+    $routeProvider.when("/project/backhistory",
     {
         templateUrl: "ClientPartial/BackedProjectHistory",
         controller: 'BackedHistoryProjectController',
