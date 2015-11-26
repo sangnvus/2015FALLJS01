@@ -101,7 +101,7 @@ namespace DDL_CapstoneProject
                         && project.ExpireDate.Value.Month == DateTime.UtcNow.Month)
                     {
                         project.IsExprired = true;
-                        project.Status = DDLConstants.ProjectStatus.EXPIRED;
+                        //project.Status = DDLConstants.ProjectStatus.EXPIRED;
                     }
 
                     db.SaveChanges();

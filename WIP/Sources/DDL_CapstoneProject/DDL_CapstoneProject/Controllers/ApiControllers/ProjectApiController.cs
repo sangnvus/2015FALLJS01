@@ -713,6 +713,36 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
         }
 
+        // PUT: api/ProjectApi/EditSingleQuestion  
+        [ResponseType(typeof(UpdateLogDTO))]
+        [HttpPut]
+        public IHttpActionResult EditSingleQuestion(QuestionDTO question)
+        {
+            var result = new QuestionDTO();
+            try
+            {
+                // Check authen.
+                if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                }
+
+                if (question == null)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+                }
+
+                result = ProjectRepository.Instance.EditSingleQuestion(question);
+            }
+            catch (Exception)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = result });
+        }
+
         // Delete: api/ProjectApi/DeleteQuestion/:id 
         [ResponseType(typeof(QuestionDTO))]
         [HttpDelete]
