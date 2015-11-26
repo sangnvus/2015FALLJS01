@@ -243,13 +243,17 @@
                         <form class="navbar-form navbar-left" role="Search" novalidate ng-submit="submit(searchkey)">
                             <div class="form-group">
                                 <div class="input-group">
-                                    <input class="form-control" id="navbarInput-01" ng-model="searchkey" type="Search" placeholder="Tìm kiếm..." />
+                                    <input type="Search" class="form-control" autofocus
+                                           placeholder="Tìm kiếm..." ng-model="searchkey"
+                                           typeahead="project for project in suggess($viewValue)"
+                                           typeahead-template-url="customTemplate.html" required="">
                                     <span class="input-group-btn">
                                         <button type="button" class="btn" ng-click="submit(searchkey)"><span class="fa fa-search"></span></button>
                                     </span>
                                 </div>
                             </div>
                         </form>
+
                     </div>
                 }
                 <!-- Login/Logout/Profile -->
@@ -350,5 +354,11 @@
     @RenderSection("scripts", required: false)
     @*<script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.7.1/loading-bar.min.js'></script>*@
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+
+    <script type="text/ng-template" id="customTemplate.html">
+        <a>
+            <span>{{match.model}}</span>
+        </a>
+    </script>
 </body>
 </html>

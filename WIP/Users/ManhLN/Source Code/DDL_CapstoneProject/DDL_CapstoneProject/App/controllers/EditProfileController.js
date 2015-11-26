@@ -1,11 +1,20 @@
 ﻿"use strict";
 
-app.controller('EditProfileController', function ($scope, toastr, usereditinfo, UserService, $filter, fileReader, CommmonService) {
+app.controller('EditProfileController', function ($scope, toastr, usereditinfo, UserService, $filter, $sce, fileReader, CommmonService) {
     //  $scope.UserEditInfo = usereditinfo.data.Data;
 
     // Todo here.
     $scope.Error = null;
 
+    $scope.trustSrc = function (src) {
+        return $sce.trustAsResourceUrl(src);
+    }
+
+    // Function check string startwith 'http'
+    $scope.checkHTTP = function (input) {
+        var lowerStr = (input + "").toLowerCase();
+        return lowerStr.indexOf('http') == 0;
+    }
 
     var promiseGet = UserService.getProfileInformation();
 

@@ -31,6 +31,7 @@ namespace DDL_CapstoneProject.Respository
 
 
 
+
         public List<AdminBakingFullInforDTO> GetBackingFullInforListForExport()
         {
             using (var db = new DDLDataContext())
@@ -78,34 +79,42 @@ namespace DDL_CapstoneProject.Respository
             {
                 categoryid = "|" + categoryid + "|";
                 bool allCategory = categoryid.ToLower().Contains("all");
-                var userTop = from user in db.DDL_Users
-                              select new UserBackInforDTO
-                              {
-                                  Rank = "Rank A",
-                                  Name = user.UserInfo.FullName,
-                                  TotalFunded =
-                                      user.CreatedProjects.Where(x => categoryid.Contains(x.CategoryID.ToString()) || allCategory)
-                                          .Sum(x => (decimal?)x.CurrentFunded) ?? 0,
-                                  TotalBacked =
-                                      user.Backings.Where(x => categoryid.Contains(x.Project.CategoryID.ToString()) || allCategory)
-                                          .Sum(x => (decimal?)x.BackingDetail.PledgedAmount) ?? 0
-                              };
-                int count = userTop.Count();
-                if (count >= 10) count = 10;
+                var userTopFunded = from user in db.DDL_Users
+                                    select new UserBackInforDTO
+                                    {
+                                        Name = user.UserInfo.FullName,
+                                        TotalFunded =
+                                            user.CreatedProjects.Where(x => categoryid.Contains(x.CategoryID.ToString()) || allCategory)
+                                                .Sum(x => (decimal?)x.CurrentFunded) ?? 0,
+                                        TotalBacked = 0,
+                                        projectCount = user.CreatedProjects.Where(x => categoryid.Contains(x.CategoryID.ToString()) || allCategory).Count()
+                                    };
+
+                var userTopBacked = from user in db.DDL_Users
+                                    select new UserBackInforDTO
+                                    {
+                                        Name = user.UserInfo.FullName,
+                                        TotalFunded = 0,
+                                        TotalBacked =
+                                            user.Backings.Where(x => categoryid.Contains(x.Project.CategoryID.ToString()) || allCategory)
+                                                .Sum(x => (decimal?)x.BackingDetail.PledgedAmount) ?? 0,
+                                        projectCount =
+                                            user.Backings.Where(x => categoryid.Contains(x.Project.CategoryID.ToString()) || allCategory).Count()
+                                    };
                 Dictionary<string, List<UserBackInforDTO>> dic = new Dictionary<string, List<UserBackInforDTO>>
                 {
                     {
-                        "UserTopBack", userTop.Where(x => x.TotalBacked > 0)
-                            .Take(count)
+                        "UserTopBack", userTopBacked.Where(x => x.TotalBacked > 0)
+                            .Take(10)
                             .OrderByDescending(x => x.TotalBacked)
-                            .ThenByDescending(x => x.TotalFunded)
+                            .ThenByDescending(x => x.projectCount)
                             .ToList()
                     },
                     {
-                        "UserTopFund", userTop.Where(x => x.TotalFunded > 0)
-                            .Take(count)
+                        "UserTopFund", userTopFunded.Where(x => x.TotalFunded > 0)
+                            .Take(10)
                             .OrderByDescending(x => x.TotalFunded)
-                            .ThenByDescending(x => x.TotalBacked)
+                            .ThenByDescending(x => x.projectCount)
                             .ToList()
                     }
                 };

@@ -2,7 +2,7 @@
 
 app.controller('PublicProfileController',
     function ($scope, $sce, $rootScope, $window, $location, userpublicinfo, $filter,
-        toastr, SweetAlert, MessageService, CommmonService) {
+        toastr, SweetAlert, MessageService, CommmonService, ReportService) {
         $scope.UserBasicInfo = userpublicinfo.data.Data;
 
         //$scope.UserBasicInfo.CreatedDate = new Date($filter('date')($scope.UserBasicInfo.CreatedDate, "yyyy-MM-dd"));
@@ -15,6 +15,51 @@ app.controller('PublicProfileController',
         $scope.checkHTTP = function (input) {
             var lowerStr = (input + "").toLowerCase();
             return lowerStr.indexOf('http') === 0;
+        }
+
+
+
+        $scope.reportUser = function () {
+            var promise = ReportService.reportUser($scope.UserBasicInfo.UserName, $scope.ReportContent);
+            promise.then(
+                function (result) {
+                    if (result.data.Status === "success") {
+                        toastr.success('Báo cáo sai phạm thành công');
+                        $('#reportModal').modal('hide');
+                    } else {
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
+                    }
+                },
+                function (error) {
+                    toastr.error('Lỗi');
+                }
+             );
+        }
+
+        $scope.showReportBox = function () {
+            if ($rootScope.UserInfo.IsAuthen === false) {
+                SweetAlert.swal({
+                    title: "Chưa đăng nhập",
+                    text: "Bạn có muốn đăng nhập để gửi tin nhắn cho người này?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#2ecc71",
+                    confirmButtonText: "Có, đăng nhập ngay",
+                    cancelButtonText: "Hủy",
+                    closeOnConfirm: false
+                },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            $window.location.href = $rootScope.BaseUrl + "login?returnUrl=" + $location.url();
+                        }
+                    });
+            } else {
+                $("#reportModal").modal("show");
+            }
         }
 
 

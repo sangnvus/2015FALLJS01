@@ -1344,6 +1344,28 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 Data = result
             });
         }
+
+
+        [HttpGet]
+        public IHttpActionResult projectTitleList(string searchkey)
+        {
+            List<ProjectTitleDTO> result = new List<ProjectTitleDTO>();
+            try
+            {
+                result = ProjectRepository.Instance.projectTitleList(searchkey);
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO
+            {
+                Status = DDLConstants.HttpMessageType.SUCCESS,
+                Message = "",
+                Type = "",
+                Data = result
+            });
+        }
         public IHttpActionResult GetProject(int take, int from, string categoryid, string orderby, string searchkey, string status, bool isExprired, string isFunded)
         {
 
@@ -1845,33 +1867,6 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "", Data = listBacker });
         }
 
-        [HttpGet]
-        public IHttpActionResult ReportProject(string code, string content)
-        {
-            try
-            {
-
-                if (User.Identity == null || !User.Identity.IsAuthenticated)
-                {
-                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
-                }
-                if (content.Equals(""))
-                {
-                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "" });
-                }
-                ProjectRepository.Instance.ReportProject(User.Identity.Name, code, content);
-            }
-            catch (UserNotFoundException)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Bạn chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
-            }
-            catch (Exception)
-            {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
-            }
-
-            return Ok(new HttpMessageDTO { Status = "success", Message = "", Type = "" });
-        }
 
         #region Comment Functions
 

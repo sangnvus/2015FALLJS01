@@ -152,7 +152,7 @@
                                             <h4>Danh sách những người ủng hộ</h4>
                                         </div>
                                         <div class="portlet-widgets">
-                                            <a onclick="return false" href="" class="btn btn-blue btn-sm">Export</a>
+                                            <a onclick="return false" href="" class="btn btn-blue btn-sm">Xuất dữ liệu</a>
                                             <a onclick="return false" data-toggle="collapse" data-parent="#accordion" href="#NewProjectTable"><i class="fa fa-chevron-down"></i></a>
                                         </div>
                                         <div class="clearfix"></div>
@@ -168,6 +168,7 @@
                                                             <th>Tên</th>
                                                             <th>Ủng hộ(VNĐ)</th>
                                                             <th>Ngày</th>
+                                                            <th style="width: 34px"></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -176,6 +177,13 @@
                                                             <td class="col-text">{{x.FullName}}</td>
                                                             <td class="col-number">{{x.Amount | currency:"":0}}</td>
                                                             <td class="col-datetime">{{x.Date | date:"dd/MM/yyyy"}}</td>
+                                                            <td class="center" style="width: 34px;">
+                                                                <a href="@Url.Content("/admin/#/backingdetail/{{x.BackingId}}")">
+                                                                    <button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1" tooltip="Xem chi tiết" tooltip-append-to-body="true" tooltip-placement="left">
+                                                                        <i class="fa fa-eye"></i>
+                                                                    </button>
+                                                                </a>
+                                                            </td>
                                                         </tr>
                                                     </tbody>
                                                 </table> <!-- TABLE BACKERS LIST -->
@@ -195,7 +203,7 @@
                     <!-- tab campaign -->
                     <div class="tab-pane fade" id="campaign">
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-8" id="admin-campaign">
                                 <div class="padding10">
                                     <h3>Thông tin dự án</h3>
                                 </div> <!-- end About this project -->
@@ -245,14 +253,14 @@
                                     <div class="well" ng-repeat="reward in Project.RewardDetail">
                                         <label for="">Ủng hộ {{reward.PledgeAmount | currency:"&#8363;":0}} hoặc hơn</label>
                                         <p><span class="glyphicon glyphicon-asterisk"></span>{{reward.Backers}} người ủng hộ</p>
-                                        <p>{{reward.Description}}</p>
+                                        <p class="div-textarea">{{reward.Description}}</p>
                                         <div class="padding20">
                                             <label>Thời gian giao hàng ước tính :</label>
                                             <p>{{reward.EstimatedDelivery | date:"'Tháng' MM/yyyy"}}</p>
                                         </div>
                                     </div>
                                 </div>
-                            </div> <!-- end col-md-8 -->
+                            </div> <!-- end col-md-4 -->
                         </div>
                     </div>
                     <!-- end tab campaign -->

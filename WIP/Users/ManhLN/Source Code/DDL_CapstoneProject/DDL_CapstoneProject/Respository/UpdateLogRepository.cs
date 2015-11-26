@@ -96,16 +96,53 @@ namespace DDL_CapstoneProject.Respository
                         throw new KeyNotFoundException();
                     }
 
-                    editLog.Description = update.Description;
-                    editLog.Title = update.Title;
-                    editLog.CreatedDate = update.CreatedDate;
-
-                    editLog.CreatedDate = CommonUtils.ConvertDateTimeToUtc(editLog.CreatedDate);
+                    if (editLog.Description != update.Description || editLog.Title != update.Title)
+                    {
+                        editLog.Description = update.Description;
+                        editLog.Title = update.Title;
+                        editLog.CreatedDate = DateTime.UtcNow;
+                    }
 
                     db.SaveChanges();
                 }
 
                 return true;
+            }
+        }
+
+        /// <summary>
+        /// Edit single update log
+        /// </summary>
+        /// <param name="updateLog"></param>
+        /// <returns>updateLogDTO</returns>
+        public UpdateLogDTO EditSingleUpdateLog(UpdateLogDTO updateLog)
+        {
+            using (var db = new DDLDataContext())
+            {
+                var editLog = db.UpdateLogs.SingleOrDefault(x => x.UpdateLogID == updateLog.UpdateLogID);
+
+                if (editLog == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                editLog.Description = updateLog.Description;
+                editLog.Title = updateLog.Title;
+                editLog.CreatedDate = DateTime.UtcNow;
+
+                db.SaveChanges();
+
+                var updateLogDTO = new UpdateLogDTO
+                {
+                    Description = editLog.Description,
+                    Title = editLog.Title,
+                    CreatedDate = editLog.CreatedDate,
+                    UpdateLogID = editLog.UpdateLogID,
+                };
+
+                updateLogDTO.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(updateLogDTO.CreatedDate);
+
+                return updateLogDTO;
             }
         }
 

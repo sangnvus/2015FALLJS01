@@ -20,10 +20,10 @@ service.service("CommmonService", function ($http, $window, $location, SweetAler
             type: "text/csv;charset=utf-8"
         });
 
-        saveAs(blob, name + " (" + today() + ").csv");
+        saveAs(blob, name + " (" + this.today() + ").csv");
     }
 
-    function today() {
+    this.today = function() {
 
         var now = new Date();
         var dd = now.getDate();
