@@ -51,7 +51,9 @@
                             <div class="input-group form-control mt0">
                                 <div class="asset_upload">
                                     <div class="image-clip pull-left">
-                                        <img id="image-clip" src="{{UserEditInfo.ProfileImage}}" alt="" class="img-responsive center-block">
+                                        @*<img id="image-clip" src="{{UserEditInfo.ProfileImage}}" alt="" class="img-responsive center-block">*@
+                                        <img style="width:135px;" ng-if="!checkHTTP(user.AvartaURL)" ng-src="../images/avatars/{{UserEditInfo.ProfileImage}}" alt="" class="img-responsive center-block">
+                                        <img style="width:135px;"  ng-if="checkHTTP(user.AvartaURL)" ng-src="{{trustSrc(UserEditInfo.ProfileImage)}}" alt="" class="img-responsive center-block">
                                     </div>
                                     <div class="upload">
                                         <input class="avatar file" name="UploadImage" id="imgSelected" ng-file-dirty

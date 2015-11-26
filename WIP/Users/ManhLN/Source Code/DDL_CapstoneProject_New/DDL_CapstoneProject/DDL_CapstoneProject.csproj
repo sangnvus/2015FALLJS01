@@ -161,6 +161,10 @@
     <Compile Include="Migrations\201511171033052_UpdateBackingBackerName.Designer.cs">
       <DependentUpon>201511171033052_UpdateBackingBackerName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511221553120_UpdateProjectPoint.cs" />
+    <Compile Include="Migrations\201511221553120_UpdateProjectPoint.Designer.cs">
+      <DependentUpon>201511221553120_UpdateProjectPoint.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Backing.cs" />
     <Compile Include="Controllers\WebControllers\HomeController.cs" />
@@ -206,6 +210,7 @@
     <Compile Include="Models\DTOs\ProjectInfoBackDTO.cs" />
     <Compile Include="Models\DTOs\ProjectStoryDTO.cs" />
     <Compile Include="Models\DTOs\ProjectEditDTO.cs" />
+    <Compile Include="Models\DTOs\ProjectTitleDTO.cs" />
     <Compile Include="Models\DTOs\QuestionDTO.cs" />
     <Compile Include="Models\DTOs\ReplyDTO.cs" />
     <Compile Include="Models\DTOs\ProjectBackDTO.cs" />
@@ -235,11 +240,7 @@
     <Compile Include="Models\UpdateLog.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Respository\QuestionRepository.cs" />
     <Compile Include="Respository\ReportResponsitoy.cs" />
-    <Compile Include="Respository\TimelineRepository.cs" />
-    <Compile Include="Respository\UpdateLogRepository.cs" />
-    <Compile Include="Respository\RewardPkgRepository.cs" />
     <Compile Include="Respository\CategoryRepository.cs" />
     <Compile Include="Respository\DDLDataContext.cs" />
     <Compile Include="Respository\MessageRepository.cs" />
@@ -265,6 +266,7 @@
     <Content Include="App\controllers\admin\AdminUserListController.js" />
     <Content Include="App\controllers\admin\AdminUserProfileController.js" />
     <Content Include="App\controllers\admin\AdminBackingListController.js" />
+    <Content Include="App\controllers\admin\AdminBackingDetailController.js" />
     <Content Include="App\controllers\BackedHistoryProjectController.js" />
     <Content Include="App\controllers\EditPasswordController.js" />
     <Content Include="App\controllers\BackProjectController.js" />
@@ -314,6 +316,7 @@
     <Content Include="App\services\CommonService.js" />
     <Content Include="App\services\ProjectService.js" />
     <Content Include="App\services\MessageService.js" />
+    <Content Include="App\services\ReportService.js" />
     <Content Include="App\services\SlideSevice.js" />
     <Content Include="App\services\UserService.js" />
     <Content Include="baokim_58b6e72ff8700e41.html" />
@@ -442,6 +445,7 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\canvas-toBlob.js" />
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\data-tables\angular-datatables.bootstrap.js" />
     <Content Include="Scripts\data-tables\angular-datatables.bootstrap.min.js" />
@@ -469,9 +473,11 @@
     <Content Include="Scripts\angular-block-ui.min.js.map" />
     <Content Include="Scripts\angular-block-ui.js.map" />
     <Content Include="Content\angular-block-ui.css.map" />
+    <Content Include="Scripts\FileSaver.js" />
     <Content Include="Scripts\flat-ui\application.js" />
     <Content Include="Scripts\flat-ui\flat-ui.js" />
     <Content Include="Scripts\flat-ui\flat-ui.min.js" />
+    <Content Include="Scripts\html2canvas.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-et.js" />
@@ -1330,6 +1336,7 @@
     <Content Include="Views\AdminPartial\Error\_NotFound.cshtml" />
     <Content Include="Views\AdminPartial\_BackingList.cshtml" />
     <Content Include="Views\Project\_ListBacker.cshtml" />
+    <Content Include="Views\AdminPartial\_BackingDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />
@@ -1352,6 +1359,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511171033052_UpdateBackingBackerName.resx">
       <DependentUpon>201511171033052_UpdateBackingBackerName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511221553120_UpdateProjectPoint.resx">
+      <DependentUpon>201511221553120_UpdateProjectPoint.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

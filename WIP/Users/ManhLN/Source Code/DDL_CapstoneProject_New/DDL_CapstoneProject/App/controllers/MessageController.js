@@ -30,7 +30,8 @@ app.controller('MessageController',
                 ToUser: "",
                 Title: "",
                 Content: ""
-            }
+            };
+            $scope.ToUser = null;
         }
         // call function
         resetNewMessageModel();
@@ -77,6 +78,7 @@ app.controller('MessageController',
         // Function request 
         $scope.sendMessage = function () {
             if ($scope.NewMessage.Content.trim() !== "") {
+                $scope.NewMessage.ToUser = $scope.ToUser.UserName;
                 var promisePost = MessageService.sendMessage($scope.NewMessage);
                 promisePost.then(
                     function (result) {

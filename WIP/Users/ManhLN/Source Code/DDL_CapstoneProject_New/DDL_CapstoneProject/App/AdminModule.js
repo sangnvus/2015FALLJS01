@@ -234,6 +234,21 @@ app.config(["$routeProvider", function ($routeProvider) {
           }
       });
 
+    $routeProvider.when("/backingdetail/:id",
+       {
+           templateUrl: "/AdminPartial/BackingDetail",
+           controller: 'AdminBackingDetailController',
+           activeTab: 'projectList',
+           breadcrumb: ['Danh sách dự án', 'Chi tiết ủng hộ'],
+           title: 'Chi tiết ủng hộ',
+           resolve: {
+               backing: ['$rootScope', '$route', '$q', 'AdminProjectService', 'CommmonService', function ($rootScope, $route, $q, AdminProjectService, CommmonService) {
+                   var promise = AdminProjectService.getBackingDetail($route.current.params.id);
+                   return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+               }]
+           }
+       });
+
     $routeProvider.when("/backinglist",
  {
      templateUrl: "/AdminPartial/BackingList",
