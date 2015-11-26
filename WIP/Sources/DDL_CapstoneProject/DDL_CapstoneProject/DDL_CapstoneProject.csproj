@@ -240,11 +240,7 @@
     <Compile Include="Models\UpdateLog.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Respository\QuestionRepository.cs" />
     <Compile Include="Respository\ReportResponsitoy.cs" />
-    <Compile Include="Respository\TimelineRepository.cs" />
-    <Compile Include="Respository\UpdateLogRepository.cs" />
-    <Compile Include="Respository\RewardPkgRepository.cs" />
     <Compile Include="Respository\CategoryRepository.cs" />
     <Compile Include="Respository\DDLDataContext.cs" />
     <Compile Include="Respository\MessageRepository.cs" />
