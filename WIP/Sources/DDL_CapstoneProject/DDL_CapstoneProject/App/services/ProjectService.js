@@ -51,18 +51,19 @@ app.service('ProjectService', function ($http) {
     this.getStatisticsInfor = function () {
         return $http.get('/api/ProjectApi/getStatisticsInfor');
     };
-    this.SearchProject = function (from, categoryidlist, orderby, searchkey) {
-        return this.GetProject(12, from, categoryidlist, orderby, searchkey, "", false, "");
+    this.SearchProject = function (from, categoryidlist, orderby, searchkey, statusString) {
+        return this.GetProject(12, from, categoryidlist, orderby, searchkey, "", statusString, "");
     }
 
 
-    this.SearchCount = function (categoryidlist, searchkey) {
+    this.SearchCount = function (categoryidlist, searchkey, statusString) {
         var request = $http({
             method: 'get',
             url: '/api/ProjectApi/SearchCount',
             params: {
                 categoryidlist: categoryidlist,
-                searchkey: searchkey
+                searchkey: searchkey,
+                statusString: statusString
             }
         });
 

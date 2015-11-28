@@ -252,7 +252,7 @@
                                     <input type="Search" class="form-control" autofocus
                                            placeholder="Tìm kiếm..." ng-model="searchkey"
                                            typeahead="project for project in suggess($viewValue)"
-                                           typeahead-template-url="customTemplate.html" required="">
+                                           typeahead-template-url="customTemplate1.html" required="">
                                     <span class="input-group-btn">
                                         <button type="button" class="btn" ng-click="submit(searchkey)"><span class="fa fa-search"></span></button>
                                     </span>
@@ -362,6 +362,13 @@
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
 
     <script type="text/ng-template" id="customTemplate.html">
+        <a>
+            <span>{{match.model.FullName}}</span>
+            <span>({{match.model.UserName}})</span>
+        </a>
+    </script>
+
+    <script type="text/ng-template" id="customTemplate1.html">
         <a>
             <span>{{match.model}}</span>
         </a>

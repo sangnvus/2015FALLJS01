@@ -37,12 +37,17 @@ namespace DDL_CapstoneProject.Respository
             {
                 var listTitle = from project in db.Projects
                                 where project.Title.Contains(searchkey)
+                                && !project.Status.Equals(DDLConstants.ProjectStatus.DRAFT)
+                                && !project.Status.Equals(DDLConstants.ProjectStatus.REJECTED)
+                                && !project.Status.Equals(DDLConstants.ProjectStatus.SUSPENDED)
+                                && !project.Status.Equals(DDLConstants.ProjectStatus.PENDING)
                                 select new ProjectTitleDTO
                                 {
                                     projectTitle = project.Title
                                 };
                 list = listTitle.ToList();
             }
+
             return list;
         }
 
@@ -53,7 +58,7 @@ namespace DDL_CapstoneProject.Respository
             {
                 Dictionary<string, int> dic = new Dictionary<string, int>();
                 //projectSuccesedCount
-                int projectSuccesedCount = GetProject(0, 0, "All", "", "", "", true, "true").Count;
+                int projectSuccesedCount = GetProject(0, 0, "All", "", "", "", "true", "true").Count;
                 //total funded
                 var totalFund = from project in db.Projects
                                 select project.CurrentFunded;
@@ -90,19 +95,20 @@ namespace DDL_CapstoneProject.Respository
         public List<ProjectBasicViewDTO> GetProjectTop(String categoryid)
         {
             categoryid = "|" + categoryid + "|";
-            return GetProject(12, 0, categoryid, "CurrentFunded", "", "", true, "");
+            return GetProject(10, 0, categoryid, "CurrentFunded", "", "", "true|false", "true");
         }
 
-        public int SearchCount(string categoryidlist, string searchkey)
+        public int SearchCount(string categoryidlist, string searchkey, string statusString)
         {
-            int searchcount = GetProject(0, 0, categoryidlist, "", searchkey, "", false, "").Count;
+            int searchcount = GetProject(0, 0, categoryidlist, "", searchkey, "", statusString, "").Count;
             return searchcount;
         }
 
 
+
         public List<ProjectBasicViewDTO> GetProject(int take, int from, String categoryidList, string order,
                                                     string pathofprojectname, string status,
-                                                    bool isExprired, string isFunded)
+                                                    string isExprired, string isFunded)
         {
             using (var db = new DDLDataContext())
             {
@@ -117,13 +123,13 @@ namespace DDL_CapstoneProject.Respository
                 }
                 if (status == null) status = "";
                 if (isFunded == null) isFunded = "";
-
+                Debug.WriteLine(isExprired);
 
                 var ProjectList = from project in db.Projects
                                   where
                                       (categoryidList.ToLower().Contains("all") ||
                                        categoryidList.Contains("|" + project.CategoryID + "|"))
-                                      && project.IsExprired == isExprired && project.Title.Contains(pathofprojectname)
+                                      && isExprired.Contains(project.IsExprired + "") && project.Title.Contains(pathofprojectname)
                                       && project.Status.Contains(status) && project.IsFunded.ToString().ToLower().Contains(isFunded)
                                       && !project.Status.Equals(DDLConstants.ProjectStatus.DRAFT) && !project.Status.Equals(DDLConstants.ProjectStatus.REJECTED)
                                       && !project.Status.Equals(DDLConstants.ProjectStatus.SUSPENDED) && !project.Status.Equals(DDLConstants.ProjectStatus.PENDING)
@@ -159,7 +165,6 @@ namespace DDL_CapstoneProject.Respository
                 return listProject;
             }
         }
-
 
 
         private IQueryable<ProjectBasicViewDTO> orderBy(string order, IQueryable<ProjectBasicViewDTO> ProjectList)
@@ -210,7 +215,7 @@ namespace DDL_CapstoneProject.Respository
                     for (int i = 0; i < cat.Count(); i++)
                     {
                         List<ProjectBasicViewDTO> getProject = GetProject(1, 0, "|" + cat[i].CategoryID + "|",
-                            "PopularPoint", "", "", false, "");
+                            "PopularPoint", "", "", "false", "");
                         if (getProject.Any())
                             ProjectList.Add(getProject[0]);
                     }
@@ -227,20 +232,20 @@ namespace DDL_CapstoneProject.Respository
         public List<List<ProjectBasicViewDTO>> GetProjectStatisticList()
         {
             var ProjectList = new List<List<ProjectBasicViewDTO>>();
-            ProjectList.Add(GetProject(4, 0, "All", "PopularPoint", "", "", false, ""));
-            ProjectList.Add(GetProject(4, 0, "All", "CreatedDate", "", "", false, ""));
-            ProjectList.Add(GetProject(4, 0, "All", "CurrentFunded", "", "", false, ""));
-            ProjectList.Add(GetProject(4, 0, "All", "ExpireDate", "", "", false, ""));
+            ProjectList.Add(GetProject(4, 0, "All", "PopularPoint", "", "", "false", ""));
+            ProjectList.Add(GetProject(4, 0, "All", "CreatedDate", "", "", "false", ""));
+            ProjectList.Add(GetProject(4, 0, "All", "CurrentFunded", "", "", "false", ""));
+            ProjectList.Add(GetProject(4, 0, "All", "ExpireDate", "", "", "false", ""));
 
             return ProjectList;
         }
         public Dictionary<string, List<ProjectBasicViewDTO>> GetStatisticListForHome()
         {
             var ProjectList = new Dictionary<string, List<ProjectBasicViewDTO>>();
-            ProjectList.Add("popularproject", GetProject(4, 0, "All", "PopularPoint", "", "", false, ""));
+            ProjectList.Add("popularproject", GetProject(4, 0, "All", "PopularPoint", "", "", "false", ""));
             ProjectList.Add("projectByCategory", GetProjectByCategory());
-            ProjectList.Add("highestprojectpledge", GetProject(1, 0, "All", "CurrentFunded", "", "", false, ""));
-            ProjectList.Add("highestprojectfund", GetProject(1, 0, "All", "CurrentFunded", "", "", true, "true"));
+            ProjectList.Add("highestprojectpledge", GetProject(1, 0, "All", "CurrentFunded", "", "", "false", ""));
+            ProjectList.Add("highestprojectfund", GetProject(1, 0, "All", "CurrentFunded", "", "", "true", "true"));
             ProjectList.Add("totalprojectfund", GetTotalFund());
             return ProjectList;
         }
