@@ -618,7 +618,8 @@ namespace DDL_CapstoneProject.Respository
                 {
                     ProjectCode = project.ProjectCode,
                     Title = project.Title,
-                    Creator = user.UserInfo.FullName
+                    Creator = user.UserInfo.FullName,
+                    CreatorUsername = user.Username
                 };
 
                 return projectInforDTO;
@@ -1548,6 +1549,42 @@ namespace DDL_CapstoneProject.Respository
                 }
 
                 return true;
+            }
+        }
+
+        /// <summary>
+        /// Edit single question
+        /// </summary>
+        /// <param name="question"></param>
+        /// <returns>updateLogDTO</returns>
+        public QuestionDTO EditSingleQuestion(QuestionDTO question)
+        {
+            using (var db = new DDLDataContext())
+            {
+                var updateQuestion = db.Questions.SingleOrDefault(x => x.QuestionID == question.QuestionID);
+
+                if (updateQuestion == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                updateQuestion.Answer = question.Answer;
+                updateQuestion.CreatedDate = DateTime.UtcNow;
+                updateQuestion.QuestionContent = question.QuestionContent;
+
+                db.SaveChanges();
+
+                var questionDTO = new QuestionDTO
+                {
+                    Answer = updateQuestion.Answer,
+                    CreatedDate = updateQuestion.CreatedDate,
+                    QuestionContent = updateQuestion.QuestionContent,
+                    QuestionID = updateQuestion.QuestionID,
+                };
+
+                questionDTO.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(questionDTO.CreatedDate);
+
+                return questionDTO;
             }
         }
 

@@ -358,6 +358,17 @@ app.service('ProjectService', function ($http) {
         return request;
     }
 
+    // Function to edit single QA
+    this.editSingleQuestion = function (editQuestion) {
+        var request = $http({
+            method: 'put',
+            url: '/api/ProjectApi/EditSingleQuestion/',
+            data: editQuestion
+        });
+
+        return request;
+    }
+
     // Funtion to delete a question
     this.deleteQuestion = function (questionId) {
         return $http.delete("/api/ProjectApi/DeleteQuestion/" + questionId);
