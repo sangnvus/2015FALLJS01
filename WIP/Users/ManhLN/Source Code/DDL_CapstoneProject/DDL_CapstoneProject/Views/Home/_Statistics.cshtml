@@ -47,7 +47,7 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading bold">
                         <form action="" class="form-inline">
-                            <a style="color: white; text-decoration: none;" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <a onclick="return false" style="color: white; text-decoration: none;" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                 Top 10 dự án
                             </a>
                             <select class="form-control" ng-model="selectedCategoryIDTopProject" ng-change="getTopProjectList(selectedCategoryIDTopProject)">
@@ -63,24 +63,25 @@
                                     <tr>
                                         <th>STT</th>
                                         <th>Mã dự án</th>
-                                        <th>Danh mục</th>
-                                        <th>Xếp hạng</th>
                                         <th>Tên dự án</th>
+                                        <th>Xếp hạng</th>
+                                        <th style="width: 118px">Danh mục</th>
                                         <th>Số tiền ủng hộ</th>
-                                        <th>Số người ủng hộ</th>
-                                        <th>Tình trạng</th>
+                                        <th style="width: 70px">Lượt ủng hộ</th>
+                                        <th style="width: 10px">Tình trạng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="project in projectTopList">
-                                        <td>{{$index}}</td>
+                                        <td class="col-number">{{$index}}</td>
                                         <td>{{project.ProjectCode}}</td>
-                                        <td>{{project.Category}}</td>
+                                        <td><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></td>
                                         <td>{{getRank(project.PopularPoint)}}</td>
-                                        <td><a href="project_detail.html">{{project.Title}}</a></td>
+                                        <td>{{project.Category}}</td>
                                         <td>{{project.CurrentFundedNumber| number : fractionSize}}&#8363;</td>
-                                        <td>{{project.Backers}}</td>
-                                        <td>Success</td>
+                                        <td class="col-number">{{project.Backers}}</td>
+                                        <td ng-if="project.CurrentFundedNumber >= project.FundingGoal"><i style="color:limegreen" class="fa fa-check"></i></td>
+                                        <td ng-if="project.CurrentFundedNumber < project.FundingGoal">{{project.CurrentFundedNumber/project.FundingGoal*100| number : fractionSize}}%</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -119,7 +120,7 @@
                             <tbody>
                                 <tr ng-repeat="user in UserTopBackList track by $index">
                                     <td>{{$index}}</td>
-                                    <td><a href="profile_public.html">{{user.Name}}</a></td>
+                                    <td><a href="/#/user/publicprofile/{{user.Username}}">{{user.Name}}</a></td>
                                     <td>{{user.TotalBacked| number : fractionSize}}&#8363;</td>
                                     <td>{{user.projectCount}}</td>
                                 </tr>
@@ -158,7 +159,7 @@
                             <tbody>
                                 <tr ng-repeat="user in UserTopFundList track by $index">
                                     <td>{{$index}}</td>
-                                    <td><a href="profile_public.html">{{user.Name}}</a></td>
+                                    <td><a href="/#/user/publicprofile/{{user.Username}}">{{user.Name}}</a></td>
                                     <td>{{user.TotalFunded| number : fractionSize}}&#8363;</td>
                                     <td>{{user.projectCount}}</td>
                                 </tr>

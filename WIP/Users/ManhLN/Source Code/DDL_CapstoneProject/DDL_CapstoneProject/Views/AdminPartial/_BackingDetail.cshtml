@@ -60,9 +60,7 @@
                 <p style="color: #16a085; font-size: 3rem; font-weight: bold; padding: 0; text-align: center;">Dự án: "<a href="@Url.Content("/admin/#/project/{{Project.ProjectCode}}")">{{Project.ProjectName}}</a>"</p>
                 <p style="font-size: 1.8rem; text-align: center; line-height: 1.72222; padding: 0; font-weight: bold;">Chủ dự án: "<a href="@Url.Content("/admin/#/userprofile/{{Project.ProjectOwnerUsername}}")">{{Project.ProjectOwner}}</a>"</p>
                 <p style="font-weight: bold;">Chi tiết gói quà:</p>
-                <p style="word-break: break-word;" class="div-textarea">
-                    {{Project.RewardPkgDesc}}
-                </p>
+                <p style="word-break: break-word;" class="div-textarea">{{Project.RewardPkgDesc}}</p>
                 <p><span style="font-weight: bold;">Ủng hộ: </span><span style="font-weight: bold;"> {{Project.PledgeAmount | currency:"":0}}&#8363;</span><span ng-show="Project.RewardPkgType != 'no reward'"> | Số lượng: {{Project.Quantity  | currency:"":0}}</span></p>
             </div>
         </div>
