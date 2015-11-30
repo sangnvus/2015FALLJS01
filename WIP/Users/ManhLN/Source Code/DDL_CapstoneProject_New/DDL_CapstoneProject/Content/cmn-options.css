@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /* CSS Information
 Description: common-option css
 Date: 2015.10.01
@@ -38,6 +38,11 @@ Date: 2015.10.01
 .bt-dash{
     border-top: 2px solid #d9d9de;
     border-top-style: dashed;
+}
+
+.text-hidden{
+    text-overflow: ellipsis;
+    overflow: hidden; 
 }
 
 /*Button

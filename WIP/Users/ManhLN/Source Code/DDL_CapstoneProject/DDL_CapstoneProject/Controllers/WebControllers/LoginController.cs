@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using DDL_CapstoneProject.Helper;
 using DDL_CapstoneProject.Models;
 using DDL_CapstoneProject.Models.DTOs;
 using DDL_CapstoneProject.Respository;
@@ -13,7 +14,7 @@ using Facebook;
 
 namespace DDL_CapstoneProject.Controllers.WebControllers
 {
-    public class LoginController : Controller
+    public class LoginController : BaseController
     {
         // GET: Login
         [Route("Login")]
@@ -21,6 +22,10 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         {
             try
             {
+                // Check is logged.
+                if (User.Identity != null && User.Identity.IsAuthenticated) return Redirect("/");
+
+                // Logout authen.
                 FormsAuthentication.SignOut();
                 // Remove all cookies.
                 var limit = Request.Cookies.Count;
@@ -133,7 +138,8 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
                     redirect_uri = RedirectUri.AbsoluteUri,
                     response_type = "code",
 
-                    scope = "email,user_birthday,user_about_me,user_website" // Add other permissions as needed
+                    scope = "email,user_birthday,user_about_me" // Add other permissions as needed
+                    //scope = "email,user_birthday,user_about_me,user_website,user_location" // Add other permissions as needed
                 });
 
 
@@ -171,6 +177,7 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
 
                 // Get the user's information
                 dynamic me = fb.Get("/me?fields=id,name,gender,link,birthday,email,bio");
+                //dynamic me = fb.Get("/me?fields=id,name,gender,link,birthday,email,bio,website,location");
                 string facebookId = me.id;
                 string email = me.email;
 
@@ -228,6 +235,9 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         {
             try
             {
+                // Logout authen.
+                FormsAuthentication.SignOut();
+
                 if (string.IsNullOrEmpty(user_name) || string.IsNullOrEmpty(code))
                 {
                     ViewBag.Status = "error";
@@ -261,7 +271,16 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         [Route("ForgotPassword")]
         public ActionResult ForgotPassword()
         {
-            return View();
+            try
+            {
+                // Logout authen.
+                FormsAuthentication.SignOut();
+                return View();
+            }
+            catch (Exception)
+            {
+                return Redirect("/#/error");
+            }
         }
 
         // GET: Login
@@ -270,6 +289,18 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         {
             try
             {
+                // Check is logged.
+                if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    // Check is admin.
+                    var currentUser = getCurrentUser();
+                    if (currentUser.UserType.Equals(DDLConstants.UserType.ADMIN, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return Redirect("/admin");
+                    }
+                }
+
+                // Logout authen.
                 FormsAuthentication.SignOut();
                 // Remove all cookies.
                 var limit = Request.Cookies.Count;

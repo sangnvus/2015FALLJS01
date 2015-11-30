@@ -8,6 +8,7 @@ app.controller('BackedHistoryProjectController', function ($scope, projects, Use
     $scope.dtOptions = DTOptionsBuilder.newOptions()
     .withDisplayLength(10)
     .withBootstrap();
+
     // Define column 
     //$scope.dtColumnDefs = [
     //    DTColumnDefBuilder.newColumnDef(0).notSortable()
@@ -30,8 +31,8 @@ app.controller('BackedHistoryProjectController', function ($scope, projects, Use
                 });
     }
 
-    $scope.getBackingInfo =  function(projectId) {
-        var promiseGet = ProjectService.backingInfo(projectId);
+    $scope.getBackingInfo =  function(projectCode) {
+        var promiseGet = ProjectService.backingInfo(projectCode);
         promiseGet.then(
             function (result) {
                 if (result.data.Status === "success") {

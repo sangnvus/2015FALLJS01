@@ -21,11 +21,13 @@ app.config(["$routeProvider", function ($routeProvider) {
             controller: 'HomeController',
             title: 'Dandelion',
             resolve: {
-                slides: ['SlideService', function (SlideService) {
-                    return SlideService.getSlides();
+                slides: ['SlideService', 'CommmonService', '$rootScope', '$q', function (SlideService, CommmonService, $rootScope, $q) {
+                    var promise = SlideService.getSlides();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
-                liststatisticforhome: ['ProjectService', function (ProjectService) {
-                    return ProjectService.GetStatisticListForHome();
+                liststatisticforhome: ['ProjectService', 'CommmonService', '$rootScope', '$q', function (ProjectService, CommmonService, $rootScope, $q) {
+                    var promise = ProjectService.GetStatisticListForHome();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
             }
         });
@@ -36,11 +38,13 @@ app.config(["$routeProvider", function ($routeProvider) {
             controller: 'DiscoverController',
             title: 'Danh mục dự án - Dandelion',
             resolve: {
-                projectstatisticlist: ['ProjectService', function (ProjectService) {
-                    return ProjectService.GetProjectStatisticList();
+                projectstatisticlist: ['ProjectService', 'CommmonService', '$rootScope', '$q', function (ProjectService, CommmonService, $rootScope, $q) {
+                    var promise = ProjectService.GetProjectStatisticList();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
-                categoryprojectcount: ['CategoryService', function (CategoryService) {
-                    return CategoryService.GetCategoryProjectCount();
+                categoryprojectcount: ['CategoryService', 'CommmonService', '$rootScope', '$q', function (CategoryService, CommmonService, $rootScope, $q) {
+                    var promise = CategoryService.GetCategoryProjectCount();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }]
             }
         });
@@ -50,17 +54,21 @@ app.config(["$routeProvider", function ($routeProvider) {
             controller: 'StatisticsController',
             title: 'Thống kê - Dandelion',
             resolve: {
-                projectSucesedCount: ['ProjectService', function (ProjectService) {
-                    return ProjectService.getStatisticsInfor();
+                projectSucesedCount: ['ProjectService', 'CommmonService', '$rootScope', '$q', function (ProjectService, CommmonService, $rootScope, $q) {
+                    var promise = ProjectService.getStatisticsInfor();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
-                projectTopList: ['ProjectService', function (ProjectService) {
-                    return ProjectService.getProjectTop("All");
+                projectTopList: ['ProjectService', 'CommmonService', '$rootScope', '$q', function (ProjectService, CommmonService, $rootScope, $q) {
+                    var promise = ProjectService.getProjectTop("All");
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
-                categoryStatistic: ['CategoryService', function (CategoryService) {
-                    return CategoryService.listDataForStatistic();
+                categoryStatistic: ['CategoryService', 'CommmonService', '$rootScope', '$q', function (CategoryService, CommmonService, $rootScope, $q) {
+                    var promise = CategoryService.listDataForStatistic();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
-                UserTopList: ['UserService', function (UserService) {
-                    return UserService.getUserTop("All");
+                UserTopList: ['UserService', 'CommmonService', '$rootScope', '$q', function (UserService, CommmonService, $rootScope, $q) {
+                    var promise = UserService.getUserTop("All");
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
             }
         });
@@ -72,7 +80,7 @@ app.config(["$routeProvider", function ($routeProvider) {
             controller: 'SearchController',
             title: 'Tìm kiếm- Dandelion',
             resolve: {
-                projectbycategory: ['ProjectService', 'CategoryService', '$route', function (ProjectService, CategoryService, $route) {
+                projectbycategory: ['ProjectService', 'CategoryService', '$route', '$q', '$rootScope', 'CommmonService', function (ProjectService, CategoryService, $route, $q, $rootScope, CommmonService) {
                     var params = $route.current.params;
                     if (typeof (params.categoryid) == "undefined") {
                         params.categoryid = "all";
@@ -85,11 +93,12 @@ app.config(["$routeProvider", function ($routeProvider) {
                         searchkey = "null";
                         params.searchkey = [""];
                     }
-                    var projectList = ProjectService.SearchProject(0, "|" + params.categoryid + "|", params.order, searchkey);
-                    return projectList;
+                    var promise = ProjectService.SearchProject(0, "|" + params.categoryid + "|", params.order, searchkey);
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
-                categoryList: ['CategoryService', function (CategoryService) {
-                    return CategoryService.getAllCategories();
+                categoryList: ['$rootScope', 'CategoryService', 'CommmonService', '$q', function ($rootScope, CategoryService, CommmonService, $q) {
+                    var promise = CategoryService.getAllCategories();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
                 isAdvance: ['$route', function ($route) {
                     var params = $route.current.params;
@@ -108,9 +117,9 @@ app.config(["$routeProvider", function ($routeProvider) {
                 searchkey: ['$route', function ($route) {
                     return $route.current.params.searchkey;
                 }],
-                projectResultListSize: ['ProjectService', '$route', function (ProjectService, $route) {
-                    var size = ProjectService.SearchCount("|" + $route.current.params.categoryid + "|", $route.current.params.searchkey);
-                    return size;
+                projectResultListSize: ['ProjectService', '$route', '$q', '$rootScope', 'CommmonService', function (ProjectService, $route, $q, $rootScope, CommmonService) {
+                    var promise = ProjectService.SearchCount("|" + $route.current.params.categoryid + "|", $route.current.params.searchkey);
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
 
             }
@@ -138,10 +147,12 @@ app.config(["$routeProvider", function ($routeProvider) {
             resolve: {
                 conversations: ['$route', '$rootScope', '$q', 'MessageService', 'CommmonService', function ($route, $rootScope, $q, MessageService, CommmonService) {
                     var promise;
-                    if ($route.current.params.list == null || $route.current.params.list !== "sent") {
+                    if ($route.current.params.list === "inbox") {
                         promise = MessageService.getListReceivedConversations();
-                    } else {
+                    } else if ($route.current.params.list === "sent") {
                         promise = MessageService.getListSentConversations();
+                    } else {
+                        promise = MessageService.getListConversations();
                     }
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }]
@@ -380,10 +391,20 @@ app.config(["$routeProvider", function ($routeProvider) {
     }]);
 }]).config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeSpinner = false;
+}]).config(['ChartJsProvider', function (ChartJsProvider) {
+    //// Configure all charts
+    //ChartJsProvider.setOptions({
+    //    colours: ['#FF5252', '#FF8A80'],
+    //    responsive: false
+    //});
+    // Configure all line charts
+    ChartJsProvider.setOptions('Line', {
+        datasetFill: false
+    });
 }]);
 
-app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOptions', 'toastrConfig', 'blockUIConfig', 'MessageService',
-    function ($rootScope, $window, $anchorScroll, UserService, DTDefaultOptions, toastrConfig, blockUIConfig, MessageService) {
+app.run(['$rootScope', '$window','$location','$route', '$anchorScroll', 'UserService', 'DTDefaultOptions', 'toastrConfig', 'blockUIConfig', 'MessageService',
+    function ($rootScope, $window,$location,$route, $anchorScroll, UserService, DTDefaultOptions, toastrConfig, blockUIConfig, MessageService) {
         $rootScope.$on('$routeChangeError', function (e, curr, prev) {
             e.preventDefault();
         });
@@ -393,13 +414,16 @@ app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOpti
             $window.scrollTo(0, 0);
         });
 
+        $rootScope.reload = function() {
+            $route.reload();
+        }
+
         $rootScope.$on("$routeChangeStart", function (e, curr, prev) {
             if (curr.$$route !== undefined) {
                 $rootScope.Page = {
                     title: curr.$$route.title !== undefined ? curr.$$route.title : ""
                 }
             }
-            //        ShareData.currentPage =
 
         });
 
@@ -463,7 +487,7 @@ app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOpti
             closeButton: true,
             newestOnTop: true,
             autoDismiss: true,
-            progressBar: true
+            //progressBar: true
         });
 
         // Base Url of web app.

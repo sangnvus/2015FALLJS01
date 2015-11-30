@@ -40,6 +40,12 @@ Date: 2015.10.01
     border-top-style: dashed;
 }
 
+.text-hidden{
+    text-overflow: ellipsis;
+    overflow: hidden; 
+}
+      
+
 /*Button
 -----------------------------------------------------------*/
 /*Button transparent*/
@@ -67,7 +73,7 @@ End Button*/
     }
 
     .c00{
-        color: #000000 !important;
+        color: #34495e !important;
     }
 
     .c-f9{

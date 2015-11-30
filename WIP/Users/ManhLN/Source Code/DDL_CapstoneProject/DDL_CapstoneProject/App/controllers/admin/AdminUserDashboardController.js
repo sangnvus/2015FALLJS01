@@ -17,4 +17,5 @@ app.controller('AdminUserDashboardController',
         $scope.NotIdleuser = $scope.Dashboard.Creator + $scope.Dashboard.Backer;
         $scope.labels = ["Người dùng đã có hoạt động", "Người dùng chưa có hoạt động","Người dùng chưa kích hoạt"];
         $scope.data = [$scope.NotIdleuser, $scope.Dashboard.IdleUser, $scope.Dashboard.NotVerifiedUser];
+        $scope.colors = ['#FDB45C', '#46BFBD', '#F7464A'];
     });

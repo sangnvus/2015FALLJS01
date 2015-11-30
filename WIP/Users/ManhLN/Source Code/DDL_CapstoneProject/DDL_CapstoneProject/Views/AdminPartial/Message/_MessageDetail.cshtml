@@ -26,7 +26,11 @@
                     <ul class="nav nav-pills nav-stacked mailbox-sidenav">
                         <li class="nav-divider"></li>
                         <li>
-                            <a href="/admin/#/message/">Hộp thư đến</a>
+                            <a href="/admin/#/message/">Tất cả thư</a>
+                        </li>
+                        <li class="nav-divider"></li>
+                        <li>
+                            <a href="/admin/#/message?list=inbox">Hộp thư đến</a>
                         </li>
                         <li class="nav-divider"></li>
                         <li>
@@ -60,7 +64,7 @@
                                         </h4>
                                     </div>
                                     <div id="message{{Message.MessageID}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="message{{Message.MessageID}}" ng-class="{'in': $last}">
-                                        <div class="panel-body" ta-bind ng-model="Message.Content"></div>
+                                        <div class="panel-body" ta-bind ng-model="Message.Content" style="word-break: break-word"></div>
                                     </div>
                                 </div>
                             </div>

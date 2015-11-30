@@ -32,12 +32,15 @@
                     <div class="modal-body">
                         <div class="container-fluid">
                             <div class="row">
-                                <h3 class="fnt25">Người ủng hộ</h3>
+                                
                                 <div class="col-md-6">
+                                    <h3 class="fnt25">Người ủng hộ</h3>
                                     <div class="row">
-                                        <div class="col-md-3">
-                                            <img id="avatar-profile" src="\images\projects\{{BackedUser.ProfileImage}}" alt="" class="img-responsive center-block pt30">
+                                        <div class="col-sm-4">
+                                            <img id="avatar-profile" ng-if="!checkHTTP(BackedUser.ProfileImage)" ng-src="../images/avatars/{{BackedUser.ProfileImage}}" alt="" class="img-responsive img-circle">
+                                            <img id="avatar-profile" ng-if="checkHTTP(BackedUser.ProfileImage)" ng-src="{{trustSrc(BackedUser.ProfileImage)}}" alt="" class="img-responsive img-circle">
                                         </div>
+                                      
                                         <div class="col-md-9">
                                             <br>
                                             <form>
@@ -63,9 +66,9 @@
                                 <div class="col-md-6">
                                     <h3 class="fnt25">Dự án: <i style="font-style: normal" id="project_title_target"></i></h3>
                                     <br>
-                                    <p class="fnt18" for="name"><span>Ủng hộ gói: </span><span class="fnt-b">{{BackingInfo[0].RewadDiscription}}</span> với số tiền:<span class="fnt-b"> {{BackingInfo[0].PledgeAmount | currency:"&#8363;":0}} </span> và <span class="fnt-b">số lượng: {{BackingInfo[0].Quantity}}</span></p>
+                                    <p class="fnt18" for="name"><span>Ủng hộ gói: </span><span class="fnt-b">{{BackingInfo[0].RewadDiscription}}</span> với số tiền:<span class="fnt-b"> {{BackingInfo[0].PledgeAmount |  number : fractionSize}}&#8363; </span> và <span class="fnt-b">số lượng: {{BackingInfo[0].Quantity}}</span></p>
                                     <!-- <p class="fnt18" for="name"><span class="fnt-b">Số lượng:</span> 1</p> -->
-                                    <p class="fnt18" for="name"><span class="fnt-b">Tổng số tiền:</span> {{BackingInfo[0].TotalAmount}}</p>
+                                    <p class="fnt18" for="name"><span class="fnt-b">Tổng số tiền:</span> {{BackingInfo[0].TotalAmount |  number : fractionSize}}&#8363;</p>
                                     <p class="fnt18" for="name"><span class="fnt-b">Ngày gửi:</span>{{BackingInfo[0].BackedDate | date: "dd-MM-yyyy"}}</p>
                                     <p class="mb0 pb0"><span class="fnt-b">Nội dung:</span></p>
                                     <p class="mt0 pt0">{{BackingInfo[0].BackingDiscription}}</p>
@@ -74,7 +77,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                     </div>
                 </div>
             </div>
@@ -87,19 +90,26 @@
                     <th>Số tiền</th>
                     <th>Thời gian</th>
                     <th>Tình trạng dự án</th>
-                    <th>Xem</th>
+                    <th class="txt-c">Xem</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="project in ListBackedProjectHistory ">
-                    <td class="txt-r">{{$index+1}}</td>
-                    <td class="txt-l"><a class="fnt-b project_title_source" href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></td>
-                    <td class="txt-r">{{project.CurrentFunded}}</td>
-                    <td class ="txt-r">{{project.BackedDate | date: "dd/MM/yyyy"}}</td>
-                    <td class="txt-l">{{project.Status}}</td>
-                    <td>
+                    <td style="width: 5%" class="txt-r">{{$index+1}}</td>
+                    <td style="width: 35%" class="txt-l"><a class="fnt-b project_title_source" href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></td>
+                    <td style="width: 15%" class="txt-r">{{project.CurrentFunded |  number : fractionSize}}&#8363;</td>
+                    <td style="width: 15%" class="txt-r">{{project.BackedDate | date: "dd/MM/yyyy"}}</td>
+                    <td style="width: 20%" class="txt-l">
+                        <label ng-if="project.Status=='pending'" class="label label-primary">Chờ duyệt</label>
+                        <label ng-if="project.Status=='draft'" class="label label-primary">Nháp</label>
+                        <label ng-if="project.Status=='rejected'" class="label label-danger">Không phê duyệt</label>
+                        <label ng-if="project.Status=='approved'" class="label label-success">Đang chạy</label>
+                        <label ng-if="project.Status=='suspended'" class="label label-danger">Đình chỉ</label>
+                        <label ng-if="project.Status=='expired'" class="label label-danger">Hết hạn</label>
+                    </td>
+                    <td style="width: 10%" class="txt-c">
                         <div class="btn-group">
-                            <button class="btn btn-danger btn-sm btn_view_detail" type="button" data-toggle="modal" data-target="#infoBanker" ng-click="getBackingInfo(project.ProjectID)" title="View">
+                            <button class="btn btn-primary btn-sm btn_view_detail" type="button" tooltip="Xem chi tiết" tooltip-append-to-body="true" tooltip-placement="left" data-toggle="modal" data-target="#infoBanker" ng-click="getBackingInfo(project.ProjectCode)" title="View">
                                 <i class="fa fa-eye"></i>
                             </button>
 
@@ -110,12 +120,6 @@
         </table>
 </section><!--/#portfolio-->
 </div>
-
-<div class="scroll-top-wrapper ">
-    <span class="scroll-top-inner">
-        <i class="fa fa-2x fa-arrow-circle-up"></i>
-    </span>
-</div> <!-- end SCROLL TO TOP -->
 
 <script type="text/javascript">
     $(document).ready(function () {

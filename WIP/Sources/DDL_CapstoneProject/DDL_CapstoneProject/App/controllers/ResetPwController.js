@@ -8,20 +8,55 @@ app.controller('ResetPwController', function ($rootScope, $scope, $location, $wi
     $scope.Error = null;
 
     $scope.Message = null;
-    // Submit User model to create new account
+    $scope.IsSent = false;
+    $scope.IsWrongCode = false;
+    // Submit email to reset.
     $scope.submit = function () {
 
-        var promisePost = UserService.resetPassword($scope.Email);
+        var promisePost = UserService.resetPasswordCode($scope.Email);
+
+        promisePost.then(
+            function (result) {
+                if (result.data.Status === "success") {
+                    //$location.path("/register_success").replace();
+                    $scope.Message = "Mã code được gửi đến email của bạn";
+                    $scope.IsSent = true;
+                    $scope.IsWrongCode = false;
+                    $scope.Error = null;
+                } else if (result.data.Status === "error") {
+                    var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                    if (a) {
+                        $scope.Error = result.data.Message;
+                    }
+                }
+            },
+            function (error) {
+                $scope.Error = error.data.Message;
+            });
+    }
+
+    // Submit reset code.
+    $scope.submitCode = function () {
+        var promisePost = UserService.resetPassword($scope.Email,$scope.Code);
 
         promisePost.then(
             function (result) {
                 if (result.data.Status === "success") {
                     //$location.path("/register_success").replace();
                     $scope.Message = "Mật khẩu mới đã được gửi đến email của bạn!";
+                    $scope.IsSent = false;
+                    $scope.Code = null;
+                    $scope.IsWrongCode = false;
                     $scope.Error = null;
                 } else if (result.data.Status === "error") {
-                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                    $scope.Error = result.data.Message;
+                    if (result.data.Type === "wrong-code") {
+                        $scope.IsWrongCode = true;
+                    } else {
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                        }
+                    }
                 }
             },
             function (error) {

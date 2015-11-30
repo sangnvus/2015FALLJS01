@@ -1,6 +1,6 @@
 ﻿<div class="row">
     <div class="col-lg-6 col-sm-6">
-        <div class="col-lg-6 col-sm-9">
+        <div class="col-lg-6 col-sm-6">
             <div class="circle-tile">
                 <a>
                     <div class="circle-tile-heading orange">
@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-sm-9">
+        <div class="col-lg-6 col-sm-6">
             <div class="circle-tile">
                 <a>
                     <div class="circle-tile-heading blue">
@@ -37,7 +37,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-sm-9">
+        <div class="col-lg-6 col-sm-6">
             <div class="circle-tile">
                 <a>
                     <div class="circle-tile-heading purple">
@@ -56,7 +56,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-sm-9">
+        <div class="col-lg-6 col-sm-6">
             <div class="circle-tile">
                 <a>
                     <div class="circle-tile-heading dark-blue">
@@ -78,21 +78,25 @@
     </div>
 
     <!-- Donut Chart Example -->
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-6">
         <div class="portlet portlet-orange">
             <div class="portlet-heading">
                 <div class="portlet-title">
-                    <h4>Biểu đồ :</h4>
+                    <h4>Biểu đồ thành viên</h4>
                 </div>
                 <div class="portlet-widgets">
                     <a href="javascript:;"><i class="fa fa-refresh"></i></a>
                     <span class="divider"></span>
-                    <a data-toggle="collapse" data-parent="#accordion" href="#donutChart"><i class="fa fa-chevron-down"></i></a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="" data-target="#donutChart"><i class="fa fa-chevron-down"></i></a>
                 </div>
                 <div class="clearfix"></div>
             </div>
-            <canvas id="pie" class="chart chart-pie"
-                    chart-data="data" chart-labels="labels"></canvas>
+            <div id="donutChart" class="panel-collapse collapse in">
+                <div class="portlet-body">
+                    <canvas id="pie" class="chart chart-doughnut" chart-legend="true" chart-colours="colors"
+                            chart-data="data" chart-labels="labels"></canvas>
+                </div>
+            </div>
         </div>
     </div>
     <!-- /.col-lg-6 -->
@@ -107,7 +111,7 @@
                     <h4><i class="fa fa-exchange fa-fw"></i>Người dùng vừa đăng nhập</h4>
                 </div>
                 <div class="portlet-widgets">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet"><i class="fa fa-chevron-down"></i></a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet" onclick="return false;"><i class="fa fa-chevron-down"></i></a>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -119,22 +123,22 @@
                                 <tr>
                                     <th>Tên</th>
                                     <th>Lần đănh nhập cuối</th>
-                                    <th>Trạng thái</th>
+                                    <th>Tình trạng hoạt động</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="user in Dashboard.RecentUser">
-                                    <td style="width:35%">
+                                    <td>
                                         <a class="pull-left" href="@Url.Content("/admin/#/userprofile/{{user.UserName}}")">
                                             <img style="width : 40px; height:40px" ng-if="!checkHTTP(user.AvartaURL)" ng-src="../images/avatars/{{user.AvartaURL}}" alt="" class="media-object img-circle">
                                             <img style="width : 40px; height:40px" ng-if="checkHTTP(user.AvartaURL)" ng-src="{{trustSrc(user.AvartaURL)}}" alt="" class="media-object img-circle">
                                         </a>
                                         <h5>{{user.FullName}}</h5>
                                     </td>
-                                    <td>{{user.LastLogin | date: "hh:mm 'ngày' dd-MM-yyyy"}}</td>
-                                    <td>
-                                        <a ng-show="user.Status" class="btn btn-xs btn-green">Bình thường</a>
-                                        <a ng-hide="user.Status" class="btn btn-xs btn-red">Đã bị khóa</a>
+                                    <td style="width:165px;">{{user.LastLogin | date: "HH:mm 'ngày' dd-MM-yyyy"}}</td>
+                                    <td style="width:100px;">
+                                        <span ng-show="user.Status" class="label label-primary center-block label-success" style="padding: 9px">Bình thường</span>
+                                        <span ng-hide="user.Status" class="label label-primary center-block label-danger" style="padding: 9px">Đã bị khóa</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -152,7 +156,7 @@
                     <h4><i class="fa fa-exchange fa-fw"></i>Người dùng ủng hộ nhièu nhất</h4>
                 </div>
                 <div class="portlet-widgets">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet2"><i class="fa fa-chevron-down"></i></a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet2" onclick="return false;"><i class="fa fa-chevron-down"></i></a>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -165,23 +169,23 @@
                                     <th>Tên</th>
                                     <th>Tổng dự án đã ủng hộ</th>
                                     <th>Tổng số tiền đã ủng hộ</th>
-                                    <th>Trạng thái</th>
+                                    <th>Tình trạng hoạt động</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="user in Dashboard.TopBacker">
-                                    <td style="width:35%">
+                                    <td class="col-number" style="width:35%">
                                         <a class="pull-left" href="@Url.Content("/admin/#/userprofile/{{user.UserName}}")">
                                             <img style="width : 40px; height:40px" ng-if="!checkHTTP(user.AvartaURL)" ng-src="../images/avatars/{{user.AvartaURL}}" alt="" class="media-object img-circle">
                                             <img style="width : 40px; height:40px" ng-if="checkHTTP(user.AvartaURL)" ng-src="{{trustSrc(user.AvartaURL)}}" alt="" class="media-object img-circle">
                                         </a>
                                         <h5>{{user.FullName}}</h5>
                                     </td>
-                                    <td>{{user.TotalProject}}</td>
-                                    <td>{{user.TotalPledgedAmount}}</td>
-                                    <td>
-                                        <a ng-show="user.Status" class="btn btn-xs btn-green">Bình thường</a>
-                                        <a ng-hide="user.Status" class="btn btn-xs btn-red">Đã bị khóa</a>
+                                    <td class="col-number">{{user.TotalProject}}</td>
+                                    <td class="col-number"><span class="money usd no-code">{{user.TotalPledgedAmount | number : fractionSize}} &#8363;</span></td>
+                                    <td style="width:100px;">
+                                        <span ng-show="user.Status" class="label label-primary center-block label-success" style="padding: 9px">Bình thường</span>
+                                        <span ng-hide="user.Status" class="label label-primary center-block label-danger" style="padding: 9px">Đã bị khóa</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -205,7 +209,7 @@
                     <h4><i class="fa fa-exchange fa-fw"></i> Người dùng mới</h4>
                 </div>
                 <div class="portlet-widgets">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet3"><i class="fa fa-chevron-down"></i></a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet3" onclick="return false;"><i class="fa fa-chevron-down"></i></a>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -217,7 +221,7 @@
                                 <tr>
                                     <th>Tên</th>
                                     <th>Ngày khởi tạo</th>
-                                    <th>Trạng thái</th>
+                                    <th>Tình trạng hoạt động</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -229,14 +233,14 @@
                                         </a>
                                         <h5>{{user.FullName}}</h5>
                                     </td>
-                                    <td>{{user.CreatedDate | date : "hh:mm 'ngày' dd-MM-yyyy"}}</td>
-                                    <td>
-                                        <a ng-show="user.Status" class="btn btn-xs btn-green">Bình thường</a>
-                                        <a ng-hide="user.Status" class="btn btn-xs btn-red">Đã bị khóa</a>
+                                    <td style="width:165px;">{{user.CreatedDate | date : "HH:mm 'ngày' dd-MM-yyyy"}}</td>
+                                    <td style="width:100px;">
+                                        <span ng-show="user.Status" class="label label-primary center-block label-success" style="padding: 9px">Bình thường</span>
+                                        <span ng-hide="user.Status" class="label label-primary center-block label-danger" style="padding: 9px">Đã bị khóa</span>
                                     </td>
                                 </tr>
-                            </tbody>
-                        </table>
+                            </tbody>        
+                        </table>                    
                     </div>
                 </div>
             </div>
@@ -251,7 +255,7 @@
                     <h4><i class="fa fa-exchange fa-fw"></i> Người dùng thành công nhất</h4>
                 </div>
                 <div class="portlet-widgets">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet4"><i class="fa fa-chevron-down"></i></a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet4" onclick="return false;"><i class="fa fa-chevron-down"></i></a>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -264,8 +268,8 @@
                                     <th>Tên</th>
                                     <th>Số dự án đã thành công</th>
                                     <th>Tổng số tiền gây quỹ thành công</th>
-                                    <th>Trạng thái</th>
-                                </tr>
+                                    <th>Tình trạng hoạt động</th>
+                                </tr>                   
                             </thead>
                             <tbody>
                                 <tr ng-repeat="user in Dashboard.TopCreator">
@@ -276,11 +280,12 @@
                                         </a>
                                         <h5>{{user.FullName}}</h5>
                                     </td>
-                                    <td>{{user.TotalSuccessProject}}</td>
-                                    <td>{{user.TotalPledgedAmount}}</td>
-                                    <td>
-                                        <a ng-show="user.Status" class="btn btn-xs btn-green">Bình thường</a>
-                                        <a ng-hide="user.Status" class="btn btn-xs btn-red">Đã bị khóa</a>
+                                    <td class="col-number">{{user.TotalSuccessProject}}</td>
+                                    <td class="col-number"><span class="money usd no-code">{{user.TotalPledgedAmount | number : fractionSize}} &#8363;</span>
+                                    </td>
+                                    <td style="width:100px;">
+                                        <span ng-show="user.Status" class="label label-primary center-block label-success" style="padding: 9px">Bình thường</span>
+                                        <span ng-hide="user.Status" class="label label-primary center-block label-danger" style="padding: 9px">Đã bị khóa</span>
                                     </td>
                                 </tr>
                             </tbody>

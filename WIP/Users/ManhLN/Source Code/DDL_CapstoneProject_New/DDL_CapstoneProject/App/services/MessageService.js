@@ -14,6 +14,16 @@ service.service('MessageService', function ($http) {
     }
 
     // Function to get list messages
+    this.getListConversations = function() {
+        var request = $http({
+            method: 'get',
+            url: '/api/MessageApi/GetListConversations'
+        });
+
+        return request;
+    }
+
+    // Function to get list messages
     this.getListReceivedConversations = function () {
         var request = $http({
             method: 'get',

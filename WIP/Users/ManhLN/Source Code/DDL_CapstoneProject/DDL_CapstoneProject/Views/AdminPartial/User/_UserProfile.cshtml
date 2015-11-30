@@ -1,5 +1,5 @@
 ﻿<div class="row">
-    <div class="modal fade" id="infoBanker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+   @* <div class="modal fade" id="infoBanker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -61,7 +61,7 @@
                 </div>
             </div>
         </div>
-    </div> <!-- end Modal infoBanker -->
+    </div>*@ <!-- end Modal infoBanker -->
     <div class="col-lg-12">
 
         <div class="portlet portlet-default">
@@ -108,18 +108,6 @@
                                                 <input ng-hide="UserProfile.Gender ==  'male'" type="text" class="form-control" value="Nữ" disabled>
                                             </div>
                                             <div class="form-inline form-group">
-                                                @*<div class="form-group">
-                                                        <label>Country</label>
-                                                        <input type="text" class="form-control" value="England" disabled>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>City</label>
-                                                        <input type="text" class="form-control" value="Bayville" disabled>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>State</label>
-                                                        <input type="text" class="form-control" value="FL" disabled>
-                                                    </div>*@
                                             </div>
                                             <div class="form-group">
                                                 <label>Loại thành viên</label>
@@ -160,30 +148,53 @@
                                         <div class="portlet-title">
                                             <h4>Dự án đã ủng hộ</h4>
                                         </div>
-                                        <div class="clearfix"></div>
+                                        <div class="portlet-widgets">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#BackedProjectTable" onclick="return false;"><i class="fa fa-chevron-down"></i></a>
+                                        </div>
+                                        <div class="clearfix">
+                                            
+                                        </div>
+                                        
                                     </div>
-                                    <div class="portlet-body">
+                                    <div id="BackedProjectTable" class="portlet-body">
                                         <div class="table-responsive">
-                                            <table id="example-table" class="table table-striped table-bordered table-hover table-green">
+                                            <table id="example-table" class="table table-striped table-bordered table-hover table-green"
+                                                   datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
                                                 <thead>
                                                     <tr>
-                                                        <th>STT</th>
+                                                        <th style="width: 15px">#</th>
                                                         <th>Tên dự án</th>
-                                                        <th>Số tiền đã ủng hộ</th>
-                                                        <th>Mục tiêu gây quỹ</th>
-                                                        <th>Tình trạng dự án</th>
-                                                        <td>Hành động</td>
+                                                        <th>Tổng số tiền đã ủng hộ</th>
+                                                        @*<th>Mục tiêu gây quỹ</th>*@
+                                                        <th>Tình trạng duyệt</th>
+                                                        <th>Tình trạng gây quỹ</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr class="odd gradeX" ng-repeat="project in ListBacked">
-                                                        <td>{{$index + 1}}</td>
+                                                        <td style="width:40px" class="col-number">{{$index + 1}}</td>
                                                         <td>{{project.ProjectTitle}}</td>
-                                                        <td><span class="money usd no-code">{{project.PledgedAmount | number : fractionSize}} &#8363;</span></td>
-                                                        <td><span class="money usd no-code">{{project.FundingGoals | number : fractionSize}} &#8363;</span></td>
-                                                        <td>{{project.Status}}</td>
-                                                        <td>
-                                                            <button class="btn btn-blue" data-toggle="modal" data-target="#infoBanker" title="View" ng-click="getBackingDetail()">Xem</button>
+                                                        <td style="width:150px" class="col-number"><span class="money usd no-code">{{project.PledgedAmount | number : fractionSize}} &#8363;</span></td>
+                                                        @*<td style="width:150px" class="col-number"><span class="money usd no-code">{{project.FundingGoals | number : fractionSize}} &#8363;</span></td>*@
+                                                        <td style="width:100px">
+                                                            <span class="label label-danger center-block gray" ng-if="project.Status == 'rejected'" style="padding: 9px;">Từ chối</span>
+                                                            <span class="label label-primary center-block label-success" ng-if="project.Status == 'approved'" style="padding: 9px;">Đã duyệt</span>
+                                                            <span class="label label-primary center-block" ng-if="project.Status == 'pending'" style="padding: 9px;">Chờ duyệt</span>
+                                                            <span class="label label-primary center-block red" ng-if="project.Status == 'suspended'" style="padding: 9px;">Đình chỉ</span>
+                                                        </td>
+                                                        <td style="width:100px">
+                                                            <span class="label center-block label-success" ng-if="project.Isfunded == 'suscced'" style="padding: 9px;">Thành công</span>
+                                                            <span class="label label-danger center-block" ng-if="project.Isfunded == 'fail'" style="padding: 9px;">Thất bại</span>
+                                                            <span class="label label-primary center-block" ng-if="project.Isfunded == 'going'" style="padding: 9px;">Đang chạy</span>
+                                                        </td>
+                                                        <td style="width:40px">
+                                                            @*<a tooltip="Nhấp để xem chi tiết" class="btn btn-blue" data-toggle="modal" data-target="#infoBanker" title="View" ng-click="getBackingDetail()">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>*@
+                                                            <a tooltip="Nhấp để xem chi tiết dự án" href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")" class="btn btn-blue">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -209,40 +220,54 @@
                                         <div class="portlet-title">
                                             <h4>Dự án đã tạo</h4>
                                         </div>
+                                        <div class="portlet-widgets">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#CreatedProjectTable" onclick="return false;"><i class="fa fa-chevron-down"></i></a>
+                                        </div>
                                         <div class="clearfix"></div>
                                     </div>
-                                    <div class="portlet-body">
+                                    <div id="CreatedProjectTable" class="portlet-body">
                                         <div class="table-responsive">
-                                            <table id="example-table-2" class="table table-striped table-bordered table-hover table-green">
+                                            <table id="example-table-2" class="table table-striped table-bordered table-hover table-green"
+                                                   datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
                                                 <thead>
                                                     <tr>
-                                                        <th>STT</th>
+                                                        <th style="width: 15px">#</th>
                                                         <th>Tên dự án</th>
                                                         <th>Danh mục</th>
                                                         <th>Tổng số tiền đã gây quỹ được</th>
                                                         <th>Mục tiêu gây quỹ</th>
                                                         <th>Tình trạng duyệt</th>
-                                                        <th>Tình trạng dự án</th>
-                                                        <th>Thời gian duyệt</th>
-                                                        <th>Hành động</th>
+                                                        <th>Tình trạng gây quỹ</th>
+                                                        <th>Ngày còn lại</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr ng-repeat="project in ListCreated">
-                                                        <td>{{$index + 1}}</td>
+                                                        <td style="width:40px" class="col-number">{{$index + 1}}</td>
                                                         <td>{{project.ProjectTitle}}</td>
                                                         <td>{{project.Category}}<span class="money usd no-code"></span></td>
-                                                        <td><span class="money usd no-code">{{project.PledgedOn | number : fractionSize}} &#8363;</span></td>
-                                                        <td><span class="money usd no-code">{{project.FundingGoals | number : fractionSize}} &#8363;</span></td>
-                                                        <td>
-                                                            <label ng-show="project.Status == 'draft'" class="btn btn-white">Nháp</label>
-                                                            <label ng-show="project.Status == 'approved'" class="btn btn-blue">Đã duyệt</label>
-                                                            <label ng-show="project.Status == 'suspended'" class="btn btn-red">Chờ kiểm duyệt</label>
+                                                        <td style="width:100px" class="col-number"><span class="money usd no-code">{{project.PledgedOn | number : fractionSize}} &#8363;</span></td>
+                                                        <td style="width:100px" class="col-number"><span class="money usd no-code">{{project.FundingGoals | number : fractionSize}} &#8363;</span></td>
+                                                        <td style="width:100px">
+                                                            <span class="label label-danger center-block" ng-if="project.Status == 'rejected'" style="padding: 9px;">Từ chối</span>
+                                                            <span class="label label-primary center-block label-success" ng-if="project.Status == 'approved'" style="padding: 9px;">Đã duyệt</span>
+                                                            <span class="label label-primary center-block" ng-if="project.Status == 'pending'" style="padding: 9px;">Chờ duyệt</span>
+                                                            <span class="label label-primary center-block red" ng-if="project.Status == 'suspended'" style="padding: 9px;">Đình chỉ</span>
                                                         </td>
-                                                        <td>{{project.Isfunded}}</td>
-                                                        <td>{{project.ExpireDate | date:"dd/MM/yyyy"}}</td>
-                                                        <td>
-                                                            <a href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")" class="btn btn-blue">Xem</a>
+                                                        <td style="width:100px">
+                                                            <span class="label label-primary center-block label-success" ng-if="project.Isfunded == 'suscced'" style="padding: 9px;">Thành công</span>
+                                                            <span class="label label-primary center-block red" ng-if="project.Isfunded == 'fail'" style="padding: 9px;">Thất bại</span>
+                                                            <span class="label label-primary center-block" ng-if="project.Isfunded == 'going'" style="padding: 9px;">Đang chạy</span>
+                                                        </td>
+                                                        <td style="width:100px" class="col-number">
+                                                            <span ng-if="project.Isexpired > 0">{{project.Isexpired}}</span>
+                                                            <span ng-if="project.Isexpired < 0" class="label label-primary center-block red" style="padding: 9px;">Đã kết thúc</span>
+                                                        </td>
+                                                        <td style="width:40px">
+                                                            <a tooltip="Nhấp để xem chi tiết dự án" href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")" class="btn btn-blue">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                 </tbody>

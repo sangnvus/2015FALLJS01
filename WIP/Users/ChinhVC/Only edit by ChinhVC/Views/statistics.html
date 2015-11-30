@@ -158,7 +158,7 @@
                   <a style="color: white; text-decoration: none;" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                     Top 10 dự án
                   </a>
-                   <select class="form-control">
+                   <select class="form-control select" data-toggle="select">
                       <option selected="">Tất cả</option>
                       <option>comics</option>
                       <option>Crafts</option>
@@ -177,7 +177,7 @@
               <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                 <div class="panel-body">
                   <table id="top10pProjectTable" class="table table-striped table-bordered table-hover">  
-                    <thead style="background: #16a085; color: #FFF">  
+                    <thead style="background: #1abc9c; color: #FFF">  
                       <tr>  
                         <th>STT</th>  
                         <th>Mã dự án</th>
@@ -306,7 +306,7 @@
                   <a style="color: white; text-decoration: none;" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                    Top 10 người ủng hộ
                  </a>
-                   <select class="form-control">
+                   <select class="form-control select" data-toggle="select">
                       <option selected="">Tất cả</option>
                       <option>comics</option>
                       <option>Crafts</option>
@@ -325,7 +325,7 @@
             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
               <div class="panel-body">
                 <table id="top10BackerTable" class="table table-striped table-bordered table-hover">  
-                  <thead style="background: #16a085; color: #FFF">  
+                  <thead style="background: #1abc9c; color: #FFF">  
                     <tr>  
                       <th>.STT</th>  
                       <th>Xếp hạng</th>
@@ -420,7 +420,7 @@
                     <a style="color: white; text-decoration: none;" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
                      Top 10 người gây quỹ
                     </a>
-                    <select class="form-control">
+                    <select class="form-control select" data-toggle="select">
                       <option selected="">Tất cả</option>
                       <option>comics</option>
                       <option>Crafts</option>
@@ -439,7 +439,7 @@
               <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                 <div class="panel-body">
                   <table id="top10CreatorTable" class="table table-striped table-bordered table-hover">  
-                    <thead style="background: #16a085; color: #FFF">  
+                    <thead style="background: #1abc9c; color: #FFF">  
                       <tr>  
                         <th>.STT</th>  
                         <th>Xếp hạng</th>
@@ -528,11 +528,23 @@
       </div> <!-- end content-5 TOP CREATOR -->
     </div> <!-- end CONTENT -->
 
-    <div class="scroll-top-wrapper ">
-      <span class="scroll-top-inner">
-        <i class="fa fa-2x fa-arrow-circle-up"></i>
-      </span>
-    </div> <!-- end SCROLL TO TOP -->
+    <div class="scroll-wrapper" >
+        <div class="scroll-top-wrapper">
+          <span class="scroll-top-inner">
+            <i class="fnt30 fa fa-2x fa-arrow-circle-up"></i>
+          </span>
+        </div>
+        <div class="scroll-refresh-wrapper">
+          <span class="scroll-refresh-inner">
+            <i class="fnt30 fa fa-2x fa fa-refresh"></i>
+          </span>
+        </div>
+        <div class="scroll-bottom-wrapper">
+          <span class="scroll-bottom-inner">
+            <i class="fnt30 fa fa-2x fa-arrow-circle-down"></i>
+          </span>
+        </div>
+    </div> <!-- end SCROLL WRAPPER -->
 
     <div id="footer">
       <div class="container">

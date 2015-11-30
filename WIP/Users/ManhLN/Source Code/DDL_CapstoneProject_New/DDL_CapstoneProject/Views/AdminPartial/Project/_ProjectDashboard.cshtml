@@ -14,7 +14,7 @@
                     {{BasicInfo.PendingProject | currency:"":0}}
                     <span id="sparklineA"></span>
                 </div>
-                <a href="~/admin/#/project/" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                <a href="~/admin/#/project/" class="circle-tile-footer">Dự án <i class="fa fa-chevron-circle-right"></i></a>
             </div>
         </div>
     </div>
@@ -32,7 +32,7 @@
                 <div class="circle-tile-number text-faded">
                     {{BasicInfo.ApprovedProject | currency:"":0}}
                 </div>
-                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                <a href="#" class="circle-tile-footer">Dự án <i class="fa fa-chevron-circle-right"></i></a>
             </div>
         </div>
     </div>
@@ -50,7 +50,7 @@
                 <div class="circle-tile-number text-faded">
                     {{BasicInfo.SuspendedProject| currency:"":0}}
                 </div>
-                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                <a href="#" class="circle-tile-footer">Dự án <i class="fa fa-chevron-circle-right"></i></a>
             </div>
         </div>
     </div>
@@ -69,7 +69,7 @@
                     {{BasicInfo.ExpriredProject| currency:"":0}}
                     <span id="sparklineB"></span>
                 </div>
-                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                <a href="#" class="circle-tile-footer">Dự án <i class="fa fa-chevron-circle-right"></i></a>
             </div>
         </div>
     </div>
@@ -82,13 +82,13 @@
             </a>
             <div class="circle-tile-content purple">
                 <div class="circle-tile-description text-faded">
-                    Dự án được ủng hộ
+                    Dự án thành công
                 </div>
                 <div class="circle-tile-number text-faded">
-                    {{BasicInfo.FundedProject| currency:"":0}}
+                    {{BasicInfo.SucceedProject| currency:"":0}}
                     <span id="sparklineB"></span>
                 </div>
-                <a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                <a href="#" class="circle-tile-footer">Dự án <i class="fa fa-chevron-circle-right"></i></a>
             </div>
         </div>
     </div>
@@ -107,7 +107,7 @@
                     {{BasicInfo.TotalProject| currency:"":0}}
                     <span id="sparklineB"></span>
                 </div>
-                <a href="~/admin/#/project/all/" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                <a href="~/admin/#/project/all/" class="circle-tile-footer">Dự án <i class="fa fa-chevron-circle-right"></i></a>
             </div>
         </div>
     </div>
@@ -124,41 +124,48 @@
                     <h4>Danh sách dự án mới chờ duyệt</h4>
                 </div>
                 <div class="portlet-widgets">
-                    <a onclick="return false" href="#" class="btn btn-blue btn-sm">Export</a>
+                    <a onclick="return false" href="#" class="btn btn-blue btn-sm">Xuất dữ liệu</a>
                     <a onclick="return false" data-toggle="collapse" data-parent="#accordion" href="#NewProjectTable"><i class="fa fa-chevron-down"></i></a>
                 </div>
                 <div class="clearfix"></div>
             </div>
-            <div id="NewProjectTable">
+            <div id="NewProjectTable" class="panel-collapse collapse in">
                 <div class="portlet-body">
                     <div class="table-responsive">
                         <table id="example-table" class="table table-striped table-bordered table-hover table-green"
                                datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
                             <thead>
                                 <tr>
-                                    <th>Mã</th>
+                                    <th style="width: 50px;">Mã</th>
                                     <th>Tên</th>
                                     <th>Lĩnh vực</th>
                                     <th>Người tạo</th>
                                     <th>Mục tiêu</th>
                                     <th>Ngày kết thúc</th>
-                                    <th>Trạng thái</th>
-                                    <th>Hành động</th>
+                                    <th style="width: 100px">Trạng thái</th>
+                                    <th style="width: 34px;"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="project in ProjectList" class="odd">
-                                    <td>{{project.ProjectCode}}</td>
-                                    <td>{{project.Title}}</td>
-                                    <td>{{project.Category}}</td>
-                                    <td class="center">{{project.CreatorEmail}}</td>
-                                    <td class="center">{{project.FundingGoal| currency:"":0}}</td>
-                                    <td class="center">{{project.ExpireDate | date:"dd/MM/yyyy"}}</td>
-                                    <td><span class="label label-primary center-block" style="padding: 9px">{{project.Status}}</span></td>
-                                    <td class="center">
+                                    <td class="col-text" style="width: 50px;">{{project.ProjectCode}}</td>
+                                    <td class="col-text">{{project.Title}}</td>
+                                    <td class="col-text">{{project.Category}}</td>
+                                    <td class="center col-text">{{project.CreatorEmail}}</td>
+                                    <td class="center col-number">{{project.FundingGoal| currency:"":0}}</td>
+                                    <td class="center col-datetime">{{project.ExpireDate | date:"dd/MM/yyyy"}}</td>
+                                    <td>
+                                        <span class="label label-success center-block" ng-if="project.Status == 'approved'" style="padding: 9px; width: 100px">Đang chạy</span>
+                                        <span class="label label-danger center-block" ng-if="project.Status == 'suspended'" style="padding: 9px; width: 100px">Đình chỉ</span>
+                                        <span class="label label-danger center-block" ng-if="project.Status == 'rejected'" style="padding: 9px;width: 100px">Từ chối</span>
+                                        <span class="label label-danger center-block" ng-if="project.Status == 'expired'" style="padding: 9px; width: 100px">Hết hạn</span>
+                                        <span class="label label-primary center-block" ng-if="project.Status == 'pending'" style="padding: 9px; width: 100px">Chờ duyệt</span>
+                                    </td>
+                                    <td class="center" style="width: 34px;">
                                         <div class="btn-group">
                                             <a href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")" class="btn btn-primary btn-sm" type="button" id="dropdownMenu1"
-                                               data-toggle="tooltip" data-placement="bottom" title="View">
+                                               data-placement="bottom" title="View"
+                                               tooltip="Xem chi tiết" tooltip-append-to-body="true" tooltip-placement="left">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                         </div>

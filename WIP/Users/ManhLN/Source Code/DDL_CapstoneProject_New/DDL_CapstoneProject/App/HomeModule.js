@@ -3,26 +3,31 @@ var service = angular.module("DDLService", []);
 var directive = angular.module("DDLDirective", []);
 var app = angular.module("ClientApp", ["ngRoute", "ngAnimate", "ngSanitize", "DDLService",
     "DDLDirective", 'angular-loading-bar', 'textAngular', 'toastr', 'ui.bootstrap', 'monospaced.elastic',
-    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert', 'angular.morris-chart', 'blockUI', 'chart.js','ui.select']);
+    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert', 'angular.morris-chart',
+    'ChartAngular', 'blockUI', 'chart.js', 'ui.select']);
 
 // Show Routing.
 app.config(["$routeProvider", function ($routeProvider) {
     $routeProvider.when("/home",
         {
             caseInsensitiveMatch: true,
-            redirectTo: "/"
+            redirectTo: "/",
+            title: 'Dandelion',
         });
     $routeProvider.when("/",
         {
             caseInsensitiveMatch: true,
             templateUrl: "/ClientPartial/Home",
             controller: 'HomeController',
+            title: 'Dandelion',
             resolve: {
-                slides: ['SlideService', function (SlideService) {
-                    return SlideService.getSlides();
+                slides: ['SlideService', 'CommmonService', '$rootScope', '$q', function (SlideService, CommmonService, $rootScope, $q) {
+                    var promise = SlideService.getSlides();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
-                liststatisticforhome: ['ProjectService', function (ProjectService) {
-                    return ProjectService.GetStatisticListForHome();
+                liststatisticforhome: ['ProjectService', 'CommmonService', '$rootScope', '$q', function (ProjectService, CommmonService, $rootScope, $q) {
+                    var promise = ProjectService.GetStatisticListForHome();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
             }
         });
@@ -31,12 +36,15 @@ app.config(["$routeProvider", function ($routeProvider) {
             caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/Discover",
             controller: 'DiscoverController',
+            title: 'Danh mục dự án - Dandelion',
             resolve: {
-                projectstatisticlist: ['ProjectService', function (ProjectService) {
-                    return ProjectService.GetProjectStatisticList();
+                projectstatisticlist: ['ProjectService', 'CommmonService', '$rootScope', '$q', function (ProjectService, CommmonService, $rootScope, $q) {
+                    var promise = ProjectService.GetProjectStatisticList();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
-                categoryprojectcount: ['CategoryService', function (CategoryService) {
-                    return CategoryService.GetCategoryProjectCount();
+                categoryprojectcount: ['CategoryService', 'CommmonService', '$rootScope', '$q', function (CategoryService, CommmonService, $rootScope, $q) {
+                    var promise = CategoryService.GetCategoryProjectCount();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }]
             }
         });
@@ -44,18 +52,23 @@ app.config(["$routeProvider", function ($routeProvider) {
         {
             templateUrl: "ClientPartial/Statistics",
             controller: 'StatisticsController',
+            title: 'Thống kê - Dandelion',
             resolve: {
-                projectSucesedCount: ['ProjectService', function (ProjectService) {
-                    return ProjectService.getStatisticsInfor();
+                projectSucesedCount: ['ProjectService', 'CommmonService', '$rootScope', '$q', function (ProjectService, CommmonService, $rootScope, $q) {
+                    var promise = ProjectService.getStatisticsInfor();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
-                projectTopList: ['ProjectService', function (ProjectService) {
-                    return ProjectService.getProjectTop("All");
+                projectTopList: ['ProjectService', 'CommmonService', '$rootScope', '$q', function (ProjectService, CommmonService, $rootScope, $q) {
+                    var promise = ProjectService.getProjectTop("All");
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
-                categoryStatistic: ['CategoryService', function (CategoryService) {
-                    return CategoryService.listDataForStatistic();
+                categoryStatistic: ['CategoryService', 'CommmonService', '$rootScope', '$q', function (CategoryService, CommmonService, $rootScope, $q) {
+                    var promise = CategoryService.listDataForStatistic();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
-                UserTopList: ['UserService', function (UserService) {
-                    return UserService.getUserTop("All");
+                UserTopList: ['UserService', 'CommmonService', '$rootScope', '$q', function (UserService, CommmonService, $rootScope, $q) {
+                    var promise = UserService.getUserTop("All");
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
             }
         });
@@ -65,8 +78,9 @@ app.config(["$routeProvider", function ($routeProvider) {
             caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/Search",
             controller: 'SearchController',
+            title: 'Tìm kiếm- Dandelion',
             resolve: {
-                projectbycategory: ['ProjectService', 'CategoryService', '$route', function (ProjectService, CategoryService, $route) {
+                projectbycategory: ['ProjectService', 'CategoryService', '$route', '$q', '$rootScope', 'CommmonService', function (ProjectService, CategoryService, $route, $q, $rootScope, CommmonService) {
                     var params = $route.current.params;
                     if (typeof (params.categoryid) == "undefined") {
                         params.categoryid = "all";
@@ -79,11 +93,12 @@ app.config(["$routeProvider", function ($routeProvider) {
                         searchkey = "null";
                         params.searchkey = [""];
                     }
-                    var projectList = ProjectService.SearchProject(0, "|" + params.categoryid + "|", params.order, searchkey);
-                    return projectList;
+                    var promise = ProjectService.SearchProject(0, "|" + params.categoryid + "|", params.order, searchkey);
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
-                categoryList: ['CategoryService', function (CategoryService) {
-                    return CategoryService.getAllCategories();
+                categoryList: ['$rootScope', 'CategoryService', 'CommmonService', '$q', function ($rootScope, CategoryService, CommmonService, $q) {
+                    var promise = CategoryService.getAllCategories();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
                 isAdvance: ['$route', function ($route) {
                     var params = $route.current.params;
@@ -102,6 +117,10 @@ app.config(["$routeProvider", function ($routeProvider) {
                 searchkey: ['$route', function ($route) {
                     return $route.current.params.searchkey;
                 }],
+                projectResultListSize: ['ProjectService', '$route', '$q', '$rootScope', 'CommmonService', function (ProjectService, $route, $q, $rootScope, CommmonService) {
+                    var promise = ProjectService.SearchCount("|" + $route.current.params.categoryid + "|", $route.current.params.searchkey);
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }],
 
             }
         });
@@ -109,12 +128,14 @@ app.config(["$routeProvider", function ($routeProvider) {
         {
             caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/Register",
-            controller: "RegisterController"
+            controller: "RegisterController",
+            title: 'Đăng ký - Dandelion',
         });
     $routeProvider.when("/register_success",
         {
             caseInsensitiveMatch: true,
-            templateUrl: "ClientPartial/RegisterSuccess"
+            templateUrl: "ClientPartial/RegisterSuccess",
+            title: 'Đăng ký thành công - Dandelion',
         });
 
     $routeProvider.when("/user/message",
@@ -122,13 +143,16 @@ app.config(["$routeProvider", function ($routeProvider) {
             caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/Message",
             controller: "MessageController",
+            title: 'Danh sách tin nhắn - Dandelion',
             resolve: {
                 conversations: ['$route', '$rootScope', '$q', 'MessageService', 'CommmonService', function ($route, $rootScope, $q, MessageService, CommmonService) {
                     var promise;
-                    if ($route.current.params.list == null || $route.current.params.list !== "sent") {
+                    if ($route.current.params.list === "inbox") {
                         promise = MessageService.getListReceivedConversations();
-                    } else {
+                    } else if ($route.current.params.list === "sent") {
                         promise = MessageService.getListSentConversations();
+                    } else {
+                        promise = MessageService.getListConversations();
                     }
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }]
@@ -139,6 +163,7 @@ app.config(["$routeProvider", function ($routeProvider) {
             caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/MessageDetail",
             controller: "MessageDetailController",
+            title: 'Tin nhắn - Dandelion',
             resolve: {
                 conversation: ['$rootScope', '$route', '$q', 'MessageService', 'CommmonService', function ($rootScope, $route, $q, MessageService, CommmonService) {
                     var promise = MessageService.getConversation($route.current.params.id);
@@ -151,6 +176,7 @@ app.config(["$routeProvider", function ($routeProvider) {
             caseInsensitiveMatch: true,
             templateUrl: "/ClientPartial/CreateProject",
             controller: "CreateProjectController",
+            title: 'Tạo dự án - Dandelion',
             resolve: {
                 categories: ['$rootScope', '$route', '$q', 'CategoryService', 'CommmonService', function ($rootScope, $route, $q, CategoryService, CommmonService) {
                     var promise = CategoryService.GetCategoriesForCreate();
@@ -163,6 +189,7 @@ app.config(["$routeProvider", function ($routeProvider) {
             caseInsensitiveMatch: true,
             templateUrl: "/ClientPartial/EditProject",
             controller: "EditProjectController",
+            title: 'Chỉnh sửa dự án - Dandelion',
             resolve: {
                 categories: ['$rootScope', '$route', '$q', 'CategoryService', 'CommmonService', function ($rootScope, $route, $q, CategoryService, CommmonService) {
                     var promise = CategoryService.getAllCategories();
@@ -179,6 +206,7 @@ app.config(["$routeProvider", function ($routeProvider) {
             caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/BackProject",
             controller: "BackProjectController",
+            title: 'Ủng hộ dự án - Dandelion',
             resolve: {
                 rewardPkgs: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
                     var promise = ProjectService.getRewardPkgByCode($route.current.params.code);
@@ -195,6 +223,7 @@ app.config(["$routeProvider", function ($routeProvider) {
             caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/PaymentProject",
             controller: "PaymentProjectController",
+            title: 'Ủng hộ dự án - Dandelion',
             resolve: {
                 rewardPkgs: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
                     var promise = ProjectService.getRewardPkgByCode($route.current.params.code);
@@ -215,6 +244,7 @@ app.config(["$routeProvider", function ($routeProvider) {
             caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/ProjectDetail",
             controller: "ProjectDetailController",
+            title: 'Thông tin dự án - Dandelion',
             resolve: {
                 project: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
                     var promise = ProjectService.getProjectDetail($route.current.params.code);
@@ -227,6 +257,7 @@ app.config(["$routeProvider", function ($routeProvider) {
         {
             templateUrl: "ClientPartial/EditPassword",
             controller: 'EditPasswordController',
+            title: 'Tài khoản - Dandelion',
             resolve: {
                 userpublicinfo: ['$rootScope', '$route', 'UserService', '$q', 'CommmonService', function ($rootScope, $route, UserService, $q, CommmonService) {
                     var promise = UserService.getEditPassword();
@@ -240,9 +271,11 @@ app.config(["$routeProvider", function ($routeProvider) {
             caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/PublicProfile",
             controller: 'PublicProfileController',
+            title: 'Thông tin người dùng - Dandelion',
             resolve: {
-                userpublicinfo: ['$route', 'UserService', function ($route, UserService) {
-                    return UserService.getPublicInformation($route.current.params.username);
+                userpublicinfo: ['$rootScope', '$route', 'UserService', '$q', 'CommmonService', function ($rootScope, $route, UserService, $q, CommmonService) {
+                    var promise = UserService.getPublicInformation($route.current.params.username);
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }]
             }
         });
@@ -252,6 +285,7 @@ app.config(["$routeProvider", function ($routeProvider) {
             caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/EditProfile",
             controller: 'EditProfileController',
+            title: 'Thông tin cá nhân - Dandelion',
             resolve: {
                 usereditinfo: ['$rootScope', '$route', 'UserService', '$q', 'CommmonService', function ($rootScope, $route, UserService, $q, CommmonService) {
                     var promise = UserService.getProfileInformation();
@@ -259,11 +293,12 @@ app.config(["$routeProvider", function ($routeProvider) {
                 }]
             }
         });
-    $routeProvider.when("/project/backedProject",
+    $routeProvider.when("/project/backed",
          {
              caseInsensitiveMatch: true,
              templateUrl: "ClientPartial/BackedProject",
              controller: 'BackedProjectController',
+             title: 'Dự án đã ủng hộ - Dandelion',
              resolve: {
                  listsBacked: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
                      var promise = ProjectService.getBackedProject();
@@ -277,6 +312,7 @@ app.config(["$routeProvider", function ($routeProvider) {
             caseInsensitiveMatch: true,
             templateUrl: "ClientPartial/ListBacker",
             controller: 'ListBackerController',
+            title: 'Danh sách ủng hộ - Dandelion',
             resolve: {
                 projects: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
                     var promise = ProjectService.getListBacker($route.current.params.code);
@@ -285,11 +321,12 @@ app.config(["$routeProvider", function ($routeProvider) {
             }
         });
 
-    $routeProvider.when("/project/starredProject",
+    $routeProvider.when("/project/reminded",
        {
            caseInsensitiveMatch: true,
            templateUrl: "ClientPartial/StarredProject",
            controller: 'StarredProjectController',
+           title: 'Dự án đang theo dõi - Dandelion',
            resolve: {
                project: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
                    var promise = ProjectService.getStarredProject();
@@ -298,11 +335,12 @@ app.config(["$routeProvider", function ($routeProvider) {
            }
        });
 
-    $routeProvider.when("/project/createdProject",
+    $routeProvider.when("/project/created",
       {
           caseInsensitiveMatch: true,
           templateUrl: "ClientPartial/CreatedProject",
           controller: 'CreatedProjectController',
+          title: 'Thông tin đã tạo - Dandelion',
           resolve: {
               projects: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
                   var promise = ProjectService.getCreatedProject();
@@ -311,45 +349,36 @@ app.config(["$routeProvider", function ($routeProvider) {
           }
       });
 
-    $routeProvider.when("/project/backedProjectHistory",
-      {
-          templateUrl: "ClientPartial/BackedProjectHistory",
-          controller: 'BackedHistoryProjectController',
-          resolve: {
-              projects: ['$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
-                  var promise = ProjectService.getBackedProjectHistory();
-                  return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
-              }]
-          }
-      });
-
-    $routeProvider.when("/slide",
-        {
-            templateUrl: "/AdminPartial/Slide",
-            controller: 'AdminSlideController',
-            activeTab: 'slide',
-            breadcrumb: ['Quản lý Slide', 'Danh sách Slide'],
-            title: 'Quản lý Slide',
-            resolve: {
-                slides: ['$rootScope', '$q', 'AdminSlideService', 'CommmonService', function ($rootScope, $q, AdminSlideService, CommmonService) {
-                    var promise = AdminSlideService.getSlides();
+    $routeProvider.when("/project/backhistory",
+    {
+        templateUrl: "ClientPartial/BackedProjectHistory",
+        controller: 'BackedHistoryProjectController',
+        title: 'Lịch sử ủng hộ - Dandelion',
+        resolve: {
+            projects: [
+                '$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function($rootScope, $route, $q, ProjectService, CommmonService) {
+                    var promise = ProjectService.getBackedProjectHistory();
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
-                }]
-            }
-        });
+                }
+            ]
+        }
+    });
 
     $routeProvider.when("/error",
         {
             caseInsensitiveMatch: true,
-            templateUrl: "/ClientPartial/Error"
+            templateUrl: "/ClientPartial/Error",
+            title: 'Lỗi - Dandelion',
         });
     $routeProvider.when("/notfound",
         {
             caseInsensitiveMatch: true,
+            title: 'Không tìm thấy - Dandelion',
             templateUrl: "/ClientPartial/NotFound"
         });
     $routeProvider.otherwise({
-        redirectTo: "/notfound"
+        redirectTo: "/",
+        title: 'Dandelion',
     });
 
     //$locationProvider.html5Mode(false).hashPrefix("!");
@@ -362,36 +391,59 @@ app.config(["$routeProvider", function ($routeProvider) {
     }]);
 }]).config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeSpinner = false;
+}]).config(['ChartJsProvider', function (ChartJsProvider) {
+    //// Configure all charts
+    //ChartJsProvider.setOptions({
+    //    colours: ['#FF5252', '#FF8A80'],
+    //    responsive: false
+    //});
+    // Configure all line charts
+    ChartJsProvider.setOptions('Line', {
+        datasetFill: false
+    });
 }]);
 
-app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOptions', 'toastrConfig', 'blockUIConfig', 'MessageService',
-    function ($rootScope, $window, $anchorScroll, UserService, DTDefaultOptions, toastrConfig, blockUIConfig, MessageService) {
+app.run(['$rootScope', '$window','$location','$route', '$anchorScroll', 'UserService', 'DTDefaultOptions', 'toastrConfig', 'blockUIConfig', 'MessageService',
+    function ($rootScope, $window,$location,$route, $anchorScroll, UserService, DTDefaultOptions, toastrConfig, blockUIConfig, MessageService) {
         $rootScope.$on('$routeChangeError', function (e, curr, prev) {
             e.preventDefault();
         });
 
         // Scroll top when route change.
-        $rootScope.$on("$locationChangeStart", function () {
-            $anchorScroll();
+        $rootScope.$on("$viewContentLoaded", function () {
+            $window.scrollTo(0, 0);
+        });
+
+        $rootScope.reload = function() {
+            $route.reload();
+        }
+
+        $rootScope.$on("$routeChangeStart", function (e, curr, prev) {
+            if (curr.$$route !== undefined) {
+                $rootScope.Page = {
+                    title: curr.$$route.title !== undefined ? curr.$$route.title : ""
+                }
+            }
+
         });
 
         //$rootScope.$on('$routeChangeSuccess', function (e, curr, prev) {
-            //if ($rootScope.UserInfo.IsAuthen === true) {
-            //    var promiseGet = MessageService.getNumberNewMessage();
-            //    promiseGet.then(
-            //        function (result) {
-            //            if (result.data.Status === "success") {
-            //                // Save authen info into $rootScope
-            //                $rootScope.UserInfo.NumberNewMessage = result.data.Data;
-            //                $rootScope.UserInfo.NumberNewMessage.Total = result.data.Data.ReceivedMessage + result.data.Data.SentMessage;
-            //            } else {
-            //                $rootScope.UserInfo.NumberNewMessage = 0;
-            //            }
-            //        },
-            //        function (error) {
-            //            $rootScope.UserInfo.NumberNewMessage = 0;
-            //        });
-            //}
+        //if ($rootScope.UserInfo.IsAuthen === true) {
+        //    var promiseGet = MessageService.getNumberNewMessage();
+        //    promiseGet.then(
+        //        function (result) {
+        //            if (result.data.Status === "success") {
+        //                // Save authen info into $rootScope
+        //                $rootScope.UserInfo.NumberNewMessage = result.data.Data;
+        //                $rootScope.UserInfo.NumberNewMessage.Total = result.data.Data.ReceivedMessage + result.data.Data.SentMessage;
+        //            } else {
+        //                $rootScope.UserInfo.NumberNewMessage = 0;
+        //            }
+        //        },
+        //        function (error) {
+        //            $rootScope.UserInfo.NumberNewMessage = 0;
+        //        });
+        //}
         //});
 
         // Set language for table
@@ -435,7 +487,7 @@ app.run(['$rootScope', '$window', '$anchorScroll', 'UserService', 'DTDefaultOpti
             closeButton: true,
             newestOnTop: true,
             autoDismiss: true,
-            progressBar: true
+            //progressBar: true
         });
 
         // Base Url of web app.

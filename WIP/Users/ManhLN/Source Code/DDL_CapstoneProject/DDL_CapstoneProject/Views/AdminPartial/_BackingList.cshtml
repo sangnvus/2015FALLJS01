@@ -9,8 +9,8 @@
                     <h4>Danh sách ủng hộ</h4>
                 </div>
                 <div class="portlet-widgets">
-                    <a href="#" class="btn btn-blue btn-sm">Xuất dữ liệu</a>
-                    <a data-toggle="collapse" data-parent="#accordion" href="#NewProjectTable"><i class="fa fa-chevron-down"></i></a>
+                    <a href="#" onclick="return false;" ng-click="exportExcel()" class="btn btn-blue btn-sm">Xuất dữ liệu</a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#NewProjectTable" onclick="return false;"><i class="fa fa-chevron-down"></i></a>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -21,26 +21,26 @@
                                datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
                             <thead>
                                 <tr>
-                                    <th>STT</th>
+                                    <th style="width: 15px">#</th>
                                     <th>Tên dự án</th>
                                     <th>Tên người ủng hộ</th>
                                     <th>Số tiền ủng hộ</th>
                                     <th>Thời gian ủng hộ</th>
-                                    <th>Hành động</th>
+                                    <th style="width:40px"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="backing in ListBacking">
-                                    <td>{{$index + 1}}</td>
+                                    <td style="width:40px" class="col-number">{{$index + 1}}</td>
                                     <td>{{backing.ProjectTitle}}</td>
                                     <td>{{backing.BackerName}}</td>
-                                    <td>{{backing.PledgeAmount}}</td>
-                                    <td>{{backing.BackedDate | date : "hh:mm dd-MM-yyyy"}}</td>
+                                    <td style="width:150px" class="col-number"><span class="money usd no-code">{{backing.PledgeAmount | number : fractionSize}} &#8363;</span></td>
+                                    <td style="width:150px">{{backing.BackedDate | date : "HH:mm 'ngày' dd-MM-yyyy"}}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <button class="btn btn-primary btn-sm" type="button" id=""
+                                            <button tooltip="Nhấp để xem chi tiết" class="btn btn-primary btn-sm" id=""
                                                     data-toggle="modal" data-target="#backingDetail"
-                                                    data-tooltip="tooltip" data-placement="left" data-trigger="hover" title="View"
+                                                    tooltip-placement="left" data-trigger="hover" title="View" tooltip-append-to-body="true"
                                                     ng-click="GetBacker(backing.UserName,backing.BackingID)">
                                                 <i class="fa fa-eye"></i>
                                             </button>
@@ -125,7 +125,7 @@
                                 <h5><strong>Mô tả gói ủng hộ:</strong></h5>
                                 <h5>Thank the Seven! Err-- Five! Thank you for your pledge! For this sign of support, we here at Larian Studios are truly grateful.</h5>
                                 <br />
-                                <h4><strong>Mức giá gói ủng hộ:</strong> {{Backer.RewardPledgeAmount}}<h4>
+                                <h4><strong>Mức giá gói ủng hộ:</strong><span class="money usd no-code">{{Backer.RewardPledgeAmount | number : fractionSize}} &#8363;</span><h4>
                             </div>
                         </div>
                     </div>

@@ -2,7 +2,7 @@
 
 app.controller('AdminProjectDetailController',
     function ($scope, $rootScope, $sce, toastr, project, AdminProjectService,
-    CommmonService) {
+    CommmonService, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
 
         // Get project list
         $scope.Project = project.data.Data;
@@ -11,10 +11,26 @@ app.controller('AdminProjectDetailController',
             return $sce.trustAsResourceUrl(src);
         }
 
+        // Function check string startwith 'http'
+        $scope.checkHTTP = function (input) {
+            var lowerStr = (input + "").toLowerCase();
+            return lowerStr.indexOf('http') === 0;
+        }
+
         $scope.FirstLoadComment = false;
         $scope.Project.CommentsList = {};
         $scope.FirstUpdateLogs = false;
         $scope.Project.UpdateLogsList = {};
+
+        // Define table
+        $scope.dtOptions = DTOptionsBuilder.newOptions()
+        .withDisplayLength(10)
+        .withOption('order', [3, 'asc'])
+        .withBootstrap();
+
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0).notSortable()
+        ];
 
         // function get comments
         $scope.getCommentList = function () {
@@ -87,9 +103,22 @@ app.controller('AdminProjectDetailController',
                 function (result) {
                     $scope.ListBacker = result.data.Data.listBacker;
                     $scope.labels = result.data.Data.Date;
-                    console.log("label " + $scope.labels);
-                    $scope.series = ['Số tiền đã ủng hộ'];
-                    $scope.data = [result.data.Data.Amount];
+                    $scope.series = ['Số tiền đã được ủng hộ', 'Mục tiêu'];
+                    var data2 = [];
+                    for (var i = 0; i < result.data.Data.Amount.length; i++) {
+                        data2.push($scope.Project.FundingGoal);
+                    }
+                    $scope.data = [result.data.Data.Amount, data2];
+                    $scope.colours = ['#97bbcd', '#f7464a'];
+                    $scope.checkLoadlist = true;
+                    $scope.options = {
+                        multiTooltipTemplate: function (label) {
+                            return (label.datasetLabel + ': ' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) + "₫";
+                        },
+                        scaleLabel: function (label) {
+                            return (label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) + "₫";
+                        }
+                    };
                 }
             );
         };
@@ -114,6 +143,29 @@ app.controller('AdminProjectDetailController',
                     $scope.Error = error.data.Message;
                     toastr.error($scope.Error, 'Lỗi!');
                 });
-        }
+        };
+
+        // Alert admin before change status
+        $scope.warning = function (status) {
+            SweetAlert.swal({
+                title: "Bạn vừa thay đổi trạng thái dự án!",
+                text: "Trạng thái dự án sẽ bị chỉnh sửa!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Có!",
+                cancelButtonText: "Không!",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        //SweetAlert.swal("Edited!", "Project's basic has been edited.", "success");
+                        $scope.change(status);
+                    } else {
+                        //SweetAlert.swal("Cancelled", "Project's basic is safe :)", "error");
+                    }
+                });
+        };
 
     });

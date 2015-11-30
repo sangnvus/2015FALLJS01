@@ -2,7 +2,7 @@
 
 app.controller('AdminCategoryController',
     function ($scope, $rootScope, toastr, listcategory, AdminCategoryService, CommmonService,
-        DTOptionsBuilder, DTColumnDefBuilder) {
+        DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
         //Todo here.
         $scope.ListCategory = listcategory.data.Data;
         $scope.NewCategory = {
@@ -35,13 +35,15 @@ app.controller('AdminCategoryController',
                             toastr.success("Đã khóa");
                         }
                     } else {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        $scope.Error = result.data.Message;
-                        toastr.error($scope.Error, 'Lỗi');
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
                     }
                 },
                 function (error) {
-                    $scope.Error = error.data.Message;
+                    toastr.error('Lỗi');
                 });
         }
 
@@ -64,32 +66,51 @@ app.controller('AdminCategoryController',
                         toastr.success("Tạo danh mục thành công");
                         $('#newCategoryModal').modal('hide');
                     } else {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        $scope.NewCategoryError = result.data.Message;
-                        toastr.error($scope.NewCategoryError, 'Lỗi');
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
                     }
                 },
                 function (error) {
-                    $scope.Error = error.data.Message;
+                    toastr.error('Lỗi');
                 });
         }
 
         // Delete category
         $scope.deleteCategory = function (id, index) {
-            var promise = AdminCategoryService.deleteCategory(id);
-            promise.then(
-                function (result) {
-                    if (result.data.Status === "success") {
-                        $scope.ListCategory.splice(index);
-                        toastr.success("Xóa thành công");
-                    } else {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        toastr.error($scope.NewCategoryError, 'Lỗi');
-                    }
-                },
-                function (error) {
-                    $scope.Error = error.data.Message;
-                });
+            SweetAlert.swal({
+                title: "Xóa danh mục",
+                text: "Bạn có chắc chắn muốn xóa danh mục này không?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Có, tôi chắc chắn",
+                cancelButtonText: "Không",
+                closeOnConfirm: true
+            },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            var promise = AdminCategoryService.deleteCategory(id);
+                            promise.then(
+                                function (result) {
+                                    if (result.data.Status === "success") {
+                                        $scope.ListCategory.splice(index, 1);
+                                        toastr.success("Xóa thành công");
+                                    } else {
+                                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                                        if (a) {
+                                            $scope.Error = result.data.Message;
+                                            toastr.error($scope.Error, 'Lỗi');
+                                        }
+                                    }
+                                },
+                                function (error) {
+                                    toastr.error('Lỗi');
+                                });
+                        }
+                    });
         }
 
         $scope.showEditDialog = function (index, EditCategoryForm) {
@@ -118,12 +139,15 @@ app.controller('AdminCategoryController',
                         toastr.success("Sửa thành công");
                         $('#EditCategoryModal').modal('hide');
                     } else {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        toastr.error($scope.NewCategoryError, 'Lỗi');
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
                     }
                 },
                 function (error) {
-                    $scope.Error = error.data.Message;
+                    toastr.error('Lỗi');
                 });
         }
 

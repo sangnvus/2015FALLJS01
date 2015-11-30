@@ -1,6 +1,14 @@
 ﻿"use strict";
 
 service.service("AdminUserService", function ($http) {
+
+    this.getListBackingFullInfor = function () {
+        var request = $http({
+            method: 'get',
+            url: '../api/UserApi/GetBackingFullInforListForExport',
+        });
+        return request;
+    }
     this.getUserlist = function () {
         var request = $http({
             method: 'get',
@@ -72,6 +80,50 @@ service.service("AdminUserService", function ($http) {
         return request;
     }
     
-    
+    this.getListBacking = function () {
+        var request = $http({
+            method: 'get',
+            url: '../api/UserApi/GetListBackingForAdmin',
+        });
+        return request;
+    }
 
+    this.getBackker = function (userName, backingID) {
+        var request = $http({
+            method: 'get',
+            url: '../api/UserApi/GetBackerForAdmin',
+            params: {
+                userName: userName,
+                backingID: backingID
+            }
+        });
+        return request;
+    }
+
+    // Function to get top backers
+    this.getTopBacker = function () {
+        var request = $http({
+            method: 'get',
+            url: '../api/UserApi/AdminGetTopBacker',
+        });
+        return request;
+    }
+
+    // Function to get recent user
+    this.getRecentUser = function () {
+        var request = $http({
+            method: 'get',
+            url: '../api/UserApi/AdminGetRecentUser',
+        });
+        return request;
+    }
+
+    // Function to get recent backing event
+    this.getRecentBacking = function () {
+        var request = $http({
+            method: 'get',
+            url: '../api/UserApi/AdminGetRecentBacking',
+        });
+        return request;
+    }
 });

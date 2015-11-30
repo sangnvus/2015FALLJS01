@@ -25,7 +25,7 @@
                                     <th>Mô tả</th>
                                     <th style="width: 65px">Số dự án</th>
                                     <th style="width: 75px">Trạng thái</th>
-                                    <th style="width: 65px"></th>
+                                    <th style="width: 30px"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -52,11 +52,11 @@
                                                     ng-click="showEditDialog($index,EditCategoryForm)">
                                                 <i class="fa fa-pencil"></i>
                                             </button>
-                                            <button ng-if="category.ProjectCount == 0" class="btn btn-danger btn-sm" type="button" tooltip-placement="right"
+                                            @*<button ng-if="category.ProjectCount == 0" class="btn btn-danger btn-sm" type="button" tooltip-placement="right"
                                                     tooltip="Xóa" tooltip-append-to-body="true"
                                                     ng-click="deleteCategory(category.CategoryID, $index)">
                                                 <i class="fa fa-times"></i>
-                                            </button>
+                                            </button>*@
                                         </div>
                                     </td>
                                 </tr>

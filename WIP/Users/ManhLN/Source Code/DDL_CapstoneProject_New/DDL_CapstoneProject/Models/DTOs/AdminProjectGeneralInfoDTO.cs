@@ -11,7 +11,7 @@ namespace DDL_CapstoneProject.Models.DTOs
         public int ApprovedProject { get; set; }
         public int SuspendedProject { get; set; }
         public int ExpriredProject { get; set; }
-        public int FundedProject { get; set; }
+        public int SucceedProject { get; set; }
         public int TotalProject { get; set; }
     }
 }

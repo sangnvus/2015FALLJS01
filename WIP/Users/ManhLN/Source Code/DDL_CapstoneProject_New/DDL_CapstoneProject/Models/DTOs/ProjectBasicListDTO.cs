@@ -17,6 +17,5 @@ namespace DDL_CapstoneProject.Models.DTOs
         public string Category { get; set; }
         public string Status { get; set; }
         public int TotalBacking { get; set; }
-        public decimal PledgeAmount { get; set; }
     }
 }

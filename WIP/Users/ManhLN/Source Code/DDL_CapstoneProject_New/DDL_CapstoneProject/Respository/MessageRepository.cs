@@ -74,6 +74,43 @@ namespace DDL_CapstoneProject.Respository
             }
         }
 
+        public List<ConversationBasicDTO> GetListConversation(string userName)
+        {
+            using (var db = new DDLDataContext())
+            {
+                var listConversation = from conversation in db.Conversations
+                                       orderby conversation.UpdatedDate descending
+                                       where (conversation.Creator.Username == userName
+                                                    && (conversation.DeleteStatus == DDLConstants.ConversationStatus.NO
+                                                        || conversation.DeleteStatus == DDLConstants.ConversationStatus.RECEIVER))
+                                             || (conversation.Receiver.Username == userName
+                                                    && (conversation.DeleteStatus == DDLConstants.ConversationStatus.CREATOR
+                                                        || conversation.DeleteStatus == DDLConstants.ConversationStatus.NO))
+                                       select new ConversationBasicDTO
+                                       {
+                                           ConversationID = conversation.ConversationID,
+                                           SenderName = conversation.Creator.UserInfo.FullName,
+                                           ReceiverName = conversation.Receiver.UserInfo.FullName,
+                                           Title = conversation.Subject,
+                                           UpdatedDate = conversation.UpdatedDate,
+                                           IsSent = conversation.Creator.Username == userName,
+                                           IsRead =
+                                               (conversation.Creator.Username == userName &&
+                                                conversation.ViewStatus == DDLConstants.ConversationStatus.CREATOR)
+                                               ||
+                                               (conversation.Creator.Username != userName &&
+                                                conversation.ViewStatus == DDLConstants.ConversationStatus.RECEIVER)
+                                               || conversation.ViewStatus == DDLConstants.ConversationStatus.BOTH
+                                       };
+
+                listConversation.ForEach(
+                    x => x.UpdatedDate = CommonUtils.ConvertDateTimeFromUtc(x.UpdatedDate.GetValueOrDefault()));
+
+                return listConversation.ToList();
+            }
+        }
+
+
         public List<ConversationBasicDTO> GetListSentConversation(string userName)
         {
             using (var db = new DDLDataContext())
@@ -228,6 +265,9 @@ namespace DDL_CapstoneProject.Respository
                 conversation.ViewStatus = conversation.Creator.Username == userName
                     ? DDLConstants.ConversationStatus.CREATOR
                     : DDLConstants.ConversationStatus.RECEIVER;
+
+                // Reset delete status.
+                conversation.DeleteStatus = DDLConstants.ConversationStatus.NO;
 
                 // Add to DB.
                 db.Conversations.AddOrUpdate(conversation);

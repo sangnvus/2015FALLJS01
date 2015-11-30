@@ -11,8 +11,9 @@ namespace DDL_CapstoneProject.Models
     {
         #region Attributes
 
-        [Key,ForeignKey("Backing")]
+        [Key, ForeignKey("Backing")]
         public int BackingID { get; set; }
+        public string BackerName { get; set; }
         public int RewardPkgID { get; set; }
         public decimal PledgedAmount { get; set; }
         public int Quantity { get; set; }

@@ -83,4 +83,9 @@ function ($scope, $http, projectbycategory, categoryList, ProjectService, Catego
             }
         });
     }
+
+    $scope.SortList = [{ 'Value': 'PopularPoint', 'Label': 'Phổ biến' },
+        { 'Value': 'CreatedDate', 'Label': 'Mới nhất' },
+        { 'Value': 'ExpireDate', 'Label': 'Ngày còn lại' },
+        { 'Value': 'CurrentFunded', 'Label': 'Ủng hộ' }];
 }]);

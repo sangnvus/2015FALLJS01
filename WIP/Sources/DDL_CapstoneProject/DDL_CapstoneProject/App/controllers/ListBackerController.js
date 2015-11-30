@@ -1,11 +1,33 @@
 ﻿"use strict"
 
 app.controller('ListBackerController', function ($scope, $route, projects, UserService, ProjectService, DTOptionsBuilder, DTColumnDefBuilder) {
-    //$scope.Project = project.data.Data;
-    $scope.ListBacker = projects.data.Data.listBacker;
-    $scope.labels = projects.data.Data.Date;
-    $scope.series = ['Số tiền đã ủng hộ'];
-    $scope.data = [projects.data.Data.Amount];
+    
+    var promise = ProjectService.getProjectDetail($route.current.params.code);
+    promise.then(
+
+        function (result) {
+            $scope.ListBacker = projects.data.Data.listBacker;
+            $scope.labels = projects.data.Data.Date;
+            $scope.series = ['Số tiền đã được ủng hộ', 'Mục tiêu'];
+            var data2 = [];
+            for (var i = 0; i < projects.data.Data.Amount.length; i++) {
+                data2.push(result.data.Data.FundingGoal);
+            }
+            $scope.data = [projects.data.Data.Amount, data2];
+            $scope.colors = ['#97bbcd', '#f7464a'];
+            $scope.options = {
+                multiTooltipTemplate: function (label) {
+                    return (label.datasetLabel + ': ' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) + "₫";
+                },
+                scaleLabel: function (label) {
+                    return (label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) + "₫";
+                }
+            };
+        },
+         function (error) {
+             $scope.Error = error.data.Message;
+         });
+   
     //loadlistBacker();
         // Define table
     $scope.dtOptions = DTOptionsBuilder.newOptions()
@@ -16,23 +38,6 @@ app.controller('ListBackerController', function ($scope, $route, projects, UserS
     $scope.dtColumnDefs = [
         DTColumnDefBuilder.newColumnDef(0).notSortable()
     ];
-
-    //function getBackedUserInfo(){
-    //    var promiseGet = UserService.getBackedUserInfo();
-
-    //        promiseGet.then(
-    //            function (result) {
-    //                if (result.data.Status === "success") {
-    //                    $scope.BackedUser = result.data.Data;
-    //                } else {
-    //                    CommmonService.checkError(result.data.Type);
-    //                    $scope.Error = result.data.Message;
-    //                }
-    //            },
-    //            function (error) {
-    //                $scope.Error = error.data.Message;
-    //            });
-    //}
 
     $scope.getBackingInfo = function () {
         var promiseGet = ProjectService.backingInfo($route.current.params.code);
@@ -50,5 +55,6 @@ app.controller('ListBackerController', function ($scope, $route, projects, UserS
                 $scope.Error = error.data.Message;
             });
     }
-    
+
+       
 });

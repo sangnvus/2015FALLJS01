@@ -3,7 +3,7 @@ var service = angular.module("DDLService", []);
 var directive = angular.module("DDLDirective", []);
 var app = angular.module("AdminApp", ["ngRoute", "ngAnimate", "ngSanitize", "DDLService",
     "DDLDirective", 'angular-loading-bar', 'textAngular', 'toastr', 'ui.bootstrap', 'monospaced.elastic',
-    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert', 'blockUI', 'chart.js']);
+    'datatables', 'datatables.bootstrap', 'oitozero.ngSweetAlert', 'blockUI', 'chart.js', "highcharts-ng", 'ChartAngular']);
 
 // Show Routing.
 app.config(["$routeProvider", function ($routeProvider) {
@@ -21,6 +21,25 @@ app.config(["$routeProvider", function ($routeProvider) {
             breadcrumb: ['Quản lý chung', 'Thống kê'],
             title: 'Thống kê',
             resolve: {
+                basicInfo: ['$rootScope', '$q', 'AdminProjectService', 'CommmonService', function ($rootScope, $q, AdminProjectService, CommmonService) {
+                    var promise = AdminProjectService.getBasicDashboardInfo();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }],
+                listcategory: ['$rootScope', '$q', 'AdminCategoryService', 'CommmonService', function ($rootScope, $q, AdminCategoryService, CommmonService) {
+                    var promise = AdminCategoryService.getCategories();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }],
+                topBackers: ['$rootScope', '$q', 'AdminUserService', 'CommmonService', function ($rootScope, $q, AdminUserService, CommmonService) {
+                    var promise = AdminUserService.getTopBacker();
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }],
+                statistic: ['$rootScope', '$q', 'AdminProjectService', 'CommmonService', function ($rootScope, $q, AdminProjectService, CommmonService) {
+                    var d = new Date();
+                    var n = d.getFullYear();
+                    var currentYear = parseInt(n);
+                    var promise = AdminProjectService.getProjectStatistic(currentYear);
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }]
             }
         });
 
@@ -72,10 +91,9 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/project",
         {
-            caseInsensitiveMatch: true,
             templateUrl: "/AdminPartial/ProjectDashboard",
             controller: 'AdminProjectDashboardController',
-            activeTab: 'dashboard',
+            activeTab: 'projectdashboard',
             breadcrumb: ['Quản lí dự án', 'Thông tin chung'],
             title: 'Thông tin chung',
             resolve: {
@@ -91,7 +109,6 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/project/all",
         {
-            caseInsensitiveMatch: true,
             templateUrl: "/AdminPartial/ProjectList",
             controller: 'AdminProjectListController',
             activeTab: 'projectList',
@@ -106,7 +123,6 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
     $routeProvider.when("/project/:code",
        {
-           caseInsensitiveMatch: true,
            templateUrl: "/AdminPartial/ProjectDetail",
            controller: 'AdminProjectDetailController',
            activeTab: 'projectList',
@@ -146,10 +162,12 @@ app.config(["$routeProvider", function ($routeProvider) {
             resolve: {
                 conversations: ['$route', '$rootScope', '$q', 'MessageService', 'CommmonService', function ($route, $rootScope, $q, MessageService, CommmonService) {
                     var promise;
-                    if ($route.current.params.list == null || $route.current.params.list !== "sent") {
+                    if ($route.current.params.list === "inbox") {
                         promise = MessageService.getListReceivedConversations();
-                    } else {
+                    } else if ($route.current.params.list === "sent") {
                         promise = MessageService.getListSentConversations();
+                    } else {
+                        promise = MessageService.getListConversations();
                     }
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }]
@@ -176,8 +194,8 @@ app.config(["$routeProvider", function ($routeProvider) {
           templateUrl: "/AdminPartial/UserList",
           controller: 'AdminUserListController',
           activeTab: 'userlist',
-          breadcrumb: ['Quản lý người dùng', 'Danh sách người dùng'],
-          title: 'Danh sách người dùng',
+          breadcrumb: ['Quản lý thành viên', 'Danh sách thành viên'],
+          title: 'Danh sách thành viên',
           resolve: {
               listuser: ['$rootScope', '$q', 'AdminUserService', 'CommmonService', function ($rootScope, $q, AdminUserService, CommmonService) {
                   var promise = AdminUserService.getUserlist();
@@ -190,9 +208,9 @@ app.config(["$routeProvider", function ($routeProvider) {
       {
           templateUrl: "/AdminPartial/UserProfile",
           controller: 'AdminUserProfileController',
-          activeTab: 'userlist ',
-          breadcrumb: ['Quản lý người dùng', 'Thông tin người dùng'],
-          title: 'Thông tin người dùng',
+          activeTab: 'userlist',
+          breadcrumb: ['Quản lý thành viên', 'Thông tin thành viên'],
+          title: 'Thông tin thành viên',
           resolve: {
               userprofile: ['$route', '$rootScope', '$q', 'AdminUserService', 'CommmonService', function ($route, $rootScope, $q, AdminUserService, CommmonService) {
                   var promise = AdminUserService.getUserprofile($route.current.params.username);
@@ -206,8 +224,8 @@ app.config(["$routeProvider", function ($routeProvider) {
           templateUrl: "/AdminPartial/UserDashboard",
           controller: 'AdminUserDashboardController',
           activeTab: 'userdashboard',
-          breadcrumb: ['Bảng điều khiển', 'Bảng điều khiển người dùng'],
-          title: 'Bảng điều khiển người dùng',
+          breadcrumb: ['Quản lý thành viên', 'Thông tin chung'],
+          title: 'Thông tin chung',
           resolve: {
               userdashboard: ['$route', '$rootScope', '$q', 'AdminUserService', 'CommmonService', function ($route, $rootScope, $q, AdminUserService, CommmonService) {
                   var promise = AdminUserService.getUserDasboard();
@@ -215,6 +233,37 @@ app.config(["$routeProvider", function ($routeProvider) {
               }]
           }
       });
+
+    $routeProvider.when("/backingdetail/:id",
+       {
+           templateUrl: "/AdminPartial/BackingDetail",
+           controller: 'AdminBackingDetailController',
+           activeTab: 'projectList',
+           breadcrumb: ['Danh sách dự án', 'Chi tiết ủng hộ'],
+           title: 'Chi tiết ủng hộ',
+           resolve: {
+               backing: ['$rootScope', '$route', '$q', 'AdminProjectService', 'CommmonService', function ($rootScope, $route, $q, AdminProjectService, CommmonService) {
+                   var promise = AdminProjectService.getBackingDetail($route.current.params.id);
+                   return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+               }]
+           }
+       });
+
+    $routeProvider.when("/backinglist",
+ {
+     templateUrl: "/AdminPartial/BackingList",
+     controller: 'AdminBackingListController',
+     activeTab: 'backinglist',
+     breadcrumb: ['Bảng điều khiển', 'Danh sách ủng hộ'],
+     title: 'Danh sách ủng hộ',
+     resolve: {
+         listBacking: ['$route', '$rootScope', '$q', 'AdminUserService', 'CommmonService', function ($route, $rootScope, $q, AdminUserService, CommmonService) {
+             var promise = AdminUserService.getListBacking();
+             return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+         }]
+     }
+ });
+
     $routeProvider.when("/notfound",
         {
             caseInsensitiveMatch: true,
@@ -233,7 +282,10 @@ app.config(["$routeProvider", function ($routeProvider) {
         });
 
     $routeProvider.otherwise({
-        redirectTo: "/notfound"
+        redirectTo: "/",
+        activeTab: '',
+        breadcrumb: [],
+        title: ''
     });
 
     //$locationProvider.html5Mode(false).hashPrefix("!");
@@ -246,6 +298,16 @@ app.config(["$routeProvider", function ($routeProvider) {
     }]);
 }]).config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeSpinner = false;
+}]).config(['ChartJsProvider', function (ChartJsProvider) {
+    //// Configure all charts
+    //ChartJsProvider.setOptions({
+    //    colours: ['#FF5252', '#FF8A80'],
+    //    responsive: false
+    //});
+    // Configure all line charts
+    ChartJsProvider.setOptions('Line', {
+        datasetFill: false
+    });
 }]);
 
 app.run(['$rootScope', '$window', '$anchorScroll', 'DTDefaultOptions', 'toastrConfig', 'blockUIConfig',
@@ -256,16 +318,18 @@ app.run(['$rootScope', '$window', '$anchorScroll', 'DTDefaultOptions', 'toastrCo
         });
 
         // Scroll top when route change.
-        $rootScope.$on("$locationChangeSuccess", function () {
-            $anchorScroll();
+        $rootScope.$on("$viewContentLoaded", function () {
+            $window.scrollTo(0, 0);
         });
 
         // Scroll top when route change.
         $rootScope.$on("$routeChangeStart", function (e, curr, prev) {
-            $rootScope.Page = {
-                title: curr.$$route.title,
-                activeTab: curr.$$route.activeTab,
-                breadcrumb: curr.$$route.breadcrumb
+            if (curr.$$route !== undefined) {
+                $rootScope.Page = {
+                    title: curr.$$route.title !== undefined ? curr.$$route.title : "",
+                    activeTab: curr.$$route.activeTab !== undefined ? curr.$$route.activeTab : "",
+                    breadcrumb: curr.$$route.breadcrumb !== undefined ? curr.$$route.breadcrumb : ""
+                }
             }
             //        ShareData.currentPage =
 
@@ -312,7 +376,7 @@ app.run(['$rootScope', '$window', '$anchorScroll', 'DTDefaultOptions', 'toastrCo
             closeButton: true,
             newestOnTop: true,
             autoDismiss: true,
-            progressBar: true
+            //progressBar: true
         });
 
         // Base Url of web app.

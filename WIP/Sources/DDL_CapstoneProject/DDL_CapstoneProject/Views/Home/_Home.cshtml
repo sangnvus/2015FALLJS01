@@ -1,20 +1,35 @@
 ﻿
-<div id="content" class="paddingNavbar">
+<div id="content" class="paddingNavbar" style="margin-bottom: -50px">
     <div id="main-slider" class="no-margin">
         <div class="carousel slide wet-asphalt">
             <ol class="carousel-indicators">
                 <li showtab data-target="#main-slider" data-slide-to="{{$index}}" ng-repeat="slide in Slides track by $index" ng-class="{'active': $first}"></li>
             </ol>
             <div class="carousel-inner">
-                <div class="item" ng-style="{'background-image': 'url(/images/slides/{{slide.ImageUrl}})'}" ng-repeat="slide in Slides track by $index" ng-class="{'active': $first}">
+                <div class="item" ng-style="{'background-image': 'url(/images/slides/{{slide.ImageUrl}})'}"
+                     ng-repeat="slide in Slides track by $index" ng-class="{'active': $first}">
                     <div class="container">
                         <div class="row">
-                            <div ng-class="$index == 2 ? 'col-sm-6': 'col-sm-12'">
+                            <div ng-class="checkHTTP(slide.VideoUrl) == true ? 'col-sm-6': 'col-sm-12'">
                                 <div class=" carousel-content txt-c white centered">
-                                    <h2 class="animation animated-item-1">{{slide.Title}}</h2>
-                                    <p class="animation animated-item-2">{{slide.Description}}</p>
-                                    <a class="btn btn-md animation animated-item-3" href="{{slide.SlideUrl}}">{{slide.ButtonText}}</a>
+                                    <h2 ng-class="slide.TextColor" class="animation animated-item-1">{{slide.Title}}</h2>
+                                    <br ng-if="slide.TextColor == 'dark'" />
+                                    <p ng-class="slide.TextColor" class="animation animated-item-2">{{slide.Description}}</p>
+                                    <br ng-if="slide.TextColor == 'dark'" />
+                                    <!--Button color-->
+                                    <a ng-if="slide.ButtonColor == 'btn-default'" class="btn btn-md animation animated-item-3"
+                                       href="{{slide.SlideUrl}}" style="min-width: 100px">{{slide.ButtonText}}</a>
+                                    <a ng-if="slide.ButtonColor == 'btn-success'" class="btn btn-success btn-md animation animated-item-3"
+                                       href="{{slide.SlideUrl}}" style="min-width: 100px">{{slide.ButtonText}}</a>
+                                    <a ng-if="slide.ButtonColor == 'btn-info'" class="btn btn-md btn-info animation animated-item-3"
+                                       href="{{slide.SlideUrl}}" style="min-width: 100px">{{slide.ButtonText}}</a>
                                 </div>
+                            </div>
+                            <div ng-if="checkHTTP(slide.VideoUrl)" class="col-sm-6 hidden-xs animation animated-item-4 ng-cloak centered">
+                                <div class="responsive-video">
+                                    <iframe ng-src="{{trustSrc(slide.VideoUrl)}}" frameborder="0"> </iframe>
+                                </div>
+                                <div ng-init="resizeWindow()"></div>
                             </div>
                         </div>
                     </div>
@@ -30,139 +45,150 @@
         </div><!--/.carousel-->
     </div><!--/#main-slider-->
 
+
     <div id="feature1">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="tabbable tabs-right">
+                    <div class=" tabbable tabs-right">
                         <ul class="nav nav-tabs">
                             <li ng-repeat="project in projectByCategory" ng-class="{'active': $first}"><a showtab="" href="#_picked{{project.ProjectID}}" data-toggle="tab">{{project.Category}}</a></li>
                         </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane" id="_picked{{project.ProjectID}}" ng-repeat="project in projectByCategory" ng-class="{'active': $first}">
-                                <h4><p class="fnt30">Nổi bật của <a href="@Url.Content("/#/search?categoryid={{project.CategoryID}}")">{{project.Category}}</a></p></h4>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img ng-src="\images\projects\{{project.ImageUrl}}" alt="" style="width: 341px; height: 255.75px;"></figure></a>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <p class="fnt35 fnt-b pt0 pb0 mb0 mt0"><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></p>
-                                        <p class="pt0 pb0 mb0 mt0">by {{project.CreatorName}}</p>
-                                        <div class="info">
-                                            {{project.SubDescription}}
-                                        </div>
-
+                    </div> <!-- end tab category -->
+                    <div class="tab-content">
+                        <div class="tab-pane" id="_picked{{project.ProjectID}}" ng-repeat="project in projectByCategory" ng-class="{'active': $first}">
+                            <h4><p class="fnt30">Nổi bật của: <a href="@Url.Content("/#/search?categoryid={{project.CategoryID}}")">{{project.Category}}</a></p></h4>
+                            <div class="row">
+                                <div class="col-sm-5 col-md-4 col-lg-5 pro-image">
+                                    <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img ng-src="\images\projects\{{project.ImageUrl}}" alt="" style="width: 341px; height: 255.75px;"></figure></a>
+                                </div>
+                                <div class="col-sm-5 col-md-5 col-lg-5">
+                                    <div class="pro-title ">
+                                        <p class="fnt30 fnt-b pt0 pb0 mb0 mt0"><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></p>
+                                        <p class="pt0 pb0 mb0 mt0">bởi {{project.CreatorName}}</p>
+                                    </div> <!-- end title -->
+                                    <div class="pro-content">
+                                        <p>{{project.SubDescription}}</p>
+                                    </div> <!-- end content -->
+                                    <div class="pro-footer">
                                         <div class="mt10 mb5">
                                             <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
                                             &nbsp;&nbsp;
                                             <a class="grey-dark" href="@Url.Content("/#/search?categoryid={{project.CategoryID}}")"><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
                                             &nbsp;&nbsp;
                                         </div>
-
                                         <div class="progress mt5 mb5">
                                             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{project.CurrentFunded}}" aria-valuemin="0" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
-                                                {{project.CurrentFunded}}%
                                             </div>
                                         </div>
                                         <div class="">
                                             <ul class="list-inline">
-                                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">ủng hộ</p></li>
-                                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber| number : fractionSize}}&#8363;</p><p class="mt0 mb0">gây quỹ</p></li>
-                                                <li><p class="fnt-b mt0 mb0">{{project.Backers}}</p><p class="mt0 mb0">người ủng hộ</p></li>
+                                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">đã ủng hộ</p></li>
+                                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber| number : fractionSize}}&#8363;</p><p class="mt0 mb0">đã gây quỹ</p></li>
+                                                <li><p class="fnt-b mt0 mb0 c00">{{project.Backers}}</p><p class="mt0 mb0">người ủng hộ</p></li>
                                                 <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">ngày còn lại</p></li>
                                             </ul>
                                         </div>
+                                    </div>  <!-- end footer -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end feature1 -->
+
+        <div id="feature2">
+            <section id="portfolio" class="container">
+                <h4 class="pull-left">Phổ biến:</h4>
+                <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="@Url.Content("/#/discover")">Xem thêm</a>
+                <div class="clearfix"></div>
+                <!-- <ul class="portfolio-filter">
+                    <li><a class="btn btn-default active" href="#" data-filter="*">All</a></li>
+                    <li><a class="btn btn-default" href="#" data-filter=".bootstrap">Bootstrap</a></li>
+                    <li><a class="btn btn-default" href="#" data-filter=".html">HTML</a></li>
+                    <li><a class="btn btn-default" href="#" data-filter=".wordpress">Wordpress</a></li>
+                </ul> -->
+                <!--/#portfolio-filter-->
+
+                <ul class="portfolio-items col-4">
+                    <li class="portfolio-item apps" ng-repeat="project in popularproject">
+                        <div class="item-inner">
+                            <div class="item-image hover01 column">
+                                <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
+                            </div>
+                            <div class="item-title">
+                                <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
+                            </div>
+                            <div class="item-content">
+                                <p class="fnt15">{{project.SubDescription}}</p>
+                            </div>
+                            <div class="item-footer">
+                                <div class="mt10 mb5 no-wrap text-hidden">
+                                    @*<a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
+            &nbsp;&nbsp;*@
+                                    <a class="grey-dark" href="@Url.Content("/#/search?categoryid={{project.CategoryID}}")"><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
+                                    &nbsp;&nbsp;
+                                    <span class="grey-dark"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>{{project.Location}}</span>
+                                </div>
+                                <div class="progress mt5 mb5">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
+                                        <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
                                     </div>
                                 </div>
-
+                                <ul class="list-inline fnt15">
+                                    <li>
+                                        <span class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</span>
+                                        <span class="mt0 mb0">đã ủng hộ</span>
+                                    </li>
+                                    <li>
+                                        <span class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</span>
+                                        <span class="mt0 mb0">ngày còn lại</span>
+                                    </li>
+                                </ul>
+                                <ul class="list-inline fnt15">
+                                    <li>
+                                        <span class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber| number : fractionSize}}&#8363;</span>
+                                        <span class="mt0 mb0">đã gây quỹ</span>
+                                    </li>
+                                </ul>
                             </div>
-
                         </div>
-                    </div>
+                    </li><!--/.portfolio-item-->
+                </ul>
+                <div class="form-actions txt-c">
                 </div>
-
-            </div>
+            </section><!--/#portfolio-->
         </div>
-    </div> <!-- end feature1 -->
-    <div id="feature2">
-        <section id="portfolio" class="container">
-            <h4 class="pull-left">Phổ biến:</h4>
-            <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="@Url.Content("/#/discover")">Xem thêm</a>
-            <div class="clearfix"></div>
-            <!-- <ul class="portfolio-filter">
-                <li><a class="btn btn-default active" href="#" data-filter="*">All</a></li>
-                <li><a class="btn btn-default" href="#" data-filter=".bootstrap">Bootstrap</a></li>
-                <li><a class="btn btn-default" href="#" data-filter=".html">HTML</a></li>
-                <li><a class="btn btn-default" href="#" data-filter=".wordpress">Wordpress</a></li>
-            </ul> -->
-            <!--/#portfolio-filter-->
 
-            <ul class="portfolio-items col-4">
-                <li class="portfolio-item apps" ng-repeat="project in popularproject">
-                    <div class="item-inner">
-                        <div class="item-image hover01 column">
-                            <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
+        <div id="feature3">
+            <div class="container">
+                <div class="text-center">
+                    <p id="topfund" class="h1 bold">TOP ỦNG HỘ</p>
+                    <div class="row dark-cyan">
+                        <div class="col-md-4">
+                            <p class="fnt25">Tổng số tiền đã ủng hộ</p>
+                            <p><i class="fa fa-money fa-5x"></i></p>
+                            <p class="fnt50 fnt-b">{{totalprojectfund.CurrentFundedNumber| number : fractionSize}}&#8363;</p>
                         </div>
-                        <div class="item-title">
-                            <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
+                        <div class="col-md-4">
+                            <p class="fnt25">Cho một dự án thành công</p>
+                            <p><i class="fa fa-line-chart fa-5x"></i></p>
+                            <p class="fnt50 fnt-b">{{highestprojectfund.CurrentFundedNumber| number : fractionSize}}&#8363;</p>
                         </div>
-                        <div class="item-content">
-                            <p class="fnt15">{{project.SubDescription}}</p>
-                        </div>
-                        <div class="item-footer">
-                            <div class="mt10 mb5">
-                                <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
-                                &nbsp;&nbsp;
-                                <a class="grey-dark" href="@Url.Content("/#/search?categoryid={{project.CategoryID}}")"><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
-                                &nbsp;&nbsp;
-                            </div>
-                            <div class="progress mt5 mb5">
-                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
-                                    <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
-                                </div>
-                            </div>
-                            <ul class="list-inline">
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">ủng hộ</p></li>
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber| number : fractionSize}}&#8363;</p><p class="mt0 mb0">gây quỹ</p></li>
-                                <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">ngày còn lại</p></li>
-                            </ul>
+                        <div class="col-md-4">
+                            <p class="fnt25">Cho một dự án đang gây quỹ</p>
+                            <p><i class="fa fa-diamond fa-5x"></i></p>
+                            <p class="fnt50 fnt-b">{{highestprojectpledge.CurrentFundedNumber| number : fractionSize}}&#8363;</p>
                         </div>
                     </div>
-                </li><!--/.portfolio-item-->
-            </ul>
-            <div class="form-actions txt-c">
-            </div>
-        </section><!--/#portfolio-->
-    </div>
-
-    <div id="feature3">
-        <div class="container">
-            <div class="text-center">
-                <p id="topfund" class="h1 bold">TOP ỦNG HỘ</p>
-                <div class="row dark-cyan">
-                    <div class="col-md-4">
-                        <p class="fnt25">Tổng số tiền đã ủng hộ</p>
-                        <p><i class="fa fa-money fa-5x"></i></p>
-                        <p class="fnt50 fnt-b">{{totalprojectfund.CurrentFundedNumber| number : fractionSize}}&#8363;</p>
-                    </div>
-                    <div class="col-md-4">
-                        <p class="fnt25">Cho một dự án thành công</p>
-                        <p><i class="fa fa-line-chart fa-5x"></i></p>
-                        <p class="fnt50 fnt-b">{{highestprojectfund.CurrentFundedNumber| number : fractionSize}}&#8363;</p>
-                    </div>
-                    <div class="col-md-4">
-                        <p class="fnt25">Cho một dự án đang gây quỹ</p>
-                        <p><i class="fa fa-diamond fa-5x"></i></p>
-                        <p class="fnt50 fnt-b">{{highestprojectpledge.CurrentFundedNumber| number : fractionSize}}&#8363;</p>
+                    <div id="btnview" class="pt15">
+                        <a class="btn btn-transparent btn-sm" href="@Url.Content("/#/statistics/")">Xem thêm</a>
                     </div>
                 </div>
-                <div id="btnview" class="pt15">
-                    <a class="btn btn-transparent btn-sm" href="@Url.Content("/#/statistics/")">Xem thêm</a>
-                </div>
             </div>
-        </div>
-    </div> <!-- end feature3 -->
-</div> <!-- end content -->
+        </div> <!-- end feature3 -->
+    </div> <!-- end content -->
 <script>
     //#main-slider
     // -------------------------------------------------------------

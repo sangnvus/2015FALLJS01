@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -11,6 +12,7 @@ using DDL_CapstoneProject.Respository;
 using DDL_CapstoneProject.Ultilities;
 using System.Web;
 using System.Web.Script.Serialization;
+using DDL_CapstoneProject.Models;
 
 namespace DDL_CapstoneProject.Controllers.ApiControllers
 {
@@ -29,7 +31,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             {
                 if (!ModelState.IsValid)
                 {
-                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Sai định dạng dữ liệu", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
                 }
                 var user = UserRepository.Instance.Register(newUser);
             }
@@ -49,12 +51,12 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         }
 
         /// <summary>
-        /// 
+        /// Api reset password
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
         [HttpPost]
-        public IHttpActionResult ResetPassword(string email)
+        public IHttpActionResult ResetPassword(string email, string code)
         {
             try
             {
@@ -62,7 +64,39 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 {
                     return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
                 }
-                var result = UserRepository.Instance.ResetPassword(email);
+                var result = UserRepository.Instance.ResetPassword(email, code);
+            }
+            catch (UserNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Tài khoản không tồn tại!", Type = "UserNotFound" });
+            }
+            catch (InvalidDataException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Mã code không đúng", Type = "wrong-code" });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
+        }
+
+        /// <summary>
+        /// SendCodeResetPassword
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public IHttpActionResult SendCodeResetPassword(string email)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+                }
+                var result = UserRepository.Instance.SendCodeResetPassword(email);
             }
             catch (UserNotFoundException)
             {
@@ -188,6 +222,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         public IHttpActionResult GetUserInfoEdit()
         {
             UserEditInfoDTO userCurrent = null;
+            DDL_User userCurrent1 = UserRepository.Instance.GetByUserNameOrEmail(User.Identity.Name);
             try
             {
                 if (!ModelState.IsValid)
@@ -200,7 +235,11 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                     return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
                 }
                 userCurrent = UserRepository.Instance.GetUserEditInfo(User.Identity.Name);
-                userCurrent.ProfileImage = DDLConstants.FileType.AVATAR + userCurrent.ProfileImage;
+                if (userCurrent1.LoginType != DDLConstants.LoginType.FACEBOOK)
+                {
+                    userCurrent.ProfileImage = DDLConstants.FileType.AVATAR + userCurrent.ProfileImage;
+                }
+                
             }
             catch (UserNotFoundException)
             {
@@ -540,6 +579,46 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = userList });
         }
 
+        [HttpPut]
+        public IHttpActionResult ChangeUserStatus(string Username)
+        {
+
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+            try
+            {
+                // Check role user.
+                var currentUser = UserRepository.Instance.GetBasicInfo(User.Identity.Name);
+                if (currentUser == null || currentUser.Role != DDLConstants.UserType.ADMIN)
+                {
+                    throw new NotPermissionException();
+                }
+                UserRepository.Instance.ChangeUserStatus(Username);
+            }
+            catch (KeyNotFoundException)
+            {
+                return
+                    Ok(new HttpMessageDTO
+                    {
+                        Status = DDLConstants.HttpMessageType.ERROR,
+                        Message = "Không tìm thấy!",
+                        Type = DDLConstants.HttpMessageType.NOT_FOUND
+                    });
+            }
+            catch (NotPermissionException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không có quyền truy cập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
+        }
+
         [HttpGet]
         public IHttpActionResult GetListBackingForAdmin()
         {
@@ -619,7 +698,50 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = backingList });
         }
 
+
         #region TrungVn
+
+
+
+        [HttpGet]
+        public IHttpActionResult GetBackingFullInforListForExport()
+        {
+            List<AdminBakingFullInforDTO> backingList = new List<AdminBakingFullInforDTO>();
+            // Check authen.
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+            try
+            {
+                // Check role user.
+                var currentUser = UserRepository.Instance.GetBasicInfo(User.Identity.Name);
+                if (currentUser == null || currentUser.Role != DDLConstants.UserType.ADMIN)
+                {
+                    throw new NotPermissionException();
+                }
+                backingList = UserRepository.Instance.GetBackingFullInforListForExport();
+            }
+            catch (KeyNotFoundException)
+            {
+                return
+                    Ok(new HttpMessageDTO
+                    {
+                        Status = DDLConstants.HttpMessageType.ERROR,
+                        Message = "Không tìm thấy!",
+                        Type = DDLConstants.HttpMessageType.NOT_FOUND
+                    });
+            }
+            catch (NotPermissionException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không có quyền truy cập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = backingList });
+        }
 
         /// <summary>
         /// /api/UserApi/GetUserTop/?categoryID=xxx
@@ -629,8 +751,18 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         [HttpGet]
         public IHttpActionResult GetUserTop(string categoryid)
         {
-            var listGetUserTop = UserRepository.Instance.GetUserTop(categoryid);
-            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Data = listGetUserTop });
+            Dictionary<string, List<UserBackInforDTO>> listGetUserTop;
+            // Check authen.
+            try
+            {
+                listGetUserTop = UserRepository.Instance.GetUserTop(categoryid);
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = listGetUserTop });
+
         }
         #endregion
 
@@ -649,7 +781,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                     return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
                 }
                 userCurrent = UserRepository.Instance.GetBackedUserInfo(User.Identity.Name);
-                userCurrent.ProfileImage = DDLConstants.FileType.AVATAR + userCurrent.ProfileImage;
+               // userCurrent.ProfileImage = DDLConstants.FileType.AVATAR + userCurrent.ProfileImage;
             }
             catch (UserNotFoundException)
             {

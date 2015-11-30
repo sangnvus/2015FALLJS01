@@ -1,4 +1,15 @@
-﻿===============19/10/2015 =============================
+﻿===============03/11/2015 =============================
+- Update Scroll buttons: All page (sua html, js, css)
+- create project: design lai (sua html, css)
+- edit_project:  Add Fixed scroll  (sua html, sytle.css, common.css application.js)
+- edit_project: chinh popup edit project model-lg, fix image auto tab basic
+- update scroll to top: All page (sua html:demo home_logged, application.js, common.css)
+- update statistic page (sua html, style.css)
+=======================================================
+
+
+
+===============19/10/2015 =============================
 - backed_project_history (sửa: html, style): update table: hyperlink title, view infobanker
 - project_detail: (sửa html): create dialog report project
 - account, editprofile: (sửa: html): add hyperlink "Thông tin công khai" link to "public_profile.html"

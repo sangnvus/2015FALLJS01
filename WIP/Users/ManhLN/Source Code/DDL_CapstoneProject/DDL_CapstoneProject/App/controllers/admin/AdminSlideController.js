@@ -2,7 +2,7 @@
 
 app.controller('AdminSlideController',
     function ($scope, $rootScope, toastr, slides, AdminSlideService, CommmonService,
-        DTOptionsBuilder, DTColumnDefBuilder, fileReader) {
+        DTOptionsBuilder, DTColumnDefBuilder, fileReader, SweetAlert) {
         ////Todo here.
         $scope.ListSlides = slides.data.Data;
         $scope.IsNew = false;
@@ -49,9 +49,20 @@ app.controller('AdminSlideController',
                               }
                           });
         };
-
+        // Embed video story url
+        function getYoutubeUrl(url) {
+            if (url == null || url === "") return url;
+            var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]{11,11}).*/;
+            var match = url.match(regExp);
+            if (match)
+                if (match.length >= 2) {
+                    url = "https://www.youtube.com/embed/" + match[2];
+                }
+            return url;
+        };
         // Submit User model to edit user information
         $scope.addNewSlide = function () {
+            $scope.NewSlide.VideoUrl = getYoutubeUrl($scope.NewSlide.VideoUrl);
             var promisePost = AdminSlideService.addSlide($scope.NewSlide, $scope.file);
 
             promisePost.then(
@@ -61,13 +72,15 @@ app.controller('AdminSlideController',
                         $scope.ListSlides.push(result.data.Data);
                         $('#newSliderModal').modal('hide');
                     } else if (result.data.Status === "error") {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        $scope.Error = result.data.Message;
-                        toastr.error($scope.Error, 'Lỗi');
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
                     }
                 },
                 function (error) {
-                    $scope.Error = error.data.Message;
+                    toastr.error('Lỗi');
                 });
         }
 
@@ -83,13 +96,15 @@ app.controller('AdminSlideController',
                             toastr.success("Đã khóa lại");
                         }
                     } else {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        $scope.Error = result.data.Message;
-                        toastr.error($scope.Error, 'Lỗi');
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
                     }
                 },
                 function (error) {
-                    $scope.Error = error.data.Message;
+                    toastr.error('Lỗi');
                 });
         }
 
@@ -112,20 +127,38 @@ app.controller('AdminSlideController',
 
         // Delete slide
         $scope.deleteSlide = function (id, index) {
-            var promise = AdminSlideService.deleteSlide(id);
-            promise.then(
-                function (result) {
-                    if (result.data.Status === "success") {
-                        $scope.ListSlides = result.data.Data;
-                        toastr.success("Xóa thành công");
-                    } else {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        toastr.error('Lỗi');
-                    }
-                },
-                function (error) {
-                    $scope.Error = error.data.Message;
-                });
+            SweetAlert.swal({
+                title: "Xóa Slide",
+                text: "Bạn có chắc chắn muốn xóa Slide này không?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Có, tôi chắc chắn",
+                cancelButtonText: "Không",
+                closeOnConfirm: true
+            },
+                   function (isConfirm) {
+                       if (isConfirm) {
+
+                           var promise = AdminSlideService.deleteSlide(id);
+                           promise.then(
+                               function (result) {
+                                   if (result.data.Status === "success") {
+                                       $scope.ListSlides = result.data.Data;
+                                       toastr.success("Xóa thành công");
+                                   } else {
+                                       var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                                       if (a) {
+                                           $scope.Error = result.data.Message;
+                                           toastr.error($scope.Error, 'Lỗi');
+                                       }
+                                   }
+                               },
+                               function (error) {
+                                   toastr.error('Lỗi');
+                               });
+                       }
+                   });
         }
 
         // Show edit dialog, mapping data
@@ -155,6 +188,7 @@ app.controller('AdminSlideController',
 
         // Edit slide
         $scope.editSlide = function () {
+            $scope.EditSlide.VideoUrl = getYoutubeUrl($scope.EditSlide.VideoUrl);
             var promisePost = AdminSlideService.editSlide($scope.EditSlide, $scope.file);
             promisePost.then(
                 function (result) {
@@ -163,12 +197,15 @@ app.controller('AdminSlideController',
                         toastr.success("Sửa Slide thành công");
                         $('#EditSliderModal').modal('hide');
                     } else {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        toastr.error('Lỗi');
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
                     }
                 },
                 function (error) {
-                    $scope.Error = error.data.Message;
+                    toastr.error('Lỗi');
                 });
         }
 
@@ -201,12 +238,15 @@ app.controller('AdminSlideController',
                         $scope.ListSlides = result.data.Data;
                         toastr.success("Đổi thứ tự thành công");
                     } else {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        toastr.error('Lỗi');
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
                     }
                 },
                 function (error) {
-                    $scope.Error = error.data.Message;
+                    toastr.error('Lỗi');
                 });
         }
 

@@ -31,35 +31,129 @@
             text-align: left;
         }
 
+        /*Fix css for datatables*/
         .table-responsive {
-            overflow: inherit;
+            /*overflow: inherit;*/
             border: none;
         }
 
-        .table-responsive th {
-            text-align: center;
-            vertical-align: top !important;
-        }
+            .table-responsive th {
+                text-align: center;
+                vertical-align: top !important;
+            }
 
-        .table-responsive td {
-            word-break: break-all;
-        }
+            .table-responsive td {
+                word-break: break-all;
+            }
 
-        table.dataTable thead .sorting:after, 
-        table.dataTable thead .sorting_asc:after, 
-        table.dataTable thead .sorting_desc:after, 
-        table.dataTable thead .sorting_asc_disabled:after, 
+        table.dataTable thead .sorting:after,
+        table.dataTable thead .sorting_asc:after,
+        table.dataTable thead .sorting_desc:after,
+        table.dataTable thead .sorting_asc_disabled:after,
         table.dataTable thead .sorting_desc_disabled:after {
             top: 8px;
+        }
+
+
+        /*Fix css for text-angular*/
+        .ta-toolbar .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: normal;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+            .ta-toolbar .btn.active {
+                -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+                box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+            }
+
+            .ta-toolbar .btn.disabled, .ta-toolbar .btn[disabled], .ta-toolbar fieldset[disabled] .btn {
+                cursor: not-allowed;
+                pointer-events: none;
+                opacity: .65;
+                box-shadow: none;
+                -webkit-box-shadow: none;
+            }
+
+        .ta-toolbar .btn-default.disabled,
+        .ta-toolbar .btn-default[disabled],
+        .ta-toolbar fieldset[disabled] .btn-default,
+        .ta-toolbar .btn-default.disabled:hover,
+        .ta-toolbar .btn-default[disabled]:hover,
+        .ta-toolbar fieldset[disabled] .btn-default:hover,
+        .ta-toolbar .btn-default.disabled.hover,
+        .ta-toolbar .btn-default[disabled].hover,
+        .ta-toolbar fieldset[disabled] .btn-default.hover,
+        .ta-toolbar .btn-default.disabled:focus,
+        .ta-toolbar .btn-default[disabled]:focus,
+        .ta-toolbar fieldset[disabled] .btn-default:focus,
+        .ta-toolbar .btn-default.disabled:active,
+        .ta-toolbar .btn-default[disabled]:active,
+        .ta-toolbar fieldset[disabled] .btn-default:active,
+        .ta-toolbar .btn-default.disabled.active,
+        .ta-toolbar .btn-default[disabled].active,
+        .ta-toolbar fieldset[disabled] .btn-default.active {
+            background-color: #fff;
+            border-color: #ccc;
+        }
+
+        .ta-toolbar .btn-toolbar .btn.active,
+        .ta-toolbar .btn-default:hover, .ta-toolbar .btn-default.hover,
+        .ta-toolbar .btn-default:focus, .ta-toolbar .btn-default:active,
+        .ta-toolbar .btn-default.active, .ta-toolbar .open > .dropdown-toggle.btn-default {
+            color: #333;
+            background-color: #ebebeb;
+            border-color: #adadad;
+        }
+
+        .ta-toolbar .btn-default {
+            background-color: #fff;
+            border-color: #ccc;
+            color: #333;
+        }
+
+        .ta-toolbar .btn-group {
+            margin-bottom: 5px;
+        }
+
+            .ta-toolbar .btn-group > .btn + .btn {
+                margin-left: -1px;
+            }
+
+        .div-textarea {
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
+
+        #admin-campaign img {
+            display: block;
+            width: 100%;
+            height: auto;
         }
     </style>
 </head>
 
 <body>
     <input type="hidden" value="@ViewBag.BaseUrl" id="BaseUrl" />
-    <div id="wrapper">
+    <div id="wrapper" style="min-width: 1024px">
         <!-- begin TOP NAVIGATION -->
-        <nav class="navbar-top" role="navigation">
+        <nav class="navbar-top" role="navigation" style="min-width: 1024px">
 
             <!-- begin BRAND HEADING -->
             <div class="navbar-header">
@@ -96,23 +190,23 @@
                             <i class="fa fa-user"></i>  <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="userprofile.html">
-                                    <i class="fa fa-user"></i> Thông tin cá nhân
-                                </a>
-                            </li>
-                            <li>
-                                <a href="message.html">
-                                    <i class="fa fa-envelope"></i> Tin nhắn
-                                    <span class="badge green pull-right">4</span>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-gear"></i> Settings
-                                </a>
-                            </li>
+                            @*<li>
+                                    <a href="userprofile.html">
+                                        <i class="fa fa-user"></i> Thông tin cá nhân
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="message.html">
+                                        <i class="fa fa-envelope"></i> Tin nhắn
+                                        <span class="badge green pull-right">4</span>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-gear"></i> Settings
+                                    </a>
+                                </li>*@
                             <li>
                                 <a class="logout_open" href="@Url.Content("/admin/logout/")">
                                     <i class="fa fa-sign-out"></i> Thoát
@@ -160,19 +254,19 @@
                     <!-- begin DASHBOARD LINK -->
                     <li>
                         <a href="~/admin/#/dashboard" ng-class="{'active': Page.activeTab == 'dashboard'}">
-                            <i class="fa fa-dashboard"></i> Dashboard
+                            <i class="fa fa-dashboard"></i> Thống kê chung
                         </a>
                     </li>
                     <!-- end DASHBOARD LINK -->
                     <!-- begin USERS DROPDOWN -->
                     <li class="panel">
                         <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#users">
-                            <i class="fa fa-files-o"></i> Users <i class="fa fa-caret-down"></i>
+                            <i class="fa fa-files-o"></i> Thành viên <i class="fa fa-caret-down"></i>
                         </a>
-                        <ul class="collapse nav" id="users">
+                        <ul class="collapse nav" ng-class="{'in': Page.activeTab == 'userdashboard' || Page.activeTab == 'userdashboard'}" id="users">
                             <li>
-                                <a href="~/admin/#/userdashboard/" ng-class="{'active': Page.activeTab == 'userprofile'}">
-                                    <i class="fa fa-angle-double-right"></i> Bảng điều khiển thành viên
+                                <a href="~/admin/#/userdashboard/" ng-class="{'active': Page.activeTab == 'userdashboard'}">
+                                    <i class="fa fa-angle-double-right"></i> Thông tin chung
                                 </a>
                             </li>
                             <li>
@@ -189,7 +283,7 @@
                             <i class="fa fa-bar-chart-o"></i> Dự án
                             <i class="fa fa-caret-down"></i>
                         </a>
-                        <ul class="collapse nav" id="projects">
+                        <ul class="collapse nav" ng-class="{'in': Page.activeTab == 'projectdashboard' || Page.activeTab == 'projectList'}" id="projects">
                             <li>
                                 <a href="~/admin/#/project/" ng-class="{'active': Page.activeTab == 'dashboard'}">
                                     <i class="fa fa-angle-double-right"></i> Thông tin chung
@@ -238,18 +332,18 @@
                     <!-- begin REPORT -->
                     <li class="panel">
                         <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#reports">
-                            <i class="fa fa-files-o"></i> Report <i class="fa fa-caret-down"></i>
+                            <i class="fa fa-files-o"></i> Báo cáo <i class="fa fa-caret-down"></i>
                         </a>
-                        <ul class="collapse nav" id="reports">
+                        <ul class="collapse nav" ng-class="{'in': Page.activeTab == 'reportuser' || Page.activeTab == 'reportproject'}" id="reports">
                             <li>
                                 <a href="/admin/#/reportuser" ng-class="{'active': Page.activeTab == 'reportuser'}">
-                                    <i class="fa fa-angle-double-right"></i> User
+                                    <i class="fa fa-angle-double-right"></i> Người dùng
                                 </a>
                             </li>
                             <li>
                                 <a href="/admin/#/reportproject" ng-class="{'active': Page.activeTab == 'reportproject'}">
                                     <i class=" fa fa-angle-double-right">
-                                    </i> Project
+                                    </i> Dự án
                                 </a>
                             </li>
                         </ul>
@@ -271,7 +365,7 @@
                         <h1 ng-bind="Page.title"></h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i><span ng-bind="Page.breadcrumb[0]"></span>
+                                <i class="fa fa-dashboard"></i>&nbsp;<span ng-bind="Page.breadcrumb[0]"></span>
                             </li>
                             <li class="active" ng-bind="Page.breadcrumb[1]"></li>
                         </ol>

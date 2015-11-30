@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DDL_CapstoneProject.Helper;
 
 namespace DDL_CapstoneProject.Controllers.WebControllers
 {
-    public class AdminPartialController : Controller
+    public class AdminPartialController : BaseController
     {
         // GET: AdminPartial/ReportProject
         public ActionResult ReportProject()
@@ -95,6 +96,12 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         public ActionResult BackingList()
         {
             return PartialView("~/Views/AdminPartial/_BackingList.cshtml");
+        }
+
+        // GET: AdminPartial/BackingDetail
+        public ActionResult BackingDetail()
+        {
+            return PartialView("~/Views/AdminPartial/_BackingDetail.cshtml");
         }
     }
 }

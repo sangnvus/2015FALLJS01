@@ -1,11 +1,11 @@
 ﻿
-<div id="setting_container" class="paddingNavbar">
+<div id="setting_container" class="paddingNavbar mt50">
     <div class="row pull-right">
         <div class="col-sm-12 col-sm-offset-0">
             <ul id="" class="list-inline fnt18 fnt-b">
-                <li class=""><a class="c-10" href="../#/project/createdProject">Dự án đã tạo</a></li>
-                <li class=""><a class="c3" href="../#/project/backedProject">Dự án đã ủng hộ</a></li>
-                <li class=""><a class="c-10" href="../#/project/starredProject">Dự án theo dõi</a></li>
+                <li class=""><a class="c-10" href="../#/project/created">Dự án đã tạo</a></li>
+                <li class=""><a class="c3" href="../#/project/backed">Dự án đã ủng hộ</a></li>
+                <li class=""><a class="c-10" href="../#/project/reminded">Dự án theo dõi</a></li>
                 <!-- <li class=""><a class="c-10" href="account.html">Setting</a></li> -->
                 <!-- <li class=""><a class="c-10" href="../Views/profile_public.html">Profile ( public )</a></li> -->
             </ul>
@@ -17,8 +17,8 @@
         <h4 class="pt30">Dự án đã ủng hộ:</h4>
         
         <ul class="list-inline fnt18 fnt-b">
-            <li class=""><a class="c3" href="../#/project/backedProject">Dự án đã ủng hộ</a></li>
-            <li class=""><a class="c-10" href="../#/project/backedProjectHistory">Lịch sử ủng hộ</a></li>
+            <li class=""><a class="c3" href="../#/project/backed">Dự án đã ủng hộ</a></li>
+            <li class=""><a class="c-10" href="../#/project/backhistory">Lịch sử ủng hộ</a></li>
         </ul>
         <div ng-if="checkEmpty==0">Bạn chưa ủng hộ dự án nào</div>
         <ul class="portfolio-items col-4">
@@ -35,23 +35,40 @@
                         <p class="fnt15">{{project.SubDescription}}</p>
                     </div>
                     <div class="item-footer">
-                        <div class="mt10 mb5">
-                            <a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
+                        <div class="mt10 mb5 no-wrap text-hidden">
+                            <a class="grey-dark" href="@Url.Content("/#/search?categoryid={{project.CategoryID}}")"><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
                             &nbsp;&nbsp;
-                            <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
-                            &nbsp;&nbsp;
+                            <span class="grey-dark"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span><span tooltip='{{project.Location}}'>{{project.Location}}</span></span>
                         </div>
-                        <div class="progress mt5 mb5">
-                            <div class="progress mt5 mb5">
-                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
-                                    <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
-                                </div>
+                        <div class="progress mt5 mb5" ng-if="project.ExpireDate >= 0 || project.CurrentFunded >= 100">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuenow="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
+                                <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
                             </div>
                         </div>
-                        <ul class="list-inline">
-                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</p><p class="mt0 mb0">ủng hộ</p></li>
-                            <li><p class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber |  number : fractionSize}}&#8363;</p><p class="mt0 mb0">gây quỹ</p></li>
-                            <li><p class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</p><p class="mt0 mb0">ngày còn lại</p></li>
+                        <div class="progress mt5 mb5" ng-if="project.ExpireDate < 0 && project.CurrentFunded < 100">
+                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuemin="0" aria-valuenow="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
+                                <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
+                            </div>
+                        </div>
+                        <ul class="list-inline fnt15">
+                            <li>
+                                <span class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</span>
+                                <span class="mt0 mb0">đã ủng hộ</span>
+                            </li>
+                            <li ng-if="project.ExpireDate >= 0">
+                                <span class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</span>
+                                <span class="mt0 mb0">ngày còn lại</span>
+                            </li>
+                            <li ng-if="project.ExpireDate < 0">
+                                <span class="fnt-b mt0 mb0 label label-danger">Đã kết thúc</span>
+                                @*<span class="mt0 mb0">ngày còn lại</span>*@
+                            </li>
+                        </ul>
+                        <ul class="list-inline fnt15">
+                            <li>
+                                <span class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber| number : fractionSize}}&#8363;</span>
+                                <span class="mt0 mb0">đã gây quỹ</span>
+                            </li>
                         </ul>
                     </div>
                    
@@ -61,12 +78,6 @@
         </ul>
     </section><!--/#portfolio-->
 </div>
-
-<div class="scroll-top-wrapper ">
-    <span class="scroll-top-inner">
-        <i class="fa fa-2x fa-arrow-circle-up"></i>
-    </span>
-</div> <!-- end SCROLL TO TOP -->
 
 <script>
     $(window).trigger('resize');

@@ -7,6 +7,7 @@ using System.Web;
 using DDL_CapstoneProject.Helpers;
 using DDL_CapstoneProject.Models;
 using DDL_CapstoneProject.Models.DTOs;
+using DDL_CapstoneProject.Ultilities;
 
 namespace DDL_CapstoneProject.Respository
 {
@@ -37,7 +38,7 @@ namespace DDL_CapstoneProject.Respository
                                       CategoryID = category.CategoryID,
                                       Name = category.Name,
                                       projectCount = (from pro in category.Projects
-                                                      where !pro.IsExprired
+                                                      where pro.Status == DDLConstants.ProjectStatus.APPROVED
                                                       select pro.ProjectID).Count()
 
                                   };
@@ -110,10 +111,11 @@ namespace DDL_CapstoneProject.Respository
         //endTrungVN
 
 
+        // HuyNM
         /// <summary>
-        /// 
+        /// Get categories for admin
         /// </summary>
-        /// <returns></returns>
+        /// <returns>listCategoryDTO</returns>
         public List<AdminCategoryDTO> GetCategoriesForAdmin()
         {
             using (var db = new DDLDataContext())
@@ -128,7 +130,7 @@ namespace DDL_CapstoneProject.Respository
                                            Description = category.Description,
                                            Name = category.Name,
                                            CategoryID = category.CategoryID,
-                                           ProjectCount = category.Projects.Count
+                                           ProjectCount = category.Projects.Count(x => x.Status != DDLConstants.ProjectStatus.DRAFT)
                                        }).ToList();
 
                 return listCategoryDTO;

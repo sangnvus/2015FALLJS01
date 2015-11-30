@@ -41,14 +41,39 @@ app.controller('StatisticsController',
             );
         }
 
+        var chartData = categoryStatistic.data.Data.GetCategoryProjectStatistic;
+        var name = [];
+        var fundedSucess = [];
+        var fundedFail = [];
+        for (var i in chartData) {
+            name.push(chartData[i].Name);
+            fundedSucess.push(chartData[i].CategorySuccessFunded);
+            fundedFail.push(chartData[i].CategoryFailFunded)
+        }
 
-        $scope.chartData = categoryStatistic.data.Data.GetCategoryProjectStatistic;
-        $scope.chart_options = {
-            data: $scope.chartData,
-            xkey: 'Name',
-            ykeys: ['CategorySuccessFunded', 'CategoryFailFunded'],
-            labels: ['Số tiền ủng hộ dự án thành công', 'Số tiền ủng hộ dự án không thành công']
+        var ctx = document.getElementById("myChart").getContext("2d");
+        var data = {
+            labels: name,
+            datasets: [
+                {
+                    label: "Số tiền ủng hộ dự án thành công",
+                    fillColor: "#0b62a4",
+                    data: fundedSucess
+                },
+                {
+                    label: "Số tiền ủng hộ dự án không thành công",
+                    fillColor: "#7a92a3",
+                    //highlightFill: "rgba(151,187,205,0.75)",\
+                    data: fundedFail
+                }
+            ]
         };
+
+        var myBarChart = new Chart(ctx).Bar(data);
+
+
+
+
         $scope.getRank = function (fundingGoal) {
             if (fundingGoal <= 50000000)
                 return "Rank D";

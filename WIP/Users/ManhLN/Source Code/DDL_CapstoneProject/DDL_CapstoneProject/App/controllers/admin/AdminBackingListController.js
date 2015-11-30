@@ -4,6 +4,43 @@ app.controller('AdminBackingListController',
     function ($scope, $sce, $rootScope, toastr, listBacking, AdminUserService, CommmonService,
         DTOptionsBuilder, DTColumnDefBuilder) {
         //Todo here.
+
+
+        $scope.exportExcel = function () {
+
+            var list = [];
+            var promise = AdminUserService.getListBackingFullInfor();
+            promise.then(
+                function (result) {
+                    if (result.data.Status === "success") {
+                        list = $scope.Backer = result.data.Data;
+                        list.unshift(['Mã dự án',
+                            'Tên dự án',
+                            'Mã gói',
+                            'Mô tả gói',
+                            'Ngày chuyển giao',
+                            'Mã ủng hộ',
+                            'Số tiền ủng hộ',
+                            'Số lượng',
+                            'Mô tả ủng hộ',
+                            'Ngày ủng hộ',
+                            'Người ủng hộ',
+                            'Tên đăng nhập',
+                            'Email',
+                            'Địa chỉ',
+                            'SĐT']);
+                        CommmonService.exportExcel(list, "Backing");
+                    } else {
+                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        $scope.Error = result.data.Message;
+                    }
+                },
+                function (error) {
+                    $scope.Error = error.data.Message;
+                });
+
+        }
+
         $scope.ListBacking = listBacking.data.Data;
 
         $scope.trustSrc = function (src) {

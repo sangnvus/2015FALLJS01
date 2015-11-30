@@ -90,8 +90,40 @@ service.service("AdminProjectService", function ($http) {
         return $http.get("../api/ProjectApi/AdminGetTopProjectList");
     };
 
-    // Function to get project statistic for admin
-    this.getProjectStatistic = function () {
-        return $http.get("../api/ProjectApi/AdminGetProjectStatistic");
+    // Function to get project statistic chart for admin
+    this.getProjectStatistic = function (year) {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/AdminGetProjectStatistic',
+            params: {
+                year: year
+            }
+        });
+        return request;
     };
+
+    // Function to get project statistic table for admin
+    this.getProjectStatisticTable = function (option) {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/AdminGetStatisticTable',
+            params: {
+                option: option
+            }
+        });
+        return request;
+    };
+
+    // Function to get backing detail for admin
+    this.getBackingDetail = function (backingId) {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/AdminGetBackingDetail',
+            params: {
+                backingId: backingId
+            }
+        });
+        return request;
+        //return $http.get("/api/ProjectApi/AdminGetBackingDetail/" + backingId);
+    }
 });

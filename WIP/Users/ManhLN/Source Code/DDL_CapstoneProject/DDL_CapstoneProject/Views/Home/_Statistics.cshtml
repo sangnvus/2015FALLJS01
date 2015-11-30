@@ -33,9 +33,12 @@
             </div>
         </div>
     </div> <!-- end content-1 STATISTIC -->
-    <div id="content-2">
-        <div class="container">
-            <barchart id="bar" data-options="chart_options"></barchart>
+    <div id="content-2" class="row">
+        <div class="panel-collapse collapse in col-md-10"></div>
+        <div id="lineChart" class="panel-collapse collapse in col-md-10" style="
+    margin-left: 6%;
+">
+            <canvas id="myChart"></canvas>
         </div>
     </div> <!-- end content-2 GRAPH STATISTIC-->
     <div id="content-3">
@@ -56,7 +59,7 @@
                     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                         <div class="panel-body">
                             <table id="top10pProjectTable" class="table table-striped table-bordered table-hover">
-                                <thead style="background: #16a085; color: #FFF">
+                                <thead style="background: #1abc9c; color: #FFF">
                                     <tr>
                                         <th>STT</th>
                                         <th>Mã dự án</th>
@@ -87,12 +90,13 @@
             </div> <!-- end top projects -->
         </div>
     </div> <!-- end content-3 TOP PROJECTS-->
+
     <div id="content-4">
         <div class="container">
             <div class="panel panel-primary">
                 <div class="panel-heading bold">
                     <form action="" class="form-inline">
-                        <a style="color: white; text-decoration: none;" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                        <a onclick="return false" style="color: white; text-decoration: none;" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                             Top 10 người ủng hộ
                         </a>
                         <select class="form-control" ng-model="selectedCategoryIDTopUserBack" ng-change="getUserTopBack(selectedCategoryIDTopUserBack)">
@@ -101,23 +105,23 @@
                         </select>
                     </form>
                 </div>
-                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
                     <div class="panel-body">
                         <table id="top10pProjectTable" class="table table-striped table-bordered table-hover">
-                            <thead style="background: #16a085; color: #FFF">
+                            <thead style="background: #1abc9c; color: #FFF">
                                 <tr>
                                     <th>.STT</th>
                                     <th>Tên người ủng hộ</th>
-                                    <th>Tổng số tiền gây quỹ</th>
-                                    <th>Tổng số tiền ủng hộ</th>
+                                    <th>Tổng số tiền đã ủng hộ</th>
+                                    <th>Tổng số dự án đã ủng hộ</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="user in UserTopBackList track by $index">
                                     <td>{{$index}}</td>
                                     <td><a href="profile_public.html">{{user.Name}}</a></td>
-                                    <td>{{user.TotalFunded| number : fractionSize}}&#8363;</td>
-                                    <td>{{user.TotalBacked}}</td>
+                                    <td>{{user.TotalBacked| number : fractionSize}}&#8363;</td>
+                                    <td>{{user.projectCount}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -131,7 +135,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading bold">
                     <form action="" class="form-inline">
-                        <a style="color: white; text-decoration: none;" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                        <a onclick="return false" style="color: white; text-decoration: none;" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
                             Top 10 người gây quỹ
                         </a>
                         <select class="form-control" ng-model="selectedCategoryIDTopUserFunded" ng-change="getUserTopFund(selectedCategoryIDTopUserFunded)">
@@ -140,15 +144,15 @@
                         </select>
                     </form>
                 </div>
-                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
                     <div class="panel-body">
                         <table id="top10pProjectTable" class="table table-striped table-bordered table-hover">
-                            <thead style="background: #16a085; color: #FFF">
+                            <thead style="background: #1abc9c; color: #FFF">
                                 <tr>
                                     <th>.STT</th>
                                     <th>Tên người ủng hộ</th>
-                                    <th>Tổng số tiền gây quỹ</th>
-                                    <th>Tổng số tiền ủng hộ</th>
+                                    <th>Tổng số tiền đã gây quỹ</th>
+                                    <th>Tổng số dự án đã gây quỹ</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -156,7 +160,7 @@
                                     <td>{{$index}}</td>
                                     <td><a href="profile_public.html">{{user.Name}}</a></td>
                                     <td>{{user.TotalFunded| number : fractionSize}}&#8363;</td>
-                                    <td>{{user.TotalBacked}}</td>
+                                    <td>{{user.projectCount}}</td>
                                 </tr>
                             </tbody>
                         </table>

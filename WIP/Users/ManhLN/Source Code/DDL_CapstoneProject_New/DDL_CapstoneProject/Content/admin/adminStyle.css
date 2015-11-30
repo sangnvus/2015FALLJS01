@@ -2099,4 +2099,17 @@ a.list-group-item.active:focus,
             height: 100%;
         }
     /*end responsive video======*/
+
+     /* dashboard page*/
+    .project-chart {
+        display: inline-block !important;
+        width: auto !important;
+    }
+
+    /* Admin responsive img*/
+    .img-adm-responsive {
+        display: block;
+        height: auto;
+        max-width: 100%;
+    }
 }
