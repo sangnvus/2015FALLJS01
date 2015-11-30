@@ -12,7 +12,7 @@
                         </group>
                         <group style="display: inline-block">
                             <lable class="control-label fnt30 fnt-b"><span ng-if="!isAdvance">Hiển thị </span><span ng-if="isAdvance">trong </span>các dự án </lable>
-                            <ui-select class="fnt20" multiple ng-model="$parent.selectcategory" theme="bootstrap" ng-disabled="disabled" close-on-select="false"
+                            <ui-select class="fnt20 pr15" multiple ng-model="$parent.selectcategory" theme="bootstrap" ng-disabled="disabled" close-on-select="false"
                                        title="Choose a category" ng-change="Search(selectcategory,selectedorder,searchkey,selectstatus)" style="min-width:200px">
                                 <ui-select-match placeholder="Choose a category...">{{$item.Name}}</ui-select-match>
                                 <ui-select-choices repeat="cat in categoryList | highlight: $select.search">
@@ -32,7 +32,7 @@
                         </group>
                         <group style="display: inline-block">
                             <lable class="control-label fnt30 fnt-b"> trạng thái </lable>
-                            <ui-select class="fnt20" multiple ng-model="$parent.selectstatus" theme="bootstrap" ng-disabled="disabled" close-on-select="false"
+                            <ui-select class="fnt20 pr15" multiple ng-model="$parent.selectstatus" theme="bootstrap" ng-disabled="disabled" close-on-select="false"
                                        title="Choose a category" ng-change="Search(selectcategory,selectedorder,searchkey,selectstatus)" style="min-width:200px">
                                 <ui-select-match placeholder="Choose a category...">{{$item.Label}}</ui-select-match>
                                 <ui-select-choices repeat="stt in statuss | highlight: $select.search">
