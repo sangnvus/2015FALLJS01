@@ -8,9 +8,9 @@ namespace DDL_CapstoneProject.Models.DTOs
     public class UserBackInforDTO
     {
         public string Name { get; set; }
+        public string Username { get; set; }
         public decimal TotalFunded { get; set; }
         public decimal TotalBacked { get; set; }
         public int projectCount { get; set; }
-
     }
 }

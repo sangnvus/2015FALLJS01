@@ -23,30 +23,22 @@ namespace DDL_CapstoneProject.Respository
         {
             using (var db = new DDLDataContext())
             {
-                try
-                {
-                    var SlideList = from slide in db.Slides
-                        where slide.IsActive
-                        orderby slide.Order
-                        select new SlideDTO
-                        {
-                            Title = slide.Title,
-                            ButtonColor = slide.ButtonColor,
-                            SlideUrl = slide.SlideUrl,
-                            ImageUrl = slide.ImageUrl,
-                            ButtonText = slide.ButtonText,
-                            Description = slide.Description,
-                            TextColor = slide.TextColor,
-                            VideoUrl = slide.VideoUrl,
-                        };
+                var SlideList = from slide in db.Slides
+                                where slide.IsActive
+                                orderby slide.Order
+                                select new SlideDTO
+                                {
+                                    Title = slide.Title,
+                                    ButtonColor = slide.ButtonColor,
+                                    SlideUrl = slide.SlideUrl,
+                                    ImageUrl = slide.ImageUrl,
+                                    ButtonText = slide.ButtonText,
+                                    Description = slide.Description,
+                                    TextColor = slide.TextColor,
+                                    VideoUrl = slide.VideoUrl,
+                                };
 
-                    return SlideList.ToList();
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex);
-                }
-                return new List<SlideDTO>();
+                return SlideList.ToList();
             }
         }
         public List<SlideDTO> GetSlidesForAdmin()
@@ -207,7 +199,7 @@ namespace DDL_CapstoneProject.Respository
                     ? db.Slides.FirstOrDefault(x => x.Order == slide.Order - 1)
                     : db.Slides.FirstOrDefault(x => x.Order == slide.Order + 1);
 
-                if (swapSlide == null) throw new KeyNotFoundException();
+                if (swapSlide == null) throw new IndexOutOfRangeException();
 
                 int tempData = slide.Order;
                 slide.Order = swapSlide.Order;
