@@ -21,8 +21,16 @@ app.controller('AdminUserProfileController',
                 var promise = AdminUserService.getBackedProject($scope.UserProfile.UserName);
                 promise.then(
                     function (result) {
-                        $scope.ListBacked = result.data.Data;
-                        $scope.checkLoadBackedlist = true;
+                        if (result.data.Status === "success") {
+                            $scope.ListBacked = result.data.Data;
+                            $scope.checkLoadBackedlist = true;
+                        } else {
+                            var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                            if (a) {
+                                $scope.Error = result.data.Message;
+                                toastr.error($scope.Error, 'Lỗi');
+                            }
+                        }
                     }
                  );
             }
@@ -34,8 +42,16 @@ app.controller('AdminUserProfileController',
                 var promise = AdminUserService.getCreatedProject($scope.UserProfile.UserName);
                 promise.then(
                     function (result) {
-                        $scope.ListCreated = result.data.Data;
-                        $scope.checkLoadCreatedlist = true;
+                        if (result.data.Status === "success") {
+                            $scope.ListCreated = result.data.Data;
+                            $scope.checkLoadCreatedlist = true;
+                        } else {
+                            var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                            if (a) {
+                                $scope.Error = result.data.Message;
+                                toastr.error($scope.Error, 'Lỗi');
+                            }
+                        }
                     }
                  );
             }

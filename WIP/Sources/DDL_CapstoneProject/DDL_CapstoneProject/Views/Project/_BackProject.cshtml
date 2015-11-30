@@ -2,8 +2,8 @@
     <div id="back_project">
         <div class="container">
             <div class="title text-center">
-                <h3 class="fnt30 mb0 pb0"><a href="project_detail.html">{{Project.Title}}</a></h3>
-                <p class="fnt18 mt0 pt0">by <a class="fnt-b" href="">{{Project.Creator}}</a></p>
+                <h3 class="fnt30 mb0 pb0"><a href="@Url.Content("/#/project/detail/{{Project.ProjectCode}}")">{{Project.Title}}</a></h3>
+                <p class="fnt18 mt0 pt0">by <a class="fnt-b" href="/#/user/publicprofile/{{Project.CreatorUsername}}">{{Project.Creator}}</a></p>
             </div>
             <div class="row mr30 ml30">
                 <div class="col-md-8 pull-left">
@@ -127,7 +127,7 @@
                         <p class="bold">DDL không phải là một của hàng.</p>
                         <p>DDL là nơi giúp mang những ý tưởng mới đến với thực tế.</p>
                         <p>Tuy nhiên chúng tôi không đảm bảo các dự án sẽ thành công 100%. Trách nhiệm hoàn thành dự án đùng các thời gian cam kết thuộc về người chủ dự án.</p>
-                        <p><a href="">Tìm hiều thêm</a></p>
+                        @*<p><a href="">Tìm hiều thêm</a></p>*@
                     </div>
                 </div>
             </div>

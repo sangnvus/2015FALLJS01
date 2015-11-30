@@ -84,5 +84,13 @@ namespace DDL_CapstoneProject.Ultilities
             public static readonly string PROJECT = "/images/projects/";
             public static readonly string SLIDE = "/images/slides/";
         }
+
+        public static class PopularPointType
+        {
+            public static readonly int BackingPoint = 10;
+            public static readonly int CommentPoint = 2;
+            public static readonly int RemindPoint = 1;
+            public static readonly int ViewPoint = 1;
+        }
     }
 }

@@ -48,9 +48,11 @@ app.controller('AdminReportUserController',
                             }
                             toastr.success("Gửi câu hỏi thành công");
                         } else {
-                            CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                            $scope.Error = result.data.Message;
-                            toastr.error($scope.Error, 'Lỗi!');
+                            var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                            if (a) {
+                                $scope.Error = result.data.Message;
+                                toastr.error($scope.Error, 'Lỗi');
+                            }
                         }
                     },
                     function (error) {
@@ -74,8 +76,11 @@ app.controller('AdminReportUserController',
                         }
 
                     } else {
-                        CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                        $scope.Error = result.data.Message;
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                            toastr.error($scope.Error, 'Lỗi');
+                        }
                     }
                 },
                 function (error) {

@@ -1,5 +1,5 @@
 ﻿@using DDL_CapstoneProject.Ultilities
-
+<a href="~/Views/Project/_ProjectDetail.cshtml">~/Views/Project/_ProjectDetail.cshtml</a>
 <div id="project-common" class="paddingNavbar padding-30">
     <div class="container">
         <div id="gt1">
@@ -9,15 +9,18 @@
             </div> <!-- end TITLE -->
             <div class="row">
                 <div class="col-md-8">
-                    <div class="responsive-video">
+                    <div class="responsive-video" ng-if="checkHTTP(Project.VideoUrl)">
                         <iframe ng-src="{{trustSrc(Project.VideoUrl)}}" frameborder="0"> </iframe>
+                    </div>
+                    <div ng-if="!checkHTTP(Project.VideoUrl)">
+                        <img ng-src="/images/projects/{{Project.ImageUrl}}" alt="" class="img-responsive center-block">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="">
                         <div class="pt0">
                             <p class="fnt45 fnt-800 h1">{{Project.NumberBacked}}</p>
-                            <p class="fnt-b mt0"><span>người đã ủng hộ</span></p>
+                            <p class="fnt-b mt0"><span>lượt đã ủng hộ</span></p>
                         </div>
                         <div class="pt5">
                             <p class="fnt45 fnt-800 h1">{{Project.CurrentFunded| number : fractionSize}}&#8363;</p>
@@ -74,20 +77,20 @@
                             <p class="h5">
                                 <span class="inline-block glyphicon glyphicon-copyright-mark"></span>
                                 <span class="inline-block">
-                                    <a class="grey-dark bold" href="">Đã tạo {{Project.Creator.NumberCreated}}</a>
+                                    <span class="grey-dark bold" href="">Đã tạo {{Project.Creator.NumberCreated}}</span>
                                     <span class="grey-dark">&nbsp;|&nbsp;</span>
                                 </span>
                                 <span class="inline-block">
-                                    <a class="grey-dark bold" href="">Đã ủng hộ {{Project.Creator.NumberBacked}}</a>
+                                    <span class="grey-dark bold" href="">Đã ủng hộ {{Project.Creator.NumberBacked}}</span>
                                 </span>
                             </p>
-                            <p class="h5">
+                            <p class="h5" ng-if="Project.Creator.Website != null && Project.Creator.Website !== ''">
                                 <span class="inline-block glyphicon glyphicon-globe"></span>
                                 <a class="grey-dark bold" href="">{{Project.Creator.Website}}</a>
                             </p>
-                            <p class="fnt15 fnt-b pt15">
+                            @*<p class="fnt15 fnt-b pt15">
                                 <a class="inline-block" href="/#/user/publicprofile/{{Project.Creator.UserName}}">Xem thông tin</a>
-                            </p>
+                            </p>*@
                         </div>
                         <div class="col-md-4 pt30">
                             <img id="" ng-if="checkHTTP(Project.Creator.ProfileImage)" ng-src="{{trustSrc(Project.Creator.ProfileImage)}}" alt="" class="img-responsive img-circle center-block">
@@ -184,7 +187,8 @@
                                                             <h5 class="fnt20"><span class="fnt-n">Tới: {{Project.Creator.FullName}}</span> </h5>
                                                             <h5 class="fnt20 fnt-n">Nội dung:</h5>
                                                             <textarea class="form-control" style="resize: none" name="" id="" cols="30" rows="5"
-                                                                      ng-model="NewQuestion.Content"></textarea>
+                                                                      ng-model="NewQuestion.Content"
+                                                                      ></textarea>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
@@ -195,25 +199,36 @@
                                             </div>
                                             <!-- end question modal -->
                                             <!-- Report Modal -->
-                                            <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                            <h5 class="modal-title" id="myModalLabel">Báo cáo dự án sai phạm</h5>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <h5 class="fnt20"><span class="fnt-n">Dự Án:</span> {{Project.Title}}</h5>
-                                                            <h5 class="fnt20 fnt-n">Nội dung:</h5>
-                                                            <textarea class="form-control" cols="30" rows="5" ng-model="$parent.ReportContent"></textarea>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                                                            <button type="button" class="btn btn-primary" ng-click="report()">Gửi báo cáo</button>
+                                            <form role="form" name="ReportForm">
+                                                <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h5 class="modal-title" id="myModalLabel">Báo cáo dự án sai phạm</h5>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <h5 class="fnt20"><span class="fnt-n">Dự Án:</span> {{Project.Title}}</h5>
+                                                                <h5 class="fnt20 fnt-n">Nội dung:</h5>
+                                                                <textarea class="form-control" name="Report" cols="30" rows="5" ng-model="$parent.ReportContent"
+                                                                          ng-minlength="20"
+                                                                          @*ng-maxlength="500"*@></textarea>
+                                                                <span class="text-danger" ng-show="ReportForm.Report.$dirty && ReportForm.Report.$invalid">
+                                                                    <span ng-show="ReportForm.Report.$error.minlength">Nội dung ít nhất 20 kí tự</span>
+                                                                    @*<span ng-show="ReportForm.Report.$error.maxlength">Nội dung từ 8 đến 500 kí tự</span>*@
+                                                                </span>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                                                <button ng-disabled="(!ReportForm.$dirty || ReportForm.$invalid) "
+                                                                        type="button" class="btn btn-primary" ng-click="report()">
+                                                                    Gửi báo cáo
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div> <!-- end report modal -->
+                                            </form> <!-- end report modal -->
                                             <!-- end report modal -->
                                         </div>
                                     }
@@ -229,21 +244,27 @@
                                         <ul class="menu pl0">
                                             <li ng-repeat="reward in Project.RewardDetail" class="item" style="width: 90%">
                                                 <div class="item-show">
-                                                    <h5 class="fnt20 c3" for="">Ủng hộ {{reward.PledgeAmount}} <span class="money usd no-code">&#8363;</span> hoặc nhiều hơn</h5>
-                                                    <p class="bold">
-                                                        <span class="glyphicon glyphicon-asterisk"></span> {{reward.Backers}} người đã ủng hộ
+                                                    <h5 class="fnt20 c3" for="">Ủng hộ {{reward.PledgeAmount | number : fractionSize}} <span class="money usd no-code">&#8363;</span> hoặc nhiều hơn</h5>
+                                                    <p class="bold h5">
+                                                        <span class="glyphicon glyphicon-asterisk"></span>{{reward.CurrentQuantity}} sản phầm | {{reward.Backers}} lượt ủng hộ
                                                     </p>
                                                     <hr />
                                                     <div style="word-break: break-word; white-space: pre-wrap;" class="item-description">{{reward.Description}}</div>
                                                     <hr />
+                                                    <div class="item-extra-info" ng-if="reward.Type == '@DDLConstants.RewardType.LIMITED' && (reward.Quantityreward - reward.CurrentQuantity > 0)">
+                                                        <span class="bold h5">Số lượng còn lại: </span>
+                                                        <span class="h5" style="font-weight: normal">{{reward.Quantity - reward.CurrentQuantity}}</span>
+                                                    </div>
+                                                    <div class="item-extra-info" ng-if="reward.Type == '@DDLConstants.RewardType.LIMITED' && (reward.Quantityreward - reward.CurrentQuantity <= 0)">
+                                                        <span class="label label-danger">Đã hết</span>
+                                                    </div>
                                                     <div class="item-extra-info">
-                                                        <span class="">Thời gian giao hàng ước tính :</span>
-                                                        <br />
-                                                        <span>{{reward.EstimatedDelivery | date:"'Tháng' MM/yyyy"}} </span>
+                                                        <span class="bold h5">Ước tính giao hàng: </span>
+                                                        <span class="h5" style="font-weight: normal">{{reward.EstimatedDelivery | date:"MM/yyyy"}} </span>
                                                     </div>
                                                 </div> <!-- end main Reward -->
                                                 <a href="@Url.Content("/#/project/back/{{Project.ProjectCode}}?reward={{$index+1}}")"
-                                                   ng-if="Project.Status != '@DDLConstants.ProjectStatus.PENDING' && Project.Status != '@DDLConstants.ProjectStatus.DRAFT' && Project.Status != '@DDLConstants.ProjectStatus.REJECTED' && !Project.IsExprired">
+                                                   ng-if="Project.Status != '@DDLConstants.ProjectStatus.PENDING' && Project.Status != '@DDLConstants.ProjectStatus.DRAFT' && Project.Status != '@DDLConstants.ProjectStatus.REJECTED' && !Project.IsExprired && !(reward.Type == '@DDLConstants.RewardType.LIMITED' && (reward.Quantityreward - reward.CurrentQuantity <= 0))">
                                                     <div class="hoverReward">
                                                         <span class="titleHover">Chọn gói này</span>
                                                     </div>

@@ -311,8 +311,8 @@
                                                 </p>
                                                 <p class="mt0 mb0" ng-show="rewardPkg.IsHide == true"><span class="label label-warning">Đã ẩn</span></p>
                                             </div>
-                                            <ul class="list-inline pull-right mt0 mb0 pb0 pt0">
-                                                <li><button class="btn btn-default btn-sm" ng-disabled="AllEditable == false" ng-click="updateReward($index)">Ẩn</button></li>
+                                            <ul class="list-inline pull-right mt0 mb0 pb0" style="padding-top: 10px">
+                                                <li><button class="btn btn-default btn-sm" ng-disabled="AllEditable == false || (RewardPKgs.length == 1 && PrjApprove == true)" ng-click="updateReward($index)">Ẩn</button></li>
                                                 <li>
                                                     <button class="btn btn-danger btn-sm" ng-click="deleteReward($index)"
                                                             ng-disabled="AllEditable == false || rewardPkg.CurrentQuantity != 0 || (RewardPKgs.length == 1 && PrjApprove == true)">
@@ -738,27 +738,24 @@
                     <div class="row">
                         <div class="col-md-12">
                             <form name="updateLogForm" ng-model="updateLogForm" novalidate>
-                                <div ng-repeat="UpdateLogs in UpdateLogs">
+                                <div ng-repeat="update in UpdateLogs">
+
                                     <div class="row border-grey">
                                         <div class="col-md-2">
-                                            <p class="title">Cập nhật #{{$index + 1}}</p>
+                                            <p class="title">Cập nhật #{{UpdateLogs.length - $index}}</p>
                                         </div>
                                         <div class="col-md-10">
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <p class="title">Tên</p>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    <input type="text" class="form-control"
-                                                           ng-trim="true"
+                                            <div style="background: #FFF; border: 1px solid eee; padding: 10px; border-radius: 6px">
+                                                <div class="fnt-b mt0 mb0" ng-class="{'hide':IsEditUpdateLog[$index] === true}">{{update.Title}}</div>
+                                                <div class="fnt-b mt0 mb0" ng-class="{'hide':(IsEditUpdateLog[$index] == null || IsEditUpdateLog[$index] === false)}">
+                                                    <input class="form-control" name="title{{$index}}"
                                                            ng-maxlength="60"
+                                                           ng-trim="true"
                                                            ng-minlength="10"
                                                            maxlength="60"
-                                                           name="title{{$index}}"
-                                                           ng-model-options="{ updateOn: 'change blur'}"
-                                                           ng-model="UpdateLogs.Title"
                                                            required
-                                                           ng-disabled="AllEditable == false">
+                                                           ng-model-options="{ updateOn: 'change blur'}"
+                                                           ng-model="update.Title" style="resize: none" />
                                                     <div ng-show="updateLogForm.title{{$index}}.$dirty && updateLogForm.title{{$index}}.$invalid" class="text-danger">
                                                         <span class="glyphicon glyphicon-remove text-danger"></span>
                                                         <span ng-show="updateLogForm.title{{$index}}.$error.required">Bạn chưa nhập tiêu đề</span>
@@ -766,36 +763,106 @@
                                                         <span ng-show="updateLogForm.title{{$index}}.$error.maxlength">Tiêu đề dài nhất 60 kí tự</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-2">
-                                                    <button class="btn btn-danger form-control" ng-click="deleteUpdateLog($index)" ng-disabled="AllEditable == false">Xóa</button>
+                                                <hr />
+                                                <div class="mt0 mb0 div-textarea" ng-class="{'hide':IsEditUpdateLog[$index] === true}">{{update.Description}}</div>
+                                                <div class="fnt-b mt0 mb0" ng-class="{'hide':(IsEditUpdateLog[$index] == null || IsEditUpdateLog[$index] === false)}">
+                                                    <textarea msd-elastic="\n" name="desc{{$index}}"
+                                                              ng-trim="true"
+                                                              ng-minlength="30"
+                                                              required
+                                                              ng-model-options="{ updateOn: 'change blur'}"
+                                                              class="form-control" ng-model="update.Description" style="resize: none; min-height: 150px"></textarea>
+                                                    <div ng-show="updateLogForm.desc{{$index}}.$dirty && updateLogForm.desc{{$index}}.$invalid" class="text-danger">
+                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                        <span ng-show="updateLogForm.desc{{$index}}.$error.required">Bạn chưa nhập mô tả</span>
+                                                        <span ng-show="updateLogForm.desc{{$index}}.$error.minlength">Mô tả ít nhất 30 kí tự</span>
+                                                    </div>
                                                 </div>
-                                            </div> <!-- end Title -->
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <p class="title">Nội dung</p>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <div class="field-wrapper">
-                                                        <textarea class="form-control"
-                                                                  rows="5"
-                                                                  style="resize: none"
-                                                                  name="desc{{$index}}"
-                                                                  ng-trim="true"
-                                                                  ng-minlength="10"
-                                                                  required
-                                                                  ng-model-options="{ updateOn: 'change blur'}"
-                                                                  ng-model="UpdateLogs.Description"
-                                                                  ng-disabled="AllEditable == false"></textarea>
-                                                        <div ng-show="updateLogForm.desc{{$index}}.$dirty && updateLogForm.desc{{$index}}.$invalid" class="text-danger">
+                                                <hr />
+                                                <p class="mt0 mb0 div-textarea">{{update.CreatedDate}}</p>
+                                            </div>
+                                            <ul class="list-inline pull-right mt0 mb0 pb0" style="padding-top: 10px">
+                                                <li>
+                                                    <button class="btn btn-danger btn-sm" ng-disabled="AllEditable == false || update.CreatedDate != checkUpdateLogDate" ng-click="deleteUpdateLog($index)">
+                                                        Xóa
+                                                    </button>
+                                                </li>
+                                                <li ng-class="{'hide':IsEditUpdateLog[$index] === true}">
+                                                    <button class="btn btn-info btn-sm" data-toggle="modal" ng-click="showEditUpdateLog($index)" ng-disabled="AllEditable == false || update.CreatedDate != checkUpdateLogDate">
+                                                        Sửa
+                                                    </button>
+                                                </li>
+                                                <li ng-class="{'hide':(IsEditUpdateLog[$index] == null || IsEditUpdateLog[$index] === false)}">
+                                                    <button class="btn btn-info btn-sm" data-toggle="modal" ng-click="resetEditUpdateLog($index)">
+                                                        Hủy
+                                                    </button>
+                                                </li>
+                                                <li ng-class="{'hide':(IsEditUpdateLog[$index] == null || IsEditUpdateLog[$index] === false)}">
+                                                    <button class="btn btn-success btn-sm" data-toggle="modal" ng-click="editSingleUpdateLog($index)" ng-disabled="update.Description.length < 30 || update.Description == '' || update.Description == null
+                                                                                                                                                                    || update.Title.length < 10 || update.Title.length > 60  || update.Title == '' || update.Title == null">
+                                                        Lưu
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div> <!-- end items -->
+                                    </div> <!-- end items -->
+                                    @*<div class="row border-grey">
+                                            <div class="col-md-2">
+                                                <p class="title">Cập nhật #{{$index + 1}}</p>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <p class="title">Tên</p>
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <input type="text" class="form-control"
+                                                               ng-trim="true"
+                                                               ng-maxlength="60"
+                                                               ng-minlength="10"
+                                                               maxlength="60"
+                                                               name="title{{$index}}"
+                                                               ng-model-options="{ updateOn: 'change blur'}"
+                                                               ng-model="UpdateLogs.Title"
+                                                               required
+                                                               ng-disabled="AllEditable == false">
+                                                        <div ng-show="updateLogForm.title{{$index}}.$dirty && updateLogForm.title{{$index}}.$invalid" class="text-danger">
                                                             <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                            <span ng-show="updateLogForm.desc{{$index}}.$error.required">Bạn chưa nhập mô tả</span>
-                                                            <span ng-show="updateLogForm.desc{{$index}}.$error.minlength">Mô tả ít nhất 10 kí tự</span>
+                                                            <span ng-show="updateLogForm.title{{$index}}.$error.required">Bạn chưa nhập tiêu đề</span>
+                                                            <span ng-show="updateLogForm.title{{$index}}.$error.minlength">Tiêu đề ít nhất 10 kí tự</span>
+                                                            <span ng-show="updateLogForm.title{{$index}}.$error.maxlength">Tiêu đề dài nhất 60 kí tự</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <button class="btn btn-danger form-control" ng-click="deleteUpdateLog($index)" ng-disabled="AllEditable == false">Xóa</button>
+                                                    </div>
+                                                </div> <!-- end Title -->
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <p class="title">Nội dung</p>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <div class="field-wrapper">
+                                                            <textarea class="form-control"
+                                                                      rows="5"
+                                                                      style="resize: none"
+                                                                      name="desc{{$index}}"
+                                                                      ng-trim="true"
+                                                                      ng-minlength="10"
+                                                                      required
+                                                                      ng-model-options="{ updateOn: 'change blur'}"
+                                                                      ng-model="UpdateLogs.Description"
+                                                                      ng-disabled="AllEditable == false"></textarea>
+                                                            <div ng-show="updateLogForm.desc{{$index}}.$dirty && updateLogForm.desc{{$index}}.$invalid" class="text-danger">
+                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                <span ng-show="updateLogForm.desc{{$index}}.$error.required">Bạn chưa nhập mô tả</span>
+                                                                <span ng-show="updateLogForm.desc{{$index}}.$error.minlength">Mô tả ít nhất 10 kí tự</span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                        </div>*@
                                 </div>
                                 <div ng-if="updateLogForm.$dirty">
                                     <button type="button" class="btn btn-danger" ng-click="resetUpdateLog(updateLogForm)">Khôi phục</button>
@@ -841,14 +908,14 @@
                                                                 <textarea class="form-control"
                                                                           name="desc"
                                                                           ng-trim="true"
-                                                                          ng-minlength="10"
+                                                                          ng-minlength="30"
                                                                           required
                                                                           ng-model-options="{ updateOn: 'change blur'}"
                                                                           ng-model="NewUpdateLog.Description"></textarea>
                                                                 <div ng-show="CreateUpdateLogForm.desc.$dirty && CreateUpdateLogForm.desc.$invalid" class="text-danger">
                                                                     <span class="glyphicon glyphicon-remove text-danger"></span>
                                                                     <span ng-show="CreateUpdateLogForm.desc.$error.required">Bạn chưa nhập mô tả</span>
-                                                                    <span ng-show="CreateUpdateLogForm.desc.$error.minlength">Mô tả ít nhất 10 kí tự</span>
+                                                                    <span ng-show="CreateUpdateLogForm.desc.$error.minlength">Mô tả ít nhất 30 kí tự</span>
                                                                 </div>
                                                             </div>
                                                         </form>

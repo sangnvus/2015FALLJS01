@@ -24,5 +24,13 @@ namespace DDL_CapstoneProject.Models.DTOs
         public string PhoneNumber { get; set; }
         public string ProjectCode { get; set; }
         public bool IsPublic { get; set; }
+        public string ProjectName { get; set; }
+        public string BackerImg { get; set; }
+        public string BackerUsername { get; set; }
+        public string ProjectOwner { get; set; }
+        public string ProjectOwnerUsername { get; set; }
+        public string RewardPkgDesc { get; set; }
+        public string RewardPkgType { get; set; }
+        public DateTime BackedDate { get; set; }
     }
 }

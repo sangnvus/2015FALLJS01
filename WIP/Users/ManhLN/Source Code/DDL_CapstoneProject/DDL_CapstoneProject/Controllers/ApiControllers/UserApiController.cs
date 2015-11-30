@@ -12,6 +12,7 @@ using DDL_CapstoneProject.Respository;
 using DDL_CapstoneProject.Ultilities;
 using System.Web;
 using System.Web.Script.Serialization;
+using DDL_CapstoneProject.Models;
 
 namespace DDL_CapstoneProject.Controllers.ApiControllers
 {
@@ -221,6 +222,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         public IHttpActionResult GetUserInfoEdit()
         {
             UserEditInfoDTO userCurrent = null;
+            DDL_User userCurrent1 = UserRepository.Instance.GetByUserNameOrEmail(User.Identity.Name);
             try
             {
                 if (!ModelState.IsValid)
@@ -233,7 +235,11 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                     return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
                 }
                 userCurrent = UserRepository.Instance.GetUserEditInfo(User.Identity.Name);
-               // userCurrent.ProfileImage = DDLConstants.FileType.AVATAR + userCurrent.ProfileImage;
+                if (userCurrent1.LoginType != DDLConstants.LoginType.FACEBOOK)
+                {
+                    userCurrent.ProfileImage = DDLConstants.FileType.AVATAR + userCurrent.ProfileImage;
+                }
+                
             }
             catch (UserNotFoundException)
             {
@@ -694,6 +700,8 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
 
         #region TrungVn
+
+
 
         [HttpGet]
         public IHttpActionResult GetBackingFullInforListForExport()

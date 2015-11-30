@@ -1,11 +1,10 @@
-﻿<div id="setting_container" class="paddingNavbar">
+﻿<div id="setting_container" class="paddingNavbar mt50">
     <div class="row pull-right">
         <div class="col-sm-12 col-sm-offset-0">
             <ul id="" class="list-inline fnt18 fnt-b">
-
-                <li class=""><a class="c-3" href="../#/project/createdProject">Dự án đã tạo</a></li>
-                <li class=""><a class="c-10" href="../#/project/backedProject">Dự án đã ủng hộ</a></li>
-                <li class=""><a class="c-10" href="../#/project/starredProject">Dự án theo dõi</a></li>
+                <li class=""><a class="c-3" href="../#/project/created">Dự án đã tạo</a></li>
+                <li class=""><a class="c-10" href="../#/project/backed">Dự án đã ủng hộ</a></li>
+                <li class=""><a class="c-10" href="../#/project/reminded">Dự án theo dõi</a></li>
             </ul>
         </div>
     </div>
@@ -37,9 +36,9 @@
                     </div>
                     <div class="item-footer">
                         <div class="mt10 mb5 no-wrap text-hidden">
-                            <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
+                            <a class="grey-dark" href="@Url.Content("/#/search?categoryid={{project.CategoryID}}")"><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
                             &nbsp;&nbsp;
-                            <span class="grey-dark"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>{{project.Location}}</span>
+                            <span class="grey-dark"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span><span tooltip='{{project.Location}}'>{{project.Location}}</span></span>
                         </div>
                         <div class="progress mt5 mb5">
                             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuenow="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
@@ -87,7 +86,7 @@
                         <div class="mt10 mb5 no-wrap text-hidden">
                             <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
                             &nbsp;&nbsp;
-                            <span class="grey-dark"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>{{project.Location}}</span>
+                            <span class="grey-dark"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span><span tooltip='{{project.Location}}'>{{project.Location}}</span></span>
                         </div>
                         <div class="progress mt5 mb5">
                             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuenow="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
@@ -141,7 +140,7 @@
                         <div class="mt10 mb5 no-wrap text-hidden">
                             <a class="grey-dark" href=""><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
                             &nbsp;&nbsp;
-                            <span class="grey-dark"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>{{project.Location}}</span>
+                            <span class="grey-dark"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span><span tooltip='{{project.Location}}'>{{project.Location}}</span></span>
                         </div>
                         <div class="progress mt5 mb5">
 
@@ -160,7 +159,8 @@
                                 <span class="mt0 mb0">đã ủng hộ</span>
                             </li>
                             <li>
-                                <span class="fnt-b mt0 mb0 c00 label label-success" ng-if="project.CurrentFunded >= 100">Thành công</span><p class="fnt-b mt0 mb0 c00 label label-danger" ng-if="project.CurrentFunded < 100">Thất bại</p>
+                                <span class="fnt-b mt0 mb0 label label-success" ng-if="project.CurrentFunded >= 100">Thành công</span>
+                                <span class="fnt-b mt0 mb0 label label-danger" ng-if="project.CurrentFunded < 100">Thất bại</span>
                                 @*<span class="mt0 mb0">{{project.CreatedDate | date : format : shortDate}}</span>*@
                             </li>
                             @*<li>

@@ -214,6 +214,12 @@
             word-break: break-word;
             white-space: pre-wrap;
         }
+
+        #campaign #load_content img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
     </style>
 </head>
 <body>
@@ -243,13 +249,17 @@
                         <form class="navbar-form navbar-left" role="Search" novalidate ng-submit="submit(searchkey)">
                             <div class="form-group">
                                 <div class="input-group">
-                                    <input class="form-control" id="navbarInput-01" ng-model="searchkey" type="Search" placeholder="Tìm kiếm..." />
+                                    <input type="Search" class="form-control" autofocus
+                                           placeholder="Tìm kiếm..." ng-model="searchkey"
+                                           typeahead="project for project in suggess($viewValue)"
+                                           typeahead-template-url="customTemplate.html" required="">
                                     <span class="input-group-btn">
                                         <button type="button" class="btn" ng-click="submit(searchkey)"><span class="fa fa-search"></span></button>
                                     </span>
                                 </div>
                             </div>
                         </form>
+
                     </div>
                 }
                 <!-- Login/Logout/Profile -->
@@ -284,9 +294,9 @@
                                 <ul class="dropdown-menu">
                                     <h5 class="c3">My stuff</h5>
                                     <li><a href="@Url.Content("/#/user/message")">Tin nhắn <span ng-show="UserInfo.NumberNewMessage.Total > 0" class="badge">{{UserInfo.NumberNewMessage.Total}}</span></a></li>
-                                    <li><a href="@Url.Content("/#/project/backedProject")">Dự án đã ủng hộ</a></li>
-                                    <li><a href="@Url.Content("/#/project/createdProject")">Dự án đã tạo</a></li>
-                                    <li><a href="@Url.Content("/#/project/starredProject")">Dự án theo dõi</a></li>
+                                    <li><a href="@Url.Content("/#/project/backed")">Dự án đã ủng hộ</a></li>
+                                    <li><a href="@Url.Content("/#/project/created")">Dự án đã tạo</a></li>
+                                    <li><a href="@Url.Content("/#/project/reminded")">Dự án theo dõi</a></li>
                                     <li class="divider"></li>
                                     <h5 class="c3">Chỉnh sửa</h5>
                                     <li><a href="@Url.Content("/#/user/editpassword/")">Tài Khoản</a></li>
@@ -350,5 +360,11 @@
     @RenderSection("scripts", required: false)
     @*<script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.7.1/loading-bar.min.js'></script>*@
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+
+    <script type="text/ng-template" id="customTemplate.html">
+        <a>
+            <span>{{match.model}}</span>
+        </a>
+    </script>
 </body>
 </html>

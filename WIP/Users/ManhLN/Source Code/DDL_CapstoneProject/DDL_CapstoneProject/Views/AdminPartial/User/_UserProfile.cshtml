@@ -162,13 +162,13 @@
                                                    datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
                                                 <thead>
                                                     <tr>
-                                                        <th>STT</th>
+                                                        <th style="width: 15px">#</th>
                                                         <th>Tên dự án</th>
                                                         <th>Tổng số tiền đã ủng hộ</th>
                                                         @*<th>Mục tiêu gây quỹ</th>*@
                                                         <th>Tình trạng duyệt</th>
                                                         <th>Tình trạng gây quỹ</th>
-                                                        <th>Hành động</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -178,15 +178,15 @@
                                                         <td style="width:150px" class="col-number"><span class="money usd no-code">{{project.PledgedAmount | number : fractionSize}} &#8363;</span></td>
                                                         @*<td style="width:150px" class="col-number"><span class="money usd no-code">{{project.FundingGoals | number : fractionSize}} &#8363;</span></td>*@
                                                         <td style="width:100px">
-                                                            <span class="label label-primary center-block gray" ng-if="project.Status == 'rejected'" style="padding: 9px;">Từ chối</span>
+                                                            <span class="label label-danger center-block gray" ng-if="project.Status == 'rejected'" style="padding: 9px;">Từ chối</span>
                                                             <span class="label label-primary center-block label-success" ng-if="project.Status == 'approved'" style="padding: 9px;">Đã duyệt</span>
-                                                            <span class="label label-primary center-block purple" ng-if="project.Status == 'pending'" style="padding: 9px;">Chờ duyệt</span>
+                                                            <span class="label label-primary center-block" ng-if="project.Status == 'pending'" style="padding: 9px;">Chờ duyệt</span>
                                                             <span class="label label-primary center-block red" ng-if="project.Status == 'suspended'" style="padding: 9px;">Đình chỉ</span>
                                                         </td>
                                                         <td style="width:100px">
-                                                            <span class="label label-primary center-block label-success" ng-if="project.Isfunded == 'suscced'" style="padding: 9px;">Thành công</span>
-                                                            <span class="label label-primary center-block blue" ng-if="project.Isfunded == 'fail'" style="padding: 9px;">Thất bại</span>
-                                                            <span class="label label-primary center-block default" ng-if="project.Isfunded == 'going'" style="padding: 9px;">Đang chạy</span>
+                                                            <span class="label center-block label-success" ng-if="project.Isfunded == 'suscced'" style="padding: 9px;">Thành công</span>
+                                                            <span class="label label-danger center-block" ng-if="project.Isfunded == 'fail'" style="padding: 9px;">Thất bại</span>
+                                                            <span class="label label-primary center-block" ng-if="project.Isfunded == 'going'" style="padding: 9px;">Đang chạy</span>
                                                         </td>
                                                         <td style="width:40px">
                                                             @*<a tooltip="Nhấp để xem chi tiết" class="btn btn-blue" data-toggle="modal" data-target="#infoBanker" title="View" ng-click="getBackingDetail()">
@@ -231,7 +231,7 @@
                                                    datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
                                                 <thead>
                                                     <tr>
-                                                        <th>STT</th>
+                                                        <th style="width: 15px">#</th>
                                                         <th>Tên dự án</th>
                                                         <th>Danh mục</th>
                                                         <th>Tổng số tiền đã gây quỹ được</th>
@@ -239,7 +239,7 @@
                                                         <th>Tình trạng duyệt</th>
                                                         <th>Tình trạng gây quỹ</th>
                                                         <th>Ngày còn lại</th>
-                                                        <th>Hành động</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -250,19 +250,19 @@
                                                         <td style="width:100px" class="col-number"><span class="money usd no-code">{{project.PledgedOn | number : fractionSize}} &#8363;</span></td>
                                                         <td style="width:100px" class="col-number"><span class="money usd no-code">{{project.FundingGoals | number : fractionSize}} &#8363;</span></td>
                                                         <td style="width:100px">
-                                                            <span class="label label-primary center-block gray" ng-if="project.Status == 'rejected'" style="padding: 9px;">Từ chối</span>
+                                                            <span class="label label-danger center-block" ng-if="project.Status == 'rejected'" style="padding: 9px;">Từ chối</span>
                                                             <span class="label label-primary center-block label-success" ng-if="project.Status == 'approved'" style="padding: 9px;">Đã duyệt</span>
-                                                            <span class="label label-primary center-block purple" ng-if="project.Status == 'pending'" style="padding: 9px;">Chờ duyệt</span>
+                                                            <span class="label label-primary center-block" ng-if="project.Status == 'pending'" style="padding: 9px;">Chờ duyệt</span>
                                                             <span class="label label-primary center-block red" ng-if="project.Status == 'suspended'" style="padding: 9px;">Đình chỉ</span>
                                                         </td>
                                                         <td style="width:100px">
                                                             <span class="label label-primary center-block label-success" ng-if="project.Isfunded == 'suscced'" style="padding: 9px;">Thành công</span>
-                                                            <span class="label label-primary center-block blue" ng-if="project.Isfunded == 'fail'" style="padding: 9px;">Thất bại</span>
-                                                            <span class="label label-primary center-block default" ng-if="project.Isfunded == 'going'" style="padding: 9px;">Đang chạy</span>
+                                                            <span class="label label-primary center-block red" ng-if="project.Isfunded == 'fail'" style="padding: 9px;">Thất bại</span>
+                                                            <span class="label label-primary center-block" ng-if="project.Isfunded == 'going'" style="padding: 9px;">Đang chạy</span>
                                                         </td>
                                                         <td style="width:100px" class="col-number">
                                                             <span ng-if="project.Isexpired > 0">{{project.Isexpired}}</span>
-                                                            <span ng-if="project.Isexpired < 0" class="label label-primary center-block red" style="padding: 9px;">Hết hạn</span>
+                                                            <span ng-if="project.Isexpired < 0" class="label label-primary center-block red" style="padding: 9px;">Đã kết thúc</span>
                                                         </td>
                                                         <td style="width:40px">
                                                             <a tooltip="Nhấp để xem chi tiết dự án" href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")" class="btn btn-blue">

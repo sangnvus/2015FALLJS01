@@ -8,6 +8,17 @@ app.controller('AdminDashBoardController', function ($scope, $rootScope, $sce, t
     .withOption('order', [0, 'desc'])
     .withBootstrap();
 
+
+
+    $scope.export = function (id,name) {
+        html2canvas(document.getElementById(id)).then(function (canvas) {
+            canvas.toBlob(function (blob) {
+                saveAs(blob, name+"("+ CommmonService.today()+")");
+            });
+        });
+    }
+
+
     // initail statistic chart year option
     $scope.chartYear = [];
     var d = new Date();

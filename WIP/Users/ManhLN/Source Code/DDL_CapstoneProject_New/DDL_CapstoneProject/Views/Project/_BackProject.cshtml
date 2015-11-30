@@ -28,7 +28,7 @@
                                                 <span ng-if="reward.Type == 'unlimited'">Không giới hạn</span>
                                             </p>
                                             <p>Đã ủng hộ: {{reward.CurrentQuantity | currency:"":0}} <span ng-if="reward.Type == 'limited'">| {{reward.Quantity | currency:"":0}}</span></p>
-                                            <p style="word-break: break-word;">{{reward.Description}}</p>
+                                            <p style="word-break: break-word;" class="div-textarea">{{reward.Description}}</p>
                                             <p ng-if="reward.Quantity <= reward.CurrentQuantity && reward.Type == 'limited'">
                                                 <span class="label label-danger">Gói đã hết. Xin chọn gói khác!</span>
                                             </p>

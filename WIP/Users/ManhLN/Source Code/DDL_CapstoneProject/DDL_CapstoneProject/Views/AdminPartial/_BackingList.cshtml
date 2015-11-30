@@ -21,26 +21,26 @@
                                datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
                             <thead>
                                 <tr>
-                                    <th>STT</th>
+                                    <th style="width: 15px">#</th>
                                     <th>Tên dự án</th>
                                     <th>Tên người ủng hộ</th>
                                     <th>Số tiền ủng hộ</th>
                                     <th>Thời gian ủng hộ</th>
-                                    <th>Hành động</th>
+                                    <th style="width:40px"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="backing in ListBacking">
-                                    <td style="width:40px">{{$index + 1}}</td>
+                                    <td style="width:40px" class="col-number">{{$index + 1}}</td>
                                     <td>{{backing.ProjectTitle}}</td>
                                     <td>{{backing.BackerName}}</td>
                                     <td style="width:150px" class="col-number"><span class="money usd no-code">{{backing.PledgeAmount | number : fractionSize}} &#8363;</span></td>
                                     <td style="width:150px">{{backing.BackedDate | date : "HH:mm 'ngày' dd-MM-yyyy"}}</td>
-                                    <td style="width:40px">
+                                    <td>
                                         <div class="btn-group">
                                             <button tooltip="Nhấp để xem chi tiết" class="btn btn-primary btn-sm" id=""
                                                     data-toggle="modal" data-target="#backingDetail"
-                                                    data-placement="left" data-trigger="hover" title="View"
+                                                    tooltip-placement="left" data-trigger="hover" title="View" tooltip-append-to-body="true"
                                                     ng-click="GetBacker(backing.UserName,backing.BackingID)">
                                                 <i class="fa fa-eye"></i>
                                             </button>

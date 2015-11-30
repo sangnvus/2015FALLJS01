@@ -14,7 +14,7 @@ app.controller('CreateProjectController', function ($scope, $rootScope, $locatio
     var percent;
 
     $scope.save = function () {
-        if ($scope.Project.FundingGoal < 1000000 || $scope.Project.Title.length < 10) {
+        if ($scope.Project.FundingGoal < 1000000 || $scope.Project.Title.length < 10 || $scope.Project.Title.length > 60) {
             $scope.isError = true;
         } else {
             $scope.isError = false;
@@ -38,12 +38,12 @@ app.controller('CreateProjectController', function ($scope, $rootScope, $locatio
 
             SweetAlert.swal({
                 title: "Hạng dự án " + rank,
-                text: "Với số tiền gây quỹ này chúng tôi sẽ lấy " + percent + "% tổng số tiền gây quỹ được",
+                text: "Với số tiền gây quỹ này chúng tôi sẽ lấy " + percent + "% tổng số tiền gây quỹ được." + "Bạn có đồng ý không?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Có!",
-                cancelButtonText: "Không!",
+                confirmButtonText: "Có",
+                cancelButtonText: "Không",
                 closeOnConfirm: true,
                 closeOnCancel: true
             },

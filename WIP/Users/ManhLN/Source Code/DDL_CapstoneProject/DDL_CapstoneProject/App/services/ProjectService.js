@@ -5,6 +5,18 @@ app.service('ProjectService', function ($http) {
 
     //Trungvn
 
+    this.projectTitleList = function (searchkey) {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/projectTitleList',
+            params: {
+                searchkey: searchkey
+            }
+        });
+
+        return request;
+    }
+
     this.getProjectTop = function (categoryID) {
         return $http.get("/api/ProjectApi/getProjectTop/?categoryID=" + categoryID);
     }
@@ -39,23 +51,25 @@ app.service('ProjectService', function ($http) {
     this.getStatisticsInfor = function () {
         return $http.get('/api/ProjectApi/getStatisticsInfor');
     };
-    this.SearchProject = function (from, categoryidlist, orderby, searchkey) {
-        return this.GetProject(12, from, categoryidlist, orderby, searchkey, "", false, "");
+    this.SearchProject = function (from, categoryidlist, orderby, searchkey, statusString) {
+        return this.GetProject(12, from, categoryidlist, orderby, searchkey, "", statusString, "");
     }
 
 
-    this.SearchCount = function (categoryidlist, searchkey) {
+    this.SearchCount = function (categoryidlist, searchkey, statusString) {
         var request = $http({
             method: 'get',
             url: '/api/ProjectApi/SearchCount',
             params: {
                 categoryidlist: categoryidlist,
-                searchkey: searchkey
+                searchkey: searchkey,
+                statusString: statusString
             }
         });
 
         return request;
     }
+
 
     //EndTrungVn
 
@@ -250,6 +264,17 @@ app.service('ProjectService', function ($http) {
         return request;
     }
 
+    // Function to edit single updateLog
+    this.editSingleUpdateLogs = function (editUpdateLog) {
+        var request = $http({
+            method: 'put',
+            url: '/api/ProjectApi/EditSingleUpdateLog/',
+            data: editUpdateLog
+        });
+
+        return request;
+    }
+
     // Funtion to delete a updateLog
     this.deleteUpdateLog = function (updateLogID) {
         return $http.delete("/api/ProjectApi/DeleteUpdateLog/" + updateLogID);
@@ -329,6 +354,17 @@ app.service('ProjectService', function ($http) {
             method: 'put',
             url: '/api/ProjectApi/EditQuestion/',
             data: question
+        });
+
+        return request;
+    }
+
+    // Function to edit single QA
+    this.editSingleQuestion = function (editQuestion) {
+        var request = $http({
+            method: 'put',
+            url: '/api/ProjectApi/EditSingleQuestion/',
+            data: editQuestion
         });
 
         return request;
@@ -457,12 +493,12 @@ app.service('ProjectService', function ($http) {
 
         return request;
     }
-// 17/10/2015 - MaiCTP - get BackedProject
+    // 17/10/2015 - MaiCTP - get BackedProject
     this.getBackedProject = function () {
         var request = $http({
             method: 'get',
             url: '/api/ProjectApi/GetBackedProject/'
-          
+
         });
 
         return request;
@@ -549,15 +585,4 @@ app.service('ProjectService', function ($http) {
         return request;
     }
 
-    this.reportProject = function (code, reportcontent) {
-        var request = $http({
-            method: 'get',
-            url: '/api/ProjectApi/ReportProject',
-            params: {
-                code: code,
-                content: reportcontent
-            }
-        });
-        return request;
-    }
 });

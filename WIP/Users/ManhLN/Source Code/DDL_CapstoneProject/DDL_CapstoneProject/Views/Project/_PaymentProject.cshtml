@@ -11,8 +11,8 @@
                                     <h3>Thông tin người ủng hộ</h3>
                                     <div class="row">
                                         <div class="col-md-3 pt30">
-                                            <img id="avatar1" ng-if="!checkHTTP(Comment.ProfileImage)" ng-src="../images/avatars/{{UserBasicInfo.ProfileImage}}" alt="" class="img-responsive img-circle center-block">
-                                            <img ng-if="checkHTTP(Comment.ProfileImage)" ng-src="{{trustSrc(UserBasicInfo.ProfileImage)}}" alt="" class="img-responsive img-circle center-block">
+                                            <img id="avatar1" ng-if="!checkHTTP(UserBasicInfo.ProfileImage)" ng-src="../images/avatars/{{UserBasicInfo.ProfileImage}}" alt="" class="img-responsive img-circle center-block">
+                                            <img id="avatar1" ng-if="checkHTTP(UserBasicInfo.ProfileImage)" ng-src="{{trustSrc(UserBasicInfo.ProfileImage)}}" alt="" class="img-responsive img-circle center-block">
                                         </div>
                                         <div class="col-md-9">
                                             <br>
@@ -46,10 +46,10 @@
                                         <div class="col-md-8 pt10 pb10">
                                             <input type="text" class="form-control"
                                                    name="address"
+                                                   ng-autocomplete
                                                    placeholder="Địa chỉ"
                                                    ng-model="UserBasicInfo.Addres"
                                                    ng-model-options="{ updateOn: 'change blur'}"
-                                                   ng-autocomplete
                                                    maxlength="60"
                                                    ng-maxlength="60"
                                                    ng-minlength="10"
@@ -107,9 +107,7 @@
                             <p class="fnt30 fnt-b txt-c c3 pt0 pb0 mt0 mb0">Dự án: "{{Project.Title}}"</p>
                             <p class="fnt18 fnt-b txt-c pt0 pb0 mt0 mb0">Chủ dự án {{Project.Creator}}</p>
                             <p class="bold">Chi tiết gói quà:</p>
-                            <p style="word-break: break-word;">
-                                {{Packet.Description}}
-                            </p>
+                            <p style="word-break: break-word;" class="div-textarea">{{Packet.Description}}</p>
                             <p><span class="bold">Ủng hộ: </span><span class="bold"> {{BackData.PledgeAmount | currency:"":0}}&#8363;</span><span ng-show="Packet.Type != 'no reward'"> | Số lượng: {{BackData.Quantity  | currency:"":0}}</span></p>
                         </div>
                     </div>

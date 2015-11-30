@@ -17,10 +17,13 @@
                             <a class="btn btn-white" href="" data-toggle="modal" data-target="#newMesageModal"><i class="fa fa-edit"></i> Soạn tin nhắn</a>
                         </li>
                         <li class="nav-divider"></li>
-                        <li @*ng-click="changeInboxSent('inbox')"*@ ng-class="{'active': !Sent}" style="cursor: pointer">
-                            <a href="/admin/#/message/">Hộp thư đến</a>
+                        <li @*ng-click="changeInboxSent('inbox')"*@ ng-class="{'active': Inbox === 'all'}" style="cursor: pointer">
+                            <a href="/admin/#/message/">Tất cả thư</a>
                         </li>
-                        <li @*ng-click="changeInboxSent('sent')"*@ ng-class="{'active': Sent}" style="cursor: pointer">
+                        <li @*ng-click="changeInboxSent('inbox')"*@ ng-class="{'active': Inbox === 'inbox'}" style="cursor: pointer">
+                            <a href="/admin/#/message?list=inbox">Hộp thư đến</a>
+                        </li>
+                        <li @*ng-click="changeInboxSent('sent')"*@ ng-class="{'active': Inbox === 'sent'}" style="cursor: pointer">
                             <a href="/admin/#/message?list=sent">Hộp thư đi</a>
                         </li>
                         <li class="nav-divider"></li>
@@ -45,7 +48,7 @@
                             </ul>
                         </div>
                         <div class="table-responsive mailbox-messages">
-                            <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
+                            <table class="table table-bordered table-hover" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
                                 <thead style="display: none">
                                     <tr style="background: #16a085; color: #FFF">
                                         <th style="width: 5%">
@@ -63,16 +66,15 @@
                                             <input type="checkbox" id="checkbox{{$index}}" ng-model="conversation.Selected"
                                                    value="{{conversation.ConversationID}}">
                                         </td>
-                                        <td class="from-col" href="message-View.html" ng-if="!Sent" style="width: 15%">
+                                        <td class="from-col" href="message-View.html" ng-if="!conversation.IsSent" style="width: 15%">
                                             <a href="/admin/#/message/{{conversation.ConversationID}}"> Từ: {{conversation.SenderName}}{{bool$index}}</a>
                                         </td>
-                                        <td class="from-col" href="message-View.html" ng-if="Sent" style="width: 15%">
+                                        <td class="from-col" href="message-View.html" ng-if="conversation.IsSent" style="width: 15%">
                                             <a href="/admin/#/message/{{conversation.ConversationID}}">Tới: {{conversation.ReceiverName}}</a>
                                         </td>
                                         <td class="msg-col" style="width: 70%">
                                             <a href="/admin/#/message/{{conversation.ConversationID}}">
                                                 {{conversation.Title}}
-                                                <span class="text-muted">- Hi again! I wanted to let you know that the order...</span>
                                             </a>
                                         </td>
                                         <td class="date-col" style="width: 10%"> {{conversation.UpdatedDate | date:'dd/MM/yy'}}</td>
@@ -160,9 +162,3 @@
     </div><!-- /.modal-dialog -->
 </div>
 <!--Template load user-->
-<script type="text/ng-template" id="customTemplate.html">
-    <a>
-        <span>{{match.model.FullName}}</span>
-        <span>({{match.model.UserName}})</span>
-    </a>
-</script>

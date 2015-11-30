@@ -1,7 +1,7 @@
 ﻿"use strict";
 
 app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, $filter, toastr, project,
-    ProjectService, CommmonService, DTOptionsBuilder, DTColumnDefBuilder, MessageService, SweetAlert) {
+    ProjectService, CommmonService, DTOptionsBuilder, DTColumnDefBuilder, MessageService, SweetAlert, ReportService) {
     //Todo here.
     $scope.ReportContent = "";
     $scope.Project = project.data.Data;
@@ -248,7 +248,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, $f
 
     $scope.Reminded = true;
     $scope.report = function () {
-        var promise = ProjectService.reportProject($scope.Project.ProjectCode, $scope.ReportContent);
+        var promise = ReportService.reportProject($scope.Project.ProjectCode, $scope.ReportContent);
         promise.then(
             function (result) {
                 if (result.data.Status === "success") {
