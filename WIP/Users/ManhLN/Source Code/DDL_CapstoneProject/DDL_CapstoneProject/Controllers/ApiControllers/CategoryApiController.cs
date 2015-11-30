@@ -198,7 +198,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                     {
                         Status = DDLConstants.HttpMessageType.ERROR,
                         Message = "Tên danh mục đã được sử dụng!",
-                        Type = DDLConstants.HttpMessageType.BAD_REQUEST
+                        Type = "duplicate"
                     });
             }
             catch (NotPermissionException)

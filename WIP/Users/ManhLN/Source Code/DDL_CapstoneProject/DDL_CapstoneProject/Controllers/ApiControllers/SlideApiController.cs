@@ -363,6 +363,10 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             {
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Sai kiểu dữ liệu", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
             }
+            catch (IndexOutOfRangeException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không thể thay đổi thứ tự", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
             catch (Exception)
             {
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });

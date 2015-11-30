@@ -85,19 +85,13 @@ namespace DDL_CapstoneProject.Respository
             using (var db = new DDLDataContext())
             {
                 // Get rewardPkg list
-                var listCategories = db.Categories.Where(x => x.IsActive).ToList();
-
-                var listCategoryDTO = new List<CategoryProjectCountDTO>();
-
-                foreach (var Category in listCategories)
-                {
-                    listCategoryDTO.Add(
-                        new CategoryProjectCountDTO
-                        {
-                            CategoryID = Category.CategoryID,
-                            Name = Category.Name,
-                        });
-                }
+                var listCategoryDTO = (from category in db.Categories
+                                       where category.IsActive
+                                       select new CategoryProjectCountDTO
+                                       {
+                                           CategoryID = category.CategoryID,
+                                           Name = category.Name,
+                                       }).ToList();
                 return listCategoryDTO;
             }
         }
@@ -130,7 +124,7 @@ namespace DDL_CapstoneProject.Respository
                                            Description = category.Description,
                                            Name = category.Name,
                                            CategoryID = category.CategoryID,
-                                           ProjectCount = category.Projects.Count(x => x.Status != DDLConstants.ProjectStatus.DRAFT)
+                                           ProjectCount = category.Projects.Count(x => x.Status != DDLConstants.ProjectStatus.DRAFT && x.Status != DDLConstants.ProjectStatus.REJECTED && x.Status != DDLConstants.ProjectStatus.PENDING)
                                        }).ToList();
 
                 return listCategoryDTO;
