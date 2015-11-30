@@ -93,7 +93,8 @@ app.config(["$routeProvider", function ($routeProvider) {
                         searchkey = "null";
                         params.searchkey = [""];
                     }
-                    var promise = ProjectService.SearchProject(0, "|" + params.categoryid + "|", params.order, searchkey);
+
+                    var promise = ProjectService.SearchProject(0, "|" + params.categoryid + "|", params.order, searchkey, "true");
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
                 categoryList: ['$rootScope', 'CategoryService', 'CommmonService', '$q', function ($rootScope, CategoryService, CommmonService, $q) {
@@ -118,7 +119,7 @@ app.config(["$routeProvider", function ($routeProvider) {
                     return $route.current.params.searchkey;
                 }],
                 projectResultListSize: ['ProjectService', '$route', '$q', '$rootScope', 'CommmonService', function (ProjectService, $route, $q, $rootScope, CommmonService) {
-                    var promise = ProjectService.SearchCount("|" + $route.current.params.categoryid + "|", $route.current.params.searchkey);
+                    var promise = ProjectService.SearchCount("|" + $route.current.params.categoryid + "|", $route.current.params.searchkey, "true");
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
 
@@ -427,24 +428,30 @@ app.run(['$rootScope', '$window','$location','$route', '$anchorScroll', 'UserSer
 
         });
 
-        //$rootScope.$on('$routeChangeSuccess', function (e, curr, prev) {
-        //if ($rootScope.UserInfo.IsAuthen === true) {
-        //    var promiseGet = MessageService.getNumberNewMessage();
-        //    promiseGet.then(
-        //        function (result) {
-        //            if (result.data.Status === "success") {
-        //                // Save authen info into $rootScope
-        //                $rootScope.UserInfo.NumberNewMessage = result.data.Data;
-        //                $rootScope.UserInfo.NumberNewMessage.Total = result.data.Data.ReceivedMessage + result.data.Data.SentMessage;
-        //            } else {
-        //                $rootScope.UserInfo.NumberNewMessage = 0;
-        //            }
-        //        },
-        //        function (error) {
-        //            $rootScope.UserInfo.NumberNewMessage = 0;
-        //        });
-        //}
-        //});
+        $rootScope.$on('$routeChangeSuccess', function (e, curr, prev) {
+            if (curr.$$route.redirectTo === undefined) {
+                if ($rootScope.UserInfo.IsAuthen === true) {
+                    var promiseGet = MessageService.getNumberNewMessage();
+                    promiseGet.then(
+                        function (result) {
+                            if (result.data.Status === "success") {
+                                //Save new message number into $rootScope
+                                $rootScope.UserInfo.NumberNewMessage = result.data.Data;
+                                $rootScope.UserInfo.NumberNewMessage.Total = result.data.Data.ReceivedMessage + result.data.Data.SentMessage;
+                            } else {
+                                $rootScope.NumberNewMessage.Total = 0;
+                                $rootScope.NumberNewMessage.ReceivedMessage = 0;
+                                $rootScope.NumberNewMessage.SentMessage = 0;
+                            }
+                        },
+                        function (error) {
+                            $rootScope.NumberNewMessage.Total = 0;
+                            $rootScope.NumberNewMessage.ReceivedMessage = 0;
+                            $rootScope.NumberNewMessage.SentMessage = 0;
+                        });
+                }
+            }
+        });
 
         // Set language for table
         DTDefaultOptions.setLanguage({

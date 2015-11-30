@@ -10,5 +10,6 @@ namespace DDL_CapstoneProject.Models.DTOs
         public string ProjectCode { get; set; }
         public string Title { get; set; }
         public string Creator { get; set; }
+        public string CreatorUsername { get; set; }
     }
 }

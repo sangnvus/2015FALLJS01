@@ -82,24 +82,26 @@ namespace DDL_CapstoneProject.Respository
                 var userTopFunded = from user in db.DDL_Users
                                     select new UserBackInforDTO
                                     {
+                                        Username = user.Username,
                                         Name = user.UserInfo.FullName,
                                         TotalFunded =
-                                            user.CreatedProjects.Where(x => categoryid.Contains(x.CategoryID.ToString()) || allCategory)
+                                            user.CreatedProjects.Where(x => (categoryid.Contains(x.CategoryID.ToString()) || allCategory) && !x.Status.Equals(DDLConstants.ProjectStatus.DRAFT))
                                                 .Sum(x => (decimal?)x.CurrentFunded) ?? 0,
                                         TotalBacked = 0,
-                                        projectCount = user.CreatedProjects.Where(x => categoryid.Contains(x.CategoryID.ToString()) || allCategory).Count()
+                                        projectCount = user.CreatedProjects.Where(x => (categoryid.Contains(x.CategoryID.ToString()) || allCategory) && !x.Status.Equals(DDLConstants.ProjectStatus.DRAFT)).Count()
                                     };
 
                 var userTopBacked = from user in db.DDL_Users
                                     select new UserBackInforDTO
                                     {
+                                        Username = user.Username,
                                         Name = user.UserInfo.FullName,
                                         TotalFunded = 0,
                                         TotalBacked =
-                                            user.Backings.Where(x => categoryid.Contains(x.Project.CategoryID.ToString()) || allCategory)
+                                            user.Backings.Where(x => (categoryid.Contains(x.Project.CategoryID.ToString()) || allCategory) && !x.Project.Status.Equals(DDLConstants.ProjectStatus.DRAFT))
                                                 .Sum(x => (decimal?)x.BackingDetail.PledgedAmount) ?? 0,
                                         projectCount =
-                                            user.Backings.Where(x => categoryid.Contains(x.Project.CategoryID.ToString()) || allCategory).Count()
+                                            user.Backings.Where(x => (categoryid.Contains(x.Project.CategoryID.ToString()) || allCategory) && !x.Project.Status.Equals(DDLConstants.ProjectStatus.DRAFT)).Count()
                                     };
                 Dictionary<string, List<UserBackInforDTO>> dic = new Dictionary<string, List<UserBackInforDTO>>
                 {
@@ -121,7 +123,6 @@ namespace DDL_CapstoneProject.Respository
                 return dic;
             }
         }
-
         #endregion
         public DDL_User CreateEmptyUser()
         {

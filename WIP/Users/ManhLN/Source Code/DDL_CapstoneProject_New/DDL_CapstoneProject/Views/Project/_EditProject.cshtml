@@ -212,7 +212,7 @@
                                             <span class="glyphicon glyphicon-remove text-danger" ng-show="Project.FundingGoal < 1000000 && errorListFlag == true"></span>
                                             <span>Mục tiêu gây quỹ ít nhất là 1,000,000&#8363;</span>
                                             <p>
-                                                Tùy theo rank dự án mà chúng tôi sẽ lấy từ 5-2% số tiền gấy quỹ được.
+                                                Tùy theo rank dự án mà chúng tôi sẽ lấy từ 2-5% số tiền gấy quỹ được.
                                             </p>
                                         </div>
                                     </div>
@@ -921,8 +921,11 @@
                                                         </form>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Bỏ</button>
-                                                        <button type="button" ng-disabled="!CreateUpdateLogForm.$dirty || (CreateUpdateLogForm.$dirty && CreateUpdateLogForm.$invalid)" class="btn btn-primary" ng-click="createUpdateLog()">Lưu</button>
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
+                                                        <button type="button" ng-disabled="!CreateUpdateLogForm.$dirty || (CreateUpdateLogForm.$dirty && CreateUpdateLogForm.$invalid)"
+                                                                class="btn btn-primary" ng-click="createUpdateLog()">
+                                                            Tạo
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -975,74 +978,147 @@
                             <form name="questionForm" ng-model="questionForm" novalidate>
                                 <div ng-repeat="question in Question">
                                     <div class="row border-grey">
-                                        <div class="col-md-1">
-                                            <p class="title">#{{$index + 1}}</p>
+                                        <div class="col-md-2">
+                                            <p class="title">Hỏi đáp #{{$index + 1}}</p>
                                         </div>
-                                        <div class="col-md-11">
-                                            <div class="row pt5 pb5">
-                                                <div class="col-md-2">
-                                                    <p class="title">Câu hỏi</p>
-                                                </div>
-                                                <div class="col-md-10">
-                                                    <div class="field-wrapper">
-                                                        <textarea class="form-control"
-                                                                  rows="5"
-                                                                  style="resize: none"
-                                                                  name="question{{$index}}"
-                                                                  ng-trim="true"
-                                                                  ng-model-options="{ updateOn: 'change blur'}"
-                                                                  maxlength="300"
-                                                                  ng-minlength="10"
-                                                                  ng-maxlength="300"
-                                                                  required
-                                                                  ng-model="question.QuestionContent" ng-disabled="AllEditable == false"></textarea>
-                                                        <div ng-show="questionForm.question{{$index}}.$dirty && questionForm.question{{$index}}.$invalid" class="text-danger">
-                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                            <span ng-show="questionForm.question{{$index}}.$error.required">Bạn chưa nhập câu hỏi</span>
-                                                            <span ng-show="questionForm.question{{$index}}.$error.minlength">Câu hỏi ít nhất 10 kí tự</span>
-                                                            <span ng-show="questionForm.question{{$index}}.$error.maxlength">Câu hỏi dài nhất 300 kí tự</span>
-                                                        </div>
+                                        <div class="col-md-10">
+                                            <div style="background: #FFF; border: 1px solid eee; padding: 10px; border-radius: 6px">
+                                                <div class="fnt-b mt0 mb0 div-textarea" ng-class="{'hide':IsEditQA[$index] === true}">{{question.QuestionContent}}</div>
+                                                <div class="fnt-b mt0 mb0" ng-class="{'hide':(IsEditQA[$index] == null || IsEditQA[$index] === false)}">
+                                                    <textarea msd-elastic="\n"
+                                                              name="question{{$index}}"
+                                                              ng-trim="true"
+                                                              maxlength="300"
+                                                              ng-minlength="10"
+                                                              ng-maxlength="300"
+                                                              required
+                                                              ng-model-options="{ updateOn: 'change blur'}"
+                                                              class="form-control"
+                                                              ng-model="question.QuestionContent"
+                                                              style="resize: none; min-height: 100px"></textarea>
+                                                    <div ng-show="questionForm.question{{$index}}.$dirty && questionForm.question{{$index}}.$invalid" class="text-danger">
+                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                        <span ng-show="questionForm.question{{$index}}.$error.required">Bạn chưa nhập câu hỏi</span>
+                                                        <span ng-show="questionForm.question{{$index}}.$error.minlength">Câu hỏi ít nhất 10 kí tự</span>
+                                                        <span ng-show="questionForm.question{{$index}}.$error.maxlength">Câu hỏi dài nhất 300 kí tự</span>
                                                     </div>
                                                 </div>
-                                            </div> <!-- end Question -->
-                                            <div class="row pt5 pb5">
-                                                <div class="col-md-2">
-                                                    <p class="title">Trả lời</p>
-                                                </div>
-                                                <div class="col-md-10">
-                                                    <div class="field-wrapper">
-                                                        <textarea class="form-control"
-                                                                  rows="5"
-                                                                  style="resize: none"
-                                                                  name="answer{{$index}}"
-                                                                  ng-trim="true"
-                                                                  maxlength="300"
-                                                                  ng-minlength="10"
-                                                                  ng-maxlength="300"
-                                                                  ng-model-options="{ updateOn: 'change blur'}"
-                                                                  ng-model="question.Answer"
-                                                                  required
-                                                                  ng-disabled="AllEditable == false"></textarea>
-                                                        <div ng-show="questionForm.answer{{$index}}.$dirty && questionForm.answer{{$index}}.$invalid" class="text-danger">
-                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                            <span ng-show="questionForm.answer{{$index}}.$error.required">Bạn chưa nhập câu trả lời</span>
-                                                            <span ng-show="questionForm.answer{{$index}}.$error.minlength">Trả lời ít nhất 10 kí tự</span>
-                                                            <span ng-show="questionForm.answer{{$index}}.$error.maxlength">Trả lời dài nhất 300 kí tự</span>
-                                                        </div>
+                                                <hr />
+                                                <div class="mt0 mb0 div-textarea" ng-class="{'hide':IsEditQA[$index] === true}">{{question.Answer}}</div>
+                                                <div class="fnt-b mt0 mb0" ng-class="{'hide':(IsEditQA[$index] == null || IsEditQA[$index] === false)}">
+                                                    <textarea msd-elastic="\n"
+                                                              name="answer{{$index}}"
+                                                              ng-trim="true"
+                                                              maxlength="300"
+                                                              ng-minlength="10"
+                                                              ng-maxlength="300"
+                                                              required
+                                                              ng-model-options="{ updateOn: 'change blur'}"
+                                                              class="form-control"
+                                                              ng-model="question.Answer"
+                                                              style="resize: none; min-height: 150px"></textarea>
+                                                    <div ng-show="questionForm.answer{{$index}}.$dirty && questionForm.answer{{$index}}.$invalid" class="text-danger">
+                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                        <span ng-show="questionForm.answer{{$index}}.$error.required">Bạn chưa nhập câu trả lời</span>
+                                                        <span ng-show="questionForm.answer{{$index}}.$error.minlength">Trả lời ít nhất 10 kí tự</span>
+                                                        <span ng-show="questionForm.answer{{$index}}.$error.maxlength">Trả lời dài nhất 300 kí tự</span>
                                                     </div>
                                                 </div>
-                                            </div> <!-- end Answer -->
-                                            <div class="row pt5 pb5">
-                                                <div class="col-md-2">
-                                                    <p class="title"></p>
-                                                </div>
-                                                <div class="col-md-10 list-inline">
-                                                    @*<a class="btn btn-info btn-wide pl10 pr10 pt5 pb5" ng-click="editQuestion($index)">Edit</a>*@
-                                                    <a class="btn btn-danger btn-wide pl10 pr10 pt5 pb5" ng-click="deleteQuestion($index)" ng-if="AllEditable == true">Xóa</a>
-                                                </div>
-                                            </div> <!-- end Action -->
-                                        </div>
-                                    </div>
+                                                <ul class="list-inline pull-right mt0 mb0 pb0" style="padding-top: 20px">
+                                                    <li>
+                                                        <button class="btn btn-danger btn-sm" ng-click="deleteQuestion($index)" ng-if="AllEditable == true">
+                                                            Xóa
+                                                        </button>
+                                                    </li>
+                                                    <li ng-class="{'hide':IsEditQA[$index] === true}">
+                                                        <button class="btn btn-info btn-sm" data-toggle="modal" ng-click="showEditQA($index)" ng-disabled="AllEditable == false">
+                                                            Sửa
+                                                        </button>
+                                                    </li>
+                                                    <li ng-class="{'hide':(IsEditQA[$index] == null || IsEditQA[$index] === false)}">
+                                                        <button class="btn btn-info btn-sm" data-toggle="modal" ng-click="resetEditQA($index)">
+                                                            Hủy
+                                                        </button>
+                                                    </li>
+                                                    <li ng-class="{'hide':(IsEditQA[$index] == null || IsEditQA[$index] === false)}">
+                                                        <button class="btn btn-success btn-sm" data-toggle="modal" ng-click="editSingleQA($index)" ng-disabled="question.Answer.length < 10 || question.Answer == '' || question.Answer == null || question.Answer.length > 300
+                                                                                                                                                                    || question.QuestionContent.length < 10 || question.QuestionContent.length > 300  || question.QuestionContent == '' || question.QuestionContent == null">
+                                                            Lưu
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div> <!-- end items -->
+                                    </div> <!-- end items -->
+                                    @*<div class="row border-grey">
+                                            <div class="col-md-1">
+                                                <p class="title">#{{$index + 1}}</p>
+                                            </div>
+                                            <div class="col-md-11">
+                                                <div class="row pt5 pb5">
+                                                    <div class="col-md-2">
+                                                        <p class="title">Câu hỏi</p>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <div class="field-wrapper">
+                                                            <textarea class="form-control"
+                                                                      rows="5"
+                                                                      style="resize: none"
+                                                                      name="question{{$index}}"
+                                                                      ng-trim="true"
+                                                                      ng-model-options="{ updateOn: 'change blur'}"
+                                                                      maxlength="300"
+                                                                      ng-minlength="10"
+                                                                      ng-maxlength="300"
+                                                                      required
+                                                                      ng-model="question.QuestionContent" ng-disabled="AllEditable == false"></textarea>
+                                                            <div ng-show="questionForm.question{{$index}}.$dirty && questionForm.question{{$index}}.$invalid" class="text-danger">
+                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                <span ng-show="questionForm.question{{$index}}.$error.required">Bạn chưa nhập câu hỏi</span>
+                                                                <span ng-show="questionForm.question{{$index}}.$error.minlength">Câu hỏi ít nhất 10 kí tự</span>
+                                                                <span ng-show="questionForm.question{{$index}}.$error.maxlength">Câu hỏi dài nhất 300 kí tự</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> <!-- end Question -->
+                                                <div class="row pt5 pb5">
+                                                    <div class="col-md-2">
+                                                        <p class="title">Trả lời</p>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <div class="field-wrapper">
+                                                            <textarea class="form-control"
+                                                                      rows="5"
+                                                                      style="resize: none"
+                                                                      name="answer{{$index}}"
+                                                                      ng-trim="true"
+                                                                      maxlength="300"
+                                                                      ng-minlength="10"
+                                                                      ng-maxlength="300"
+                                                                      ng-model-options="{ updateOn: 'change blur'}"
+                                                                      ng-model="question.Answer"
+                                                                      required
+                                                                      ng-disabled="AllEditable == false"></textarea>
+                                                            <div ng-show="questionForm.answer{{$index}}.$dirty && questionForm.answer{{$index}}.$invalid" class="text-danger">
+                                                                <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                <span ng-show="questionForm.answer{{$index}}.$error.required">Bạn chưa nhập câu trả lời</span>
+                                                                <span ng-show="questionForm.answer{{$index}}.$error.minlength">Trả lời ít nhất 10 kí tự</span>
+                                                                <span ng-show="questionForm.answer{{$index}}.$error.maxlength">Trả lời dài nhất 300 kí tự</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> <!-- end Answer -->
+                                                <div class="row pt5 pb5">
+                                                    <div class="col-md-2">
+                                                        <p class="title"></p>
+                                                    </div>
+                                                    <div class="col-md-10 list-inline">
+                                                        <a class="btn btn-info btn-wide pl10 pr10 pt5 pb5" ng-click="editQuestion($index)">Edit</a>
+                                                        <a class="btn btn-danger btn-wide pl10 pr10 pt5 pb5" ng-click="deleteQuestion($index)" ng-if="AllEditable == true">Xóa</a>
+                                                    </div>
+                                                </div> <!-- end Action -->
+                                            </div>
+                                        </div>*@
                                 </div>
                                 <div ng-if="questionForm.$dirty">
                                     <button type="button" class="btn btn-danger" ng-click="resetQuestion(questionForm)">Khôi phục</button>

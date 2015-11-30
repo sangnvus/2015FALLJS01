@@ -1332,8 +1332,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
         #region TrungVN
         [HttpGet]
-
-        public IHttpActionResult SearchCount(string categoryidlist, string searchkey)
+        public IHttpActionResult SearchCount(string categoryidlist, string searchkey, string statusString)
         {
 
 
@@ -1341,7 +1340,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             try
             {
                 // Get current user name.
-                result = ProjectRepository.Instance.SearchCount(categoryidlist, searchkey);
+                result = ProjectRepository.Instance.SearchCount(categoryidlist, searchkey, statusString);
             }
             catch (Exception)
             {
@@ -1396,7 +1395,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 Data = result
             });
         }
-        public IHttpActionResult GetProject(int take, int from, string categoryid, string orderby, string searchkey, string status, bool isExprired, string isFunded)
+        public IHttpActionResult GetProject(int take, int from, string categoryid, string orderby, string searchkey, string status, string isExprired, string isFunded)
         {
 
             List<ProjectBasicViewDTO> result = null;

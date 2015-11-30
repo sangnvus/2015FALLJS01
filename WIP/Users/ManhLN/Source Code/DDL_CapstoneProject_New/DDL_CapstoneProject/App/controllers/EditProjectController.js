@@ -28,6 +28,8 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     $scope.newRewardError = false;
     // check edit updatelog
     $scope.IsEditUpdateLog = [];
+    // check edit QA
+    $scope.IsEditQA = [];
 
     // Check first load
     $scope.FirstLoadReward = false;
@@ -352,7 +354,7 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                         $('#addReward').modal('hide');
                         // reinitial newReward
                         $scope.NewReward = {};
-                        $scope.NewReward.Type = "no reward"
+                        $scope.NewReward.Type = "no reward";
                         result.data.Data.EstimatedDelivery = new Date($filter('date')(result.data.Data.EstimatedDelivery, "yyyy-MM-dd"));
                         if (result.data.Data.Quantity > 0) {
                             result.data.Data.LimitQuantity = true;
@@ -550,6 +552,7 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                 toastr.error($scope.Error, 'Lỗi!');
             });
     };
+
     // Create a new updateLog
     $scope.createUpdateLog = function () {
         var promiseCreateUpdateLog = ProjectService.createUpdateLog($scope.Project.ProjectID, $scope.NewUpdateLog);
@@ -561,6 +564,9 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                     $('#updateModal').modal('hide');
                     // reinitial newUpdateLog
                     $scope.NewUpdateLog = {};
+                    $scope.CreateUpdateLogForm.$setPristine();
+                    $scope.CreateUpdateLogForm.$setUntouched();
+
                     result.data.Data.CreatedDate = new Date($filter('date')(result.data.Data.CreatedDate, "yyyy-MM-dd"));
                     var dd = result.data.Data.CreatedDate.getDate();
                     var mm = result.data.Data.CreatedDate.getMonth() + 1; //January is 0!
@@ -773,6 +779,23 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                 });
         }
     };
+
+    // Function show edit update log form.
+    $scope.showEditQA = function (index) {
+        if ($scope.IsEditQA[index] == null || $scope.IsEditQA[index] === false) {
+            $scope.IsEditQA[index] = true;
+            $scope.Question[index].EditedQuestionContent = $scope.Question[index].QuestionContent;
+            $scope.Question[index].EditedAnswer = $scope.Question[index].Answer;
+        } else {
+            $scope.IsEditQA[index] = false;
+        }
+    }
+    $scope.resetEditQA = function (index) {
+        $scope.IsEditQA[index] = false;
+        $scope.Question = angular.copy($scope.originalQuestion);
+        $scope.questionForm.$setPristine();
+        $scope.questionForm.$setUntouched();
+    }
     // Edit question
     $scope.updateQuestion = function (form) {
         var promiseUpdateQuestion = ProjectService.editQuestion($scope.Question);
@@ -781,10 +804,51 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
             function (result) {
                 if (result.data.Status === "success") {
                     toastr.success('Sửa thành công!');
-                    // re-set original project reward
+                    // re-set original QA
                     $scope.originalQuestion = angular.copy($scope.Question);
+                    // reset show QA
+                    for (var i = 0; i < $scope.Question.length; i++) {
+                        if ($scope.IsEditQA[i] === true) {
+                            $scope.showEditQA(i);
+                        }
+                    };
                     form.$setPristine();
                     form.$setUntouched();
+                } else {
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                    $scope.Error = result.data.Message;
+                    toastr.error($scope.Error, 'Lỗi!');
+                }
+            },
+            function (error) {
+                $scope.Error = error.data.Message;
+                toastr.error($scope.Error, 'Lỗi!');
+            });
+    };
+    // Edit single QA
+    $scope.editSingleQA = function (index) {
+        // Put update project
+        var promiseEditUpdateLog = ProjectService.editSingleQuestion($scope.Question[index]);
+
+        promiseEditUpdateLog.then(
+            function (result) {
+                if (result.data.Status === "success") {
+                    toastr.success('Sửa thành công!');
+                    //$scope.UpdateLogs[index] = result.data.Data;
+                    // re-set original QA
+                    $scope.originalQuestion = angular.copy($scope.Question);
+                    // reset show update log
+                    $scope.showEditQA(index);
+                    var flagQA = 0;
+                    for (var i = 0; i < $scope.IsEditQA.length; i++) {
+                        if ($scope.IsEditQA[i] === true) {
+                            flagQA = 1;
+                        }
+                    }
+                    if (flagQA === 0) {
+                        $scope.questionForm.$setPristine();
+                        $scope.questionForm.$setUntouched();
+                    }
                 } else {
                     CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
@@ -926,7 +990,7 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     };
     // Prevent switch tab if tab's invalid
     $('#tablist a').click(function (e) {
-        if ($scope.fileIsBig == true) {
+        if ($scope.fileIsBig === true) {
             $scope.BasicForm.$invalid = true;
         }
         var form;
@@ -1026,12 +1090,7 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                    $scope.Question = angular.copy($scope.originalQuestion);
                    $scope.Timeline = angular.copy($scope.originalTimeline);
 
-                   // reset show update log
-                   for (var i = 0; i < $scope.UpdateLogs.length; i++) {
-                       if ($scope.IsEditUpdateLog[i] === true) {
-                           $scope.showEditUpdateLog(i);
-                       }
-                   };
+                   $scope.resetShowUpdateLogAndQA();
                    form.$setPristine();
                    form.$setUntouched();
                    $scope.fileIsBig = false;
@@ -1040,6 +1099,26 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                }
            });
     };
+
+    $scope.resetShowUpdateLogAndQA = function () {
+        // reset show update log
+        if ($scope.UpdateLogs != null) {
+            for (var i = 0; i < $scope.UpdateLogs.length; i++) {
+                if ($scope.IsEditUpdateLog[i] === true) {
+                    $scope.showEditUpdateLog(i);
+                }
+            };
+        }
+
+        // reset show QA
+        if ($scope.Question != null) {
+            for (var j = 0; j < $scope.Question.length; j++) {
+                if ($scope.IsEditQA[j] === true) {
+                    $scope.showEditQA(j);
+                }
+            };
+        }
+    }
 
     // If tab basic is dirty
     $scope.checkEditProjectBasic = function (form) {
@@ -1070,6 +1149,7 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                     var resetImg = $("#imgSelected");
                     resetImg.replaceWith(resetImg = resetImg.clone(true));
                     $scope.file = null;
+                    $scope.resetShowUpdateLogAndQA();
                     // Switch tab
                     $scope.changeTab($scope.thisTab.context.hash);
                 }
@@ -1098,6 +1178,7 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                     $scope.RewardPKgs = angular.copy($scope.originalReward);
                     form.$setPristine();
                     form.$setUntouched();
+                    $scope.resetShowUpdateLogAndQA();
                     // Switch tab
                     $scope.changeTab($scope.thisTab.context.hash);
                 }
@@ -1126,6 +1207,7 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                     $scope.UpdateLogs = angular.copy($scope.originalUpdateLog);
                     form.$setPristine();
                     form.$setUntouched();
+                    $scope.resetShowUpdateLogAndQA();
                     // Switch tab
                     $scope.changeTab($scope.thisTab.context.hash);
                 }
@@ -1154,6 +1236,7 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                     $scope.ProjectStory = angular.copy($scope.originalStory);
                     form.$setPristine();
                     form.$setUntouched();
+                    $scope.resetShowUpdateLogAndQA();
                     // Switch tab
                     $scope.changeTab($scope.thisTab.context.hash);
                 }
@@ -1182,6 +1265,7 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                     $scope.Question = angular.copy($scope.originalQuestion);
                     form.$setPristine();
                     form.$setUntouched();
+                    $scope.resetShowUpdateLogAndQA();
                     // Switch tab
                     $scope.changeTab($scope.thisTab.context.hash);
                 }
@@ -1215,6 +1299,7 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                     $scope.Timeline = angular.copy($scope.originalTimeline);
                     form.$setPristine();
                     form.$setUntouched();
+                    $scope.resetShowUpdateLogAndQA();
                     // Switch tab
                     $scope.changeTab($scope.thisTab.context.hash);
                 }
