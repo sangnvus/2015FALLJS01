@@ -11,7 +11,7 @@ app.controller('AdminMessageController',
 
         // Define table
         $scope.dtOptions = DTOptionsBuilder.newOptions()
-        .withDisplayLength(50)
+        .withDisplayLength(25)
         .withOption('bLengthChange', false)
         .withOption('order', [3, 'desc'])
         .withBootstrap();
