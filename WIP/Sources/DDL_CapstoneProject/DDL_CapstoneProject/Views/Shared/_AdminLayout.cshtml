@@ -23,6 +23,10 @@
     <![endif]-->
 
     <style>
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+
         .col-number, .col-datetime {
             text-align: right;
         }
@@ -146,6 +150,29 @@
             width: 100%;
             height: auto;
         }
+
+        .badge-info {
+            background-color: #3498db;
+        }
+
+        .fa {
+            position: relative;
+        }
+
+        .badge-inside {
+            font-size: .25em;
+            display: block;
+            position: absolute;
+            top: -.75em;
+            right: -.75em;
+            width: 2em;
+            height: 2em;
+            line-height: 2em;
+            border-radius: 50%;
+            text-align: center;
+            color: #fff;
+            /*background: rgba(0,0,0,0.5);*/
+        }
     </style>
 </head>
 
@@ -187,7 +214,7 @@
                     <!-- begin USER ACTIONS DROPDOWN -->
                     <li class="dropdown">
                         <a href="#" onclick="return false" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-user"></i>  <i class="fa fa-caret-down"></i>
+                            <i class="fa fa-user"></i>&nbsp;<span ng-show="NumberNewMessage.Total > 0" class="badge badge-info mb3 ng-cloak">{{NumberNewMessage.Total}}</span><i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
                             @*<li>
@@ -324,7 +351,7 @@
                     <!-- begin MESSAGES DROPDOWN -->
                     <li class="panel">
                         <a href="~/admin/#/message/" ng-class="{'active': Page.activeTab == 'message'}">
-                            <i class="fa fa-bar-chart-o"></i> Tin nhắn
+                            <i class="fa fa-bar-chart-o"></i> Tin nhắn&nbsp;<span ng-show="NumberNewMessage.Total > 0" class="badge badge-info mb3 ng-cloak">{{NumberNewMessage.Total}}</span>
                             <!-- <i class="fa fa-caret-down"></i> -->
                         </a>
                     </li>

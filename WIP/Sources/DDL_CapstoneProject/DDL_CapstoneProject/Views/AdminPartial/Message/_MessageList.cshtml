@@ -18,13 +18,13 @@
                         </li>
                         <li class="nav-divider"></li>
                         <li @*ng-click="changeInboxSent('inbox')"*@ ng-class="{'active': Inbox === 'all'}" style="cursor: pointer">
-                            <a href="/admin/#/message/">Tất cả thư</a>
+                            <a href="/admin/#/message/">Tất cả thư&nbsp;<span ng-show="NumberNewMessage.Total > 0" class="badge badge-info mb3 ng-cloak">{{NumberNewMessage.Total}}</span></a>
                         </li>
                         <li @*ng-click="changeInboxSent('inbox')"*@ ng-class="{'active': Inbox === 'inbox'}" style="cursor: pointer">
-                            <a href="/admin/#/message?list=inbox">Hộp thư đến</a>
+                            <a href="/admin/#/message?list=inbox">Hộp thư đến&nbsp;<span ng-show="NumberNewMessage.ReceivedMessage > 0" class="badge badge-info mb3 ng-cloak">{{NumberNewMessage.ReceivedMessage}}</span></a>
                         </li>
                         <li @*ng-click="changeInboxSent('sent')"*@ ng-class="{'active': Inbox === 'sent'}" style="cursor: pointer">
-                            <a href="/admin/#/message?list=sent">Hộp thư đi</a>
+                            <a href="/admin/#/message?list=sent">Hộp thư đi&nbsp;<span ng-show="NumberNewMessage.SentMessage > 0" class="badge badge-info mb3 ng-cloak">{{NumberNewMessage.SentMessage}}</span></a>
                         </li>
                         <li class="nav-divider"></li>
                     </ul>
@@ -122,8 +122,8 @@
                             <span class="input-group-addon">Tới (*):</span>
                             <input type="text" class="form-control" autofocus
                                    placeholder="Tên người nhận..."
-                                   name="ToUser" ng-model="NewMessage.ToUser"
-                                   typeahead="user.UserName as user.UserName for user in getUserName($viewValue)"
+                                   name="ToUser" ng-model="ToUser"
+                                   typeahead="user as user.FullName for user in getUserName($viewValue)"
                                    typeahead-loading="loadingLocations" typeahead-no-results="noResults"
                                    typeahead-template-url="customTemplate.html" required="">
                         </div>

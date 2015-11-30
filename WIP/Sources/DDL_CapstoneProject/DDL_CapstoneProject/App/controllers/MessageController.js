@@ -24,6 +24,32 @@ app.controller('MessageController',
             DTColumnDefBuilder.newColumnDef(0).notSortable()
         ];
 
+        // Get message number.
+        function getNewMessageNumber() {
+            if ($rootScope.UserInfo.IsAuthen === true && $scope.NumberNewMessage === undefined) {
+                var promiseGet = MessageService.getNumberNewMessage();
+                promiseGet.then(
+                    function (result) {
+                        if (result.data.Status === "success") {
+                            //Save new message number into $rootScope
+                            $scope.NumberNewMessage = result.data.Data;
+                            $scope.NumberNewMessage.Total = result.data.Data.ReceivedMessage + result.data.Data.SentMessage;
+                        } else {
+                            $scope.NumberNewMessage.Total = 0;
+                            $scope.NumberNewMessage = 0;
+                            $scope.NumberNewMessage = 0;
+                        }
+                    },
+                    function (error) {
+                        $scope.NumberNewMessage = 0;
+                        $scope.NumberNewMessage = 0;
+                        $scope.NumberNewMessage = 0;
+                    });
+            }
+        }
+
+        getNewMessageNumber();
+
         // Functions reset new message form
         function resetNewMessageModel() {
             $scope.NewMessage = {
