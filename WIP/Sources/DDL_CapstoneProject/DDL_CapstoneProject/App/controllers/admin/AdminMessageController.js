@@ -8,13 +8,40 @@ app.controller('AdminMessageController',
         $scope.Inbox = ($route.current.params.list === "") || ($route.current.params.list === undefined) ? "all" : $route.current.params.list;
         $scope.checkAll = false;
         $scope.selection = [];
+        $scope.NumberNewMessage = $rootScope.NumberNewMessage;
 
         // Define table
         $scope.dtOptions = DTOptionsBuilder.newOptions()
-        .withDisplayLength(50)
+        .withDisplayLength(25)
         .withOption('bLengthChange', false)
         .withOption('order', [3, 'desc'])
         .withBootstrap();
+
+        // Get message number.
+        function getNewMessageNumber() {
+            if ($scope.NumberNewMessage === undefined) {
+                var promiseGet = MessageService.getNumberNewMessage();
+                promiseGet.then(
+                    function (result) {
+                        if (result.data.Status === "success") {
+                            //Save new message number into $rootScope
+                            $scope.NumberNewMessage = result.data.Data;
+                            $scope.NumberNewMessage.Total = result.data.Data.ReceivedMessage + result.data.Data.SentMessage;
+                        } else {
+                            $scope.NumberNewMessage.Total = 0;
+                            $scope.NumberNewMessage = 0;
+                            $scope.NumberNewMessage = 0;
+                        }
+                    },
+                    function (error) {
+                        $scope.NumberNewMessage = 0;
+                        $scope.NumberNewMessage = 0;
+                        $scope.NumberNewMessage = 0;
+                    });
+            }
+        }
+
+        getNewMessageNumber();
 
         // Add selected column to table with value true/false
         function addSelected(bool) {

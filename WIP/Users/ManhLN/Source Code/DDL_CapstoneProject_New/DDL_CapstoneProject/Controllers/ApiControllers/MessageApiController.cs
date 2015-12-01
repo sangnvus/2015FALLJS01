@@ -72,7 +72,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
             catch (UserNotFoundException)
             {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không tìm thấy địa chỉ người nhận!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Tài khoản không tồn tại", Type = DDLConstants.HttpMessageType.NOT_FOUND });
             }
             catch (Exception)
             {
@@ -111,7 +111,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
             catch (UserNotFoundException)
             {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không tìm thấy địa chỉ người nhận!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Tài khoản không tồn tại", Type = DDLConstants.HttpMessageType.NOT_FOUND });
             }
             catch (Exception)
             {
@@ -144,7 +144,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
             catch (UserNotFoundException)
             {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không tìm thấy địa chỉ người nhận!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Tài khoản không tồn tại", Type = DDLConstants.HttpMessageType.NOT_FOUND });
             }
             catch (Exception)
             {
@@ -182,9 +182,13 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 }
                 conversationDetail = MessageRepository.Instance.GetConveration(Id, User.Identity.Name);
             }
+            catch (UserNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Tài khoản không tồn tại", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+            }
             catch (KeyNotFoundException)
             {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không tìm thấy tin nhắn!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không tìm thấy tin nhắn", Type = DDLConstants.HttpMessageType.NOT_FOUND });
             }
             catch (Exception)
             {
@@ -316,7 +320,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 {
                     return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
                 }
-                numberNewMessage = MessageRepository.Instance.GetNumberNewMessgae(User.Identity.Name);
+                numberNewMessage = MessageRepository.Instance.GetNumberNewMessage(User.Identity.Name);
             }
             catch (UserNotFoundException)
             {

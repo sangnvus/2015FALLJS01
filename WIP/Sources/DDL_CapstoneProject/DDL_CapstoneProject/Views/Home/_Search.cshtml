@@ -12,7 +12,7 @@
                         </group>
                         <group style="display: inline-block">
                             <lable class="control-label fnt30 fnt-b"><span ng-if="!isAdvance">Hiển thị </span><span ng-if="isAdvance">trong </span>các dự án </lable>
-                            <ui-select class="fnt20" multiple ng-model="$parent.selectcategory" theme="bootstrap" ng-disabled="disabled" close-on-select="false"
+                            <ui-select class="fnt20 pr15" multiple ng-model="$parent.selectcategory" theme="bootstrap" ng-disabled="disabled" close-on-select="false"
                                        title="Choose a category" ng-change="Search(selectcategory,selectedorder,searchkey,selectstatus)" style="min-width:200px">
                                 <ui-select-match placeholder="Choose a category...">{{$item.Name}}</ui-select-match>
                                 <ui-select-choices repeat="cat in categoryList | highlight: $select.search">
@@ -32,7 +32,7 @@
                         </group>
                         <group style="display: inline-block">
                             <lable class="control-label fnt30 fnt-b"> trạng thái </lable>
-                            <ui-select class="fnt20" multiple ng-model="$parent.selectstatus" theme="bootstrap" ng-disabled="disabled" close-on-select="false"
+                            <ui-select class="fnt20 pr15" multiple ng-model="$parent.selectstatus" theme="bootstrap" ng-disabled="disabled" close-on-select="false"
                                        title="Choose a category" ng-change="Search(selectcategory,selectedorder,searchkey,selectstatus)" style="min-width:200px">
                                 <ui-select-match placeholder="Choose a category...">{{$item.Label}}</ui-select-match>
                                 <ui-select-choices repeat="stt in statuss | highlight: $select.search">
@@ -73,8 +73,13 @@
                                         &nbsp;&nbsp;
                                         <span class="grey-dark"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>{{project.Location}}</span>
                                     </div>
-                                    <div class="progress mt5 mb5">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
+                                    <div class="progress mt5 mb5" ng-if="project.ExpireDate >= 0 || project.CurrentFunded >= 100">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuenow="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}% ">
+                                            <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
+                                        </div>
+                                    </div>
+                                    <div class="progress mt5 mb5" ng-if="project.ExpireDate < 0 && project.CurrentFunded < 100">
+                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuemin="0" aria-valuenow="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
                                             <span class="sr-only">{{project.CurrentFunded}}% Complete (success)</span>
                                         </div>
                                     </div>
@@ -83,9 +88,13 @@
                                             <span class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</span>
                                             <span class="mt0 mb0">đã ủng hộ</span>
                                         </li>
-                                        <li>
+                                        <li ng-if="project.ExpireDate >= 0">
                                             <span class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</span>
                                             <span class="mt0 mb0">ngày còn lại</span>
+                                        </li>
+                                        <li ng-if="project.ExpireDate < 0">
+                                            <span class="fnt-b mt0 mb0 label label-danger">Đã kết thúc</span>
+                                            @*<span class="mt0 mb0">ngày còn lại</span>*@
                                         </li>
                                     </ul>
                                     <ul class="list-inline fnt15">
@@ -103,7 +112,7 @@
                         <a class="btn btn-transparent btn-sm" href="discover.html">See more</a>
                     </div> -->
                 </section><!--/#portfolio-->
-                <a class="btn btn-transparent btn-sm" ng-if="showLoadMoreButton" ng-click="Loadmore(selectcategory,selectedorder,searchkey)" href="">Xem thêm</a>
+                <a class="btn btn-transparent btn-sm center-block" style="width: 90px" ng-if="showLoadMoreButton" ng-click="Loadmore(selectcategory,selectedorder,searchkey)" href="">Xem thêm</a>
 
             </div> <!-- end item-popular -->
 

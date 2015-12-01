@@ -713,6 +713,36 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
         }
 
+        // PUT: api/ProjectApi/EditSingleQuestion  
+        [ResponseType(typeof(UpdateLogDTO))]
+        [HttpPut]
+        public IHttpActionResult EditSingleQuestion(QuestionDTO question)
+        {
+            var result = new QuestionDTO();
+            try
+            {
+                // Check authen.
+                if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                }
+
+                if (question == null)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+                }
+
+                result = ProjectRepository.Instance.EditSingleQuestion(question);
+            }
+            catch (Exception)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = result });
+        }
+
         // Delete: api/ProjectApi/DeleteQuestion/:id 
         [ResponseType(typeof(QuestionDTO))]
         [HttpDelete]
@@ -1302,8 +1332,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
         #region TrungVN
         [HttpGet]
-
-        public IHttpActionResult SearchCount(string categoryidlist, string searchkey)
+        public IHttpActionResult SearchCount(string categoryidlist, string searchkey, string statusString)
         {
 
 
@@ -1311,7 +1340,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             try
             {
                 // Get current user name.
-                result = ProjectRepository.Instance.SearchCount(categoryidlist, searchkey);
+                result = ProjectRepository.Instance.SearchCount(categoryidlist, searchkey, statusString);
             }
             catch (Exception)
             {
@@ -1366,7 +1395,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 Data = result
             });
         }
-        public IHttpActionResult GetProject(int take, int from, string categoryid, string orderby, string searchkey, string status, bool isExprired, string isFunded)
+        public IHttpActionResult GetProject(int take, int from, string categoryid, string orderby, string searchkey, string status, string isExprired, string isFunded)
         {
 
             List<ProjectBasicViewDTO> result = null;

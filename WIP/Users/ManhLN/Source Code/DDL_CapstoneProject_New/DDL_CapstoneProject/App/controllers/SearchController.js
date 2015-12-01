@@ -16,9 +16,22 @@ function ($scope, $http, projectbycategory, categoryList, ProjectService, Catego
             $scope.selectcategory = [$scope.categoryList[i]];
         }
     };
+    $scope.statuss = [{ 'Value': 'true', 'Label': 'Đã hết hạn' },
+        { 'Value': 'false', 'Label': 'Đang gây vốn' }];
+    $scope.selectstatus = [$scope.statuss[1]];
+    var statusString = "true";
+    if (projectResultListSize.data.Data == 0) {
+        document.getElementById("noResult").setAttribute("style", "display:inline;");
+    } else {
+        document.getElementById("noResult").setAttribute("style", "display:none;");
+    }
+
 
     $scope.index = searchBlockSize;
-    $scope.Search = function (category, order, searchkey) {
+    $scope.Search = function (category, order, searchkey, selectstatus) {
+        if (selectstatus.length == 0) {
+            $scope.selectstatus = [{ 'Value': 'false', 'Label': 'Đang gây vốn' }];
+        }
         var categoryIdString = "";
         var selectedCategory = angular.copy(category);
         if (!selectedCategory) {
@@ -46,9 +59,21 @@ function ($scope, $http, projectbycategory, categoryList, ProjectService, Catego
                 }
             }
         }
-        var searchResult = ProjectService.SearchProject(0, categoryIdString, order, searchkey).then(function (projectlist) {
+
+        statusString = "";
+        for (var i = 0; i < selectstatus.length; i++) {
+            statusString += "|" + selectstatus[i].Value + "|";
+        }
+        var searchResult = ProjectService.SearchProject(0, categoryIdString, order, searchkey, statusString).then(function (projectlist) {
             $scope.projectbycategory = projectlist.data.Data;
-            ProjectService.SearchCount(categoryIdString, searchkey).then(function (response) {
+            ProjectService.SearchCount(categoryIdString, searchkey, statusString).then(function (response) {
+
+                if (response.data.Data == 0) {
+
+                    document.getElementById("noResult").setAttribute("style","display:inline;");
+                } else {
+                    document.getElementById("noResult").setAttribute("style", "display:none;");
+                }
                 $scope.projectResultListSize = response.data.Data;
                 if ($scope.projectbycategory.length >= $scope.projectResultListSize) {
                     $scope.showLoadMoreButton = false;
@@ -75,7 +100,11 @@ function ($scope, $http, projectbycategory, categoryList, ProjectService, Catego
                 categoryIdString += "|" + category[i].CategoryID + "|";
             }
         }
-        var searchResult = ProjectService.SearchProject($scope.index, categoryIdString, order, searchkey).then(function (projectlist) {
+        statusString = "";
+        for (var i = 0; i < $scope.selectstatus.length; i++) {
+            statusString += "|" + $scope.selectstatus[i].Value + "|";
+        }
+        var searchResult = ProjectService.SearchProject($scope.index, categoryIdString, order, searchkey, statusString).then(function (projectlist) {
             $scope.projectbycategory = $scope.projectbycategory.concat(projectlist.data.Data);
             $scope.index = $scope.projectbycategory.length;
             if ($scope.projectbycategory.length >= $scope.projectResultListSize) {

@@ -220,6 +220,34 @@
             width: 100%;
             height: auto;
         }
+
+        .badge-info {
+            background-color: #3498db;
+        }
+
+        .fa {
+            position: relative;
+        }
+
+        .badge-inside {
+            font-size: .25em;
+            display: block;
+            position: absolute;
+            top: -.75em;
+            right: 0.25em;
+            width: 2em;
+            height: 2em;
+            line-height: 1.5em;
+            border-radius: 50%;
+            text-align: center;
+            color: #fff;
+            /*background: rgba(0,0,0,0.5);*/
+        }
+
+        li.active .badge-inside {
+            background-color: #fff;
+            color: #3498db;
+        }
     </style>
 </head>
 <body>
@@ -252,7 +280,7 @@
                                     <input type="Search" class="form-control" autofocus
                                            placeholder="Tìm kiếm..." ng-model="searchkey"
                                            typeahead="project for project in suggess($viewValue)"
-                                           typeahead-template-url="customTemplate.html" required="">
+                                           typeahead-template-url="customTemplate1.html" required="">
                                     <span class="input-group-btn">
                                         <button type="button" class="btn" ng-click="submit(searchkey)"><span class="fa fa-search"></span></button>
                                     </span>
@@ -287,16 +315,16 @@
                                     {
                                         <img id="avatar" src="@Url.Content("~/images/avatars/" + @ViewBag.CurrentUser.ProfileImage)" alt="" class="img-responsive img-circle center-block">
                                     }
-                                    @ViewBag.CurrentUser.FullName
+                                    @ViewBag.CurrentUser.FullName&nbsp;<span ng-show="UserInfo.NumberNewMessage.Total > 0" class="badge badge-info mb3 ng-cloak">{{UserInfo.NumberNewMessage.Total}}</span>
                                     <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu">
-                                    <h5 class="c3">My stuff</h5>
-                                    <li><a href="@Url.Content("/#/user/message")">Tin nhắn <span ng-show="UserInfo.NumberNewMessage.Total > 0" class="badge">{{UserInfo.NumberNewMessage.Total}}</span></a></li>
-                                    <li><a href="@Url.Content("/#/project/backed")">Dự án đã ủng hộ</a></li>
-                                    <li><a href="@Url.Content("/#/project/created")">Dự án đã tạo</a></li>
-                                    <li><a href="@Url.Content("/#/project/reminded")">Dự án theo dõi</a></li>
+                                    <h5 class="c3">Quản lý</h5>
+                                    <li><a href="@Url.Content("/#/user/message/")">Tin nhắn <span ng-show="UserInfo.NumberNewMessage.Total > 0" class="badge badge-info mb3 ng-cloak">{{UserInfo.NumberNewMessage.Total}}</span></a></li>
+                                    <li><a href="@Url.Content("/#/project/backed/")">Dự án đã ủng hộ</a></li>
+                                    <li><a href="@Url.Content("/#/project/created/")">Dự án đã tạo</a></li>
+                                    <li><a href="@Url.Content("/#/project/reminded/")">Dự án theo dõi</a></li>
                                     <li class="divider"></li>
                                     <h5 class="c3">Chỉnh sửa</h5>
                                     <li><a href="@Url.Content("/#/user/editpassword/")">Tài Khoản</a></li>
@@ -341,14 +369,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <p class="fnt30 fnt-b dark-cyan"><a href="/">DLL - Dandelion</a></p>
+                    <p class="fnt30 fnt-b dark-cyan"><a href="/#/home/">DLL - Dandelion</a></p>
                 </div>
                 <div class="col-md-6">
                     <ul class="pull-right list-inline">
-                        <li><a href="/">Trang chủ</a></li>
-                        <li><a href="#">Về chúng tôi</a></li>
-                        <li><a href="#">Giúp đỡ</a></li>
-                        <li><a href="#">Liên hệ</a></li>
+                        <li><a href="/#/home/">Trang chủ</a></li>
+                        <li><a href="/#/home/">Về chúng tôi</a></li>
+                        <li><a href="/#/home/">Giúp đỡ</a></li>
+                        <li><a href="/#/home/">Liên hệ</a></li>
                     </ul>
                 </div>
             </div>
@@ -362,6 +390,13 @@
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
 
     <script type="text/ng-template" id="customTemplate.html">
+        <a>
+            <span>{{match.model.FullName}}</span>
+            <span>({{match.model.UserName}})</span>
+        </a>
+    </script>
+
+    <script type="text/ng-template" id="customTemplate1.html">
         <a>
             <span>{{match.model}}</span>
         </a>

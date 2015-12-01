@@ -32,7 +32,10 @@ namespace DDL_CapstoneProject.Respository
                 else
                 {
                     var creator = UserRepository.Instance.GetByUserNameOrEmail(senderName);
-
+                    if (creator == null)
+                    {
+                        throw new UserNotFoundException();
+                    }
                     // Create conversation.
                     var newConversation = db.Conversations.Create();
                     newConversation.CreatedDate = DateTime.UtcNow;
@@ -78,6 +81,12 @@ namespace DDL_CapstoneProject.Respository
         {
             using (var db = new DDLDataContext())
             {
+                var user = UserRepository.Instance.GetByUserNameOrEmail(userName);
+                if (user == null)
+                {
+                    throw new UserNotFoundException();
+                }
+
                 var listConversation = from conversation in db.Conversations
                                        orderby conversation.UpdatedDate descending
                                        where (conversation.Creator.Username == userName
@@ -115,6 +124,11 @@ namespace DDL_CapstoneProject.Respository
         {
             using (var db = new DDLDataContext())
             {
+                var user = UserRepository.Instance.GetByUserNameOrEmail(userName);
+                if (user == null)
+                {
+                    throw new UserNotFoundException();
+                }
                 var listConversation = from conversation in db.Conversations
                                        orderby conversation.UpdatedDate descending
                                        where conversation.Creator.Username == userName
@@ -148,6 +162,11 @@ namespace DDL_CapstoneProject.Respository
         {
             using (var db = new DDLDataContext())
             {
+                var user = UserRepository.Instance.GetByUserNameOrEmail(userName);
+                if (user == null)
+                {
+                    throw new UserNotFoundException();
+                }
                 var listConversation = from conversation in db.Conversations
                                        orderby conversation.UpdatedDate descending
                                        where conversation.Receiver.Username == userName
@@ -181,6 +200,11 @@ namespace DDL_CapstoneProject.Respository
         {
             using (var db = new DDLDataContext())
             {
+                var user = UserRepository.Instance.GetByUserNameOrEmail(userName);
+                if (user == null)
+                {
+                    throw new UserNotFoundException();
+                }
                 var conversation = db.Conversations.FirstOrDefault(c => c.ConversationID == conversationID);
                 if (conversation == null)
                 {
@@ -392,10 +416,16 @@ namespace DDL_CapstoneProject.Respository
             }
         }
 
-        public NewMessageNumberDTO GetNumberNewMessgae(string userName)
+        public NewMessageNumberDTO GetNumberNewMessage(string userName)
         {
             using (var db = new DDLDataContext())
             {
+                // Check user exist.
+                var user = UserRepository.Instance.GetByUserNameOrEmail(userName);
+                if (user == null)
+                {
+                    throw new UserNotFoundException();
+                }
                 // Select conversation created or received.
                 var numberNewMessage =
                     db.Conversations.Where(conversation => (conversation.Receiver.Username == userName

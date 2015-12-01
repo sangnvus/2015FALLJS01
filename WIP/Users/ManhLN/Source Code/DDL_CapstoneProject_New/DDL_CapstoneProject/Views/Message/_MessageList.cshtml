@@ -16,22 +16,22 @@
 
                     <li ng-click="changeInboxSent('all')" ng-class="{'active': Inbox === 'all'}">
                         <a>
-                            <i class="icon fa fa-inbox fa-2x fa-fw"></i>
-                            <span class="toggle">Tất cả thư <span ng-show="NumberNewMessage.AllMessage > 0" class="badge">{{NumberNewMessage.AllMessage}}</span></span>
+                            <i class="icon fa fa-inbox fa-2x fa-fw"><span ng-show="NumberNewMessage.Total > 0" class="badge badge-info badge-inside mb5">{{NumberNewMessage.Total}}</span></i>
+                            <span class="toggle">Tất cả thư </span>
                         </a>
                     </li>
 
                     <li ng-click="changeInboxSent('inbox')" ng-class="{'active': Inbox === 'inbox'}">
                         <a>
-                            <i class="icon fa fa-inbox fa-2x fa-fw"></i>
-                            <span class="toggle">Hộp thư đến <span ng-show="NumberNewMessage.ReceivedMessage > 0" class="badge">{{NumberNewMessage.ReceivedMessage}}</span></span>
+                            <i class="icon fa fa-inbox fa-2x fa-fw"><span ng-show="NumberNewMessage.ReceivedMessage > 0" class="badge badge-info badge-inside mb5">{{NumberNewMessage.ReceivedMessage}}</span></i>
+                            <span class="toggle">Hộp thư đến </span>
                         </a>
                     </li>
 
                     <li ng-click="changeInboxSent('sent')" ng-class="{'active': Inbox === 'sent'}">
                         <a>
-                            <i class="icon fa fa-paper-plane fa-2x fa-fw"></i>
-                            <span class="toggle">Hộp thư đi <span ng-show="NumberNewMessage.SentMessage > 0" class="badge">{{NumberNewMessage.SentMessage}}</span></span>
+                            <i class="icon fa fa-paper-plane fa-2x fa-fw"><span ng-show="NumberNewMessage.SentMessage > 0" class="badge badge-info badge-inside mb5">{{NumberNewMessage.SentMessage}}</span></i>
+                            <span class="toggle">Hộp thư đi </span>
                         </a>
                     </li>
 
@@ -138,8 +138,8 @@
                             <div class="pl0 ml0 col-sm-10">
                                 <input type="text" class="pl0 ml0 form-control flat fnt18 fnt-b noboder" id=""
                                        placeholder="Tên người nhận..."
-                                       name="ToUser" ng-model="NewMessage.ToUser"
-                                       typeahead="user.UserName as user.UserName for user in getUserName($viewValue)"
+                                       name="ToUser" ng-model="ToUser"
+                                       typeahead="user as user.FullName for user in getUserName($viewValue)"
                                        typeahead-loading="loadingLocations" typeahead-no-results="noResults"
                                        typeahead-template-url="customTemplate.html" required="">
                                 <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>

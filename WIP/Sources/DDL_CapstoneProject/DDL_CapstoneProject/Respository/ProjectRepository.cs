@@ -311,7 +311,7 @@ namespace DDL_CapstoneProject.Respository
                 var user = db.DDL_Users.SingleOrDefault(x => x.Username == username);
                 if (user == null)
                 {
-                    throw new KeyNotFoundException();
+                    throw new UserNotFoundException();
                 }
 
                 var project = CreateEmptyProject();
@@ -341,7 +341,7 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="project">object</param>
         /// <returns>updateProject</returns>
-        public ProjectEditDTO EditProjectBasic(ProjectEditDTO project, string uploadImageName)
+        public ProjectEditDTO EditProjectBasic(ProjectEditDTO project, string uploadImageName, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -350,6 +350,11 @@ namespace DDL_CapstoneProject.Respository
                 if (updateProject == null)
                 {
                     throw new KeyNotFoundException();
+                }
+
+                if (username != updateProject.Creator.Username)
+                {
+                    throw new NotPermissionException();
                 }
 
                 if (uploadImageName != string.Empty)
@@ -411,7 +416,7 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="project"></param>
         /// <returns></returns>
-        public ProjectStoryDTO EditProjectStory(ProjectStoryDTO project)
+        public ProjectStoryDTO EditProjectStory(ProjectStoryDTO project, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -420,6 +425,11 @@ namespace DDL_CapstoneProject.Respository
                 if (updateProject == null)
                 {
                     throw new KeyNotFoundException();
+                }
+
+                if (username != updateProject.Creator.Username)
+                {
+                    throw new NotPermissionException();
                 }
 
                 updateProject.Risk = project.Risk.Trim();
@@ -457,9 +467,7 @@ namespace DDL_CapstoneProject.Respository
                     throw new KeyNotFoundException();
                 }
 
-                var user = db.DDL_Users.SingleOrDefault(x => x.Username == UserName);
-
-                if (project.CreatorID != user.DDL_UserID)
+                if (project.Creator.Username != UserName)
                 {
                     throw new NotPermissionException();
                 }
@@ -492,7 +500,12 @@ namespace DDL_CapstoneProject.Respository
             }
         }
 
-        public ProjectStoryDTO GetProjectStory(int ProjectID)
+        /// <summary>
+        /// Get projec story
+        /// </summary>
+        /// <param name="ProjectID"></param>
+        /// <returns>projectBasicDTO</returns>
+        public ProjectStoryDTO GetProjectStory(int ProjectID, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -501,6 +514,11 @@ namespace DDL_CapstoneProject.Respository
                 if (project == null)
                 {
                     throw new KeyNotFoundException();
+                }
+
+                if (project.Creator.Username != username)
+                {
+                    throw new NotPermissionException();
                 }
 
                 var projectBasicDTO = new ProjectStoryDTO
@@ -520,7 +538,7 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="submitProject"></param>
         /// <returns>errorList</returns>
-        public List<string> SubmitProject(ProjectEditDTO submitProject)
+        public List<string> SubmitProject(ProjectEditDTO submitProject, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -529,6 +547,11 @@ namespace DDL_CapstoneProject.Respository
                 if (project == null)
                 {
                     throw new KeyNotFoundException();
+                }
+
+                if (project.Creator.Username != username)
+                {
+                    throw new NotPermissionException();
                 }
 
                 if (project.ExpireDate != null)
@@ -612,19 +635,12 @@ namespace DDL_CapstoneProject.Respository
                     throw new KeyNotFoundException();
                 }
 
-                var user = db.DDL_Users.SingleOrDefault(x => x.DDL_UserID == project.CreatorID);
-
-                if (user == null)
-                {
-                    throw new NotPermissionException();
-                }
-
                 var projectInforDTO = new ProjectInfoBackDTO
                 {
                     ProjectCode = project.ProjectCode,
                     Title = project.Title,
-                    Creator = user.UserInfo.FullName,
-                    CreatorUsername = user.Username
+                    Creator = project.Creator.UserInfo.FullName,
+                    CreatorUsername = project.Creator.Username
                 };
 
                 return projectInforDTO;
@@ -650,7 +666,7 @@ namespace DDL_CapstoneProject.Respository
                 var user = db.DDL_Users.SingleOrDefault((x => x.Email == backingData.Email));
                 if (user == null)
                 {
-                    throw new KeyNotFoundException();
+                    throw new UserNotFoundException();
                 }
 
                 // Create new backing record
@@ -1502,10 +1518,21 @@ namespace DDL_CapstoneProject.Respository
         /// <param name="ProjectID"></param>
         /// <param name="question"></param>
         /// <returns>newQuestionDTO</returns>
-        public QuestionDTO CreateQuestion(int ProjectID, QuestionDTO question)
+        public QuestionDTO CreateQuestion(int ProjectID, QuestionDTO question, string username)
         {
             using (var db = new DDLDataContext())
             {
+                var project = db.Projects.SingleOrDefault(x => x.ProjectID == ProjectID);
+                if (project == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                if (project.Creator.Username != username)
+                {
+                    throw new NotPermissionException();
+                }
+
                 var newQuestion = db.Questions.Create();
                 newQuestion.ProjectID = ProjectID;
                 newQuestion.CreatedDate = DateTime.UtcNow;
@@ -1533,7 +1560,7 @@ namespace DDL_CapstoneProject.Respository
         /// Edit QAs
         /// </summary>
         /// <returns>boolean</returns>
-        public bool EditQuestion(List<QuestionDTO> question)
+        public bool EditQuestion(List<QuestionDTO> question, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -1544,6 +1571,11 @@ namespace DDL_CapstoneProject.Respository
                     if (updateQuestion == null)
                     {
                         throw new KeyNotFoundException();
+                    }
+
+                    if (updateQuestion.Project.Creator.Username != username)
+                    {
+                        throw new NotPermissionException();
                     }
 
                     updateQuestion.Answer = qa.Answer;
@@ -1562,7 +1594,7 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="question"></param>
         /// <returns>updateLogDTO</returns>
-        public QuestionDTO EditSingleQuestion(QuestionDTO question)
+        public QuestionDTO EditSingleQuestion(QuestionDTO question, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -1571,6 +1603,11 @@ namespace DDL_CapstoneProject.Respository
                 if (updateQuestion == null)
                 {
                     throw new KeyNotFoundException();
+                }
+
+                if (updateQuestion.Project.Creator.Username != username)
+                {
+                    throw new NotPermissionException();
                 }
 
                 updateQuestion.Answer = question.Answer;
@@ -1598,7 +1635,7 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="questionID"></param>
         /// <returns>boolean</returns>
-        public bool DeleteQuestion(int questionID)
+        public bool DeleteQuestion(int questionID, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -1607,6 +1644,11 @@ namespace DDL_CapstoneProject.Respository
                 if (deleteQuestion == null)
                 {
                     throw new KeyNotFoundException();
+                }
+
+                if (deleteQuestion.Project.Creator.Username != username)
+                {
+                    throw new NotPermissionException();
                 }
 
                 db.Questions.Remove(deleteQuestion);
@@ -1688,10 +1730,22 @@ namespace DDL_CapstoneProject.Respository
         /// <param name="ProjectID"></param>
         /// <param name="rewardPkg"></param>
         /// <returns>newRewardPkg</returns>
-        public RewardPkgDTO CreateRewardPkg(int ProjectID, RewardPkgDTO rewardPkg)
+        public RewardPkgDTO CreateRewardPkg(int ProjectID, RewardPkgDTO rewardPkg, string username)
         {
             using (var db = new DDLDataContext())
             {
+                var project = db.Projects.SingleOrDefault(x => x.ProjectID == ProjectID);
+
+                if (project == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                if (project.Creator.Username != username)
+                {
+                    throw new NotPermissionException();
+                }
+
                 var newRewardPkg = db.RewardPkgs.Create();
 
                 newRewardPkg.ProjectID = ProjectID;
@@ -1736,7 +1790,7 @@ namespace DDL_CapstoneProject.Respository
         /// Edit rewardPkgs
         /// </summary>
         /// <returns></returns>
-        public bool EditRewardPkg(RewardPkgDTO rewardPkg)
+        public bool EditRewardPkg(RewardPkgDTO rewardPkg, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -1745,6 +1799,11 @@ namespace DDL_CapstoneProject.Respository
                 if (updateReward == null)
                 {
                     throw new KeyNotFoundException();
+                }
+
+                if (updateReward.Project.Creator.Username != username)
+                {
+                    throw new NotPermissionException();
                 }
 
                 if (updateReward.EstimatedDelivery != null)
@@ -1770,7 +1829,7 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="rewardPkgID"></param>
         /// <returns>boolean</returns>
-        public bool DeleteRewardPkg(int rewardPkgID)
+        public bool DeleteRewardPkg(int rewardPkgID, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -1779,6 +1838,11 @@ namespace DDL_CapstoneProject.Respository
                 if (deleteRewardPkg == null)
                 {
                     throw new KeyNotFoundException();
+                }
+
+                if (deleteRewardPkg.Project.Creator.Username != username)
+                {
+                    throw new NotPermissionException();
                 }
 
                 db.RewardPkgs.Remove(deleteRewardPkg);
@@ -1822,10 +1886,20 @@ namespace DDL_CapstoneProject.Respository
         /// <param name="ProjectID"></param>
         /// <param name="updateLog"></param>
         /// <returns>newRewardPkg</returns>
-        public UpdateLogDTO CreateUpdateLog(int ProjectID, UpdateLogDTO newUpdateLog)
+        public UpdateLogDTO CreateUpdateLog(int ProjectID, UpdateLogDTO newUpdateLog, string username)
         {
             using (var db = new DDLDataContext())
             {
+                var project = db.Projects.SingleOrDefault(x => x.ProjectID == ProjectID);
+                if (project == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+                if (project.Creator.Username != username)
+                {
+                    throw new NotPermissionException();
+                }
+
                 var updateLog = db.UpdateLogs.Create();
                 updateLog.ProjectID = ProjectID;
                 updateLog.Description = newUpdateLog.Description;
@@ -1853,7 +1927,7 @@ namespace DDL_CapstoneProject.Respository
         /// Edit updateLog
         /// </summary>
         /// <returns>boolean</returns>
-        public bool EditUpdateLog(List<UpdateLogDTO> updateLog)
+        public bool EditUpdateLog(List<UpdateLogDTO> updateLog, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -1864,6 +1938,11 @@ namespace DDL_CapstoneProject.Respository
                     if (editLog == null)
                     {
                         throw new KeyNotFoundException();
+                    }
+
+                    if (editLog.Project.Creator.Username != username)
+                    {
+                        throw new NotPermissionException();
                     }
 
                     if (editLog.Description != update.Description || editLog.Title != update.Title)
@@ -1885,7 +1964,7 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="updateLog"></param>
         /// <returns>updateLogDTO</returns>
-        public UpdateLogDTO EditSingleUpdateLog(UpdateLogDTO updateLog)
+        public UpdateLogDTO EditSingleUpdateLog(UpdateLogDTO updateLog, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -1894,6 +1973,11 @@ namespace DDL_CapstoneProject.Respository
                 if (editLog == null)
                 {
                     throw new KeyNotFoundException();
+                }
+
+                if (editLog.Project.Creator.Username != username)
+                {
+                    throw new NotPermissionException();
                 }
 
                 editLog.Description = updateLog.Description;
@@ -1916,7 +2000,13 @@ namespace DDL_CapstoneProject.Respository
             }
         }
 
-        public bool DeleteUpdateLog(int updateLogID)
+        /// <summary>
+        /// Delete a updateLog
+        /// </summary>
+        /// <param name="updateLogID"></param>
+        /// <param name="username"></param>
+        /// <returns>bool</returns>
+        public bool DeleteUpdateLog(int updateLogID, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -1925,6 +2015,11 @@ namespace DDL_CapstoneProject.Respository
                 if (deleteUpdateLog == null)
                 {
                     throw new KeyNotFoundException();
+                }
+
+                if (deleteUpdateLog.Project.Creator.Username != username)
+                {
+                    throw new NotPermissionException();
                 }
 
                 db.UpdateLogs.Remove(deleteUpdateLog);
