@@ -27,9 +27,9 @@
                         <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
                         <a class="btn btn-info btn-xs" href="/#/project/edit/{{project.ProjectCode}}">Sửa</a>
                         <a class="btn btn-danger btn-xs" href="" ng-click="deleteDraft($index)">Xóa</a>
-                        <label class="label label-danger" ng-if="project.Status == 'pending'">Đang chờ kiểm duyệt</label>
+                        <label class="label label-primary" ng-if="project.Status == 'pending'">Đang chờ kiểm duyệt</label>
                         <label class="label label-default" ng-if="project.Status == 'draft'">Dự án nháp</label>
-
+                        <label class="label label-danger" ng-if="project.Status == 'rejected'">Đã bị từ chối</label>
                     </div>
                     <div class="item-content">
                         <p class="fnt15">{{project.SubDescription}}</p>
@@ -40,23 +40,23 @@
                             &nbsp;&nbsp;
                             <span class="grey-dark"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span><span tooltip='{{project.Location}}'>{{project.Location}}</span></span>
                         </div>
-                        <div class="progress mt5 mb5">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuenow="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
-                                <span class=" sr-only">
-                                    {{project.CurrentFunded}}% Complete (success)
-                                </span>
+                        @*<div class="progress mt5 mb5">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuenow="{{project.CurrentFunded}}" aria-valuemax="100" style="width: {{project.CurrentFunded}}%">
+                                    <span class=" sr-only">
+                                        {{project.CurrentFunded}}% Complete (success)
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                        <ul class="list-inline fnt15">
-                            <li>
-                                <span class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</span>
-                                <span class="mt0 mb0">đã ủng hộ</span>
-                            </li>
-                            <li>
-                                <span class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber| number : fractionSize}}&#8363;</span>
-                                <span class="mt0 mb0">đã gây quỹ</span>
-                            </li>
-                        </ul>
+                            <ul class="list-inline fnt15">
+                                <li>
+                                    <span class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</span>
+                                    <span class="mt0 mb0">đã ủng hộ</span>
+                                </li>
+                                <li>
+                                    <span class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber| number : fractionSize}}&#8363;</span>
+                                    <span class="mt0 mb0">đã gây quỹ</span>
+                                </li>
+                            </ul>*@
                     </div>
                 </div>
             </li><!--/.portfolio-item-->
@@ -95,18 +95,18 @@
                         </div>
                         <ul class="list-inline fnt15">
                             <li>
-                                <span class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</span>
-                                <span class="mt0 mb0">đã ủng hộ</span>
+                                <span class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber| number : fractionSize}}&#8363;({{project.CurrentFunded}}%)</span>
+                                <span class="mt0 mb0">đã gây quỹ</span>
                             </li>
-                            <li>
-                                <span class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</span>
-                                <span class="mt0 mb0">ngày còn lại</span>
-                            </li>
+                            @*<li>
+                                    <span class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</span>
+                                    <span class="mt0 mb0">đã ủng hộ</span>
+                                </li>*@
                         </ul>
                         <ul class="list-inline fnt15">
                             <li>
-                                <span class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber| number : fractionSize}}&#8363;</span>
-                                <span class="mt0 mb0">đã gây quỹ</span>
+                                <span class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</span>
+                                <span class="mt0 mb0">ngày còn lại</span>
                             </li>
                         </ul>
                     </div>
@@ -155,14 +155,13 @@
                         </div>
                         <ul class="list-inline fnt15">
                             <li>
-                                <span class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</span>
-                                <span class="mt0 mb0">đã ủng hộ</span>
+                                <span class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber| number : fractionSize}}&#8363;({{project.CurrentFunded}}%)</span>
+                                <span class="mt0 mb0">đã gây quỹ</span>
                             </li>
-                            <li>
-                                <span class="fnt-b mt0 mb0 label label-success" ng-if="project.CurrentFunded >= 100">Thành công</span>
-                                <span class="fnt-b mt0 mb0 label label-danger" ng-if="project.CurrentFunded < 100">Thất bại</span>
-                                @*<span class="mt0 mb0">{{project.CreatedDate | date : format : shortDate}}</span>*@
-                            </li>
+                            @*<li>
+                                    <span class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</span>
+                                    <span class="mt0 mb0">đã ủng hộ</span>
+                                </li>*@
                             @*<li>
                                     <span class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</span>
                                     <span class="mt0 mb0">ngày còn lại</span>
@@ -170,8 +169,9 @@
                         </ul>
                         <ul class="list-inline fnt15">
                             <li>
-                                <span class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber| number : fractionSize}}&#8363;</span>
-                                <span class="mt0 mb0">đã gây quỹ</span>
+                                <span class="fnt-b mt0 mb0 label label-success" ng-if="project.CurrentFunded >= 100">Thành công</span>
+                                <span class="fnt-b mt0 mb0 label label-danger" ng-if="project.CurrentFunded < 100">Thất bại</span>
+                                @*<span class="mt0 mb0">{{project.CreatedDate | date : format : shortDate}}</span>*@
                             </li>
                         </ul>
                     </div>
