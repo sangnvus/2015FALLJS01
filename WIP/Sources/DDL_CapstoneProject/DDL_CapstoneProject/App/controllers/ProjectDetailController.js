@@ -353,5 +353,18 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, $f
             toastr.warning("Bạn chưa nhập nội dung câu hỏi", 'Thông báo');
         }
     }
+    
+    $scope.share = function (post) {
+        FB.ui(
+        {
+            method: 'feed',
+            name: $scope.Project.Title,
+            link: 'http://dandelionvn.com/#/project/detail/' + $scope.Project.ProjectCode,
+            picture: 'http://dandelionvn.com/images/projects/' + $scope.Project.ImageUrl,
+            caption: 'dandelionvn.com',
+            description: $scope.Project.SubDescription,
+            message: 'message'
+        });
+    }
 
 });

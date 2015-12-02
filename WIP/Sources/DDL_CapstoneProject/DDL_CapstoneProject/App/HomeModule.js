@@ -525,4 +525,35 @@ app.run(['$rootScope', '$window','$location','$route', '$anchorScroll', 'UserSer
         }
         // 2. call function
         checkLoginStatus();
+
+        $window.fbAsyncInit = function () {
+            FB.init({
+                appId: '412367302292593',
+                status: false,
+                cookie: true,
+                xfbml: true,
+                version: 'v2.4'
+            });
+            //FbService.watchLoginStatusChange();
+        };
+
+        (function (d) {
+            // load the Facebook javascript SDK
+
+            var js,
+                id = 'facebook-jssdk',
+                ref = d.getElementsByTagName('script')[0];
+
+            if (d.getElementById(id)) {
+                return;
+            }
+
+            js = d.createElement('script');
+            js.id = id;
+            js.async = true;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+
+            ref.parentNode.insertBefore(js, ref);
+
+        }(document));
     }]);
