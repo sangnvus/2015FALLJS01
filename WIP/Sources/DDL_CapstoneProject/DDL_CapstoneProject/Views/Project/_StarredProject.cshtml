@@ -45,22 +45,24 @@
                         </div>
                         <ul class="list-inline fnt15">
                             <li>
-                                <span class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</span>
-                                <span class="mt0 mb0">đã ủng hộ</span>
+                                <span class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber| number : fractionSize}}&#8363;({{project.CurrentFunded}}%)</span>
+                                <span class="mt0 mb0">đã gây quỹ</span>
                             </li>
+                            @*<li>
+                <span class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</span>
+                <span class="mt0 mb0">đã ủng hộ</span>
+            </li>*@
+                        </ul>
+                        <ul class="list-inline fnt15">
                             <li ng-if="project.ExpireDate >= 0">
                                 <span class="fnt-b mt0 mb0 c00">{{project.ExpireDate}}</span>
                                 <span class="mt0 mb0">ngày còn lại</span>
                             </li>
                             <li ng-if="project.ExpireDate < 0">
-                                <span class="fnt-b mt0 mb0 label label-danger">Đã kết thúc</span>
+                                @*<span class="fnt-b mt0 mb0 label label-danger">Đã kết thúc</span>*@
+                                <span class="fnt-b mt0 mb0 label label-success" ng-if="project.CurrentFunded >= 100">Thành công</span>
+                                <span class="fnt-b mt0 mb0 label label-danger" ng-if="project.CurrentFunded < 100">Thất bại</span>
                                 @*<span class="mt0 mb0">ngày còn lại</span>*@
-                            </li>
-                        </ul>
-                        <ul class="list-inline fnt15">
-                            <li>
-                                <span class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber| number : fractionSize}}&#8363;</span>
-                                <span class="mt0 mb0">đã gây quỹ</span>
                             </li>
                         </ul>
                     </div>
