@@ -90,14 +90,14 @@ String.prototype.repeat = function (num) {
          $('.portfolio-items').removeClass('col-2');
          $('.portfolio-items').removeClass('col-1');
          $('.portfolio-items').addClass('col-4');
-       } else if(win_width >950 && win_width <=1200){
+       } else if(win_width >975 && win_width <=1200){
          $('.portfolio-items').removeClass('col-4');
          $('.portfolio-items').removeClass('col-3');
          $('.portfolio-items').removeClass('col-3');
          $('.portfolio-items').removeClass('col-2');
          $('.portfolio-items').removeClass('col-1');
          $('.portfolio-items').addClass('col-3');
-       } else if(win_width <=950){
+       } else if(win_width <=975){
          $('.portfolio-items').removeClass('col-4');
          $('.portfolio-items').removeClass('col-3');
          $('.portfolio-items').removeClass('col-3');
