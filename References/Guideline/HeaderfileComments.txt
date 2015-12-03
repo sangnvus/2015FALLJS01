@@ -1,0 +1,14 @@
+// SICSA project (XEP 6087)
+//
+// APP-SYSTEM/AUTH/RBAC/USER_ROLE
+//
+// Object: currentRole
+// Author: R. Looek
+// Creation date: 13/11/2009
+//
+// © St Andrews University 2009
+//
+// Modification history
+// Version  Modifier  Date      Change  Reason
+// 1.0  J. Jones  11/11/2009  Add header  Submitted to CM
+// 1.1  R. Looek   13/11/2009  New field  Change req. R07/02
