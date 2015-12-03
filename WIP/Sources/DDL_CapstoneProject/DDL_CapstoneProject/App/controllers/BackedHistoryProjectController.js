@@ -10,9 +10,9 @@ app.controller('BackedHistoryProjectController', function ($scope, projects, Use
     .withBootstrap();
 
     // Define column 
-    //$scope.dtColumnDefs = [
-    //    DTColumnDefBuilder.newColumnDef(0).notSortable()
-    //];
+    $scope.dtColumnDefs = [
+        DTColumnDefBuilder.newColumnDef(5).notSortable()
+    ];
 
 
     function getBackedUserInfo(){

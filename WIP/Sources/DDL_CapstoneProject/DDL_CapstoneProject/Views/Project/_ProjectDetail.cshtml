@@ -4,7 +4,7 @@
     <div class="container">
         <div id="gt1">
             <div class="title text-center">
-                <h2 class="fnt30 mb0"><a href="">{{Project.Title}}</a></h2>
+                <h2 class="fnt30 mb0"><a href="/#/project/detail/{{Project.ProjectCode}}/">{{Project.Title}}</a></h2>
                 <p class="fnt18">by <a class="fnt-b" href="/#/user/publicprofile/{{Project.Creator.UserName}}">{{Project.Creator.FullName}}</a></p>
             </div> <!-- end TITLE -->
             <div class="row">
@@ -67,7 +67,7 @@
                         &nbsp;&nbsp;
                         <span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{Project.Location}}
                         &nbsp;&nbsp;
-                        <a class="btn btn-info btn-sm" href=""><i class="fa fa-facebook-square"></i> Chia sẻ</a>
+                        <a class="btn btn-info btn-sm fb-share-button" href="" ng-click="share(post)"><i class="fa fa-facebook-square"></i> Chia sẻ</a>
                     </div>
                 </div>
                 <div class="col-md-4 border-top">

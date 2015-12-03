@@ -2334,13 +2334,14 @@ namespace DDL_CapstoneProject.Respository
                 var Project = (from backing in db.Backings
                                from project in db.Projects
                                where backing.User.Username == userName && project.ProjectID == backing.ProjectID
+                               orderby backing.BackedDate descending
                                select new ProjectBasicViewDTO
                 {
                     ProjectID = project.ProjectID,
                     ProjectCode = project.ProjectCode,
                     CreatorName = project.Creator.UserInfo.FullName,
                     Title = project.Title,
-                    CurrentFunded = project.CurrentFunded,
+                    CurrentFunded = backing.BackingDetail.PledgedAmount,
                     BackedDate = backing.BackedDate,
                     Status = project.Status
                 }).Distinct().ToList();
