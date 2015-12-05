@@ -165,6 +165,10 @@
     <Compile Include="Migrations\201511221553120_UpdateProjectPoint.Designer.cs">
       <DependentUpon>201511221553120_UpdateProjectPoint.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512051310382_UpdateBackingDetail.cs" />
+    <Compile Include="Migrations\201512051310382_UpdateBackingDetail.Designer.cs">
+      <DependentUpon>201512051310382_UpdateBackingDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Backing.cs" />
     <Compile Include="Controllers\WebControllers\HomeController.cs" />
@@ -268,6 +272,7 @@
     <Content Include="App\controllers\admin\AdminBackingListController.js" />
     <Content Include="App\controllers\admin\AdminBackingDetailController.js" />
     <Content Include="App\controllers\BackedHistoryProjectController.js" />
+    <Content Include="App\controllers\BackingSuccessProjectController.js" />
     <Content Include="App\controllers\EditPasswordController.js" />
     <Content Include="App\controllers\BackProjectController.js" />
     <Content Include="App\controllers\BackedProjectController.js" />
@@ -1337,6 +1342,7 @@
     <Content Include="Views\AdminPartial\_BackingList.cshtml" />
     <Content Include="Views\Project\_ListBacker.cshtml" />
     <Content Include="Views\AdminPartial\_BackingDetail.cshtml" />
+    <Content Include="Views\Project\_BackingSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />
@@ -1362,6 +1368,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511221553120_UpdateProjectPoint.resx">
       <DependentUpon>201511221553120_UpdateProjectPoint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512051310382_UpdateBackingDetail.resx">
+      <DependentUpon>201512051310382_UpdateBackingDetail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

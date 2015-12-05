@@ -652,7 +652,7 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="backingData"></param>
         /// <returns>projectCode</returns>
-        public string BackProject(ProjectBackDTO backingData)
+        public int BackProject(ProjectBackDTO backingData)
         {
             using (var db = new DDLDataContext())
             {
@@ -669,12 +669,14 @@ namespace DDL_CapstoneProject.Respository
                     throw new UserNotFoundException();
                 }
 
+                backingData.BackedDate = CommonUtils.ConvertDateTimeToUtc(backingData.BackedDate);
+
                 // Create new backing record
                 var backing = db.Backings.Create();
                 backing.UserID = user.DDL_UserID;
                 backing.ProjectID = project.ProjectID;
-                backing.BackedDate = DateTime.UtcNow;
-                backing.IsPublic = backingData.IsPublic;
+                backing.BackedDate = backingData.BackedDate;
+                //backing.IsPublic = backingData.IsPublic;
 
                 // Create new backingDetail recored
                 var backingDetail = db.BackingDetails.Create();
@@ -686,6 +688,8 @@ namespace DDL_CapstoneProject.Respository
                 backingDetail.Address = backingData.Address;
                 backingDetail.Email = backingData.Email;
                 backingDetail.PhoneNumber = backingData.PhoneNumber;
+                backingDetail.OrderId = backingData.OrderId;
+                backingDetail.TransactionId = backingData.TransactionId;
 
                 // Add backingDetail to backing
                 backing.BackingDetail = backingDetail;
@@ -712,7 +716,7 @@ namespace DDL_CapstoneProject.Respository
 
                 db.SaveChanges();
 
-                return project.ProjectCode;
+                return backing.BackingID;
             }
         }
 
@@ -737,6 +741,51 @@ namespace DDL_CapstoneProject.Respository
                 db.SaveChanges();
             }
         }
+
+        /// <summary>
+        /// Get backing detail
+        /// </summary>
+        /// <param name="backingId"></param>
+        /// <returns></returns>
+        public ProjectBackDTO GetBackingDetail(int backingId)
+        {
+            using (var db = new DDLDataContext())
+            {
+                var backing = db.Backings.SingleOrDefault(x => x.BackingID == backingId);
+
+                if (backing == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                backing.BackedDate = CommonUtils.ConvertDateTimeFromUtc(backing.BackedDate);
+
+                var projectBackDto = new ProjectBackDTO
+                {
+                    BackedDate = backing.BackedDate,
+                    ProjectCode = backing.Project.ProjectCode,
+                    RewardPkgID = backing.BackingDetail.RewardPkgID,
+                    Description = backing.BackingDetail.Description,
+                    PledgeAmount = backing.BackingDetail.PledgedAmount,
+                    Email = backing.BackingDetail.Email,
+                    Quantity = backing.BackingDetail.Quantity,
+                    Address = backing.BackingDetail.Address,
+                    BackerName = backing.BackingDetail.BackerName,
+                    PhoneNumber = backing.BackingDetail.PhoneNumber,
+                    ProjectName = backing.Project.Title,
+                    ProjectOwner = backing.Project.Creator.UserInfo.FullName,
+                    RewardPkgDesc = backing.BackingDetail.RewardPkg.Description,
+                    RewardPkgType = backing.BackingDetail.RewardPkg.Type,
+                    BackerImg = backing.User.UserInfo.ProfileImage,
+                    BackerUsername = backing.User.Username,
+                    ProjectOwnerUsername = backing.Project.Creator.Username,
+                    TransactionId = backing.BackingDetail.TransactionId,
+                    OrderId = backing.BackingDetail.OrderId
+                };
+
+                return projectBackDto;
+            }
+        }
         #region Admin
 
         /// <summary>
@@ -754,6 +803,8 @@ namespace DDL_CapstoneProject.Respository
                 {
                     throw new KeyNotFoundException();
                 }
+
+                backing.BackedDate = CommonUtils.ConvertDateTimeFromUtc(backing.BackedDate);
 
                 var projectBackDto = new ProjectBackDTO
                 {

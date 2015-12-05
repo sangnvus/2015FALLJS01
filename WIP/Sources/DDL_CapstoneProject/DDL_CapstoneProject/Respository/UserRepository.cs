@@ -962,7 +962,7 @@ namespace DDL_CapstoneProject.Respository
                         UserName = user.Username,
                         Status = user.IsActive,
                         FullName = user.UserInfo.FullName,
-                        CreatedDate = user.CreatedDate
+                        CreatedDate = CommonUtils.ConvertDateTimeFromUtc(user.CreatedDate)
                     };
 
                     listNewUser.Add(userReturn);

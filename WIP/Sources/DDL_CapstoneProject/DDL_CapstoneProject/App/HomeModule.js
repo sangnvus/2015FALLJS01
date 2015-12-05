@@ -365,6 +365,21 @@ app.config(["$routeProvider", function ($routeProvider) {
         }
     });
 
+    $routeProvider.when("/backsuccess/:id",
+    {
+        templateUrl: "ClientPartial/BackingSuccess",
+        controller: 'BackingSuccessProjectController',
+        title: 'Chi tiết ủng hộ - Dandelion',
+        resolve: {
+            backingData: [
+                '$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
+                    var promise = ProjectService.getBackingSuccess($route.current.params.id);
+                    return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                }
+            ]
+        }
+    });
+
     $routeProvider.when("/error",
         {
             caseInsensitiveMatch: true,

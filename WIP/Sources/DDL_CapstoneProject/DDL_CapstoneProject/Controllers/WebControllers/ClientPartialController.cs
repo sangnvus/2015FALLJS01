@@ -124,5 +124,10 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         {
             return PartialView("~/Views/Shared/_NotFound.cshtml");
         }
+
+        public ActionResult BackingSuccess()
+        {
+            return PartialView("~/Views/Project/_BackingSuccess.cshtml");
+        }
     }
 }
