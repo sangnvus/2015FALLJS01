@@ -57,9 +57,9 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
                     "0",
                     "0",
                     Request.QueryString["Des"],
-                    "http://localhost:34747/baokimcallback",
-                    "http://localhost:34747/#/project/detail/" + Request.QueryString["ProjectCode"],
-                    "http://localhost:34747/#/project/detail/" + Request.QueryString["ProjectCode"]
+                    "http://dandelionvn.com/baokimcallback",
+                    "http://dandelionvn.com/#/project/detail/" + Request.QueryString["ProjectCode"],
+                    "http://dandelionvn.com/#/project/detail/" + Request.QueryString["ProjectCode"]
                     );
 
                 // Inital cookie
@@ -154,10 +154,19 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
                     TransactionId = Request.QueryString["transaction_id"]
                 };
 
-                int backingId = ProjectRepository.Instance.BackProject(projectBackDTO);
+                string orderId = ProjectRepository.Instance.BackProject(projectBackDTO);
                 ProjectRepository.Instance.CaculateProjectPoint(projectBackDTO.ProjectCode, DDLConstants.PopularPointType.BackingPoint);
 
-                return Redirect("/#/backsuccess/" + backingId);
+                // Remove all cookies.
+                var limit = Request.Cookies.Count;
+                for (int i = 0; i < limit; i++)
+                {
+                    var cookieName = Request.Cookies[i].Name;
+                    var cookie = new HttpCookie(cookieName) { Expires = DateTime.UtcNow.AddDays(-1) };
+                    Response.Cookies.Add(cookie);
+                }
+
+                return Redirect("/#/backsuccess/" + orderId);
             }
             catch (Exception)
             {

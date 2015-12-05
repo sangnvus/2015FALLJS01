@@ -1028,7 +1028,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         // GET: api/ProjectApi/GetBackingDetail/:id
         [HttpGet]
         [ResponseType(typeof(ProjectBackDTO))]
-        public IHttpActionResult GetBackingDetail(int backingId)
+        public IHttpActionResult GetBackingDetail(string backingId)
         {
             var backingDetail = new ProjectBackDTO();
 
@@ -1040,9 +1040,14 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                     return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
                 }
 
-                backingDetail = ProjectRepository.Instance.GetBackingDetail(backingId);
+                backingDetail = ProjectRepository.Instance.GetBackingDetail(backingId, User.Identity.Name);
             }
             catch (KeyNotFoundException)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+            }
+            catch (NotPermissionException)
             {
 
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_FOUND });

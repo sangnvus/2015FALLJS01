@@ -652,7 +652,7 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="backingData"></param>
         /// <returns>projectCode</returns>
-        public int BackProject(ProjectBackDTO backingData)
+        public string BackProject(ProjectBackDTO backingData)
         {
             using (var db = new DDLDataContext())
             {
@@ -716,7 +716,7 @@ namespace DDL_CapstoneProject.Respository
 
                 db.SaveChanges();
 
-                return backing.BackingID;
+                return backing.BackingDetail.OrderId;
             }
         }
 
@@ -747,40 +747,45 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="backingId"></param>
         /// <returns></returns>
-        public ProjectBackDTO GetBackingDetail(int backingId)
+        public ProjectBackDTO GetBackingDetail(string order_id, string username)
         {
             using (var db = new DDLDataContext())
             {
-                var backing = db.Backings.SingleOrDefault(x => x.BackingID == backingId);
+                var backing = db.BackingDetails.SingleOrDefault(x => x.OrderId == order_id);
 
                 if (backing == null)
                 {
                     throw new KeyNotFoundException();
                 }
 
-                backing.BackedDate = CommonUtils.ConvertDateTimeFromUtc(backing.BackedDate);
+                if (backing.Backing.User.Username != username)
+                {
+                    throw new NotPermissionException();
+                }
+
+                backing.Backing.BackedDate = CommonUtils.ConvertDateTimeFromUtc(backing.Backing.BackedDate);
 
                 var projectBackDto = new ProjectBackDTO
                 {
-                    BackedDate = backing.BackedDate,
-                    ProjectCode = backing.Project.ProjectCode,
-                    RewardPkgID = backing.BackingDetail.RewardPkgID,
-                    Description = backing.BackingDetail.Description,
-                    PledgeAmount = backing.BackingDetail.PledgedAmount,
-                    Email = backing.BackingDetail.Email,
-                    Quantity = backing.BackingDetail.Quantity,
-                    Address = backing.BackingDetail.Address,
-                    BackerName = backing.BackingDetail.BackerName,
-                    PhoneNumber = backing.BackingDetail.PhoneNumber,
-                    ProjectName = backing.Project.Title,
-                    ProjectOwner = backing.Project.Creator.UserInfo.FullName,
-                    RewardPkgDesc = backing.BackingDetail.RewardPkg.Description,
-                    RewardPkgType = backing.BackingDetail.RewardPkg.Type,
-                    BackerImg = backing.User.UserInfo.ProfileImage,
-                    BackerUsername = backing.User.Username,
-                    ProjectOwnerUsername = backing.Project.Creator.Username,
-                    TransactionId = backing.BackingDetail.TransactionId,
-                    OrderId = backing.BackingDetail.OrderId
+                    BackedDate = backing.Backing.BackedDate,
+                    ProjectCode = backing.Backing.Project.ProjectCode,
+                    RewardPkgID = backing.RewardPkgID,
+                    Description = backing.Description,
+                    PledgeAmount = backing.PledgedAmount,
+                    Email = backing.Email,
+                    Quantity = backing.Quantity,
+                    Address = backing.Address,
+                    BackerName = backing.BackerName,
+                    PhoneNumber = backing.PhoneNumber,
+                    ProjectName = backing.Backing.Project.Title,
+                    ProjectOwner = backing.Backing.Project.Creator.UserInfo.FullName,
+                    RewardPkgDesc = backing.RewardPkg.Description,
+                    RewardPkgType = backing.RewardPkg.Type,
+                    BackerImg = backing.Backing.User.UserInfo.ProfileImage,
+                    BackerUsername = backing.Backing.User.Username,
+                    ProjectOwnerUsername = backing.Backing.Project.Creator.Username,
+                    TransactionId = backing.TransactionId,
+                    OrderId = backing.OrderId
                 };
 
                 return projectBackDto;
@@ -824,7 +829,9 @@ namespace DDL_CapstoneProject.Respository
                     RewardPkgType = backing.BackingDetail.RewardPkg.Type,
                     BackerImg = backing.User.UserInfo.ProfileImage,
                     BackerUsername = backing.User.Username,
-                    ProjectOwnerUsername = backing.Project.Creator.Username
+                    ProjectOwnerUsername = backing.Project.Creator.Username,
+                    TransactionId = backing.BackingDetail.TransactionId,
+                    OrderId = backing.BackingDetail.OrderId
                 };
 
                 return projectBackDto;
