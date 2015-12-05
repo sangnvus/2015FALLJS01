@@ -97,15 +97,15 @@
                 <tr ng-repeat="project in ListBackedProjectHistory ">
                     <td class="txt-r">{{$index+1}}</td>
                     <td class="txt-l"><a class="fnt-b project_title_source" href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></td>
-                    <td class="txt-r">{{project.CurrentFunded |  number : fractionSize}}&#8363;</td>
-                    <td class="txt-r">{{project.BackedDate | date: "dd/MM/yyyy"}}</td>
+                    <td class="txt-r" data-search="{{project.CurrentFunded}}" data-order="{{project.CurrentFunded}}">{{project.CurrentFunded |  number : fractionSize}}&#8363;</td>
+                    <td class="txt-r" data-order="{{project.BackedDate}}">{{project.BackedDate | date: "dd/MM/yyyy"}}</td>
                     <td class="txt-l">
                         <label ng-if="project.Status=='pending'" class="label label-primary center-block" style="padding: 9px 10px">Chờ duyệt</label>
                         <label ng-if="project.Status=='draft'" class="label label-primary center-block" style="padding: 9px 10px">Nháp</label>
                         <label ng-if="project.Status=='rejected'" class="label label-danger center-block" style="padding: 9px 10px">Không phê duyệt</label>
                         <label ng-if="project.Status=='approved'" class="label label-success center-block" style="padding: 9px 10px">Đang chạy</label>
-                        <label ng-if="project.Status=='suspended'" class="label label-danger center-block" style="padding: 9px 10px">Đình chỉ</label>
-                        <label ng-if="project.Status=='expired'" class="label label-danger center-block" style="padding: 9px 10px">Kết thúc</label>
+                        <label ng-if="project.Status=='suspended'" class="label label-danger center-block" style="padding: 9px 10px">Bị đình chỉ</label>
+                        <label ng-if="project.Status=='expired'" class="label label-danger center-block" style="padding: 9px 10px">Đã kết thúc</label>
                     </td>
                     <td class="txt-c">
                         <div class="btn-group">

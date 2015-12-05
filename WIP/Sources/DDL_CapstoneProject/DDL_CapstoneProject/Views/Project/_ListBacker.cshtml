@@ -18,22 +18,22 @@
                 <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" id="backersTable" class="table table-striped table-bordered table-hover">
                     <thead style="background: #16a085; color: #FFF">
                         <tr>
-                            <th>STT</th>
+                            <th style="width: 20px">#</th>
                             <th>Tên người ủng hộ</th>
                             <th>Số tiền</th>
                             <th>Thời gian</th>
-                            <th>Xem</th>
+                            <th style="width: 60px">Xem</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="backer in ListBacker">
-                            <td style="width: 10%" class="txt-r">{{$index+1}}</td>
-                            <td style="width: 30%" class="txt-l">{{backer.FullName}}</td>
-                            <td style="width: 25%" class="txt-r">{{backer.Amount  |  number : fractionSize}}&#8363;</td>
-                            <td style="width: 25%" class="txt-r">{{backer.Date  | date:"dd/MM/yyyy"}}</td>
+                            <td class="txt-r">{{$index+1}}</td>
+                            <td class="txt-l">{{backer.FullName}}</td>
+                            <td class="txt-r" data-search="{{backer.Amount}}" data-order="{{backer.Amount}}">{{backer.Amount  |  number : fractionSize}}&#8363;</td>
+                            <td class="txt-r" data-order="{{backer.Date}}">{{backer.Date  | date:"dd/MM/yyyy"}}</td>
                             <td>
                                 <div class="btn-group">
-                                    <button class="btn btn-primary btn-sm" type="button" id="" tooltip="Xem chi tiết" tooltip-append-to-body="true" tooltip-placement="left" data-toggle="modal" data-target="#viewBanker" data-placement="left" data-trigger="hover" ng-click="getBackingInfo()" title="View">
+                                    <button class="btn btn-info btn-sm center-block" type="button" id="" tooltip="Xem chi tiết" tooltip-append-to-body="true" tooltip-placement="left" data-toggle="modal" data-target="#viewBanker" data-placement="left" data-trigger="hover" ng-click="getBackingInfo()" title="View">
                                         <i class="fa fa-eye"></i>
                                     </button>
                                 </div>
@@ -76,14 +76,17 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <h3 class="fnt25">Dự án: <i style="font-style: normal" id="project_title_target"></i></h3>
+                                                            <h3 class="fnt25">Dự án: <i style="font-style: normal" id="project_title_target"></i>
+                                                            </h3>
                                                             <div class="col-md-6">
 
                                                                 <br>
                                                                 <p class="fnt18" for="name"><span>Ủng hộ gói: </span><span class="fnt-b">{{BackingInfo.RewadDiscription}}</span> với số tiền:<span class="fnt-b"> {{BackingInfo.PledgeAmount}} VNĐ</span> và <span class="fnt-b">số lượng: {{BackingInfo.Quantity}}</span></p>
                                                                 <!-- <p class="fnt18" for="name"><span class="fnt-b">Số lượng:</span> 1</p> -->
-                                                                <p class="fnt18" for="name"><span class="fnt-b">Tổng số tiền:</span> {{BackingInfo.TotalAmount}} VNĐ</p>
-                                                                <p class="fnt18" for="name"><span class="fnt-b">Ngày gửi:</span>{{BackingInfo.BackedDate | date: "dd-MM-yyyy"}}</p>
+                                                                <p class="fnt18" for="name"><span class="fnt-b">Tổng số tiền:</span> {{BackingInfo.TotalAmount}} VNĐ
+                                                                </p>
+                                                                <p class="fnt18" for="name"><span class="fnt-b">Ngày gửi:</span>{{BackingInfo.BackedDate | date: "dd-MM-yyyy"}}
+                                                                </p>
                                                                 <p class="mb0 pb0"><span class="fnt-b">Nội dung:</span></p>
                                                                 <p class="mt0 pt0">{{BackingInfo.BackingDiscription}}</p>
                                                             </div>
@@ -96,6 +99,7 @@
                                             </div>
                                         </div>
                                     </div> <!-- end Modal infoBanker -->
+                                </div>
                             </td>
                         </tr>
                     </tbody>
