@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-app.controller('PaymentProjectController', function ($scope, $rootScope, $sce, $route, $location, toastr, CommmonService, ProjectService, rewardPkgs, usereditinfo, project) {
+app.controller('PaymentProjectController', function ($scope, $rootScope, $sce, $route, $window, $location, toastr, CommmonService, ProjectService, rewardPkgs, usereditinfo, project) {
     // Get rewardPkgs
     $scope.RewardPkgs = rewardPkgs.data.Data;
     // Get Project basic information
@@ -53,23 +53,28 @@ app.controller('PaymentProjectController', function ($scope, $rootScope, $sce, $
         $scope.backingData.Email = $scope.UserBasicInfo.Email;
         $scope.backingData.PhoneNumber = $scope.UserBasicInfo.ContactNumber;
 
-        var promisePost = ProjectService.backingProject($scope.backingData);
+        $window.location.href = "/baokim?ProjectCode=" + $scope.backingData.ProjectCode + "&PledgeAmount=" + $scope.backingData.PledgeAmount + "&Des=" + $scope.Packet.Description
+            + "&Email=" + $scope.backingData.Email + "&BackerName=" + $scope.backingData.BackerName + "&RewardId=" + $scope.backingData.RewardPKgID
+            + "&Quantity=" + $scope.backingData.Quantity + "&Mes=" + $scope.backingData.Description
+            + "&Address=" + $scope.backingData.Address + "&Phone=" + $scope.backingData.PhoneNumber;
 
-        promisePost.then(
-            function (result) {
-                if (result.data.Status === "success") {
-                    toastr.success('Bạn đã ủng hộ dự án thành công!');
-                    $location.path("/project/detail/" + result.data.Data).replace();
-                } else {
-                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                    $scope.Error = result.data.Message;
-                    toastr.error($scope.Error, 'Lỗi!');
-                }
-            },
-            function (error) {
-                $scope.Error = error.data.Message;
-                toastr.error($scope.Error, 'Lỗi!');
-            });
+        //var promisePost = ProjectService.backingProject($scope.backingData);
+
+        //promisePost.then(
+        //    function (result) {
+        //        if (result.data.Status === "success") {
+        //            //toastr.success('Bạn đã ủng hộ dự án thành công!');
+        //            $window.location.href ="/baokim?=";
+        //        } else {
+        //            CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+        //            $scope.Error = result.data.Message;
+        //            toastr.error($scope.Error, 'Lỗi!');
+        //        }
+        //    },
+        //    function (error) {
+        //        $scope.Error = error.data.Message;
+        //        toastr.error($scope.Error, 'Lỗi!');
+        //    });
     }
 
 });

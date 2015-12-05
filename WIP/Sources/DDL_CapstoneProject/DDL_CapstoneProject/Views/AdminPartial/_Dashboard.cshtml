@@ -309,7 +309,7 @@
                             <tbody>
                                 <tr ng-repeat="user in RecentUser">
                                     <td class="col-text">{{user.FullName}}</td>
-                                    <td class="col-number">{{user.LastLogin | date: "hh:mm 'ngày' dd-MM-yyyy"}}</td>
+                                    <td class="col-number">{{user.LastLogin | date: "HH:mm 'ngày' dd-MM-yyyy"}}</td>
                                     <td class="col-text">
                                         <a class="btn btn-xs btn-green" ng-if="user.Status == true">Bình thường</a>
                                         <a class="btn btn-xs btn-red" ng-if="user.Status == false">Khóa</a>
@@ -352,7 +352,7 @@
                                     <td class="col-text">{{backing.Email}}</td>
                                     <td class="col-text">{{backing.ProjectTitle}}</td>
                                     <td class="col-number">{{backing.PledgeAmount  | currency:"":0}}</td>
-                                    <td class="col-number">{{backing.BackedDate  | date: "hh:mm 'ngày' dd-MM-yyyy"}}</td>
+                                    <td class="col-number">{{backing.BackedDate  | date: "HH:mm 'ngày' dd-MM-yyyy"}}</td>
                                 </tr>
                             </tbody>
                         </table>
