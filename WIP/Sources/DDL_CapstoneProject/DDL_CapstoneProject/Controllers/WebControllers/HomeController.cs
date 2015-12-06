@@ -162,8 +162,13 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
                 for (int i = 0; i < limit; i++)
                 {
                     var cookieName = Request.Cookies[i].Name;
-                    var cookie = new HttpCookie(cookieName) { Expires = DateTime.UtcNow.AddDays(-1) };
-                    Response.Cookies.Add(cookie);
+                    if (cookieName == projectCodeCookie.Name || cookieName == emailCookie.Name || cookieName == backerNameCookie.Name || cookieName == rewardIdCookie.Name
+                        || cookieName == pledgeAmountCookie.Name || cookieName == quantityCookie.Name || cookieName == descCookie.Name
+                        || cookieName == addressCookie.Name || cookieName == phoneNumberCookie.Name)
+                    {
+                        var cookie = new HttpCookie(cookieName) { Expires = DateTime.UtcNow.AddDays(-1) };
+                        Response.Cookies.Add(cookie);
+                    }
                 }
 
                 return Redirect("/#/backsuccess/" + orderId);

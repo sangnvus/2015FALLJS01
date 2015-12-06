@@ -1183,6 +1183,11 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
                 projectList = ProjectRepository.Instance.GetProjectList();
             }
+            catch (NotPermissionException)
+            {
+
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
             catch (Exception)
             {
 

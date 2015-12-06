@@ -1,68 +1,56 @@
-﻿<div id="infoBanker">
-    <div class="container">
-        <div class="panel panel-success">
-            <div class="panel-heading bold" style="font-weight: bold;">Thông tin</div>
-            <div class="panel-body">
+﻿<div class="portlet portlet-default">
+    <div class="portlet-body">
+        <div id="content" class="paddingNavbar">
+            <div class="container-fluid">
+                <h3 class="fnt24 fnt-b txt-c c3" style="font-weight: bold; font-size: 2.4rem; text-align: center; color: #16a085;">Ủng hộ dự án: "<a href="@Url.Content("/admin/#/project/{{Project.ProjectCode}}")" style="color: #337ab7 !important;">{{Project.ProjectName}}</a>"</h3>
+                <p class="fnt22 fnt-b mb0 pb0" style="padding-bottom: 0; margin-bottom: 0; font-weight: bold; font-size: 2.2rem; margin: 0 0 15px; line-height: 1.72222;">Nội dung ủng hộ và gói quà:</p>
                 <div class="row">
-                    <div class="col-md-6">
-                        <h3>Thông tin người ủng hộ</h3>
-                        <div class="row">
-                            <div class="col-md-3 pt30">
-                                <a ng-if="!checkHTTP(Project.ProfileImage)" href="@Url.Content("/admin/#/userprofile/{{Project.BackerUsername}}")">
-                                    <img id="avatar1" style="width: 115px; height: 115px;" ng-src="../images/avatars/{{Project.BackerImg}}" alt="" class="img-responsive img-circle center-block">
-                                </a>
-                                <a ng-if="checkHTTP(Project.ProfileImage)" href="@Url.Content("/admin/#/userprofile/{{Project.BackerUsername}}")">
-                                    <img id="avatar1" style="width: 115px; height: 115px;" ng-src="{{trustSrc(Project.BackerImg)}}" alt="" class="img-responsive img-circle center-block">
-                                </a>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="form-group">
-                                    <label>Tên đầy đủ</label>
-                                    <input type="text" class="form-control" value="{{Project.BackerName}}" disabled>
-                                </div>
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="text" class="form-control" value="{{Project.Email}}" disabled>
-                                </div>
-                                <div class="form-group">
-                                    <label>Địa chỉ</label>
-                                    <input type="text" class="form-control" value="{{Project.Address}}" disabled>
-                                </div>
-                                <div class="form-group">
-                                    <label>SĐT</label>
-                                    <input type="text" class="form-control" value="{{Project.PhoneNumber}}" disabled>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <h3>Thông tin thêm</h3>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Lời nhắn :</label>
-                                    <textarea class="form-control" rows="3" style="height: 256px" disabled>{{Project.Description}}</textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="col-md-3">Tên dự án: </div>
+                    <div class="col-md-9">{{Project.ProjectName}}1</div>
+                    @*<div class="col-md-3">Gói ủng hộ: </div>*@
+                    @*<div class="col-md-9"></div>*@
+                    <div class="col-md-3" ng-show="Packet.Type != 'no reward'">Số lượng: </div>
+                    <div class="col-md-9" ng-show="Packet.Type != 'no reward'">{{Project.Quantity}}</div>
+                    <div class="col-md-3 pr0">Số tiền ủng hộ:</div>
+                    <div class="col-md-9">{{Project.PledgeAmount | currency:"":0}}&#8363;</div>
+                    <div class="col-md-3">Nội dung gói quà: </div>
+                    <div class="col-md-9 div-textarea" style="word-break: break-word;">{{Project.RewardPkgDesc}}</div>
+                    <div class="col-md-3 pr0">Thời gian:</div>
+                    <div class="col-md-9">{{Project.BackedDate | date: "HH:mm 'ngày' dd-MM-yyyy"}}</div>
+                </div>
+                <p></p>
+                <p style="border-top: 2px solid #d9d9de; border-top-style: dashed;"></p>
+                <p class="fnt22 fnt-b mb0 pb0" style="padding-bottom: 0; margin-bottom: 0; font-weight: bold; font-size: 2.2rem; margin: 0 0 15px; line-height: 1.72222;">Thông tin người nhận</p>
+                <div class="row">
+                    <div class="col-md-3">Họ và tên: </div>
+                    <div class="col-md-9"><a href="@Url.Content("/admin/#/userprofile/{{Project.BackerUsername}}")" style="color: #337ab7 !important;">{{Project.BackerName}}</a></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Email: </div>
+                    <div class="col-md-9">{{Project.Email}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Địa chỉ: </div>
+                    <div class="col-md-9">{{Project.Address}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Số điện thoại: </div>
+                    <div class="col-md-9">{{Project.PhoneNumber}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Thông tin thêm: </div>
+                    <div class="col-md-9 div-textarea" style="word-break: break-word;">{{Project.Description}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Mã hóa đơn thanh toán: </div>
+                    <div class="col-md-9">{{Project.OrderId}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Mã giao dịch: </div>
+                    <div class="col-md-9">{{Project.TransactionId}}</div>
                 </div>
             </div>
-        </div>
+        </div> <!-- end content -->
     </div>
-</div> <!-- info Banker -->
+</div>
 
-<div id="paymentReward">
-    <div class="container">
-        <div class="panel panel-info">
-            <div class="panel-heading bold" style="font-weight: bold;">Mức ủng hộ</div>
-            <div class="panel-body">
-                <p style="color: #16a085; font-size: 3rem; font-weight: bold; padding: 0; text-align: center;">Dự án: "<a href="@Url.Content("/admin/#/project/{{Project.ProjectCode}}")">{{Project.ProjectName}}</a>"</p>
-                <p style="font-size: 1.8rem; text-align: center; line-height: 1.72222; padding: 0; font-weight: bold;">Chủ dự án: "<a href="@Url.Content("/admin/#/userprofile/{{Project.ProjectOwnerUsername}}")">{{Project.ProjectOwner}}</a>"</p>
-                <p style="font-weight: bold;">Chi tiết gói quà:</p>
-                <p style="word-break: break-word;" class="div-textarea">{{Project.RewardPkgDesc}}</p>
-                <p><span style="font-weight: bold;">Ủng hộ: </span><span style="font-weight: bold;"> {{Project.PledgeAmount | currency:"":0}}&#8363;</span><span ng-show="Project.RewardPkgType != 'no reward'"> | Số lượng: {{Project.Quantity  | currency:"":0}}</span></p>
-            </div>
-        </div>
-    </div>
-</div> <!-- payment Reward -->

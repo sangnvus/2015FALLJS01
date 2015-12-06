@@ -1342,7 +1342,7 @@
     <Content Include="Views\AdminPartial\_BackingList.cshtml" />
     <Content Include="Views\Project\_ListBacker.cshtml" />
     <Content Include="Views\AdminPartial\_BackingDetail.cshtml" />
-    <Content Include="Views\Project\_BackingSuccess.cshtml" />
+    <Content Include="Views\Project\_BackingDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\filters\" />
