@@ -836,6 +836,8 @@ Date: 2015.10.01
 	}
 /* List Backer Page ----------------------------------------------- */
 
+
+
 /* List Backers (list_backers.html)
 ------------------------------------------------------------------- */
 #content-3 .panel-primary,
@@ -849,3 +851,19 @@ Date: 2015.10.01
 	background: #16a085;
 }
 /* End Statistic Page --------------------------------------------- */
+
+
+/* Backing-Detail (backing_detail.html)
+------------------------------------------------------------------- */
+#backing-detail .topLine{
+	border-top: 2px solid #CBCBCB;
+}
+#backing-detail .container1{
+	background: #FFFFFF;
+	margin: 15px 50px 15px 50px;
+	padding: 15px 30px 15px 30px;
+	border: 2px solid #CBCBCB;
+	border-radius: 5px;
+}
+
+/* End Backing-Detail --------------------------------------------- */
