@@ -889,7 +889,9 @@ namespace DDL_CapstoneProject.Respository
                                        FundingGoal = Project.FundingGoal,
                                        ExpireDate = Project.ExpireDate,
                                        Status = Project.Status,
-                                       CurrentFunded = Project.CurrentFunded
+                                       CurrentFunded = Project.CurrentFunded,
+                                       CreatorUsername = Project.Creator.Username,
+                                       CreatorFullname = Project.Creator.UserInfo.FullName
                                    }).ToList();
 
                 pendingList.ForEach(x => x.ExpireDate = CommonUtils.ConvertDateTimeFromUtc(x.ExpireDate.GetValueOrDefault()));
@@ -921,7 +923,9 @@ namespace DDL_CapstoneProject.Respository
                                        ExpireDate = Project.ExpireDate,
                                        Status = Project.Status,
                                        CurrentFunded = Project.CurrentFunded,
-                                       TotalBacking = Project.Backings.Count
+                                       TotalBacking = Project.Backings.Count,
+                                       CreatorUsername = Project.Creator.Username,
+                                       CreatorFullname = Project.Creator.UserInfo.FullName
                                    }).ToList();
 
                 projectList.ForEach(x => x.ExpireDate = CommonUtils.ConvertDateTimeFromUtc(x.ExpireDate.GetValueOrDefault()));
@@ -2596,6 +2600,8 @@ namespace DDL_CapstoneProject.Respository
                 {
                     db.Reminds.Remove(reminded);
                     db.SaveChanges();
+
+                    ProjectRepository.Instance.CaculateProjectPoint(projectCode, DDLConstants.PopularPointType.RemoveRemindPoint);
                     return false;
                 }
                 else

@@ -91,6 +91,7 @@ namespace DDL_CapstoneProject.Ultilities
             public static readonly int CommentPoint = 2;
             public static readonly int RemindPoint = 1;
             public static readonly int ViewPoint = 1;
+            public static readonly int RemoveRemindPoint = -1;
         }
     }
 }

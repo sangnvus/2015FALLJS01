@@ -19,6 +19,10 @@ app.controller('PaymentProjectController', function ($scope, $rootScope, $sce, $
         $scope.submitAble = true;
     }
 
+    if ($scope.UserBasicInfo.ProfileImage.indexOf("/images/avatars/") > -1) {
+        $scope.UserBasicInfo.ProfileImage = $scope.UserBasicInfo.ProfileImage.replace('/images/avatars/', '');
+    }
+
     // Initial backing data record
     $scope.backingData = {};
 

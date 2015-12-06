@@ -11,7 +11,7 @@
                                     <h3>Thông tin người ủng hộ</h3>
                                     <div class="row">
                                         <div class="col-md-3 pt30">
-                                            <img id="avatar1" ng-if="!checkHTTP(UserBasicInfo.ProfileImage)" ng-src="{{UserBasicInfo.ProfileImage}}" alt="" class="img-responsive img-circle center-block">
+                                            <img id="avatar1" ng-if="!checkHTTP(UserBasicInfo.ProfileImage)" ng-src="../images/avatars/{{userbasicinfo.profileimage}}" alt="" class="img-responsive img-circle center-block">
                                             <img id="avatar1" ng-if="checkHTTP(UserBasicInfo.ProfileImage)" ng-src="{{trustSrc(UserBasicInfo.ProfileImage)}}" alt="" class="img-responsive img-circle center-block">
                                         </div>
                                         <div class="col-md-9">
