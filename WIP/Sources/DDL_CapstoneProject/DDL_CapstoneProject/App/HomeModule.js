@@ -93,8 +93,11 @@ app.config(["$routeProvider", function ($routeProvider) {
                         searchkey = "null";
                         params.searchkey = [""];
                     }
-
-                    var promise = ProjectService.SearchProject(0, "|" + params.categoryid + "|", params.order, searchkey, "true");
+                    var status =""
+                    if (!params.advance) {
+                        status = "false";
+                    }
+                    var promise = ProjectService.SearchProject(0, "|" + params.categoryid + "|", params.order, searchkey, status);
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
                 categoryList: ['$rootScope', 'CategoryService', 'CommmonService', '$q', function ($rootScope, CategoryService, CommmonService, $q) {
@@ -119,9 +122,13 @@ app.config(["$routeProvider", function ($routeProvider) {
                     return $route.current.params.searchkey;
                 }],
                 projectResultListSize: ['ProjectService', '$route', '$q', '$rootScope', 'CommmonService', function (ProjectService, $route, $q, $rootScope, CommmonService) {
-                    var promise = ProjectService.SearchCount("|" + $route.current.params.categoryid + "|", $route.current.params.searchkey, "");
+                    var status = ""
+                    if (!$route.current.params.advance) {
+                        status = "false";
+                    }
+                    var promise = ProjectService.SearchCount("|" + $route.current.params.categoryid + "|", $route.current.params.searchkey, status);
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
-                }],
+                }]
 
             }
         });
