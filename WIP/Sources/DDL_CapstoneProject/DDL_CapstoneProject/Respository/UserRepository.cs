@@ -85,10 +85,10 @@ namespace DDL_CapstoneProject.Respository
                                         Username = user.Username,
                                         Name = user.UserInfo.FullName,
                                         TotalFunded =
-                                            user.CreatedProjects.Where(x => (categoryid.Contains(x.CategoryID.ToString()) || allCategory) && !x.Status.Equals(DDLConstants.ProjectStatus.DRAFT))
+                                            user.CreatedProjects.Where(x => (categoryid.Contains(x.CategoryID.ToString()) || allCategory) && x.IsExprired && x.IsFunded)
                                                 .Sum(x => (decimal?)x.CurrentFunded) ?? 0,
                                         TotalBacked = 0,
-                                        projectCount = user.CreatedProjects.Where(x => (categoryid.Contains(x.CategoryID.ToString()) || allCategory) && !x.Status.Equals(DDLConstants.ProjectStatus.DRAFT)).Count()
+                                        projectCount = user.CreatedProjects.Where(x => (categoryid.Contains(x.CategoryID.ToString()) || allCategory) && x.IsExprired && x.IsFunded).Count()
                                     };
 
                 var userTopBacked = from user in db.DDL_Users
@@ -98,10 +98,10 @@ namespace DDL_CapstoneProject.Respository
                                         Name = user.UserInfo.FullName,
                                         TotalFunded = 0,
                                         TotalBacked =
-                                            user.Backings.Where(x => (categoryid.Contains(x.Project.CategoryID.ToString()) || allCategory) && !x.Project.Status.Equals(DDLConstants.ProjectStatus.DRAFT))
+                                            user.Backings.Where(x => (categoryid.Contains(x.Project.CategoryID.ToString()) || allCategory) && x.Project.IsExprired && x.Project.IsFunded)
                                                 .Sum(x => (decimal?)x.BackingDetail.PledgedAmount) ?? 0,
                                         projectCount =
-                                            user.Backings.Where(x => (categoryid.Contains(x.Project.CategoryID.ToString()) || allCategory) && !x.Project.Status.Equals(DDLConstants.ProjectStatus.DRAFT)).Count()
+                                            user.Backings.Where(x => (categoryid.Contains(x.Project.CategoryID.ToString()) || allCategory) && x.Project.IsExprired && x.Project.IsFunded).Count()
                                     };
                 Dictionary<string, List<UserBackInforDTO>> dic = new Dictionary<string, List<UserBackInforDTO>>
                 {
