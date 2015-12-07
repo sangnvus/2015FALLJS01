@@ -38,7 +38,7 @@
                                     <td class="col-text" style="width: 50px;">{{project.ProjectCode}}</td>
                                     <td class="col-text">{{project.Title}}</td>
                                     <td class="col-text">{{project.Category}}</td>
-                                    <td class="center col-text">{{project.CreatorEmail}}</td>
+                                    <td class="center col-text"><a href="@Url.Content("/admin/#/userprofile/{{project.CreatorUsername}}")">{{project.CreatorFullname}}</a></td>
                                     <td class="center col-number col-datetime">{{project.FundingGoal | currency:"":0}}</td>
                                     <td class="center col-number col-datetime">{{project.ExpireDate | date:"dd/MM/yyyy"}}</td>
                                     <td class="center col-number col-datetime">{{project.TotalBacking | currency:"":0}}</td>

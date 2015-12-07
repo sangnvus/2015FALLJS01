@@ -10,7 +10,7 @@
                     <li>
                         <a href="/#/user/message/">
                             <i class="icon fa fa-inbox fa-2x fa-fw"></i>
-                            <span class="toggle">Tất cả thư <span ng-show="NumberNewMessage.AllMessage > 0" class="badge">{{NumberNewMessage.AllMessage}}</span></span>
+                            <span class="toggle">Tất cả thư <span ng-show="NumberNewMessage.Total > 0" class="badge badge-info">{{NumberNewMessage.Total}}</span></span>
                         </a>
                     </li>
 
@@ -18,14 +18,14 @@
                     <li>
                         <a href="/#/user/message/?list=inbox">
                             <i class="icon fa fa-inbox fa-2x fa-fw"></i>
-                            <span class="toggle">Hộp thư đến <span ng-show="NumberNewMessage.ReceivedMessage > 0" class="badge">{{NumberNewMessage.ReceivedMessage}}</span></span>
+                            <span class="toggle">Hộp thư đến <span ng-show="NumberNewMessage.ReceivedMessage > 0" class="badge badge-info">{{NumberNewMessage.ReceivedMessage}}</span></span>
                         </a>
                     </li>
 
                     <li>
                         <a href="/#/user/message?list=sent">
                             <i class="icon fa fa-paper-plane fa-2x fa-fw"></i>
-                            <span class="toggle">Hộp thư đi <span ng-show="NumberNewMessage.SentMessage > 0" class="badge">{{NumberNewMessage.SentMessage}}</span></span>
+                            <span class="toggle">Hộp thư đi <span ng-show="NumberNewMessage.SentMessage > 0" class="badge badge-info">{{NumberNewMessage.SentMessage}}</span></span>
                         </a>
                     </li>
 
