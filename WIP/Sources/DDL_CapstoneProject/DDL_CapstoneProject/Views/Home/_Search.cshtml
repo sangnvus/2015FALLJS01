@@ -25,22 +25,20 @@
                             <ui-select ng-model="selectedorder" ng-change="Search(selectcategory,selectedorder,searchkey,selectstatus)" class="fnt20" theme="bootstrap"
                                        style="display: inline-block; min-width:200px" ng-disabled="disabled">
                                 <ui-select-match placeholder="Sắp xếp theo...">{{$select.selected.Label}}</ui-select-match>
-                                <ui-select-choices repeat="sort.Value as sort in SortList | filter: $select.search">
+                                <ui-select-choices repeat="sort.type as sort in SortList | filter: $select.search">
                                     {{sort.Label}}
                                 </ui-select-choices>
                             </ui-select>
                         </group>
                         <group style="display: inline-block">
                             <lable class="control-label fnt30 fnt-b"> trạng thái </lable>
-                            <ui-select class="fnt20 pr15" multiple ng-model="$parent.selectstatus" theme="bootstrap" ng-disabled="disabled" close-on-select="false"
-                                       title="Choose a category" ng-change="Search(selectcategory,selectedorder,searchkey,selectstatus)" style="min-width:200px">
-                                <ui-select-match placeholder="Choose a category...">{{$item.Label}}</ui-select-match>
-                                <ui-select-choices repeat="stt in statuss | highlight: $select.search">
+                            <ui-select ng-model="selectstatus" ng-change="Search(selectcategory,selectedorder,searchkey,selectstatus)" class="fnt20" theme="bootstrap"
+                                       style="display: inline-block; min-width:200px" ng-disabled="disabled">
+                                <ui-select-match placeholder="Sắp xếp theo...">{{$select.selected.Label}}</ui-select-match>
+                                <ui-select-choices repeat="stt.isExpried as stt in statuss | filter: $select.search">
                                     {{stt.Label}}
                                 </ui-select-choices>
                             </ui-select>
-
-                            <p class="text-danger" id="noResult" style="display:none"><i class="glyphicon glyphicon-remove"></i> không tìm thấy.</p>
                         </group>
                     </div>
                 </form>
@@ -50,8 +48,7 @@
             <div id="item-search" class="pt30 pb30">
                 <section id="portfolio" class="container">
                     <div class="explore">
-                        <span class="fnt30 fnt-b">Có</span>
-                        <span class="fnt30 fnt-b color-green">{{projectResultListSize}} dự án</span>
+                        <span class="fnt30 fnt-b">{{noti}}</span>
                     </div>
                     <ul class="portfolio-items col-4">
                         <li class="portfolio-item" ng-repeat="project in projectbycategory">
@@ -89,9 +86,9 @@
                                             <span class="mt0 mb0">đã gây quỹ</span>
                                         </li>
                                         @*<li>
-                <span class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</span>
-                <span class="mt0 mb0">đã ủng hộ</span>
-            </li>*@
+                                                <span class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</span>
+                                                <span class="mt0 mb0">đã ủng hộ</span>
+                                            </li>*@
                                     </ul>
                                     <ul class="list-inline fnt15">
                                         <li ng-if="project.ExpireDate >= 0">

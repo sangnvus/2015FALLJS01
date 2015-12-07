@@ -119,7 +119,7 @@ app.config(["$routeProvider", function ($routeProvider) {
                     return $route.current.params.searchkey;
                 }],
                 projectResultListSize: ['ProjectService', '$route', '$q', '$rootScope', 'CommmonService', function (ProjectService, $route, $q, $rootScope, CommmonService) {
-                    var promise = ProjectService.SearchCount("|" + $route.current.params.categoryid + "|", $route.current.params.searchkey, "true");
+                    var promise = ProjectService.SearchCount("|" + $route.current.params.categoryid + "|", $route.current.params.searchkey, "");
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
 
