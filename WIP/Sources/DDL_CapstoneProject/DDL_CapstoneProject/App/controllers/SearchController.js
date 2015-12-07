@@ -31,8 +31,11 @@ function ($scope, $http, projectbycategory, categoryList, ProjectService, Catego
         { 'isExpried': 'true', 'Label': 'Đã hết hạn' },
         { 'isExpried': 'false', 'Label': 'Đang gây vốn' }
     ];
-
-    $scope.selectstatus = angular.copy($scope.statuss[0]);
+    if (isAdvance) {
+        $scope.selectstatus = angular.copy($scope.statuss[0]);
+    } else {
+        $scope.selectstatus = angular.copy($scope.statuss[2]);
+    }
     if ($scope.projectResultListSize == 0) {
         $scope.noti = "không tìm thấy dự án nào.";
     } else {
