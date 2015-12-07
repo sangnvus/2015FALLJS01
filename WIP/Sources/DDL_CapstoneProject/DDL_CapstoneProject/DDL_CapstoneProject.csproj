@@ -398,6 +398,7 @@
     <Content Include="images\others\404.png" />
     <Content Include="images\others\background.jpg" />
     <Content Include="images\others\error.png" />
+    <Content Include="images\others\logo.png" />
     <Content Include="images\projects\img_PRJ000003.png" />
     <Content Include="images\projects\img_PRJ000001.jpg" />
     <Content Include="images\projects\img_PRJ000002.jpg" />

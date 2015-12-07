@@ -2301,6 +2301,7 @@ namespace DDL_CapstoneProject.Respository
                 //    db.RewardPkgs.Where(x => x.ProjectID == projectDetail.ProjectID && !x.IsHide).ToList();
                 var rewardDto = (from reward in db.RewardPkgs
                                  where reward.ProjectID == projectDetail.ProjectID && !reward.IsHide
+                                 orderby reward.PledgeAmount
                                  select new RewardPkgDTO
                                  {
                                      Backers = reward.BackingDetails.Count,
