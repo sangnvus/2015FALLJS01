@@ -110,7 +110,7 @@
                 <li class="active"><a showtab href="#campaign" data-toggle="tab">Thông tin</a></li>
                 <li ng-if="Project.Status != '@DDLConstants.ProjectStatus.PENDING' && Project.Status != '@DDLConstants.ProjectStatus.DRAFT' && Project.Status != '@DDLConstants.ProjectStatus.REJECTED'" ng-show="Project.NumberUpdate > 0"><a showtab href="#update" data-toggle="tab" ng-click="getUpdateLogList()">Cập nhật <span class="badge">{{Project.NumberUpdate}}</span></a></li>
                 <li ng-if="Project.Status != '@DDLConstants.ProjectStatus.PENDING' && Project.Status != '@DDLConstants.ProjectStatus.DRAFT' && Project.Status != '@DDLConstants.ProjectStatus.REJECTED'"><a showtab href="#comments" data-toggle="tab" ng-click="getCommentList()">Bình luận <span class="badge">{{Project.NumberComment}}</span></a></li>
-                <li><a showtab href="#schedule" data-toggle="tab">Tiến trình</a></li>
+                @*<li><a showtab href="#schedule" data-toggle="tab">Tiến trình</a></li>*@
                 @*<li ng-show="Project.NumberBacked > 0"><a showtab href="#list-backers" data-toggle="tab" ng-click="loadlistBacker()">Ủng hộ <span class="badge">{{Project.NumberBacked}}</span></a></li>*@
             </ul>
         </div>
@@ -251,11 +251,11 @@
                                                     <hr />
                                                     <div style="word-break: break-word; white-space: pre-wrap;" class="item-description">{{reward.Description}}</div>
                                                     <hr />
-                                                    <div class="item-extra-info" ng-if="reward.Type == '@DDLConstants.RewardType.LIMITED' && (reward.Quantityreward - reward.CurrentQuantity > 0)">
+                                                    <div class="item-extra-info" ng-if="reward.Type == '@DDLConstants.RewardType.LIMITED' && (reward.Quantity - reward.CurrentQuantity > 0)">
                                                         <span class="bold h5">Số lượng còn lại: </span>
                                                         <span class="h5" style="font-weight: normal">{{reward.Quantity - reward.CurrentQuantity}}</span>
                                                     </div>
-                                                    <div class="item-extra-info" ng-if="reward.Type == '@DDLConstants.RewardType.LIMITED' && (reward.Quantityreward - reward.CurrentQuantity <= 0)">
+                                                    <div class="item-extra-info" ng-if="reward.Type == '@DDLConstants.RewardType.LIMITED' && (reward.Quantity - reward.CurrentQuantity <= 0)">
                                                         <span class="label label-danger">Đã hết</span>
                                                     </div>
                                                     <div class="item-extra-info">
@@ -264,7 +264,7 @@
                                                     </div>
                                                 </div> <!-- end main Reward -->
                                                 <a href="@Url.Content("/#/project/back/{{Project.ProjectCode}}?reward={{$index+1}}")"
-                                                   ng-if="Project.Status != '@DDLConstants.ProjectStatus.PENDING' && Project.Status != '@DDLConstants.ProjectStatus.DRAFT' && Project.Status != '@DDLConstants.ProjectStatus.REJECTED' && !Project.IsExprired && !(reward.Type == '@DDLConstants.RewardType.LIMITED' && (reward.Quantityreward - reward.CurrentQuantity <= 0))">
+                                                   ng-if="Project.Status != '@DDLConstants.ProjectStatus.PENDING' && Project.Status != '@DDLConstants.ProjectStatus.DRAFT' && Project.Status != '@DDLConstants.ProjectStatus.REJECTED' && !Project.IsExprired && !(reward.Type == '@DDLConstants.RewardType.LIMITED' && (reward.Quantity - reward.CurrentQuantity <= 0))">
                                                     <div class="hoverReward">
                                                         <span class="titleHover">Chọn gói này</span>
                                                     </div>
@@ -384,7 +384,7 @@
                             </div><!--/#comments-list-->
                         </div>
                     </div> <!-- endTabpanel COMMENT -->
-                    <!-- SCHEDULE -->
+                    @*<!-- SCHEDULE -->
                     <div id="schedule" role="tabpanel" class="tab-pane fade in project-tab-border" timeliner-directive>
                         <div class="ml10 mr10">
                             <div class="">
@@ -429,7 +429,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div><!-- end SCHEDULE -->
+                    </div><!-- end SCHEDULE -->*@
                     <!-- LIST-BACKERS -->
                     @*<div id="list-backers" role="tabpanel" class="tab-pane fade in project-tab-border">
                             <div class="ml10 mr10">

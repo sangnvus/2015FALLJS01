@@ -95,7 +95,7 @@ namespace DDL_CapstoneProject.Respository
         public List<ProjectBasicViewDTO> GetProjectTop(String categoryid)
         {
             categoryid = "|" + categoryid + "|";
-            return GetProject(10, 0, categoryid, "CurrentFunded", "", "", "true|false", "true");
+            return GetProject(10, 0, categoryid, "CurrentFunded", "", "", "", "true");
         }
 
         public int SearchCount(string categoryidlist, string searchkey, string statusString)
@@ -123,13 +123,13 @@ namespace DDL_CapstoneProject.Respository
                 }
                 if (status == null) status = "";
                 if (isFunded == null) isFunded = "";
-                Debug.WriteLine(isExprired);
+                if (isExprired == null) isExprired = "";
 
                 var ProjectList = from project in db.Projects
                                   where
                                       (categoryidList.ToLower().Contains("all") ||
                                        categoryidList.Contains("|" + project.CategoryID + "|"))
-                                      && isExprired.Contains(project.IsExprired + "") && project.Title.Contains(pathofprojectname)
+                                      && (project.IsExprired + "").Contains(isExprired) && project.Title.Contains(pathofprojectname)
                                       && project.Status.Contains(status) && project.IsFunded.ToString().ToLower().Contains(isFunded)
                                       && !project.Status.Equals(DDLConstants.ProjectStatus.DRAFT) && !project.Status.Equals(DDLConstants.ProjectStatus.REJECTED)
                                       && !project.Status.Equals(DDLConstants.ProjectStatus.SUSPENDED) && !project.Status.Equals(DDLConstants.ProjectStatus.PENDING)
@@ -2301,6 +2301,7 @@ namespace DDL_CapstoneProject.Respository
                 //    db.RewardPkgs.Where(x => x.ProjectID == projectDetail.ProjectID && !x.IsHide).ToList();
                 var rewardDto = (from reward in db.RewardPkgs
                                  where reward.ProjectID == projectDetail.ProjectID && !reward.IsHide
+                                 orderby reward.PledgeAmount
                                  select new RewardPkgDTO
                                  {
                                      Backers = reward.BackingDetails.Count,
