@@ -32,5 +32,7 @@ namespace DDL_CapstoneProject.Models.DTOs
         public string RewardPkgDesc { get; set; }
         public string RewardPkgType { get; set; }
         public DateTime BackedDate { get; set; }
+        public string OrderId { get; set; }
+        public string TransactionId { get; set; }
     }
 }

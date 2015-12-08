@@ -5,10 +5,37 @@ app.controller('MessageDetailController', function ($scope, $location, $sce, $ro
     //Todo here.
     $scope.Conversation = conversation.data.Data;
     $scope.CurrentUser = $rootScope.UserInfo;
+    $scope.NumberNewMessage = $rootScope.UserInfo.NumberNewMessage;
     $scope.Reply = {
         ConversationID: $scope.Conversation.ConversationID,
         Content: ""
     }
+
+    // Get message number.
+    function getNewMessageNumber() {
+        if ($rootScope.UserInfo.IsAuthen === true && $scope.NumberNewMessage === undefined) {
+            var promiseGet = MessageService.getNumberNewMessage();
+            promiseGet.then(
+                function (result) {
+                    if (result.data.Status === "success") {
+                        //Save new message number into $rootScope
+                        $scope.NumberNewMessage = result.data.Data;
+                        $scope.NumberNewMessage.Total = result.data.Data.ReceivedMessage + result.data.Data.SentMessage;
+                    } else {
+                        $scope.NumberNewMessage.Total = 0;
+                        $scope.NumberNewMessage = 0;
+                        $scope.NumberNewMessage = 0;
+                    }
+                },
+                function (error) {
+                    $scope.NumberNewMessage = 0;
+                    $scope.NumberNewMessage = 0;
+                    $scope.NumberNewMessage = 0;
+                });
+        }
+    }
+
+    getNewMessageNumber();
 
     // Function check string startwith 'http'
     $scope.checkHTTP = function (input) {

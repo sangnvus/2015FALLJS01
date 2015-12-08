@@ -1,0 +1,52 @@
+﻿<div id="content" class="paddingNavbar">
+    <div class="container-fluid">
+        <h3 class="fnt24 fnt-b txt-c c3">Ủng hộ dự án: "<a href="@Url.Content("/#/project/detail/{{BackingData.ProjectCode}}")">{{BackingData.ProjectName}}</a>"</h3>
+        <p class="fnt22 fnt-b mb0 pb0">Nội dung ủng hộ và gói quà:</p>
+        <div class="row">
+            <div class="col-md-3">Tên dự án: </div>
+            <div class="col-md-9">{{BackingData.ProjectName}}1</div>
+            @*<div class="col-md-3">Gói ủng hộ: </div>*@
+            @*<div class="col-md-9"></div>*@
+            <div class="col-md-3" ng-show="Packet.Type != 'no reward'">Số lượng: </div>
+            <div class="col-md-9" ng-show="Packet.Type != 'no reward'">{{BackingData.Quantity}}</div>
+            <div class="col-md-3 pr0">Số tiền ủng hộ:</div>
+            <div class="col-md-9">{{BackingData.PledgeAmount | currency:"":0}}&#8363;</div>
+            <div class="col-md-3">Nội dung gói quà: </div>
+            <div class="col-md-9 div-textarea" style="word-break: break-word;">{{BackingData.RewardPkgDesc}}</div>
+            <div class="col-md-3 pr0">Thời gian:</div>
+            <div class="col-md-9">{{BackingData.BackedDate | date: "HH:mm 'ngày' dd-MM-yyyy"}}</div>
+        </div>
+        <p></p>
+        <p class="bt-dash"></p>
+        <p class="fnt22 fnt-b mb0 pb0">Thông tin người nhận</p>
+        <div class="row">
+            <div class="col-md-3">Họ và tên: </div>
+            <div class="col-md-9">{{BackingData.BackerName}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">Email: </div>
+            <div class="col-md-9">{{BackingData.Email}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">Địa chỉ: </div>
+            <div class="col-md-9">{{BackingData.Address}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">Số điện thoại: </div>
+            <div class="col-md-9">{{BackingData.PhoneNumber}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">Thông tin thêm: </div>
+            <div class="col-md-9 div-textarea" style="word-break: break-word;">{{BackingData.Description}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">Mã hóa đơn thanh toán: </div>
+            <div class="col-md-9">{{BackingData.OrderId}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">Mã giao dịch: </div>
+            <div class="col-md-9">{{BackingData.TransactionId}}</div>
+        </div>
+        <a class="btn btn-primary" href="/#/home">Trở về trang chủ</a>
+    </div>
+</div> <!-- end content -->

@@ -6,13 +6,14 @@ app.controller('BackedHistoryProjectController', function ($scope, projects, Use
 
     // Define table
     $scope.dtOptions = DTOptionsBuilder.newOptions()
-    .withDisplayLength(10)
-    .withBootstrap();
+        .withDisplayLength(10)
+        .withBootstrap()
+        .withOption('order', [3, 'desc']);
 
     // Define column 
-    //$scope.dtColumnDefs = [
-    //    DTColumnDefBuilder.newColumnDef(0).notSortable()
-    //];
+    $scope.dtColumnDefs = [
+        DTColumnDefBuilder.newColumnDef(5).notSortable()
+    ];
 
 
     function getBackedUserInfo(){

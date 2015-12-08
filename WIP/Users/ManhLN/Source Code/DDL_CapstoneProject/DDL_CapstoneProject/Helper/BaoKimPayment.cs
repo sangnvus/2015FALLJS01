@@ -18,13 +18,15 @@ using System.Collections.Specialized;
 class BaoKimPayment
 {
     //URL checkout của BaoKim.vn
-    private string baokim_url = "https://www.baokim.vn/payment/customize_payment/order";
+    private string baokim_url = "http://kiemthu.baokim.vn/payment/customize_payment/order";
 
     //Mã merchant site
-    private string merchant_id = "20033";	//Thay bằng mã merchant site bạn đã đăng ký trên BaoKim.vn
+    //private string merchant_id = "20033";	//Thay bằng mã merchant site bạn đã đăng ký trên BaoKim.vn
+    private string merchant_id = "647";	//Thay bằng mã merchant site bạn đã đăng ký trên BaoKim.vn
 
     //Mật khẩu bảo mật
-    private string secure_pass = "b6eb222debf4bdc0";	//Thay bằng mật khẩu giao tiếp giữa website của bạn với BaoKim.vn
+    //private string secure_pass = "b6eb222debf4bdc0";	//Thay bằng mật khẩu giao tiếp giữa website của bạn với BaoKim.vn
+    private string secure_pass = "ae543c080ad91c23";	//Thay bằng mật khẩu giao tiếp giữa website của bạn với BaoKim.vn
 
     /**
      * Hàm thực hiện việc mã hóa, tạo khóa trên đường dẫn
