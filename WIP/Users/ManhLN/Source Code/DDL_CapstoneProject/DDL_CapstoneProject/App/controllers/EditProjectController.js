@@ -1421,4 +1421,11 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                 //toastr.error($scope.Error, 'Lỗi!');
             });
     }
+
+    // preview project
+    $scope.preview = function () {
+        $scope.dirtyForm();
+
+        $location.path("/project/detail/" + $scope.Project.ProjectCode).replace();
+    }
 });

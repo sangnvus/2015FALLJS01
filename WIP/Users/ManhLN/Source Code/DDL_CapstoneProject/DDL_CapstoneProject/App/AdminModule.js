@@ -310,8 +310,8 @@ app.config(["$routeProvider", function ($routeProvider) {
     });
 }]);
 
-app.run(['$rootScope', '$window', '$anchorScroll', 'DTDefaultOptions', 'toastrConfig', 'blockUIConfig',
-    function ($rootScope, $window, $anchorScroll, DTDefaultOptions, toastrConfig, blockUIConfig) {
+app.run(['$rootScope', '$window', '$anchorScroll', 'DTDefaultOptions', 'toastrConfig', 'blockUIConfig', 'MessageService',
+    function ($rootScope, $window, $anchorScroll, DTDefaultOptions, toastrConfig, blockUIConfig, MessageService) {
 
         $rootScope.$on('$routeChangeError', function (e, curr, prev) {
             e.preventDefault();
@@ -333,6 +333,29 @@ app.run(['$rootScope', '$window', '$anchorScroll', 'DTDefaultOptions', 'toastrCo
             }
             //        ShareData.currentPage =
 
+        });
+
+        $rootScope.$on('$routeChangeSuccess', function (e, curr, prev) {
+            if (curr.$$route.redirectTo === undefined) {
+                var promiseGet = MessageService.getNumberNewMessage();
+                promiseGet.then(
+                    function (result) {
+                        if (result.data.Status === "success") {
+                            //Save new message number into $rootScope
+                            $rootScope.NumberNewMessage = result.data.Data;
+                            $rootScope.NumberNewMessage.Total = result.data.Data.ReceivedMessage + result.data.Data.SentMessage;
+                        } else {
+                            $rootScope.NumberNewMessage.Total = 0;
+                            $rootScope.NumberNewMessage.ReceivedMessage = 0;
+                            $rootScope.NumberNewMessage.SentMessage = 0;
+                        }
+                    },
+                    function (error) {
+                        $rootScope.NumberNewMessage.Total = 0;
+                        $rootScope.NumberNewMessage.ReceivedMessage = 0;
+                        $rootScope.NumberNewMessage.SentMessage = 0;
+                    });
+            }
         });
 
         DTDefaultOptions.setLanguage({
