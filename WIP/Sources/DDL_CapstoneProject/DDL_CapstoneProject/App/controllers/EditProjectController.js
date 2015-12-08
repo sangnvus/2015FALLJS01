@@ -887,13 +887,13 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     // Delete a question
     $scope.deleteQuestion = function (index) {
         SweetAlert.swal({
-            title: "Xóa hỏi đáp!",
+            title: "Xóa hỏi đáp.",
             text: "Bạn có chắc muốn xóa hỏi đáp này?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Có!",
-            cancelButtonText: "Không!",
+            confirmButtonText: "Có",
+            cancelButtonText: "Không",
             closeOnConfirm: true,
             closeOnCancel: true
         },
@@ -1061,13 +1061,13 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     // If form is dirty
     $scope.checkForm = function (form) {
         SweetAlert.swal({
-            title: "Bạn vừa chỉnh sửa sai dữ liệu!",
+            title: "Bạn vừa chỉnh sửa sai dữ liệu.",
             text: "Bạn có muốn chỉnh sửa lại không?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Có!",
-            cancelButtonText: "Không, Khôi phục dữ liệu cũ!",
+            confirmButtonText: "Có",
+            cancelButtonText: "Không, Khôi phục dữ liệu cũ",
             closeOnConfirm: true,
             closeOnCancel: true
         },
@@ -1123,13 +1123,13 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     // If tab basic is dirty
     $scope.checkEditProjectBasic = function (form) {
         SweetAlert.swal({
-            title: "Bạn vừa thay đổi trang thông tin cơ bản!",
-            text: "Thông tin cơ bản của dự án sẽ bị chỉnh sửa!",
+            title: "Bạn vừa thay đổi trang thông tin cơ bản.",
+            text: "Thông tin cơ bản của dự án sẽ bị chỉnh sửa. Bạn có đồng ý không?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Có!",
-            cancelButtonText: "Không!",
+            confirmButtonText: "Có",
+            cancelButtonText: "Không",
             closeOnConfirm: true,
             closeOnCancel: true
         },
@@ -1159,13 +1159,13 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     // If tab reward is dirty
     $scope.checkEditReward = function (form) {
         SweetAlert.swal({
-            title: "Bạn vừa thay đổi thông tin gói quà!",
-            text: "Thông tin gói quà của dự án sẽ bị chỉnh sửa!",
+            title: "Bạn vừa thay đổi thông tin gói quà.",
+            text: "Thông tin gói quà của dự án sẽ bị chỉnh sửa. Bạn có đồng ý không?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Có!",
-            cancelButtonText: "Không!",
+            confirmButtonText: "Có",
+            cancelButtonText: "Không",
             closeOnConfirm: true,
             closeOnCancel: true
         },
@@ -1188,13 +1188,13 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     // If tab update log is dirty
     $scope.checkEditUpdateLog = function (form) {
         SweetAlert.swal({
-            title: "Bạn vừa thay đổi cập nhật dự án!",
-            text: "Nội dung cập nhật dự án sẽ bị thay đổi!",
+            title: "Bạn vừa thay đổi cập nhật dự án.",
+            text: "Nội dung cập nhật dự án sẽ bị thay đổi. Bạn có đồng ý không?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Có!",
-            cancelButtonText: "Không!",
+            confirmButtonText: "Có",
+            cancelButtonText: "Không",
             closeOnConfirm: true,
             closeOnCancel: true
         },
@@ -1217,13 +1217,13 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     // If tab story is dirty
     $scope.checkEditStory = function (form) {
         SweetAlert.swal({
-            title: "Bạn vừa thay đổi mô tả chi tiết dự án!",
-            text: "Nội dung chi tiết dự án sẽ bị chỉnh sửa!",
+            title: "Bạn vừa thay đổi mô tả chi tiết dự án.",
+            text: "Nội dung chi tiết dự án sẽ bị chỉnh sửa. Bạn có đồng ý không?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Có!",
-            cancelButtonText: "Không!",
+            confirmButtonText: "Có",
+            cancelButtonText: "Không",
             closeOnConfirm: true,
             closeOnCancel: true
         },
@@ -1246,13 +1246,13 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     // If tab story is dirty
     $scope.checkEditQuestion = function (form) {
         SweetAlert.swal({
-            title: "Bạn vừa thay đổi mục hỏi đáp!",
-            text: "Nội dung hỏi đáp sẽ bị thay đổi!",
+            title: "Bạn vừa thay đổi mục hỏi đáp.",
+            text: "Nội dung hỏi đáp sẽ bị thay đổi. Bạn có đồng ý không?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Có!",
-            cancelButtonText: "Không!",
+            confirmButtonText: "Có",
+            cancelButtonText: "Không",
             closeOnConfirm: true,
             closeOnCancel: true
         },
@@ -1275,13 +1275,13 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     // If tab timeline is dirty
     $scope.checkEditTimeline = function (form) {
         SweetAlert.swal({
-            title: "Bạn vừa thay đổi mốc lịch trình!",
-            text: "Lịch trình dự án sẽ bị chỉnh sửa!",
+            title: "Bạn vừa thay đổi mốc lịch trình.",
+            text: "Lịch trình dự án sẽ bị chỉnh sửa. Bạn có đồng ý không?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Có!",
-            cancelButtonText: "Không!",
+            confirmButtonText: "Có",
+            cancelButtonText: "Không",
             closeOnConfirm: true,
             closeOnCancel: true
         },

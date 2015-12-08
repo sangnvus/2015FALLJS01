@@ -305,9 +305,9 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="project in TopProject">
-                                    <td class="col-text">{{project.Title}}</td>
+                                    <td class="col-text"><a href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")">{{project.Title}}</a></td>
                                     <td class="col-text">{{project.Category}}</td>
-                                    <td class="col-text">{{project.CreatorEmail}}</td>
+                                    <td class="col-text"><a href="@Url.Content("/admin/#/userprofile/{{project.CreatorUsername}}")">{{project.CreatorFullname}}</a></td>
                                     <td class="col-number">{{project.FundingGoal | currency:"":0}}</td>
                                     <td class="col-number">{{project.CurrentFunded | currency:"":0}}</td>
                                     <td class="col-text">

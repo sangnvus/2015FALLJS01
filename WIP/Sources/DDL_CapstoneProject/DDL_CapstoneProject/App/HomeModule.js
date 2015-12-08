@@ -372,7 +372,7 @@ app.config(["$routeProvider", function ($routeProvider) {
         }
     });
 
-    $routeProvider.when("/backsuccess/:id",
+    $routeProvider.when("/backingdetail/:id",
      {
          templateUrl: "ClientPartial/BackingDetail",
          controller: 'BackingSuccessProjectController',

@@ -38,12 +38,12 @@
                                     <td style="width:150px">{{backing.BackedDate | date : "HH:mm 'ngày' dd-MM-yyyy"}}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <button tooltip="Nhấp để xem chi tiết" class="btn btn-primary btn-sm" id=""
-                                                    data-toggle="modal" data-target="#backingDetail"
-                                                    tooltip-placement="left" data-trigger="hover" title="View" tooltip-append-to-body="true"
-                                                    ng-click="GetBacker(backing.UserName,backing.BackingID)">
-                                                <i class="fa fa-eye"></i>
-                                            </button>
+                                            <a href="@Url.Content("/admin/#/backingdetail/{{backing.BackingID}}")">
+                                                <button tooltip="Nhấp để xem chi tiết" class="btn btn-primary btn-sm" id=""
+                                                        tooltip-placement="left" data-trigger="hover" title="View" tooltip-append-to-body="true">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>
