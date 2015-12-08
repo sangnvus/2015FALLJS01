@@ -652,7 +652,7 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="backingData"></param>
         /// <returns>projectCode</returns>
-        public string BackProject(ProjectBackDTO backingData)
+        public int BackProject(ProjectBackDTO backingData)
         {
             using (var db = new DDLDataContext())
             {
@@ -716,7 +716,7 @@ namespace DDL_CapstoneProject.Respository
 
                 db.SaveChanges();
 
-                return backing.BackingDetail.OrderId;
+                return backing.BackingID;
             }
         }
 
@@ -747,21 +747,21 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="backingId"></param>
         /// <returns></returns>
-        public ProjectBackDTO GetBackingDetail(string order_id, string username)
+        public ProjectBackDTO GetBackingDetail(int backingId, string username)
         {
             using (var db = new DDLDataContext())
             {
-                var backing = db.BackingDetails.SingleOrDefault(x => x.OrderId == order_id);
+                var backing = db.BackingDetails.SingleOrDefault(x => x.BackingID == backingId);
 
                 if (backing == null)
                 {
                     throw new KeyNotFoundException();
                 }
 
-                if (backing.Backing.User.Username != username)
-                {
-                    throw new NotPermissionException();
-                }
+                //if (backing.Backing.User.Username != username)
+                //{
+                //    throw new NotPermissionException();
+                //}
 
                 backing.Backing.BackedDate = CommonUtils.ConvertDateTimeFromUtc(backing.Backing.BackedDate);
 
@@ -1095,7 +1095,7 @@ namespace DDL_CapstoneProject.Respository
             {
                 // Get rewardPkg list
                 var projectList = (from Project in db.Projects
-                                   where Project.Status == DDLConstants.ProjectStatus.EXPIRED && Project.IsFunded
+                                   where Project.IsExprired && Project.IsFunded
                                    select new ProjectBasicListDTO
                                    {
                                        ProjectCode = Project.ProjectCode,
@@ -1105,6 +1105,8 @@ namespace DDL_CapstoneProject.Respository
                                        FundingGoal = Project.FundingGoal,
                                        Status = Project.Status,
                                        CurrentFunded = Project.CurrentFunded,
+                                       CreatorFullname = Project.Creator.UserInfo.FullName,
+                                       CreatorUsername = Project.Creator.Username
                                    }).ToList();
 
                 projectList = projectList.OrderByDescending(x => x.CurrentFunded).Take(5).ToList();
@@ -2405,7 +2407,8 @@ namespace DDL_CapstoneProject.Respository
                                     Title = project.Title,
                                     CurrentFunded = backing.BackingDetail.PledgedAmount,
                                     BackedDate = backing.BackedDate,
-                                    Status = project.Status
+                                    Status = project.Status,
+                                    BackingId = backing.BackingID
                                 }).OrderByDescending(x => x.BackedDate).ToList();
                 return Project;
             }

@@ -32,7 +32,7 @@
                     <div class="modal-body">
                         <div class="container-fluid">
                             <div class="row">
-                                
+
                                 <div class="col-md-6">
                                     <h3 class="fnt25">Người ủng hộ</h3>
                                     <div class="row">
@@ -40,7 +40,7 @@
                                             <img id="avatar-profile" ng-if="!checkHTTP(BackedUser.ProfileImage)" ng-src="../images/avatars/{{BackedUser.ProfileImage}}" alt="" class="img-responsive img-circle">
                                             <img id="avatar-profile" ng-if="checkHTTP(BackedUser.ProfileImage)" ng-src="{{trustSrc(BackedUser.ProfileImage)}}" alt="" class="img-responsive img-circle">
                                         </div>
-                                      
+
                                         <div class="col-md-9">
                                             <br>
                                             <form>
@@ -109,16 +109,17 @@
                     </td>
                     <td class="txt-c">
                         <div class="btn-group">
-                            <button class="btn btn-info btn-sm btn_view_detail" type="button" tooltip="Xem chi tiết" tooltip-append-to-body="true" tooltip-placement="left" data-toggle="modal" data-target="#infoBanker" ng-click="getBackingInfo(project.ProjectCode)" title="View">
-                                <i class="fa fa-eye"></i>
-                            </button>
-
+                            <a href="@Url.Content("/#/backingdetail/{{project.BackingId}}")">
+                                <button class="btn btn-info btn-sm btn_view_detail" type="button" tooltip="Xem chi tiết" tooltip-append-to-body="true" tooltip-placement="left" title="View">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                            </a>
                         </div>
                     </td>
                 </tr> <!-- item -->
             </tbody>
         </table>
-</section><!--/#portfolio-->
+    </section><!--/#portfolio-->
 </div>
 
 <script type="text/javascript">

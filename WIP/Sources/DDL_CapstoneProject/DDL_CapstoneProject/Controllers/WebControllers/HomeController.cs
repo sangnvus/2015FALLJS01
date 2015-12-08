@@ -154,7 +154,7 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
                     TransactionId = Request.QueryString["transaction_id"]
                 };
 
-                string orderId = ProjectRepository.Instance.BackProject(projectBackDTO);
+                int backingId = ProjectRepository.Instance.BackProject(projectBackDTO);
                 ProjectRepository.Instance.CaculateProjectPoint(projectBackDTO.ProjectCode, DDLConstants.PopularPointType.BackingPoint);
 
                 // Remove all cookies.
@@ -171,7 +171,7 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
                     }
                 }
 
-                return Redirect("/#/backsuccess/" + orderId);
+                return Redirect("/#/backingdetail/" + backingId);
             }
             catch (Exception)
             {
