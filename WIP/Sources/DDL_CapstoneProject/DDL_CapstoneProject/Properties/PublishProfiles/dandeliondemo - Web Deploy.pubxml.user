@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA5AV6DeT0K0CRn3OxUpuS5QAAAAACAAAAAAAQZgAAAAEAACAAAAASEJtQ7TB4xCmb01AWFf0DEJrSSh/AHNAvofDKU4tDjgAAAAAOgAAAAAIAACAAAADpQ0LryTUjKpQSj4NvbaEpK5UeUDERst3seLevNSiErIAAAAAYaOX50VKnvtZHMdZKFvMhwCjDouCW4g72bVI3tAvWn69f2YzDZWgp9jRSqGUnpcRxa7/8GfgjIBkwMPgwsBZUs1ZLntExq09AqVzhVvetj3cKFqvu8IKOC19AVBVzQ58KG2gcGgdetgkk5E3xXo1kw9l8gTROwjxxYa0SF1LwwkAAAADDvJminuXrT3Qhc7jAHrdKgf5KGvwwU3WXFN8IAB8kA6qBiJEjt3pPnmN+qWsKW0xzTStl0EktbIx/NQr2oJN2</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <AzureDBConnectionStrings Include="Data Source=tcp:p414g6a7rg.database.windows.net,1433;Initial Catalog=dandeliondemo_db;User Id=manhmaluc@p414g6a7rg;Password=12345678@a" />
+    <AzureDBConnectionStrings Include="Server=tcp:rmvknlgt97.database.windows.net,1433;Database=DDL_CapstoneProjectDB2;User ID=manhmaluc@rmvknlgt97;Password=12345678@a;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;MultipleActiveResultSets=True" />
+  </ItemGroup>
+</Project>
