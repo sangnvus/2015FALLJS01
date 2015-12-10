@@ -1,0 +1,9 @@
+Folder,Files,LOC,SLOC-P,SLOC-L,MVG,BLOC,C&SLOC,CLOC,CWORD,HCLOC,HCWORD
+Total,72,13061,10259,8261,1396,1602,130,1200,6727,29,224
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\App,72,13061,10259,8261,1396,1602,130,1200,6727,29,224
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\App\controllers,38,5107,4224,3029,454,494,8,389,1300,0,4
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\App\controllers\admin,15,1820,1493,964,144,176,1,151,493,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\App\directives,19,5528,4080,4134,722,819,119,629,4677,29,220
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\App\directives\text-angular,3,18,7,952,0,0,3,11,50,0,1
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\App\services,13,1411,1063,634,142,230,1,118,540,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\App\services\Admin,6,429,343,203,41,54,0,32,167,0,0

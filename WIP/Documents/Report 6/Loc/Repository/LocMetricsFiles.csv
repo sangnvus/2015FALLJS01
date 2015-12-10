@@ -1,0 +1,8 @@
+File,LOC,SLOC-P,SLOC-L,MVG,BLOC,C&SLOC,CLOC,CWORD,HCLOC,HCWORD
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Respository\CategoryRepository.cs,251,196,94,16,36,0,19,52,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Respository\DDLDataContext.cs,65,47,36,0,8,0,10,43,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Respository\MessageRepository.cs,469,371,155,55,54,3,44,146,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Respository\ProjectRepository.cs,2973,2225,1006,235,402,0,346,1022,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Respository\ReportResponsitoy.cs,179,161,72,14,18,0,0,0,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Respository\SlideRepository.cs,217,183,103,14,30,0,4,11,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Respository\UserRepository.cs,1142,906,390,83,109,0,127,414,0,0
