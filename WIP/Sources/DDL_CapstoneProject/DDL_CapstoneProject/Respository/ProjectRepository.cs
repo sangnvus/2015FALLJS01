@@ -124,7 +124,11 @@ namespace DDL_CapstoneProject.Respository
                 if (status == null) status = "";
                 if (isFunded == null) isFunded = "";
                 if (isExprired == null) isExprired = "";
-
+                int CategoryExistCount = (from category in db.Categories
+                                          where (categoryidList.ToLower().Contains("all") ||
+                                                 categoryidList.Contains("|" + category.CategoryID + "|")) && category.IsActive
+                                          select new CategoryDTO { }).Count();
+                if (CategoryExistCount == 0) throw new DllNotFoundException();
                 var ProjectList = from project in db.Projects
                                   where
                                       (categoryidList.ToLower().Contains("all") ||
