@@ -1,0 +1,14 @@
+File,LOC,SLOC-P,SLOC-L,MVG,BLOC,C&SLOC,CLOC,CWORD,HCLOC,HCWORD
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Migrations\201510110856270_InitialCreate.cs,376,356,126,0,20,0,0,0,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Migrations\201510110856270_InitialCreate.Designer.cs,30,24,13,0,5,0,1,2,1,2
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Migrations\201510210055539_UpdateBackingBackingDetail.cs,35,32,26,0,3,0,0,0,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Migrations\201510210055539_UpdateBackingBackingDetail.designer.cs,30,24,13,0,5,0,1,2,1,2
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Migrations\201510220931488_CurrentQuantity.cs,19,16,8,0,3,0,0,0,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Migrations\201510220931488_CurrentQuantity.Designer.cs,30,24,13,0,5,0,1,2,1,2
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Migrations\201511171033052_UpdateBackingBackerName.cs,19,16,8,0,3,0,0,0,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Migrations\201511171033052_UpdateBackingBackerName.Designer.cs,30,24,13,0,5,0,1,2,1,2
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Migrations\201511221553120_UpdateProjectPoint.cs,19,16,8,0,3,0,0,0,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Migrations\201511221553120_UpdateProjectPoint.Designer.cs,30,24,13,0,5,0,1,2,1,2
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Migrations\201512051310382_UpdateBackingDetail.cs,21,18,10,0,3,0,0,0,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Migrations\201512051310382_UpdateBackingDetail.Designer.cs,30,24,13,0,5,0,1,2,1,2
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Migrations\Configuration.cs,345,20,12,0,23,0,302,1751,0,0
