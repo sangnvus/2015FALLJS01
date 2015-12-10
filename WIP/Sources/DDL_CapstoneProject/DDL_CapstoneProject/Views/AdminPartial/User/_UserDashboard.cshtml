@@ -179,7 +179,7 @@
                                             <img style="width : 40px; height:40px" ng-if="!checkHTTP(user.AvartaURL)" ng-src="../images/avatars/{{user.AvartaURL}}" alt="" class="media-object img-circle">
                                             <img style="width : 40px; height:40px" ng-if="checkHTTP(user.AvartaURL)" ng-src="{{trustSrc(user.AvartaURL)}}" alt="" class="media-object img-circle">
                                         </a>
-                                        <h5>{{user.FullName}}</h5>
+                                        <h5 style="text-align: left;">{{user.FullName}}</h5>
                                     </td>
                                     <td class="col-number">{{user.TotalProject}}</td>
                                     <td class="col-number"><span class="money usd no-code">{{user.TotalPledgedAmount | number : fractionSize}} &#8363;</span></td>
