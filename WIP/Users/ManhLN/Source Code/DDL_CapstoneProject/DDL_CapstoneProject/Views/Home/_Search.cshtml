@@ -30,8 +30,8 @@
                                 </ui-select-choices>
                             </ui-select>
                         </group>
-                        <group style="display: inline-block" ng-if="isAdvance">
-                            <lable class="control-label fnt30 fnt-b" ng-if="!isAdvance"> trạng thái </lable>
+                        <group style="display: inline-block">
+                            <lable class="control-label fnt30 fnt-b"> trạng thái </lable>
                             <ui-select ng-model="selectstatus" ng-change="Search(selectcategory,selectedorder,searchkey,selectstatus)" class="fnt20" theme="bootstrap"
                                        style="display: inline-block; min-width:200px" ng-disabled="disabled">
                                 <ui-select-match placeholder="Sắp xếp theo...">{{$select.selected.Label}}</ui-select-match>
