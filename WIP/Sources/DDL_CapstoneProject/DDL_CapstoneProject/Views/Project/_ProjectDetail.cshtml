@@ -33,7 +33,7 @@
                     </div>
                     <div class="pt20">
                         <a class="btn btn-primary btn-lg" ng-if="Project.Status == '@DDLConstants.ProjectStatus.APPROVED' && !Project.IsExprired" href="@Url.Content("/#/project/back/{{Project.ProjectCode}}")">Ủng hộ dự án</a>
-                        <button class="btn btn-default btn-lg" disabled ng-if="Project.Status == '@DDLConstants.ProjectStatus.PENDING' ||Project.Status == '@DDLConstants.ProjectStatus.DRAFT' || Project.Status == '@DDLConstants.ProjectStatus.REJECTED'" href="back_project.html">Dự án này chưa hoạt động</button>
+                        <a href="@Url.Content("/#/project/edit/{{Project.ProjectCode}}")" class="btn btn-info btn-lg" ng-if="Project.Status == '@DDLConstants.ProjectStatus.PENDING' ||Project.Status == '@DDLConstants.ProjectStatus.DRAFT' || Project.Status == '@DDLConstants.ProjectStatus.REJECTED'" href="back_project.html">Chỉnh sửa dự án</a>
                         <button class="btn btn-danger btn-lg" style="background-color: #d9534f" disabled ng-if="Project.IsExprired && Project.Status != '@DDLConstants.ProjectStatus.PENDING' &&  Project.Status != '@DDLConstants.ProjectStatus.DRAFT' && Project.Status != '@DDLConstants.ProjectStatus.REJECTED'" href="back_project.html">Dự án đã kết thúc</button>
                         <button class="btn btn-danger btn-lg" style="background-color: #d9534f" disabled ng-if="!Project.IsExprired && Project.Status == '@DDLConstants.ProjectStatus.SUSPENDED'">Dự án đã bị tạm dừng</button>
                         <span ng-if="UserInfo.IsAuthen && Project.Status != '@DDLConstants.ProjectStatus.PENDING' && Project.Status != '@DDLConstants.ProjectStatus.DRAFT' && Project.Status != '@DDLConstants.ProjectStatus.REJECTED'">
