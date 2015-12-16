@@ -32,6 +32,7 @@ namespace DDL_CapstoneProject.Models.DTOs
         public DateTime CreatedDate { get; set; }
         public int PopularPoint { get; set; }
         public string Status { get; set; }
+        public bool IsExprired { get; set; }
         public DateTime BackedDate { get; set; }
         public int BackingId { get; set; }
     }
