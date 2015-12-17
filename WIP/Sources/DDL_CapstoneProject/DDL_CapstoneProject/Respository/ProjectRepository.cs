@@ -672,7 +672,7 @@ namespace DDL_CapstoneProject.Respository
                     throw new UserNotFoundException();
                 }
 
-                backingData.BackedDate = CommonUtils.ConvertDateTimeToUtc(backingData.BackedDate);
+                //backingData.BackedDate = CommonUtils.ConvertDateTimeToUtc(backingData.BackedDate);
 
                 // Create new backing record
                 var backing = db.Backings.Create();
