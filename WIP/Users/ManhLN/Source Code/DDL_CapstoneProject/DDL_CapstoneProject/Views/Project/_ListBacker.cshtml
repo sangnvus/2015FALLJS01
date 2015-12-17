@@ -33,73 +33,75 @@
                             <td class="txt-r" data-order="{{backer.Date}}">{{backer.Date  | date:"dd/MM/yyyy"}}</td>
                             <td>
                                 <div class="btn-group">
-                                    <button class="btn btn-info btn-sm center-block" type="button" id="" tooltip="Xem chi tiết" tooltip-append-to-body="true" tooltip-placement="left" data-toggle="modal" data-target="#viewBanker" data-placement="left" data-trigger="hover" ng-click="getBackingInfo()" title="View">
-                                        <i class="fa fa-eye"></i>
-                                    </button>
+                                    <a href="@Url.Content("/#/backingdetail/{{backer.BackingId}}")">
+                                        <button class="btn btn-info btn-sm center-block" type="button" id="" tooltip="Xem chi tiết" tooltip-append-to-body="true" tooltip-placement="left" data-placement="left" data-trigger="hover" title="View">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                    </a>
                                 </div>
                                 <!-- Modal -->
-                                <div class="modal fade" id="viewBanker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                    <div class="modal-dialog modal-lg" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="myModalLabel">Thông tin người ủng hộ</h4>
-                                                <div class="modal-body">
-                                                    <div class="container-fluid">
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <h3 class="fnt25">Người ủng hộ</h3>
-                                                                <div class="row">
-                                                                    <div class="col-sm-4">
-                                                                        <img id="avatar-profile" ng-if="!checkHTTP(backer.ProfileImage)" ng-src="../images/avatars/{{BackingInfo.ProfileImage}}" alt="" class="img-responsive img-circle">
-                                                                        <img id="avatar-profile" ng-if="checkHTTP(backer.ProfileImage)" ng-src="{{trustSrc(BackingInfo.ProfileImage)}}" alt="" class="img-responsive img-circle">
+                                @*<div class="modal fade" id="viewBanker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">Thông tin người ủng hộ</h4>
+                                                    <div class="modal-body">
+                                                        <div class="container-fluid">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <h3 class="fnt25">Người ủng hộ</h3>
+                                                                    <div class="row">
+                                                                        <div class="col-sm-4">
+                                                                            <img id="avatar-profile" ng-if="!checkHTTP(backer.ProfileImage)" ng-src="../images/avatars/{{BackingInfo.ProfileImage}}" alt="" class="img-responsive img-circle">
+                                                                            <img id="avatar-profile" ng-if="checkHTTP(backer.ProfileImage)" ng-src="{{trustSrc(BackingInfo.ProfileImage)}}" alt="" class="img-responsive img-circle">
+                                                                        </div>
+                                                                        <div class="col-md-9">
+                                                                            <br>
+                                                                            <form>
+                                                                                <div>
+                                                                                    <label class="fnt20 fnt-b mt0 mb0" for="name">{{BackingInfo.FullName}}</label>
+                                                                                </div>
+                                                                                <div>
+                                                                                    <label class="fnt20 mt0 mb0" for="email">{{BackingInfo.Email}}</label>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="col-md-9">
-                                                                        <br>
-                                                                        <form>
-                                                                            <div>
-                                                                                <label class="fnt20 fnt-b mt0 mb0" for="name">{{BackingInfo.FullName}}</label>
-                                                                            </div>
-                                                                            <div>
-                                                                                <label class="fnt20 mt0 mb0" for="email">{{BackingInfo.Email}}</label>
-                                                                            </div>
-                                                                        </form>
+                                                                    <br>
+                                                                    <div class="">
+                                                                        <div class="">
+                                                                            <label class="fnt18 mt0 mb0" for="name"><span class="fnt-b">Địa chỉ: </span>{{BackingInfo.Add}}</label>
+                                                                        </div>
+                                                                        <div class="">
+                                                                            <label class="fnt18 mt0 mb0" for="name"><span class="fnt-b">Số điện thoại: </span>{{BackingInfo.Phone }}</label>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <br>
-                                                                <div class="">
-                                                                    <div class="">
-                                                                        <label class="fnt18 mt0 mb0" for="name"><span class="fnt-b">Địa chỉ: </span>{{BackingInfo.Add}}</label>
-                                                                    </div>
-                                                                    <div class="">
-                                                                        <label class="fnt18 mt0 mb0" for="name"><span class="fnt-b">Số điện thoại: </span>{{BackingInfo.Phone }}</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <h3 class="fnt25">Dự án: <i style="font-style: normal" id="project_title_target"></i>
-                                                            </h3>
-                                                            <div class="col-md-6">
+                                                                <h3 class="fnt25">Dự án: <i style="font-style: normal" id="project_title_target"></i>
+                                                                </h3>
+                                                                <div class="col-md-6">
 
-                                                                <br>
-                                                                <p class="fnt18" for="name"><span>Ủng hộ gói: </span><span class="fnt-b">{{BackingInfo.RewadDiscription}}</span> với số tiền:<span class="fnt-b"> {{BackingInfo.PledgeAmount}} VNĐ</span> và <span class="fnt-b">số lượng: {{BackingInfo.Quantity}}</span></p>
-                                                                <!-- <p class="fnt18" for="name"><span class="fnt-b">Số lượng:</span> 1</p> -->
-                                                                <p class="fnt18" for="name"><span class="fnt-b">Tổng số tiền:</span> {{BackingInfo.TotalAmount}} VNĐ
-                                                                </p>
-                                                                <p class="fnt18" for="name"><span class="fnt-b">Ngày gửi:</span>{{BackingInfo.BackedDate | date: "dd-MM-yyyy"}}
-                                                                </p>
-                                                                <p class="mb0 pb0"><span class="fnt-b">Nội dung:</span></p>
-                                                                <p class="mt0 pt0">{{BackingInfo.BackingDiscription}}</p>
+                                                                    <br>
+                                                                    <p class="fnt18" for="name"><span>Ủng hộ gói: </span><span class="fnt-b">{{BackingInfo.RewadDiscription}}</span> với số tiền:<span class="fnt-b"> {{BackingInfo.PledgeAmount}} VNĐ</span> và <span class="fnt-b">số lượng: {{BackingInfo.Quantity}}</span></p>
+                                                                    <!-- <p class="fnt18" for="name"><span class="fnt-b">Số lượng:</span> 1</p> -->
+                                                                    <p class="fnt18" for="name"><span class="fnt-b">Tổng số tiền:</span> {{BackingInfo.TotalAmount}} VNĐ
+                                                                    </p>
+                                                                    <p class="fnt18" for="name"><span class="fnt-b">Ngày gửi:</span>{{BackingInfo.BackedDate | date: "dd-MM-yyyy"}}
+                                                                    </p>
+                                                                    <p class="mb0 pb0"><span class="fnt-b">Nội dung:</span></p>
+                                                                    <p class="mt0 pt0">{{BackingInfo.BackingDiscription}}</p>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div> <!-- end Modal infoBanker -->
-                                </div>
+                                        </div> <!-- end Modal infoBanker -->
+                                    </div>*@
                             </td>
                         </tr>
                     </tbody>

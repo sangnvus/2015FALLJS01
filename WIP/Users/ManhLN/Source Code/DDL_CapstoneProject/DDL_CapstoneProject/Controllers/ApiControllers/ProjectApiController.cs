@@ -959,40 +959,44 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         // POST: api/ProjectApi/BackProject
         [ResponseType(typeof(ProjectBackDTO))]
         [HttpPost]
-        //public IHttpActionResult BackProject(ProjectBackDTO backingData)
-        //{
-        //    string projectCode;
+        public IHttpActionResult BackProject(ProjectBackDTO backingData)
+        {
+            int backingId;
 
-        //    try
-        //    {
-        //        // Check authen.
-        //        if (User.Identity == null || !User.Identity.IsAuthenticated)
-        //        {
-        //            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
-        //        }
+            try
+            {
+                // Check authen.
+                if (User.Identity == null || !User.Identity.IsAuthenticated)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                }
 
-        //        if (!ModelState.IsValid)
-        //        {
-        //            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
-        //        }
+                if (!ModelState.IsValid)
+                {
+                    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+                }
 
-        //        projectCode = ProjectRepository.Instance.BackProject(backingData);
-        //        ProjectRepository.Instance.CaculateProjectPoint(backingData.ProjectCode, DDLConstants.PopularPointType.BackingPoint);
-        //    }
-        //    catch (KeyNotFoundException)
-        //    {
-        //        return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_FOUND });
-        //    }
-        //    catch (UserNotFoundException)
-        //    {
-        //        return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
-        //    }
-        //    return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = projectCode });
-        //}
+                backingData.OrderId = backingData.ProjectCode + CommonUtils.GenerateVerifyCode() + DateTime.Now.ToString("hmmsstt");
+                backingData.TransactionId = CommonUtils.GenerateVerifyCode().Substring(0, 13);
+                backingData.BackedDate = DateTime.Now;
+
+                backingId = ProjectRepository.Instance.BackProject(backingData);
+                ProjectRepository.Instance.CaculateProjectPoint(backingData.ProjectCode, DDLConstants.PopularPointType.BackingPoint);
+            }
+            catch (KeyNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+            }
+            catch (UserNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+            catch (Exception)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
+            }
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = backingId });
+        }
 
         // GET: api/ProjectApi/GetBackProjectInfo/:code
         [HttpGet]
@@ -1028,7 +1032,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         // GET: api/ProjectApi/GetBackingDetail/:id
         [HttpGet]
         [ResponseType(typeof(ProjectBackDTO))]
-        public IHttpActionResult GetBackingDetail(string backingId)
+        public IHttpActionResult GetBackingDetail(int backingId)
         {
             var backingDetail = new ProjectBackDTO();
 
@@ -1594,6 +1598,10 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             catch (KeyNotFoundException)
             {
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Dự án không tồn tại!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+            }
+            catch (DllNotFoundException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Mã danh mục không tồn tại!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
             }
             catch (Exception)
             {

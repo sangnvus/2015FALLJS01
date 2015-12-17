@@ -25,13 +25,15 @@ app.controller('EditProfileController', function ($scope, toastr, usereditinfo, 
                 if ($scope.UserEditInfo.DateOfBirth != null)
                     $scope.UserEditInfo.DateOfBirth = new Date($filter('date')($scope.UserEditInfo.DateOfBirth, "yyyy-MM-dd"));
             } else {
-                CommmonService.checkError(result.data.Type);
-                $scope.Error = result.data.Message;
-                toastr.error($scope.Error, 'Lỗi!');
+                var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                if (a) {
+                    $scope.Error = result.data.Message;
+                }
             }
         },
         function (error) {
             $scope.Error = error.data.Message;
+            toastr.error($scope.Error, 'Lỗi');
         });
 
 
@@ -50,15 +52,21 @@ app.controller('EditProfileController', function ($scope, toastr, usereditinfo, 
         var promisePost = UserService.editProfileInformation($scope.UserEditInfo, $scope.file);
 
         promisePost.then(
-                function () {
-                    if (usereditinfo.data.Status === "success") {
-                        toastr.success('Sửa thông tin cá nhân!', 'Thành công!');
-                    } else if (usereditinfo.data.Status === "error") {
-                        $scope.Error = usereditinfo.data.Message;
-                        toastr.error($scope.Error, 'Lỗi!');
+                function (result) {
+                    if (result.data.Status === "success") {
+                        toastr.success('Sửa thông tin cá nhân', 'Thành công');
+                        angular.element("#avatar").attr("src", "/images/avatars/" + result.data.Data);
+                    } else {
+                        var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                        if (a) {
+                            $scope.Error = result.data.Message;
+                        }
                     }
-                }
-                );
+                },
+                function (error) {
+                    $scope.Error = error.data.Message;
+                    toastr.error($scope.Error, 'Lỗi');
+                });
     };
     $scope.units = [
         { 'id': 'male', 'label': 'Nam' },
