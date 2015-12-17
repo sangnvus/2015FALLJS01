@@ -78,12 +78,12 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
                 // Set the cookie value.
                 projectCodeCookie.Value = Request.QueryString["ProjectCode"];
                 emailCookie.Value = Request.QueryString["Email"];
-                backerNameCookie.Value = Request.QueryString["BackerName"];
+                backerNameCookie.Value = Server.UrlDecode(Request.QueryString["BackerName"]);
                 rewardIdCookie.Value = Request.QueryString["RewardId"];
                 pledgeAmountCookie.Value = Request.QueryString["PledgeAmount"];
                 quantityCookie.Value = Request.QueryString["Quantity"];
-                descCookie.Value = Request.QueryString["Mes"];
-                addressCookie.Value = Request.QueryString["Address"];
+                descCookie.Value = Server.UrlDecode(Request.QueryString["Mes"]);
+                addressCookie.Value = Server.UrlDecode(Request.QueryString["Address"]);
                 phoneNumberCookie.Value = Request.QueryString["Phone"];
 
                 // Set the cookie expiration date.
