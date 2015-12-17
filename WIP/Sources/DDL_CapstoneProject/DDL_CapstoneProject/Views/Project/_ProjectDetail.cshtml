@@ -247,7 +247,7 @@
                                                 <div class="item-show">
                                                     <h5 class="fnt20 c3" for="">Ủng hộ {{reward.PledgeAmount | number : fractionSize}} <span class="money usd no-code">&#8363;</span> hoặc nhiều hơn</h5>
                                                     <p class="bold h5">
-                                                        <span class="glyphicon glyphicon-asterisk"></span>{{reward.CurrentQuantity}} sản phầm | {{reward.Backers}} lượt ủng hộ
+                                                        <span class="glyphicon glyphicon-asterisk"></span><span ng-if="reward.Type != '@DDLConstants.RewardType.NO_REWARD'">{{reward.CurrentQuantity}} sản phầm đã được ủng hộ</span><span ng-if="reward.Type == '@DDLConstants.RewardType.NO_REWARD'">{{reward.Backers}} lượt ủng hộ</span>
                                                     </p>
                                                     <hr />
                                                     <div style="word-break: break-word; white-space: pre-wrap;" class="item-description">{{reward.Description}}</div>
