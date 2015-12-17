@@ -212,46 +212,43 @@ namespace DDL_CapstoneProject.Respository
         {
             using (var db = new DDLDataContext())
             {
-                var ProjectList = new List<ProjectBasicViewDTO>();
-                try
+                var projectList = new List<ProjectBasicViewDTO>();
+                var cat = db.Categories.Where(x => x.IsActive).Select(x => x.CategoryID).ToList();
+                for (int i = 0; i < cat.Count; i++)
                 {
-                    List<Category> cat = db.Categories.ToList();
-                    for (int i = 0; i < cat.Count(); i++)
-                    {
-                        List<ProjectBasicViewDTO> getProject = GetProject(1, 0, "|" + cat[i].CategoryID + "|",
-                            "PopularPoint", "", "", "false", "");
-                        if (getProject.Any())
-                            ProjectList.Add(getProject[0]);
-                    }
+                    var getProject = GetProject(1, 0, "|" + cat[i] + "|",
+                        "PopularPoint", "", "", "false", "");
+                    if (getProject.Any())
+                        projectList.Add(getProject[0]);
                 }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex);
-                }
-                return ProjectList;
+                return projectList;
             }
         }
 
 
         public List<List<ProjectBasicViewDTO>> GetProjectStatisticList()
         {
-            var ProjectList = new List<List<ProjectBasicViewDTO>>();
-            ProjectList.Add(GetProject(4, 0, "All", "PopularPoint", "", "", "false", ""));
-            ProjectList.Add(GetProject(4, 0, "All", "CreatedDate", "", "", "false", ""));
-            ProjectList.Add(GetProject(4, 0, "All", "CurrentFunded", "", "", "false", ""));
-            ProjectList.Add(GetProject(4, 0, "All", "ExpireDate", "", "", "false", ""));
+            var projectList = new List<List<ProjectBasicViewDTO>>
+            {
+                GetProject(4, 0, "All", "PopularPoint", "", "", "false", ""),
+                GetProject(4, 0, "All", "CreatedDate", "", "", "false", ""),
+                GetProject(4, 0, "All", "CurrentFunded", "", "", "false", ""),
+                GetProject(4, 0, "All", "ExpireDate", "", "", "false", "")
+            };
 
-            return ProjectList;
+            return projectList;
         }
         public Dictionary<string, List<ProjectBasicViewDTO>> GetStatisticListForHome()
         {
-            var ProjectList = new Dictionary<string, List<ProjectBasicViewDTO>>();
-            ProjectList.Add("popularproject", GetProject(4, 0, "All", "PopularPoint", "", "", "false", ""));
-            ProjectList.Add("projectByCategory", GetProjectByCategory());
-            ProjectList.Add("highestprojectpledge", GetProject(1, 0, "All", "CurrentFunded", "", "", "false", ""));
-            ProjectList.Add("highestprojectfund", GetProject(1, 0, "All", "CurrentFunded", "", "", "true", "true"));
-            ProjectList.Add("totalprojectfund", GetTotalFund());
-            return ProjectList;
+            var projectList = new Dictionary<string, List<ProjectBasicViewDTO>>
+            {
+                {"popularproject", GetProject(4, 0, "All", "PopularPoint", "", "", "false", "")},
+                {"projectByCategory", GetProjectByCategory()},
+                {"highestprojectpledge", GetProject(1, 0, "All", "CurrentFunded", "", "", "false", "")},
+                {"highestprojectfund", GetProject(1, 0, "All", "CurrentFunded", "", "", "true", "true")},
+                {"totalprojectfund", GetTotalFund()}
+            };
+            return projectList;
         }
 
         public List<ProjectBasicViewDTO> GetTotalFund()
@@ -261,8 +258,10 @@ namespace DDL_CapstoneProject.Respository
                 var list = new List<ProjectBasicViewDTO>();
                 var TotalFund = from project in db.Projects
                                 select project.CurrentFunded;
-                var totalFund = new ProjectBasicViewDTO();
-                totalFund.CurrentFundedNumber = (Convert.ToDecimal(TotalFund.Sum()));
+                var totalFund = new ProjectBasicViewDTO
+                {
+                    CurrentFundedNumber = (Convert.ToDecimal(TotalFund.Sum()))
+                };
 
                 list.Add(totalFund);
                 return list;
@@ -2244,7 +2243,7 @@ namespace DDL_CapstoneProject.Respository
                 // Create Project query from dB.
                 var projectDetail = (from project in db.Projects
                                      where project.ProjectCode.Equals(projectCode.ToUpper())
-                                     && ((project.Status != DDLConstants.ProjectStatus.DRAFT && project.Status != DDLConstants.ProjectStatus.PENDING)
+                                     && ((project.Status != DDLConstants.ProjectStatus.DRAFT && project.Status != DDLConstants.ProjectStatus.PENDING && project.Status != DDLConstants.ProjectStatus.REJECTED)
                                         || project.Creator.Username.Equals(temp, StringComparison.OrdinalIgnoreCase))
                                      select new ProjectDetailDTO
                                      {
@@ -2343,7 +2342,7 @@ namespace DDL_CapstoneProject.Respository
 
                 // Set number exprire day.
                 var timespan = projectDetail.ExpireDate - CommonUtils.DateTodayGMT7();
-                projectDetail.NumberDays = timespan.GetValueOrDefault().Days;
+                projectDetail.NumberDays = timespan.GetValueOrDefault().Days >= 0 ? timespan.GetValueOrDefault().Days : 0;
 
                 return projectDetail;
             }
@@ -2412,7 +2411,8 @@ namespace DDL_CapstoneProject.Respository
                                     CurrentFunded = backing.BackingDetail.PledgedAmount,
                                     BackedDate = backing.BackedDate,
                                     Status = project.Status,
-                                    BackingId = backing.BackingID
+                                    BackingId = backing.BackingID,
+                                    IsExprired = project.IsExprired
                                 }).OrderByDescending(x => x.BackedDate).ToList();
                 return Project;
             }

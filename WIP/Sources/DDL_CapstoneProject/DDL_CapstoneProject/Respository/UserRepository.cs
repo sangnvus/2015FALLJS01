@@ -472,7 +472,7 @@ namespace DDL_CapstoneProject.Respository
 
 
         //UserEditInfoDTO
-        public void EditUserInfo(UserEditInfoDTO userCurrent, string uploadImageName)
+        public UserEditInfoDTO EditUserInfo(UserEditInfoDTO userCurrent, string uploadImageName)
         {
             using (var db = new DDLDataContext())
             {
@@ -495,6 +495,9 @@ namespace DDL_CapstoneProject.Respository
                 }
 
                 db.SaveChanges();
+
+                userCurrent.ProfileImage = uploadImageName;
+                return userCurrent;
             }
         }
 
