@@ -38,7 +38,8 @@ namespace DDL_CapstoneProject.Respository
                                       CategoryID = category.CategoryID,
                                       Name = category.Name,
                                       projectCount = (from project in category.Projects
-                                                      where !project.Status.Equals(DDLConstants.ProjectStatus.DRAFT) && !project.Status.Equals(DDLConstants.ProjectStatus.REJECTED)
+                                                      where !project.IsExprired
+                                                            &&!project.Status.Equals(DDLConstants.ProjectStatus.DRAFT) && !project.Status.Equals(DDLConstants.ProjectStatus.REJECTED)
                                                             && !project.Status.Equals(DDLConstants.ProjectStatus.SUSPENDED) && !project.Status.Equals(DDLConstants.ProjectStatus.PENDING)
                                                       select project.ProjectID).Count()
 

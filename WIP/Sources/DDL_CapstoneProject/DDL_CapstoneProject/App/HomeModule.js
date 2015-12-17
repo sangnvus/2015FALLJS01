@@ -94,9 +94,9 @@ app.config(["$routeProvider", function ($routeProvider) {
                         params.searchkey = [""];
                     }
                     var status = "";
-                    //if (!params.advance) {
-                    //    status = "false";
-                    //}
+                    if (!params.advance) {
+                        status = "false";
+                    }
                     var promise = ProjectService.SearchProject(0, "|" + params.categoryid + "|", params.order, searchkey, status);
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
@@ -123,9 +123,9 @@ app.config(["$routeProvider", function ($routeProvider) {
                 }],
                 projectResultListSize: ['ProjectService', '$route', '$q', '$rootScope', 'CommmonService', function (ProjectService, $route, $q, $rootScope, CommmonService) {
                     var status = ""
-                    //if (!$route.current.params.advance) {
-                    //    status = "false";
-                    //}
+                    if (!$route.current.params.advance) {
+                        status = "false";
+                    }
                     var promise = ProjectService.SearchCount("|" + $route.current.params.categoryid + "|", $route.current.params.searchkey, status);
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }]
