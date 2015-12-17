@@ -570,7 +570,7 @@ namespace DDL_CapstoneProject.Respository
                 string messageBasic = string.Empty;
                 if (string.IsNullOrEmpty(project.Title) || project.Title.Length < 10 || project.Title.Length > 60
                     || string.IsNullOrEmpty(project.ImageUrl)
-                    || string.IsNullOrEmpty(project.SubDescription) || project.SubDescription.Length < 30 || project.SubDescription.Length > 135
+                    || string.IsNullOrEmpty(project.SubDescription) || project.SubDescription.Length < 30 || project.SubDescription.Length > 300
                     || string.IsNullOrEmpty(project.Location) || project.Location.Length < 10 || project.Location.Length > 60
                     || project.ExpireDate == null || project.ExpireDate < expireDateLaw
                     || project.FundingGoal < 1000000)
@@ -602,10 +602,10 @@ namespace DDL_CapstoneProject.Respository
 
                 string messageStory = string.Empty;
                 if (string.IsNullOrEmpty(project.Description) || project.Description.Length < 135
-                    || string.IsNullOrEmpty(project.Risk) || project.Risk.Length < 135
+                    || (!string.IsNullOrEmpty(project.Risk) && project.Risk.Length < 135)
                     )
                 {
-                    messageStory = "Xin hãy xem lại trang Mô tả chỉ tiết! Các trường PHẢI được nhập đầy đủ (trừ video)";
+                    messageStory = "Xin hãy xem lại trang Mô tả chỉ tiết! Các trường PHẢI được nhập đầy đủ và hợp lệ (video và mô tả khó khăn không bắt buộc)";
                     mylist.Add(messageStory);
                 }
 
@@ -928,7 +928,9 @@ namespace DDL_CapstoneProject.Respository
                                        CurrentFunded = Project.CurrentFunded,
                                        TotalBacking = Project.Backings.Count,
                                        CreatorUsername = Project.Creator.Username,
-                                       CreatorFullname = Project.Creator.UserInfo.FullName
+                                       CreatorFullname = Project.Creator.UserInfo.FullName,
+                                       IsExprired = Project.IsExprired,
+                                       IsFunded = Project.IsFunded
                                    }).ToList();
 
                 projectList.ForEach(x => x.ExpireDate = CommonUtils.ConvertDateTimeFromUtc(x.ExpireDate.GetValueOrDefault()));
@@ -990,7 +992,7 @@ namespace DDL_CapstoneProject.Respository
                     Content = "Xin chào " + projectOwner.UserInfo.FullName + "," +
                             "<br/>Chúng tôi vừa " + type + " dự án " + updateProject.Title + " của bạn." +
                             "<br/>Để biết thêm chi tiết xin liện hệ với admin qua email" +
-                            "<br/>ngocmanh1712@gmail.com"
+                            "<br/>dandelion.system@gmail.com"
                 };
                 MessageRepository.Instance.CreateNewConversation(message, senderName);
 
@@ -1054,7 +1056,7 @@ namespace DDL_CapstoneProject.Respository
                 // Count pending project
                 var pending = projects.Count(x => x.Status == DDLConstants.ProjectStatus.PENDING);
                 // Count live project
-                var approved = projects.Count(x => x.Status == DDLConstants.ProjectStatus.APPROVED);
+                var approved = projects.Count(x => x.Status == DDLConstants.ProjectStatus.APPROVED && x.IsExprired);
                 // Count succeed project
                 var funed = projects.Count(x => x.IsFunded);
                 // Count rank A project
@@ -1492,6 +1494,7 @@ namespace DDL_CapstoneProject.Respository
                                          //        ? project.Comments.Count
                                          //        : project.Comments.Count(x => !x.IsHide),
                                          NumberUpdate = project.UpdateLogs.Count,
+                                         IsFunded = project.IsFunded,
                                          Creator = new CreatorDTO
                                          {
                                              FullName = project.Creator.UserInfo.FullName,
@@ -1543,6 +1546,10 @@ namespace DDL_CapstoneProject.Respository
                 // Set number exprire day.
                 var timespan = projectDetail.ExpireDate - CommonUtils.DateTodayGMT7();
                 projectDetail.NumberDays = timespan.GetValueOrDefault().Days;
+                if (projectDetail.NumberDays < 0)
+                {
+                    projectDetail.NumberDays = 0;
+                }
 
                 return projectDetail;
             }

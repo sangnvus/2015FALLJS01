@@ -1012,7 +1012,8 @@ namespace DDL_CapstoneProject.Respository
                                       RewardContent = backing.BackingDetail.RewardPkg.Description,
                                       RewardPledgeAmount = backing.BackingDetail.RewardPkg.PledgeAmount,
                                       UserName = backing.User.Username,
-                                      BackingID = backing.BackingID
+                                      BackingID = backing.BackingID,
+                                      ProjectCode = backing.Project.ProjectCode
                                   }).ToList();
 
                 listReturn.ForEach(x => x.BackedDate = CommonUtils.ConvertDateTimeFromUtc(x.BackedDate.GetValueOrDefault()));

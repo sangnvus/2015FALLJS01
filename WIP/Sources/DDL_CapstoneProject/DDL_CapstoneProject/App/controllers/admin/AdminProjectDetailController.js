@@ -147,9 +147,20 @@ app.controller('AdminProjectDetailController',
 
         // Alert admin before change status
         $scope.warning = function (status) {
+            var stringAlert = '';
+            if (status === 'suspended') {
+                stringAlert = 'ngừng';
+            }
+
+            if (status === 'approved') {
+                stringAlert = 'thông qua';
+            }
+
+            if (status === 'rejected') {
+                stringAlert = 'từ chối';
+            }
             SweetAlert.swal({
-                title: "Bạn vừa thay đổi trạng thái dự án.",
-                text: "Trạng thái dự án sẽ bị chỉnh sửa. Bạn có đồng ý không?",
+                title: "Bạn có chắc chắn muốn " + stringAlert + " dự án này không?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",

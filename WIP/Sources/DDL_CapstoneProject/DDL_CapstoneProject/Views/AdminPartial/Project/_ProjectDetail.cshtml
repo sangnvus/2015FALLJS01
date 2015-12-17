@@ -10,19 +10,19 @@
                     <li><a onclick="return false" href="#updates" data-toggle="tab" ng-click="getUpdateLogList()">Cập nhật</a></li>
                     <li><a onclick="return false" href="#comments" data-toggle="tab" ng-click="getCommentList()">Bình luận</a></li>
                     <button class="btn btn-danger btn-sm pull-right" data-toggle="modal" ng-click="warning('suspended')"
-                            data-target="#ConfirmModal" ng-if="Project.Status == 'approved'">
+                            data-target="#ConfirmModal" ng-if="Project.Status == 'approved' && !Project.IsExprired">
                         Ngừng dự án
                     </button>
                     <button class="btn btn-success btn-sm pull-right" data-toggle="modal"
-                            data-target="#ConfirmModal" ng-if="Project.Status == 'suspended'" ng-click="warning('approved')">
+                            data-target="#ConfirmModal" ng-if="Project.Status == 'suspended' && !Project.IsExprired" ng-click="warning('approved')">
                         Tiếp tục
                     </button>
                     <button class="btn btn-danger btn-sm pull-right" data-toggle="modal"
-                            data-target="#ConfirmModal" ng-if="Project.Status == 'pending'" ng-click="warning('rejected')">
+                            data-target="#ConfirmModal" ng-if="Project.Status == 'pending' && !Project.IsExprired" ng-click="warning('rejected')">
                         Từ chối
                     </button>
                     <button class="btn btn-success btn-sm pull-right" data-toggle="modal" style="margin-right: 15px;"
-                            data-target="#ConfirmModal" ng-if="Project.Status == 'pending' || Project.Status == 'rejected'" ng-click="warning('approved')">
+                            data-target="#ConfirmModal" ng-if="(Project.Status == 'pending' || Project.Status == 'rejected') && !Project.IsExprired" ng-click="warning('approved')">
                         Chấp nhận
                     </button>
                 </ul>
@@ -36,11 +36,12 @@
                                 <h2>{{Project.Title}}</h2>
                                 <p>
                                     by <a href="@Url.Content("/admin/#/userprofile/{{Project.Creator.UserName}}")">{{Project.Creator.FullName}}</a> - <span class="badge purple">{{Project.CategoryName}}</span> -
-                                    <span class="badge green" ng-if="Project.Status == 'approved'">Đang chạy</span>
-                                    <span class="badge red" ng-if="Project.Status == 'suspended'">Đình chỉ</span>
-                                    <span class="badge red" ng-if="Project.Status == 'rejected'">Từ chối</span>
-                                    <span class="badge red" ng-if="Project.Status == 'expired'">Hết hạn</span>
-                                    <span class="badge blue" ng-if="Project.Status == 'pending'">Chờ duyệt</span>
+                                    <span class="badge green" ng-if="Project.Status == 'approved' && !Project.IsExprired">Đang chạy</span>
+                                    <span class="badge red" ng-if="Project.Status == 'suspended' && !Project.IsExprired">Đình chỉ</span>
+                                    <span class="badge red" ng-if="Project.Status == 'rejected' && !Project.IsExprired">Từ chối</span>
+                                    <span class="badge green" ng-if="Project.IsExprired && Project.IsFunded">Thành công</span>
+                                    <span class="badge red" ng-if="Project.IsExprired && !Project.IsFunded">Thất bại</span>
+                                    <span class="badge blue" ng-if="Project.Status == 'pending' && !Project.IsExprired">Chờ duyệt</span>
                                 </p>
                             </div>
                             <div class="col-lg-7">

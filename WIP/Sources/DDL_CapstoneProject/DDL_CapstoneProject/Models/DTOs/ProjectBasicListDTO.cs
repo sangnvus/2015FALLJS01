@@ -19,5 +19,7 @@ namespace DDL_CapstoneProject.Models.DTOs
         public string Category { get; set; }
         public string Status { get; set; }
         public int TotalBacking { get; set; }
+        public bool IsExprired { get; set; }
+        public bool IsFunded { get; set; }
     }
 }

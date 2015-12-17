@@ -15,8 +15,8 @@
 </div> <!-- end PROCESS-CREATE -->
 <div id="create-tabs-fixedPosition"></div>
 <!--Wanrning -->
-<div class="alert alert-danger" role="alert" style="text-align: center" ng-if="Project.Status == 'rejected'">Dự án của bạn bị từ chối, xin hãy xem và chỉnh sửa lại trước khi submit lần tiếp theo. Nếu bạn cần giúp đỡ hãy liên hệ với chúng tôi qua email... hay SĐT...</div>
-<div class="alert alert-warning" role="alert" style="text-align: center" ng-if="Project.Status == 'pending'">Dự án của bạn đang trong thời gian kiểm duyệt(2-3 ngày từ ngày submit) vui lòng chờ kết quả từ chúng tôi!</div>
+<div class="alert alert-danger" role="alert" style="text-align: center" ng-if="Project.Status == 'rejected'">Dự án của bạn bị từ chối, xin hãy xem và chỉnh sửa lại trước khi gửi lần tiếp theo. Nếu bạn cần giúp đỡ hãy liên hệ với chúng tôi qua email: dandelion.system@gmail.com hay SĐT: (+84)123 810 7765</div>
+<div class="alert alert-warning" role="alert" style="text-align: center" ng-if="Project.Status == 'pending'">Dự án của bạn đang trong thời gian kiểm duyệt(2-3 ngày từ ngày gửi) vui lòng chờ kết quả từ chúng tôi!</div>
 <div class="alert alert-danger" role="alert" style="text-align: center" ng-show="errorListFlag == true">
     <p ng-repeat="error in errorList">{{error}}</p>
 </div>
@@ -112,13 +112,13 @@
                                         <div class="field-wrapper">
                                             <textarea class="form-control fnt18"
                                                       rows="3" style="resize: none" name="SubDes" ng-trim="true"
-                                                      maxlength="135"
+                                                      maxlength="300"
                                                       ng-model="Project.SubDescription"
                                                       ng-disabled="AllEditable == false"
                                                       msd-elastic="\n"></textarea>
                                             @*ng-model-options="{ updateOn: 'change blur'}"*@
                                             <div style="position: relative">
-                                                <label for="" class="countText" style="top: -30px; right: 5px">{{Project.SubDescription.length + "/135"}}</label>
+                                                <label for="" class="countText" style="top: -30px; right: 5px">{{Project.SubDescription.length + "/300"}}</label>
                                             </div>
                                             @*<div ng-show="BasicForm.SubDes.$dirty && BasicForm.SubDes.$invalid" class="text-danger">
                                                     <span class="glyphicon glyphicon-remove text-danger"></span>
@@ -126,11 +126,11 @@
                                                     <span ng-show="BasicForm.SubDes.$error.maxlength">Tên dự án tối đa 135 kí tự!</span>
                                                 </div>*@
                                         </div>
-                                        <div class="field-help-2" ng-class="{'text-danger' : (Project.SubDescription.length > 135 || Project.SubDescription.length < 30) && (errorListFlag == true || PrjApprove == true)}">
+                                        <div class="field-help-2" ng-class="{'text-danger' : (Project.SubDescription.length > 300 || Project.SubDescription.length < 30) && (errorListFlag == true || PrjApprove == true)}">
                                             <span class="glyphicon glyphicon-remove text-danger"
-                                                  ng-show="(Project.SubDescription.length > 135 || Project.SubDescription.length < 30) && (errorListFlag == true || PrjApprove == true)"></span>
+                                                  ng-show="(Project.SubDescription.length > 300 || Project.SubDescription.length < 30) && (errorListFlag == true || PrjApprove == true)"></span>
                                             <span>
-                                                Mô tả ngắn ít nhất là 30 kí tự và dài nhất là 135 kí tự!
+                                                Mô tả ngắn ít nhất là 30 kí tự và dài nhất là 300 kí tự!
                                             </span>
                                         </div>
                                     </div>
@@ -385,7 +385,7 @@
                                                         <div class="col-md-8">
                                                             @*<input type="month" class="form-control" min="{{toDay |  date:'yyyy-MM'}}" style="line-height: 15px;" name="deadline"
                                                                 ng-model="editPkg.EstimatedDelivery">*@
-                                                            <input type="month" class="form-control" min="{{editPkg.EstimatedDelivery | date:'yyyy-MM'}}" style="line-height: 15px;" name="deadline"
+                                                            <input type="month" class="form-control" min="{{toDay | date:'yyyy-MM'}}" style="line-height: 15px;" name="deadline"
                                                                    ng-model="editPkg.EstimatedDelivery">
                                                             <div ng-show="EditRewardModal.deadline.$dirty && EditRewardModal.deadline.$invalid" class="text-danger">
                                                                 <span class="glyphicon glyphicon-remove text-danger"></span>
@@ -669,15 +669,15 @@
                                 </div> <!-- end Project Description -->
                                 <div class="row border-grey">
                                     <div class="col-md-3">
-                                        <span class="title">Khó khăn và thử thách</span><span class="text-danger"> *</span>
+                                        <span class="title">Khó khăn và thử thách</span>
                                     </div>
                                     <div class="col-md-9">
                                         <div class="help">
                                             <p>
                                                 <b>Khó khăn bạn đang gặp phải là gì và làm thế nào bạn vượt qua nó?</b>
                                             </p>
-                                            <p ng-class="{'text-danger' : ProjectStory.Risk.length < 135 && (errorListFlag == true || PrjApprove == true)}">
-                                                <span class="glyphicon glyphicon-remove text-danger" ng-show="ProjectStory.Risk.length < 135 && (errorListFlag == true || PrjApprove == true)"></span>
+                                            <p ng-class="{'text-danger' : (ProjectStory.Risk.length < 135 && ProjectStory.Risk != '') && (errorListFlag == true || PrjApprove == true)}">
+                                                <span class="glyphicon glyphicon-remove text-danger" ng-show="(ProjectStory.Risk.length < 135 && ProjectStory.Risk != '') && (errorListFlag == true || PrjApprove == true)"></span>
                                                 Mô tả khó khăn cần ít nhất 135 kí tự!
                                             </p>
                                         </div>

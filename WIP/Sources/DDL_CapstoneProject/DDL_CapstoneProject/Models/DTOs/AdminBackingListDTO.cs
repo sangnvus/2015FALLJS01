@@ -22,6 +22,7 @@ namespace DDL_CapstoneProject.Models.DTOs
         public string RewardContent { get; set; }
         public decimal RewardPledgeAmount { get; set; }
         public int RewardID { get; set; }
+        public string ProjectCode { get; set; }
     }
 
 }

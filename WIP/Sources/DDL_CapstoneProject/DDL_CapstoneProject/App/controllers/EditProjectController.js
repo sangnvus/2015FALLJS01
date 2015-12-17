@@ -39,13 +39,14 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     $scope.FirstLoadStory = false;
 
     // Get current time
-    $scope.toDay = new Date($.now());
+    var toDayNow = new Date($.now());
+    $scope.toDay = new Date(toDayNow.getFullYear(), toDayNow.getMonth() + 1, 0);
     $scope.NewReward.EstimatedDelivery = angular.copy($scope.toDay);
 
     // Check current time of update log
-    var dd = $scope.toDay.getDate();
-    var mm = $scope.toDay.getMonth() + 1; //January is 0!
-    var yyyy = $scope.toDay.getFullYear();
+    var dd = toDayNow.getDate();
+    var mm = toDayNow.getMonth() + 1; //January is 0!
+    var yyyy = toDayNow.getFullYear();
 
     if (dd < 10) {
         dd = '0' + dd;
@@ -82,6 +83,9 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
 
     // Get project's basic record
     $scope.Project = project.data.Data;
+    if ($scope.Project.NumberDays < 0) {
+        $scope.Project.NumberDays = 0;
+    }
 
     // Check project's status
     $scope.AllEditable = true;
