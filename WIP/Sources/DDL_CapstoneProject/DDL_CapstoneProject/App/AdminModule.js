@@ -238,7 +238,7 @@ app.config(["$routeProvider", function ($routeProvider) {
        {
            templateUrl: "/AdminPartial/BackingDetail",
            controller: 'AdminBackingDetailController',
-           activeTab: 'projectList',
+           activeTab: 'backinglist',
            breadcrumb: ['Danh sách dự án', 'Chi tiết ủng hộ'],
            title: 'Chi tiết ủng hộ',
            resolve: {
