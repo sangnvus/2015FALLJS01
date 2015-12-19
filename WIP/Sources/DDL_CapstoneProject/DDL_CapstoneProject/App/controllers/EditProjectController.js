@@ -38,6 +38,10 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     $scope.FirstLoadTimeLine = false;
     $scope.FirstLoadStory = false;
 
+    // initial detech submit
+    var detechSubmit = '';
+    var submitAble = true;
+
     // Get current time
     var toDayNow = new Date($.now());
     $scope.toDay = new Date(toDayNow.getFullYear(), toDayNow.getMonth() + 1, 0);
@@ -934,12 +938,12 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
         var form;
         if (!angular.equals($scope.originalProjectBasic, $scope.Project) || !angular.equals($scope.originalSelectedCate, $scope.selectedOption)) {
             form = $scope.BasicForm;
-            if ($scope.BasicForm.$invalid || (($scope.Project.SubDescription.length > 135 || $scope.Project.SubDescription.length < 30) && $scope.PrjApprove === true)) {
+            if ($scope.BasicForm.$invalid || (($scope.Project.SubDescription.length > 300 || $scope.Project.SubDescription.length < 30) && $scope.PrjApprove === true)) {
                 $scope.checkForm(form);
             } else {
                 $scope.checkEditProjectBasic($scope.BasicForm);
             }
-            //e.stopImmediatePropagation();
+            submitAble = false;
         }
 
         if (!angular.equals($scope.originalReward, $scope.RewardPKgs)) {
@@ -949,7 +953,7 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
             } else {
                 $scope.checkEditReward($scope.rewardForm);
             }
-            //e.stopImmediatePropagation();
+            submitAble = false;
         }
 
         if (!angular.equals($scope.originalUpdateLog, $scope.UpdateLogs)) {
@@ -959,7 +963,7 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
             } else {
                 $scope.checkEditUpdateLog($scope.updateLogForm);
             }
-            //e.stopImmediatePropagation();
+            submitAble = false;
         }
 
         if (!angular.equals($scope.originalStory, $scope.ProjectStory)) {
@@ -969,7 +973,7 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
             } else {
                 $scope.checkEditStory($scope.storyForm);
             }
-            //e.stopImmediatePropagation();
+            submitAble = false;
         }
 
         if (!angular.equals($scope.originalQuestion, $scope.Question)) {
@@ -979,7 +983,7 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
             } else {
                 $scope.checkEditQuestion($scope.questionForm);
             }
-            //e.stopImmediatePropagation();
+            submitAble = false;
         }
 
         if (!angular.equals($scope.originalTimeline, $scope.Timeline)) {
@@ -989,18 +993,27 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
             } else {
                 $scope.checkEditTimeline($scope.timelineForm);
             }
-            //e.stopImmediatePropagation();
+            submitAble = false;
+        }
+
+        if (submitAble) {
+            if (detechSubmit === 'preview') {
+                $scope.preview();
+            }
+            if (detechSubmit === 'submit') {
+                $scope.submit();
+            }
         }
     };
     // Prevent switch tab if tab's invalid
-    $('#tablist a').click(function (e) {
+    $('#tablist li a').click(function (e) {
         if ($scope.fileIsBig === true) {
             $scope.BasicForm.$invalid = true;
         }
         var form;
         if (!angular.equals($scope.originalProjectBasic, $scope.Project) || !angular.equals($scope.originalSelectedCate, $scope.selectedOption)) {
             form = $scope.BasicForm;
-            if ($scope.BasicForm.$invalid || (($scope.Project.SubDescription.length > 135 || $scope.Project.SubDescription.length < 30) && $scope.PrjApprove === true)) {
+            if ($scope.BasicForm.$invalid || (($scope.Project.SubDescription.length > 300 || $scope.Project.SubDescription.length < 30) && $scope.PrjApprove === true)) {
                 $scope.checkForm(form);
             } else {
                 $scope.checkEditProjectBasic($scope.BasicForm);
@@ -1099,7 +1112,15 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                    form.$setUntouched();
                    $scope.fileIsBig = false;
                    // Switch tab
-                   $scope.changeTab($scope.thisTab.context.hash);
+                   if ($scope.thisTab.context.hash) {
+                       $scope.changeTab($scope.thisTab.context.hash);
+                   }
+                   if (detechSubmit === 'preview') {
+                       $scope.preview();
+                   }
+                   if (detechSubmit === 'submit') {
+                       $scope.submit();
+                   }
                }
            });
     };
@@ -1155,7 +1176,15 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                     $scope.file = null;
                     $scope.resetShowUpdateLogAndQA();
                     // Switch tab
-                    $scope.changeTab($scope.thisTab.context.hash);
+                    if ($scope.thisTab.context.hash) {
+                        $scope.changeTab($scope.thisTab.context.hash);
+                    }
+                    if (detechSubmit === 'preview') {
+                        $scope.preview();
+                    }
+                    if (detechSubmit === 'submit') {
+                        $scope.submit();
+                    }
                 }
             });
     };
@@ -1184,7 +1213,15 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                     form.$setUntouched();
                     $scope.resetShowUpdateLogAndQA();
                     // Switch tab
-                    $scope.changeTab($scope.thisTab.context.hash);
+                    if ($scope.thisTab.context.hash) {
+                        $scope.changeTab($scope.thisTab.context.hash);
+                    }
+                    if (detechSubmit === 'preview') {
+                        $scope.preview();
+                    }
+                    if (detechSubmit === 'submit') {
+                        $scope.submit();
+                    }
                 }
             });
     };
@@ -1213,7 +1250,15 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                     form.$setUntouched();
                     $scope.resetShowUpdateLogAndQA();
                     // Switch tab
-                    $scope.changeTab($scope.thisTab.context.hash);
+                    if ($scope.thisTab.context.hash) {
+                        $scope.changeTab($scope.thisTab.context.hash);
+                    }
+                    if (detechSubmit === 'preview') {
+                        $scope.preview();
+                    }
+                    if (detechSubmit === 'submit') {
+                        $scope.submit();
+                    }
                 }
             });
     };
@@ -1242,7 +1287,15 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                     form.$setUntouched();
                     $scope.resetShowUpdateLogAndQA();
                     // Switch tab
-                    $scope.changeTab($scope.thisTab.context.hash);
+                    if ($scope.thisTab.context.hash) {
+                        $scope.changeTab($scope.thisTab.context.hash);
+                    }
+                    if (detechSubmit === 'preview') {
+                        $scope.preview();
+                    }
+                    if (detechSubmit === 'submit') {
+                        $scope.submit();
+                    }
                 }
             });
     };
@@ -1271,7 +1324,15 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                     form.$setUntouched();
                     $scope.resetShowUpdateLogAndQA();
                     // Switch tab
-                    $scope.changeTab($scope.thisTab.context.hash);
+                    if ($scope.thisTab.context.hash) {
+                        $scope.changeTab($scope.thisTab.context.hash);
+                    }
+                    if (detechSubmit === 'preview') {
+                        $scope.preview();
+                    }
+                    if (detechSubmit === 'submit') {
+                        $scope.submit();
+                    }
                 }
             });
     };
@@ -1305,7 +1366,15 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
                     form.$setUntouched();
                     $scope.resetShowUpdateLogAndQA();
                     // Switch tab
-                    $scope.changeTab($scope.thisTab.context.hash);
+                    if ($scope.thisTab.context.hash) {
+                        $scope.changeTab($scope.thisTab.context.hash);
+                    }
+                    if (detechSubmit === 'preview') {
+                        $scope.preview();
+                    }
+                    if (detechSubmit === 'submit') {
+                        $scope.submit();
+                    }
                 }
             });
     };
@@ -1402,7 +1471,8 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
 
     // submit project
     $scope.submit = function () {
-        $scope.dirtyForm();
+        // reset detech submit
+        detechSubmit = '';
         // Put update project
         var promisePut = ProjectService.submitProject($scope.Project);
 
@@ -1428,8 +1498,15 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
 
     // preview project
     $scope.preview = function () {
-        $scope.dirtyForm();
+        // reset detech submit
+        detechSubmit = '';
 
         $location.path("/project/detail/" + $scope.Project.ProjectCode).replace();
+    }
+
+    // Check form before submit or preview
+    $scope.checkBeforeSubmitPre = function (type) {
+        detechSubmit = type;
+        $scope.dirtyForm(type);
     }
 });

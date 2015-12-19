@@ -63,7 +63,7 @@ app.controller('PaymentProjectController', function ($scope, $rootScope, $sce, $
             function (result) {
                 if (result.data.Status === "success") {
                     toastr.success('Bạn đã ủng hộ dự án thành công!');
-                    $window.location.href ="/#/backingdetail/" + result.data.Data;
+                    $window.location.href = "/#/backingdetail/" + result.data.Data;
                 } else {
                     CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                     $scope.Error = result.data.Message;
@@ -83,10 +83,12 @@ app.controller('PaymentProjectController', function ($scope, $rootScope, $sce, $
         $scope.backingData.Email = $scope.UserBasicInfo.Email;
         $scope.backingData.PhoneNumber = $scope.UserBasicInfo.ContactNumber;
 
-        $window.location.href = "/baokim?ProjectCode=" + $scope.backingData.ProjectCode + "&PledgeAmount=" + $scope.backingData.PledgeAmount + "&Des=" + $scope.Packet.Description
+        var baokimUrl = $scope.backingData.ProjectCode + "&PledgeAmount=" + $scope.backingData.PledgeAmount + "&Des=" + $scope.Packet.Description
             + "&Email=" + $scope.backingData.Email + "&BackerName=" + $scope.backingData.BackerName + "&RewardId=" + $scope.backingData.RewardPKgID
             + "&Quantity=" + $scope.backingData.Quantity + "&Mes=" + $scope.backingData.Description
             + "&Address=" + $scope.backingData.Address + "&Phone=" + $scope.backingData.PhoneNumber;
+
+        $window.location.href = "/baokim?ProjectCode=" + encodeURI(baokimUrl);
 
         //var promisePost = ProjectService.backingProject($scope.backingData);
 

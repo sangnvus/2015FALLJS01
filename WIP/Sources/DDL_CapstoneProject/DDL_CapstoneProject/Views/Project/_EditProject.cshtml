@@ -30,8 +30,8 @@
                 <li ng-show="Project.Status == 'approved'"><a onclick="return false" href="#update" data-toggle="tab" ng-click="getUpdateLog()">Cập nhật</a></li>
                 <li ng-show="Project.Status == 'approved'"><a onclick="return false" href="#quesion-answer" data-toggle="tab" ng-click="getQuestion()">Hỏi đáp</a></li>
                 @*<li><a onclick="return false" href="#timelineTab" data-toggle="tab" ng-click="getTimeline()">Lịch trình</a></li>*@
-                <a class="btn btn-success" ng-click="preview()">Xem trước</a>
-                <a class="btn btn-primary" ng-click="submit()" ng-if="Project.Status == 'draft' || Project.Status == 'rejected'">Gửi dự án</a>
+                <a class="btn btn-success" ng-click="checkBeforeSubmitPre('preview')" onclick="return false">Xem trước</a>
+                <a class="btn btn-primary" ng-click="checkBeforeSubmitPre('submit')" ng-if="Project.Status == 'draft' || Project.Status == 'rejected'" onclick="return false">Gửi dự án</a>
                 <a class="btn btn-primary" ng-if="Project.Status == 'pending'">Chờ kiểm duyệt</a>
                 <a class="btn btn-primary" ng-if="Project.Status == 'approved'">Đã xác nhận</a>
                 <a class="btn btn-primary" ng-if="Project.Status == 'suspended'">Đình chỉ</a>
@@ -702,7 +702,7 @@
                                 </div>
                                 <div ng-if="storyForm.$dirty">
                                     <button type="button" class="btn btn-danger" ng-click="resetStory(storyForm)">Khôi phục</button>
-                                    <button type="button" ng-disabled="storyForm.$invalid || (PrjApprove == true && (ProjectStory.Risk.length < 135 || ProjectStory.Description.length < 135))" class="btn btn-success" ng-click="editProjectStory(storyForm)">Lưu</button>
+                                    <button type="button" ng-disabled="storyForm.$invalid || (PrjApprove == true && ((ProjectStory.Risk.length < 135 && ProjectStory.Risk != '') || ProjectStory.Description.length < 135))" class="btn btn-success" ng-click="editProjectStory(storyForm)">Lưu</button>
                                 </div>
                             </div> <!-- end col-md-9 -->
                             @*<div class="col-md-3">
