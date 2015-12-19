@@ -139,7 +139,7 @@ Date: 2015.10.01
 	#feature1 .nav>li>a {
 		position: relative;
 		display: block;
-		padding: 0px 15px;
+		padding: 5px 15px;
 	}
     .tabs-right > .nav-tabs {
 	  float: right;
@@ -153,12 +153,14 @@ Date: 2015.10.01
 	.tabs-right > .nav-tabs > li > a {
 	  min-width: 74px;
 	  margin-right: 0;
-	  margin-bottom: 3px;
 	  color: #000000;
+	  border: none;
+      border-left: 3px solid transparent;
+      border-radius: 0px;
 	}
 	.tabs-right > .nav-tabs > li > a:hover{
 		color: #2bde73;
-		border-left: 3px solid #2bde73;
+		border-left: 3px solid transparent;
 		/*background: #999999;*/
 	}
 	.tabs-right > .nav-tabs .active > a,
@@ -187,8 +189,9 @@ Date: 2015.10.01
 
 	/* Feature1 */
 	#feature1{
-		background: #ECF0F1;
-		padding: 30px 0 0;
+		background: #f7fafa;
+		padding: 20px 0 0;
+	    border-bottom: 1px solid #d9d9de;
 	}
 	#feature1 h3>a{
 		color: #000000;
@@ -198,14 +201,15 @@ Date: 2015.10.01
 	/* Feature2 */
 	#feature2{
 		padding: 30px 0px;
-		background: #F9f9f9;
+		/*background: #F9f9f9;*/
+		background: #FFF;
 	}
     .pro-image img{
 		width: 100%;
 	}
 	.pro-title p {
 	  /*background: #fff;*/
-	  height: 40px;
+	  height: 30px;
 	  padding: 0;
 	  white-space: nowrap;
 	  text-overflow: ellipsis;
@@ -223,7 +227,7 @@ Date: 2015.10.01
 	.pro-footer p {
 	  /*background: #fff;*/
 	  margin-bottom: 10px;
-	  font-size: 18px;
+	  font-size: 16px;
 	  color: #828587;
 	}
 	/*.portfolio-item .item-content {
@@ -878,3 +882,24 @@ Date: 2015.10.01
 	background: #16a085;
 }
 /* End Statistic Page --------------------------------------------- */
+
+
+
+/* Backing-Detail (backing_detail.html)
+------------------------------------------------------------------- */
+#backing-detail .topLine{
+	border-top: 2px solid #CBCBCB;
+}
+#backing-detail .container1{
+	background: #FFFFFF;
+	margin: 15px 50px 15px 50px;
+	padding: 15px 30px 15px 30px;
+	border: 2px solid #CBCBCB;
+	border-radius: 5px;
+}
+#backing-detail .container1 .row{
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* End Backing-Detail --------------------------------------------- */

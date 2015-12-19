@@ -123,7 +123,7 @@
                     <h4>Lĩnh vực</h4>
                 </div>
                 <div class="portlet-widgets">
-                    <a onclick="return false" href="javascript:;"><i class="fa fa-refresh"></i></a>
+                    <a onclick="return false" href="javascript:;">@*<i class="fa fa-refresh"></i>*@</a>
                     <span class="divider"></span>
                     <a onclick="return false" data-toggle="collapse" data-parent="#accordion" href="#cate"><i class="fa fa-chevron-down"></i></a>
                 </div>
@@ -147,7 +147,7 @@
                     <h4>Hạng dự án</h4>
                 </div>
                 <div class="portlet-widgets">
-                    <a onclick="return false" href="javascript:;"><i class="fa fa-refresh"></i></a>
+                    <a onclick="return false" href="javascript:;">@*<i class="fa fa-refresh"></i>*@</a>
                     <span class="divider"></span>
                     <a onclick="return false" data-toggle="collapse" data-parent="#accordion" href="#rank"><i class="fa fa-chevron-down"></i></a>
                 </div>
@@ -171,7 +171,7 @@
                     <h4>Tỉ lệ thành công</h4>
                 </div>
                 <div class="portlet-widgets">
-                    <a onclick="return false" href="javascript:;"><i class="fa fa-refresh"></i></a>
+                    <a onclick="return false" href="javascript:;">@*<i class="fa fa-refresh"></i>*@</a>
                     <span class="divider"></span>
                     <a onclick="return false" data-toggle="collapse" data-parent="#accordion" href="#rate"><i class="fa fa-chevron-down"></i></a>
                 </div>
@@ -217,7 +217,7 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="backer in TopBacker">
-                                    <td class="col-text">{{backer.FullName}}</td>
+                                    <td class="col-text"><a href="@Url.Content("/admin/#/userprofile/{{backer.UserName}}")">{{backer.FullName}}</a></td>
                                     <td class="col-number">{{backer.TotalProject  | currency:"":0}}</td>
                                     <td class="col-number">{{backer.TotalPledgedAmount  | currency:"":0}}</td>
                                     <td class="col-text">
@@ -233,6 +233,50 @@
         </div>
     </div>
     <!-- end top backers -->
+    <!-- begin recent user table -->
+    <div class="col-lg-6">
+        <div class="portlet portlet-green">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4>Người dùng vừa đăng nhập</h4>
+                </div>
+                <div class="portlet-widgets">
+                    <a onclick="return false" data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet3"><i class="fa fa-chevron-down"></i></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div id="transactionsPortlet3" class="panel-collapse collapse in">
+                <div class="portlet-body">
+                    <div class="table-responsive dashboard-demo-table">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Đăng nhập cuối</th>
+                                    <th style="width: 100px">Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="user in RecentUser">
+                                    <td class="col-text"><a href="@Url.Content("/admin/#/userprofile/{{user.UserName}}")">{{user.FullName}}</a></td>
+                                    <td class="col-number">{{user.LastLogin | date: "HH:mm 'ngày' dd-MM-yyyy"}}</td>
+                                    <td class="col-text">
+                                        <a class="btn btn-xs btn-green" ng-if="user.Status == true">Bình thường</a>
+                                        <a class="btn btn-xs btn-red" ng-if="user.Status == false">Khóa</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end recent user table -->
+</div>
+<!-- end top table -->
+<!-- begin recent user and recent backing table -->
+<div class="row">
     <!-- Top Projects -->
     <div class="col-lg-6">
         <div class="portlet portlet-green">
@@ -261,9 +305,9 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="project in TopProject">
-                                    <td class="col-text">{{project.Title}}</td>
+                                    <td class="col-text"><a href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")">{{project.Title}}</a></td>
                                     <td class="col-text">{{project.Category}}</td>
-                                    <td class="col-text">{{project.CreatorEmail}}</td>
+                                    <td class="col-text"><a href="@Url.Content("/admin/#/userprofile/{{project.CreatorUsername}}")">{{project.CreatorFullname}}</a></td>
                                     <td class="col-number">{{project.FundingGoal | currency:"":0}}</td>
                                     <td class="col-number">{{project.CurrentFunded | currency:"":0}}</td>
                                     <td class="col-text">
@@ -279,50 +323,6 @@
         </div>
     </div>
     <!-- end top Projects -->
-</div>
-<!-- end top table -->
-<!-- begin recent user and recent backing table -->
-<div class="row">
-    <!-- begin recent user table -->
-    <div class="col-lg-6">
-        <div class="portlet portlet-green">
-            <div class="portlet-heading">
-                <div class="portlet-title">
-                    <h4>Người dùng vừa đăng nhập</h4>
-                </div>
-                <div class="portlet-widgets">
-                    <a onclick="return false" data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet3"><i class="fa fa-chevron-down"></i></a>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            <div id="transactionsPortlet3" class="panel-collapse collapse in">
-                <div class="portlet-body">
-                    <div class="table-responsive dashboard-demo-table">
-                        <table class="table table-bordered table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Tên</th>
-                                    <th>Đăng nhập cuối</th>
-                                    <th style="width: 100px">Trạng thái</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="user in RecentUser">
-                                    <td class="col-text">{{user.FullName}}</td>
-                                    <td class="col-number">{{user.LastLogin | date: "hh:mm 'ngày' dd-MM-yyyy"}}</td>
-                                    <td class="col-text">
-                                        <a class="btn btn-xs btn-green" ng-if="user.Status == true">Bình thường</a>
-                                        <a class="btn btn-xs btn-red" ng-if="user.Status == false">Khóa</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- end recent user table -->
     <!-- begin recent backing table -->
     <div class="col-lg-6">
         <div class="portlet portlet-green">
@@ -349,10 +349,10 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="backing in RecentBacking">
-                                    <td class="col-text">{{backing.Email}}</td>
-                                    <td class="col-text">{{backing.ProjectTitle}}</td>
-                                    <td class="col-number">{{backing.PledgeAmount  | currency:"":0}}</td>
-                                    <td class="col-number">{{backing.BackedDate  | date: "hh:mm 'ngày' dd-MM-yyyy"}}</td>
+                                    <td class="col-text"><a href="@Url.Content("/admin/#/userprofile/{{backing.Username}}")">{{backing.BackerName}}</a></td>
+                                    <td class="col-text"><a href="@Url.Content("/admin/#/project/{{backing.ProjectCode}}")">{{backing.ProjectTitle}}</a></td>
+                                    <td class="col-number">{{backing.PledgeAmount | currency:"":0}}</td>
+                                    <td class="col-number">{{backing.BackedDate | date: "HH:mm 'ngày' dd-MM-yyyy"}}</td>
                                 </tr>
                             </tbody>
                         </table>

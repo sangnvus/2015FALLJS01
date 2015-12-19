@@ -585,4 +585,16 @@ app.service('ProjectService', function ($http) {
         return request;
     }
 
+    // Function to get backing success information
+    this.getBackingSuccess = function (backingId) {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/GetBackingDetail',
+            params: {
+                backingId: backingId
+            }
+        });
+        return request;
+    }
+
 });

@@ -39,13 +39,14 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     $scope.FirstLoadStory = false;
 
     // Get current time
-    $scope.toDay = new Date($.now());
+    var toDayNow = new Date($.now());
+    $scope.toDay = new Date(toDayNow.getFullYear(), toDayNow.getMonth() + 1, 0);
     $scope.NewReward.EstimatedDelivery = angular.copy($scope.toDay);
 
     // Check current time of update log
-    var dd = $scope.toDay.getDate();
-    var mm = $scope.toDay.getMonth() + 1; //January is 0!
-    var yyyy = $scope.toDay.getFullYear();
+    var dd = toDayNow.getDate();
+    var mm = toDayNow.getMonth() + 1; //January is 0!
+    var yyyy = toDayNow.getFullYear();
 
     if (dd < 10) {
         dd = '0' + dd;
@@ -82,6 +83,9 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
 
     // Get project's basic record
     $scope.Project = project.data.Data;
+    if ($scope.Project.NumberDays < 0) {
+        $scope.Project.NumberDays = 0;
+    }
 
     // Check project's status
     $scope.AllEditable = true;
@@ -887,13 +891,13 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     // Delete a question
     $scope.deleteQuestion = function (index) {
         SweetAlert.swal({
-            title: "Xóa hỏi đáp!",
+            title: "Xóa hỏi đáp.",
             text: "Bạn có chắc muốn xóa hỏi đáp này?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Có!",
-            cancelButtonText: "Không!",
+            confirmButtonText: "Có",
+            cancelButtonText: "Không",
             closeOnConfirm: true,
             closeOnCancel: true
         },
@@ -1061,13 +1065,13 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     // If form is dirty
     $scope.checkForm = function (form) {
         SweetAlert.swal({
-            title: "Bạn vừa chỉnh sửa sai dữ liệu!",
+            title: "Bạn vừa chỉnh sửa sai dữ liệu.",
             text: "Bạn có muốn chỉnh sửa lại không?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Có!",
-            cancelButtonText: "Không, Khôi phục dữ liệu cũ!",
+            confirmButtonText: "Có",
+            cancelButtonText: "Không, Khôi phục dữ liệu cũ",
             closeOnConfirm: true,
             closeOnCancel: true
         },
@@ -1123,13 +1127,13 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     // If tab basic is dirty
     $scope.checkEditProjectBasic = function (form) {
         SweetAlert.swal({
-            title: "Bạn vừa thay đổi trang thông tin cơ bản!",
-            text: "Thông tin cơ bản của dự án sẽ bị chỉnh sửa!",
+            title: "Bạn vừa thay đổi trang thông tin cơ bản.",
+            text: "Thông tin cơ bản của dự án sẽ bị chỉnh sửa. Bạn có đồng ý không?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Có!",
-            cancelButtonText: "Không!",
+            confirmButtonText: "Có",
+            cancelButtonText: "Không",
             closeOnConfirm: true,
             closeOnCancel: true
         },
@@ -1159,13 +1163,13 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     // If tab reward is dirty
     $scope.checkEditReward = function (form) {
         SweetAlert.swal({
-            title: "Bạn vừa thay đổi thông tin gói quà!",
-            text: "Thông tin gói quà của dự án sẽ bị chỉnh sửa!",
+            title: "Bạn vừa thay đổi thông tin gói quà.",
+            text: "Thông tin gói quà của dự án sẽ bị chỉnh sửa. Bạn có đồng ý không?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Có!",
-            cancelButtonText: "Không!",
+            confirmButtonText: "Có",
+            cancelButtonText: "Không",
             closeOnConfirm: true,
             closeOnCancel: true
         },
@@ -1188,13 +1192,13 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     // If tab update log is dirty
     $scope.checkEditUpdateLog = function (form) {
         SweetAlert.swal({
-            title: "Bạn vừa thay đổi cập nhật dự án!",
-            text: "Nội dung cập nhật dự án sẽ bị thay đổi!",
+            title: "Bạn vừa thay đổi cập nhật dự án.",
+            text: "Nội dung cập nhật dự án sẽ bị thay đổi. Bạn có đồng ý không?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Có!",
-            cancelButtonText: "Không!",
+            confirmButtonText: "Có",
+            cancelButtonText: "Không",
             closeOnConfirm: true,
             closeOnCancel: true
         },
@@ -1217,13 +1221,13 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     // If tab story is dirty
     $scope.checkEditStory = function (form) {
         SweetAlert.swal({
-            title: "Bạn vừa thay đổi mô tả chi tiết dự án!",
-            text: "Nội dung chi tiết dự án sẽ bị chỉnh sửa!",
+            title: "Bạn vừa thay đổi mô tả chi tiết dự án.",
+            text: "Nội dung chi tiết dự án sẽ bị chỉnh sửa. Bạn có đồng ý không?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Có!",
-            cancelButtonText: "Không!",
+            confirmButtonText: "Có",
+            cancelButtonText: "Không",
             closeOnConfirm: true,
             closeOnCancel: true
         },
@@ -1246,13 +1250,13 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     // If tab story is dirty
     $scope.checkEditQuestion = function (form) {
         SweetAlert.swal({
-            title: "Bạn vừa thay đổi mục hỏi đáp!",
-            text: "Nội dung hỏi đáp sẽ bị thay đổi!",
+            title: "Bạn vừa thay đổi mục hỏi đáp.",
+            text: "Nội dung hỏi đáp sẽ bị thay đổi. Bạn có đồng ý không?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Có!",
-            cancelButtonText: "Không!",
+            confirmButtonText: "Có",
+            cancelButtonText: "Không",
             closeOnConfirm: true,
             closeOnCancel: true
         },
@@ -1275,13 +1279,13 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
     // If tab timeline is dirty
     $scope.checkEditTimeline = function (form) {
         SweetAlert.swal({
-            title: "Bạn vừa thay đổi mốc lịch trình!",
-            text: "Lịch trình dự án sẽ bị chỉnh sửa!",
+            title: "Bạn vừa thay đổi mốc lịch trình.",
+            text: "Lịch trình dự án sẽ bị chỉnh sửa. Bạn có đồng ý không?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Có!",
-            cancelButtonText: "Không!",
+            confirmButtonText: "Có",
+            cancelButtonText: "Không",
             closeOnConfirm: true,
             closeOnCancel: true
         },
@@ -1420,5 +1424,12 @@ app.controller("EditProjectController", function ($scope, $filter, $rootScope, $
             function (error) {
                 //toastr.error($scope.Error, 'Lỗi!');
             });
+    }
+
+    // preview project
+    $scope.preview = function () {
+        $scope.dirtyForm();
+
+        $location.path("/project/detail/" + $scope.Project.ProjectCode).replace();
     }
 });

@@ -93,7 +93,7 @@ namespace DDL_CapstoneProject
         {
             using (var db = new DDLDataContext())
             {
-                var projects = db.Projects.Where(x => x.IsExprired == false && x.Status != DDLConstants.ProjectStatus.DRAFT).ToList();
+                var projects = db.Projects.Where(x => x.IsExprired == false && x.Status == DDLConstants.ProjectStatus.APPROVED).ToList();
 
                 foreach (var project in projects)
                 {
@@ -143,10 +143,10 @@ namespace DDL_CapstoneProject
                 var projects = db.Projects.Where(x => x.IsExprired == false).ToList();
                 foreach (var project in projects)
                 {
-                    //if (project.PopularPoint > 4)
-                    //{
-                    project.PopularPoint = project.PopularPoint / 2;
-                    //}
+                    if (project.PopularPoint != 0)
+                    {
+                        project.PopularPoint = project.PopularPoint / 2;
+                    }
 
                     project.PopularPoint += project.PointOfTheDay;
                     project.PointOfTheDay = 0;

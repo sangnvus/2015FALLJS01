@@ -186,7 +186,11 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
             catch (NotPermissionException)
             {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không có quyền truy cập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không có quyền truy cập", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Tối thiểu 1 slide hoạt động", Type = "Not Delete" });
             }
             catch (Exception)
             {
@@ -231,7 +235,11 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
             catch (NotPermissionException)
             {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không có quyền truy cập!", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không có quyền truy cập", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Tối thiểu 1 slide active", Type = "Not Delete" });
             }
             catch (Exception)
             {

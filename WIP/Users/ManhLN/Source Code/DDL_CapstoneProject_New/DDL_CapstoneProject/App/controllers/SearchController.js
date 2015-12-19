@@ -9,28 +9,52 @@ function ($scope, $http, projectbycategory, categoryList, ProjectService, Catego
     $scope.categoryList = [{ "CategoryID": "all", "Name": "Tất cả" }].concat(categoryList.data.Data)
     $scope.projectResultListSize = projectResultListSize.data.Data;
     $scope.isAdvance = isAdvance;
-    $scope.selectedorder = selectedorder;
+
+
+    $scope.SortList = [{ 'type': 'PopularPoint', 'Label': 'Phổ biến' },
+        { 'type': 'CreatedDate', 'Label': 'Mới nhất' },
+        { 'type': 'ExpireDate', 'Label': 'Ngày còn lại' },
+        { 'type': 'CurrentFunded', 'Label': 'Ủng hộ' }];
+    for (var i in $scope.SortList) {
+        if (selectedorder == $scope.SortList[i].type)
+             $scope.selectedorder = angular.copy($scope.SortList[i]);
+    }
+
     $scope.searchkey = searchkey;
     for (var i = 0; i < $scope.categoryList.length; i++) {
         if ($scope.categoryList[i].CategoryID == selectcategory) {
             $scope.selectcategory = [$scope.categoryList[i]];
         }
     };
-    $scope.statuss = [{ 'Value': 'true', 'Label': 'Đã hết hạn' },
-        { 'Value': 'false', 'Label': 'Đang gây vốn' }];
-    $scope.selectstatus = [$scope.statuss[1]];
-    var statusString = "true";
-    if (projectResultListSize.data.Data == 0) {
-        document.getElementById("noResult").setAttribute("style", "display:inline;");
+    $scope.statuss = [
+        { 'isExpried': '', 'Label': 'Tất cả' },
+        { 'isExpried': 'true', 'Label': 'Đã hết hạn' },
+        { 'isExpried': 'false', 'Label': 'Đang gây vốn' }
+    ];
+
+    $scope.selectstatus = angular.copy($scope.statuss[0]);
+    //if (isAdvance) {
+    //    $scope.selectstatus = angular.copy($scope.statuss[0]);
+    //} else {
+    //    $scope.selectstatus = angular.copy($scope.statuss[0]);
+    //}
+    if ($scope.projectResultListSize == 0) {
+        $scope.noti = true;"";
     } else {
-        document.getElementById("noResult").setAttribute("style", "display:none;");
+        $scope.noti = false;
     }
 
 
     $scope.index = searchBlockSize;
     $scope.Search = function (category, order, searchkey, selectstatus) {
         if (selectstatus.length == 0) {
-            $scope.selectstatus = [{ 'Value': 'false', 'Label': 'Đang gây vốn' }];
+            $scope.selectstatus = angular.copy($scope.statuss[0]);
+        } else {
+            for (var i in $scope.statuss) {
+                if (selectstatus == $scope.statuss[i].isExpried) {
+                    $scope.selectstatus = angular.copy($scope.statuss[i]);
+                }
+            }
         }
         var categoryIdString = "";
         var selectedCategory = angular.copy(category);
@@ -59,32 +83,26 @@ function ($scope, $http, projectbycategory, categoryList, ProjectService, Catego
                 }
             }
         }
-
-        statusString = "";
-        for (var i = 0; i < selectstatus.length; i++) {
-            statusString += "|" + selectstatus[i].Value + "|";
-        }
-        var searchResult = ProjectService.SearchProject(0, categoryIdString, order, searchkey, statusString).then(function (projectlist) {
+        ProjectService.SearchProject(0, categoryIdString, order, searchkey, $scope.selectstatus.isExpried).then(function (projectlist) {
             $scope.projectbycategory = projectlist.data.Data;
-            ProjectService.SearchCount(categoryIdString, searchkey, statusString).then(function (response) {
-
-                if (response.data.Data == 0) {
-
-                    document.getElementById("noResult").setAttribute("style","display:inline;");
-                } else {
-                    document.getElementById("noResult").setAttribute("style", "display:none;");
-                }
+            ProjectService.SearchCount(categoryIdString, searchkey, $scope.selectstatus.isExpried).then(function (response) {
                 $scope.projectResultListSize = response.data.Data;
+                if ($scope.projectResultListSize == 0) {
+                    $scope.noti = true;
+                } else {
+                    $scope.noti = false;
+                }
                 if ($scope.projectbycategory.length >= $scope.projectResultListSize) {
                     $scope.showLoadMoreButton = false;
                 } else {
                     $scope.showLoadMoreButton = true;
                 }
             })
+
             $scope.index = $scope.projectbycategory.length;
         });
     }
-
+    
     if ($scope.projectbycategory.length >= $scope.projectResultListSize) {
         $scope.showLoadMoreButton = false;
     } else {
@@ -100,11 +118,7 @@ function ($scope, $http, projectbycategory, categoryList, ProjectService, Catego
                 categoryIdString += "|" + category[i].CategoryID + "|";
             }
         }
-        statusString = "";
-        for (var i = 0; i < $scope.selectstatus.length; i++) {
-            statusString += "|" + $scope.selectstatus[i].Value + "|";
-        }
-        var searchResult = ProjectService.SearchProject($scope.index, categoryIdString, order, searchkey, statusString).then(function (projectlist) {
+        ProjectService.SearchProject($scope.index, categoryIdString, order, searchkey, $scope.selectstatus.isExpried).then(function (projectlist) {
             $scope.projectbycategory = $scope.projectbycategory.concat(projectlist.data.Data);
             $scope.index = $scope.projectbycategory.length;
             if ($scope.projectbycategory.length >= $scope.projectResultListSize) {
@@ -113,8 +127,4 @@ function ($scope, $http, projectbycategory, categoryList, ProjectService, Catego
         });
     }
 
-    $scope.SortList = [{ 'Value': 'PopularPoint', 'Label': 'Phổ biến' },
-        { 'Value': 'CreatedDate', 'Label': 'Mới nhất' },
-        { 'Value': 'ExpireDate', 'Label': 'Ngày còn lại' },
-        { 'Value': 'CurrentFunded', 'Label': 'Ủng hộ' }];
 }]);

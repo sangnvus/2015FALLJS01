@@ -15,8 +15,8 @@
 </div> <!-- end PROCESS-CREATE -->
 <div id="create-tabs-fixedPosition"></div>
 <!--Wanrning -->
-<div class="alert alert-danger" role="alert" style="text-align: center" ng-if="Project.Status == 'rejected'">Dự án của bạn bị từ chối, xin hãy xem và chỉnh sửa lại trước khi submit lần tiếp theo. Nếu bạn cần giúp đỡ hãy liên hệ với chúng tôi qua email... hay SĐT...</div>
-<div class="alert alert-warning" role="alert" style="text-align: center" ng-if="Project.Status == 'pending'">Dự án của bạn đang trong thời gian kiểm duyệt(2-3 ngày từ ngày submit) vui lòng chờ kết quả từ chúng tôi!</div>
+<div class="alert alert-danger" role="alert" style="text-align: center" ng-if="Project.Status == 'rejected'">Dự án của bạn bị từ chối, xin hãy xem và chỉnh sửa lại trước khi gửi lần tiếp theo. Nếu bạn cần giúp đỡ hãy liên hệ với chúng tôi qua email: dandelion.system@gmail.com hay SĐT: (+84)123 810 7765</div>
+<div class="alert alert-warning" role="alert" style="text-align: center" ng-if="Project.Status == 'pending'">Dự án của bạn đang trong thời gian kiểm duyệt(2-3 ngày từ ngày gửi) vui lòng chờ kết quả từ chúng tôi!</div>
 <div class="alert alert-danger" role="alert" style="text-align: center" ng-show="errorListFlag == true">
     <p ng-repeat="error in errorList">{{error}}</p>
 </div>
@@ -29,8 +29,8 @@
                 <li><a onclick="return false" href="#story" data-toggle="tab" ng-click="getStory()">Mô tả chỉ tiết</a></li>
                 <li ng-show="Project.Status == 'approved'"><a onclick="return false" href="#update" data-toggle="tab" ng-click="getUpdateLog()">Cập nhật</a></li>
                 <li ng-show="Project.Status == 'approved'"><a onclick="return false" href="#quesion-answer" data-toggle="tab" ng-click="getQuestion()">Hỏi đáp</a></li>
-                <li><a onclick="return false" href="#timelineTab" data-toggle="tab" ng-click="getTimeline()">Lịch trình</a></li>
-                @*<li><a onclick="return false" href="#preview" data-toggle="tab">Xem trước</a></li>*@
+                @*<li><a onclick="return false" href="#timelineTab" data-toggle="tab" ng-click="getTimeline()">Lịch trình</a></li>*@
+                <a class="btn btn-success" ng-click="preview()">Xem trước</a>
                 <a class="btn btn-primary" ng-click="submit()" ng-if="Project.Status == 'draft' || Project.Status == 'rejected'">Gửi dự án</a>
                 <a class="btn btn-primary" ng-if="Project.Status == 'pending'">Chờ kiểm duyệt</a>
                 <a class="btn btn-primary" ng-if="Project.Status == 'approved'">Đã xác nhận</a>
@@ -58,7 +58,7 @@
                             <div class="col-md-9">
                                 <div class="row border-grey">
                                     <div class="col-md-4">
-                                        <p class="title">Ảnh dự án</p>
+                                        <span class="title">Ảnh dự án</span><span class="text-danger"> *</span>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="">
@@ -88,7 +88,7 @@
                                 </div> <!-- end project image -->
                                 <div class="row border-grey">
                                     <div class="col-md-4">
-                                        <p class="title">Tên dự án</p>
+                                        <span class="title">Tên dự án</span><span class="text-danger"> *</span>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="">
@@ -106,19 +106,19 @@
                                 </div> <!-- end project title -->
                                 <div class="row border-grey">
                                     <div class="col-md-4">
-                                        <p class="title">Mô tả ngắn</p>
+                                        <span class="title">Mô tả ngắn</span><span class="text-danger"> *</span>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="field-wrapper">
                                             <textarea class="form-control fnt18"
                                                       rows="3" style="resize: none" name="SubDes" ng-trim="true"
-                                                      maxlength="135"
+                                                      maxlength="300"
                                                       ng-model="Project.SubDescription"
                                                       ng-disabled="AllEditable == false"
                                                       msd-elastic="\n"></textarea>
                                             @*ng-model-options="{ updateOn: 'change blur'}"*@
                                             <div style="position: relative">
-                                                <label for="" class="countText" style="top: -30px; right: 5px">{{Project.SubDescription.length + "/135"}}</label>
+                                                <label for="" class="countText" style="top: -30px; right: 5px">{{Project.SubDescription.length + "/300"}}</label>
                                             </div>
                                             @*<div ng-show="BasicForm.SubDes.$dirty && BasicForm.SubDes.$invalid" class="text-danger">
                                                     <span class="glyphicon glyphicon-remove text-danger"></span>
@@ -126,18 +126,18 @@
                                                     <span ng-show="BasicForm.SubDes.$error.maxlength">Tên dự án tối đa 135 kí tự!</span>
                                                 </div>*@
                                         </div>
-                                        <div class="field-help-2" ng-class="{'text-danger' : (Project.SubDescription.length > 135 || Project.SubDescription.length < 30) && (errorListFlag == true || PrjApprove == true)}">
+                                        <div class="field-help-2" ng-class="{'text-danger' : (Project.SubDescription.length > 300 || Project.SubDescription.length < 30) && (errorListFlag == true || PrjApprove == true)}">
                                             <span class="glyphicon glyphicon-remove text-danger"
-                                                  ng-show="(Project.SubDescription.length > 135 || Project.SubDescription.length < 30) && (errorListFlag == true || PrjApprove == true)"></span>
+                                                  ng-show="(Project.SubDescription.length > 300 || Project.SubDescription.length < 30) && (errorListFlag == true || PrjApprove == true)"></span>
                                             <span>
-                                                Mô tả ngắn ít nhất là 30 kí tự và dài nhất là 135 kí tự!
+                                                Mô tả ngắn ít nhất là 30 kí tự và dài nhất là 300 kí tự!
                                             </span>
                                         </div>
                                     </div>
                                 </div> <!-- end short blurb -->
                                 <div class="row border-grey">
                                     <div class="col-md-4">
-                                        <p class="title">Lĩnh vực</p>
+                                        <span class="title">Lĩnh vực</span><span class="text-danger"> *</span>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="field-wrapper">
@@ -148,7 +148,7 @@
                                 </div> <!-- end category -->
                                 <div class="row border-grey">
                                     <div class="col-md-4">
-                                        <p class="title">Địa điểm</p>
+                                        <span class="title">Địa điểm</span><span class="text-danger"> *</span>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="">
@@ -173,7 +173,7 @@
                                 </div> <!-- end location -->
                                 <div class="row border-grey">
                                     <div class="col-md-4">
-                                        <p class="title">Thời hạn</p>
+                                        <span class="title">Thời hạn</span><span class="text-danger"> *</span>
                                     </div>
                                     <div class="col-md-8">
                                         @*<div class="form-inline">
@@ -199,7 +199,7 @@
                                 </div> <!-- end funding duration -->
                                 <div class="row border-grey">
                                     <div class="col-md-4">
-                                        <p class="title">Mục tiêu gây quỹ</p>
+                                        <span class="title">Mục tiêu gây quỹ</span><span class="text-danger"> *</span>
                                     </div>
                                     <div class="col-md-8">
                                         <input type="text" format="number" class="form-control fnt-b" ng-trim="true"
@@ -345,7 +345,7 @@
                                                 </div>
                                                 <div class="col-md-10">
                                                     <div class="row pb5">
-                                                        <div class="col-md-4">Mức ủng hộ</div>
+                                                        <div class="col-md-4"><span>Mức ủng hộ</span><span class="text-danger"> *</span></div>
                                                         <div class="col-md-8">
                                                             <input type="text" format="number" id="pledge_amount" name="PledgeAmount" ng-model="editPkg.PledgeAmount" class="form-control">
                                                             @*<div ng-show="EditRewardModal.PledgeAmount.$dirty && editPkg.PledgeAmount < 1000" class="text-danger">
@@ -362,7 +362,7 @@
                                                         </div>
                                                     </div> <!-- end Pledge amount -->
                                                     <div class="row pb5">
-                                                        <div class="col-md-4">Mô tả</div>
+                                                        <div class="col-md-4"><span>Mô tả</span><span class="text-danger"> *</span></div>
                                                         <div class="col-md-8">
                                                             <textarea class="form-control" rows="5" style="resize: none" name="NewRewardDes"
                                                                       maxlength="135" ng-trim="true" ng-model="editPkg.Description"></textarea>
@@ -381,11 +381,11 @@
                                                         </div>
                                                     </div> <!-- end Description -->
                                                     <div class="row pt5 pb5" ng-show="selectedType.value != 'no reward'">
-                                                        <div class="col-md-4">Thời gian giao hàng</div>
+                                                        <div class="col-md-4"><span>Thời gian giao hàng</span><span class="text-danger"> *</span></div>
                                                         <div class="col-md-8">
                                                             @*<input type="month" class="form-control" min="{{toDay |  date:'yyyy-MM'}}" style="line-height: 15px;" name="deadline"
                                                                 ng-model="editPkg.EstimatedDelivery">*@
-                                                            <input type="month" class="form-control" min="{{editPkg.EstimatedDelivery | date:'yyyy-MM'}}" style="line-height: 15px;" name="deadline"
+                                                            <input type="month" class="form-control" min="{{toDay | date:'yyyy-MM'}}" style="line-height: 15px;" name="deadline"
                                                                    ng-model="editPkg.EstimatedDelivery">
                                                             <div ng-show="EditRewardModal.deadline.$dirty && EditRewardModal.deadline.$invalid" class="text-danger">
                                                                 <span class="glyphicon glyphicon-remove text-danger"></span>
@@ -458,7 +458,7 @@
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="row pb5">
-                                                                <div class="col-md-4">Mức ủng hộ</div>
+                                                                <div class="col-md-4"><span>Mức ủng hộ</span><span class="text-danger"> *</span></div>
                                                                 <div class="col-md-8">
                                                                     <input type="text" format="number"
                                                                            name="NewRewardPledge"
@@ -480,7 +480,7 @@
                                                                 </div>
                                                             </div> <!-- end Pledge amount -->
                                                             <div class="row pb5">
-                                                                <div class="col-md-4">Mô tả</div>
+                                                                <div class="col-md-4"><span>Mô tả</span><span class="text-danger"> *</span></div>
                                                                 <div class="col-md-8">
                                                                     <textarea class="form-control" rows="5" style="resize: none" name="NewRewardDes"
                                                                               maxlength="135" ng-trim="true"
@@ -503,7 +503,7 @@
                                                                 </div>
                                                             </div> <!-- end Description -->
                                                             <div class="row pt5 pb5" ng-show="NewReward.Type != 'no reward'">
-                                                                <div class="col-md-4">Thời gian giao hàng</div>
+                                                                <div class="col-md-4"><span>Thời gian giao hàng</span><span class="text-danger"> *</span></div>
                                                                 <div class="col-md-8">
                                                                     @*<input type="month" min="{{toDay |  date:'yyyy-MM'}}" class="form-control delivery-date" style="line-height: 15px;"
                                                                         name="NewRewardDelivery" ng-model="NewReward.EstimatedDelivery">*@
@@ -654,7 +654,7 @@
                                 </div> <!-- end Project video -->
                                 <div class="row border-grey">
                                     <div class="col-md-3">
-                                        <p class="title">Mô tả chi tiết</p>
+                                        <span class="title">Mô tả chi tiết</span><span class="text-danger"> *</span>
                                     </div>
                                     <div class="col-md-9">
                                         <div class="help">
@@ -669,15 +669,15 @@
                                 </div> <!-- end Project Description -->
                                 <div class="row border-grey">
                                     <div class="col-md-3">
-                                        <p class="title">Khó khăn và thử thách</p>
+                                        <span class="title">Khó khăn và thử thách</span>
                                     </div>
                                     <div class="col-md-9">
                                         <div class="help">
                                             <p>
                                                 <b>Khó khăn bạn đang gặp phải là gì và làm thế nào bạn vượt qua nó?</b>
                                             </p>
-                                            <p ng-class="{'text-danger' : ProjectStory.Risk.length < 135 && (errorListFlag == true || PrjApprove == true)}">
-                                                <span class="glyphicon glyphicon-remove text-danger" ng-show="ProjectStory.Risk.length < 135 && (errorListFlag == true || PrjApprove == true)"></span>
+                                            <p ng-class="{'text-danger' : (ProjectStory.Risk.length < 135 && ProjectStory.Risk != '') && (errorListFlag == true || PrjApprove == true)}">
+                                                <span class="glyphicon glyphicon-remove text-danger" ng-show="(ProjectStory.Risk.length < 135 && ProjectStory.Risk != '') && (errorListFlag == true || PrjApprove == true)"></span>
                                                 Mô tả khó khăn cần ít nhất 135 kí tự!
                                             </p>
                                         </div>
@@ -1239,216 +1239,216 @@
                 </div>  <!-- end-content -->
             </div> <!-- end QUESTION AND ANSWER -->
             @* begin tab timeline *@
-            <div id="timelineTab" role="tabpanel" class="tab-pane fade in border-main">
-                <div class="pt30">
-                    <h4 class="text-center">Lịch trình dự án</h4>
-                    <h5 class="text-center">Đây là thời gian cam kết hoàn thành tiến độ dự án</h5>
-                </div> <!-- end-title -->
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-9">
-                            <form name="timelineForm" ng-model="timelineForm" novalidate>
-                                <div ng-repeat="timeline in Timeline">
-                                    <div class="row border-grey">
-                                        <div class="col-md-2">
-                                            <p class="title">#{{$index + 1}}</p>
-                                        </div>
-                                        <div class="col-md-10">
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <p class="title">Tiêu đề</p>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <input type="text" class="form-control" name="title{{$index}}" ng-model="timeline.Title" ng-trim="true"
-                                                           maxlength="60" id="title{{$index}}" disabled>
-                                                    @*<div ng-show="timelineForm.title{{$index}}.$dirty && timelineForm.title{{$index}}.$invalid" class="text-danger">
-                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                            <span ng-show="timelineForm.title{{$index}}.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
-                                                            <span ng-show="timelineForm.title{{$index}}.$error.maxlength">Trả lời dài nhất 60 kí tự!</span>
-                                                        </div>*@
-                                                </div>
-                                            </div> <!-- end Title and Delete-->
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <p class="title">Ngày</p>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <input type="date" class="form-control" style="line-height: 15px" name="duedate" ng-model="timeline.DueDate" id="date{{$index}}" disabled>
-                                                    <div ng-show="timelineForm.duedate.$dirty && timelineForm.duedate.$invalid" class="text-danger">
-                                                        <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                        <span ng-show="timelineForm.duedate.$invalid">Xin hãy nhập đúng chuẩn ngày tháng</span>
+            @*<div id="timelineTab" role="tabpanel" class="tab-pane fade in border-main">
+                    <div class="pt30">
+                        <h4 class="text-center">Lịch trình dự án</h4>
+                        <h5 class="text-center">Đây là thời gian cam kết hoàn thành tiến độ dự án</h5>
+                    </div> <!-- end-title -->
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <form name="timelineForm" ng-model="timelineForm" novalidate>
+                                    <div ng-repeat="timeline in Timeline">
+                                        <div class="row border-grey">
+                                            <div class="col-md-2">
+                                                <p class="title">#{{$index + 1}}</p>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <p class="title">Tiêu đề</p>
                                                     </div>
-                                                </div>
-                                            </div><!-- end Date -->
-                                            <div class="row pt5 pb5">
-                                                <div class="col-md-3">
-                                                    <p class="title">Ảnh</p>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <div class="asset_upload">
-                                                        <div class="image-clip pull-left">
-                                                            <img src="{{timeline.ImageUrl}}" class="img-responsive center-block">
-                                                        </div>
-                                                        <div class="upload">
-                                                            <input type="file" class="avatar file" ng-file-dirty
-                                                                   ng-file-select="onFileSelect($files)" accept="image/*" id="{{$index}}" disabled>
-                                                            @*<input class="avatar file" type="file">*@
-                                                            <strong class="center profile-photo">
-                                                                Lựa chọn một hình ảnh từ máy tính của bạn
-                                                                <span> JPEG, PNG, GIF, or BMP  •  50MB file limit</span>
-                                                            </strong>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div> <!-- end Image -->
-                                            <div class="row pt5 pb5">
-                                                <div class="col-md-3">
-                                                    <p class="title">Mô tả</p>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <div class="field-wrapper">
-                                                        <textarea class="form-control" rows="5" style="resize: none" name="desc{{$index}}" ng-model="timeline.Description" ng-trim="true"
-                                                                  maxlength="135" id="desc{{$index}}" disabled></textarea>
-                                                        @*<div ng-show="timelineForm.desc{{$index}}.$dirty && timelineForm.desc{{$index}}.$invalid" class="text-danger">
+                                                    <div class="col-md-9">
+                                                        <input type="text" class="form-control" name="title{{$index}}" ng-model="timeline.Title" ng-trim="true"
+                                                               maxlength="60" id="title{{$index}}" disabled>
+                                                        @*<div ng-show="timelineForm.title{{$index}}.$dirty && timelineForm.title{{$index}}.$invalid" class="text-danger">
                                                                 <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                                <span ng-show="timelineForm.desc{{$index}}.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
-                                                                <span ng-show="timelineForm.desc{{$index}}.$error.maxlength">Trả lời dài nhất 135 kí tự!</span>
-                                                            </div>*@
+                                                                <span ng-show="timelineForm.title{{$index}}.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
+                                                                <span ng-show="timelineForm.title{{$index}}.$error.maxlength">Trả lời dài nhất 60 kí tự!</span>
+                                                            </div>
                                                     </div>
-                                                </div>
-                                            </div> <!-- end Description -->
-                                            <div class="row pt5 pb5">
-                                                <div class="col-md-3"></div>
-                                                <div class="col-md-9">
-                                                    <a class="btn btn-info btn-sm btn-wide pl5 pr5" ng-click="turnEditTimeline($index)" ng-if="AllEditable == true">Sửa</a>
-                                                    <a class="btn btn-success btn-sm btn-wide pl5 pr5" ng-disabled="timelineForm.$invalid" ng-click="timelineForm.$valid && updateTimeline($index)" ng-if="editTimeline[$index] == true">Lưu</a>
-                                                    <a class="btn btn-danger btn-sm btn-wide pl5 pr5" ng-click="deleteTimeline($index)" ng-if="AllEditable == true">Xóa</a>
-                                                </div>
-                                            </div> <!-- end Action -->
+                                                </div> <!-- end Title and Delete-->
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <p class="title">Ngày</p>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="date" class="form-control" style="line-height: 15px" name="duedate" ng-model="timeline.DueDate" id="date{{$index}}" disabled>
+                                                        <div ng-show="timelineForm.duedate.$dirty && timelineForm.duedate.$invalid" class="text-danger">
+                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                            <span ng-show="timelineForm.duedate.$invalid">Xin hãy nhập đúng chuẩn ngày tháng</span>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- end Date -->
+                                                <div class="row pt5 pb5">
+                                                    <div class="col-md-3">
+                                                        <p class="title">Ảnh</p>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <div class="asset_upload">
+                                                            <div class="image-clip pull-left">
+                                                                <img src="{{timeline.ImageUrl}}" class="img-responsive center-block">
+                                                            </div>
+                                                            <div class="upload">
+                                                                <input type="file" class="avatar file" ng-file-dirty
+                                                                       ng-file-select="onFileSelect($files)" accept="image/*" id="{{$index}}" disabled>
+                                                                <input class="avatar file" type="file">
+                                                                <strong class="center profile-photo">
+                                                                    Lựa chọn một hình ảnh từ máy tính của bạn
+                                                                    <span> JPEG, PNG, GIF, or BMP  •  50MB file limit</span>
+                                                                </strong>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> <!-- end Image -->
+                                                <div class="row pt5 pb5">
+                                                    <div class="col-md-3">
+                                                        <p class="title">Mô tả</p>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <div class="field-wrapper">
+                                                            <textarea class="form-control" rows="5" style="resize: none" name="desc{{$index}}" ng-model="timeline.Description" ng-trim="true"
+                                                                      maxlength="135" id="desc{{$index}}" disabled></textarea>
+                                                            <div ng-show="timelineForm.desc{{$index}}.$dirty && timelineForm.desc{{$index}}.$invalid" class="text-danger">
+                                                                    <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                    <span ng-show="timelineForm.desc{{$index}}.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
+                                                                    <span ng-show="timelineForm.desc{{$index}}.$error.maxlength">Trả lời dài nhất 135 kí tự!</span>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                </div> <!-- end Description -->
+                                                <div class="row pt5 pb5">
+                                                    <div class="col-md-3"></div>
+                                                    <div class="col-md-9">
+                                                        <a class="btn btn-info btn-sm btn-wide pl5 pr5" ng-click="turnEditTimeline($index)" ng-if="AllEditable == true">Sửa</a>
+                                                        <a class="btn btn-success btn-sm btn-wide pl5 pr5" ng-disabled="timelineForm.$invalid" ng-click="timelineForm.$valid && updateTimeline($index)" ng-if="editTimeline[$index] == true">Lưu</a>
+                                                        <a class="btn btn-danger btn-sm btn-wide pl5 pr5" ng-click="deleteTimeline($index)" ng-if="AllEditable == true">Xóa</a>
+                                                    </div>
+                                                </div> <!-- end Action -->
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
-                            <div class="row border-grey border-dash">
-                                <div class="addReward">
-                                    <div class="txt-c">
-                                        <a class="btn btn-success" data-toggle="modal" data-target="#addTimeline" ng-click="onNewPoint()" ng-show="AllEditable == true">Thêm timeline</a>
-                                        <!-- add new reward dialog -->
-                                        <div class="modal fade" id="addTimeline" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                            <form class="form-horizontal" role="form" name="CreateTimelineForm" novalidate>
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="row border-grey">
-                                                            <div class="col-md-2">
-                                                                <p class="title">Tạo mốc thời gian mới</p>
-                                                            </div>
-                                                            <div class="col-md-10">
-                                                                <div class="row">
-                                                                    <div class="col-md-3">
-                                                                        <p class="title">Tiêu đề</p>
-                                                                    </div>
-                                                                    <div class="col-md-9">
-                                                                        <input type="text" class="form-control" name="title" ng-trim="true"
-                                                                               maxlength="60" ng-model="newTimeline.Title">
-                                                                        @*<div ng-show="CreateTimelineForm.title.$dirty && CreateTimelineForm.title.$invalid" class="text-danger">
+                                </form>
+                                <div class="row border-grey border-dash">
+                                    <div class="addReward">
+                                        <div class="txt-c">
+                                            <a class="btn btn-success" data-toggle="modal" data-target="#addTimeline" ng-click="onNewPoint()" ng-show="AllEditable == true">Thêm timeline</a>
+                                            <!-- add new reward dialog -->
+                                            <div class="modal fade" id="addTimeline" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <form class="form-horizontal" role="form" name="CreateTimelineForm" novalidate>
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="row border-grey">
+                                                                <div class="col-md-2">
+                                                                    <p class="title">Tạo mốc thời gian mới</p>
+                                                                </div>
+                                                                <div class="col-md-10">
+                                                                    <div class="row">
+                                                                        <div class="col-md-3">
+                                                                            <p class="title">Tiêu đề</p>
+                                                                        </div>
+                                                                        <div class="col-md-9">
+                                                                            <input type="text" class="form-control" name="title" ng-trim="true"
+                                                                                   maxlength="60" ng-model="newTimeline.Title">
+                                                                            <div ng-show="CreateTimelineForm.title.$dirty && CreateTimelineForm.title.$invalid" class="text-danger">
+                                                                                    <span class="glyphicon glyphicon-remove text-danger"></span>
+                                                                                    <span ng-show="CreateTimelineForm.title.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
+                                                                                    <span ng-show="CreateTimelineForm.title.$error.maxlength">Trả lời dài nhất 60 kí tự!</span>
+                                                                                </div>
+                                                                        </div>
+                                                                    </div> <!-- end Title and Delete-->
+                                                                    <div class="row">
+                                                                        <div class="col-md-3">
+                                                                            <p class="title">Ngày</p>
+                                                                        </div>
+                                                                        <div class="col-md-9">
+                                                                            <input type="date" class="form-control" min="{{toDay | date:'yyyy-MM-dd'}}" name="date"
+                                                                                   style="line-height: 15px" ng-model="newTimeline.DueDate">
+                                                                            <div ng-show="CreateTimelineForm.date.$dirty && timelineForm.date.$invalid" class="text-danger">
                                                                                 <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                                                <span ng-show="CreateTimelineForm.title.$error.minlength">Trả lời ít nhất 10 kí tự!</span>
-                                                                                <span ng-show="CreateTimelineForm.title.$error.maxlength">Trả lời dài nhất 60 kí tự!</span>
-                                                                            </div>*@
-                                                                    </div>
-                                                                </div> <!-- end Title and Delete-->
-                                                                <div class="row">
-                                                                    <div class="col-md-3">
-                                                                        <p class="title">Ngày</p>
-                                                                    </div>
-                                                                    <div class="col-md-9">
-                                                                        <input type="date" class="form-control" min="{{toDay | date:'yyyy-MM-dd'}}" name="date"
-                                                                               style="line-height: 15px" ng-model="newTimeline.DueDate">
-                                                                        <div ng-show="CreateTimelineForm.date.$dirty && timelineForm.date.$invalid" class="text-danger">
-                                                                            <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                                            <span ng-show="CreateTimelineForm.date.$invalid">Xin hãy nhập đúng chuẩn ngày tháng</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div><!-- end Date -->
-                                                                <div class="row pt5 pb5">
-                                                                    <div class="col-md-3">
-                                                                        <p class="title">Ảnh</p>
-                                                                    </div>
-                                                                    <div class="col-md-9">
-                                                                        <div class="asset_upload">
-                                                                            <div class="image-clip pull-left">
-                                                                                <img id="#newTimelineImg" src="{{newTimeline.ImageUrl}}" class="img-responsive center-block">
-                                                                            </div>
-                                                                            <div class="upload">
-                                                                                <input type="file" class="avatar file" ng-file-dirty
-                                                                                       ng-file-select="onFileSelect($files)" accept="image/*">
-                                                                                <strong class="center profile-photo">
-                                                                                    Lựa chọn một hình ảnh từ máy tính của bạn
-                                                                                    <span> JPEG, PNG, GIF, or BMP  •  50MB file limit</span>
-                                                                                </strong>
+                                                                                <span ng-show="CreateTimelineForm.date.$invalid">Xin hãy nhập đúng chuẩn ngày tháng</span>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div> <!-- end Image -->
-                                                                <div class="row pt5 pb5">
-                                                                    <div class="col-md-3">
-                                                                        <p class="title">Mô tả</p>
-                                                                    </div>
-                                                                    <div class="col-md-9">
-                                                                        <div class="field-wrapper">
-                                                                            <textarea class="form-control" rows="5" style="resize: none" name="desc" ng-trim="true"
-                                                                                      maxlength="135" ng-model="newTimeline.Description"></textarea>
+                                                                    </div><!-- end Date -->
+                                                                    <div class="row pt5 pb5">
+                                                                        <div class="col-md-3">
+                                                                            <p class="title">Ảnh</p>
                                                                         </div>
-                                                                    </div>
-                                                                </div> <!-- end Description -->
+                                                                        <div class="col-md-9">
+                                                                            <div class="asset_upload">
+                                                                                <div class="image-clip pull-left">
+                                                                                    <img id="#newTimelineImg" src="{{newTimeline.ImageUrl}}" class="img-responsive center-block">
+                                                                                </div>
+                                                                                <div class="upload">
+                                                                                    <input type="file" class="avatar file" ng-file-dirty
+                                                                                           ng-file-select="onFileSelect($files)" accept="image/*">
+                                                                                    <strong class="center profile-photo">
+                                                                                        Lựa chọn một hình ảnh từ máy tính của bạn
+                                                                                        <span> JPEG, PNG, GIF, or BMP  •  50MB file limit</span>
+                                                                                    </strong>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div> <!-- end Image -->
+                                                                    <div class="row pt5 pb5">
+                                                                        <div class="col-md-3">
+                                                                            <p class="title">Mô tả</p>
+                                                                        </div>
+                                                                        <div class="col-md-9">
+                                                                            <div class="field-wrapper">
+                                                                                <textarea class="form-control" rows="5" style="resize: none" name="desc" ng-trim="true"
+                                                                                          maxlength="135" ng-model="newTimeline.Description"></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div> <!-- end Description -->
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="offNewPoint()">Bỏ</button>
-                                                            <button type="button" ng-disabled="CreateTimelineForm.$invalid" class="btn btn-success" ng-click="createTimeline()">
-                                                                Tạo
-                                                            </button>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="offNewPoint()">Bỏ</button>
+                                                                <button type="button" ng-disabled="CreateTimelineForm.$invalid" class="btn btn-success" ng-click="createTimeline()">
+                                                                    Tạo
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </form>
-                                        </div> <!-- end addModal -->
+                                                </form>
+                                            </div> <!-- end addModal -->
+                                        </div>
                                     </div>
+                                    <!-- add reward at here -->
                                 </div>
-                                <!-- add reward at here -->
-                            </div>
-                        </div> <!-- end col-md-9 -->
+                            </div> <!-- end col-md-9 -->
 
-                        <div class="col-md-3">
-                            <!-- <div class="border-tips">
-                              <p>How to:</p>
-                              <a href=""><b>Create greate rewards</b></a>
-                            </div>
-                            <div class="help">
-                              <h5><b>What to offer</b></h5>
-                              <p>Copies of what you're making, unique experiences, and limited editions work great.</p>
-                              <h5><b>How to price</b></h5>
-                              <ul>
-                                <li>Price fairly, and offer a good value. What would <i>you</i> consider a fair exchange?</li>
-                                <li>Something fun for <span class="money gbp no-code">£10</span> or less is always a good idea.</li>
-                                <li>Funds that backers pledge to account for shipping costs will count towards your project's funding goal. Keep this in mind when setting your goal.</li>
-                                <li>Use the shipping tool to add delivery costs for any country you like (including your own). The price will be added to backer's pledges as they check out.</li>
-                              </ul>
-                              <h5><b>What's prohibited</b></h5>
-                              <ul>
-                                <li>Rewards not directly produced by the creator or the project itself</li>
-                                <li>Financial incentives</li>
-                                <li>Raffles, lotteries, and sweepstakes</li>
-                                <li>Coupons, discounts, and cash-value gift cards</li>
-                                <li>For more, please review our list of prohibited items and subject matter</li>
-                              </ul>
-                              <h5><b>Need ideas for rewards?</b></h5>
-                              <p>Campus has a discussion on that — and plenty more.</p>
-                            </div> -->
-                        </div><!-- end col-md-3 -->
-                    </div>
-                </div>  <!-- end-content -->
-            </div> <!-- end TIMELINE-TAB -->
+                            <div class="col-md-3">
+                                <!-- <div class="border-tips">
+                                  <p>How to:</p>
+                                  <a href=""><b>Create greate rewards</b></a>
+                                </div>
+                                <div class="help">
+                                  <h5><b>What to offer</b></h5>
+                                  <p>Copies of what you're making, unique experiences, and limited editions work great.</p>
+                                  <h5><b>How to price</b></h5>
+                                  <ul>
+                                    <li>Price fairly, and offer a good value. What would <i>you</i> consider a fair exchange?</li>
+                                    <li>Something fun for <span class="money gbp no-code">£10</span> or less is always a good idea.</li>
+                                    <li>Funds that backers pledge to account for shipping costs will count towards your project's funding goal. Keep this in mind when setting your goal.</li>
+                                    <li>Use the shipping tool to add delivery costs for any country you like (including your own). The price will be added to backer's pledges as they check out.</li>
+                                  </ul>
+                                  <h5><b>What's prohibited</b></h5>
+                                  <ul>
+                                    <li>Rewards not directly produced by the creator or the project itself</li>
+                                    <li>Financial incentives</li>
+                                    <li>Raffles, lotteries, and sweepstakes</li>
+                                    <li>Coupons, discounts, and cash-value gift cards</li>
+                                    <li>For more, please review our list of prohibited items and subject matter</li>
+                                  </ul>
+                                  <h5><b>Need ideas for rewards?</b></h5>
+                                  <p>Campus has a discussion on that — and plenty more.</p>
+                                </div> -->
+                            </div><!-- end col-md-3 -->
+                        </div>
+                    </div>  <!-- end-content -->
+                </div> <!-- end TIMELINE-TAB -->*@
             @* end TimeLine *@
         </div>
     </div>

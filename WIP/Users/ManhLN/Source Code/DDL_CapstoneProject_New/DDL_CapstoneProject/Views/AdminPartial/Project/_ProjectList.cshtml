@@ -27,7 +27,7 @@
                                     <th>Người tạo</th>
                                     <th>Mục tiêu</th>
                                     <th>Ngày kết thúc</th>
-                                    <th>Lượt ủng hộ</th>
+                                    @*<th>Lượt ủng hộ</th>*@
                                     <th>Tiền được ủng hộ</th>
                                     <th>Trạng thái</th>
                                     <th style="width: 34px;"></th>
@@ -38,17 +38,18 @@
                                     <td class="col-text" style="width: 50px;">{{project.ProjectCode}}</td>
                                     <td class="col-text">{{project.Title}}</td>
                                     <td class="col-text">{{project.Category}}</td>
-                                    <td class="center col-text">{{project.CreatorEmail}}</td>
+                                    <td class="center col-text"><a href="@Url.Content("/admin/#/userprofile/{{project.CreatorUsername}}")">{{project.CreatorFullname}}</a></td>
                                     <td class="center col-number col-datetime">{{project.FundingGoal | currency:"":0}}</td>
-                                    <td class="center col-number col-datetime">{{project.ExpireDate | date:"dd/MM/yyyy"}}</td>
-                                    <td class="center col-number col-datetime">{{project.TotalBacking | currency:"":0}}</td>
+                                    <td class="center col-number col-datetime" data-order="{{project.ExpireDate}}">{{project.ExpireDate | date:"dd/MM/yyyy"}}</td>
+                                    @*<td class="center col-number col-datetime">{{project.TotalBacking | currency:"":0}}</td>*@
                                     <td class="center col-number col-datetime">{{project.CurrentFunded | currency:"":0}}</td>
                                     <td class="center">
-                                        <span class="label label-success center-block" ng-if="project.Status == 'approved'" style="padding: 9px">Đang chạy</span>
-                                        <span class="label label-danger center-block" ng-if="project.Status == 'rejected'" style="padding: 9px">Từ chối</span>
-                                        <span class="label label-danger center-block" ng-if="project.Status == 'expired'" style="padding: 9px">Hết hạn</span>
-                                        <span class="label label-primary center-block" ng-if="project.Status == 'pending'" style="padding: 9px">Chờ duyệt</span>
-                                        <span class="label label-danger center-block" ng-if="project.Status == 'suspended'" style="padding: 9px">Đình chỉ</span>
+                                        <span class="label label-success center-block" ng-if="project.Status == 'approved' && !project.IsExprired" style="padding: 9px">Đang chạy</span>
+                                        <span class="label label-danger center-block" ng-if="project.Status == 'rejected' && !project.IsExprired" style="padding: 9px">Từ chối</span>
+                                        <span class="label label-success center-block" ng-if="project.IsExprired && project.IsFunded" style="padding: 9px">Thành công</span>
+                                        <span class="label label-danger center-block" ng-if="project.IsExprired && !project.IsFunded" style="padding: 9px">Thất bại</span>
+                                        <span class="label label-primary center-block" ng-if="project.Status == 'pending' && !project.IsExprired" style="padding: 9px">Chờ duyệt</span>
+                                        <span class="label label-danger center-block" ng-if="project.Status == 'suspended' && !project.IsExprired" style="padding: 9px">Đình chỉ</span>
                                     </td>
                                     <td class="center" style="width: 34px;">
                                         <a href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")">

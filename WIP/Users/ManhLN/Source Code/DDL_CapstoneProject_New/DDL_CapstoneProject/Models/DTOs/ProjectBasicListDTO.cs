@@ -10,6 +10,8 @@ namespace DDL_CapstoneProject.Models.DTOs
         public int ProjectID { get; set; }
         public string ProjectCode { get; set; }
         public string CreatorEmail { get; set; }
+        public string CreatorUsername { get; set; }
+        public string CreatorFullname { get; set; }
         public string Title { get; set; }
         public decimal CurrentFunded { get; set; }
         public DateTime? ExpireDate { get; set; }
@@ -17,5 +19,7 @@ namespace DDL_CapstoneProject.Models.DTOs
         public string Category { get; set; }
         public string Status { get; set; }
         public int TotalBacking { get; set; }
+        public bool IsExprired { get; set; }
+        public bool IsFunded { get; set; }
     }
 }

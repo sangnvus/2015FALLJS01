@@ -41,7 +41,7 @@ namespace DDL_CapstoneProject.Ultilities
 
                 file.SaveAs(path);
 
-                return fileName;
+                return fileName + "?v=" + (new Random().Next());
             }
 
             return string.Empty;

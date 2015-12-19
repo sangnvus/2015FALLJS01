@@ -93,8 +93,11 @@ app.config(["$routeProvider", function ($routeProvider) {
                         searchkey = "null";
                         params.searchkey = [""];
                     }
-
-                    var promise = ProjectService.SearchProject(0, "|" + params.categoryid + "|", params.order, searchkey, "true");
+                    var status = "";
+                    if (!params.advance) {
+                        status = "false";
+                    }
+                    var promise = ProjectService.SearchProject(0, "|" + params.categoryid + "|", params.order, searchkey, status);
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
                 }],
                 categoryList: ['$rootScope', 'CategoryService', 'CommmonService', '$q', function ($rootScope, CategoryService, CommmonService, $q) {
@@ -119,9 +122,13 @@ app.config(["$routeProvider", function ($routeProvider) {
                     return $route.current.params.searchkey;
                 }],
                 projectResultListSize: ['ProjectService', '$route', '$q', '$rootScope', 'CommmonService', function (ProjectService, $route, $q, $rootScope, CommmonService) {
-                    var promise = ProjectService.SearchCount("|" + $route.current.params.categoryid + "|", $route.current.params.searchkey, "true");
+                    var status = ""
+                    if (!$route.current.params.advance) {
+                        status = "false";
+                    }
+                    var promise = ProjectService.SearchCount("|" + $route.current.params.categoryid + "|", $route.current.params.searchkey, status);
                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
-                }],
+                }]
 
             }
         });
@@ -365,6 +372,21 @@ app.config(["$routeProvider", function ($routeProvider) {
         }
     });
 
+    $routeProvider.when("/backingdetail/:id",
+     {
+         templateUrl: "ClientPartial/BackingDetail",
+         controller: 'BackingSuccessProjectController',
+         title: 'Chi tiết ủng hộ - Dandelion',
+         resolve: {
+             backingData: [
+                 '$rootScope', '$route', '$q', 'ProjectService', 'CommmonService', function ($rootScope, $route, $q, ProjectService, CommmonService) {
+                     var promise = ProjectService.getBackingSuccess($route.current.params.id);
+                     return CommmonService.checkHttpResult($q, promise, $rootScope.BaseUrl);
+                 }
+             ]
+         }
+     });
+
     $routeProvider.when("/error",
         {
             caseInsensitiveMatch: true,
@@ -525,4 +547,35 @@ app.run(['$rootScope', '$window','$location','$route', '$anchorScroll', 'UserSer
         }
         // 2. call function
         checkLoginStatus();
+
+        $window.fbAsyncInit = function () {
+            FB.init({
+                appId: '412367302292593',
+                status: false,
+                cookie: true,
+                xfbml: true,
+                version: 'v2.4'
+            });
+            //FbService.watchLoginStatusChange();
+        };
+
+        (function (d) {
+            // load the Facebook javascript SDK
+
+            var js,
+                id = 'facebook-jssdk',
+                ref = d.getElementsByTagName('script')[0];
+
+            if (d.getElementById(id)) {
+                return;
+            }
+
+            js = d.createElement('script');
+            js.id = id;
+            js.async = true;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+
+            ref.parentNode.insertBefore(js, ref);
+
+        }(document));
     }]);

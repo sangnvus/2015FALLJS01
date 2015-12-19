@@ -95,7 +95,7 @@ namespace DDL_CapstoneProject.Respository
         public List<ProjectBasicViewDTO> GetProjectTop(String categoryid)
         {
             categoryid = "|" + categoryid + "|";
-            return GetProject(10, 0, categoryid, "CurrentFunded", "", "", "true|false", "true");
+            return GetProject(10, 0, categoryid, "CurrentFunded", "", "", "", "true");
         }
 
         public int SearchCount(string categoryidlist, string searchkey, string statusString)
@@ -123,13 +123,17 @@ namespace DDL_CapstoneProject.Respository
                 }
                 if (status == null) status = "";
                 if (isFunded == null) isFunded = "";
-                Debug.WriteLine(isExprired);
-
+                if (isExprired == null) isExprired = "";
+                int CategoryExistCount = (from category in db.Categories
+                                          where (categoryidList.ToLower().Contains("all") ||
+                                                 categoryidList.Contains("|" + category.CategoryID + "|")) && category.IsActive
+                                          select new CategoryDTO { }).Count();
+                if (CategoryExistCount == 0) throw new DllNotFoundException();
                 var ProjectList = from project in db.Projects
                                   where
                                       (categoryidList.ToLower().Contains("all") ||
                                        categoryidList.Contains("|" + project.CategoryID + "|"))
-                                      && isExprired.Contains(project.IsExprired + "") && project.Title.Contains(pathofprojectname)
+                                      && (project.IsExprired + "").Contains(isExprired) && project.Title.Contains(pathofprojectname)
                                       && project.Status.Contains(status) && project.IsFunded.ToString().ToLower().Contains(isFunded)
                                       && !project.Status.Equals(DDLConstants.ProjectStatus.DRAFT) && !project.Status.Equals(DDLConstants.ProjectStatus.REJECTED)
                                       && !project.Status.Equals(DDLConstants.ProjectStatus.SUSPENDED) && !project.Status.Equals(DDLConstants.ProjectStatus.PENDING)
@@ -208,46 +212,43 @@ namespace DDL_CapstoneProject.Respository
         {
             using (var db = new DDLDataContext())
             {
-                var ProjectList = new List<ProjectBasicViewDTO>();
-                try
+                var projectList = new List<ProjectBasicViewDTO>();
+                var cat = db.Categories.Where(x => x.IsActive).Select(x => x.CategoryID).ToList();
+                for (int i = 0; i < cat.Count; i++)
                 {
-                    List<Category> cat = db.Categories.ToList();
-                    for (int i = 0; i < cat.Count(); i++)
-                    {
-                        List<ProjectBasicViewDTO> getProject = GetProject(1, 0, "|" + cat[i].CategoryID + "|",
-                            "PopularPoint", "", "", "false", "");
-                        if (getProject.Any())
-                            ProjectList.Add(getProject[0]);
-                    }
+                    var getProject = GetProject(1, 0, "|" + cat[i] + "|",
+                        "PopularPoint", "", "", "false", "");
+                    if (getProject.Any())
+                        projectList.Add(getProject[0]);
                 }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex);
-                }
-                return ProjectList;
+                return projectList;
             }
         }
 
 
         public List<List<ProjectBasicViewDTO>> GetProjectStatisticList()
         {
-            var ProjectList = new List<List<ProjectBasicViewDTO>>();
-            ProjectList.Add(GetProject(4, 0, "All", "PopularPoint", "", "", "false", ""));
-            ProjectList.Add(GetProject(4, 0, "All", "CreatedDate", "", "", "false", ""));
-            ProjectList.Add(GetProject(4, 0, "All", "CurrentFunded", "", "", "false", ""));
-            ProjectList.Add(GetProject(4, 0, "All", "ExpireDate", "", "", "false", ""));
+            var projectList = new List<List<ProjectBasicViewDTO>>
+            {
+                GetProject(4, 0, "All", "PopularPoint", "", "", "false", ""),
+                GetProject(4, 0, "All", "CreatedDate", "", "", "false", ""),
+                GetProject(4, 0, "All", "CurrentFunded", "", "", "false", ""),
+                GetProject(4, 0, "All", "ExpireDate", "", "", "false", "")
+            };
 
-            return ProjectList;
+            return projectList;
         }
         public Dictionary<string, List<ProjectBasicViewDTO>> GetStatisticListForHome()
         {
-            var ProjectList = new Dictionary<string, List<ProjectBasicViewDTO>>();
-            ProjectList.Add("popularproject", GetProject(4, 0, "All", "PopularPoint", "", "", "false", ""));
-            ProjectList.Add("projectByCategory", GetProjectByCategory());
-            ProjectList.Add("highestprojectpledge", GetProject(1, 0, "All", "CurrentFunded", "", "", "false", ""));
-            ProjectList.Add("highestprojectfund", GetProject(1, 0, "All", "CurrentFunded", "", "", "true", "true"));
-            ProjectList.Add("totalprojectfund", GetTotalFund());
-            return ProjectList;
+            var projectList = new Dictionary<string, List<ProjectBasicViewDTO>>
+            {
+                {"popularproject", GetProject(4, 0, "All", "PopularPoint", "", "", "false", "")},
+                {"projectByCategory", GetProjectByCategory()},
+                {"highestprojectpledge", GetProject(1, 0, "All", "CurrentFunded", "", "", "false", "")},
+                {"highestprojectfund", GetProject(1, 0, "All", "CurrentFunded", "", "", "true", "true")},
+                {"totalprojectfund", GetTotalFund()}
+            };
+            return projectList;
         }
 
         public List<ProjectBasicViewDTO> GetTotalFund()
@@ -257,8 +258,10 @@ namespace DDL_CapstoneProject.Respository
                 var list = new List<ProjectBasicViewDTO>();
                 var TotalFund = from project in db.Projects
                                 select project.CurrentFunded;
-                var totalFund = new ProjectBasicViewDTO();
-                totalFund.CurrentFundedNumber = (Convert.ToDecimal(TotalFund.Sum()));
+                var totalFund = new ProjectBasicViewDTO
+                {
+                    CurrentFundedNumber = (Convert.ToDecimal(TotalFund.Sum()))
+                };
 
                 list.Add(totalFund);
                 return list;
@@ -311,7 +314,7 @@ namespace DDL_CapstoneProject.Respository
                 var user = db.DDL_Users.SingleOrDefault(x => x.Username == username);
                 if (user == null)
                 {
-                    throw new KeyNotFoundException();
+                    throw new UserNotFoundException();
                 }
 
                 var project = CreateEmptyProject();
@@ -341,7 +344,7 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="project">object</param>
         /// <returns>updateProject</returns>
-        public ProjectEditDTO EditProjectBasic(ProjectEditDTO project, string uploadImageName)
+        public ProjectEditDTO EditProjectBasic(ProjectEditDTO project, string uploadImageName, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -350,6 +353,11 @@ namespace DDL_CapstoneProject.Respository
                 if (updateProject == null)
                 {
                     throw new KeyNotFoundException();
+                }
+
+                if (username != updateProject.Creator.Username)
+                {
+                    throw new NotPermissionException();
                 }
 
                 if (uploadImageName != string.Empty)
@@ -411,7 +419,7 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="project"></param>
         /// <returns></returns>
-        public ProjectStoryDTO EditProjectStory(ProjectStoryDTO project)
+        public ProjectStoryDTO EditProjectStory(ProjectStoryDTO project, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -420,6 +428,11 @@ namespace DDL_CapstoneProject.Respository
                 if (updateProject == null)
                 {
                     throw new KeyNotFoundException();
+                }
+
+                if (username != updateProject.Creator.Username)
+                {
+                    throw new NotPermissionException();
                 }
 
                 updateProject.Risk = project.Risk.Trim();
@@ -457,9 +470,7 @@ namespace DDL_CapstoneProject.Respository
                     throw new KeyNotFoundException();
                 }
 
-                var user = db.DDL_Users.SingleOrDefault(x => x.Username == UserName);
-
-                if (project.CreatorID != user.DDL_UserID)
+                if (project.Creator.Username != UserName)
                 {
                     throw new NotPermissionException();
                 }
@@ -492,7 +503,12 @@ namespace DDL_CapstoneProject.Respository
             }
         }
 
-        public ProjectStoryDTO GetProjectStory(int ProjectID)
+        /// <summary>
+        /// Get projec story
+        /// </summary>
+        /// <param name="ProjectID"></param>
+        /// <returns>projectBasicDTO</returns>
+        public ProjectStoryDTO GetProjectStory(int ProjectID, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -501,6 +517,11 @@ namespace DDL_CapstoneProject.Respository
                 if (project == null)
                 {
                     throw new KeyNotFoundException();
+                }
+
+                if (project.Creator.Username != username)
+                {
+                    throw new NotPermissionException();
                 }
 
                 var projectBasicDTO = new ProjectStoryDTO
@@ -520,7 +541,7 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="submitProject"></param>
         /// <returns>errorList</returns>
-        public List<string> SubmitProject(ProjectEditDTO submitProject)
+        public List<string> SubmitProject(ProjectEditDTO submitProject, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -529,6 +550,11 @@ namespace DDL_CapstoneProject.Respository
                 if (project == null)
                 {
                     throw new KeyNotFoundException();
+                }
+
+                if (project.Creator.Username != username)
+                {
+                    throw new NotPermissionException();
                 }
 
                 if (project.ExpireDate != null)
@@ -544,7 +570,7 @@ namespace DDL_CapstoneProject.Respository
                 string messageBasic = string.Empty;
                 if (string.IsNullOrEmpty(project.Title) || project.Title.Length < 10 || project.Title.Length > 60
                     || string.IsNullOrEmpty(project.ImageUrl)
-                    || string.IsNullOrEmpty(project.SubDescription) || project.SubDescription.Length < 30 || project.SubDescription.Length > 135
+                    || string.IsNullOrEmpty(project.SubDescription) || project.SubDescription.Length < 30 || project.SubDescription.Length > 300
                     || string.IsNullOrEmpty(project.Location) || project.Location.Length < 10 || project.Location.Length > 60
                     || project.ExpireDate == null || project.ExpireDate < expireDateLaw
                     || project.FundingGoal < 1000000)
@@ -576,10 +602,10 @@ namespace DDL_CapstoneProject.Respository
 
                 string messageStory = string.Empty;
                 if (string.IsNullOrEmpty(project.Description) || project.Description.Length < 135
-                    || string.IsNullOrEmpty(project.Risk) || project.Risk.Length < 135
+                    || (!string.IsNullOrEmpty(project.Risk) && project.Risk.Length < 135)
                     )
                 {
-                    messageStory = "Xin hãy xem lại trang Mô tả chỉ tiết! Các trường PHẢI được nhập đầy đủ (trừ video)";
+                    messageStory = "Xin hãy xem lại trang Mô tả chỉ tiết! Các trường PHẢI được nhập đầy đủ và hợp lệ (video và mô tả khó khăn không bắt buộc)";
                     mylist.Add(messageStory);
                 }
 
@@ -612,19 +638,12 @@ namespace DDL_CapstoneProject.Respository
                     throw new KeyNotFoundException();
                 }
 
-                var user = db.DDL_Users.SingleOrDefault(x => x.DDL_UserID == project.CreatorID);
-
-                if (user == null)
-                {
-                    throw new NotPermissionException();
-                }
-
                 var projectInforDTO = new ProjectInfoBackDTO
                 {
                     ProjectCode = project.ProjectCode,
                     Title = project.Title,
-                    Creator = user.UserInfo.FullName,
-                    CreatorUsername = user.Username
+                    Creator = project.Creator.UserInfo.FullName,
+                    CreatorUsername = project.Creator.Username
                 };
 
                 return projectInforDTO;
@@ -636,7 +655,7 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="backingData"></param>
         /// <returns>projectCode</returns>
-        public string BackProject(ProjectBackDTO backingData)
+        public int BackProject(ProjectBackDTO backingData)
         {
             using (var db = new DDLDataContext())
             {
@@ -650,15 +669,17 @@ namespace DDL_CapstoneProject.Respository
                 var user = db.DDL_Users.SingleOrDefault((x => x.Email == backingData.Email));
                 if (user == null)
                 {
-                    throw new KeyNotFoundException();
+                    throw new UserNotFoundException();
                 }
+
+                //backingData.BackedDate = CommonUtils.ConvertDateTimeToUtc(backingData.BackedDate);
 
                 // Create new backing record
                 var backing = db.Backings.Create();
                 backing.UserID = user.DDL_UserID;
                 backing.ProjectID = project.ProjectID;
-                backing.BackedDate = DateTime.UtcNow;
-                backing.IsPublic = backingData.IsPublic;
+                backing.BackedDate = backingData.BackedDate;
+                //backing.IsPublic = backingData.IsPublic;
 
                 // Create new backingDetail recored
                 var backingDetail = db.BackingDetails.Create();
@@ -670,6 +691,8 @@ namespace DDL_CapstoneProject.Respository
                 backingDetail.Address = backingData.Address;
                 backingDetail.Email = backingData.Email;
                 backingDetail.PhoneNumber = backingData.PhoneNumber;
+                backingDetail.OrderId = backingData.OrderId;
+                backingDetail.TransactionId = backingData.TransactionId;
 
                 // Add backingDetail to backing
                 backing.BackingDetail = backingDetail;
@@ -696,7 +719,7 @@ namespace DDL_CapstoneProject.Respository
 
                 db.SaveChanges();
 
-                return project.ProjectCode;
+                return backing.BackingID;
             }
         }
 
@@ -721,6 +744,56 @@ namespace DDL_CapstoneProject.Respository
                 db.SaveChanges();
             }
         }
+
+        /// <summary>
+        /// Get backing detail
+        /// </summary>
+        /// <param name="backingId"></param>
+        /// <returns></returns>
+        public ProjectBackDTO GetBackingDetail(int backingId, string username)
+        {
+            using (var db = new DDLDataContext())
+            {
+                var backing = db.BackingDetails.SingleOrDefault(x => x.BackingID == backingId);
+
+                if (backing == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                //if (backing.Backing.User.Username != username)
+                //{
+                //    throw new NotPermissionException();
+                //}
+
+                backing.Backing.BackedDate = CommonUtils.ConvertDateTimeFromUtc(backing.Backing.BackedDate);
+
+                var projectBackDto = new ProjectBackDTO
+                {
+                    BackedDate = backing.Backing.BackedDate,
+                    ProjectCode = backing.Backing.Project.ProjectCode,
+                    RewardPkgID = backing.RewardPkgID,
+                    Description = backing.Description,
+                    PledgeAmount = backing.PledgedAmount,
+                    Email = backing.Email,
+                    Quantity = backing.Quantity,
+                    Address = backing.Address,
+                    BackerName = backing.BackerName,
+                    PhoneNumber = backing.PhoneNumber,
+                    ProjectName = backing.Backing.Project.Title,
+                    ProjectOwner = backing.Backing.Project.Creator.UserInfo.FullName,
+                    RewardPkgDesc = backing.RewardPkg.Description,
+                    RewardPkgType = backing.RewardPkg.Type,
+                    BackerImg = backing.Backing.User.UserInfo.ProfileImage,
+                    BackerUsername = backing.Backing.User.Username,
+                    ProjectOwnerUsername = backing.Backing.Project.Creator.Username,
+                    TransactionId = backing.TransactionId,
+                    OrderId = backing.OrderId
+                };
+
+                return projectBackDto;
+            }
+        }
         #region Admin
 
         /// <summary>
@@ -738,6 +811,8 @@ namespace DDL_CapstoneProject.Respository
                 {
                     throw new KeyNotFoundException();
                 }
+
+                backing.BackedDate = CommonUtils.ConvertDateTimeFromUtc(backing.BackedDate);
 
                 var projectBackDto = new ProjectBackDTO
                 {
@@ -757,7 +832,9 @@ namespace DDL_CapstoneProject.Respository
                     RewardPkgType = backing.BackingDetail.RewardPkg.Type,
                     BackerImg = backing.User.UserInfo.ProfileImage,
                     BackerUsername = backing.User.Username,
-                    ProjectOwnerUsername = backing.Project.Creator.Username
+                    ProjectOwnerUsername = backing.Project.Creator.Username,
+                    TransactionId = backing.BackingDetail.TransactionId,
+                    OrderId = backing.BackingDetail.OrderId
                 };
 
                 return projectBackDto;
@@ -815,7 +892,9 @@ namespace DDL_CapstoneProject.Respository
                                        FundingGoal = Project.FundingGoal,
                                        ExpireDate = Project.ExpireDate,
                                        Status = Project.Status,
-                                       CurrentFunded = Project.CurrentFunded
+                                       CurrentFunded = Project.CurrentFunded,
+                                       CreatorUsername = Project.Creator.Username,
+                                       CreatorFullname = Project.Creator.UserInfo.FullName
                                    }).ToList();
 
                 pendingList.ForEach(x => x.ExpireDate = CommonUtils.ConvertDateTimeFromUtc(x.ExpireDate.GetValueOrDefault()));
@@ -847,7 +926,11 @@ namespace DDL_CapstoneProject.Respository
                                        ExpireDate = Project.ExpireDate,
                                        Status = Project.Status,
                                        CurrentFunded = Project.CurrentFunded,
-                                       TotalBacking = Project.Backings.Count
+                                       TotalBacking = Project.Backings.Count,
+                                       CreatorUsername = Project.Creator.Username,
+                                       CreatorFullname = Project.Creator.UserInfo.FullName,
+                                       IsExprired = Project.IsExprired,
+                                       IsFunded = Project.IsFunded
                                    }).ToList();
 
                 projectList.ForEach(x => x.ExpireDate = CommonUtils.ConvertDateTimeFromUtc(x.ExpireDate.GetValueOrDefault()));
@@ -909,7 +992,7 @@ namespace DDL_CapstoneProject.Respository
                     Content = "Xin chào " + projectOwner.UserInfo.FullName + "," +
                             "<br/>Chúng tôi vừa " + type + " dự án " + updateProject.Title + " của bạn." +
                             "<br/>Để biết thêm chi tiết xin liện hệ với admin qua email" +
-                            "<br/>ngocmanh1712@gmail.com"
+                            "<br/>dandelion.system@gmail.com"
                 };
                 MessageRepository.Instance.CreateNewConversation(message, senderName);
 
@@ -973,7 +1056,7 @@ namespace DDL_CapstoneProject.Respository
                 // Count pending project
                 var pending = projects.Count(x => x.Status == DDLConstants.ProjectStatus.PENDING);
                 // Count live project
-                var approved = projects.Count(x => x.Status == DDLConstants.ProjectStatus.APPROVED);
+                var approved = projects.Count(x => x.Status == DDLConstants.ProjectStatus.APPROVED && x.IsExprired);
                 // Count succeed project
                 var funed = projects.Count(x => x.IsFunded);
                 // Count rank A project
@@ -1017,7 +1100,7 @@ namespace DDL_CapstoneProject.Respository
             {
                 // Get rewardPkg list
                 var projectList = (from Project in db.Projects
-                                   where Project.Status == DDLConstants.ProjectStatus.EXPIRED && Project.IsFunded
+                                   where Project.IsExprired && Project.IsFunded
                                    select new ProjectBasicListDTO
                                    {
                                        ProjectCode = Project.ProjectCode,
@@ -1027,6 +1110,8 @@ namespace DDL_CapstoneProject.Respository
                                        FundingGoal = Project.FundingGoal,
                                        Status = Project.Status,
                                        CurrentFunded = Project.CurrentFunded,
+                                       CreatorFullname = Project.Creator.UserInfo.FullName,
+                                       CreatorUsername = Project.Creator.Username
                                    }).ToList();
 
                 projectList = projectList.OrderByDescending(x => x.CurrentFunded).Take(5).ToList();
@@ -1409,6 +1494,7 @@ namespace DDL_CapstoneProject.Respository
                                          //        ? project.Comments.Count
                                          //        : project.Comments.Count(x => !x.IsHide),
                                          NumberUpdate = project.UpdateLogs.Count,
+                                         IsFunded = project.IsFunded,
                                          Creator = new CreatorDTO
                                          {
                                              FullName = project.Creator.UserInfo.FullName,
@@ -1460,6 +1546,10 @@ namespace DDL_CapstoneProject.Respository
                 // Set number exprire day.
                 var timespan = projectDetail.ExpireDate - CommonUtils.DateTodayGMT7();
                 projectDetail.NumberDays = timespan.GetValueOrDefault().Days;
+                if (projectDetail.NumberDays < 0)
+                {
+                    projectDetail.NumberDays = 0;
+                }
 
                 return projectDetail;
             }
@@ -1502,10 +1592,21 @@ namespace DDL_CapstoneProject.Respository
         /// <param name="ProjectID"></param>
         /// <param name="question"></param>
         /// <returns>newQuestionDTO</returns>
-        public QuestionDTO CreateQuestion(int ProjectID, QuestionDTO question)
+        public QuestionDTO CreateQuestion(int ProjectID, QuestionDTO question, string username)
         {
             using (var db = new DDLDataContext())
             {
+                var project = db.Projects.SingleOrDefault(x => x.ProjectID == ProjectID);
+                if (project == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                if (project.Creator.Username != username)
+                {
+                    throw new NotPermissionException();
+                }
+
                 var newQuestion = db.Questions.Create();
                 newQuestion.ProjectID = ProjectID;
                 newQuestion.CreatedDate = DateTime.UtcNow;
@@ -1533,7 +1634,7 @@ namespace DDL_CapstoneProject.Respository
         /// Edit QAs
         /// </summary>
         /// <returns>boolean</returns>
-        public bool EditQuestion(List<QuestionDTO> question)
+        public bool EditQuestion(List<QuestionDTO> question, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -1544,6 +1645,11 @@ namespace DDL_CapstoneProject.Respository
                     if (updateQuestion == null)
                     {
                         throw new KeyNotFoundException();
+                    }
+
+                    if (updateQuestion.Project.Creator.Username != username)
+                    {
+                        throw new NotPermissionException();
                     }
 
                     updateQuestion.Answer = qa.Answer;
@@ -1562,7 +1668,7 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="question"></param>
         /// <returns>updateLogDTO</returns>
-        public QuestionDTO EditSingleQuestion(QuestionDTO question)
+        public QuestionDTO EditSingleQuestion(QuestionDTO question, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -1571,6 +1677,11 @@ namespace DDL_CapstoneProject.Respository
                 if (updateQuestion == null)
                 {
                     throw new KeyNotFoundException();
+                }
+
+                if (updateQuestion.Project.Creator.Username != username)
+                {
+                    throw new NotPermissionException();
                 }
 
                 updateQuestion.Answer = question.Answer;
@@ -1598,7 +1709,7 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="questionID"></param>
         /// <returns>boolean</returns>
-        public bool DeleteQuestion(int questionID)
+        public bool DeleteQuestion(int questionID, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -1607,6 +1718,11 @@ namespace DDL_CapstoneProject.Respository
                 if (deleteQuestion == null)
                 {
                     throw new KeyNotFoundException();
+                }
+
+                if (deleteQuestion.Project.Creator.Username != username)
+                {
+                    throw new NotPermissionException();
                 }
 
                 db.Questions.Remove(deleteQuestion);
@@ -1688,10 +1804,22 @@ namespace DDL_CapstoneProject.Respository
         /// <param name="ProjectID"></param>
         /// <param name="rewardPkg"></param>
         /// <returns>newRewardPkg</returns>
-        public RewardPkgDTO CreateRewardPkg(int ProjectID, RewardPkgDTO rewardPkg)
+        public RewardPkgDTO CreateRewardPkg(int ProjectID, RewardPkgDTO rewardPkg, string username)
         {
             using (var db = new DDLDataContext())
             {
+                var project = db.Projects.SingleOrDefault(x => x.ProjectID == ProjectID);
+
+                if (project == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                if (project.Creator.Username != username)
+                {
+                    throw new NotPermissionException();
+                }
+
                 var newRewardPkg = db.RewardPkgs.Create();
 
                 newRewardPkg.ProjectID = ProjectID;
@@ -1736,7 +1864,7 @@ namespace DDL_CapstoneProject.Respository
         /// Edit rewardPkgs
         /// </summary>
         /// <returns></returns>
-        public bool EditRewardPkg(RewardPkgDTO rewardPkg)
+        public bool EditRewardPkg(RewardPkgDTO rewardPkg, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -1745,6 +1873,11 @@ namespace DDL_CapstoneProject.Respository
                 if (updateReward == null)
                 {
                     throw new KeyNotFoundException();
+                }
+
+                if (updateReward.Project.Creator.Username != username)
+                {
+                    throw new NotPermissionException();
                 }
 
                 if (updateReward.EstimatedDelivery != null)
@@ -1770,7 +1903,7 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="rewardPkgID"></param>
         /// <returns>boolean</returns>
-        public bool DeleteRewardPkg(int rewardPkgID)
+        public bool DeleteRewardPkg(int rewardPkgID, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -1779,6 +1912,11 @@ namespace DDL_CapstoneProject.Respository
                 if (deleteRewardPkg == null)
                 {
                     throw new KeyNotFoundException();
+                }
+
+                if (deleteRewardPkg.Project.Creator.Username != username)
+                {
+                    throw new NotPermissionException();
                 }
 
                 db.RewardPkgs.Remove(deleteRewardPkg);
@@ -1822,10 +1960,20 @@ namespace DDL_CapstoneProject.Respository
         /// <param name="ProjectID"></param>
         /// <param name="updateLog"></param>
         /// <returns>newRewardPkg</returns>
-        public UpdateLogDTO CreateUpdateLog(int ProjectID, UpdateLogDTO newUpdateLog)
+        public UpdateLogDTO CreateUpdateLog(int ProjectID, UpdateLogDTO newUpdateLog, string username)
         {
             using (var db = new DDLDataContext())
             {
+                var project = db.Projects.SingleOrDefault(x => x.ProjectID == ProjectID);
+                if (project == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+                if (project.Creator.Username != username)
+                {
+                    throw new NotPermissionException();
+                }
+
                 var updateLog = db.UpdateLogs.Create();
                 updateLog.ProjectID = ProjectID;
                 updateLog.Description = newUpdateLog.Description;
@@ -1853,7 +2001,7 @@ namespace DDL_CapstoneProject.Respository
         /// Edit updateLog
         /// </summary>
         /// <returns>boolean</returns>
-        public bool EditUpdateLog(List<UpdateLogDTO> updateLog)
+        public bool EditUpdateLog(List<UpdateLogDTO> updateLog, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -1864,6 +2012,11 @@ namespace DDL_CapstoneProject.Respository
                     if (editLog == null)
                     {
                         throw new KeyNotFoundException();
+                    }
+
+                    if (editLog.Project.Creator.Username != username)
+                    {
+                        throw new NotPermissionException();
                     }
 
                     if (editLog.Description != update.Description || editLog.Title != update.Title)
@@ -1885,7 +2038,7 @@ namespace DDL_CapstoneProject.Respository
         /// </summary>
         /// <param name="updateLog"></param>
         /// <returns>updateLogDTO</returns>
-        public UpdateLogDTO EditSingleUpdateLog(UpdateLogDTO updateLog)
+        public UpdateLogDTO EditSingleUpdateLog(UpdateLogDTO updateLog, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -1894,6 +2047,11 @@ namespace DDL_CapstoneProject.Respository
                 if (editLog == null)
                 {
                     throw new KeyNotFoundException();
+                }
+
+                if (editLog.Project.Creator.Username != username)
+                {
+                    throw new NotPermissionException();
                 }
 
                 editLog.Description = updateLog.Description;
@@ -1916,7 +2074,13 @@ namespace DDL_CapstoneProject.Respository
             }
         }
 
-        public bool DeleteUpdateLog(int updateLogID)
+        /// <summary>
+        /// Delete a updateLog
+        /// </summary>
+        /// <param name="updateLogID"></param>
+        /// <param name="username"></param>
+        /// <returns>bool</returns>
+        public bool DeleteUpdateLog(int updateLogID, string username)
         {
             using (var db = new DDLDataContext())
             {
@@ -1925,6 +2089,11 @@ namespace DDL_CapstoneProject.Respository
                 if (deleteUpdateLog == null)
                 {
                     throw new KeyNotFoundException();
+                }
+
+                if (deleteUpdateLog.Project.Creator.Username != username)
+                {
+                    throw new NotPermissionException();
                 }
 
                 db.UpdateLogs.Remove(deleteUpdateLog);
@@ -2081,7 +2250,7 @@ namespace DDL_CapstoneProject.Respository
                 // Create Project query from dB.
                 var projectDetail = (from project in db.Projects
                                      where project.ProjectCode.Equals(projectCode.ToUpper())
-                                     && ((project.Status != DDLConstants.ProjectStatus.DRAFT && project.Status != DDLConstants.ProjectStatus.PENDING)
+                                     && ((project.Status != DDLConstants.ProjectStatus.DRAFT && project.Status != DDLConstants.ProjectStatus.PENDING && project.Status != DDLConstants.ProjectStatus.REJECTED)
                                         || project.Creator.Username.Equals(temp, StringComparison.OrdinalIgnoreCase))
                                      select new ProjectDetailDTO
                                      {
@@ -2144,6 +2313,7 @@ namespace DDL_CapstoneProject.Respository
                 //    db.RewardPkgs.Where(x => x.ProjectID == projectDetail.ProjectID && !x.IsHide).ToList();
                 var rewardDto = (from reward in db.RewardPkgs
                                  where reward.ProjectID == projectDetail.ProjectID && !reward.IsHide
+                                 orderby reward.PledgeAmount
                                  select new RewardPkgDTO
                                  {
                                      Backers = reward.BackingDetails.Count,
@@ -2179,7 +2349,7 @@ namespace DDL_CapstoneProject.Respository
 
                 // Set number exprire day.
                 var timespan = projectDetail.ExpireDate - CommonUtils.DateTodayGMT7();
-                projectDetail.NumberDays = timespan.GetValueOrDefault().Days;
+                projectDetail.NumberDays = timespan.GetValueOrDefault().Days >= 0 ? timespan.GetValueOrDefault().Days : 0;
 
                 return projectDetail;
             }
@@ -2240,15 +2410,17 @@ namespace DDL_CapstoneProject.Respository
                                from project in db.Projects
                                where backing.User.Username == userName && project.ProjectID == backing.ProjectID
                                select new ProjectBasicViewDTO
-                {
-                    ProjectID = project.ProjectID,
-                    ProjectCode = project.ProjectCode,
-                    CreatorName = project.Creator.UserInfo.FullName,
-                    Title = project.Title,
-                    CurrentFunded = project.CurrentFunded,
-                    BackedDate = backing.BackedDate,
-                    Status = project.Status
-                }).Distinct().ToList();
+                                {
+                                    ProjectID = project.ProjectID,
+                                    ProjectCode = project.ProjectCode,
+                                    CreatorName = project.Creator.UserInfo.FullName,
+                                    Title = project.Title,
+                                    CurrentFunded = backing.BackingDetail.PledgedAmount,
+                                    BackedDate = backing.BackedDate,
+                                    Status = project.Status,
+                                    BackingId = backing.BackingID,
+                                    IsExprired = project.IsExprired
+                                }).OrderByDescending(x => x.BackedDate).ToList();
                 return Project;
             }
 
@@ -2414,7 +2586,7 @@ namespace DDL_CapstoneProject.Respository
 
             using (var db = new DDLDataContext())
             {
-                var deleteProjectDraft = db.Projects.FirstOrDefault(x => x.ProjectID == projectID && (x.Status == DDLConstants.ProjectStatus.DRAFT 
+                var deleteProjectDraft = db.Projects.FirstOrDefault(x => x.ProjectID == projectID && (x.Status == DDLConstants.ProjectStatus.DRAFT
                                                                                                         || x.Status == DDLConstants.ProjectStatus.REJECTED));
 
                 if (deleteProjectDraft == null)
@@ -2443,6 +2615,8 @@ namespace DDL_CapstoneProject.Respository
                 {
                     db.Reminds.Remove(reminded);
                     db.SaveChanges();
+
+                    ProjectRepository.Instance.CaculateProjectPoint(projectCode, DDLConstants.PopularPointType.RemoveRemindPoint);
                     return false;
                 }
                 else

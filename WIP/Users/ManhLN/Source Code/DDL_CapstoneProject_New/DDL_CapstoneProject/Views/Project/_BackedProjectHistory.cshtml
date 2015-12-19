@@ -32,7 +32,7 @@
                     <div class="modal-body">
                         <div class="container-fluid">
                             <div class="row">
-                                
+
                                 <div class="col-md-6">
                                     <h3 class="fnt25">Người ủng hộ</h3>
                                     <div class="row">
@@ -40,7 +40,7 @@
                                             <img id="avatar-profile" ng-if="!checkHTTP(BackedUser.ProfileImage)" ng-src="../images/avatars/{{BackedUser.ProfileImage}}" alt="" class="img-responsive img-circle">
                                             <img id="avatar-profile" ng-if="checkHTTP(BackedUser.ProfileImage)" ng-src="{{trustSrc(BackedUser.ProfileImage)}}" alt="" class="img-responsive img-circle">
                                         </div>
-                                      
+
                                         <div class="col-md-9">
                                             <br>
                                             <form>
@@ -85,40 +85,41 @@
         <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" id="table_historyBacked" class="table table-striped table-bordered table-hover">
             <thead style="background: #16a085; color: #FFF">
                 <tr>
-                    <th>STT</th>
+                    <th style="width: 20px">#</th>
                     <th>Tên dự án</th>
                     <th>Số tiền</th>
                     <th>Thời gian</th>
-                    <th>Tình trạng dự án</th>
-                    <th class="txt-c">Xem</th>
+                    <th>Tình trạng</th>
+                    <th class="txt-c" style="width: 60px">Xem</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="project in ListBackedProjectHistory ">
-                    <td style="width: 5%" class="txt-r">{{$index+1}}</td>
-                    <td style="width: 35%" class="txt-l"><a class="fnt-b project_title_source" href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></td>
-                    <td style="width: 15%" class="txt-r">{{project.CurrentFunded |  number : fractionSize}}&#8363;</td>
-                    <td style="width: 15%" class="txt-r">{{project.BackedDate | date: "dd/MM/yyyy"}}</td>
-                    <td style="width: 20%" class="txt-l">
-                        <label ng-if="project.Status=='pending'" class="label label-primary">Chờ duyệt</label>
-                        <label ng-if="project.Status=='draft'" class="label label-primary">Nháp</label>
-                        <label ng-if="project.Status=='rejected'" class="label label-danger">Không phê duyệt</label>
-                        <label ng-if="project.Status=='approved'" class="label label-success">Đang chạy</label>
-                        <label ng-if="project.Status=='suspended'" class="label label-danger">Đình chỉ</label>
-                        <label ng-if="project.Status=='expired'" class="label label-danger">Hết hạn</label>
+                    <td class="txt-r">{{$index+1}}</td>
+                    <td class="txt-l"><a class="fnt-b project_title_source" href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></td>
+                    <td class="txt-r" data-search="{{project.CurrentFunded}}" data-order="{{project.CurrentFunded}}">{{project.CurrentFunded |  number : fractionSize}}&#8363;</td>
+                    <td class="txt-r" data-order="{{project.BackedDate}}">{{project.BackedDate | date: "dd/MM/yyyy"}}</td>
+                    <td class="txt-l">
+                        <label ng-if="project.Status =='pending'" class="label label-primary center-block" style="padding: 9px 10px">Chờ duyệt</label>
+                        <label ng-if="project.Status =='draft'" class="label label-primary center-block" style="padding: 9px 10px">Nháp</label>
+                        <label ng-if="project.Status =='rejected'" class="label label-danger center-block" style="padding: 9px 10px">Không phê duyệt</label>
+                        <label ng-if="project.IsExprired === false && project.Status =='approved'" class="label label-success center-block" style="padding: 9px 10px">Đang chạy</label>
+                        <label ng-if="project.Status =='suspended'" class="label label-default center-block" style="padding: 9px 10px">Bị đình chỉ</label>
+                        <label ng-if="project.IsExprired === true && project.Status =='approved'" class="label label-danger center-block" style="padding: 9px 10px">Đã kết thúc</label>
                     </td>
-                    <td style="width: 10%" class="txt-c">
+                    <td class="txt-c">
                         <div class="btn-group">
-                            <button class="btn btn-primary btn-sm btn_view_detail" type="button" tooltip="Xem chi tiết" tooltip-append-to-body="true" tooltip-placement="left" data-toggle="modal" data-target="#infoBanker" ng-click="getBackingInfo(project.ProjectCode)" title="View">
-                                <i class="fa fa-eye"></i>
-                            </button>
-
+                            <a href="@Url.Content("/#/backingdetail/{{project.BackingId}}")">
+                                <button class="btn btn-info btn-sm btn_view_detail" type="button" tooltip="Xem chi tiết" tooltip-append-to-body="true" tooltip-placement="left" title="View">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                            </a>
                         </div>
                     </td>
                 </tr> <!-- item -->
             </tbody>
         </table>
-</section><!--/#portfolio-->
+    </section><!--/#portfolio-->
 </div>
 
 <script type="text/javascript">

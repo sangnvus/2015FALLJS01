@@ -32,11 +32,11 @@ app.controller('ListBackerController', function ($scope, $route, projects, UserS
         // Define table
     $scope.dtOptions = DTOptionsBuilder.newOptions()
     .withDisplayLength(10)
-    //.withOption('order', [3, 'desc'])
+    .withOption('order', [3, 'desc'])
     .withBootstrap();
 
     $scope.dtColumnDefs = [
-        DTColumnDefBuilder.newColumnDef(0).notSortable()
+        DTColumnDefBuilder.newColumnDef(4).notSortable()
     ];
 
     $scope.getBackingInfo = function () {

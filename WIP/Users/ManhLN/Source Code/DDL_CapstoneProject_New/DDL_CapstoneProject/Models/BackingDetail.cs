@@ -21,6 +21,8 @@ namespace DDL_CapstoneProject.Models
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
+        public string OrderId { get; set; }
+        public string TransactionId { get; set; }
         #endregion
 
         public virtual Backing Backing { get; set; }

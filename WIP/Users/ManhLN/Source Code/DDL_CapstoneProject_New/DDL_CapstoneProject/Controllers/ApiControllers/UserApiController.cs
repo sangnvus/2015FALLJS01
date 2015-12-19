@@ -222,7 +222,6 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         public IHttpActionResult GetUserInfoEdit()
         {
             UserEditInfoDTO userCurrent = null;
-            DDL_User userCurrent1 = UserRepository.Instance.GetByUserNameOrEmail(User.Identity.Name);
             try
             {
                 if (!ModelState.IsValid)
@@ -235,10 +234,11 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                     return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
                 }
                 userCurrent = UserRepository.Instance.GetUserEditInfo(User.Identity.Name);
-                if (userCurrent1.LoginType != DDLConstants.LoginType.FACEBOOK)
+                if (userCurrent.ProfileImage.StartsWith("http") == false)
                 {
                     userCurrent.ProfileImage = DDLConstants.FileType.AVATAR + userCurrent.ProfileImage;
                 }
+                
                 
             }
             catch (UserNotFoundException)
@@ -255,12 +255,13 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
         public IHttpActionResult EditUserInfo()
         {
+            UserEditInfoDTO userCurrent;
             try
             {
                 var httpRequest = HttpContext.Current.Request;
                 var userCurrentJson = httpRequest.Form["profile"];
                 var serializer = new JavaScriptSerializer { MaxJsonLength = Int32.MaxValue };
-                var userCurrent = serializer.Deserialize<UserEditInfoDTO>(userCurrentJson);
+                userCurrent = serializer.Deserialize<UserEditInfoDTO>(userCurrentJson);
                 if (!ModelState.IsValid)
                 {
                     return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
@@ -269,10 +270,13 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 {
                     return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
                 }
-                string imageName = "img_" + userCurrent.UserName;
+                // Save image
+                var imageName = "img_" + userCurrent.UserName;
                 var file = httpRequest.Files["file"];
                 var uploadImageName = CommonUtils.UploadImage(file, imageName, DDLConstants.FileType.AVATAR);
-                UserRepository.Instance.EditUserInfo(userCurrent, uploadImageName);
+
+                // Change info
+                userCurrent = UserRepository.Instance.EditUserInfo(userCurrent, uploadImageName);
             }
             catch (UserNotFoundException)
             {
@@ -282,7 +286,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             {
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
             }
-            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = userCurrent.ProfileImage });
         }
 
         public IHttpActionResult GetUserPasswordEdit()

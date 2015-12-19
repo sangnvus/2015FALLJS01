@@ -70,6 +70,7 @@ namespace DDL_CapstoneProject.Respository
         {
             using (var db = new DDLDataContext())
             {
+
                 // create new record.
                 var newSlide = db.Slides.Create();
                 newSlide.Title = newSlideDTO.Title;
@@ -142,6 +143,16 @@ namespace DDL_CapstoneProject.Respository
                     throw new KeyNotFoundException();
                 }
 
+                // Can't delete active slide if there is only 1 active slide
+                if (slide.IsActive)
+                {
+                    var countSlide = db.Slides.Count(x => x.IsActive);
+                    if (countSlide <= 1)
+                    {
+                        throw new IndexOutOfRangeException();
+                    }
+                }
+
                 db.Slides.Remove(slide);
                 CommonUtils.DeleteFile(slide.ImageUrl, DDLConstants.FileType.SLIDE);
                 db.SaveChanges();
@@ -166,6 +177,16 @@ namespace DDL_CapstoneProject.Respository
             {
                 var slide = db.Slides.FirstOrDefault(x => x.SlideID == id);
                 if (slide == null) throw new KeyNotFoundException();
+
+                // Can't deactivate if there are only 1 active slide
+                if (slide.IsActive)
+                {
+                    var countSlide = db.Slides.Count(x => x.IsActive);
+                    if (countSlide <= 1)
+                    {
+                        throw new IndexOutOfRangeException();
+                    }
+                }
 
                 slide.IsActive = !slide.IsActive;
                 db.SaveChanges();
