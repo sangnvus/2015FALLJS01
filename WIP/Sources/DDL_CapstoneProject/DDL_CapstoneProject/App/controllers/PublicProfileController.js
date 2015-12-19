@@ -3,7 +3,9 @@
 app.controller('PublicProfileController',
     function ($scope, $sce, $rootScope, $window, $location, userpublicinfo, $filter,
         toastr, SweetAlert, MessageService, CommmonService, ReportService) {
+
         $scope.UserBasicInfo = userpublicinfo.data.Data;
+        $scope.CurrentUser = $rootScope.UserInfo;
 
         //$scope.UserBasicInfo.CreatedDate = new Date($filter('date')($scope.UserBasicInfo.CreatedDate, "yyyy-MM-dd"));
         //$scope.UserBasicInfo.LastLogin = new Date($filter('date')($scope.UserBasicInfo.LastLogin, "yyyy-MM-dd"));

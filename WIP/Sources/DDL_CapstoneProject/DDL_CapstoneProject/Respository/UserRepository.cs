@@ -476,10 +476,9 @@ namespace DDL_CapstoneProject.Respository
         {
             using (var db = new DDLDataContext())
             {
-                DDL_User firstOrDefault = db.DDL_Users.FirstOrDefault(x => x.Username.Equals(userCurrent.UserName));
-                if (firstOrDefault != null)
+                UserInfo userEdit = db.UserInfos.FirstOrDefault(x => x.DDL_User.Username.Equals(userCurrent.UserName));
+                if (userEdit != null)
                 {
-                    var userEdit = firstOrDefault.UserInfo;
                     if (uploadImageName != string.Empty)
                     {
                         userEdit.ProfileImage = uploadImageName;
@@ -492,11 +491,13 @@ namespace DDL_CapstoneProject.Respository
                     userEdit.Address = userCurrent.Addres;
                     userEdit.Gender = userCurrent.Gender;
                     userEdit.PhoneNumber = userCurrent.ContactNumber;
+                    db.SaveChanges();
+                    userCurrent.ProfileImage = userEdit.ProfileImage;
                 }
-
-                db.SaveChanges();
-
-                userCurrent.ProfileImage = uploadImageName;
+                else
+                {
+                    throw new UserNotFoundException();
+                }
                 return userCurrent;
             }
         }
@@ -999,18 +1000,19 @@ namespace DDL_CapstoneProject.Respository
             {
                 //var listBacking = db.Backings.ToList();
                 var listReturn = (from backing in db.Backings
+                                  orderby backing.BackedDate descending 
                                   select new AdminBackingListDTO
                                   {
                                       ProjectTitle = backing.Project.Title,
-                                      PhoneNumber = backing.User.UserInfo.PhoneNumber,
+                                      //PhoneNumber = backing.User.UserInfo.PhoneNumber,
                                       PledgeAmount = backing.BackingDetail.PledgedAmount,
                                       BackerName = backing.User.UserInfo.FullName,
-                                      Address = backing.User.UserInfo.Address,
+                                      //Address = backing.User.UserInfo.Address,
                                       BackedDate = backing.BackedDate,
-                                      Content = backing.BackingDetail.Description,
-                                      Email = backing.User.Email,
-                                      RewardContent = backing.BackingDetail.RewardPkg.Description,
-                                      RewardPledgeAmount = backing.BackingDetail.RewardPkg.PledgeAmount,
+                                      ////Content = backing.BackingDetail.Description,
+                                      //Email = backing.User.Email,
+                                      //RewardContent = backing.BackingDetail.RewardPkg.Description,
+                                      //RewardPledgeAmount = backing.BackingDetail.RewardPkg.PledgeAmount,
                                       UserName = backing.User.Username,
                                       BackingID = backing.BackingID,
                                       ProjectCode = backing.Project.ProjectCode

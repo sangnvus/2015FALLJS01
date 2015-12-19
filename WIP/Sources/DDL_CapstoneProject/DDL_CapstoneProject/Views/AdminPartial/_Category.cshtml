@@ -23,7 +23,9 @@
                                     <th style="width: 15px">ID</th>
                                     <th>Tên danh mục</th>
                                     <th>Mô tả</th>
-                                    <th style="width: 65px">Số dự án</th>
+                                    <th>Dự án đang chạy</th>
+                                    <th>Dự án đã kết thúc</th>
+                                    <th style="width: 65px">Dự án bị đình chỉ</th>
                                     <th style="width: 75px">Trạng thái</th>
                                     <th style="width: 30px"></th>
                                 </tr>
@@ -33,7 +35,9 @@
                                     <td class="col-number">{{category.CategoryID}}</td>
                                     <td>{{category.Name}}</td>
                                     <td>{{category.Description}}</td>
-                                    <td class="col-number">{{category.ProjectCount}}</td>
+                                    <td class="col-number">{{category.RunningProjectCount}}</td>
+                                    <td class="col-number">{{category.ExpiredProjectCount}}</td>
+                                    <td class="col-number">{{category.RejectedProjectCount}}</td>
                                     <td>
                                         <button ng-if="category.IsActive" class="btn btn-success btn-sm btn-block" type="button"
                                                 ng-click="changeCategoryStatus(category.CategoryID,$index)"

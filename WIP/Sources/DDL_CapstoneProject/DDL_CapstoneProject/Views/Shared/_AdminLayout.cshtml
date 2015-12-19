@@ -280,7 +280,7 @@
                     <!-- end SIDE NAV USER PANEL -->
                     <!-- begin DASHBOARD LINK -->
                     <li>
-                        <a href="~/admin/#/dashboard" ng-class="{'active': Page.activeTab == 'dashboard'}">
+                        <a href="/admin/#/dashboard" ng-class="{'active': Page.activeTab == 'dashboard'}">
                             <i class="fa fa-dashboard"></i> Thống kê chung
                         </a>
                     </li>
@@ -290,14 +290,14 @@
                         <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#users">
                             <i class="fa fa-files-o"></i> Thành viên <i class="fa fa-caret-down"></i>
                         </a>
-                        <ul class="collapse nav" ng-class="{'in': Page.activeTab == 'userdashboard' || Page.activeTab == 'userdashboard'}" id="users">
+                        <ul class="collapse nav" ng-class="{'in': Page.activeTab == 'userdashboard' || Page.activeTab == 'userlist','collapse': Page.activeTab != 'userdashboard' && Page.activeTab != 'userlist' }" id="users">
                             <li>
-                                <a href="~/admin/#/userdashboard/" ng-class="{'active': Page.activeTab == 'userdashboard'}">
+                                <a href="/admin/#/userdashboard/" ng-class="{'active': Page.activeTab == 'userdashboard'}">
                                     <i class="fa fa-angle-double-right"></i> Thông tin chung
                                 </a>
                             </li>
                             <li>
-                                <a href="~/admin/#/userlist/" ng-class="{'active': Page.activeTab == 'userlist'}">
+                                <a href="/admin/#/userlist/" ng-class="{'active': Page.activeTab == 'userlist'}">
                                     <i class="fa fa-angle-double-right"></i> Danh sách thành viên
                                 </a>
                             </li>
@@ -310,14 +310,14 @@
                             <i class="fa fa-bar-chart-o"></i> Dự án
                             <i class="fa fa-caret-down"></i>
                         </a>
-                        <ul class="collapse nav" ng-class="{'in': Page.activeTab == 'projectdashboard' || Page.activeTab == 'projectList'}" id="projects">
+                        <ul class="collapse nav" ng-class="{'in': Page.activeTab == 'projectdashboard' || Page.activeTab == 'projectList', 'collapse': Page.activeTab != 'projectdashboard' && Page.activeTab != 'projectList'}" id="projects">
                             <li>
-                                <a href="~/admin/#/project/" ng-class="{'active': Page.activeTab == 'dashboard'}">
+                                <a href="/admin/#/project/" ng-class="{'active': Page.activeTab == 'projectdashboard'}">
                                     <i class="fa fa-angle-double-right"></i> Thông tin chung
                                 </a>
                             </li>
                             <li>
-                                <a href="~/admin/#/project/all/" ng-class="{'active': Page.activeTab == 'projectList'}">
+                                <a href="/admin/#/project/all/" ng-class="{'active': Page.activeTab == 'projectList'}">
                                     <i class="fa fa-angle-double-right"></i> Danh sách dự án
                                 </a>
                             </li>
@@ -326,7 +326,7 @@
                     <!-- end PROJECTS DROPDOWN -->
                     <!-- begin BACKINGS DROPDOWN -->
                     <li class="panel">
-                        <a href="~/admin/#/backinglist" ng-class="{'active': Page.activeTab == 'backinglist'}">
+                        <a href="/admin/#/backinglist" ng-class="{'active': Page.activeTab == 'backinglist'}">
                             <i class="fa fa-bar-chart-o"></i> Ủng hộ
                             <!-- <i class="fa fa-caret-down"></i> -->
                         </a>
@@ -334,7 +334,7 @@
                     <!-- end BACKINGS DROPDOWN -->
                     <!-- begin CATEGORIES DROPDOWN -->
                     <li class="panel">
-                        <a href="~/admin/#/category/" ng-class="{'active': Page.activeTab == 'category'}">
+                        <a href="/admin/#/category/" ng-class="{'active': Page.activeTab == 'category'}">
                             <i class="fa fa-bar-chart-o"></i> Danh mục
                             <!-- <i class="fa fa-caret-down"></i> -->
                         </a>
@@ -342,7 +342,7 @@
                     <!-- end CATEGORIES DROPDOWN -->
                     <!-- begin SLIDERS DROPDOWN -->
                     <li class="panel">
-                        <a href="~/admin/#/slide/" ng-class="{'active': Page.activeTab == 'slide'}">
+                        <a href="/admin/#/slide/" ng-class="{'active': Page.activeTab == 'slide'}">
                             <i class="fa fa-bar-chart-o"></i> Slide
                             <!-- <i class="fa fa-caret-down"></i> -->
                         </a>
@@ -350,7 +350,7 @@
                     <!-- end SLIDERS DROPDOWN -->
                     <!-- begin MESSAGES DROPDOWN -->
                     <li class="panel">
-                        <a href="~/admin/#/message/" ng-class="{'active': Page.activeTab == 'message'}">
+                        <a href="/admin/#/message/" ng-class="{'active': Page.activeTab == 'message'}">
                             <i class="fa fa-bar-chart-o"></i> Tin nhắn&nbsp;<span ng-show="NumberNewMessage.Total > 0" class="badge badge-info mb3 ng-cloak">{{NumberNewMessage.Total}}</span>
                             <!-- <i class="fa fa-caret-down"></i> -->
                         </a>
@@ -361,7 +361,7 @@
                         <a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#reports">
                             <i class="fa fa-files-o"></i> Báo cáo <i class="fa fa-caret-down"></i>
                         </a>
-                        <ul class="collapse nav" ng-class="{'in': Page.activeTab == 'reportuser' || Page.activeTab == 'reportproject'}" id="reports">
+                        <ul class="collapse nav" ng-class="{'in': Page.activeTab == 'reportuser' || Page.activeTab == 'reportproject', 'collapse': Page.activeTab != 'reportuser' && Page.activeTab != 'reportproject'}" id="reports">
                             <li>
                                 <a href="/admin/#/reportuser" ng-class="{'active': Page.activeTab == 'reportuser'}">
                                     <i class="fa fa-angle-double-right"></i> Người dùng

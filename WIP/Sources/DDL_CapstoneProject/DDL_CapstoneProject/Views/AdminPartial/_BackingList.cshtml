@@ -25,18 +25,18 @@
                                     <th>Tên dự án</th>
                                     <th>Tên người ủng hộ</th>
                                     <th>Số tiền ủng hộ</th>
-                                    <th>Thời gian ủng hộ</th>
+                                    <th>Thời gian</th>
                                     <th style="width:40px"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="backing in ListBacking">
-                                    <td style="width:40px" class="col-number">{{$index + 1}}</td>
-                                    <td>{{backing.ProjectTitle}}</td>
-                                    <td>{{backing.BackerName}}</td>
-                                    <td style="width:150px" class="col-number"><span class="money usd no-code">{{backing.PledgeAmount | number : fractionSize}} &#8363;</span></td>
+                                    <td class="col-number">{{$index + 1}}</td>
+                                    <td><a href="@Url.Content("/admin/#/project/{{backing.ProjectCode}}")">{{backing.ProjectTitle}}</a></td>
+                                    <td><a href="@Url.Content("/admin/#/userprofile/{{backing.UserName}}")">{{backing.BackerName}}</a></td>
+                                    <td class="col-number" data-order="{{backing.PledgeAmount}}" ><span class=" money usd no-code">{{backing.PledgeAmount | number : fractionSize}} &#8363;</span></td>
                                     @*<td style="width: 150px">{{backing.BackedDate | date : "HH:mm 'ngày' dd-MM-yyyy"}}</td>*@
-                                    <td style="width: 150px" class="txt-r" data-order="{{backing.BackedDate}}">{{backing.BackedDate  | date:"dd/MM/yyyy"}}</td>
+                                    <td class="col-datetime" data-order="{{backing.BackedDate}}">{{backing.BackedDate  | date:"dd/MM/yyyy"}}</td>
                                     <td>
                                         <div class="btn-group">
                                             <a href="@Url.Content("/admin/#/backingdetail/{{backing.BackingID}}")">
@@ -59,81 +59,4 @@
         <!-- /.portlet -->
     </div>
     <!-- /.col-lg-12 -->
-</div>
-
-
-<div class="modal modal-flex fade" id="backingDetail" tabindex="-1" role="dialog" aria-labelledby="flexModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <!-- <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="flexModalLabel">Backing Detail</h4>
-            </div> -->
-            <div class="modal-body">
-                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingOne">
-                            <h4 class="panel-title">
-                                <a role="button" onclick="return false">
-                                    Thông tin người ủng hộ
-                                </a>
-                            </h4>
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <img id="avatar-profile" ng-if="!checkHTTP(Backer.ImageURL)" ng-src="../images/avatars/{{Backer.ImageURL}}" alt="" class="img-responsive img-circle">
-                                    <img id="avatar-profile" ng-if="checkHTTP(Backer.ImageURL)" ng-src="{{trustSrc(Backer.ImageURL)}}" alt="" class="img-responsive img-circle">
-                                </div>
-                                <div class="col-md-8 pull-right">
-                                    <h4>{{Backer.BackerName}}</h4>
-                                    <h5>{{Backer.Email}}</h5>
-                                    <h5>{{Backer.Address}}</h5>
-                                    <h5>{{Backer.PhoneNumber}}</h5>
-                                    <button class="btn btn-primary">Send Message</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingTwo">
-                            <h4 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
-                                   href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" onclick="return false">
-                                    Mô tả về người ủng hộ :
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseTwo" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingTwo">
-                            <div class="panel-body">
-                                {{Backer.Biography}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingThree">
-                            <h4 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
-                                   href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" onclick="return false">
-                                    Thông tin gói ủng hộ
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                            <div class="panel-body">
-                                <h4><strong>{{Backer.ProjectTitle}}</strong><small> by {{Backer.CreatorName}}</small></h4>
-                                <br />
-                                <h5><strong>Mô tả gói ủng hộ:</strong></h5>
-                                <h5>Thank the Seven! Err-- Five! Thank you for your pledge! For this sign of support, we here at Larian Studios are truly grateful.</h5>
-                                <br />
-                                <h4><strong>Mức giá gói ủng hộ:</strong><span class="money usd no-code">{{Backer.RewardPledgeAmount | number : fractionSize}} &#8363;</span><h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
 </div>

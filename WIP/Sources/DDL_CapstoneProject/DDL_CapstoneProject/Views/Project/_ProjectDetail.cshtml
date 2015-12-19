@@ -32,8 +32,9 @@
                         </div>
                     </div>
                     <div class="pt20">
-                        <a class="btn btn-primary btn-lg" ng-if="Project.Status == '@DDLConstants.ProjectStatus.APPROVED' && !Project.IsExprired" href="@Url.Content("/#/project/back/{{Project.ProjectCode}}")">Ủng hộ dự án</a>
-                        <a href="@Url.Content("/#/project/edit/{{Project.ProjectCode}}")" class="btn btn-info btn-lg" ng-if="Project.Status == '@DDLConstants.ProjectStatus.PENDING' ||Project.Status == '@DDLConstants.ProjectStatus.DRAFT' || Project.Status == '@DDLConstants.ProjectStatus.REJECTED'" href="back_project.html">Chỉnh sửa dự án</a>
+                        <a class="btn btn-primary btn-lg" ng-if="Project.Status == '@DDLConstants.ProjectStatus.APPROVED' && !Project.IsExprired && CurrentUser.UserName != Project.Creator.UserName" href="@Url.Content("/#/project/back/{{Project.ProjectCode}}")">Ủng hộ dự án</a>
+                        <a class="btn btn-info btn-lg" ng-if="Project.Status == '@DDLConstants.ProjectStatus.APPROVED' && !Project.IsExprired && CurrentUser.UserName == Project.Creator.UserName">Chỉnh sửa thông tin dự án</a>
+                        <a href="@Url.Content("/#/project/edit/{{Project.ProjectCode}}")" class="btn btn-info btn-lg" ng-if="Project.Status == '@DDLConstants.ProjectStatus.PENDING' ||Project.Status == '@DDLConstants.ProjectStatus.DRAFT' || Project.Status == '@DDLConstants.ProjectStatus.REJECTED'" href="back_project.html">Chỉnh sửa thông tin dự án</a>
                         <button class="btn btn-danger btn-lg" style="background-color: #d9534f" disabled ng-if="Project.IsExprired && Project.Status != '@DDLConstants.ProjectStatus.PENDING' &&  Project.Status != '@DDLConstants.ProjectStatus.DRAFT' && Project.Status != '@DDLConstants.ProjectStatus.REJECTED'" href="back_project.html">Dự án đã kết thúc</button>
                         <button class="btn btn-danger btn-lg" style="background-color: #d9534f" disabled ng-if="!Project.IsExprired && Project.Status == '@DDLConstants.ProjectStatus.SUSPENDED'">Dự án đã bị tạm dừng</button>
                         <span ng-if="UserInfo.IsAuthen && Project.Status != '@DDLConstants.ProjectStatus.PENDING' && Project.Status != '@DDLConstants.ProjectStatus.DRAFT' && Project.Status != '@DDLConstants.ProjectStatus.REJECTED'">
@@ -135,7 +136,7 @@
                                     <!-- end About this project -->
                                     <div id="load_content" class="pt15" ta-bind ng-model="Project.Description" style="word-break: break-word"></div>
                                     <!-- end load_content -->
-                                    <div id="riskandchallenges" class="padding30">
+                                    <div id="riskandchallenges" class="padding30" ng-if="Project.Risk != ''">
                                         <h1 class="fnt25">Rủi ro và thách thức</h1>
                                         <p style="word-break: break-word; white-space: pre-wrap;">{{Project.Risk}}</p>
                                     </div> <!-- end Risks and challeges -->
@@ -166,7 +167,7 @@
                                     </ul>
                                     @if (User.Identity != null && !string.IsNullOrEmpty(User.Identity.Name))
                                     {
-                                        <div ng-if="Project.Status != '@DDLConstants.ProjectStatus.PENDING' && Project.Status != '@DDLConstants.ProjectStatus.DRAFT' && Project.Status != '@DDLConstants.ProjectStatus.REJECTED'">
+                                        <div ng-if="Project.Status != '@DDLConstants.ProjectStatus.PENDING' && Project.Status != '@DDLConstants.ProjectStatus.DRAFT' && Project.Status != '@DDLConstants.ProjectStatus.REJECTED' && CurrentUser.UserName != Project.Creator.UserName">
 
                                             <p>
                                                 <h1 ng-if="Project.Question.length == 0" class="fnt25">Bạn có thắc mắc cần được giải đáp ?</h1>
@@ -188,8 +189,7 @@
                                                             <h5 class="fnt20"><span class="fnt-n">Tới: {{Project.Creator.FullName}}</span> </h5>
                                                             <h5 class="fnt20 fnt-n">Nội dung:</h5>
                                                             <textarea class="form-control" style="resize: none" name="" id="" cols="30" rows="5"
-                                                                      ng-model="NewQuestion.Content"
-                                                                      ></textarea>
+                                                                      ng-model="NewQuestion.Content"></textarea>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
@@ -265,7 +265,7 @@
                                                     </div>
                                                 </div> <!-- end main Reward -->
                                                 <a href="@Url.Content("/#/project/back/{{Project.ProjectCode}}?reward={{$index+1}}")"
-                                                   ng-if="Project.Status != '@DDLConstants.ProjectStatus.SUSPENDED' && Project.Status != '@DDLConstants.ProjectStatus.PENDING' && Project.Status != '@DDLConstants.ProjectStatus.DRAFT' && Project.Status != '@DDLConstants.ProjectStatus.REJECTED' && !Project.IsExprired && !(reward.Type == '@DDLConstants.RewardType.LIMITED' && (reward.Quantity - reward.CurrentQuantity <= 0))">
+                                                   ng-if="CurrentUser.UserName != Project.Creator.UserName && Project.Status != '@DDLConstants.ProjectStatus.SUSPENDED' && Project.Status != '@DDLConstants.ProjectStatus.PENDING' && Project.Status != '@DDLConstants.ProjectStatus.DRAFT' && Project.Status != '@DDLConstants.ProjectStatus.REJECTED' && !Project.IsExprired && !(reward.Type == '@DDLConstants.RewardType.LIMITED' && (reward.Quantity - reward.CurrentQuantity <= 0))">
                                                     <div class="hoverReward">
                                                         <span class="titleHover">Chọn gói này</span>
                                                     </div>
@@ -340,7 +340,7 @@
                                 </div>
                             </div><!--/#comment-form-->
                             <!--Comment list-->
-                            <h3 class="fnt22">Danh sách bình luận</h3>
+                            <h3 class="fnt22" ng-show="Project.CommentsList.length > 0">Danh sách bình luận</h3>
                             <div id="comments-list">
                                 <!--avatar-->
                                 <div class="media" ng-repeat="Comment in Project.CommentsList">

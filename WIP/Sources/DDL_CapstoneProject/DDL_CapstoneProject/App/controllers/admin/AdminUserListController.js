@@ -56,8 +56,8 @@ app.controller('AdminUserListController',
         // Alert admin before change status
         $scope.warning = function (username,index) {
             SweetAlert.swal({
-                title: "Bạn vừa thay đổi tình trạng hoạt động của người dùng!",
-                text: "Tình trạng hoạt động của người dùng sẽ bị thay đổi!",
+                title: "Yêu cầu xác nhận",
+                text: "Bạn có chắc chắn muốn thay đổi trạng thái của người dùng này",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",

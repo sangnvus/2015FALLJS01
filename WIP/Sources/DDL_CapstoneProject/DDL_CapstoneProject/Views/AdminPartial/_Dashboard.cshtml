@@ -9,7 +9,7 @@
             </a>
             <div class="circle-tile-content dark-blue">
                 <div class="circle-tile-description text-faded">
-                    Số người dùng
+                    Số thành viên
                 </div>
                 <div class="circle-tile-number text-faded">
                     {{BasicInfo.TotalUser | currency:"":0}}
@@ -120,7 +120,7 @@
         <div class="portlet portlet-green">
             <div class="portlet-heading">
                 <div class="portlet-title">
-                    <h4>Lĩnh vực</h4>
+                    <h4>Dự án theo lĩnh vực</h4>
                 </div>
                 <div class="portlet-widgets">
                     <a onclick="return false" href="javascript:;">@*<i class="fa fa-refresh"></i>*@</a>
@@ -196,7 +196,7 @@
         <div class="portlet portlet-green">
             <div class="portlet-heading">
                 <div class="portlet-title">
-                    <h4>Những người ủng hộ nhiều nhất</h4>
+                    <h4>Thành viên ủng hộ nhiều nhất</h4>
                 </div>
                 <div class="portlet-widgets">
                     <a onclick="return false" data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet"><i class="fa fa-chevron-down"></i></a>
@@ -238,7 +238,7 @@
         <div class="portlet portlet-green">
             <div class="portlet-heading">
                 <div class="portlet-title">
-                    <h4>Người dùng vừa đăng nhập</h4>
+                    <h4>Thành viên đăng nhập gần nhất</h4>
                 </div>
                 <div class="portlet-widgets">
                     <a onclick="return false" data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet3"><i class="fa fa-chevron-down"></i></a>
@@ -262,7 +262,7 @@
                                     <td class="col-number">{{user.LastLogin | date: "HH:mm 'ngày' dd-MM-yyyy"}}</td>
                                     <td class="col-text">
                                         <a class="btn btn-xs btn-green" ng-if="user.Status == true">Bình thường</a>
-                                        <a class="btn btn-xs btn-red" ng-if="user.Status == false">Khóa</a>
+                                        <a class="btn btn-xs btn-red" ng-if="user.Status == false">Đã bị Khóa</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -296,10 +296,10 @@
                             <thead>
                                 <tr>
                                     <th>Dự án</th>
-                                    <th>Lĩnh vực</th>
-                                    <th>Chủ dự án</th>
-                                    <th>Mục tiêu(VNĐ)</th>
-                                    <th>Quỹ(VNĐ)</th>
+                                    <th>Danh mục</th>
+                                    @*<th>Chủ dự án</th>*@
+                                    @*<th>Mục tiêu(VNĐ)</th>*@
+                                    <th>Số tiền thu được(VNĐ)</th>
                                     <th style="width: 100px">Trạng thái</th>
                                 </tr>
                             </thead>
@@ -307,12 +307,12 @@
                                 <tr ng-repeat="project in TopProject">
                                     <td class="col-text"><a href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")">{{project.Title}}</a></td>
                                     <td class="col-text">{{project.Category}}</td>
-                                    <td class="col-text"><a href="@Url.Content("/admin/#/userprofile/{{project.CreatorUsername}}")">{{project.CreatorFullname}}</a></td>
-                                    <td class="col-number">{{project.FundingGoal | currency:"":0}}</td>
+                                    @*<td class="col-text"><a href="@Url.Content("/admin/#/userprofile/{{project.CreatorUsername}}")">{{project.CreatorFullname}}</a></td>*@
+                                    @*<td class="col-number">{{project.FundingGoal | currency:"":0}}</td>*@
                                     <td class="col-number">{{project.CurrentFunded | currency:"":0}}</td>
                                     <td class="col-text">
                                         <a class="btn btn-xs btn-green" ng-if="project.Status == 'approved'">Đang chạy</a>
-                                        <a class="btn btn-xs btn-red" ng-if="project.Status == 'expired'">Hết hạn</a>
+                                        <a class="btn btn-xs btn-red" ng-if="project.Status == 'expired'">Đã kết thúc</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -413,8 +413,8 @@
                                 <th>Dự án thành công</th>
                                 <th>Dự án thất bại</th>
                                 @*<th>Dự án đang chạy</th>*@
-                                <th>Tổng số đóng góp(VNĐ)</th>
-                                <th>Đóng góp thành công(VNĐ)</th>
+                                <th>Tổng số gây quỹ(VNĐ)</th>
+                                <th>Gây quỹ thành công(VNĐ)</th>
                                 <th>Lợi nhuận(VNĐ)</th>
                                 <th>Tỉ lệ thành công</th>
                             </tr>
@@ -430,7 +430,7 @@
                                 <td class="col-number">{{statistic.TotalFund | currency:"":0}}</td>
                                 <td class="col-number">{{statistic.SucceedFund | currency:"":0}}</td>
                                 <td class="col-number">{{statistic.TotalProfit | currency:"":0}}</td>
-                                <td class="col-number">{{statistic.TotalSucceed*100/statistic.TotalProject | number:0}}%</td>
+                                <td class="col-number">{{statistic.TotalSucceed*100/(statistic.TotalSucceed + statistic.TotalFail) | number:0}}%</td>
                             </tr>
                         </tbody>
                     </table>

@@ -15,7 +15,7 @@ app.controller('AdminProjectListController',
         .withBootstrap();
 
         $scope.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(9).notSortable()
+            DTColumnDefBuilder.newColumnDef(8).notSortable()
         ];
 
         $scope.save = function () {

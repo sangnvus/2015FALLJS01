@@ -280,7 +280,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
             }
             catch (UserNotFoundException)
             {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Bạn chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không tìm thấy người dùng", Type = DDLConstants.HttpMessageType.NOT_FOUND });
             }
             catch (Exception)
             {

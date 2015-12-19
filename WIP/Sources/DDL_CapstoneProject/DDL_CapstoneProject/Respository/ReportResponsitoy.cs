@@ -70,12 +70,14 @@ namespace DDL_CapstoneProject.Respository
             using (var db = new DDLDataContext())
             {
                 var ReportProjectSet = from ReportProject in db.ReportProjects
+                                       orderby ReportProject.ReportedDate descending 
                                        select new ReportProjectDTO
                                        {
                                            ProjectID = ReportProject.ProjectID,
+                                           ProjectCode = ReportProject.Project.ProjectCode,
                                            ProjectTitle = ReportProject.Project.Title,
                                            ReportContent = ReportProject.ReportContent,
-                                           ReportedDate = ReportProject.ReportedDate.Day + "/" + ReportProject.ReportedDate.Month + "/" + ReportProject.ReportedDate.Year,
+                                           ReportedDate = ReportProject.ReportedDate,
                                            ReporterUsername = ReportProject.Reporter.Username,
                                            reporterName = ReportProject.Reporter.UserInfo.FullName,
                                            ReportID = ReportProject.ReportID,
@@ -94,11 +96,12 @@ namespace DDL_CapstoneProject.Respository
             using (var db = new DDLDataContext())
             {
                 var ReportUserSet = from ReportUser in db.ReportUsers
+                                    orderby ReportUser.ReportedDate descending
                                     select new ReportUserDTO
                                     {
                                         ReportID = ReportUser.ReportID,
                                         ReportContent = ReportUser.ReportContent,
-                                        ReportedDate = ReportUser.ReportedDate.Day + "/" + ReportUser.ReportedDate.Month + "/" + ReportUser.ReportedDate.Year,
+                                        ReportedDate = ReportUser.ReportedDate,
                                         ReportedFullname = ReportUser.ReportedUser.UserInfo.FullName,
                                         ReportedUserID = ReportUser.ReportedUserID,
                                         ReportedUsername = ReportUser.ReportedUser.Username,

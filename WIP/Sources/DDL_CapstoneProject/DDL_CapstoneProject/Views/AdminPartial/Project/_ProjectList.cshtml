@@ -45,11 +45,11 @@
                                     <td class="center col-number col-datetime">{{project.CurrentFunded | currency:"":0}}</td>
                                     <td class="center">
                                         <span class="label label-success center-block" ng-if="project.Status == 'approved' && !project.IsExprired" style="padding: 9px">Đang chạy</span>
-                                        <span class="label label-danger center-block" ng-if="project.Status == 'rejected' && !project.IsExprired" style="padding: 9px">Từ chối</span>
+                                        <span class="label label-danger center-block" ng-if="project.Status == 'rejected' && !project.IsExprired" style="padding: 9px">Bị từ chối</span>
                                         <span class="label label-success center-block" ng-if="project.IsExprired && project.IsFunded" style="padding: 9px">Thành công</span>
                                         <span class="label label-danger center-block" ng-if="project.IsExprired && !project.IsFunded" style="padding: 9px">Thất bại</span>
                                         <span class="label label-primary center-block" ng-if="project.Status == 'pending' && !project.IsExprired" style="padding: 9px">Chờ duyệt</span>
-                                        <span class="label label-danger center-block" ng-if="project.Status == 'suspended' && !project.IsExprired" style="padding: 9px">Đình chỉ</span>
+                                        <span class="label label-danger center-block" ng-if="project.Status == 'suspended' && !project.IsExprired" style="padding: 9px">Bị đình chỉ</span>
                                     </td>
                                     <td class="center" style="width: 34px;">
                                         <a href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")">
