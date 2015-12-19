@@ -1,5 +1,5 @@
 ﻿<div id="content" class="paddingNavbar">
-    <form name="paymentFrom" novalidate>
+    <form name="paymentFrom" action="@Url.Content("~/baokim")" novalidate>
         <div id="payment">
             <div id="infoBanker">
                 <div class="container">
@@ -16,47 +16,47 @@
                                         </div>
                                         <div class="col-md-9">
                                             <br>
-                                            <input type="text" class="form-control" name="fullname" required
+                                            <input type="text" class="form-control" name="BackerName" required
                                                    ng-trim="true"
                                                    ng-minlength="6"
                                                    ng-model-options="{ updateOn: 'change blur'}"
                                                    ng-maxlength="30"
                                                    placeholder="Họ và tên"
-                                                   ng-model="UserBasicInfo.FullName">
-                                            <span ng-show="paymentFrom.fullname.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
-                                            <span style="color:red" ng-show="paymentFrom.fullname.$error.required">Bạn chưa nhập tên đầy đủ</span>
-                                            <span style="color:red" ng-show="paymentFrom.fullname.$error.minlength">Tên đầy đủ tối thiểu 6 kí tự</span>
-                                            <span style="color:red" ng-show="paymentFrom.fullname.$error.maxlength">Tên đầy đủ tối đa 20 kí tự</span>
+                                                   ng-model="backingData.BackerName">
+                                            <span ng-show="paymentFrom.BackerName.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
+                                            <span style="color:red" ng-show="paymentFrom.BackerName.$error.required">Bạn chưa nhập tên đầy đủ</span>
+                                            <span style="color:red" ng-show="paymentFrom.BackerName.$error.minlength">Tên đầy đủ tối thiểu 6 kí tự</span>
+                                            <span style="color:red" ng-show="paymentFrom.BackerName.$error.maxlength">Tên đầy đủ tối đa 20 kí tự</span>
                                             <br>
                                             <input type="email"
                                                    class="form-control"
-                                                   name="email"
+                                                   name="Email"
                                                    placeholder="Email..."
-                                                   ng-model="UserBasicInfo.Email"
+                                                   ng-model="backingData.Email"
                                                    ng-model-options="{ updateOn: 'change blur'}"
                                                    required>
-                                            <span ng-show="paymentFrom.email.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
-                                            <span style="color:red" ng-show="paymentFrom.email.$error.required">Bạn chưa nhập email</span>
-                                            <span style="color: red" ng-show="paymentFrom.email.$error.email">Email không đúng định dạng</span>
-                                            <span style="color: red" ng-show="paymentFrom.email.$error.email">Email sai định dạng</span>
+                                            <span ng-show="paymentFrom.Email.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
+                                            <span style="color:red" ng-show="paymentFrom.Email.$error.required">Bạn chưa nhập email</span>
+                                            <span style="color: red" ng-show="paymentFrom.Email.$error.email">Email không đúng định dạng</span>
+                                            <span style="color: red" ng-show="paymentFrom.Email.$error.email">Email sai định dạng</span>
                                         </div>
                                     </div>
 
                                     <div class="row pt15">
                                         <div class="col-md-8 pt10 pb10">
                                             <input type="text" class="form-control"
-                                                   name="address"
+                                                   name="Address"
                                                    ng-autocomplete
                                                    placeholder="Địa chỉ"
-                                                   ng-model="UserBasicInfo.Addres"
+                                                   ng-model="backingData.Address"
                                                    maxlength="60"
                                                    ng-maxlength="60"
                                                    ng-minlength="10"
                                                    required>
-                                            <span ng-show="paymentFrom.address.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
-                                            <span style="color:red" ng-show="paymentFrom.address.$error.required">Bạn chưa nhập địa chỉ</span>
-                                            <span style="color:red" ng-show="paymentFrom.address.$error.maxlength">Địa chỉ dài nhất là 60 kí tự</span>
-                                            <span style="color:red" ng-show="paymentFrom.address.$error.minlength">Địa chỉ cần ít nhât 10 kí tự</span>
+                                            <span ng-show="paymentFrom.Address.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
+                                            <span style="color:red" ng-show="paymentFrom.Address.$error.required">Bạn chưa nhập địa chỉ</span>
+                                            <span style="color:red" ng-show="paymentFrom.Address.$error.maxlength">Địa chỉ dài nhất là 60 kí tự</span>
+                                            <span style="color:red" ng-show="paymentFrom.Address.$error.minlength">Địa chỉ cần ít nhât 10 kí tự</span>
                                         </div>
                                         <div class="col-md-4 pt10 pb10">
                                             <input type="text" class="form-control"
@@ -64,7 +64,7 @@
                                                    ng-minlength="10"
                                                    ng-maxlength="11"
                                                    name="PhoneNumber"
-                                                   ng-model="UserBasicInfo.ContactNumber"
+                                                   ng-model="backingData.PhoneNumber"
                                                    ng-model-options="{ updateOn: 'change blur'}"
                                                    required>
                                             <span ng-show="paymentFrom.PhoneNumber.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
@@ -81,10 +81,10 @@
                                             <textarea class="form-control" rows="7"
                                                       style="height: 181px"
                                                       ng-model-options="{ updateOn: 'change blur'}"
-                                                      placeholder="Lời nhắn..." name="Des" ng-maxlength="135" maxlength="135"
+                                                      placeholder="Lời nhắn..." name="Description" ng-maxlength="135" maxlength="135"
                                                       ng-model="backingData.Description"></textarea>
-                                            <span ng-show="paymentFrom.Des.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
-                                            <span style="color:red" ng-show="paymentFrom.Des.$error.maxlength">Tối đa 135 kí tự</span>
+                                            <span ng-show="paymentFrom.Description.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
+                                            <span style="color:red" ng-show="paymentFrom.Description.$error.maxlength">Tối đa 135 kí tự</span>
                                             @*<label class="checkbox" for="checkbox1">
                                                     <input type="checkbox" data-toggle="checkbox" value="" id="checkbox1" ng-model="backingData.IsPublic">
                                                     Ẩn danh, tên bạn sẽ được ẩn bên danh sách người ủng hộ
@@ -144,15 +144,22 @@
                         </div>
                     </div>
                 </div>*@
+            <div>
+                <input type="hidden" name="RewardPkgDesc" ng-value="Packet.Description" />
+                <input type="hidden" name="ProjectCode" ng-value="BackData.ProjectCode" />
+                <input type="hidden" name="Quantity" ng-value="BackData.Quantity" />
+                <input type="hidden" name="PledgeAmount" ng-value="BackData.PledgeAmount" />
+                <input type="hidden" name="RewardPkgID" ng-value="Packet.RewardPkgID" />
+            </div>
             <div id="paymentSubmit">
                 <div class="container">
                     <div class="pull-right">
                         @*<button class="btn btn-success btn-wide"
-                                ng-disabled="(!paymentFrom.$dirty && !submitAble) || (paymentFrom.$dirty && paymentFrom.$invalid) || (submitAble && paymentFrom.$invalid)"
-                                ng-click="submit()">
-                            Ủng hộ
-                        </button>*@
-                        <button class="btn btn-success btn-wide"
+                                    ng-disabled="(!paymentFrom.$dirty && !submitAble) || (paymentFrom.$dirty && paymentFrom.$invalid) || (submitAble && paymentFrom.$invalid)"
+                                    ng-click="submit()">
+                                Ủng hộ
+                            </button>*@
+                        <button class="btn btn-success btn-wide" type="submit"
                                 ng-disabled="(!paymentFrom.$dirty && !submitAble) || (paymentFrom.$dirty && paymentFrom.$invalid) || (submitAble && paymentFrom.$invalid)"
                                 ng-click="submitBaokim()">
                             Ủng hộ @*bằng Bảo Kim*@

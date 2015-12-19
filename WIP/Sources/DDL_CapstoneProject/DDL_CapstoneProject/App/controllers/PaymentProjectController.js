@@ -23,13 +23,6 @@ app.controller('PaymentProjectController', function ($scope, $rootScope, $sce, $
         $scope.UserBasicInfo.ProfileImage = $scope.UserBasicInfo.ProfileImage.replace('/images/avatars/', '');
     }
 
-    // Initial backing data record
-    $scope.backingData = {};
-
-    $scope.backingData.RewardPKgID = $scope.BackData.RewardPKgID;
-    $scope.backingData.PledgeAmount = $scope.BackData.PledgeAmount;
-    $scope.backingData.Quantity = $scope.BackData.Quantity;
-
     for (var i = 0; i < $scope.RewardPkgs.length; i++) {
         if ($scope.RewardPkgs[i].RewardPkgID == $scope.BackData.RewardPKgID) {
             $scope.Packet = $scope.RewardPkgs[i];
@@ -39,6 +32,19 @@ app.controller('PaymentProjectController', function ($scope, $rootScope, $sce, $
     if ($scope.BackData.PledgeAmount == null) {
         $location.path("/project/back/" + $route.current.params.code).replace();
     }
+
+    // Initial backing data record
+    $scope.backingData = {};
+
+    $scope.backingData.RewardPKgID = $scope.BackData.RewardPKgID;
+    $scope.backingData.PledgeAmount = $scope.BackData.PledgeAmount;
+    $scope.backingData.Quantity = $scope.BackData.Quantity;
+    $scope.backingData.BackerName = $scope.UserBasicInfo.FullName;
+    $scope.backingData.ProjectCode = $scope.BackData.ProjectCode;
+    $scope.backingData.Address = $scope.UserBasicInfo.Addres;
+    $scope.backingData.Email = $scope.UserBasicInfo.Email;
+    $scope.backingData.PhoneNumber = $scope.UserBasicInfo.ContactNumber;
+    $scope.backingData.RewardPkgDesc = $scope.Packet.Description;
 
     $scope.trustSrc = function (src) {
         return $sce.trustAsResourceUrl(src);
@@ -51,11 +57,11 @@ app.controller('PaymentProjectController', function ($scope, $rootScope, $sce, $
     }
 
     $scope.submit = function () {
-        $scope.backingData.BackerName = $scope.UserBasicInfo.FullName;
-        $scope.backingData.ProjectCode = $scope.BackData.ProjectCode;
-        $scope.backingData.Address = $scope.UserBasicInfo.Addres;
-        $scope.backingData.Email = $scope.UserBasicInfo.Email;
-        $scope.backingData.PhoneNumber = $scope.UserBasicInfo.ContactNumber;
+        //$scope.backingData.BackerName = $scope.UserBasicInfo.FullName;
+        //$scope.backingData.ProjectCode = $scope.BackData.ProjectCode;
+        //$scope.backingData.Address = $scope.UserBasicInfo.Addres;
+        //$scope.backingData.Email = $scope.UserBasicInfo.Email;
+        //$scope.backingData.PhoneNumber = $scope.UserBasicInfo.ContactNumber;
 
         var promisePost = ProjectService.backingProject($scope.backingData);
 
@@ -76,37 +82,33 @@ app.controller('PaymentProjectController', function ($scope, $rootScope, $sce, $
             });
     }
 
-    $scope.submitBaokim = function () {
-        $scope.backingData.BackerName = $scope.UserBasicInfo.FullName;
-        $scope.backingData.ProjectCode = $scope.BackData.ProjectCode;
-        $scope.backingData.Address = $scope.UserBasicInfo.Addres;
-        $scope.backingData.Email = $scope.UserBasicInfo.Email;
-        $scope.backingData.PhoneNumber = $scope.UserBasicInfo.ContactNumber;
+    //$scope.submitBaokim = function () {
 
-        var baokimUrl = $scope.backingData.ProjectCode + "&PledgeAmount=" + $scope.backingData.PledgeAmount + "&Des=" + $scope.Packet.Description
-            + "&Email=" + $scope.backingData.Email + "&BackerName=" + $scope.backingData.BackerName + "&RewardId=" + $scope.backingData.RewardPKgID
-            + "&Quantity=" + $scope.backingData.Quantity + "&Mes=" + $scope.backingData.Description
-            + "&Address=" + $scope.backingData.Address + "&Phone=" + $scope.backingData.PhoneNumber;
 
-        $window.location.href = "/baokim?ProjectCode=" + encodeURI(baokimUrl);
+    //var baokimUrl = $scope.backingData.ProjectCode + "&PledgeAmount=" + $scope.backingData.PledgeAmount + "&Des=" + $scope.Packet.Description
+    //    + "&Email=" + $scope.backingData.Email + "&BackerName=" + $scope.backingData.BackerName + "&RewardId=" + $scope.backingData.RewardPKgID
+    //    + "&Quantity=" + $scope.backingData.Quantity + "&Mes=" + $scope.backingData.Description
+    //    + "&Address=" + $scope.backingData.Address + "&Phone=" + $scope.backingData.PhoneNumber;
 
-        //var promisePost = ProjectService.backingProject($scope.backingData);
+    //$window.location.href = "/baokim?ProjectCode=" + encodeURI(baokimUrl);
 
-        //promisePost.then(
-        //    function (result) {
-        //        if (result.data.Status === "success") {
-        //            //toastr.success('Bạn đã ủng hộ dự án thành công!');
-        //            $window.location.href ="/baokim?=";
-        //        } else {
-        //            CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-        //            $scope.Error = result.data.Message;
-        //            toastr.error($scope.Error, 'Lỗi!');
-        //        }
-        //    },
-        //    function (error) {
-        //        $scope.Error = error.data.Message;
-        //        toastr.error($scope.Error, 'Lỗi!');
-        //    });
-    }
+    //var promisePost = ProjectService.backingProject($scope.backingData);
+
+    //promisePost.then(
+    //    function (result) {
+    //        if (result.data.Status === "success") {
+    //            //toastr.success('Bạn đã ủng hộ dự án thành công!');
+    //            $window.location.href ="/baokim?=";
+    //        } else {
+    //            CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+    //            $scope.Error = result.data.Message;
+    //            toastr.error($scope.Error, 'Lỗi!');
+    //        }
+    //    },
+    //    function (error) {
+    //        $scope.Error = error.data.Message;
+    //        toastr.error($scope.Error, 'Lỗi!');
+    //    });
+    //}
 
 });

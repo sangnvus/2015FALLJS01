@@ -44,19 +44,20 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
         }
 
         [Route("baokim")]
-        public ActionResult Baokim()
+        public ActionResult Baokim(ProjectBackDTO backingData)
         {
             try
             {
                 var bk = new BaoKimPayment();
-                var randomCode = CommonUtils.GenerateVerifyCode();
+                var randomCode = CommonUtils.GenerateVerifyCode().Substring(0, 10);
+                string totalPledge = backingData.PledgeAmount.ToString();
                 var paymentUrl = bk.createRequestUrl(
-                    Request.QueryString["ProjectCode"] + randomCode + DateTime.Now.ToString("hmmsstt"),
+                    backingData.ProjectCode + randomCode + DateTime.Now.ToString("hmmsstt"),
                     "dev.baokim@bk.vn",
-                     Request.QueryString["PledgeAmount"],
+                     totalPledge,
                     "0",
                     "0",
-                    Request.QueryString["Des"],
+                    backingData.RewardPkgDesc,
                     "http://dandelionvn.com/baokimcallback",
                     "http://dandelionvn.com/#/project/detail/" + Request.QueryString["ProjectCode"],
                     "http://dandelionvn.com/#/project/detail/" + Request.QueryString["ProjectCode"]
@@ -76,15 +77,15 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
                 DateTime now = DateTime.Now;
 
                 // Set the cookie value.
-                projectCodeCookie.Value = HttpUtility.UrlDecode(Request.QueryString["ProjectCode"]);
-                emailCookie.Value = HttpUtility.UrlDecode(Request.QueryString["Email"]);
-                backerNameCookie.Value = HttpUtility.UrlDecode(Request.QueryString["BackerName"]);
-                rewardIdCookie.Value = HttpUtility.UrlDecode(Request.QueryString["RewardId"]);
-                pledgeAmountCookie.Value = HttpUtility.UrlDecode(Request.QueryString["PledgeAmount"]);
-                quantityCookie.Value = HttpUtility.UrlDecode(Request.QueryString["Quantity"]);
-                descCookie.Value = HttpUtility.UrlDecode(Request.QueryString["Mes"]);
-                addressCookie.Value = HttpUtility.UrlDecode(Request.QueryString["Address"]);
-                phoneNumberCookie.Value = HttpUtility.UrlDecode(Request.QueryString["Phone"]);
+                projectCodeCookie.Value = backingData.ProjectCode;
+                emailCookie.Value = backingData.Email;
+                backerNameCookie.Value = backingData.BackerName;
+                rewardIdCookie.Value = backingData.RewardPkgID.ToString();
+                pledgeAmountCookie.Value = backingData.PledgeAmount.ToString();
+                quantityCookie.Value = backingData.Quantity.ToString();
+                descCookie.Value = backingData.Description;
+                addressCookie.Value = backingData.Address;
+                phoneNumberCookie.Value = backingData.PhoneNumber;
 
                 // Set the cookie expiration date.
                 projectCodeCookie.Expires = now.AddMinutes(30);
