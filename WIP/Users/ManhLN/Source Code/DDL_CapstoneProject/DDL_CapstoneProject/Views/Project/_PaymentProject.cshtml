@@ -26,7 +26,7 @@
                                             <span ng-show="paymentFrom.fullname.$invalid" class="glyphicon glyphicon-remove text-danger"></span>
                                             <span style="color:red" ng-show="paymentFrom.fullname.$error.required">Bạn chưa nhập tên đầy đủ</span>
                                             <span style="color:red" ng-show="paymentFrom.fullname.$error.minlength">Tên đầy đủ tối thiểu 6 kí tự</span>
-                                            <span style="color: red" ng-show="paymentFrom.fullname.$error.maxlength">Tên đầy đủ tối đa 20 kí tự</span>
+                                            <span style="color:red" ng-show="paymentFrom.fullname.$error.maxlength">Tên đầy đủ tối đa 20 kí tự</span>
                                             <br>
                                             <input type="email"
                                                    class="form-control"
@@ -147,16 +147,16 @@
             <div id="paymentSubmit">
                 <div class="container">
                     <div class="pull-right">
-                        <button class="btn btn-success btn-wide"
+                        @*<button class="btn btn-success btn-wide"
                                 ng-disabled="(!paymentFrom.$dirty && !submitAble) || (paymentFrom.$dirty && paymentFrom.$invalid) || (submitAble && paymentFrom.$invalid)"
                                 ng-click="submit()">
                             Ủng hộ
-                        </button>
-                        @*<button class="btn btn-success btn-wide"
+                        </button>*@
+                        <button class="btn btn-success btn-wide"
                                 ng-disabled="(!paymentFrom.$dirty && !submitAble) || (paymentFrom.$dirty && paymentFrom.$invalid) || (submitAble && paymentFrom.$invalid)"
                                 ng-click="submitBaokim()">
-                            Ủng hộ bằng Bảo Kim
-                        </button>*@
+                            Ủng hộ @*bằng Bảo Kim*@
+                        </button>
                         @*<a type="button" href="@Url.Content("/baokim")">Bảo kim</a>*@
                     </div>
                 </div>

@@ -39,7 +39,7 @@ namespace DDL_CapstoneProject.Respository
                                       Name = category.Name,
                                       projectCount = (from project in category.Projects
                                                       where !project.IsExprired
-                                                            && !project.Status.Equals(DDLConstants.ProjectStatus.DRAFT) && !project.Status.Equals(DDLConstants.ProjectStatus.REJECTED)
+                                                            &&!project.Status.Equals(DDLConstants.ProjectStatus.DRAFT) && !project.Status.Equals(DDLConstants.ProjectStatus.REJECTED)
                                                             && !project.Status.Equals(DDLConstants.ProjectStatus.SUSPENDED) && !project.Status.Equals(DDLConstants.ProjectStatus.PENDING)
                                                       select project.ProjectID).Count()
 
@@ -65,6 +65,7 @@ namespace DDL_CapstoneProject.Respository
             using (var db = new DDLDataContext())
             {
                 var CategorySet = from category in db.Categories
+                                  where category.IsActive
                                   select new CategoryProjectCountDTO
                                   {
                                       CategoryID = category.CategoryID,
@@ -119,13 +120,16 @@ namespace DDL_CapstoneProject.Respository
                 // Get category list
 
                 var listCategoryDTO = (from category in db.Categories
-                                       orderby category.CategoryID ascending
+                                       orderby category.IsActive descending , category.CategoryID ascending
                                        select new AdminCategoryDTO
                                        {
                                            IsActive = category.IsActive,
                                            Description = category.Description,
                                            Name = category.Name,
                                            CategoryID = category.CategoryID,
+                                           RejectedProjectCount = category.Projects.Count(x => x.Status == DDLConstants.ProjectStatus.SUSPENDED),
+                                           RunningProjectCount = category.Projects.Count(x => x.IsExprired == false && x.Status == DDLConstants.ProjectStatus.APPROVED),
+                                           ExpiredProjectCount = category.Projects.Count(x => x.IsExprired),
                                            ProjectCount = category.Projects.Count(x => x.Status != DDLConstants.ProjectStatus.DRAFT && x.Status != DDLConstants.ProjectStatus.REJECTED && x.Status != DDLConstants.ProjectStatus.PENDING)
                                        }).ToList();
 
@@ -165,7 +169,9 @@ namespace DDL_CapstoneProject.Respository
                     IsActive = category.IsActive,
                     Description = category.Description,
                     Name = category.Name,
-                    ProjectCount = category.Projects.Count
+                    RejectedProjectCount = category.Projects.Count(x => x.Status == DDLConstants.ProjectStatus.SUSPENDED),
+                    RunningProjectCount = category.Projects.Count(x => x.IsExprired == false && x.Status == DDLConstants.ProjectStatus.APPROVED),
+                    ExpiredProjectCount = category.Projects.Count(x => x.IsExprired)
                 };
 
                 return categoryDTO;

@@ -31,15 +31,17 @@ function ($scope, $http, projectbycategory, categoryList, ProjectService, Catego
         { 'isExpried': 'true', 'Label': 'Đã hết hạn' },
         { 'isExpried': 'false', 'Label': 'Đang gây vốn' }
     ];
-    if (isAdvance) {
-        $scope.selectstatus = angular.copy($scope.statuss[0]);
-    } else {
-        $scope.selectstatus = angular.copy($scope.statuss[2]);
-    }
+
+    $scope.selectstatus = angular.copy($scope.statuss[0]);
+    //if (isAdvance) {
+    //    $scope.selectstatus = angular.copy($scope.statuss[0]);
+    //} else {
+    //    $scope.selectstatus = angular.copy($scope.statuss[0]);
+    //}
     if ($scope.projectResultListSize == 0) {
-        $scope.noti = "không tìm thấy dự án nào.";
+        $scope.noti = true;"";
     } else {
-        $scope.noti = "Có " + $scope.projectResultListSize + "dự án";
+        $scope.noti = false;
     }
 
 
@@ -86,9 +88,9 @@ function ($scope, $http, projectbycategory, categoryList, ProjectService, Catego
             ProjectService.SearchCount(categoryIdString, searchkey, $scope.selectstatus.isExpried).then(function (response) {
                 $scope.projectResultListSize = response.data.Data;
                 if ($scope.projectResultListSize == 0) {
-                    $scope.noti = "không tìm thấy dự án nào.";
+                    $scope.noti = true;
                 } else {
-                    $scope.noti = "Có " + $scope.projectResultListSize + "dự án";
+                    $scope.noti = false;
                 }
                 if ($scope.projectbycategory.length >= $scope.projectResultListSize) {
                     $scope.showLoadMoreButton = false;

@@ -35,9 +35,7 @@
     </div> <!-- end content-1 STATISTIC -->
     <div id="content-2" class="row">
         <div class="panel-collapse collapse in col-md-10"></div>
-        <div id="lineChart" class="panel-collapse collapse in col-md-10" style="
-    margin-left: 6%;
-">
+        <div id="lineChart" class="panel-collapse collapse in col-md-10" style="margin-left: 6%;">
             <canvas id="myChart"></canvas>
         </div>
     </div> <!-- end content-2 GRAPH STATISTIC-->
@@ -68,7 +66,7 @@
                                         <th style="width: 118px">Danh mục</th>
                                         <th>Số tiền ủng hộ</th>
                                         <th style="width: 70px">Lượt ủng hộ</th>
-                                        <th style="width: 10px">Tình trạng</th>
+                                        <th style="width: 110px">Tình trạng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -80,8 +78,8 @@
                                         <td>{{project.Category}}</td>
                                         <td>{{project.CurrentFundedNumber| number : fractionSize}}&#8363;</td>
                                         <td class="col-number">{{project.Backers}}</td>
-                                        <td ng-if="project.CurrentFundedNumber >= project.FundingGoal"><i style="color:limegreen" class="fa fa-check"></i></td>
-                                        <td ng-if="project.CurrentFundedNumber < project.FundingGoal">{{project.CurrentFundedNumber/project.FundingGoal*100| number : fractionSize}}%</td>
+                                        <td ng-if="project.CurrentFundedNumber >= project.FundingGoal">Thành công</td>
+                                        <td ng-if="project.CurrentFundedNumber < project.FundingGoal">Đang chạy</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -113,7 +111,7 @@
                                 <tr>
                                     <th style="width:20px">.STT</th>
                                     <th>Tên người ủng hộ</th>
-                                    <th>Tổng số tiền đã ủng hộ</th>
+                                    <th style="width:210px">Tổng số tiền đã ủng hộ</th>
                                     <th style="width:210px">Tổng số dự án đã ủng hộ</th>
                                 </tr>
                             </thead>
@@ -152,7 +150,7 @@
                                 <tr>
                                     <th style="width:20px">.STT</th>
                                     <th>Tên người ủng hộ</th>
-                                    <th>Tổng số tiền đã gây quỹ</th>
+                                    <th style="width:210px">Tổng số tiền đã gây quỹ</th>
                                     <th style="width:220px">Tổng số dự án đã gây quỹ</th>
 </tr>
                             </thead>

@@ -32,6 +32,7 @@ app.controller('ProjectDetailController', function ($scope, $sce, $rootScope, $f
                 function (result) {
                     if (result.data.Status === "success") {
                         $scope.Project.CommentsList = result.data.Data;
+                        $scope.Project.NumberComment = result.data.Data.length;
                         $scope.FirstLoadComment = true;
                     } else {
                         var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);

@@ -4,7 +4,7 @@
         <div class="portlet portlet-default">
             <div class="portlet-heading">
                 <div class="portlet-title">
-                    <h4>Danh sách người dùng bị báo xấu</h4>
+                    <h4>Danh sách người dùng bị báo vi phạm</h4>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -14,8 +14,8 @@
                         <thead>
                             <tr>
                                 <th style="width: 15px">#</th>
-                                <th>Người báo xấu</th>
-                                <th>Người bị báo xấu</th>
+                                <th>Người báo cáo</th>
+                                <th>Người vi phạm</th>
                                 @*<th>Lý do</th>*@
                                 <th>Ngày báo</th>
                                 <th style="width: 72px">Trạng thái</th>
@@ -28,11 +28,11 @@
                                 <td><a href="/admin/#/userprofile/{{report.ReporterUsername}}">{{report.ReporterFullname}}</a></td>
                                 <td><a href="/admin/#/userprofile/{{report.ReportedUsername}}">{{report.ReportedFullname}}</a></td>
                                 @*<td>{{report.Subject}}</td>*@
-                                <td class="col-datetime">{{report.ReportedDate}}</td>
+                                <td class="col-datetime" data-order="{{report.ReportedDate}}">{{report.ReportedDate | date : "dd/MM/yyyy"}}</td>
                                 <td>
                                     <span style="padding: 9px 10px" class="label label-default center-block" ng-if="report.Status != 'rejected' && report.Status != 'done' && report.Status != 'viewed'">Chưa xem</span>
                                     <span style="padding: 9px 10px" class="label label-primary  center-block" ng-if="report.Status == 'viewed'">Đã xem</span>
-                                    <span style="padding: 9px 10px" class="label label-success center-block" ng-if="report.Status == 'done'">Đã đồng ý</span>
+                                    <span style="padding: 9px 10px" class="label label-success center-block" ng-if="report.Status == 'done'">Đã xác nhận</span>
                                     <span style="padding: 9px 10px" class="label label-danger center-block" ng-if="report.Status == 'rejected'">Đã Hủy</span>
                                 </td>
                                 <td>
@@ -41,7 +41,7 @@
                                                 ng-click="loadReportContent(report.ReportID)" data-toggle="modal" data-target="#viewMessageModal">
                                             <i class="fa fa-eye"></i>
                                         </button>
-                                        <button class="btn btn-primary btn-sm btn-purple" type="button" tooltip="Đồng ý" tooltip-append-to-body="true" tooltip-placement="left"
+                                        <button class="btn btn-success btn-sm" type="button" tooltip="Xác nhận" tooltip-append-to-body="true" tooltip-placement="left"
                                                 ng-click="changeReportUserStatus(report.ReportID,'done')" ng-if="report.Status != 'rejected' && report.Status != 'done' ">
                                             <i class="fa fa-check"></i>
                                         </button>
@@ -82,7 +82,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-info" ng-click="sendReply()" data-dismiss="modal">Gửi trả lời</button>
+                <button type="button" class="btn btn-info" ng-click="sendReply()" data-dismiss="modal">Trả lời</button>
             </div>
         </div>
     </div>
@@ -96,7 +96,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title" id="flexModalLabel">
-                        Nội dung báo xấu
+                       Thông tin báo vi phạm
                     </h4>
                 </div>
                 <div class="modal-body">
@@ -108,14 +108,12 @@
                 </div>*@
                     <div class="form-group">
                         <label for="exampleInputPassword1">Nội dung:</label>
-                        <textarea readonly class="form-control" id="exampleInputPassword1" placeholder="Description..."
-                                  rows="6" cols="50" maxlength="300" style="resize: none">
-                            {{reportContent.ReportContent}}
-                        </textarea>
+                        <textarea readonly class="form-control" id="exampleInputPassword1"
+                                  rows="6" cols="50" maxlength="300" style="resize: none">{{reportContent.ReportContent}}</textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> <button type="button" class="btn btn-green" data-dismiss="modal" data-toggle="modal" data-target="#reply">Reply</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button> <button type="button" class="btn btn-green" data-dismiss="modal" data-toggle="modal" data-target="#reply">Trả lời</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->

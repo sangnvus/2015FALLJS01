@@ -3,7 +3,9 @@
 app.controller('HomeController', function ($scope, $sce, $window, slides, liststatisticforhome) {
     //Todo here.
     $scope.Slides = slides.data.Data;
-
+    //for (var i = 0; i <  $scope.Slides.length; i++) {
+    //    $scope.Slides[i].ImageUrl += "?v=" + Math.random();
+    //}
     var data = liststatisticforhome.data.Data;
     $scope.popularproject = data.popularproject;
     $scope.projectByCategory = data.projectByCategory;

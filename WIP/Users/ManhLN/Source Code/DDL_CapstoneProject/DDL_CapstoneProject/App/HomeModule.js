@@ -93,7 +93,7 @@ app.config(["$routeProvider", function ($routeProvider) {
                         searchkey = "null";
                         params.searchkey = [""];
                     }
-                    var status =""
+                    var status = "";
                     if (!params.advance) {
                         status = "false";
                     }

@@ -61,7 +61,7 @@ namespace DDL_CapstoneProject.Helper
             _mail.Body = "Xin chào " + fullname + "," +
                         "<br/>Chúng tôi vừa " + type + " dự án " + projectTitle + " của bạn." +
                         "<br/>Để biết thêm chi tiết xin liện hệ với admin qua email" +
-                        "<br/>ngocmanh1712@gmail.com";
+                        "<br/>dandelion.system@gmail.com";
             _smtp.Send(_mail);
         }
 

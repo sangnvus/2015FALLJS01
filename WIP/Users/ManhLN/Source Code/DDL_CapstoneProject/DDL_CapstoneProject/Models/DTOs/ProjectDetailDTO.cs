@@ -28,6 +28,7 @@ namespace DDL_CapstoneProject.Models.DTOs
         public List<RewardPkgDTO> RewardDetail { get; set; }
         public bool Reminded { get; set; }
         public List<QuestionDTO> Question { get; set; }
+        public bool IsFunded { get; set; }
 
         /// <summary>
         /// Status of a project

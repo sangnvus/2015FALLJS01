@@ -1,4 +1,4 @@
-﻿begin<!--          DASHBOARD CIRCLE TILES -->
+﻿<!--          DASHBOARD CIRCLE TILES -->
 <div align="center" class="row centered">
     <div class="col-lg-2 col-sm-0"></div>
     <div class="col-lg-2 col-sm-6">
@@ -10,7 +10,7 @@
             </a>
             <div class="circle-tile-content orange">
                 <div class="circle-tile-description text-faded">
-                    Người dùng mới tạo
+                    Thành viên mới
                 </div>
                 <div class="circle-tile-number text-faded">
                     {{userList.NewUser}}
@@ -28,7 +28,7 @@
             </a>
             <div class="circle-tile-content blue">
                 <div class="circle-tile-description text-faded">
-                    Người dùng chưa kích hoạt
+                    Thành viên chưa kích hoạt
                 </div>
                 <div class="circle-tile-number text-faded">
                     {{userList.InActiveUser}}
@@ -48,7 +48,7 @@
             </a>
             <div class="circle-tile-content purple">
                 <div class="circle-tile-description text-faded">
-                    Người dùng đã kích hoạt
+                    Thành viên đã kích hoạt
                 </div>  
                 <div class="circle-tile-number text-faded">
                     {{userList.ActiveUser}}
@@ -67,7 +67,7 @@
             </a>
             <div class="circle-tile-content dark-blue">
                 <div class="circle-tile-description text-faded">
-                    Tổng số người dùng
+                    Tổng số thành viên
                 </div>
                 <div class="circle-tile-number text-faded">
                     {{userList.TotalUser}}
@@ -87,7 +87,7 @@
         <div class="portlet portlet-default">
             <div class="portlet-heading">
                 <div class="portlet-title">
-                    <h4>Danh sách Người dùng</h4>
+                    <h4>Danh sách thành viên</h4>
                 </div>
                 <div class="portlet-widgets">
                     <a data-toggle="collapse" data-parent="#accordion" href="#UserTable" onclick="return false;"><i class="fa fa-chevron-down"></i></a>
@@ -101,13 +101,13 @@
                                datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
                             <thead>
                                 <tr>
-                                    <th>STT</th>
+                                    <th>#</th>
                                     <th>Tên đầy đủ</th>
                                     <th>Email</th>
                                     <th>Số điện thoại</th>
                                     <th>Loại tài khoản</th>
-                                    <th>Trạng thái kích hoạt</th>
-                                    <th>Hành động</th>
+                                    <th>Trạng thái</th>
+                                    <th style="width:90px;"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -116,22 +116,30 @@
                                     <td style="width:20px;" class="col-number">{{$index + 1}}</td>
                                     <td>{{user.FullName}}</td>
                                     <td>{{user.Email}}</td>
-                                    <td style="width:90px; " class="col-number">{{user.PhoneNumber}}</td>
-                                    <td style="width:90px; ">{{user.LoginType}}</td>
-                                    <td style="width:124px;">
+                                    <td class="col-number">{{user.PhoneNumber}}</td>
+                                    <td>{{user.LoginType}}</td>
+                                    <td>
                                         <!-- <button class="btn btn-default">Inactive</button> -->
-                                        <div ng-show="user.Status">
-                                            <span class="label label-primary center-block green" style="padding: 9px">Đã kích hoạt</span>
+                                        <div ng-if="user.StatusActive == true && user.Status == true">
+                                            <span class="label label-success center-block" style="padding: 9px">Đã kích hoạt</span>
                                         </div>
-                                        <div ng-hide="user.Status">
+                                        <div ng-if="user.StatusActive == false && user.Status == true">
+                                            <span class="label label-danger center-block" style="padding: 9px">Đã bị khóa</span>
+                                        </div>
+                                        <div ng-if="!user.Status">
                                             <span class="label label-primary center-block btn-default" style="padding: 9px">Chưa kích hoạt</span>
                                         </div>
                                     </td>
-                                    <td style="width:100px;">
-                                        <a tooltip="Nhấp để xem chi tiết" href="/admin/#/userprofile/{{user.UserName}}"><button class="btn btn-blue"><i class="fa fa-eye"></i></button></a>
-                                        <a style="width:40px;" ng-show="user.StatusActive == false && user.Status == true" tooltip="Nhấp để mở khóa tài khoản" data-toggle="modal" data-target="#ConfirmModal" ng-click="warning(user.UserName,$index)" class="btn btn-red"><i class="fa fa-unlock"></i></a>
-                                        <a style="width: 40px;" ng-show="user.StatusActive == true && user.Status == true" tooltip="Nhấp để khóa tài khoản" data-toggle="modal" data-target="#ConfirmModal"
-                                           ng-click="warning(user.UserName,$index)" class="btn btn-green"><i class="fa fa-lock"></i></a>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a class="btn btn-blue" tooltip=" nhấp để xem chi tiết" tooltip-append-to-body="true" tooltip-placement="top"
+                                                href="/admin/#/userprofile/{{user.UserName}}"><i class="fa fa-eye"></i></a>
+                                            <a style="width: 40px;" ng-if="user.StatusActive == false && user.Status == true" tooltip="Nhấp để mở khóa tài khoản" tooltip-append-to-body="true" tooltip-placement="top"
+                                                data-toggle="modal" data-target="#ConfirmModal" ng-click="warning(user.UserName,$index)" class="btn btn-red"><i class="fa fa-unlock"></i></a>
+                                            <a style="width: 40px;" ng-if="user.StatusActive == true && user.Status == true" tooltip="Nhấp để khóa tài khoản" tooltip-append-to-body="true" tooltip-placement="top"
+                                                data-toggle="modal" data-target="#ConfirmModal"
+                                               ng-click="warning(user.UserName,$index)" class="btn btn-success"><i class="fa fa-lock"></i></a>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>

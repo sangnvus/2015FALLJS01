@@ -48,7 +48,8 @@
             <div id="item-search" class="pt30 pb30">
                 <section id="portfolio" class="container">
                     <div class="explore">
-                        <span class="fnt30 fnt-b">{{noti}}</span>
+                        <span class="fnt25" ng-if="noti">không tìm thấy dự án nào.</span>
+                        <span class="fnt25" ng-if="!noti">Có {{projectResultListSize}} dự án.</span>
                     </div>
                     <ul class="portfolio-items col-4">
                         <li class="portfolio-item" ng-repeat="project in projectbycategory">
@@ -83,7 +84,7 @@
                                     <ul class="list-inline fnt15">
                                         <li>
                                             <span class="fnt-b mt0 mb0 c00">{{project.CurrentFundedNumber| number : fractionSize}}&#8363;({{project.CurrentFunded}}%)</span>
-                                            <span class="mt0 mb0">đã gây quỹ</span>
+                                            <span class="mt0 mb0">đã được gây quỹ</span>
                                         </li>
                                         @*<li>
                                                 <span class="fnt-b mt0 mb0 c00">{{project.CurrentFunded}}%</span>

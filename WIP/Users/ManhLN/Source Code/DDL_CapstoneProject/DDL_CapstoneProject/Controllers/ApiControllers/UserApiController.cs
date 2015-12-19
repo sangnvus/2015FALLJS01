@@ -255,12 +255,13 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
 
         public IHttpActionResult EditUserInfo()
         {
+            UserEditInfoDTO userCurrent;
             try
             {
                 var httpRequest = HttpContext.Current.Request;
                 var userCurrentJson = httpRequest.Form["profile"];
                 var serializer = new JavaScriptSerializer { MaxJsonLength = Int32.MaxValue };
-                var userCurrent = serializer.Deserialize<UserEditInfoDTO>(userCurrentJson);
+                userCurrent = serializer.Deserialize<UserEditInfoDTO>(userCurrentJson);
                 if (!ModelState.IsValid)
                 {
                     return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
@@ -269,20 +270,23 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                 {
                     return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.NOT_AUTHEN });
                 }
-                string imageName = "img_" + userCurrent.UserName;
+                // Save image
+                var imageName = "img_" + userCurrent.UserName;
                 var file = httpRequest.Files["file"];
                 var uploadImageName = CommonUtils.UploadImage(file, imageName, DDLConstants.FileType.AVATAR);
-                UserRepository.Instance.EditUserInfo(userCurrent, uploadImageName);
+
+                // Change info
+                userCurrent = UserRepository.Instance.EditUserInfo(userCurrent, uploadImageName);
             }
             catch (UserNotFoundException)
             {
-                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Bạn chưa đăng nhập!", Type = DDLConstants.HttpMessageType.NOT_FOUND });
+                return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "Không tìm thấy người dùng", Type = DDLConstants.HttpMessageType.NOT_FOUND });
             }
             catch (Exception)
             {
                 return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
             }
-            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "" });
+            return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.SUCCESS, Message = "", Type = "", Data = userCurrent.ProfileImage });
         }
 
         public IHttpActionResult GetUserPasswordEdit()

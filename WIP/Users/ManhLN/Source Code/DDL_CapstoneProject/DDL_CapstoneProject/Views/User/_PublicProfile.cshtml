@@ -29,9 +29,9 @@
                     <div ng-show="UserBasicInfo.Website != ''" class="mt5 mb5 border-b"><i class="glyphicon glyphicon-globe"></i>&nbsp;&nbsp;<a href="{{UserBasicInfo.Website}}">{{UserBasicInfo.Website}}</a></div>
                     <div ng-show="UserBasicInfo.FacebookUrl != ''" class="mt5 mb5 border-b" style="word-break: break-all"><i class="fa fa-facebook-square"></i>&nbsp;&nbsp;<a href="{{UserBasicInfo.FacebookUrl}}">{{UserBasicInfo.FullName}}</a></div>
                     <div ng-show="UserBasicInfo.PhoneNumber != ''" class="mt5 mb5 border-b"><i class="glyphicon glyphicon-phone"></i>&nbsp;&nbsp;{{UserBasicInfo.PhoneNumber}}</div>
-                    <div class="mt5 mb5 border-b"><i class="glyphicon glyphicon-bold"></i>&nbsp;&nbsp;{{UserBasicInfo.CountCreatedProject}} đã tạo</div>
-                    <div class="mt5 mb5 border-b"><i class="fa fa-university"></i>&nbsp;&nbsp;{{UserBasicInfo.CountBackedProject}} đã ủng hộ</div>
-                    <div class="mt5 mb5">
+                    @*<div class="mt5 mb5 border-b"><i class="glyphicon glyphicon-bold"></i>&nbsp;&nbsp;{{UserBasicInfo.CountCreatedProject}} dự án đã tạo</div>
+                    <div class="mt5 mb5 border-b"><i class="fa fa-university"></i>&nbsp;&nbsp;{{UserBasicInfo.CountBackedProject}} lượt đã ủng hộ</div>*@
+                    <div class="mt5 mb5" ng-if="CurrentUser.UserName != UserBasicInfo.UserName">
                         <button class="btn btn-primary" ng-click="showContactBox()">Gửi tin nhắn</button>
                         <button class="btn btn-red" ng-click="showReportBox()">Báo xấu người dùng</button>
                     </div>

@@ -413,9 +413,6 @@
     <Content Include="images\Schedule\7.png" />
     <Content Include="images\Schedule\8.png" />
     <Content Include="images\Schedule\9.png" />
-    <Content Include="images\slides\slide_1.jpg" />
-    <Content Include="images\slides\slide_2.jpg" />
-    <Content Include="images\slides\slide_3.jpg" />
     <Content Include="Scripts\admin-flex\flex.js" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
@@ -1353,6 +1350,7 @@
   <ItemGroup>
     <Folder Include="App\filters\" />
     <Folder Include="App_Data\" />
+    <Folder Include="images\slides\" />
     <Folder Include="Views\Slider\" />
   </ItemGroup>
   <ItemGroup>

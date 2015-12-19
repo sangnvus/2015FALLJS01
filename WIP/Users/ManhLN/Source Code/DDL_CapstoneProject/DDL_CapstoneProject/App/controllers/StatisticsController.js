@@ -57,30 +57,28 @@ app.controller('StatisticsController',
             datasets: [
                 {
                     label: "Số tiền ủng hộ dự án thành công",
-                    fillColor: "#0b62a4",
+                    fillColor: "#97bbcd",
                     data: fundedSucess
                 },
                 {
                     label: "Số tiền ủng hộ dự án không thành công",
-                    fillColor: "#7a92a3",
+                    fillColor: "#f7464a",
                     //highlightFill: "rgba(151,187,205,0.75)",\
                     data: fundedFail
                 }
             ]
         };
 
-        var myBarChart = new Chart(ctx).Bar(data);
+        var options = {
+            multiTooltipTemplate: function (label) {
+                return (label.datasetLabel + ': ' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) + "₫";
+            },
+            scaleLabel: function (label) {
+                return (label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) + "₫";
+            }
+        };
+        var myBarChart = new Chart(ctx).Bar(data, options);
 
 
 
-
-        $scope.getRank = function (fundingGoal) {
-            if (fundingGoal <= 50000000)
-                return "Rank D";
-            if (fundingGoal <= 100000000 && fundingGoal > 50000000)
-                return "Rank C";
-            if (fundingGoal <= 500000000 && fundingGoal > 100000000)
-                return "Rank B";
-            else return "Rank A";
-        }
     });

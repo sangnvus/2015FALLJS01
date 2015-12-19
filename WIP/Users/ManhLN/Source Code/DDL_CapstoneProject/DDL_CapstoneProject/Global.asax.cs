@@ -93,7 +93,7 @@ namespace DDL_CapstoneProject
         {
             using (var db = new DDLDataContext())
             {
-                var projects = db.Projects.Where(x => x.IsExprired == false && x.Status != DDLConstants.ProjectStatus.DRAFT).ToList();
+                var projects = db.Projects.Where(x => x.IsExprired == false && x.Status == DDLConstants.ProjectStatus.APPROVED).ToList();
 
                 foreach (var project in projects)
                 {

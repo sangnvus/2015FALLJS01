@@ -9,7 +9,7 @@
                 </a>
                 <div class="circle-tile-content orange">
                     <div class="circle-tile-description text-faded">
-                        Người dùng mới
+                        Thành Viên mới
                     </div>
                     <div class="circle-tile-number text-faded">
                         {{Dashboard.NewUser}}
@@ -27,7 +27,7 @@
                 </a>
                 <div class="circle-tile-content blue">
                     <div class="circle-tile-description text-faded">
-                        Người dùng chưa kích hoạt
+                        Thành Viên chưa kích hoạt
                     </div>
                     <div class="circle-tile-number text-faded">
                         {{Dashboard.NotVerifiedUser}}
@@ -46,7 +46,7 @@
                 </a>
                 <div class="circle-tile-content purple">
                     <div class="circle-tile-description text-faded">
-                        Người dùng đã kích hoạt
+                        Thành Viên đã kích hoạt
                     </div>
                     <div class="circle-tile-number text-faded">
                         {{Dashboard.VerifiedUser}}
@@ -65,7 +65,7 @@
                 </a>
                 <div class="circle-tile-content dark-blue">
                     <div class="circle-tile-description text-faded">
-                        Tổng số người dùng
+                        Tổng số thành Viên
                     </div>
                     <div class="circle-tile-number text-faded">
                         {{Dashboard.TotalUser}}
@@ -108,7 +108,7 @@
         <div class="portlet portlet-green">
             <div class="portlet-heading">
                 <div class="portlet-title">
-                    <h4><i class="fa fa-exchange fa-fw"></i>Người dùng vừa đăng nhập</h4>
+                    <h4><i class="fa fa-exchange fa-fw"></i>Thành viên vừa đăng nhập</h4>
                 </div>
                 <div class="portlet-widgets">
                     <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet" onclick="return false;"><i class="fa fa-chevron-down"></i></a>
@@ -122,8 +122,8 @@
                             <thead>
                                 <tr>
                                     <th>Tên</th>
-                                    <th>Lần đănh nhập cuối</th>
-                                    <th>Tình trạng hoạt động</th>
+                                    <th>Lần đăng nhập cuối</th>
+                                    <th>Tình trạng</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -153,7 +153,7 @@
         <div class="portlet portlet-green">
             <div class="portlet-heading">
                 <div class="portlet-title">
-                    <h4><i class="fa fa-exchange fa-fw"></i>Người dùng ủng hộ nhièu nhất</h4>
+                    <h4><i class="fa fa-exchange fa-fw"></i>Thành viên ủng hộ nhièu nhất</h4>
                 </div>
                 <div class="portlet-widgets">
                     <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet2" onclick="return false;"><i class="fa fa-chevron-down"></i></a>
@@ -169,7 +169,7 @@
                                     <th>Tên</th>
                                     <th>Tổng dự án đã ủng hộ</th>
                                     <th>Tổng số tiền đã ủng hộ</th>
-                                    <th>Tình trạng hoạt động</th>
+                                    <th>Tình trạng</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -197,7 +197,6 @@
     </div>
 </div>
 <!-- /.col-lg-12 -->
-                </div>
 <!-- /.row -->
 <!-- new users and top creator -->
 <div class="row">
@@ -206,7 +205,7 @@
         <div class="portlet portlet-green">
             <div class="portlet-heading">
                 <div class="portlet-title">
-                    <h4><i class="fa fa-exchange fa-fw"></i> Người dùng mới</h4>
+                    <h4><i class="fa fa-exchange fa-fw"></i> Thành viên mới</h4>
                 </div>
                 <div class="portlet-widgets">
                     <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet3" onclick="return false;"><i class="fa fa-chevron-down"></i></a>
@@ -220,16 +219,16 @@
                             <thead>
                                 <tr>
                                     <th>Tên</th>
-                                    <th>Ngày khởi tạo</th>
-                                    <th>Tình trạng hoạt động</th>
+                                    <th>Ngày đăng ký</th>
+                                    <th>Tình trạng</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="user in Dashboard.ListNewUser">
                                     <td style="width:35%">
                                         <a class="pull-left" href="@Url.Content("/admin/#/userprofile/{{user.UserName}}")">
-                                            <img style="width : 40px; height:40px" ng-if="!checkHTTP(user.AvartaURL)" ng-src="../images/avatars/{{user.AvartaURL}}" alt="" class="media-object img-circle">
-                                            <img style="width : 40px; height:40px" ng-if="checkHTTP(user.AvartaURL)" ng-src="{{trustSrc(user.AvartaURL)}}" alt="" class="media-object img-circle">
+                                            <img style="width: 40px; height: 40px" ng-if="!checkHTTP(user.AvartaURL)" ng-src="../images/avatars/{{user.AvartaURL}}" alt="" class="media-object img-circle">
+                                            <img style="width: 40px; height: 40px" ng-if="checkHTTP(user.AvartaURL)" ng-src="{{trustSrc(user.AvartaURL)}}" alt="" class="media-object img-circle">
                                         </a>
                                         <h5>{{user.FullName}}</h5>
                                     </td>
@@ -252,7 +251,7 @@
         <div class="portlet portlet-green">
             <div class="portlet-heading">
                 <div class="portlet-title">
-                    <h4><i class="fa fa-exchange fa-fw"></i> Người dùng thành công nhất</h4>
+                    <h4><i class="fa fa-exchange fa-fw"></i> Thành viên thành công nhất</h4>
                 </div>
                 <div class="portlet-widgets">
                     <a data-toggle="collapse" data-parent="#accordion" href="#transactionsPortlet4" onclick="return false;"><i class="fa fa-chevron-down"></i></a>
@@ -268,7 +267,7 @@
                                     <th>Tên</th>
                                     <th>Số dự án đã thành công</th>
                                     <th>Tổng số tiền gây quỹ thành công</th>
-                                    <th>Tình trạng hoạt động</th>
+                                    <th>Tình trạng</th>
                                 </tr>                   
                             </thead>
                             <tbody>
