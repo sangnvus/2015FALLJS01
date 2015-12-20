@@ -25,11 +25,12 @@ app.controller('AdminProjectDetailController',
         // Define table
         $scope.dtOptions = DTOptionsBuilder.newOptions()
         .withDisplayLength(10)
-        .withOption('order', [3, 'asc'])
+        .withOption('order', [3, 'desc'])
         .withBootstrap();
 
         $scope.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(0).notSortable()
+            DTColumnDefBuilder.newColumnDef(0).notSortable(),
+            DTColumnDefBuilder.newColumnDef(4).notSortable()
         ];
 
         // function get comments
