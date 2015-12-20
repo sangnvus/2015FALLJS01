@@ -22,6 +22,26 @@ service.service('UserService', function ($http) {
         return request;
     }
 
+    // Function to send code change pass
+    this.sendCodeChangePassword = function (email) {
+        var request = $http({
+            method: 'post',
+            url: '/api/UserApi/SendCodeChangePassword?email=' + email,
+        });
+
+        return request;
+    }
+
+    // Function to check verify code
+    this.checkCodeVerify = function (email, code) {
+        var request = $http({
+            method: 'post',
+            url: '/api/UserApi/CheckCodeVerify?username=' + email + '&code=' + code
+        });
+
+        return request;
+    }
+
     // Function to reset password
     this.resetPassword = function (email,code) {
         var request = $http({
@@ -114,6 +134,15 @@ service.service('UserService', function ($http) {
         var request = $http({
             method: 'post',
             url: '/api/UserApi/ChangePassword',
+            data: newpass
+        });
+        return request;
+    }
+
+    this.setNewPass = function (newpass) {
+        var request = $http({
+            method: 'post',
+            url: '/api/UserApi/SetPassword',
             data: newpass
         });
         return request;

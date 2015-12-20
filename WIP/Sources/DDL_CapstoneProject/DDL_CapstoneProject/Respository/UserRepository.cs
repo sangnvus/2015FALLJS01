@@ -365,6 +365,27 @@ namespace DDL_CapstoneProject.Respository
             }
         }
 
+        public bool SendCodeChangePass(string email)
+        {
+            using (var db = new DDLDataContext())
+            {
+                var user = GetByUserNameOrEmail(email);
+                if (user == null)
+                {
+                    throw new UserNotFoundException();
+                }
+
+                string resetCode = GenerateResetCode();
+                user.VerifyCode = resetCode;
+                db.DDL_Users.AddOrUpdate(user);
+                db.SaveChanges();
+
+                MailHelper.Instance.SendMailResetPasswordCode(email, resetCode, user.UserInfo.FullName);
+
+                return true;
+            }
+        }
+
         public bool ResetPassword(string email, string code)
         {
             using (var db = new DDLDataContext())
@@ -387,6 +408,25 @@ namespace DDL_CapstoneProject.Respository
                 db.SaveChanges();
 
                 MailHelper.Instance.SendMailResetPassword(email, newPassword, user.UserInfo.FullName);
+
+                return true;
+            }
+        }
+
+        public bool CheckCodeVerify(string username, string code)
+        {
+            using (var db = new DDLDataContext())
+            {
+                var user = GetByUserNameOrEmail(username);
+                if (user == null)
+                {
+                    throw new UserNotFoundException();
+                }
+
+                if (string.IsNullOrEmpty(code) || !code.Equals(user.VerifyCode))
+                {
+                    return false;
+                }
 
                 return true;
             }
@@ -527,10 +567,31 @@ namespace DDL_CapstoneProject.Respository
         {
             using (var db = new DDLDataContext())
             {
-                var userCurrent = db.DDL_Users.FirstOrDefault(x => x.Username.Equals(userName));
-                if (userCurrent != null && userCurrent.Password == newPass.CurrentPassword)
+                var userCurrent =
+                    db.DDL_Users.FirstOrDefault(x => x.Username == userName && x.Password == newPass.CurrentPassword);
+                if (userCurrent != null)
                 {
                     userCurrent.Password = newPass.NewPassword;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        public bool SetPassword(string userName, EditPasswordDTO newPass)
+        {
+            using (var db = new DDLDataContext())
+            {
+                var userCurrent = db.DDL_Users.FirstOrDefault(x => x.Username == userName);
+                if (userCurrent != null)
+                {
+                    userCurrent.Password = newPass.NewPassword;
+                    userCurrent.VerifyCode = String.Empty;
+                    userCurrent.LoginType = DDLConstants.LoginType.BOTH;
                     db.SaveChanges();
                 }
                 else

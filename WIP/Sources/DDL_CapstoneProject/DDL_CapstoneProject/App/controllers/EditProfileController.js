@@ -55,7 +55,11 @@ app.controller('EditProfileController', function ($scope, toastr, usereditinfo, 
                 function (result) {
                     if (result.data.Status === "success") {
                         toastr.success('Sửa thông tin cá nhân', 'Thành công');
-                        angular.element("#avatar").attr("src", "/images/avatars/" + result.data.Data);
+                        if ($scope.checkHTTP(result.data.Data)) {
+                            angular.element("#avatar").attr("src", result.data.Data);
+                        } else {
+                            angular.element("#avatar").attr("src", "/images/avatars/" + result.data.Data);
+                        }
                     } else {
                         var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
                         if (a) {

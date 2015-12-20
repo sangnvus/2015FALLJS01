@@ -79,12 +79,12 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
                 // Set the cookie value.
                 projectCodeCookie.Value = backingData.ProjectCode;
                 emailCookie.Value = backingData.Email;
-                backerNameCookie.Value = backingData.BackerName;
+                backerNameCookie.Value = HttpUtility.UrlEncode(backingData.BackerName);
                 rewardIdCookie.Value = backingData.RewardPkgID.ToString();
                 pledgeAmountCookie.Value = backingData.PledgeAmount.ToString();
                 quantityCookie.Value = backingData.Quantity.ToString();
-                descCookie.Value = backingData.Description;
-                addressCookie.Value = backingData.Address;
+                descCookie.Value = HttpUtility.UrlEncode(backingData.Description);
+                addressCookie.Value = HttpUtility.UrlEncode(backingData.Address);
                 phoneNumberCookie.Value = backingData.PhoneNumber;
 
                 // Set the cookie expiration date.
@@ -143,16 +143,16 @@ namespace DDL_CapstoneProject.Controllers.WebControllers
                 {
                     ProjectCode = projectCodeCookie.Value,
                     Email = emailCookie.Value,
-                    BackerName = backerNameCookie.Value,
+                    BackerName = HttpUtility.UrlDecode(backerNameCookie.Value),
                     RewardPkgID = Int32.Parse(rewardIdCookie.Value),
                     PledgeAmount = Decimal.Parse(pledgeAmountCookie.Value),
                     Quantity = Int32.Parse(quantityCookie.Value),
-                    Description = descCookie.Value,
-                    Address = addressCookie.Value,
+                    Description = HttpUtility.UrlDecode(descCookie.Value),
+                    Address = HttpUtility.UrlDecode(addressCookie.Value),
                     PhoneNumber = phoneNumberCookie.Value,
                     BackedDate = createdTime,
                     OrderId = Request.QueryString["order_id"],
-                    TransactionId = Request.QueryString["transaction_id"]
+                    TransactionId = Request.QueryString["transaction_id"],
                 };
 
                 int backingId = ProjectRepository.Instance.BackProject(projectBackDTO);
