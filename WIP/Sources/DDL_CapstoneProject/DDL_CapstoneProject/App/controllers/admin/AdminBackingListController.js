@@ -56,7 +56,7 @@ app.controller('AdminBackingListController',
         $scope.dtOptions = DTOptionsBuilder.newOptions()
         .withDisplayLength(10)
         .withOption('order', [4, 'desc'])
-        .withOption('stateSave', true)
+        //.withOption('stateSave', true)
         .withBootstrap();
 
         $scope.dtColumnDefs = [

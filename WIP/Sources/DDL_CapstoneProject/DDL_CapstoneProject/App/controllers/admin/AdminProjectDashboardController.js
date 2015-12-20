@@ -13,7 +13,7 @@ app.controller('AdminProjectDashboardController',
         $scope.dtOptions = DTOptionsBuilder.newOptions()
         .withDisplayLength(10)
         .withOption('order', [0, 'desc'])
-        .withOption('stateSave', true)
+        //.withOption('stateSave', true)
         .withBootstrap();
 
         $scope.dtColumnDefs = [
