@@ -22,7 +22,7 @@
                         Từ chối
                     </button>
                     <button class="btn btn-success btn-sm pull-right" data-toggle="modal" style="margin-right: 15px;"
-                            data-target="#ConfirmModal" ng-if="(Project.Status == 'pending' || Project.Status == 'rejected') && !Project.IsExprired" ng-click="warning('approved')">
+                            data-target="#ConfirmModal" ng-if="Project.Status == 'pending' && !Project.IsExprired" ng-click="warning('approved')">
                         Chấp nhận
                     </button>
                 </ul>

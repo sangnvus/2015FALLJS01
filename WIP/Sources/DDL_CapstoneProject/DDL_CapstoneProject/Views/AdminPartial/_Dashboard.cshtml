@@ -430,7 +430,8 @@
                                 <td class="col-number">{{statistic.TotalFund | currency:"":0}}</td>
                                 <td class="col-number">{{statistic.SucceedFund | currency:"":0}}</td>
                                 <td class="col-number">{{statistic.TotalProfit | currency:"":0}}</td>
-                                <td class="col-number">{{statistic.TotalSucceed*100/(statistic.TotalSucceed + statistic.TotalFail) | number:0}}%</td>
+                                <td class="col-number" ng-if="statistic.TotalSucceed != 0">{{statistic.TotalSucceed*100/(statistic.TotalSucceed + statistic.TotalFail) | number:0}}%</td>
+                                <td class="col-number" ng-if="statistic.TotalSucceed == 0">0%</td>
                             </tr>
                         </tbody>
                     </table>

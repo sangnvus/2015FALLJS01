@@ -6,7 +6,7 @@
                 <p class="fnt22 fnt-b mb0 pb0" style="padding-bottom: 0; margin-bottom: 0; font-weight: bold; font-size: 2.2rem; margin: 0 0 15px; line-height: 1.72222;">Thông tin người nhận</p>
                 <div class="row">
                     <div class="col-md-3">Họ và tên: </div>
-                    <div class="col-md-9">{{Project.BackerName}}</div>
+                    <div class="col-md-9"><a href="@Url.Content("/admin/#/userprofile/{{Project.BackerUsername}}")">{{Project.BackerName}}</a></div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">Email: </div>
@@ -29,7 +29,7 @@
                 <p class="fnt22 fnt-b mb0 pb0" style="padding-bottom: 0; margin-bottom: 0; font-weight: bold; font-size: 2.2rem; margin: 0 0 15px; line-height: 1.72222;">Nội dung ủng hộ:</p>
                 <div class="row">
                     <div class="col-md-3">Tên dự án: </div>
-                    <div class="col-md-9">{{Project.ProjectName}}1</div>
+                    <div class="col-md-9">{{Project.ProjectName}}</div>
                     @*<div class="col-md-3">Gói ủng hộ: </div>*@
                     @*<div class="col-md-9"></div>*@
                     <div class="col-md-3" ng-show="Packet.Type != 'no reward'">Số lượng: </div>
