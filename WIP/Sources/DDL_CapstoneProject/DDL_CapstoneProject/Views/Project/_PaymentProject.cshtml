@@ -154,11 +154,11 @@
             <div id="paymentSubmit">
                 <div class="container">
                     <div class="pull-right">
-                        <button class="btn btn-success btn-wide"
+                        <button class="btn btn-success btn-wide" type="button" onclick="return false;"
                                     ng-disabled="(!paymentFrom.$dirty && !submitAble) || (paymentFrom.$dirty && paymentFrom.$invalid) || (submitAble && paymentFrom.$invalid)"
                                     ng-click="submit()">
                                 Ủng hộ
-                            </button>
+                        </button>
                         @*<button class="btn btn-success btn-wide" type="submit"
                                 ng-disabled="(!paymentFrom.$dirty && !submitAble) || (paymentFrom.$dirty && paymentFrom.$invalid) || (submitAble && paymentFrom.$invalid)"
                                 ng-click="submitBaokim()">

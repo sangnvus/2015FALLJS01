@@ -9,9 +9,9 @@ service.service("CommmonService", function ($http, $window, $location, SweetAler
                 var tablecontent = (table[i][j] + "");
                 if (tablecontent != "null" && tablecontent != "undefined") {
                     tablecontent = tablecontent.split("\"").join("\'");
-                    tableString += "\"" + tablecontent + "\";";
+                    tableString += "\"" + tablecontent + "\",";
                 } else {
-                    tableString += ";";
+                    tableString += ",";
                 }
             }
             tableString += "\n";

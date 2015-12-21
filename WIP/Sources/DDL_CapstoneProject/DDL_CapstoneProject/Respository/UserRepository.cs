@@ -550,6 +550,7 @@ namespace DDL_CapstoneProject.Respository
                     throw new UserNotFoundException();
                 }
                 userPublicDto.CreatedDate = CommonUtils.ConvertDateTimeFromUtc(userPublicDto.CreatedDate);
+                userPublicDto.LastLogin = CommonUtils.ConvertDateTimeFromUtc(userPublicDto.LastLogin.GetValueOrDefault());
 
                 return userPublicDto;
             }
@@ -1107,7 +1108,7 @@ namespace DDL_CapstoneProject.Respository
                 listTopCreator = listTopCreator.OrderByDescending(x => x.TotalPledgedAmount).Take(5).ToList();
                 listRecentUser = listRecentUser.OrderByDescending(x => x.LastLogin).Take(5).ToList(); ;
                 listTopbackerUser = listTopbackerUser.OrderByDescending(x => x.TotalPledgedAmount).Take(5).ToList();
-                listNewUser = listNewUser.OrderByDescending(x => x.CreatedDate).ToList();
+                listNewUser = listNewUser.OrderByDescending(x => x.CreatedDate).Take(5).ToList();
 
 
                 listReturn.RecentUser = listRecentUser;
