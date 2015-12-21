@@ -976,7 +976,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
                     return Ok(new HttpMessageDTO { Status = DDLConstants.HttpMessageType.ERROR, Message = "", Type = DDLConstants.HttpMessageType.BAD_REQUEST });
                 }
 
-                backingData.OrderId = backingData.ProjectCode + CommonUtils.GenerateVerifyCode() + DateTime.Now.ToString("hmmsstt");
+                backingData.OrderId = int.Parse(backingData.ProjectCode.Substring(3,6)) + CommonUtils.GenerateVerifyCode().Substring(0,10) + DateTime.Now.ToString("hmmsstt");
                 backingData.TransactionId = CommonUtils.GenerateVerifyCode().Substring(0, 13);
                 backingData.BackedDate = DateTime.Now;
 
