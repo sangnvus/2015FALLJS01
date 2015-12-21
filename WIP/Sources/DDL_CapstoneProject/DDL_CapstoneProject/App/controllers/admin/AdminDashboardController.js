@@ -78,6 +78,16 @@ app.controller('AdminDashBoardController', function ($scope, $rootScope, $sce, t
 
     // Get basic info
     $scope.BasicInfo = basicInfo.data.Data;
+    $scope.convertTotalFund = false;
+    $scope.convertProfit = false;
+    if ($scope.BasicInfo.TotalFund >= 1000000) {
+        $scope.BasicInfo.TotalFund = $scope.BasicInfo.TotalFund / 1000000;
+        $scope.convertTotalFund = true;
+    }
+    if ($scope.BasicInfo.TotalProfit >= 1000000) {
+        $scope.BasicInfo.TotalProfit = $scope.BasicInfo.TotalProfit / 1000000;
+        $scope.convertProfit = true;
+    }
     // Get category list
     $scope.Categories = {
         Labels: [],
