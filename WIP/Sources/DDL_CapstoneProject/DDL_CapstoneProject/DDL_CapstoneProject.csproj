@@ -223,6 +223,7 @@
     <Compile Include="Models\DTOs\ReportUserDTO.cs" />
     <Compile Include="Models\DTOs\RewardPkgDTO.cs" />
     <Compile Include="Models\DTOs\SlideDTO.cs" />
+    <Compile Include="Models\DTOs\StatisticDTO.cs" />
     <Compile Include="Models\DTOs\TimeLineDTO.cs" />
     <Compile Include="Models\DTOs\UpdateLogDTO.cs" />
     <Compile Include="Models\DTOs\UserBackInforDTO.cs" />

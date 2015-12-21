@@ -1709,7 +1709,7 @@ namespace DDL_CapstoneProject.Controllers.ApiControllers
         }
         public IHttpActionResult getStatisticsInfor()
         {
-            Dictionary<string, int> result = null;
+            StatisticDTO result = null;
             try
             {
                 result = ProjectRepository.Instance.getStatisticsInfor();

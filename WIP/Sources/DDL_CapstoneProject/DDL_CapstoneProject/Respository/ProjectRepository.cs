@@ -86,11 +86,11 @@ namespace DDL_CapstoneProject.Respository
         }
 
 
-        public Dictionary<string, int> getStatisticsInfor()
+        public StatisticDTO getStatisticsInfor()
         {
             using (var db = new DDLDataContext())
             {
-                Dictionary<string, int> dic = new Dictionary<string, int>();
+                //Dictionary<string, int> dic = new Dictionary<string, int>();
                 //projectSuccesedCount
                 int projectSuccesedCount = GetProject(0, 0, "All", "", "", "", "true", "true").Count;
                 //total funded
@@ -116,12 +116,20 @@ namespace DDL_CapstoneProject.Respository
                 int NumberOfBacking = (from backing in db.Backings
                                        select backing.BackingID).Count();
 
-                dic.Add("SuccesedCount", projectSuccesedCount);
-                dic.Add("TotalFunded", Convert.ToInt32(totalFund.Sum()));
-                dic.Add("BackingUserCount", backingUserCount);
-                dic.Add("UserBackmuchCount", UserBackmuchCount);
-                dic.Add("NumberOfBacking", NumberOfBacking);
-                return dic;
+                var statistic = new StatisticDTO
+                {
+                    SuccesedCount = projectSuccesedCount,
+                    TotalFunded = totalFund.Sum(),
+                    BackingUserCount = backingUserCount,
+                    NumberOfBacking = NumberOfBacking,
+                    UserBackmuchCount = UserBackmuchCount
+                };
+                //dic.Add("SuccesedCount", projectSuccesedCount);
+                //dic.Add("TotalFunded", Convert.ToDecimal(totalFund.Sum());
+                //dic.Add("BackingUserCount", backingUserCount);
+                //dic.Add("UserBackmuchCount", UserBackmuchCount);
+                //dic.Add("NumberOfBacking", NumberOfBacking);
+                return statistic;
             }
         }
 
