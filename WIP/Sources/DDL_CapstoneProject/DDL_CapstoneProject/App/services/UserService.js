@@ -7,6 +7,13 @@ service.service('UserService', function ($http) {
     this.getUserTop = function (categoryID) {
         return $http.get("/api/UserApi/GetUserTop?categoryID=" + categoryID);
     }
+    this.GetBackingForUserExport = function () {
+        var request = $http({
+            method: 'get',
+            url: '../api/UserApi/GetBackingForUserExport',
+        });
+        return request;
+    }
 
     //End TrungVN
 

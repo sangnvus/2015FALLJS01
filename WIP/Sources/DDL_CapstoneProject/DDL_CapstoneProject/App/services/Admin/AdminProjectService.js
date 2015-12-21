@@ -30,6 +30,16 @@ service.service("AdminProjectService", function ($http) {
         return request;
     }
 
+    // Function to get all project information
+    this.AdminGetAllProjectDetail = function () {
+        var request = $http({
+            method: 'get',
+            url: '/api/ProjectApi/AdminGetAllProjectDetail'
+        });
+
+        return request;
+    }
+
     // Function to ger a project by ProjectCode
     this.getCommentList = function (code, lastDatetime) {
         var request = $http({

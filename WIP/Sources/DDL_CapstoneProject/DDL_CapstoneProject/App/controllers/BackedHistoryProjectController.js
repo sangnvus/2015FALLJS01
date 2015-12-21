@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-app.controller('BackedHistoryProjectController', function ($scope, projects, UserService, ProjectService, DTOptionsBuilder, DTColumnDefBuilder) {
+app.controller('BackedHistoryProjectController', function ($scope, projects, UserService, ProjectService, DTOptionsBuilder, DTColumnDefBuilder, $rootScope, CommmonService) {
     $scope.ListBackedProjectHistory = projects.data.Data;
     getBackedUserInfo();
 
@@ -15,6 +15,41 @@ app.controller('BackedHistoryProjectController', function ($scope, projects, Use
         DTColumnDefBuilder.newColumnDef(5).notSortable()
     ];
 
+    $scope.exportExcel = function () {
+
+        var list = [];
+        var promise = UserService.GetBackingForUserExport();
+        promise.then(
+            function (result) {
+                if (result.data.Status === "success") {
+                    list = $scope.Backer = result.data.Data;
+                    list.unshift(['Mã dự án',
+                        'Tên dự án',
+                        'Mã gói',
+                        'Mô tả gói',
+                        'Ngày chuyển giao',
+                        'Mã ủng hộ',
+                        'Số tiền ủng hộ',
+                        'Số lượng',
+                        'Mô tả ủng hộ',
+                        'Ngày ủng hộ',
+                        'Người ủng hộ',
+                        'Tên đăng nhập',
+                        'Email',
+                        'Địa chỉ',
+                        'SĐT']);
+                    var CurrentUsername = $rootScope.UserInfo.UserName;
+                    CommmonService.exportExcel(list, "Lịch Sử Ủng Hộ - " + CurrentUsername);
+                } else {
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                    $scope.Error = result.data.Message;
+                }
+            },
+            function (error) {
+                $scope.Error = error.data.Message;
+            });
+
+    }
 
     function getBackedUserInfo(){
         var promiseGet = UserService.getBackedUserInfo();     

@@ -29,6 +29,40 @@ namespace DDL_CapstoneProject.Respository
         #region TrungVN
 
 
+        public List<ProjectExportDTO> AdminGetAllProjectDetail()
+        {
+            using (var db = new DDLDataContext())
+            {
+                List<ProjectExportDTO> list = new List<ProjectExportDTO>();
+                var projects = (from project in db.Projects
+                                where project.Status != DDLConstants.ProjectStatus.DRAFT
+                                orderby project.CreatedDate ascending
+                                select new ProjectExportDTO
+                                {
+                                    ProjectCode = project.ProjectCode,
+                                    CreatedDate = project.CreatedDate,
+                                    Title = project.Title,
+                                    CurrentFunded = project.CurrentFunded + "",
+                                    FundingGoal = project.FundingGoal + "",
+                                    ExpireDate = project.ExpireDate,
+                                    Status = project.Status == "approved" ? "Đang chạy" :
+                                                (project.Status == "rejected" ? "Từ chối" :
+                                                (project.Status == "expired" ? "Hết hạn" :
+                                                (project.Status == "pending" ? "Chờ duyệt" :
+                                                (project.Status == "suspended" ? "Đình chỉ" : "")))),
+                                    IsFunded = project.IsFunded ? "Đã đủ tiền" : "Chưa đủ tiền",
+                                    IsExprired = project.IsExprired ? "Đã quá hạn" : "Chưa quá hạn",
+                                    NumberBacked = project.Backings.Count + "",
+                                    CategoryName = project.Category.Name,
+                                    Location = project.Location,
+                                    NumberUpdate = project.UpdateLogs.Count + "",
+                                    CreatorFullname = project.Creator.UserInfo.FullName,
+                                    CreatorUserName = project.Creator.Username,
+                                }).ToList();
+                return projects;
+            }
+        }
+
         public List<ProjectTitleDTO> projectTitleList(string searchkey)
         {
             if (searchkey == null) searchkey = "";

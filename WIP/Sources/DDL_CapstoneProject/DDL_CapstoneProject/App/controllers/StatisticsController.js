@@ -79,6 +79,15 @@ app.controller('StatisticsController',
         };
         var myBarChart = new Chart(ctx).Bar(data, options);
 
+        $scope.getRank = function (fundingGoal) {
+            if (fundingGoal <= 50000000)
+                return "Hạng D";
+            if (fundingGoal <= 100000000 && fundingGoal > 50000000)
+                return "Hạng C";
+            if (fundingGoal <= 500000000 && fundingGoal > 100000000)
+                return "Hạng B";
+            else return "Hạng A";
+        }
 
 
     });

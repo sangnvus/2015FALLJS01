@@ -8,21 +8,21 @@ service.service("CommmonService", function ($http, $window, $location, SweetAler
         for (var i in table) {
             for (var j in table[i]) {
                 if ((table[i][j] + "") != "null") {
-                    tableString += "\"" + table[i][j] + "\";";
+                    var content = table[i][j] + "";
+                    content = content.split("\"").join("\'");
+                    tableString += "\"" + content + "\";";
                 } else {
                     tableString += ";";
                 }
             }
             tableString += "\n";
         }
-        //tableString = tableString.split("/").join(".");
         var blob = new Blob([tableString], {
-            type: "text/csv;charset=utf-8"
+            type: "text/csv;charset=UTF-8"
         });
 
         saveAs(blob, name + " (" + this.today() + ").csv");
     }
-
     this.today = function() {
 
         var now = new Date();

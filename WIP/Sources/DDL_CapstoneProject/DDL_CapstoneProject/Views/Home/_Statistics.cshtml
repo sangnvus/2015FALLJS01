@@ -71,15 +71,17 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="project in projectTopList">
-                                        <td class="col-number">{{$index}}</td>
+                                        <td class="col-number">{{$index+1}}</td>
                                         <td>{{project.ProjectCode}}</td>
                                         <td><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></td>
                                         <td>{{getRank(project.PopularPoint)}}</td>
                                         <td>{{project.Category}}</td>
-                                        <td>{{project.CurrentFundedNumber| number : fractionSize}}&#8363;</td>
+                                        <td class="col-number">{{project.CurrentFundedNumber| number : fractionSize}}&#8363;</td>
                                         <td class="col-number">{{project.Backers}}</td>
-                                        <td ng-if="project.CurrentFundedNumber >= project.FundingGoal">Thành công</td>
-                                        <td ng-if="project.CurrentFundedNumber < project.FundingGoal">Đang chạy</td>
+                                        <td>
+                                            <span class="label label-success center-block" ng-if="project.CurrentFundedNumber >= project.FundingGoal" style="padding: 9px">Đang chạy</span>
+                                            <span class="label label-success center-block" ng-if="project.CurrentFundedNumber < project.FundingGoal" style="padding: 9px">Thành công</span>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -117,10 +119,10 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="user in UserTopBackList track by $index">
-                                    <td>{{$index}}</td>
+                                    <td class="col-number">{{$index+1}}</td>
                                     <td><a href="/#/user/publicprofile/{{user.Username}}">{{user.Name}}</a></td>
-                                    <td>{{user.TotalBacked| number : fractionSize}}&#8363;</td>
-                                    <td>{{user.projectCount}}</td>
+                                    <td class="col-number">{{user.TotalBacked| number : fractionSize}}&#8363;</td>
+                                    <td class="col-number">{{user.projectCount}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -152,14 +154,14 @@
                                     <th>Tên người ủng hộ</th>
                                     <th style="width:210px">Tổng số tiền đã gây quỹ</th>
                                     <th style="width:220px">Tổng số dự án đã gây quỹ</th>
-</tr>
+                                </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="user in UserTopFundList track by $index">
-                                    <td>{{$index}}</td>
+                                    <td class="col-number">{{$index+1}}</td>
                                     <td><a href="/#/user/publicprofile/{{user.Username}}">{{user.Name}}</a></td>
-                                    <td>{{user.TotalFunded| number : fractionSize}}&#8363;</td>
-                                    <td>{{user.projectCount}}</td>
+                                    <td class="col-number">{{user.TotalFunded| number : fractionSize}}&#8363;</td>
+                                    <td class="col-number">{{user.projectCount}}</td>
                                 </tr>
                             </tbody>
                         </table>

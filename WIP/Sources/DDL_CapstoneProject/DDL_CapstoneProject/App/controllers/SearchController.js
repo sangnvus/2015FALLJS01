@@ -32,12 +32,12 @@ function ($scope, $http, projectbycategory, categoryList, ProjectService, Catego
         { 'isExpried': 'false', 'Label': 'Đang gây vốn' }
     ];
 
-    $scope.selectstatus = angular.copy($scope.statuss[0]);
-    //if (isAdvance) {
-    //    $scope.selectstatus = angular.copy($scope.statuss[0]);
-    //} else {
-    //    $scope.selectstatus = angular.copy($scope.statuss[0]);
-    //}
+    //$scope.selectstatus = angular.copy($scope.statuss[0]);
+    if (isAdvance) {
+        $scope.selectstatus = angular.copy($scope.statuss[0]);
+    } else {
+        $scope.selectstatus = angular.copy($scope.statuss[2]);
+    }
     if ($scope.projectResultListSize == 0) {
         $scope.noti = true;"";
     } else {

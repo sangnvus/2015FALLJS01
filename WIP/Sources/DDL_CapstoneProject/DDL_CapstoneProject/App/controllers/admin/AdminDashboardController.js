@@ -10,13 +10,42 @@ app.controller('AdminDashBoardController', function ($scope, $rootScope, $sce, t
 
 
 
-    $scope.export = function (id,name) {
-        html2canvas(document.getElementById(id)).then(function (canvas) {
-            canvas.toBlob(function (blob) {
-                saveAs(blob, name+"("+ CommmonService.today()+")");
-            });
-        });
+    $scope.exportExcel = function () {
+        if (typeof ($scope.StatisticTable) != "undefined") {
+            var list = [];
+            for (var i in $scope.StatisticTable) {
+                list[i] = [];
+                if ($scope.selectedTableOption.value == "year")
+                    list[i].push($scope.StatisticTable[i].Time.getFullYear());
+                else
+                    list[i].push(($scope.StatisticTable[i].Time.getMonth() + 1) + "-" + $scope.StatisticTable[i].Time.getFullYear());
+                list[i].push($scope.StatisticTable[i].TotalProject);
+                list[i].push($scope.StatisticTable[i].TotalSucceed);
+                list[i].push($scope.StatisticTable[i].TotalFail);
+                list[i].push($scope.StatisticTable[i].TotalFund);
+                list[i].push($scope.StatisticTable[i].SucceedFund);
+                list[i].push($scope.StatisticTable[i].TotalProfit + "");
+                if (typeof ($scope.StatisticTable[i].TotalSucceed) == "undefined" | typeof ($scope.StatisticTable[i].TotalFail) == "undefined" | ($scope.StatisticTable[i].TotalSucceed + $scope.StatisticTable[i].TotalFail) == 0)
+                    list[i].push("0%")
+                else {
+                    list[i].push(Math.round(($scope.StatisticTable[i].TotalSucceed / ($scope.StatisticTable[i].TotalSucceed + $scope.StatisticTable[i].TotalFail)) * 100) + "%");
+                }
+            }
+
+            list.unshift([
+                'Thời gian',
+                'Số dự án tạo',
+                'Dự án thành công',
+                'Dự án thất bại',
+                'Tổng số đóng góp(VNĐ)',
+                'Đóng góp thành công(VNĐ)',
+                'Lợi nhuận(VNĐ)',
+                'Tỉ lệ thành công']);
+            CommmonService.exportExcel(list, "Thông kê dự án");
+        }
     }
+
+
 
 
     // initail statistic chart year option
