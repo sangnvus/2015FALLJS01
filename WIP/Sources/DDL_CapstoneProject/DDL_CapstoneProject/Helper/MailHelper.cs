@@ -41,6 +41,7 @@ namespace DDL_CapstoneProject.Helper
                         "<br/>Để kích hoạt tài khoản, vui lòng bấm vào link dưới đây:" +
                         "<br/><a href='http://dandelionvn.com/active?user_name=" + userName + "&code=" + verifyCode + "'>http://dandelionvn.com/active?user_name=" + userName + "&code=" + verifyCode + "</a>";
             _smtp.Send(_mail);
+            _mail.To.Clear();
         }
 
         public void SendMailResetPassword(string email, string newPassword, string fullName)
@@ -52,6 +53,7 @@ namespace DDL_CapstoneProject.Helper
                         "<br/>Bạn có thể bấm vào link dưới đây để đăng nhập với mật khẩu mới" +
                         "<br/><a href='http://dandelionvn.com/login'>http://dandelionvn.com/login</a>";
             _smtp.Send(_mail);
+            _mail.To.Clear();
         }
 
         public void SendMailChangeProjectStatus(string email, string fullname, string type, string projectTitle)
@@ -63,6 +65,7 @@ namespace DDL_CapstoneProject.Helper
                         "<br/>Để biết thêm chi tiết xin liện hệ với admin qua email" +
                         "<br/>dandelion.system@gmail.com";
             _smtp.Send(_mail);
+            _mail.To.Clear();
         }
 
         public void SendMailResetPasswordCode(string email, string resetCode, string fullName)
@@ -72,6 +75,7 @@ namespace DDL_CapstoneProject.Helper
             _mail.Body = "Xin chào " + fullName + "," +
                         "<br/>Mã thay đổi mật khẩu của bạn là: <b>" + resetCode + "</b>";
             _smtp.Send(_mail);
+            _mail.To.Clear();
         }
     }
 }
