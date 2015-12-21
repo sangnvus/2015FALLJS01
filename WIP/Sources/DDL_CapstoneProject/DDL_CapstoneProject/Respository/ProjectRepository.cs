@@ -611,7 +611,7 @@ namespace DDL_CapstoneProject.Respository
 
                 string messageBasic = string.Empty;
                 if (string.IsNullOrEmpty(project.Title) || project.Title.Length < 10 || project.Title.Length > 60
-                    || string.IsNullOrEmpty(project.ImageUrl) || project.ImageUrl == "default_img.png" 
+                    || string.IsNullOrEmpty(project.ImageUrl) || project.ImageUrl == "default_img.png"
                     || string.IsNullOrEmpty(project.SubDescription) || project.SubDescription.Length < 30 || project.SubDescription.Length > 300
                     || string.IsNullOrEmpty(project.Location) || project.Location.Length < 10 || project.Location.Length > 60
                     || project.ExpireDate == null || project.ExpireDate < expireDateLaw
@@ -1655,6 +1655,8 @@ namespace DDL_CapstoneProject.Respository
                 newQuestion.QuestionContent = question.QuestionContent;
                 newQuestion.Answer = question.Answer;
 
+                project.UpdatedDate = DateTime.UtcNow;
+
                 db.Questions.Add(newQuestion);
                 db.SaveChanges();
 
@@ -1698,6 +1700,8 @@ namespace DDL_CapstoneProject.Respository
                     updateQuestion.CreatedDate = DateTime.UtcNow;
                     updateQuestion.QuestionContent = qa.QuestionContent;
 
+                    updateQuestion.Project.UpdatedDate = DateTime.UtcNow;
+
                     db.SaveChanges();
                 }
 
@@ -1729,6 +1733,8 @@ namespace DDL_CapstoneProject.Respository
                 updateQuestion.Answer = question.Answer;
                 updateQuestion.CreatedDate = DateTime.UtcNow;
                 updateQuestion.QuestionContent = question.QuestionContent;
+
+                updateQuestion.Project.UpdatedDate = DateTime.UtcNow;
 
                 db.SaveChanges();
 
@@ -1766,6 +1772,8 @@ namespace DDL_CapstoneProject.Respository
                 {
                     throw new NotPermissionException();
                 }
+
+                deleteQuestion.Project.UpdatedDate = DateTime.UtcNow;
 
                 db.Questions.Remove(deleteQuestion);
                 db.SaveChanges();
@@ -1878,6 +1886,8 @@ namespace DDL_CapstoneProject.Respository
                         CommonUtils.ConvertDateTimeToUtc(newRewardPkg.EstimatedDelivery.GetValueOrDefault());
                 }
 
+                project.UpdatedDate = DateTime.UtcNow;
+
                 db.RewardPkgs.Add(newRewardPkg);
                 db.SaveChanges();
 
@@ -1934,6 +1944,8 @@ namespace DDL_CapstoneProject.Respository
                 updateReward.Type = rewardPkg.Type;
                 updateReward.PledgeAmount = rewardPkg.PledgeAmount;
 
+                updateReward.Project.UpdatedDate = DateTime.UtcNow;
+
                 db.SaveChanges();
 
                 return true;
@@ -1960,6 +1972,8 @@ namespace DDL_CapstoneProject.Respository
                 {
                     throw new NotPermissionException();
                 }
+
+                deleteRewardPkg.Project.UpdatedDate = DateTime.UtcNow;
 
                 db.RewardPkgs.Remove(deleteRewardPkg);
                 db.SaveChanges();
@@ -2022,6 +2036,8 @@ namespace DDL_CapstoneProject.Respository
                 updateLog.CreatedDate = DateTime.UtcNow;
                 updateLog.Title = newUpdateLog.Title;
 
+                project.UpdatedDate = DateTime.UtcNow;
+
                 db.UpdateLogs.Add(updateLog);
                 db.SaveChanges();
 
@@ -2066,6 +2082,7 @@ namespace DDL_CapstoneProject.Respository
                         editLog.Description = update.Description;
                         editLog.Title = update.Title;
                         editLog.CreatedDate = DateTime.UtcNow;
+                        editLog.Project.UpdatedDate = DateTime.UtcNow;
                     }
 
                     db.SaveChanges();
@@ -2099,6 +2116,7 @@ namespace DDL_CapstoneProject.Respository
                 editLog.Description = updateLog.Description;
                 editLog.Title = updateLog.Title;
                 editLog.CreatedDate = DateTime.UtcNow;
+                editLog.Project.UpdatedDate = DateTime.UtcNow;
 
                 db.SaveChanges();
 
@@ -2137,6 +2155,8 @@ namespace DDL_CapstoneProject.Respository
                 {
                     throw new NotPermissionException();
                 }
+
+                deleteUpdateLog.Project.UpdatedDate = DateTime.UtcNow;
 
                 db.UpdateLogs.Remove(deleteUpdateLog);
                 db.SaveChanges();
