@@ -12,7 +12,7 @@
         <div class="panel panel-primary">
             <div class="panel-heading bold">
                 Danh sách người ủng hộ
-                <button class="btn btn-info btn-sm">Xuất dữ liệu</button>
+                <a href="#" onclick="return false;" ng-click="exportExcel()" class="btn btn-info btn-sm">Xuất dữ liệu</a>
             </div>
             <div class="panel-body">
                 <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" id="backersTable" class="table table-striped table-bordered table-hover">

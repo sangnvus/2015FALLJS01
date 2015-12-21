@@ -14,6 +14,13 @@ service.service('UserService', function ($http) {
         });
         return request;
     }
+    this.GetBackingForCreatedProjectExport = function (projectcode) {
+        var request = $http({
+            method: 'get',
+            url: '../api/UserApi/GetBackingForCreatedProjectExport?projectcode=' + projectcode,
+        });
+        return request;
+    }
 
     //End TrungVN
 

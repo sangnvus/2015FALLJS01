@@ -1,6 +1,6 @@
 ﻿"use strict"
 
-app.controller('ListBackerController', function ($scope, $route, projects, UserService, ProjectService, DTOptionsBuilder, DTColumnDefBuilder) {
+app.controller('ListBackerController', function ($scope, $route, projects, UserService, ProjectService, DTOptionsBuilder, DTColumnDefBuilder,CommmonService) {
     
     var promise = ProjectService.getProjectDetail($route.current.params.code);
     promise.then(
@@ -27,9 +27,41 @@ app.controller('ListBackerController', function ($scope, $route, projects, UserS
          function (error) {
              $scope.Error = error.data.Message;
          });
-   
-    //loadlistBacker();
-        // Define table
+
+    $scope.exportExcel = function () {
+
+        var list = [];
+        var promise = UserService.GetBackingForCreatedProjectExport($route.current.params.code);
+        promise.then(
+            function (result) {
+                if (result.data.Status === "success") {
+                    list = $scope.Backer = result.data.Data;
+                    list.unshift(['Mã dự án',
+                        'Tên dự án',
+                        'Mã gói',
+                        'Mô tả gói',
+                        'Ngày chuyển giao',
+                        'Mã ủng hộ',
+                        'Số tiền ủng hộ',
+                        'Số lượng',
+                        'Mô tả ủng hộ',
+                        'Ngày ủng hộ',
+                        'Người ủng hộ',
+                        'Tên đăng nhập',
+                        'Email',
+                        'Địa chỉ',
+                        'SĐT']);
+                    CommmonService.exportExcel(list, "Danh sách Ủng Hộ - " + $route.current.params.code);
+                } else {
+                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                    $scope.Error = result.data.Message;
+                }
+            },
+            function (error) {
+                $scope.Error = error.data.Message;
+            });
+
+    }
     $scope.dtOptions = DTOptionsBuilder.newOptions()
     .withDisplayLength(10)
     .withOption('order', [3, 'desc'])

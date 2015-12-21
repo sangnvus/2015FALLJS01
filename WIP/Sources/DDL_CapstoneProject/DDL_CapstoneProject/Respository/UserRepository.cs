@@ -105,6 +105,43 @@ namespace DDL_CapstoneProject.Respository
         }
 
 
+        public List<AdminBakingFullInforDTO> GetBackingForCreatedProjectExport(string projectcode, string username)
+        {
+            using (var db = new DDLDataContext())
+            {
+                var checkpermis = (from project in db.Projects
+                                   where project.ProjectCode == projectcode && project.Creator.Username == username
+                                   select project.ProjectCode).Count();
+                if (checkpermis == 0) throw new NotPermissionException();
+                //var listBacking = db.Backings.ToList();
+                var listReturn = (from backing in db.Backings
+                                  where backing.Project.ProjectCode == projectcode
+                                  select new AdminBakingFullInforDTO
+                                  {
+                                      ProjectCode = backing.Project.ProjectCode,
+                                      ProjectTitle = backing.Project.Title,
+
+                                      RewardID = backing.BackingDetail.RewardPkgID,
+                                      RewardDes = backing.BackingDetail.RewardPkg.Description,
+                                      RewardEstimatedDelivery = backing.BackingDetail.RewardPkg.EstimatedDelivery.Value + ".",
+
+                                      BackingID = backing.BackingID,
+                                      BackingPledgeAmount = backing.BackingDetail.PledgedAmount,
+                                      BackingQuantity = backing.BackingDetail.Quantity,
+                                      BackingDes = backing.BackingDetail.Description,
+                                      BackedDate = backing.BackedDate + ".",
+
+                                      BackerName = backing.User.UserInfo.FullName,
+                                      BackerUserName = backing.User.Username,
+                                      BackerEmail = backing.BackingDetail.Email,
+                                      BackerAddress = backing.BackingDetail.Address,
+                                      BackerPhoneNumber = "'" + backing.BackingDetail.PhoneNumber,
+
+                                  }).ToList();
+                return listReturn;
+            }
+        }
+
 
         public Dictionary<string, List<UserBackInforDTO>> GetUserTop(string categoryid)
         {
