@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-app.controller('BackedHistoryProjectController', function ($scope, projects, UserService, ProjectService, DTOptionsBuilder, DTColumnDefBuilder, $rootScope, CommmonService) {
+app.controller('BackedHistoryProjectController', function ($scope, projects, UserService, ProjectService, DTOptionsBuilder, DTColumnDefBuilder, $rootScope, CommmonService, toastr) {
     $scope.ListBackedProjectHistory = projects.data.Data;
     getBackedUserInfo();
 
@@ -41,13 +41,16 @@ app.controller('BackedHistoryProjectController', function ($scope, projects, Use
                     var CurrentUsername = $rootScope.UserInfo.UserName;
                     CommmonService.exportExcel(list, "Lịch Sử Ủng Hộ - " + CurrentUsername);
                 } else {
-                    CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
-                    $scope.Error = result.data.Message;
+                    var a = CommmonService.checkError(result.data.Type, $rootScope.BaseUrl);
+                    if (a) {
+                        $scope.Error = result.data.Message;
+                        toastr.error($scope.Error, 'Lỗi');
+                    }
                 }
             },
-            function (error) {
-                $scope.Error = error.data.Message;
-            });
+                function (error) {
+                    toastr.error('Lỗi');
+                });
 
     }
 

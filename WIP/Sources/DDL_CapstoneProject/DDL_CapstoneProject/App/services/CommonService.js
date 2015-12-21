@@ -2,17 +2,16 @@
 service.service("CommmonService", function ($http, $window, $location, SweetAlert) {
 
 
-
     this.exportExcel = function (table, name) {
         var tableString = "";
         for (var i in table) {
             for (var j in table[i]) {
-                if ((table[i][j] + "") != "null") {
-                    var content = table[i][j] + "";
-                    content = content.split("\"").join("\'");
-                    tableString += "\"" + content + "\";";
+                var tablecontent = (table[i][j] + "");
+                if (tablecontent != "null" && tablecontent != "undefined") {
+                    tablecontent = tablecontent.split("\"").join("\'");
+                    tableString += "\"" + tablecontent + "\",";
                 } else {
-                    tableString += ";";
+                    tableString += ",";
                 }
             }
             tableString += "\n";

@@ -321,7 +321,7 @@ namespace DDL_CapstoneProject.Respository
                 project.CreatedDate = DateTime.UtcNow;
                 project.UpdatedDate = DateTime.UtcNow;
                 project.Risk = string.Empty;
-                project.ImageUrl = string.Empty;
+                project.ImageUrl = "default_img.png";
                 project.SubDescription = string.Empty;
                 project.Location = string.Empty;
                 project.IsExprired = false;
@@ -603,7 +603,7 @@ namespace DDL_CapstoneProject.Respository
 
                 string messageBasic = string.Empty;
                 if (string.IsNullOrEmpty(project.Title) || project.Title.Length < 10 || project.Title.Length > 60
-                    || string.IsNullOrEmpty(project.ImageUrl)
+                    || string.IsNullOrEmpty(project.ImageUrl) || project.ImageUrl == "default_img.png" 
                     || string.IsNullOrEmpty(project.SubDescription) || project.SubDescription.Length < 30 || project.SubDescription.Length > 300
                     || string.IsNullOrEmpty(project.Location) || project.Location.Length < 10 || project.Location.Length > 60
                     || project.ExpireDate == null || project.ExpireDate < expireDateLaw
