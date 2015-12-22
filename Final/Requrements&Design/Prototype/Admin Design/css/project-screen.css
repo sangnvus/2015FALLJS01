@@ -1,0 +1,56 @@
+/* Css for demo prototype of project screen */
+
+/* Table style */
+.table > thead > tr > th {
+     vertical-align: middle;
+	 text-align: center;
+}
+
+.table > tbody > tr > td > .btn-group{
+	display: flex;
+}
+.table > tbody > tr > td > .label{
+	line-height: 2.4em;
+}
+.portlet-body .table-responsive {
+	overflow-x: inherit;
+}
+
+.centered {
+	text-align: center;
+}
+.centered > div {
+	float: none;
+	display: inline-block;
+}
+
+.carousel-caption{
+	padding-bottom: 13%;
+}
+/*reponsive video*/
+.responsive-video {
+	position: relative;
+	padding-bottom: 56.25%;
+	padding-top: 60px; 
+	overflow: hidden;
+}
+
+.responsive-video iframe, .responsive-video object, .responsive-video embed {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+/*end responsive video*/
+
+/*------------- override ------------------------- */
+.chat-widget {
+	max-height: 600px !important;
+}
+
+/* dashboard page*/
+.project-chart {
+	display: inline-block !important;
+	width: auto !important;
+}
