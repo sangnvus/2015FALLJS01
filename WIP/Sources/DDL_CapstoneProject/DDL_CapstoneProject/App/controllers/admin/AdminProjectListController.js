@@ -10,7 +10,7 @@ app.controller('AdminProjectListController',
         // Define table
         $scope.dtOptions = DTOptionsBuilder.newOptions()
         .withDisplayLength(10)
-        .withOption('order', [1, 'desc'])
+        .withOption('order', [0, 'desc'])
         .withBootstrap();
 
         $scope.dtColumnDefs = [

@@ -50,7 +50,7 @@
                     Số tiền được ủng hộ
                 </div>
                 <div class="circle-tile-number text-faded">
-                    ~{{BasicInfo.TotalFund | currency:"":0}}<span ng-if="convertTotalFund">M</span><span ng-if="!convertTotalFund">&#8363;</span>
+                    ~{{BasicInfo.TotalFund | currency:"":0}}<span ng-if="convertTotalFund"></span> Triệu<span ng-if="!convertTotalFund">&#8363;</span>
                     <span id="sparklineC"></span>
                 </div>
                 @*<a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>*@
@@ -69,7 +69,7 @@
                     Lợi nhuận
                 </div>
                 <div class="circle-tile-number text-faded">
-                    ~{{BasicInfo.TotalProfit | currency:"":0}}<span ng-if="convertProfit">M</span><span ng-if="!convertProfit">&#8363;</span>
+                    ~{{BasicInfo.TotalProfit | currency:"":0}}<span ng-if="convertProfit"> Triệu</span><span ng-if="!convertProfit">&#8363;</span>
                 </div>
                 @*<a href="#" class="circle-tile-footer">More Info <i class="fa fa-chevron-circle-right"></i></a>*@
             </div>
@@ -349,9 +349,8 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="backing in RecentBacking">
-                                    <td class="col-text"><a href="@Url.Content("/admin/#/userprofile/{{backing.Username}}/")">{{backing.BackerName}}</a></td>
-                                    <td class="col-text"><a href="@Url.Content("/admin/#/project/{{backing.ProjectCode}}/")">{{backing.ProjectTitle}}</a></td>
-                                    <td class="col-number">{{backing.PledgeAmount | currency:"":0}}</td>
+                                    <td class="col-text"><a href="@Url.Content("/admin/#/userprofile/{{backing.UserName}}/")">{{backing.BackerName}}</a></td>
+                                    <td class="col-text"><a href="@Url.Content("/admin/#/project/{{backing.ProjectCode}}/")">{{backing.ProjectTitle}}</a></td>                                    <td class="col-number">{{backing.PledgeAmount | currency:"":0}}</td>
                                     <td class="col-number">{{backing.BackedDate | date: "HH:mm 'ngày' dd-MM-yyyy"}}</td>
                                 </tr>
                             </tbody>
