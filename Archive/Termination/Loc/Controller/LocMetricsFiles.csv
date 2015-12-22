@@ -1,0 +1,11 @@
+File,LOC,SLOC-P,SLOC-L,MVG,BLOC,C&SLOC,CLOC,CWORD,HCLOC,HCWORD
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Controllers\ApiControllers\CategoryApiController.cs,307,253,152,44,17,0,37,83,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Controllers\ApiControllers\MessageApiController.cs,337,280,176,61,16,0,41,132,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Controllers\ApiControllers\ProjectApiController.cs,2238,1764,1118,376,337,0,137,338,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Controllers\ApiControllers\ReportApiController.cs,245,207,125,40,18,0,20,48,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Controllers\ApiControllers\SlideApiController.cs,377,310,201,54,23,1,44,123,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Controllers\ApiControllers\UserApiController.cs,902,777,482,161,63,0,62,152,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Controllers\WebControllers\AdminPartialController.cs,107,80,42,17,14,0,13,26,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Controllers\WebControllers\ClientPartialController.cs,133,108,56,24,19,0,6,12,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Controllers\WebControllers\HomeController.cs,182,158,99,15,18,0,6,21,0,0
+D:\2015FALLJS01\WIP\Sources\DDL_CapstoneProject\DDL_CapstoneProject\Controllers\WebControllers\LoginController.cs,418,330,185,48,46,1,42,145,0,0
