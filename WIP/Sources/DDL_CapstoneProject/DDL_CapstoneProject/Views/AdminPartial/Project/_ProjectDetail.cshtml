@@ -177,7 +177,7 @@
                                                             <td class="col-number">{{$index + 1}}</td>
                                                             <td class="col-text">{{x.FullName}}</td>
                                                             <td class="col-number">{{x.Amount | currency:"":0}}</td>
-                                                            <td class="col-datetime">{{x.Date | date:"dd/MM/yyyy"}}</td>
+                                                            <td class="col-datetime" data-order="{{x.Date}}">{{x.Date | date:"dd/MM/yyyy"}}</td>
                                                             <td class="center" style="width: 34px;">
                                                                 <a href="@Url.Content("/admin/#/backingdetail/{{x.BackingId}}")">
                                                                     <button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1" tooltip="Xem chi tiết" tooltip-append-to-body="true" tooltip-placement="left">
