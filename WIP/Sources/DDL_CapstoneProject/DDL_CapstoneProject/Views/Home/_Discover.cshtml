@@ -14,7 +14,7 @@
             <ul class="portfolio-items col-5">
                 <li ng-repeat="category in categoryprojectcount">
                     <div class="item-inner pb20 pr20">
-                        <a href="@Url.Content("/#/search?categoryid={{category.CategoryID}}")">
+                        <a href="@Url.Content("/#/search/?categoryid={{category.CategoryID}}")">
                             <div class="thumbnail feature2_animation_box thumbnail_size">
                                 <div class="first_link fnt-b fnt20 c-10">{{category.Name}}</div>
                                 <div class="liveproject_art_font">{{category.projectCount}} dự án đang chạy</div>
@@ -29,16 +29,16 @@
     <div id="item-popular" class="pt30">
         <section id="portfolio" class="container">
             <h4 class="pull-left">Nổi bật nhất:</h4>
-            <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="@Url.Content("/#/search?categoryid=all&order=PopularPoint")">Xem thêm</a>
+            <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="@Url.Content("/#/search/?categoryid=all&order=PopularPoint")">Xem thêm</a>
             <div class="clearfix"></div>
             <ul class="portfolio-items col-4">
                 <li class="portfolio-item" ng-repeat="project in popularproject">
                     <div class="item-inner">
                         <div class="item-image hover01 column">
-                            <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
+                            <a href="/#/project/detail/{{project.ProjectCode}}/"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
                         </div>
                         <div class="item-title">
-                            <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
+                            <h5><a href="/#/project/detail/{{project.ProjectCode}}/">{{project.Title}}</a></h5>
                         </div>
                         <div class="item-content">
                             <p class="fnt15">{{project.SubDescription}}</p>
@@ -47,7 +47,7 @@
                             <div class="mt10 mb5 no-wrap text-hidden">
                                 @*<a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
             &nbsp;&nbsp;*@
-                                <a class="grey-dark" href="@Url.Content("/#/search?categoryid={{project.CategoryID}}")"><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
+                                <a class="grey-dark" href="@Url.Content("/#/search/?categoryid={{project.CategoryID}}")"><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
                                 &nbsp;&nbsp;
                                 <span class="grey-dark"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>{{project.Location}}</span>
                             </div>
@@ -84,16 +84,16 @@
     <div id="item-newest" class="pt30">
         <section id="portfolio" class="container">
             <h4 class="pull-left">Mới nhất:</h4>
-            <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="@Url.Content("/#/search?categoryid=all&order=CreatedDate")">Xem thêm</a>
+            <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="@Url.Content("/#/search/?categoryid=all&order=CreatedDate")">Xem thêm</a>
             <div class="clearfix"></div>
             <ul class="portfolio-items col-4">
                 <li class="portfolio-item" ng-repeat="project in newestproject">
                     <div class="item-inner">
                         <div class="item-image hover01 column">
-                            <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
+                            <a href="/#/project/detail/{{project.ProjectCode}}/"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
                         </div>
                         <div class="item-title">
-                            <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
+                            <h5><a href="/#/project/detail/{{project.ProjectCode}}/">{{project.Title}}</a></h5>
                         </div>
                         <div class="item-content">
                             <p class="fnt15">{{project.SubDescription}}</p>
@@ -102,7 +102,7 @@
                             <div class="mt10 mb5 no-wrap text-hidden">
                                 @*<a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
             &nbsp;&nbsp;*@
-                                <a class="grey-dark" href="@Url.Content("/#/search?categoryid={{project.CategoryID}}")"><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
+                                <a class="grey-dark" href="@Url.Content("/#/search/?categoryid={{project.CategoryID}}")"><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
                                 &nbsp;&nbsp;
                                 <span class="grey-dark"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>{{project.Location}}</span>
                             </div>
@@ -139,17 +139,17 @@
     <div id="item-most-fund" class="pt30">
         <section id="portfolio" class="container">
             <h4 class="pull-left">Được ủng hộ nhiều nhất:</h4>
-            <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="@Url.Content("/#/search?categoryid=all&order=CurrentFunded")">Xem thêm</a>
+            <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="@Url.Content("/#/search/?categoryid=all&order=CurrentFunded")">Xem thêm</a>
             <div class="clearfix"></div>
 
             <ul class="portfolio-items col-4">
                 <li class="portfolio-item" ng-repeat="project in mostfundproject">
                     <div class="item-inner">
                         <div class="item-image hover01 column">
-                            <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
+                            <a href="/#/project/detail/{{project.ProjectCode}}/"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
                         </div>
                         <div class="item-title">
-                            <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
+                            <h5><a href="/#/project/detail/{{project.ProjectCode}}/">{{project.Title}}</a></h5>
                         </div>
                         <div class="item-content">
                             <p class="fnt15">{{project.SubDescription}}</p>
@@ -158,7 +158,7 @@
                             <div class="mt10 mb5 no-wrap text-hidden">
                                 @*<a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
             &nbsp;&nbsp;*@
-                                <a class="grey-dark" href="@Url.Content("/#/search?categoryid={{project.CategoryID}}")"><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
+                                <a class="grey-dark" href="@Url.Content("/#/search/?categoryid={{project.CategoryID}}")"><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
                                 &nbsp;&nbsp;
                                 <span class="grey-dark"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>{{project.Location}}</span>
                             </div>
@@ -195,16 +195,16 @@
     <div id="item-end-date" class="pt30 pb30">
         <section id="portfolio" class="container">
             <h4 class="pull-left">Sắp kết thúc:</h4>
-            <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="@Url.Content("/#/search?categoryid=all&order=ExpireDate")">Xem thêm</a>
+            <a class="btn btn-transparent btn-sm pull-right ml10 mt10" href="@Url.Content("/#/search/?categoryid=all&order=ExpireDate")">Xem thêm</a>
             <div class="clearfix"></div>
             <ul class="portfolio-items col-4">
                 <li class="portfolio-item" ng-repeat="project in enddateproject">
                     <div class="item-inner">
                         <div class="item-image hover01 column">
-                            <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
+                            <a href="/#/project/detail/{{project.ProjectCode}}/"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
                         </div>
                         <div class="item-title">
-                            <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
+                            <h5><a href="/#/project/detail/{{project.ProjectCode}}/">{{project.Title}}</a></h5>
                         </div>
                         <div class="item-content">
                             <p class="fnt15">{{project.SubDescription}}</p>
@@ -213,7 +213,7 @@
                             <div class="mt10 mb5 no-wrap text-hidden">
                                 @*<a class="grey-dark" href=""><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>{{project.Location}}</a>
             &nbsp;&nbsp;*@
-                                <a class="grey-dark" href="@Url.Content("/#/search?categoryid={{project.CategoryID}}")"><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
+                                <a class="grey-dark" href="@Url.Content("/#/search/?categoryid={{project.CategoryID}}")"><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
                                 &nbsp;&nbsp;
                                 <span class="grey-dark"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>{{project.Location}}</span>
                             </div>

@@ -26,7 +26,8 @@
                     <div ng-show="UserBasicInfo.IsActive" class="mt5 mb5 border-b"><i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Đã kích hoạt</div>
                     <div ng-hide="UserBasicInfo.IsActive" class="mt5 mb5 border-b"><i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Đang bị khóa</div>
                     <div class="mt5 mb5 border-b"><i class="glyphicon glyphicon-lock"></i>&nbsp;&nbsp;Đăng nhập lần cuối: {{UserBasicInfo.LastLogin | date:"HH:mm dd/MM/yyyy"}}</div>
-                    <div ng-show="UserBasicInfo.Website != ''" class="mt5 mb5 border-b"><i class="glyphicon glyphicon-globe"></i>&nbsp;&nbsp;<a href="{{UserBasicInfo.Website}}">{{UserBasicInfo.Website}}</a></div>
+                    <div ng-show="UserBasicInfo.Website != '' && checkHTTP(UserBasicInfo.ProfileImage)" class="mt5 mb5 border-b"><i class="glyphicon glyphicon-globe"></i>&nbsp;&nbsp;<a href="{{UserBasicInfo.Website}}">{{UserBasicInfo.Website}}</a></div>
+                    <div ng-show="UserBasicInfo.Website != '' && !checkHTTP(UserBasicInfo.ProfileImage)" class="mt5 mb5 border-b"><i class="glyphicon glyphicon-globe"></i>&nbsp;&nbsp;<a href="http://{{UserBasicInfo.Website}}">{{UserBasicInfo.Website}}</a></div>
                     <div ng-show="UserBasicInfo.FacebookUrl != ''" class="mt5 mb5 border-b" style="word-break: break-all"><i class="fa fa-facebook-square"></i>&nbsp;&nbsp;<a href="{{UserBasicInfo.FacebookUrl}}">{{UserBasicInfo.FullName}}</a></div>
                     <div ng-show="UserBasicInfo.PhoneNumber != ''" class="mt5 mb5 border-b"><i class="glyphicon glyphicon-phone"></i>&nbsp;&nbsp;{{UserBasicInfo.PhoneNumber}}</div>
                     @*<div class="mt5 mb5 border-b"><i class="glyphicon glyphicon-bold"></i>&nbsp;&nbsp;{{UserBasicInfo.CountCreatedProject}} dự án đã tạo</div>

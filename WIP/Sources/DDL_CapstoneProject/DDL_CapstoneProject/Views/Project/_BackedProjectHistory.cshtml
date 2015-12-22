@@ -5,9 +5,9 @@
     <div class="row pull-right">
         <div class="col-sm-12 col-sm-offset-0">
             <ul id="" class="list-inline fnt18 fnt-b">
-                <li class=""><a class="c-10" href="../#/project/created">Dự án đã tạo</a></li>
-                <li class=""><a class="c3" href="../#/project/backed">Dự án đã ủng hộ</a></li>
-                <li class=""><a class="c-10" href="../#/project/reminded">Dự án theo dõi</a></li>
+                <li class=""><a class="c-10" href="../#/project/created/">Dự án đã tạo</a></li>
+                <li class=""><a class="c3" href="../#/project/backed/">Dự án đã ủng hộ</a></li>
+                <li class=""><a class="c-10" href="../#/project/reminded/">Dự án theo dõi</a></li>
                 <!-- <li class=""><a class="c-10" href="account.html">Setting</a></li> -->
                 <!-- <li class=""><a class="c-10" href="../Views/profile_public.html">Profile ( public )</a></li> -->
             </ul>
@@ -18,8 +18,8 @@
     <section id="portfolio" class="container">
         <h4 class="pt30">Backed projects:</h4>
         <ul class="list-inline fnt18 fnt-b">
-            <li class=""><a class="c-10" href="../#/project/backed">Dự án đã ủng hộ</a></li>
-            <li class=""><a class="c3" href="../#/project/backhistory">Lịch sử ủng hộ</a></li>
+            <li class=""><a class="c-10" href="../#/project/backed/">Dự án đã ủng hộ</a></li>
+            <li class=""><a class="c3" href="../#/project/backhistory/">Lịch sử ủng hộ</a></li>
             <li>
                 <a href="#" onclick="return false;" ng-click="exportExcel()" class="btn btn-info btn-sm">Xuất dữ liệu</a>
             </li>
@@ -99,7 +99,7 @@
             <tbody>
                 <tr ng-repeat="project in ListBackedProjectHistory ">
                     <td class="txt-r">{{$index+1}}</td>
-                    <td class="txt-l"><a class="fnt-b project_title_source" href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></td>
+                    <td class="txt-l"><a class="fnt-b project_title_source" href="/#/project/detail/{{project.ProjectCode}}/">{{project.Title}}</a></td>
                     <td class="txt-r" data-search="{{project.CurrentFunded}}" data-order="{{project.CurrentFunded}}">{{project.CurrentFunded |  number : fractionSize}}&#8363;</td>
                     <td class="txt-r" data-order="{{project.BackedDate}}">{{project.BackedDate | date: "dd/MM/yyyy"}}</td>
                     <td class="txt-l">
@@ -112,7 +112,7 @@
                     </td>
                     <td class="txt-c">
                         <div class="btn-group">
-                            <a href="@Url.Content("/#/backingdetail/{{project.BackingId}}")">
+                            <a href="@Url.Content("/#/backingdetail/{{project.BackingId}}/")">
                                 <button class="btn btn-info btn-sm btn_view_detail" type="button" tooltip="Xem chi tiết" tooltip-append-to-body="true" tooltip-placement="left" title="View">
                                     <i class="fa fa-eye"></i>
                                 </button>

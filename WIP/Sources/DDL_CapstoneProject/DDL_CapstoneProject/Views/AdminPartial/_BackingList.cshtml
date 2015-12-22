@@ -32,14 +32,14 @@
                             <tbody>
                                 <tr ng-repeat="backing in ListBacking">
                                     <td class="col-number">{{$index + 1}}</td>
-                                    <td><a href="@Url.Content("/admin/#/project/{{backing.ProjectCode}}")">{{backing.ProjectTitle}}</a></td>
-                                    <td><a href="@Url.Content("/admin/#/userprofile/{{backing.UserName}}")">{{backing.BackerName}}</a></td>
+                                    <td><a href="@Url.Content("/admin/#/project/{{backing.ProjectCode}}/")">{{backing.ProjectTitle}}</a></td>
+                                    <td><a href="@Url.Content("/admin/#/userprofile/{{backing.UserName}}/")">{{backing.BackerName}}</a></td>
                                     <td class="col-number" data-order="{{backing.PledgeAmount}}" ><span class=" money usd no-code">{{backing.PledgeAmount | number : fractionSize}} &#8363;</span></td>
                                     @*<td style="width: 150px">{{backing.BackedDate | date : "HH:mm 'ngày' dd-MM-yyyy"}}</td>*@
                                     <td class="col-datetime" data-order="{{backing.BackedDate}}">{{backing.BackedDate  | date:"dd/MM/yyyy"}}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="@Url.Content("/admin/#/backingdetail/{{backing.BackingID}}")">
+                                            <a href="@Url.Content("/admin/#/backingdetail/{{backing.BackingID}}/")">
                                                 <button tooltip="Nhấp để xem chi tiết" class="btn btn-primary btn-sm" id=""
                                                         tooltip-placement="left" data-trigger="hover" title="View" tooltip-append-to-body="true">
                                                     <i class="fa fa-eye"></i>

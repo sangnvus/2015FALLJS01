@@ -21,10 +21,10 @@
                             <a href="/admin/#/message/">Tất cả thư&nbsp;<span ng-show="NumberNewMessage.Total > 0" class="badge badge-info mb3 ng-cloak">{{NumberNewMessage.Total}}</span></a>
                         </li>
                         <li @*ng-click="changeInboxSent('inbox')"*@ ng-class="{'active': Inbox === 'inbox'}" style="cursor: pointer">
-                            <a href="/admin/#/message?list=inbox">Hộp thư đến&nbsp;<span ng-show="NumberNewMessage.ReceivedMessage > 0" class="badge badge-info mb3 ng-cloak">{{NumberNewMessage.ReceivedMessage}}</span></a>
+                            <a href="/admin/#/message/?list=inbox">Hộp thư đến&nbsp;<span ng-show="NumberNewMessage.ReceivedMessage > 0" class="badge badge-info mb3 ng-cloak">{{NumberNewMessage.ReceivedMessage}}</span></a>
                         </li>
                         <li @*ng-click="changeInboxSent('sent')"*@ ng-class="{'active': Inbox === 'sent'}" style="cursor: pointer">
-                            <a href="/admin/#/message?list=sent">Hộp thư đi&nbsp;<span ng-show="NumberNewMessage.SentMessage > 0" class="badge badge-info mb3 ng-cloak">{{NumberNewMessage.SentMessage}}</span></a>
+                            <a href="/admin/#/message/?list=sent">Hộp thư đi&nbsp;<span ng-show="NumberNewMessage.SentMessage > 0" class="badge badge-info mb3 ng-cloak">{{NumberNewMessage.SentMessage}}</span></a>
                         </li>
                         <li class="nav-divider"></li>
                     </ul>
@@ -67,13 +67,13 @@
                                                    value="{{conversation.ConversationID}}">
                                         </td>
                                         <td class="from-col" href="message-View.html" ng-if="!conversation.IsSent" style="width: 15%">
-                                            <a href="/admin/#/message/{{conversation.ConversationID}}"> Từ: {{conversation.SenderName}}{{bool$index}}</a>
+                                            <a href="/admin/#/message/{{conversation.ConversationID}}/"> Từ: {{conversation.SenderName}}{{bool$index}}</a>
                                         </td>
                                         <td class="from-col" href="message-View.html" ng-if="conversation.IsSent" style="width: 15%">
-                                            <a href="/admin/#/message/{{conversation.ConversationID}}">Tới: {{conversation.ReceiverName}}</a>
+                                            <a href="/admin/#/message/{{conversation.ConversationID}}/">Tới: {{conversation.ReceiverName}}</a>
                                         </td>
                                         <td class="msg-col" style="width: 70%">
-                                            <a href="/admin/#/message/{{conversation.ConversationID}}">
+                                            <a href="/admin/#/message/{{conversation.ConversationID}}/">
                                                 {{conversation.Title}}
                                             </a>
                                         </td>

@@ -175,7 +175,7 @@
                                                     <tr class="odd gradeX" ng-repeat="project in ListBacked">
                                                         <td style="width:40px" class="col-number">{{$index + 1}}</td>
                                                         <td>{{project.ProjectTitle}}</td>
-                                                        <td style="width:150px" class="col-number"><span class="money usd no-code">{{project.PledgedAmount | number : fractionSize}} &#8363;</span></td>
+                                                        <td style="width:150px" class="col-number" data-order="{{project.PledgedAmount}}"><span class="money usd no-code">{{project.PledgedAmount | number : fractionSize}} &#8363;</span></td>
                                                         @*<td style="width:150px" class="col-number"><span class="money usd no-code">{{project.FundingGoals | number : fractionSize}} &#8363;</span></td>*@
                                                         <td style="width:100px">
                                                             <span class="label label-danger center-block gray" ng-if="project.Status == 'rejected'" style="padding: 9px;">Từ chối</span>
@@ -192,7 +192,7 @@
                                                             @*<a tooltip="Nhấp để xem chi tiết" class="btn btn-blue" data-toggle="modal" data-target="#infoBanker" title="View" ng-click="getBackingDetail()">
                                                                 <i class="fa fa-eye"></i>
                                                             </a>*@
-                                                            <a tooltip="Nhấp để xem chi tiết dự án" href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")" class="btn btn-blue">
+                                                            <a tooltip="Nhấp để xem chi tiết dự án" href="@Url.Content("/admin/#/project/{{project.ProjectCode}}/")" class="btn btn-blue">
                                                                 <i class="fa fa-eye"></i>
                                                             </a>
                                                         </td>
@@ -247,8 +247,8 @@
                                                         <td style="width:40px" class="col-number">{{$index + 1}}</td>
                                                         <td>{{project.ProjectTitle}}</td>
                                                         <td>{{project.Category}}<span class="money usd no-code"></span></td>
-                                                        <td style="width:100px" class="col-number"><span class="money usd no-code">{{project.PledgedOn | number : fractionSize}} &#8363;</span></td>
-                                                        <td style="width:100px" class="col-number"><span class="money usd no-code">{{project.FundingGoals | number : fractionSize}} &#8363;</span></td>
+                                                        <td style="width:100px" class="col-number" data-order="{{project.PledgedOn}}"><span class="money usd no-code">{{project.PledgedOn | number : fractionSize}} &#8363;</span></td>
+                                                        <td style="width:100px" class="col-number" data-order="{{project.FundingGoals}}"><span class="money usd no-code">{{project.FundingGoals | number : fractionSize}} &#8363;</span></td>
                                                         <td style="width:100px">
                                                             <span class="label label-danger center-block" ng-if="project.Status == 'rejected'" style="padding: 9px;">Từ chối</span>
                                                             <span class="label label-primary center-block label-success" ng-if="project.Status == 'approved'" style="padding: 9px;">Đã duyệt</span>
@@ -261,11 +261,11 @@
                                                             <span class="label label-primary center-block" ng-if="project.Isfunded == 'going'" style="padding: 9px;">Đang chạy</span>
                                                         </td>
                                                         <td style="width:100px" class="col-number">
-                                                            <span ng-if="project.Isexpired > 0">{{project.Isexpired}}</span>
+                                                            <span ng-if="project.Isexpired > 0" class="label label-primary center-block" style="padding: 9px;">{{project.Isexpired}} ngày</span>
                                                             <span ng-if="project.Isexpired < 0" class="label label-primary center-block red" style="padding: 9px;">Đã kết thúc</span>
                                                         </td>
                                                         <td style="width:40px">
-                                                            <a tooltip="Nhấp để xem chi tiết dự án" href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")" class="btn btn-blue">
+                                                            <a tooltip="Nhấp để xem chi tiết dự án" href="@Url.Content("/admin/#/project/{{project.ProjectCode}}/")" class="btn btn-blue">
                                                                 <i class="fa fa-eye"></i>
                                                             </a>
                                                         </td>

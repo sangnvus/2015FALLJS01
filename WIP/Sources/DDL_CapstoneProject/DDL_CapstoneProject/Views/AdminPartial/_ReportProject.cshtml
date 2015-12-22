@@ -41,9 +41,9 @@
                         <tbody>
                             <tr ng-repeat="report in listReport track by $index" ng-class-odd="'odd'" ng-class-even="'even'">
                                 <td class="col-number">{{$index + 1}}</td>
-                                <td><a href="/admin/#/userprofile/{{report.ReporterUsername}}">{{report.reporterName}}</a></td>
-                                <td><a href="/admin/#/project/{{report.ProjectCode}}">{{report.ProjectTitle}}</a></td>
-                                <td><a href="/admin/#/userprofile/{{report.ReporterUsername}}">{{report.CreatorName}}</a></td>
+                                <td><a href="/admin/#/userprofile/{{report.ReporterUsername}}/">{{report.reporterName}}</a></td>
+                                <td><a href="/admin/#/project/{{report.ProjectCode}}/">{{report.ProjectTitle}}</a></td>
+                                <td><a href="/admin/#/userprofile/{{report.ReporterUsername}}/">{{report.CreatorName}}</a></td>
                                 @*<td>{{report.Subject}}</td>*@
                                 <td class="col-datetime" data-order="{{report.ReportedDate}}">{{report.ReportedDate | date : "dd/MM/yyyy"}}</td>
                                 <td>

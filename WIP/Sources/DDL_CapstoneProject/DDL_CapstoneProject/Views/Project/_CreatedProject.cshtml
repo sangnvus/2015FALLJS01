@@ -2,9 +2,9 @@
     <div class="row pull-right">
         <div class="col-sm-12 col-sm-offset-0">
             <ul id="" class="list-inline fnt18 fnt-b">
-                <li class=""><a class="c-3" href="../#/project/created">Dự án đã tạo</a></li>
-                <li class=""><a class="c-10" href="../#/project/backed">Dự án đã ủng hộ</a></li>
-                <li class=""><a class="c-10" href="../#/project/reminded">Dự án theo dõi</a></li>
+                <li class=""><a class="c-3" href="../#/project/created/">Dự án đã tạo</a></li>
+                <li class=""><a class="c-10" href="../#/project/backed/">Dự án đã ủng hộ</a></li>
+                <li class=""><a class="c-10" href="../#/project/reminded/">Dự án theo dõi</a></li>
             </ul>
         </div>
     </div>
@@ -21,11 +21,11 @@
 
                 <div class="item-inner">
                     <div class=" item-image hover01 column">
-                        <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
+                        <a href="/#/project/detail/{{project.ProjectCode}}/"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
                     </div>
                     <div class="item-title">
-                        <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
-                        <a class="btn btn-info btn-xs" href="/#/project/edit/{{project.ProjectCode}}">Sửa</a>
+                        <h5><a href="/#/project/detail/{{project.ProjectCode}}/">{{project.Title}}</a></h5>
+                        <a class="btn btn-info btn-xs" href="/#/project/edit/{{project.ProjectCode}}/">Sửa</a>
                         <a class="btn btn-danger btn-xs" href="" ng-click="deleteDraft($index)">Xóa</a>
                         <label class="label label-primary" ng-if="project.Status == 'pending'">Đang chờ kiểm duyệt</label>
                         <label class="label label-default" ng-if="project.Status == 'draft'">Dự án nháp</label>
@@ -36,7 +36,7 @@
                     </div>
                     <div class="item-footer">
                         <div class="mt10 mb5 no-wrap text-hidden">
-                            <a class="grey-dark" href="@Url.Content("/#/search?categoryid={{project.CategoryID}}")"><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
+                            <a class="grey-dark" href="@Url.Content("/#/search/?categoryid={{project.CategoryID}}")"><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
                             &nbsp;&nbsp;
                             <span class="grey-dark"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span><span tooltip='{{project.Location}}'>{{project.Location}}</span></span>
                         </div>
@@ -72,14 +72,14 @@
             <li class="portfolio-item apps" ng-repeat="project in ListCreatedProjectApproved">
                 <div class="item-inner">
                     <div class="item-image hover01 column">
-                        <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
+                        <a href="/#/project/detail/{{project.ProjectCode}}/"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
                     </div>
                     <div class="item-title">
-                        <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
+                        <h5><a href="/#/project/detail/{{project.ProjectCode}}/">{{project.Title}}</a></h5>
                     </div>
                     <div class="item-content">
-                        <a class="btn btn-primary btn-xs" href="/#/project/listBacker/{{project.ProjectCode}}">Danh sách ủng hộ</a>
-                        <a class="btn btn-info btn-xs" href="/#/project/edit/{{project.ProjectCode}}">Sửa</a>
+                        <a class="btn btn-primary btn-xs" href="/#/project/listBacker/{{project.ProjectCode}}/">Danh sách ủng hộ</a>
+                        <a class="btn btn-info btn-xs" href="/#/project/edit/{{project.ProjectCode}}/">Sửa</a>
                         <p class="fnt15">{{project.SubDescription}}</p>
                     </div>
                     <div class="item-footer">
@@ -130,8 +130,8 @@
                         <figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure>
                     </div>
                     <div class="item-title">
-                        <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
-                        <a class="btn btn-primary btn-xs" href="/#/project/listBacker/{{project.ProjectCode}}">Danh sách ủng hộ</a>
+                        <h5><a href="/#/project/detail/{{project.ProjectCode}}/">{{project.Title}}</a></h5>
+                        <a class="btn btn-primary btn-xs" href="/#/project/listBacker/{{project.ProjectCode}}/">Danh sách ủng hộ</a>
                     </div>
                     <div class="item-content">
                         <p class="fnt15">{{project.SubDescription}}</p>

@@ -151,7 +151,7 @@
                                     <td class="col-text" style="width: 50px;">{{project.ProjectCode}}</td>
                                     <td class="col-text">{{project.Title}}</td>
                                     <td class="col-text">{{project.Category}}</td>
-                                    <td class="center col-text"><a href="@Url.Content("/admin/#/userprofile/{{project.CreatorUsername}}")">{{project.CreatorFullname}}</a></td>
+                                    <td class="center col-text"><a href="@Url.Content("/admin/#/userprofile/{{project.CreatorUsername}}/")">{{project.CreatorFullname}}</a></td>
                                     <td class="center col-number">{{project.FundingGoal| currency:"":0}}</td>
                                     <td class="center col-datetime">{{project.ExpireDate | date:"dd/MM/yyyy"}}</td>
                                     <td>
@@ -163,7 +163,7 @@
                                     </td>
                                     <td class="center" style="width: 34px;">
                                         <div class="btn-group">
-                                            <a href="@Url.Content("/admin/#/project/{{project.ProjectCode}}")" class="btn btn-primary btn-sm" type="button" id="dropdownMenu1"
+                                            <a href="@Url.Content("/admin/#/project/{{project.ProjectCode}}/")" class="btn btn-primary btn-sm" type="button" id="dropdownMenu1"
                                                data-placement="bottom" title="View"
                                                tooltip="Xem chi tiết" tooltip-append-to-body="true" tooltip-placement="left">
                                                 <i class="fa fa-eye"></i>

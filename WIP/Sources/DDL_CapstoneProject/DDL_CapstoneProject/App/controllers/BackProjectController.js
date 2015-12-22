@@ -74,7 +74,7 @@ app.controller('BackProjectController', function ($scope, $route, $rootScope, $l
             var promisePost = ProjectService.addBack($scope.BackData);
 
             if ($rootScope.UserInfo.IsAuthen == true) {
-                $location.path("/project/payment/" + $route.current.params.code).replace();
+                $location.path("/project/payment/" + $route.current.params.code +"/").replace();
             } else {
                 CommmonService.checkError("not-authen", $rootScope.BaseUrl);
             }

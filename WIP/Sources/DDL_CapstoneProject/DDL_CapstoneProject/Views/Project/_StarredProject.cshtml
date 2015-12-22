@@ -2,9 +2,9 @@
     <div class="row pull-right">
         <div class="col-sm-12 col-sm-offset-0">
             <ul id="" class="list-inline fnt18 fnt-b">
-                <li class=""><a class="c-10" href="../#/project/created">Dự án đã tạo</a></li>
-                <li class=""><a class="c-10" href="../#/project/backed">Dự án đã ủng hộ</a></li>
-                <li class=""><a class="c3" href="../#/project/reminded">Dự án theo dõi</a></li>
+                <li class=""><a class="c-10" href="../#/project/created/">Dự án đã tạo</a></li>
+                <li class=""><a class="c-10" href="../#/project/backed/">Dự án đã ủng hộ</a></li>
+                <li class=""><a class="c3" href="../#/project/reminded/">Dự án theo dõi</a></li>
                 <!-- <li class=""><a class="c-10" href="account.html">Setting</a></li> -->
                 <!-- <li class=""><a class="c-10" href="../Views/profile_public.html">Profile ( public )</a></li> -->
             </ul>
@@ -21,17 +21,17 @@
                 
                 <div class="item-inner">
                     <div class="item-image hover01 column">
-                        <a href="/#/project/detail/{{project.ProjectCode}}"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
+                        <a href="/#/project/detail/{{project.ProjectCode}}/"><figure><img class="img-fit" ng-src="\images\projects\{{project.ImageUrl}}" alt=""></figure></a>
                     </div>
                     <div class="item-title">
-                        <h5><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></h5>
+                        <h5><a href="/#/project/detail/{{project.ProjectCode}}/">{{project.Title}}</a></h5>
                     </div>
                     <div class="item-content">
                         <p class="fnt15">{{project.SubDescription}}</p>
                     </div>
                     <div class="item-footer">
                         <div class="mt10 mb5 no-wrap text-hidden">
-                            <a class="grey-dark" href="@Url.Content("/#/search?categoryid={{project.CategoryID}}")"><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
+                            <a class="grey-dark" href="@Url.Content("/#/search/?categoryid={{project.CategoryID}}")"><span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>{{project.Category}}</a>
                             &nbsp;&nbsp;
                             <span class="grey-dark"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span><span tooltip='{{project.Location}}'>{{project.Location}}</span></span>
                         </div>

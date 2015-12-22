@@ -129,7 +129,7 @@
                             <tbody>
                                 <tr ng-repeat="user in Dashboard.RecentUser">
                                     <td>
-                                        <a class="pull-left" href="@Url.Content("/admin/#/userprofile/{{user.UserName}}")">
+                                        <a class="pull-left" href="@Url.Content("/admin/#/userprofile/{{user.UserName}}/")">
                                             <img style="width : 40px; height:40px" ng-if="!checkHTTP(user.AvartaURL)" ng-src="../images/avatars/{{user.AvartaURL}}" alt="" class="media-object img-circle">
                                             <img style="width : 40px; height:40px" ng-if="checkHTTP(user.AvartaURL)" ng-src="{{trustSrc(user.AvartaURL)}}" alt="" class="media-object img-circle">
                                         </a>
@@ -175,7 +175,7 @@
                             <tbody>
                                 <tr ng-repeat="user in Dashboard.TopBacker">
                                     <td class="col-number" style="width:35%">
-                                        <a class="pull-left" href="@Url.Content("/admin/#/userprofile/{{user.UserName}}")">
+                                        <a class="pull-left" href="@Url.Content("/admin/#/userprofile/{{user.UserName}}/")">
                                             <img style="width : 40px; height:40px" ng-if="!checkHTTP(user.AvartaURL)" ng-src="../images/avatars/{{user.AvartaURL}}" alt="" class="media-object img-circle">
                                             <img style="width : 40px; height:40px" ng-if="checkHTTP(user.AvartaURL)" ng-src="{{trustSrc(user.AvartaURL)}}" alt="" class="media-object img-circle">
                                         </a>
@@ -226,7 +226,7 @@
                             <tbody>
                                 <tr ng-repeat="user in Dashboard.ListNewUser">
                                     <td style="width:35%">
-                                        <a class="pull-left" href="@Url.Content("/admin/#/userprofile/{{user.UserName}}")">
+                                        <a class="pull-left" href="@Url.Content("/admin/#/userprofile/{{user.UserName}}/")">
                                             <img style="width: 40px; height: 40px" ng-if="!checkHTTP(user.AvartaURL)" ng-src="../images/avatars/{{user.AvartaURL}}" alt="" class="media-object img-circle">
                                             <img style="width: 40px; height: 40px" ng-if="checkHTTP(user.AvartaURL)" ng-src="{{trustSrc(user.AvartaURL)}}" alt="" class="media-object img-circle">
                                         </a>
@@ -273,7 +273,7 @@
                             <tbody>
                                 <tr ng-repeat="user in Dashboard.TopCreator">
                                     <td style="width:35%">
-                                        <a class="pull-left" href="@Url.Content("/admin/#/userprofile/{{user.UserName}}")">
+                                        <a class="pull-left" href="@Url.Content("/admin/#/userprofile/{{user.UserName}}/")">
                                             <img style="width : 40px; height:40px" ng-if="!checkHTTP(user.AvartaURL)" ng-src="../images/avatars/{{user.AvartaURL}}" alt="" class="media-object img-circle">
                                             <img style="width : 40px; height:40px" ng-if="checkHTTP(user.AvartaURL)" ng-src="{{trustSrc(user.AvartaURL)}}" alt="" class="media-object img-circle">
                                         </a>

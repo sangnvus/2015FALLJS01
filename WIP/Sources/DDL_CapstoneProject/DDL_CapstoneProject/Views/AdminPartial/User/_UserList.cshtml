@@ -133,7 +133,7 @@
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-blue" tooltip=" nhấp để xem chi tiết" tooltip-append-to-body="true" tooltip-placement="top"
-                                                href="/admin/#/userprofile/{{user.UserName}}"><i class="fa fa-eye"></i></a>
+                                                href="/admin/#/userprofile/{{user.UserName}}/"><i class="fa fa-eye"></i></a>
                                             <a style="width: 40px;" ng-if="user.StatusActive == false && user.Status == true" tooltip="Nhấp để mở khóa tài khoản" tooltip-append-to-body="true" tooltip-placement="top"
                                                 data-toggle="modal" data-target="#ConfirmModal" ng-click="warning(user.UserName,$index)" class="btn btn-success"><i class="fa fa-unlock"></i></a>
                                             <a style="width: 40px;" ng-if="user.StatusActive == true && user.Status == true" tooltip="Nhấp để khóa tài khoản" tooltip-append-to-body="true" tooltip-placement="top"

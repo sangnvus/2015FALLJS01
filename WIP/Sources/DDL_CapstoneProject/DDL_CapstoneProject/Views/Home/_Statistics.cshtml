@@ -73,7 +73,7 @@
                                     <tr ng-repeat="project in projectTopList">
                                         <td class="col-number">{{$index+1}}</td>
                                         <td>{{project.ProjectCode}}</td>
-                                        <td><a href="/#/project/detail/{{project.ProjectCode}}">{{project.Title}}</a></td>
+                                        <td><a href="/#/project/detail/{{project.ProjectCode}}/">{{project.Title}}</a></td>
                                         <td>{{getRank(project.PopularPoint)}}</td>
                                         <td>{{project.Category}}</td>
                                         <td class="col-number">{{project.CurrentFundedNumber| number : fractionSize}}&#8363;</td>
@@ -120,7 +120,7 @@
                             <tbody>
                                 <tr ng-repeat="user in UserTopBackList track by $index">
                                     <td class="col-number">{{$index+1}}</td>
-                                    <td><a href="/#/user/publicprofile/{{user.Username}}">{{user.Name}}</a></td>
+                                    <td><a href="/#/user/publicprofile/{{user.Username}}/">{{user.Name}}</a></td>
                                     <td class="col-number">{{user.TotalBacked| number : fractionSize}}&#8363;</td>
                                     <td class="col-number">{{user.projectCount}}</td>
                                 </tr>
@@ -159,7 +159,7 @@
                             <tbody>
                                 <tr ng-repeat="user in UserTopFundList track by $index">
                                     <td class="col-number">{{$index+1}}</td>
-                                    <td><a href="/#/user/publicprofile/{{user.Username}}">{{user.Name}}</a></td>
+                                    <td><a href="/#/user/publicprofile/{{user.Username}}/">{{user.Name}}</a></td>
                                     <td class="col-number">{{user.TotalFunded| number : fractionSize}}&#8363;</td>
                                     <td class="col-number">{{user.projectCount}}</td>
                                 </tr>

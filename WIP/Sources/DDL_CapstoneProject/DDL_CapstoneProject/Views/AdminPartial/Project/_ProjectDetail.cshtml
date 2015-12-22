@@ -35,7 +35,7 @@
                             <div class="title text-center">
                                 <h2>{{Project.Title}}</h2>
                                 <p>
-                                    by <a href="@Url.Content("/admin/#/userprofile/{{Project.Creator.UserName}}")">{{Project.Creator.FullName}}</a> - <span class="badge purple">{{Project.CategoryName}}</span> -
+                                    by <a href="@Url.Content("/admin/#/userprofile/{{Project.Creator.UserName}}/")">{{Project.Creator.FullName}}</a> - <span class="badge purple">{{Project.CategoryName}}</span> -
                                     <span class="badge green" ng-if="Project.Status == 'approved' && !Project.IsExprired">Đang chạy</span>
                                     <span class="badge red" ng-if="Project.Status == 'suspended' && !Project.IsExprired">Đình chỉ</span>
                                     <span class="badge red" ng-if="Project.Status == 'rejected' && !Project.IsExprired">Từ chối</span>
@@ -179,7 +179,7 @@
                                                             <td class="col-number">{{x.Amount | currency:"":0}}</td>
                                                             <td class="col-datetime">{{x.Date | date:"dd/MM/yyyy"}}</td>
                                                             <td class="center" style="width: 34px;">
-                                                                <a href="@Url.Content("/admin/#/backingdetail/{{x.BackingId}}")">
+                                                                <a href="@Url.Content("/admin/#/backingdetail/{{x.BackingId}}/")">
                                                                     <button class="btn btn-primary btn-sm" type="button" id="dropdownMenu1" tooltip="Xem chi tiết" tooltip-append-to-body="true" tooltip-placement="left">
                                                                         <i class="fa fa-eye"></i>
                                                                     </button>
@@ -303,7 +303,7 @@
                                     <!--Comment header-->
                                     <div class="media-heading">
                                         <strong>
-                                            <a ng-class="{'by-author':Comment.UserName == Project.Creator.UserName}" href="/#/user/publicprofile/{{Comment.FullName}}">{{Comment.FullName}}</a>
+                                            <a ng-class="{'by-author':Comment.UserName == Project.Creator.UserName}" href="/#/user/publicprofile/{{Comment.UserName}}/">{{Comment.FullName}}</a>
                                             <span ng-if="Comment.UserName == Project.Creator.UserName" class="label label-primary">chủ</span>
                                         </strong>
                                         <small>&nbsp;- lúc {{Comment.CreatedDate | date:"HH:mm 'ngày' dd/MM/yyyy"}}</small>

@@ -102,13 +102,13 @@
                                 </label>
                             </td>
                             <td class="from-col" href="message-View.html" ng-if="!conversation.IsSent">
-                                <a href="/#/user/message/{{conversation.ConversationID}}"> Từ: {{conversation.SenderName}}{{bool$index}}</a>
+                                <a href="/#/user/message/{{conversation.ConversationID}}/"> Từ: {{conversation.SenderName}}{{bool$index}}</a>
                             </td>
                             <td class="from-col" href="message-View.html" ng-if="conversation.IsSent">
-                                <a href="/#/user/message/{{conversation.ConversationID}}">Tới: {{conversation.ReceiverName}}</a>
+                                <a href="/#/user/message/{{conversation.ConversationID}}/">Tới: {{conversation.ReceiverName}}</a>
                             </td>
                             <td class="msg-col">
-                                <a href="/#/user/message/{{conversation.ConversationID}}">
+                                <a href="/#/user/message/{{conversation.ConversationID}}/">
                                     {{conversation.Title}}
                                 </a>
                             </td>

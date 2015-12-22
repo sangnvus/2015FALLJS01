@@ -264,7 +264,7 @@
                                                         <span class="h5" style="font-weight: normal">{{reward.EstimatedDelivery | date:"MM/yyyy"}} </span>
                                                     </div>
                                                 </div> <!-- end main Reward -->
-                                                <a href="@Url.Content("/#/project/back/{{Project.ProjectCode}}?reward={{$index+1}}")"
+                                                <a href="@Url.Content("/#/project/back/{{Project.ProjectCode}}/?reward={{$index+1}}")"
                                                    ng-if="CurrentUser.UserName != Project.Creator.UserName && Project.Status != '@DDLConstants.ProjectStatus.SUSPENDED' && Project.Status != '@DDLConstants.ProjectStatus.PENDING' && Project.Status != '@DDLConstants.ProjectStatus.DRAFT' && Project.Status != '@DDLConstants.ProjectStatus.REJECTED' && !Project.IsExprired && !(reward.Type == '@DDLConstants.RewardType.LIMITED' && (reward.Quantity - reward.CurrentQuantity <= 0))">
                                                     <div class="hoverReward">
                                                         <span class="titleHover">Chọn gói này</span>
